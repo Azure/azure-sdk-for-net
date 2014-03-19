@@ -39,7 +39,8 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a Create Job operation.
+        /// Required. Parameters specifying the job definition for a Create Job
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Job operation response.
@@ -71,7 +72,8 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a Create Job operation.
+        /// Required. Parameters specifying the job definition for a Create Job
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Job operation response.
@@ -89,11 +91,11 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to create or update.
+        /// Required. Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a CreateOrUpdate Job
-        /// operation.
+        /// Required. Parameters specifying the job definition for a
+        /// CreateOrUpdate Job operation.
         /// </param>
         /// <returns>
         /// The CreateOrUpdate Job operation response.
@@ -125,11 +127,11 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to create or update.
+        /// Required. Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a CreateOrUpdate Job
-        /// operation.
+        /// Required. Parameters specifying the job definition for a
+        /// CreateOrUpdate Job operation.
         /// </param>
         /// <returns>
         /// The CreateOrUpdate Job operation response.
@@ -146,7 +148,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to delete.
+        /// Required. Id of the job to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -178,7 +180,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to delete.
+        /// Required. Id of the job to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -196,7 +198,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get.
+        /// Required. Id of the job to get.
         /// </param>
         /// <returns>
         /// The Get Job operation response.
@@ -227,7 +229,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get.
+        /// Required. Id of the job to get.
         /// </param>
         /// <returns>
         /// The Get Job operation response.
@@ -244,10 +246,10 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History operation.
+        /// Required. Parameters supplied to the Get Job History operation.
         /// </param>
         /// <returns>
         /// The Get Job History operation response.
@@ -278,10 +280,10 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History operation.
+        /// Required. Parameters supplied to the Get Job History operation.
         /// </param>
         /// <returns>
         /// The Get Job History operation response.
@@ -298,10 +300,11 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History With Filter operation.
+        /// Required. Parameters supplied to the Get Job History With Filter
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Job History operation response.
@@ -332,10 +335,11 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History With Filter operation.
+        /// Required. Parameters supplied to the Get Job History With Filter
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Job History operation response.
@@ -352,7 +356,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs operation.
+        /// Required. Parameters supplied to the List Jobs operation.
         /// </param>
         /// <returns>
         /// The List Jobs operation response.
@@ -383,7 +387,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs operation.
+        /// Required. Parameters supplied to the List Jobs operation.
         /// </param>
         /// <returns>
         /// The List Jobs operation response.
@@ -401,7 +405,8 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs with filter operation.
+        /// Required. Parameters supplied to the List Jobs with filter
+        /// operation.
         /// </param>
         /// <returns>
         /// The List Jobs operation response.
@@ -433,7 +438,8 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs with filter operation.
+        /// Required. Parameters supplied to the List Jobs with filter
+        /// operation.
         /// </param>
         /// <returns>
         /// The List Jobs operation response.
@@ -450,7 +456,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Jobs State operation.
+        /// Required. Parameters supplied to the Update Jobs State operation.
         /// </param>
         /// <returns>
         /// The Update Jobs State operation response.
@@ -481,7 +487,7 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Jobs State operation.
+        /// Required. Parameters supplied to the Update Jobs State operation.
         /// </param>
         /// <returns>
         /// The Update Jobs State operation response.
@@ -498,10 +504,10 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to update.
+        /// Required. Id of the job to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job State operation.
+        /// Required. Parameters supplied to the Update Job State operation.
         /// </param>
         /// <returns>
         /// The Update Job State operation response.
@@ -532,10 +538,10 @@ namespace Microsoft.WindowsAzure
         /// Reference to the Microsoft.WindowsAzure.Scheduler.IJobOperations.
         /// </param>
         /// <param name='jobId'>
-        /// Id of the job to update.
+        /// Required. Id of the job to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job State operation.
+        /// Required. Parameters supplied to the Update Job State operation.
         /// </param>
         /// <returns>
         /// The Update Job State operation response.

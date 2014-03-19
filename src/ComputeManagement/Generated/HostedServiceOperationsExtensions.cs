@@ -54,10 +54,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -104,10 +104,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -140,10 +140,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -183,10 +183,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -208,7 +208,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -266,11 +266,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -306,11 +306,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The cloud service name that you would like to use.
+        /// Required. The cloud service name that you would like to use.
         /// </param>
         /// <returns>
         /// The Check Hosted Service Name Availability operation response.
@@ -367,7 +367,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The cloud service name that you would like to use.
+        /// Required. The cloud service name that you would like to use.
         /// </param>
         /// <returns>
         /// The Check Hosted Service Name Availability operation response.
@@ -388,7 +388,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Hosted Service operation.
+        /// Required. Parameters supplied to the Create Hosted Service
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -424,7 +425,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Hosted Service operation.
+        /// Required. Parameters supplied to the Create Hosted Service
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -446,7 +448,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -482,7 +484,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -504,7 +506,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -547,7 +549,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -576,11 +578,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -623,11 +625,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -659,7 +661,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The Get Hosted Service operation response.
@@ -697,7 +699,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The Get Hosted Service operation response.
@@ -722,7 +724,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The detailed Get Hosted Service operation response.
@@ -761,7 +763,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The detailed Get Hosted Service operation response.
@@ -782,11 +784,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// The Get Extension operation response.
@@ -821,11 +823,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <returns>
         /// The Get Extension operation response.
@@ -952,7 +954,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The List Extensions operation response.
@@ -987,7 +989,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <returns>
         /// The List Extensions operation response.
@@ -1011,10 +1013,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='providerNamespace'>
-        /// The provider namespace.
+        /// Required. The provider namespace.
         /// </param>
         /// <param name='extensionType'>
-        /// The extension type name.
+        /// Required. The extension type name.
         /// </param>
         /// <returns>
         /// The List Available Extensions operation response.
@@ -1052,10 +1054,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='providerNamespace'>
-        /// The provider namespace.
+        /// Required. The provider namespace.
         /// </param>
         /// <param name='extensionType'>
-        /// The extension type name.
+        /// Required. The extension type name.
         /// </param>
         /// <returns>
         /// The List Available Extensions operation response.
@@ -1076,10 +1078,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Hosted Service operation.
+        /// Required. Parameters supplied to the Update Hosted Service
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1115,10 +1118,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Hosted Service operation.
+        /// Required. Parameters supplied to the Update Hosted Service
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

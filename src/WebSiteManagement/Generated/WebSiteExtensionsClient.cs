@@ -133,13 +133,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Initializes a new instance of the WebSiteExtensionsClient class.
         /// </summary>
         /// <param name='siteName'>
-        /// The site name.
+        /// Required. The site name.
         /// </param>
         /// <param name='credentials'>
-        /// TBD.
+        /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all kudu requests.
+        /// Required. The URI used as the base for all kudu requests.
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri)
             : this()
@@ -167,10 +167,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Initializes a new instance of the WebSiteExtensionsClient class.
         /// </summary>
         /// <param name='siteName'>
-        /// The site name.
+        /// Required. The site name.
         /// </param>
         /// <param name='credentials'>
-        /// TBD.
+        /// Required. TBD.
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials)
             : this()

@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// settings for the resource.
         /// </summary>
         /// <param name='parameters'>
-        /// Metric settings to be created or updated.
+        /// Required. Metric settings to be created or updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -108,7 +108,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -130,18 +141,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject metricSettingValue = new JObject();
-                requestDoc = metricSettingValue;
-                
-                metricSettingValue["ResourceId"] = parameters.MetricSetting.ResourceId;
+                requestDoc = new JObject();
+                requestDoc["ResourceId"] = parameters.MetricSetting.ResourceId;
                 
                 if (parameters.MetricSetting.Namespace != null)
                 {
-                    metricSettingValue["Namespace"] = parameters.MetricSetting.Namespace;
+                    requestDoc["Namespace"] = parameters.MetricSetting.Namespace;
                 }
                 
                 JObject valueValue = new JObject();
-                metricSettingValue["Value"] = valueValue;
+                requestDoc["Value"] = valueValue;
                 valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                 if (parameters.MetricSetting.Value is AvailabilityMetricSettingValue)
                 {
@@ -267,10 +276,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// the resource.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -303,9 +312,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -355,7 +375,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricSettingListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

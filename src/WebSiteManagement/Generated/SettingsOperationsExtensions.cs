@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <returns>
         /// The get setting operation response.
@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <returns>
         /// The get setting operation response.
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The setting value.
+        /// Required. The setting value.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -222,7 +222,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.ISettingsOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The setting value.
+        /// Required. The setting value.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

@@ -68,7 +68,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// CreateOrUpdate if a user-chosen job id is required.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a Create Job operation.
+        /// Required. Parameters specifying the job definition for a Create Job
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -163,8 +164,19 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2014-04-01";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -439,7 +451,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobCreateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -859,11 +875,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// existing job, replacing its definition with that specified.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to create or update.
+        /// Required. Id of the job to create or update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters specifying the job definition for a CreateOrUpdate Job
-        /// operation.
+        /// Required. Parameters specifying the job definition for a
+        /// CreateOrUpdate Job operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -963,8 +979,19 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2014-04-01";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1239,7 +1266,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobCreateOrUpdateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1658,7 +1689,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Deletes a job.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to delete.
+        /// Required. Id of the job to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1687,8 +1718,19 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2014-04-01";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1767,7 +1809,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Get the definition and status of a job.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to get.
+        /// Required. Id of the job to get.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1795,8 +1837,19 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2014-04-01";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1845,7 +1898,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2264,10 +2321,10 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Get the execution history of a Job.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History operation.
+        /// Required. Parameters supplied to the Get Job History operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2300,10 +2357,21 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            url = url + "api-version=2014-04-01";
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
             url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2352,7 +2420,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobGetHistoryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2470,10 +2542,11 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Get the execution history of a Job with a filter on the job Status.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to get the history of.
+        /// Required. Id of the job to get the history of.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Job History With Filter operation.
+        /// Required. Parameters supplied to the Get Job History With Filter
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2506,11 +2579,22 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            url = url + "api-version=2014-04-01";
             url = url + "&$filter=status eq " + Uri.EscapeUriString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
             url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2559,7 +2643,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobGetHistoryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2677,7 +2765,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Get the list of all jobs in a job collection.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs operation.
+        /// Required. Parameters supplied to the List Jobs operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2705,8 +2793,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2014-04-01";
             if (parameters.Skip != null)
             {
                 url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
@@ -2715,6 +2804,16 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2763,7 +2862,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -3190,7 +3293,8 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// state.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Jobs with filter operation.
+        /// Required. Parameters supplied to the List Jobs with filter
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3218,8 +3322,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            url = url + "api-version=2014-04-01";
             url = url + "&$filter=state eq " + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State));
             if (parameters.Skip != null)
             {
@@ -3229,6 +3334,16 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3277,7 +3392,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -3703,7 +3822,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Update the state of all jobs in a job collections.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Jobs State operation.
+        /// Required. Parameters supplied to the Update Jobs State operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3731,7 +3850,18 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3796,7 +3926,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobCollectionJobsUpdateStateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -4222,10 +4356,10 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// Update the state of a job.
         /// </summary>
         /// <param name='jobId'>
-        /// Id of the job to update.
+        /// Required. Id of the job to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job State operation.
+        /// Required. Parameters supplied to the Update Job State operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4258,8 +4392,19 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
-            url = url + "api-version=2013-10-31_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            url = url + "api-version=2014-04-01";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4326,7 +4471,11 @@ namespace Microsoft.WindowsAzure.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new JobUpdateStateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

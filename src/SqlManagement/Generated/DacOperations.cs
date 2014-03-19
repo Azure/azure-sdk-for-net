@@ -70,10 +70,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Export DAC into Windows Azure blob storage.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being exported from.
+        /// Required. The name of the server being exported from.
         /// </param>
         /// <param name='parameters'>
-        /// Export parameters.
+        /// Optional. Export parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -135,7 +135,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Export";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -279,19 +290,19 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Gets the status of the DAC.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server.
+        /// Required. The name of the server.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server.
+        /// Required. The fully qualified name of the server.
         /// </param>
         /// <param name='username'>
-        /// The server's username.
+        /// Required. The server's username.
         /// </param>
         /// <param name='password'>
-        /// The server's password.
+        /// Required. The server's password.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried.
+        /// Required. The request ID of the operation being queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -339,11 +350,22 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Status?";
             url = url + "servername=" + Uri.EscapeUriString(fullyQualifiedServerName);
             url = url + "&username=" + Uri.EscapeUriString(username);
             url = url + "&password=" + Uri.EscapeUriString(password);
             url = url + "&reqId=" + Uri.EscapeUriString(requestId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -401,7 +423,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             foreach (XElement statusInfoElement in arrayOfStatusInfoElement.Elements(XName.Get("StatusInfo", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes")))
                             {
-                                DacGetStatusResponse.StatusInfo statusInfoInstance = new DacGetStatusResponse.StatusInfo();
+                                StatusInfo statusInfoInstance = new StatusInfo();
                                 result.StatusInfoList.Add(statusInfoInstance);
                                 
                                 XElement blobUriElement = statusInfoElement.Element(XName.Get("BlobUri", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes"));
@@ -512,10 +534,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Import DAC from Windows Azure blob storage.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being imported to.
+        /// Required. The name of the server being imported to.
         /// </param>
         /// <param name='parameters'>
-        /// Import parameters.
+        /// Optional. Import parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -577,7 +599,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/DacOperations/Import";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

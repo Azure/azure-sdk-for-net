@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The rule to create or update.
+        /// Required. The rule to create or update.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The rule to create or update.
+        /// Required. The rule to create or update.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The id of the rule to delete.
+        /// Required. The id of the rule to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The id of the rule to delete.
+        /// Required. The id of the rule to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The id of the rule to retrieve.
+        /// Required. The id of the rule to retrieve.
         /// </param>
         /// <returns>
         /// The Get Rule operation response.
@@ -157,7 +157,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The id of the rule to retrieve.
+        /// Required. The id of the rule to retrieve.
         /// </param>
         /// <returns>
         /// The Get Rule operation response.

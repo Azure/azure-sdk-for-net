@@ -69,10 +69,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Delete a continuous job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
@@ -103,8 +103,19 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/vfs/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/vfs/site/wwwroot/App_Data/jobs/continuous/" + jobName + "?";
             url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -182,10 +193,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Delete a triggered job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
@@ -216,8 +227,19 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/vfs/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/vfs/site/wwwroot/App_Data/jobs/triggered/" + jobName + "?";
             url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -295,7 +317,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// TBD.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -323,7 +345,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/").AbsoluteUri + jobName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/" + jobName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -371,7 +404,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -538,7 +575,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -566,7 +603,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/continuous/" + jobName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -614,7 +662,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -781,10 +833,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a web job run.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobRunId'>
-        /// The job run identifier.
+        /// Required. The job run identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -817,7 +869,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/history/" + jobRunId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/triggered/" + jobName + "/history/" + jobRunId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -865,7 +928,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetRunResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -962,7 +1029,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -990,7 +1057,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/triggered/" + jobName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1038,7 +1116,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1205,7 +1287,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1229,7 +1311,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs").AbsoluteUri + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1238,6 +1321,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1285,7 +1378,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1459,7 +1556,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the continuous web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1483,7 +1580,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous").AbsoluteUri + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/continuous?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1492,6 +1590,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1539,7 +1647,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1713,10 +1825,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the web job runs.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1745,7 +1857,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/history?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/triggered/" + jobName + "/history?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1754,6 +1867,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1801,7 +1924,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobRunListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1905,7 +2032,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the triggered web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1929,7 +2056,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered").AbsoluteUri + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/triggered?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -1938,6 +2066,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1985,7 +2123,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2159,7 +2301,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Run a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2188,7 +2330,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/triggered/").AbsoluteUri + jobName + "/run";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/triggered/" + jobName + "/run";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2267,10 +2420,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// instance opposed to running on all instances.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='isSingleton'>
-        /// Boolean value indicating if the job is singleton or not.
+        /// Required. Boolean value indicating if the job is singleton or not.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2300,8 +2453,19 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/singleton/?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/continuous/" + jobName + "/singleton/?";
             url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2379,7 +2543,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Start a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2408,7 +2572,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/start/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/continuous/" + jobName + "/start/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2486,7 +2661,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Stop a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2515,7 +2690,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/jobs/continuous/").AbsoluteUri + jobName + "/stop/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/jobs/continuous/" + jobName + "/stop/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2593,10 +2779,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Upload a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2630,7 +2816,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/zip/site/wwwroot/App_Data/jobs/continuous/").AbsoluteUri + jobName + "/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/zip/site/wwwroot/App_Data/jobs/continuous/" + jobName + "/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2713,10 +2910,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Upload a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2750,7 +2947,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/zip/site/wwwroot/App_Data/jobs/triggered/").AbsoluteUri + jobName + "/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/zip/site/wwwroot/App_Data/jobs/triggered/" + jobName + "/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

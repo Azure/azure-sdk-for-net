@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _address;
         
         /// <summary>
-        /// The virtual IP address of the deployment.
+        /// Optional. The virtual IP address of the deployment.
         /// </summary>
         public string Address
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isDnsProgrammed;
         
         /// <summary>
-        /// Indicates whether the IP address is DNS programmed.
+        /// Optional. Indicates whether the IP address is DNS programmed.
         /// </summary>
         public bool? IsDnsProgrammed
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// The name of the virtual IP.
+        /// Optional. The name of the virtual IP.
         /// </summary>
         public string Name
         {

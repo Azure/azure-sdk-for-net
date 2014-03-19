@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<Incident> _value;
         
         /// <summary>
-        /// Incident collection.
+        /// Optional. Incident collection.
         /// </summary>
         public IList<Incident> Value
         {

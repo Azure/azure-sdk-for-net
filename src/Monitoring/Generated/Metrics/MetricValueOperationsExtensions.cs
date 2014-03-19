@@ -40,22 +40,22 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNames'>
-        /// The names of the metrics.
+        /// Required. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <param name='timeGrain'>
-        /// The time grain of the metrics.
+        /// Required. The time grain of the metrics.
         /// </param>
         /// <param name='startTime'>
-        /// The start time (in UTC) of the metrics.
+        /// Required. The start time (in UTC) of the metrics.
         /// </param>
         /// <param name='endTime'>
-        /// The end time (in UTC) of the metrics.
+        /// Required. The end time (in UTC) of the metrics.
         /// </param>
         /// <returns>
         /// The List Metric values operation response.
@@ -88,22 +88,22 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNames'>
-        /// The names of the metrics.
+        /// Required. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <param name='timeGrain'>
-        /// The time grain of the metrics.
+        /// Required. The time grain of the metrics.
         /// </param>
         /// <param name='startTime'>
-        /// The start time (in UTC) of the metrics.
+        /// Required. The start time (in UTC) of the metrics.
         /// </param>
         /// <param name='endTime'>
-        /// The end time (in UTC) of the metrics.
+        /// Required. The end time (in UTC) of the metrics.
         /// </param>
         /// <returns>
         /// The List Metric values operation response.

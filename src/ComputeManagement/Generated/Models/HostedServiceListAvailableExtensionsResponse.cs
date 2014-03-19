@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<HostedServiceListAvailableExtensionsResponse.ExtensionImage> _extensionImages;
         
         /// <summary>
-        /// The extensions that are available to add to your cloud service.
+        /// Optional. The extensions that are available to add to your cloud
+        /// service.
         /// </summary>
         public IList<HostedServiceListAvailableExtensionsResponse.ExtensionImage> ExtensionImages
         {
@@ -76,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _description;
             
             /// <summary>
-            /// The description of the extension.
+            /// Optional. The description of the extension.
             /// </summary>
             public string Description
             {
@@ -84,13 +85,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._description = value; }
             }
             
-            private HostingResources _hostingResources;
+            private string _hostingResources;
             
             /// <summary>
-            /// The type of resource that supports the extension. This value
-            /// can be WebRole, WorkerRole, or WebRole|WorkerRole.
+            /// Optional. The type of resource that supports the extension.
+            /// This value can be WebRole, WorkerRole, or WebRole|WorkerRole.
             /// </summary>
-            public HostingResources HostingResources
+            public string HostingResources
             {
                 get { return this._hostingResources; }
                 set { this._hostingResources = value; }
@@ -99,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// The label that is used to identify the extension.
+            /// Optional. The label that is used to identify the extension.
             /// </summary>
             public string Label
             {
@@ -110,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _privateConfigurationSchema;
             
             /// <summary>
-            /// The schema of the private configuration.
+            /// Optional. The schema of the private configuration.
             /// </summary>
             public string PrivateConfigurationSchema
             {
@@ -121,8 +122,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _providerNamespace;
             
             /// <summary>
-            /// The provider namespace of the extension. The provider namespace
-            /// for Windows Azure extensions is
+            /// Optional. The provider namespace of the extension. The provider
+            /// namespace for Windows Azure extensions is
             /// Microsoft.Windows.Azure.Extensions.
             /// </summary>
             public string ProviderNamespace
@@ -134,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publicConfigurationSchema;
             
             /// <summary>
-            /// The schema of the public configuration.
+            /// Optional. The schema of the public configuration.
             /// </summary>
             public string PublicConfigurationSchema
             {
@@ -145,8 +146,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _thumbprintAlgorithm;
             
             /// <summary>
-            /// The thumbprint algorithm of the certificate that is used for
-            /// encryption.
+            /// Optional. The thumbprint algorithm of the certificate that is
+            /// used for encryption.
             /// </summary>
             public string ThumbprintAlgorithm
             {
@@ -168,7 +169,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _version;
             
             /// <summary>
-            /// The version of the extension.
+            /// Optional. The version of the extension.
             /// </summary>
             public string Version
             {

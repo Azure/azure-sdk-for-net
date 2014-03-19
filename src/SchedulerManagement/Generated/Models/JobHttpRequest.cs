@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _body;
         
         /// <summary>
-        /// Request body.
+        /// Optional. Request body.
         /// </summary>
         public string Body
         {
@@ -44,7 +44,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IDictionary<string, string> _headers;
         
         /// <summary>
-        /// Header name value pairs to supply with the http/https action.
+        /// Optional. Header name value pairs to supply with the http/https
+        /// action.
         /// </summary>
         public IDictionary<string, string> Headers
         {
@@ -55,7 +56,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _method;
         
         /// <summary>
-        /// Http method e.g. GET, PUT, POST, DELETE.
+        /// Required. Http method e.g. GET, PUT, POST, DELETE.
         /// </summary>
         public string Method
         {
@@ -66,7 +67,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private Uri _uri;
         
         /// <summary>
-        /// Uri of the endpoint to invoke.
+        /// Required. Uri of the endpoint to invoke.
         /// </summary>
         public Uri Uri
         {

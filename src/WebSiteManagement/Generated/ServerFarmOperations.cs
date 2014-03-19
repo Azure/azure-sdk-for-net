@@ -81,10 +81,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
+        /// Required. Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -117,7 +117,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -301,7 +312,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -330,7 +341,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -419,10 +441,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='serverFarmName'>
-        /// The name of the server farm.
+        /// Required. The name of the server farm.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -455,7 +477,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/" + serverFarmName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -595,7 +628,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -623,7 +656,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -769,10 +813,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
+        /// Required. Parameters supplied to the Update Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -805,7 +849,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/ServerFarms/DefaultServerFarm";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

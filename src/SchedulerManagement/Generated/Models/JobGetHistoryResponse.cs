@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<JobGetHistoryResponse.JobHistoryEntry> _jobHistory;
         
         /// <summary>
-        /// The job history entries.
+        /// Optional. The job history entries.
         /// </summary>
         public IList<JobGetHistoryResponse.JobHistoryEntry> JobHistory
         {
@@ -75,7 +75,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private JobHistoryActionName _actionName;
             
             /// <summary>
-            /// The action of this execution, MainAction or ErrorAction.
+            /// Optional. The action of this execution, MainAction or
+            /// ErrorAction.
             /// </summary>
             public JobHistoryActionName ActionName
             {
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private DateTime _endTime;
             
             /// <summary>
-            /// The time the execution attempt concluded.
+            /// Optional. The time the execution attempt concluded.
             /// </summary>
             public DateTime EndTime
             {
@@ -97,7 +98,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private string _id;
             
             /// <summary>
-            /// The job id that this history entry is for.
+            /// Optional. The job id that this history entry is for.
             /// </summary>
             public string Id
             {
@@ -108,7 +109,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private string _message;
             
             /// <summary>
-            /// A description of the result of the execution attempt.
+            /// Optional. A description of the result of the execution attempt.
             /// </summary>
             public string Message
             {
@@ -119,7 +120,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private int _repeatCount;
             
             /// <summary>
-            /// The occurrence count of this execution.
+            /// Optional. The occurrence count of this execution.
             /// </summary>
             public int RepeatCount
             {
@@ -130,7 +131,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private int _retryCount;
             
             /// <summary>
-            /// The retry count of this occurrence.
+            /// Optional. The retry count of this occurrence.
             /// </summary>
             public int RetryCount
             {
@@ -141,7 +142,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private DateTime _startTime;
             
             /// <summary>
-            /// The time the execution attempt began.
+            /// Optional. The time the execution attempt began.
             /// </summary>
             public DateTime StartTime
             {
@@ -152,7 +153,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private JobState _state;
             
             /// <summary>
-            /// The state of the job: enabled, disabled, faulted, or completed.
+            /// Optional. The state of the job: enabled, disabled, faulted, or
+            /// completed.
             /// </summary>
             public JobState State
             {
@@ -163,7 +165,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private JobHistoryStatus _status;
             
             /// <summary>
-            /// The status of this execution attempt, completed or failed.
+            /// Optional. The status of this execution attempt, completed or
+            /// failed.
             /// </summary>
             public JobHistoryStatus Status
             {
@@ -174,7 +177,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
             private DateTime _timestamp;
             
             /// <summary>
-            /// The time the execution attempt began.
+            /// Optional. The time the execution attempt began.
             /// </summary>
             public DateTime Timestamp
             {

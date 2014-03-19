@@ -66,13 +66,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Create a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -114,7 +116,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -266,10 +279,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Deletes a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -303,7 +316,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -382,13 +406,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Update a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -434,7 +460,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -591,12 +628,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// JobCollection names must be unique within a cloud-service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// A name for the JobCollection. The name must be unique as scoped
-        /// within the CloudService.  The name can be up to 100 characters in
-        /// length.
+        /// Required. A name for the JobCollection. The name must be unique as
+        /// scoped within the CloudService.  The name can be up to 100
+        /// characters in length.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -633,9 +670,20 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/JobCollections/?";
             url = url + "op=checknameavailability";
             url = url + "&resourceName=" + Uri.EscapeUriString(jobCollectionName);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -730,13 +778,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Create a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -832,10 +882,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Deletes a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -929,10 +979,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Retreive a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// Name of the cloud service.
+        /// Required. Name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// Name of the job collection.
+        /// Required. Name of the job collection.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -965,7 +1015,18 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, this.Client.Credentials.SubscriptionId).AbsoluteUri + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + cloudServiceName + "/resources/scheduler/~/JobCollections/" + jobCollectionName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1047,13 +1108,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             result.SchemaVersion = schemaVersionInstance;
                         }
                         
-                        XElement planElement = resourceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                        if (planElement != null && planElement.IsEmpty == false)
-                        {
-                            string planInstance = planElement.Value;
-                            result.Plan = planInstance;
-                        }
-                        
                         XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
                         if (promotionCodeElement != null && promotionCodeElement.IsEmpty == false)
                         {
@@ -1067,11 +1121,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
                             result.IntrinsicSettings = intrinsicSettingsInstance;
                             
-                            XElement planElement2 = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement2 != null && planElement2.IsEmpty == false)
+                            XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                            if (planElement != null && planElement.IsEmpty == false)
                             {
-                                JobCollectionPlan planInstance2 = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement2.Value, true);
-                                intrinsicSettingsInstance.Plan = planInstance2;
+                                JobCollectionPlan planInstance = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true);
+                                intrinsicSettingsInstance.Plan = planInstance;
                             }
                             
                             XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
@@ -1193,13 +1247,15 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Update a job collection.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

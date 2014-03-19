@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private DateTime _createdTime;
         
         /// <summary>
-        /// The time when the operation was created.
+        /// Optional. The time when the operation was created.
         /// </summary>
         public DateTime CreatedTime
         {
@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteOperationStatusResponse.Error> _errors;
         
         /// <summary>
-        /// The list of errors that occurred during the operation.
+        /// Optional. The list of errors that occurred during the operation.
         /// </summary>
         public IList<WebSiteOperationStatusResponse.Error> Errors
         {
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private DateTime _expirationTime;
         
         /// <summary>
-        /// The time when the operation will time out.
+        /// Optional. The time when the operation will time out.
         /// </summary>
         public DateTime ExpirationTime
         {
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _geoMasterOperationId;
         
         /// <summary>
-        /// The GeoMaster Operation Id for this operation, if any.
+        /// Optional. The GeoMaster Operation Id for this operation, if any.
         /// </summary>
         public string GeoMasterOperationId
         {
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private DateTime _modifiedTime;
         
         /// <summary>
-        /// The time when the operation was last modified.
+        /// Optional. The time when the operation was last modified.
         /// </summary>
         public DateTime ModifiedTime
         {
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// The name of the operation.
+        /// Optional. The name of the operation.
         /// </summary>
         public string Name
         {
@@ -106,8 +106,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _operationId;
         
         /// <summary>
-        /// The operation Id for this operation.  Used to poll for operation
-        /// status.
+        /// Optional. The operation Id for this operation.  Used to poll for
+        /// operation status.
         /// </summary>
         public string OperationId
         {
@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteOperationStatus _status;
         
         /// <summary>
-        /// The status of the asynchronous operation.
+        /// Optional. The status of the asynchronous operation.
         /// </summary>
         public WebSiteOperationStatus Status
         {
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _code;
             
             /// <summary>
-            /// The error code.
+            /// Optional. The error code.
             /// </summary>
             public string Code
             {
@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _extendedCode;
             
             /// <summary>
-            /// The error extended code.
+            /// Optional. The error extended code.
             /// </summary>
             public string ExtendedCode
             {
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _innerErrors;
             
             /// <summary>
-            /// The inner errors for this operation.
+            /// Optional. The inner errors for this operation.
             /// </summary>
             public string InnerErrors
             {
@@ -176,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _message;
             
             /// <summary>
-            /// The error message.
+            /// Optional. The error message.
             /// </summary>
             public string Message
             {
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _messageTemplate;
             
             /// <summary>
-            /// The message template.
+            /// Optional. The message template.
             /// </summary>
             public string MessageTemplate
             {
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IList<string> _parameters;
             
             /// <summary>
-            /// The parameters for the message template.
+            /// Optional. The parameters for the message template.
             /// </summary>
             public IList<string> Parameters
             {

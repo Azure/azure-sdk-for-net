@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private AzureBgpPeering _bgpPeering;
         
         /// <summary>
-        /// Details for the requested Bgp Peering.
+        /// Optional. Details for the requested Bgp Peering.
         /// </summary>
         public AzureBgpPeering BgpPeering
         {

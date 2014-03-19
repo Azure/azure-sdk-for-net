@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private DateTime _end;
         
         /// <summary>
-        /// The end of the time window.
+        /// Optional. The end of the time window.
         /// </summary>
         public DateTime End
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private DateTime _start;
         
         /// <summary>
-        /// The start of the time window.
+        /// Optional. The start of the time window.
         /// </summary>
         public DateTime Start
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _timeZone;
         
         /// <summary>
-        /// The time zone information.
+        /// Optional. The time zone information.
         /// </summary>
         public string TimeZone
         {

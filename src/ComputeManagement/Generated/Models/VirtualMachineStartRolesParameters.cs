@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<string> _roles;
         
         /// <summary>
-        /// The set of roles to shut down.
+        /// Optional. The set of roles to shut down.
         /// </summary>
         public IList<string> Roles
         {

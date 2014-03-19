@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _bandwidth;
         
         /// <summary>
-        /// Bandwidth of the dedicated circuit in Mbps.
+        /// Required. Bandwidth of the dedicated circuit in Mbps.
         /// </summary>
         public uint Bandwidth
         {
@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _label;
         
         /// <summary>
-        /// Label associated with the bandwidth.
+        /// Required. Label associated with the bandwidth.
         /// </summary>
         public string Label
         {

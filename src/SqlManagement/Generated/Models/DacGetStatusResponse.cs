@@ -30,15 +30,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// The response structure for the DAC GetStatus operation.
     /// </summary>
-    public partial class DacGetStatusResponse : OperationResponse, IEnumerable<DacGetStatusResponse.StatusInfo>
+    public partial class DacGetStatusResponse : OperationResponse, IEnumerable<StatusInfo>
     {
-        private IList<DacGetStatusResponse.StatusInfo> _statusInfoList;
+        private IList<StatusInfo> _statusInfoList;
         
         /// <summary>
-        /// Gets or sets the list of statuses relevant to this import/export
-        /// request.
+        /// Optional. Gets or sets the list of statuses relevant to this
+        /// import/export request.
         /// </summary>
-        public IList<DacGetStatusResponse.StatusInfo> StatusInfoList
+        public IList<StatusInfo> StatusInfoList
         {
             get { return this._statusInfoList; }
             set { this._statusInfoList = value; }
@@ -49,13 +49,13 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DacGetStatusResponse()
         {
-            this._statusInfoList = new List<DacGetStatusResponse.StatusInfo>();
+            this._statusInfoList = new List<StatusInfo>();
         }
         
         /// <summary>
         /// Gets the sequence of StatusInfoList.
         /// </summary>
-        public IEnumerator<DacGetStatusResponse.StatusInfo> GetEnumerator()
+        public IEnumerator<StatusInfo> GetEnumerator()
         {
             return this.StatusInfoList.GetEnumerator();
         }
@@ -66,124 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Status of a DAC import.
-        /// </summary>
-        public partial class StatusInfo
-        {
-            private Uri _blobUri;
-            
-            /// <summary>
-            /// Gets or sets the URI of the DAC file stored in Windows Azure
-            /// Blob Storage to be imported.
-            /// </summary>
-            public Uri BlobUri
-            {
-                get { return this._blobUri; }
-                set { this._blobUri = value; }
-            }
-            
-            private string _databaseName;
-            
-            /// <summary>
-            /// Gets or sets the name of the database into which this DAC will
-            /// be imported.
-            /// </summary>
-            public string DatabaseName
-            {
-                get { return this._databaseName; }
-                set { this._databaseName = value; }
-            }
-            
-            private string _errorMessage;
-            
-            /// <summary>
-            /// Gets or sets the error message of the request if the request
-            /// failed in some way.
-            /// </summary>
-            public string ErrorMessage
-            {
-                get { return this._errorMessage; }
-                set { this._errorMessage = value; }
-            }
-            
-            private DateTime _lastModifiedTime;
-            
-            /// <summary>
-            /// Gets or sets the last time the status changed.
-            /// </summary>
-            public DateTime LastModifiedTime
-            {
-                get { return this._lastModifiedTime; }
-                set { this._lastModifiedTime = value; }
-            }
-            
-            private DateTime _queuedTime;
-            
-            /// <summary>
-            /// Gets or sets the time at which the import/export request was
-            /// queued and the process initiated.
-            /// </summary>
-            public DateTime QueuedTime
-            {
-                get { return this._queuedTime; }
-                set { this._queuedTime = value; }
-            }
-            
-            private string _requestId;
-            
-            /// <summary>
-            /// Gets or sets the request ID of this import/export request, so
-            /// that it can be tracked with future calls to GetStatus.
-            /// </summary>
-            public string RequestId
-            {
-                get { return this._requestId; }
-                set { this._requestId = value; }
-            }
-            
-            private string _requestType;
-            
-            /// <summary>
-            /// Gets or sets the type (Import/Export) of this request.
-            /// </summary>
-            public string RequestType
-            {
-                get { return this._requestType; }
-                set { this._requestType = value; }
-            }
-            
-            private string _serverName;
-            
-            /// <summary>
-            /// Gets or sets the name of the SQL database server into which
-            /// this DAC will be imported or from which it will be exported.
-            /// </summary>
-            public string ServerName
-            {
-                get { return this._serverName; }
-                set { this._serverName = value; }
-            }
-            
-            private string _status;
-            
-            /// <summary>
-            /// Gets or sets the status of the import/export request.
-            /// </summary>
-            public string Status
-            {
-                get { return this._status; }
-                set { this._status = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the StatusInfo class.
-            /// </summary>
-            public StatusInfo()
-            {
-            }
         }
     }
 }

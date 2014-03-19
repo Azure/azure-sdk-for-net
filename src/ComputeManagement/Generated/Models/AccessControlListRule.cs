@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _action;
         
         /// <summary>
-        /// The action allowed by this Access Control List Rule.
+        /// Optional. The action allowed by this Access Control List Rule.
         /// </summary>
         public string Action
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _description;
         
         /// <summary>
-        /// The description for this Access Control List Rule.
+        /// Optional. The description for this Access Control List Rule.
         /// </summary>
         public string Description
         {
@@ -54,7 +54,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _order;
         
         /// <summary>
-        /// The order of application for this Access Control List Rule.
+        /// Optional. The order of application for this Access Control List
+        /// Rule.
         /// </summary>
         public int? Order
         {
@@ -65,8 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _remoteSubnet;
         
         /// <summary>
-        /// The remote subnet that is granted access for this Access Control
-        /// List Rule.
+        /// Optional. The remote subnet that is granted access for this Access
+        /// Control List Rule.
         /// </summary>
         public string RemoteSubnet
         {

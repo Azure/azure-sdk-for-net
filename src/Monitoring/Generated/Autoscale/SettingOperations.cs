@@ -66,10 +66,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -103,8 +103,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -360,7 +371,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -389,8 +400,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -467,7 +489,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -496,8 +518,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
             url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -547,7 +580,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new AutoscaleSettingGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

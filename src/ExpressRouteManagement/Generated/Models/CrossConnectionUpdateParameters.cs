@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private UpdateCrossConnectionOperation _operation;
         
         /// <summary>
-        /// Specifies the notification operation to perform. Possible values
-        /// are: NotifyCrossConnectionProvisioned,
+        /// Optional. Specifies the notification operation to perform. Possible
+        /// values are: NotifyCrossConnectionProvisioned,
         /// NotifyCrossConnectionNotProvisioned.
         /// </summary>
         public UpdateCrossConnectionOperation Operation
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _provisioningError;
         
         /// <summary>
-        /// Specifies the error that occurred if provisioning was not
+        /// Optional. Specifies the error that occurred if provisioning was not
         /// successful.
         /// </summary>
         public string ProvisioningError

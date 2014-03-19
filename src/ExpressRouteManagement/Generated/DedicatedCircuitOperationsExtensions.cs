@@ -47,7 +47,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Dedicated Circuit operation.
+        /// Required. Parameters supplied to the New Dedicated Circuit
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -80,7 +81,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Dedicated Circuit operation.
+        /// Required. Parameters supplied to the New Dedicated Circuit
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -100,7 +102,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit to be deleted.
+        /// Required. Service key representing the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -134,7 +137,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit to be deleted.
+        /// Required. Service key representing the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -154,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit operation response.
@@ -187,7 +191,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit operation response.
@@ -251,7 +255,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Required. Parameters supplied to the Create Virtual Network Gateway
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit operation response.
@@ -283,7 +288,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Required. Parameters supplied to the Create Virtual Network Gateway
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit operation response.
@@ -302,7 +308,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit to be deleted.
+        /// Required. Service Key associated with the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -343,7 +350,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit to be deleted.
+        /// Required. Service Key associated with the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

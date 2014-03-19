@@ -69,13 +69,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// You can swap a web site from one slot to the production slot.
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -118,9 +119,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/slots?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/slots?";
             url = url + "Command=swap";
             url = url + "&targetSlot=" + Uri.EscapeUriString(slotName);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -405,10 +417,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Web Site operation.
+        /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -464,7 +476,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1089,10 +1112,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1126,7 +1149,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1210,13 +1244,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to delete a web site.
+        /// Required. The parameters to delete a web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1255,10 +1289,21 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
             url = url + "deleteEmptyServerFarm=" + Uri.EscapeUriString(parameters.DeleteEmptyServerFarm.ToString().ToLower());
             url = url + "&deleteMetrics=" + Uri.EscapeUriString(parameters.DeleteMetrics.ToString().ToLower());
             url = url + "&deleteAllSlots=" + Uri.EscapeUriString(parameters.DeleteAllSlots.ToString().ToLower());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1344,10 +1389,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1380,7 +1425,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1478,10 +1534,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1515,7 +1571,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/newpassword";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1597,13 +1664,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1637,11 +1704,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "?";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
                 url = url + "propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2193,10 +2271,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2229,7 +2307,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2550,13 +2639,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2594,7 +2683,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/metrics?";
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
                 url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
@@ -2607,6 +2697,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2839,10 +2939,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2875,7 +2975,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/publishxml";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3085,10 +3196,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3121,7 +3232,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3217,10 +3339,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3253,7 +3375,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/usages";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3413,7 +3546,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Determines if a hostname is available
         /// </summary>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3441,8 +3574,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?";
             url = url + "ishostnameavailable=" + Uri.EscapeUriString(webSiteName);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3535,10 +3679,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3572,7 +3716,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/restart";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3651,13 +3806,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// You can swap a web site from one slot to the production slot.
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3758,10 +3914,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3795,7 +3951,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository?action=sync";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/repository?action=sync";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3877,13 +4044,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
+        /// Required. Parameters supplied to the Update Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3921,7 +4088,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4624,13 +4802,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
+        /// Required. The Update Web Site Configuration parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4669,7 +4847,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + webSiteName + "/config";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

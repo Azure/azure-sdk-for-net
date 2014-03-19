@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<ServerFarmListResponse.ServerFarm> _serverFarms;
         
         /// <summary>
-        /// The server farms associated with the specified subscription.
+        /// Optional. The server farms associated with the specified
+        /// subscription.
         /// </summary>
         public IList<ServerFarmListResponse.ServerFarm> ServerFarms
         {
@@ -75,7 +76,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private int _currentNumberOfWorkers;
             
             /// <summary>
-            /// The current number of Virtual Machines (VMs) in the server farm.
+            /// Optional. The current number of Virtual Machines (VMs) in the
+            /// server farm.
             /// </summary>
             public int CurrentNumberOfWorkers
             {
@@ -86,8 +88,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private ServerFarmWorkerSize _currentWorkerSize;
             
             /// <summary>
-            /// The current worker size Possible values are Small, Medium, or
-            /// Large.
+            /// Optional. The current worker size Possible values are Small,
+            /// Medium, or Large.
             /// </summary>
             public ServerFarmWorkerSize CurrentWorkerSize
             {
@@ -98,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The name of the server farm.
+            /// Optional. The name of the server farm.
             /// </summary>
             public string Name
             {
@@ -109,8 +111,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private int _numberOfWorkers;
             
             /// <summary>
-            /// The instance count, which is the number of virtual machines
-            /// dedicated to the farm. Supported values are 1-10.
+            /// Optional. The instance count, which is the number of virtual
+            /// machines dedicated to the farm. Supported values are 1-10.
             /// </summary>
             public int NumberOfWorkers
             {
@@ -121,7 +123,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private ServerFarmStatus _status;
             
             /// <summary>
-            /// Server farm status. Possible values are Ready or Pending.
+            /// Optional. Server farm status. Possible values are Ready or
+            /// Pending.
             /// </summary>
             public ServerFarmStatus Status
             {
@@ -132,7 +135,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private ServerFarmWorkerSize _workerSize;
             
             /// <summary>
-            /// The instance size. Possible values are Small, Medium, or Large.
+            /// Optional. The instance size. Possible values are Small, Medium,
+            /// or Large.
             /// </summary>
             public ServerFarmWorkerSize WorkerSize
             {

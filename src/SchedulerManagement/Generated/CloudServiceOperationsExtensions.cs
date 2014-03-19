@@ -39,10 +39,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -75,10 +75,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -149,10 +149,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -192,10 +192,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -261,7 +261,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -287,7 +287,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// Information about a retrieved Cloud Service.
@@ -319,7 +319,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.ICloudServiceOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <returns>
         /// Information about a retrieved Cloud Service.

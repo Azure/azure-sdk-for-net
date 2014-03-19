@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric> _usageMetrics;
         
         /// <summary>
-        /// Historical metric snapshots for the web site.
+        /// Optional. Historical metric snapshots for the web site.
         /// </summary>
         public IList<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric> UsageMetrics
         {
@@ -76,7 +76,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _code;
             
             /// <summary>
-            /// Reports whether the metric data was returned successfully.
+            /// Optional. Reports whether the metric data was returned
+            /// successfully.
             /// </summary>
             public string Code
             {
@@ -87,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData _data;
             
             /// <summary>
-            /// Historical metric snapshot data for the web site.
+            /// Optional. Historical metric snapshot data for the web site.
             /// </summary>
             public WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData Data
             {
@@ -98,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _message;
             
             /// <summary>
-            /// A string for optional message content.
+            /// Optional. A string for optional message content.
             /// </summary>
             public string Message
             {
@@ -122,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _displayName;
             
             /// <summary>
-            /// The display name of the metric, including spaces.
+            /// Optional. The display name of the metric, including spaces.
             /// </summary>
             public string DisplayName
             {
@@ -133,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private DateTime _endTime;
             
             /// <summary>
-            /// The end time of the data reported.
+            /// Optional. The end time of the data reported.
             /// </summary>
             public DateTime EndTime
             {
@@ -144,7 +145,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The name of the metric.
+            /// Optional. The name of the metric.
             /// </summary>
             public string Name
             {
@@ -155,7 +156,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _primaryAggregationType;
             
             /// <summary>
-            /// The primary data aggregation type. This value is usually Total.
+            /// Optional. The primary data aggregation type. This value is
+            /// usually Total.
             /// </summary>
             public string PrimaryAggregationType
             {
@@ -166,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private DateTime _startTime;
             
             /// <summary>
-            /// The start time of the data reported.
+            /// Optional. The start time of the data reported.
             /// </summary>
             public DateTime StartTime
             {
@@ -177,8 +179,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _timeGrain;
             
             /// <summary>
-            /// Length of time (rollup) during which the information was
-            /// gathered. For more information, see Supported Rollups.
+            /// Optional. Length of time (rollup) during which the information
+            /// was gathered. For more information, see Supported Rollups.
             /// </summary>
             public string TimeGrain
             {
@@ -189,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _unit;
             
             /// <summary>
-            /// The unit of measurement for the metric (for example,
+            /// Optional. The unit of measurement for the metric (for example,
             /// milliseconds, bytes, or count).
             /// </summary>
             public string Unit
@@ -201,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IList<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample> _values;
             
             /// <summary>
-            /// One or more MetricSample elements.
+            /// Optional. One or more MetricSample elements.
             /// </summary>
             public IList<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample> Values
             {
@@ -227,7 +229,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private int _count;
             
             /// <summary>
-            /// The metric sample count. This value is usually 1.
+            /// Optional. The metric sample count. This value is usually 1.
             /// </summary>
             public int Count
             {
@@ -238,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _maximum;
             
             /// <summary>
-            /// Maximum value recorded.
+            /// Optional. Maximum value recorded.
             /// </summary>
             public string Maximum
             {
@@ -249,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _minimum;
             
             /// <summary>
-            /// Minimum value recorded.
+            /// Optional. Minimum value recorded.
             /// </summary>
             public string Minimum
             {
@@ -260,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private DateTime _timeCreated;
             
             /// <summary>
-            /// Time the metric was taken.
+            /// Optional. Time the metric was taken.
             /// </summary>
             public DateTime TimeCreated
             {
@@ -271,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _total;
             
             /// <summary>
-            /// Value of the metric sample for the time taken.
+            /// Optional. Value of the metric sample for the time taken.
             /// </summary>
             public string Total
             {

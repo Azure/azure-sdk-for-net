@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _bandwidth;
         
         /// <summary>
-        /// Specifies the bandwidth that is assigned to the circuit.
+        /// Optional. Specifies the bandwidth that is assigned to the circuit.
         /// </summary>
         public uint Bandwidth
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _circuitName;
         
         /// <summary>
-        /// Specifies the name of the circuit.
+        /// Optional. Specifies the name of the circuit.
         /// </summary>
         public string CircuitName
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _location;
         
         /// <summary>
-        /// Specifies the peering location of the circuit.
+        /// Optional. Specifies the peering location of the circuit.
         /// </summary>
         public string Location
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _serviceKey;
         
         /// <summary>
-        /// A value that uniquely identifies the circuit.
+        /// Optional. A value that uniquely identifies the circuit.
         /// </summary>
         public string ServiceKey
         {
@@ -77,7 +77,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _serviceProviderName;
         
         /// <summary>
-        /// Specifies the name of the dedicated circuit service provider.
+        /// Optional. Specifies the name of the dedicated circuit service
+        /// provider.
         /// </summary>
         public string ServiceProviderName
         {
@@ -88,8 +89,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private ProviderProvisioningState _serviceProviderProvisioningState;
         
         /// <summary>
-        /// Specifies the provisioning state of the circuit. Values are
-        /// NotProvisioned, Provisioning, Provisioned, or DeProvisioning.
+        /// Optional. Specifies the provisioning state of the circuit. Values
+        /// are NotProvisioned, Provisioning, Provisioned, or DeProvisioning.
         /// </summary>
         public ProviderProvisioningState ServiceProviderProvisioningState
         {
@@ -100,8 +101,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private DedicatedCircuitState _status;
         
         /// <summary>
-        /// The current status of the circuit. Values are Disabled, Disabliing,
-        /// Enabled, Enabling.
+        /// Optional. The current status of the circuit. Values are Disabled,
+        /// Disabliing, Enabled, Enabling.
         /// </summary>
         public DedicatedCircuitState Status
         {

@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int _executionCount;
         
         /// <summary>
-        /// Number of times this job has executed.
+        /// Required. Number of times this job has executed.
         /// </summary>
         public int ExecutionCount
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int _failureCount;
         
         /// <summary>
-        /// Number of times this job has failed.
+        /// Optional. Number of times this job has failed.
         /// </summary>
         public int FailureCount
         {
@@ -54,8 +54,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int _faultedCount;
         
         /// <summary>
-        /// Number of faulted occurrences (occurrences that were retried and
-        /// failed as many times as the retry policy states).
+        /// Optional. Number of faulted occurrences (occurrences that were
+        /// retried and failed as many times as the retry policy states).
         /// </summary>
         public int FaultedCount
         {
@@ -66,8 +66,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _lastExecutionTime;
         
         /// <summary>
-        /// Time the last occurrence executed in ISO-8601 format. Could be
-        /// empty if job has not run yet.
+        /// Optional. Time the last occurrence executed in ISO-8601 format.
+        /// Could be empty if job has not run yet.
         /// </summary>
         public System.DateTime? LastExecutionTime
         {
@@ -78,8 +78,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _nextExecutionTime;
         
         /// <summary>
-        /// Time of the next occurrence in ISO-8601 format. Could be empty if
-        /// the job is completed.
+        /// Optional. Time of the next occurrence in ISO-8601 format. Could be
+        /// empty if the job is completed.
         /// </summary>
         public System.DateTime? NextExecutionTime
         {

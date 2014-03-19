@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private MediaServicesCreatedAccount _account;
         
         /// <summary>
-        /// The created account
+        /// Optional. The created account
         /// </summary>
         public MediaServicesCreatedAccount Account
         {

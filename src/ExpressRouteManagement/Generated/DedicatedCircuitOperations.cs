@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Dedicated Circuit operation.
+        /// Required. Parameters supplied to the New Dedicated Circuit
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -107,7 +108,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -230,7 +242,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit to be deleted.
+        /// Required. Service key representing the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -259,7 +272,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -355,7 +379,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -383,7 +407,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -544,7 +579,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -687,7 +733,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Required. Parameters supplied to the Create Virtual Network Gateway
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -756,7 +803,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit to be deleted.
+        /// Required. Service Key associated with the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

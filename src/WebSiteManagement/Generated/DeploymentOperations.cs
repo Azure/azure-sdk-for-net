@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a deployment for a website.
         /// </summary>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -94,7 +94,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -142,7 +153,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DeploymentGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -316,10 +331,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a deployment log for a website.
         /// </summary>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='deploymentLogId'>
-        /// The deployment log identifier.
+        /// Required. The deployment log identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -352,7 +367,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log/" + deploymentLogId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId + "/log/" + deploymentLogId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -400,7 +426,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DeploymentGetLogResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -476,7 +506,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the deployments for a website.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -500,7 +530,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -509,6 +540,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -556,7 +597,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DeploymentListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -737,10 +782,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the logs for a deployment for a website.
         /// </summary>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -769,7 +814,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId + "/log";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId + "/log";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
@@ -778,6 +824,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             {
                 url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -825,7 +881,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DeploymentListLogsResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -908,7 +968,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Redeploys a specific website deployment.
         /// </summary>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -936,7 +996,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/deployments/").AbsoluteUri + deploymentId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/deployments/" + deploymentId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -984,7 +1055,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DeploymentUpdateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

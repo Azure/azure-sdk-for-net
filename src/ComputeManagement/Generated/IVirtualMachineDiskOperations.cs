@@ -55,8 +55,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the disk should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -147,8 +147,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the disk should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -176,8 +176,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the disk should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

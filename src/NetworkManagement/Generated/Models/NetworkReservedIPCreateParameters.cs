@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// An affinity group, which indirectly refers to the location where
-        /// the virtual network exists.
+        /// Optional. An affinity group, which indirectly refers to the
+        /// location where the virtual network exists.
         /// </summary>
         public string AffinityGroup
         {
@@ -44,7 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _deploymentName;
         
         /// <summary>
-        /// The name of the deployment the IP belongs to, if being used.
+        /// Optional. The name of the deployment the IP belongs to, if being
+        /// used.
         /// </summary>
         public string DeploymentName
         {
@@ -55,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _label;
         
         /// <summary>
-        /// The friendly identifier of the site.
+        /// Optional. The friendly identifier of the site.
         /// </summary>
         public string Label
         {
@@ -66,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _name;
         
         /// <summary>
-        /// Name of the reserved IP.
+        /// Optional. Name of the reserved IP.
         /// </summary>
         public string Name
         {
@@ -77,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _serviceName;
         
         /// <summary>
-        /// The name of the service the IP belongs to, if being used.
+        /// Optional. The name of the service the IP belongs to, if being used.
         /// </summary>
         public string ServiceName
         {

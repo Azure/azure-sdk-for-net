@@ -64,14 +64,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// for the resource.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.The resource id can be built using the
-        /// resource id builder class under utilities
+        /// Required. The id of the resource.The resource id can be built using
+        /// the resource id builder class under utilities
         /// </param>
         /// <param name='metricNames'>
-        /// The names of the metrics.
+        /// Optional. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.The value is either null or
+        /// Required. The namespace of the metrics.The value is either null or
         /// WindowsAzure.Availability.WindowsAzure.Availability returns the
         /// metric definitions for endpoint monitoring metrics
         /// </param>
@@ -103,7 +103,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricdefinitions/query?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricdefinitions/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             if (metricNamespace != null)
             {
@@ -113,6 +114,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
             }
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -162,7 +173,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricDefinitionListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

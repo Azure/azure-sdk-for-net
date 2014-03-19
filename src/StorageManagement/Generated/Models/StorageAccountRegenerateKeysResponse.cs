@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _primaryKey;
         
         /// <summary>
-        /// The primary access key for the storage account.
+        /// Optional. The primary access key for the storage account.
         /// </summary>
         public string PrimaryKey
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _secondaryKey;
         
         /// <summary>
-        /// The secondary access key for the storage account.
+        /// Optional. The secondary access key for the storage account.
         /// </summary>
         public string SecondaryKey
         {
@@ -55,8 +55,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private Uri _uri;
         
         /// <summary>
-        /// The Service Management API request URI used to perform Get Storage
-        /// Account Properties requests against the storage account.
+        /// Optional. The Service Management API request URI used to perform
+        /// Get Storage Account Properties requests against the storage
+        /// account.
         /// </summary>
         public Uri Uri
         {

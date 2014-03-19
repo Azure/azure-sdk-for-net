@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _eTag;
         
         /// <summary>
-        /// ETag of the Job Collection.
+        /// Optional. ETag of the Job Collection.
         /// </summary>
         public string ETag
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionIntrinsicSettings _intrinsicSettings;
         
         /// <summary>
-        /// Intrinsic settings for the scheduler job collections.
+        /// Optional. Intrinsic settings for the scheduler job collections.
         /// </summary>
         public JobCollectionIntrinsicSettings IntrinsicSettings
         {
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _label;
         
         /// <summary>
-        /// Label for the resource.
+        /// Optional. Label for the resource.
         /// </summary>
         public string Label
         {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionGetResponse.OperationStatus _lastOperationStatus;
         
         /// <summary>
-        /// The promotion code for buying the resource.
+        /// Optional. The promotion code for buying the resource.
         /// </summary>
         public JobCollectionGetResponse.OperationStatus LastOperationStatus
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _name;
         
         /// <summary>
-        /// Name of the Job Collection.
+        /// Optional. Name of the Job Collection.
         /// </summary>
         public string Name
         {
@@ -87,21 +87,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             set { this._name = value; }
         }
         
-        private string _plan;
-        
-        /// <summary>
-        /// The plan of the resource.
-        /// </summary>
-        public string Plan
-        {
-            get { return this._plan; }
-            set { this._plan = value; }
-        }
-        
         private string _promotionCode;
         
         /// <summary>
-        /// The promotion code for buying the resource.
+        /// Optional. The promotion code for buying the resource.
         /// </summary>
         public string PromotionCode
         {
@@ -112,9 +101,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _schemaVersion;
         
         /// <summary>
-        /// The version of the Intrinsic Properties for your Resource. If not
-        /// specified, you must conform to the contract resource version you
-        /// registered as default.
+        /// Optional. The version of the Intrinsic Properties for your
+        /// Resource. If not specified, you must conform to the contract
+        /// resource version you registered as default.
         /// </summary>
         public string SchemaVersion
         {
@@ -125,7 +114,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionState _state;
         
         /// <summary>
-        /// State of the Job Collection.
+        /// Optional. State of the Job Collection.
         /// </summary>
         public JobCollectionState State
         {
@@ -148,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private JobCollectionGetResponse.OperationStatusResponseDetails _responseDetails;
             
             /// <summary>
-            /// Details about the last operation.
+            /// Optional. Details about the last operation.
             /// </summary>
             public JobCollectionGetResponse.OperationStatusResponseDetails ResponseDetails
             {
@@ -159,7 +148,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private SchedulerOperationStatus _status;
             
             /// <summary>
-            /// Status of the last operation.
+            /// Optional. Status of the last operation.
             /// </summary>
             public SchedulerOperationStatus Status
             {
@@ -183,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _message;
             
             /// <summary>
-            /// Message returned by the operation.
+            /// Optional. Message returned by the operation.
             /// </summary>
             public string Message
             {
@@ -194,7 +183,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private HttpStatusCode _statusCode;
             
             /// <summary>
-            /// The HTTP status code of the operation.
+            /// Optional. The HTTP status code of the operation.
             /// </summary>
             public HttpStatusCode StatusCode
             {

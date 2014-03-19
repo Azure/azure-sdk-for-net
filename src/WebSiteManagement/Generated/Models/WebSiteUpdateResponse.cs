@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSite _webSite;
         
         /// <summary>
-        /// Details of the updated website.
+        /// Optional. Details of the updated website.
         /// </summary>
         public WebSite WebSite
         {

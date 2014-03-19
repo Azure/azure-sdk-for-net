@@ -49,8 +49,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<ConfigurationSet> _configurationSets;
         
         /// <summary>
-        /// Contains the collection of configuration sets that contain system
-        /// and application configuration settings.
+        /// Optional. Contains the collection of configuration sets that
+        /// contain system and application configuration settings.
         /// </summary>
         public IList<ConfigurationSet> ConfigurationSets
         {
@@ -61,8 +61,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DataVirtualHardDisk> _dataVirtualHardDisks;
         
         /// <summary>
-        /// Contains the parameters Windows Azure used to create the data disk
-        /// for the virtual machine.
+        /// Optional. Contains the parameters Windows Azure used to create the
+        /// data disk for the virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
         {
@@ -84,8 +84,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>
-        /// Contains the parameters Windows Azure used to create the operating
-        /// system disk for the virtual machine.
+        /// Required. Contains the parameters Windows Azure used to create the
+        /// operating system disk for the virtual machine.
         /// </summary>
         public OSVirtualHardDisk OSVirtualHardDisk
         {
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleSize;
         
         /// <summary>
-        /// The size of the virtual machine.
+        /// Optional. The size of the virtual machine.
         /// </summary>
         public string RoleSize
         {

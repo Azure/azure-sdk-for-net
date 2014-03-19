@@ -49,10 +49,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.
@@ -89,10 +89,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.
@@ -115,10 +115,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.
@@ -155,10 +155,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.
@@ -176,10 +176,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
@@ -211,10 +211,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
@@ -238,7 +238,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A response to a request for a list of queues.
@@ -276,7 +276,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A response to a request for a list of queues.
@@ -297,10 +297,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.
@@ -335,10 +335,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.IQueueOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <returns>
         /// A response to a request for a particular queue.

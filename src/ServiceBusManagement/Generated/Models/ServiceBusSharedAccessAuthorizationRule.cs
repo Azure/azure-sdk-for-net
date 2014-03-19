@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _claimType;
         
         /// <summary>
-        /// The type of the claim.
+        /// Optional. The type of the claim.
         /// </summary>
         public string ClaimType
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _claimValue;
         
         /// <summary>
-        /// The value of the claim.
+        /// Optional. The value of the claim.
         /// </summary>
         public string ClaimValue
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _createdTime;
         
         /// <summary>
-        /// The time at which the authorization rule was created.
+        /// Optional. The time at which the authorization rule was created.
         /// </summary>
         public DateTime CreatedTime
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _keyName;
         
         /// <summary>
-        /// The name of the key that was used.
+        /// Optional. The name of the key that was used.
         /// </summary>
         public string KeyName
         {
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _modifiedTime;
         
         /// <summary>
-        /// The most recent time the rule was updated.
+        /// Optional. The most recent time the rule was updated.
         /// </summary>
         public DateTime ModifiedTime
         {
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _primaryKey;
         
         /// <summary>
-        /// The primary key that was used.
+        /// Optional. The primary key that was used.
         /// </summary>
         public string PrimaryKey
         {
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _revision;
         
         /// <summary>
-        /// The revision number for the rule.
+        /// Optional. The revision number for the rule.
         /// </summary>
         public int Revision
         {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<AccessRight> _rights;
         
         /// <summary>
-        /// The rights associated with the rule.
+        /// Optional. The rights associated with the rule.
         /// </summary>
         public IList<AccessRight> Rights
         {
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _secondaryKey;
         
         /// <summary>
-        /// The secondary key that was used.
+        /// Optional. The secondary key that was used.
         /// </summary>
         public string SecondaryKey
         {

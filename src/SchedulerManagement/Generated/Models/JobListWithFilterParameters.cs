@@ -33,9 +33,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobState _state;
         
         /// <summary>
-        /// Filter the job history to have it only return job execution
-        /// attempts having a particular State, enabled, disabled, faulted, or
-        /// completed.
+        /// Required. Filter the job history to have it only return job
+        /// execution attempts having a particular State, enabled, disabled,
+        /// faulted, or completed.
         /// </summary>
         public JobState State
         {

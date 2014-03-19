@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private DateTime _registrationDate;
         
         /// <summary>
-        /// The required data when the entitlement is performed.
+        /// Required. The required data when the entitlement is performed.
         /// </summary>
         public DateTime RegistrationDate
         {
@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _resourceNamespace;
         
         /// <summary>
-        /// Required NameSpace identifier for the resource provider.
+        /// Required. Required NameSpace identifier for the resource provider.
         /// </summary>
         public string ResourceNamespace
         {
@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _resourceType;
         
         /// <summary>
-        /// Required type for the resource.
+        /// Required. Required type for the resource.
         /// </summary>
         public string ResourceType
         {

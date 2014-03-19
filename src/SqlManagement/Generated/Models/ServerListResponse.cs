@@ -30,14 +30,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// <summary>
     /// The response structure for the Server List operation.
     /// </summary>
-    public partial class ServerListResponse : OperationResponse, IEnumerable<ServerListResponse.Server>
+    public partial class ServerListResponse : OperationResponse, IEnumerable<Server>
     {
-        private IList<ServerListResponse.Server> _servers;
+        private IList<Server> _servers;
         
         /// <summary>
-        /// Gets or sets the SQL Servers that are valid for your subscription.
+        /// Optional. Gets or sets the SQL Servers that are valid for your
+        /// subscription.
         /// </summary>
-        public IList<ServerListResponse.Server> Servers
+        public IList<Server> Servers
         {
             get { return this._servers; }
             set { this._servers = value; }
@@ -48,13 +49,13 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this._servers = new List<ServerListResponse.Server>();
+            this._servers = new List<Server>();
         }
         
         /// <summary>
         /// Gets the sequence of Servers.
         /// </summary>
-        public IEnumerator<ServerListResponse.Server> GetEnumerator()
+        public IEnumerator<Server> GetEnumerator()
         {
             return this.Servers.GetEnumerator();
         }
@@ -65,67 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// An individual server in your Windows Azure subscription.
-        /// </summary>
-        public partial class Server
-        {
-            private string _administratorUserName;
-            
-            /// <summary>
-            /// Gets or sets the name of an administrator for this server.
-            /// </summary>
-            public string AdministratorUserName
-            {
-                get { return this._administratorUserName; }
-                set { this._administratorUserName = value; }
-            }
-            
-            private IDictionary<string, string> _features;
-            
-            /// <summary>
-            /// Gets or sets the list of features and the type of database
-            /// server for an individual server.
-            /// </summary>
-            public IDictionary<string, string> Features
-            {
-                get { return this._features; }
-                set { this._features = value; }
-            }
-            
-            private string _location;
-            
-            /// <summary>
-            /// Gets or sets the name of a data center location that is valid
-            /// for your subscription.
-            /// </summary>
-            public string Location
-            {
-                get { return this._location; }
-                set { this._location = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Gets or sets the name of a SQL Server running in your
-            /// subscription.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the Server class.
-            /// </summary>
-            public Server()
-            {
-                this._features = new Dictionary<string, string>();
-            }
         }
     }
 }

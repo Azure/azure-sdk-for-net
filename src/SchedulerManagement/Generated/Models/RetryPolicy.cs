@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _retryCount;
         
         /// <summary>
-        /// Number of times a retry should be attempted.
+        /// Optional. Number of times a retry should be attempted.
         /// </summary>
         public int? RetryCount
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.TimeSpan? _retryInterval;
         
         /// <summary>
-        /// The interval between retries.
+        /// Optional. The interval between retries.
         /// </summary>
         public System.TimeSpan? RetryInterval
         {
@@ -55,8 +55,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private RetryType _retryType;
         
         /// <summary>
-        /// The Retry Type of the Retry Policy. Can be either 'fixed' or
-        /// 'none'.
+        /// Required.  The Retry Type of the Retry Policy. Can be either
+        /// 'fixed' or 'none'.
         /// </summary>
         public RetryType RetryType
         {

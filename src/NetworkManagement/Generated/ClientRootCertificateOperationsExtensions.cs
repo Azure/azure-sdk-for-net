@@ -47,11 +47,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upload client certificate Virtual
-        /// Network Gateway operation.
+        /// Required. Parameters supplied to the Upload client certificate
+        /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -87,11 +87,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upload client certificate Virtual
-        /// Network Gateway operation.
+        /// Required. Parameters supplied to the Upload client certificate
+        /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -113,10 +113,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint.
+        /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -152,10 +152,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint.
+        /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -178,10 +178,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint.
+        /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -218,10 +218,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='certificateThumbprint'>
-        /// The X509 certificate thumbprint.
+        /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to the list client root certificates request.
@@ -280,7 +280,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IClientRootCertificateOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network for this gateway.
+        /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
         /// The response to the list client root certificates request.

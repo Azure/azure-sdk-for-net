@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private ServiceBusNamespace _namespace;
         
         /// <summary>
-        /// The namespace.
+        /// Optional. The namespace.
         /// </summary>
         public ServiceBusNamespace Namespace
         {

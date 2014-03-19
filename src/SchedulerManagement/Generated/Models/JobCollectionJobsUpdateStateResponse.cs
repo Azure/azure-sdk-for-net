@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<Job> _jobs;
         
         /// <summary>
-        /// The definitions of the updated jobs.
+        /// Optional. The definitions of the updated jobs.
         /// </summary>
         public IList<Job> Jobs
         {

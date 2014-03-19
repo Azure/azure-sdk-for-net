@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private ServiceBusSharedAccessAuthorizationRule _authorizationRule;
         
         /// <summary>
-        /// The requested authorization rule.
+        /// Optional. The requested authorization rule.
         /// </summary>
         public ServiceBusSharedAccessAuthorizationRule AuthorizationRule
         {

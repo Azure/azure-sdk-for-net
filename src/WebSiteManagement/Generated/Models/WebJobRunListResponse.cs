@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private IList<WebJobRun> _jobRuns;
         
         /// <summary>
-        /// The list of job runs.
+        /// Optional. The list of job runs.
         /// </summary>
         public IList<WebJobRun> JobRuns
         {

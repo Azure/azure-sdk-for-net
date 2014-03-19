@@ -47,6 +47,12 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
+        /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
@@ -78,6 +84,12 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
+        /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
         /// code and request ID.
@@ -96,7 +108,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit.
+        /// Required. Service key representing the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -130,7 +145,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit.
+        /// Required. Service key representing the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -150,7 +168,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
@@ -183,7 +204,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
@@ -201,6 +225,9 @@ namespace Microsoft.WindowsAzure
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The List Dedicated Circuit Link operation response.
@@ -233,6 +260,9 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
         /// <returns>
         /// The List Dedicated Circuit Link operation response.
         /// </returns>
@@ -248,6 +278,12 @@ namespace Microsoft.WindowsAzure
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
+        /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
@@ -279,6 +315,12 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
+        /// </param>
         /// <returns>
         /// The Get Dedicated Circuit Link operation response.
         /// </returns>
@@ -296,7 +338,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit.
+        /// Required. Service Key associated with the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -337,7 +382,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit.
+        /// Required. Service Key associated with the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

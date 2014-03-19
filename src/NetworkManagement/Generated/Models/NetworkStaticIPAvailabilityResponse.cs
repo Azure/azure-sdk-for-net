@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private IList<string> _availableAddresses;
         
         /// <summary>
-        /// The list of the available IP addresses.
+        /// Optional. The list of the available IP addresses.
         /// </summary>
         public IList<string> AvailableAddresses
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Whether the IP address is available.
+        /// Optional. Whether the IP address is available.
         /// </summary>
         public bool IsAvailable
         {

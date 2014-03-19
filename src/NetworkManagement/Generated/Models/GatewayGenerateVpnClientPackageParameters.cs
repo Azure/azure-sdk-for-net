@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private GatewayProcessorArchitecture _processorArchitecture;
         
         /// <summary>
-        /// The client processor architecture.
+        /// Required. The client processor architecture.
         /// </summary>
         public GatewayProcessorArchitecture ProcessorArchitecture
         {

@@ -57,8 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule create response.
         /// </returns>
         Task<FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken);
         
@@ -83,6 +82,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// request ID.
         /// </returns>
         Task<OperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Returns a list of all the server-level firewall rules for a SQL
+        /// Database server that belongs to a subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serverName'>
+        /// The name of the server for which the call is being made.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The name of the rule for which the call is being made.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns a list of all the server-level firewall rules for a SQL
@@ -122,8 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Response containing the firewall rule update response.
         /// </returns>
         Task<FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken);
     }

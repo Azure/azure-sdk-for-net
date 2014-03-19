@@ -66,14 +66,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -136,7 +136,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -266,10 +277,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -299,7 +310,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -394,14 +416,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The Update Bgp Peering operation updates an existing bgp peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -456,7 +478,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -592,10 +625,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit with the specified service key.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -624,7 +657,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/" + serviceKey + "/bgppeerings/" + accessType + "?api-version=1.0";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -772,14 +816,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// with the dedicated circuit specified by the service key provided.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -849,10 +893,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The Remove Bgp Peering operation deletes an existing bgp peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -923,14 +967,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// creates a new one if one doesn't exist.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

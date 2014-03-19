@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.Network
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Network">
-      <PackageVersion>0.9.6-preview</PackageVersion>
+      <PackageVersion>0.9.7-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

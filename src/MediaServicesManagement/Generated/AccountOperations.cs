@@ -69,7 +69,8 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Media Services Account operation.
+        /// Required. Parameters supplied to the Create Media Services Account
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -156,7 +157,18 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -236,7 +248,11 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MediaServicesAccountCreateResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -301,7 +317,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the media services account.
+        /// Required. The name of the media services account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -330,7 +346,18 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -412,7 +439,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the Media Services account.
+        /// Required. The name of the Media Services account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -440,7 +467,18 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -489,7 +527,11 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MediaServicesAccountGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -603,7 +645,18 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -743,10 +796,10 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the Media Services Account.
+        /// Required. The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
-        /// The type of key to regenerate (primary or secondary)
+        /// Required. The type of key to regenerate (primary or secondary)
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -776,7 +829,18 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

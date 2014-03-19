@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private ServiceBusTopic _topic;
         
         /// <summary>
-        /// The requested topic.
+        /// Optional. The requested topic.
         /// </summary>
         public ServiceBusTopic Topic
         {

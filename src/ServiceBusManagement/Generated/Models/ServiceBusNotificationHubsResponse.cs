@@ -35,6 +35,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     {
         private IList<ServiceBusNotificationHub> _notificationHubs;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<ServiceBusNotificationHub> NotificationHubs
         {
             get { return this._notificationHubs; }

@@ -142,16 +142,16 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all Service Bus requests.
+        /// Required. The URI used as the base for all Service Bus requests.
         /// </param>
         public ServiceBusManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -174,13 +174,13 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         public ServiceBusManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -204,8 +204,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='requestId'>
-        /// The request ID for the request you wish to track. The request ID is
-        /// returned in the x-ms-request-id response header for every request.
+        /// Required. The request ID for the request you wish to track. The
+        /// request ID is returned in the x-ms-request-id response header for
+        /// every request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -241,7 +242,18 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string baseUrl = this.BaseUri.AbsoluteUri;
+            string url = "/" + this.Credentials.SubscriptionId + "/operations/" + requestId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -394,7 +406,18 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/services/servicebus/regions";
+            string baseUrl = this.BaseUri.AbsoluteUri;
+            string url = "/" + this.Credentials.SubscriptionId + "/services/servicebus/regions";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

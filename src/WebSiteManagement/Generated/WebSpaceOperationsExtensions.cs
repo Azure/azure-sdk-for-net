@@ -47,13 +47,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='username'>
-        /// The user name.
+        /// Required. The user name.
         /// </param>
         /// <param name='password'>
-        /// The user password.
+        /// Required. The user password.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
+        /// Optional. Parameters supplied to the Create Publishing User
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Publishing User operation response.
@@ -85,13 +86,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='username'>
-        /// The user name.
+        /// Required. The user name.
         /// </param>
         /// <param name='password'>
-        /// The user password.
+        /// Required. The user password.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
+        /// Optional. Parameters supplied to the Create Publishing User
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Publishing User operation response.
@@ -112,7 +114,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// The Get Web Space Details operation response.
@@ -147,7 +149,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// The Get Web Space Details operation response.
@@ -350,10 +352,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The List Web Sites operation response.
@@ -388,10 +390,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSpaceOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The List Web Sites operation response.

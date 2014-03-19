@@ -65,22 +65,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// resource metrics.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNames'>
-        /// The names of the metrics.
+        /// Required. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <param name='timeGrain'>
-        /// The time grain of the metrics.
+        /// Required. The time grain of the metrics.
         /// </param>
         /// <param name='startTime'>
-        /// The start time (in UTC) of the metrics.
+        /// Required. The start time (in UTC) of the metrics.
         /// </param>
         /// <param name='endTime'>
-        /// The end time (in UTC) of the metrics.
+        /// Required. The end time (in UTC) of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -121,7 +121,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricvalues/query?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricvalues/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
             if (metricNamespace != null)
             {
@@ -131,6 +132,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(timeGrain));
             url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
             url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -180,7 +191,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricValueListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

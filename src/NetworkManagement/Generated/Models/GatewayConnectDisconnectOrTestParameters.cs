@@ -33,9 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _iPAddress;
         
         /// <summary>
-        /// Required if operation is set to Test; otherwise not used. Specifies
-        /// the IP address of the target local network site with which the
-        /// gateway will test connectivity.
+        /// Optional. Required if operation is set to Test; otherwise not used.
+        /// Specifies the IP address of the target local network site with
+        /// which the gateway will test connectivity.
         /// </summary>
         public string IPAddress
         {

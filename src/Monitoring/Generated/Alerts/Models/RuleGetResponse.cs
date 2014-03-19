@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Rule _rule;
         
         /// <summary>
-        /// The retrieved rule.
+        /// Optional. The retrieved rule.
         /// </summary>
         public Rule Rule
         {

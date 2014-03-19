@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<HostedServiceListResponse.HostedService> _hostedServices;
         
         /// <summary>
-        /// The hosted services associated with your subscription.
+        /// Optional. The hosted services associated with your subscription.
         /// </summary>
         public IList<HostedServiceListResponse.HostedService> HostedServices
         {
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private HostedServiceProperties _properties;
             
             /// <summary>
-            /// The properties that are assigned to the cloud service.
+            /// Optional. The properties that are assigned to the cloud service.
             /// </summary>
             public HostedServiceProperties Properties
             {
@@ -86,10 +86,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _serviceName;
             
             /// <summary>
-            /// The name of the cloud service. This name is the DNS prefix name
-            /// and can be used to access the cloud service. For example, if
-            /// the cloud service name is MyService you could access the cloud
-            /// service by calling: http://MyService.cloudapp.net
+            /// Optional. The name of the cloud service. This name is the DNS
+            /// prefix name and can be used to access the cloud service. For
+            /// example, if the cloud service name is MyService you could
+            /// access the cloud service by calling:
+            /// http://MyService.cloudapp.net
             /// </summary>
             public string ServiceName
             {
@@ -100,8 +101,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _uri;
             
             /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Hosted Service Properties requests against the cloud service.
+            /// Optional. The Service Management API request URI used to
+            /// perform Get Hosted Service Properties requests against the
+            /// cloud service.
             /// </summary>
             public Uri Uri
             {

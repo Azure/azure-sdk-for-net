@@ -64,10 +64,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// availability of static IP addresses for the given virtual network.
         /// </summary>
         /// <param name='networkName'>
-        /// The name of the virtual network.
+        /// Required. The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
-        /// The address of the static IP.
+        /// Required. The address of the static IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -101,9 +101,20 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "?";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "?";
             url = url + "op=checkavailability";
             url = url + "&address=" + Uri.EscapeUriString(ipAddress);
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

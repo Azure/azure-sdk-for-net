@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private TimeSpan _duration;
         
         /// <summary>
-        /// The duration.
+        /// Optional. The duration.
         /// </summary>
         public TimeSpan Duration
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// The end time.
+        /// Optional. The end time.
         /// </summary>
         public DateTime EndTime
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _errorUrl;
         
         /// <summary>
-        /// The error url.
+        /// Optional. The error url.
         /// </summary>
         public Uri ErrorUrl
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _id;
         
         /// <summary>
-        /// The identifier.
+        /// Optional. The identifier.
         /// </summary>
         public string Id
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _outputUrl;
         
         /// <summary>
-        /// The output url.
+        /// Optional. The output url.
         /// </summary>
         public Uri OutputUrl
         {
@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// The start time.
+        /// Optional. The start time.
         /// </summary>
         public DateTime StartTime
         {
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _status;
         
         /// <summary>
-        /// The status.
+        /// Optional. The status.
         /// </summary>
         public string Status
         {
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _url;
         
         /// <summary>
-        /// The url.
+        /// Optional. The url.
         /// </summary>
         public Uri Url
         {

@@ -35,6 +35,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
     {
         private IList<SubscriptionListOperationResponse.Subscription> _subscriptions;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<SubscriptionListOperationResponse.Subscription> Subscriptions
         {
             get { return this._subscriptions; }
@@ -70,6 +73,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         {
             private string _accountAdminLiveEmailId;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public string AccountAdminLiveEmailId
             {
                 get { return this._accountAdminLiveEmailId; }
@@ -78,6 +84,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private string _activeDirectoryTenantId;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public string ActiveDirectoryTenantId
             {
                 get { return this._activeDirectoryTenantId; }
@@ -86,6 +95,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private DateTime _created;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public DateTime Created
             {
                 get { return this._created; }
@@ -94,6 +106,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _currentCoreCount;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int CurrentCoreCount
             {
                 get { return this._currentCoreCount; }
@@ -102,6 +117,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _currentHostedServices;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int CurrentHostedServices
             {
                 get { return this._currentHostedServices; }
@@ -110,6 +128,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _currentStorageAccounts;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int CurrentStorageAccounts
             {
                 get { return this._currentStorageAccounts; }
@@ -118,6 +139,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumCoreCount;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumCoreCount
             {
                 get { return this._maximumCoreCount; }
@@ -126,6 +150,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumDnsServers;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumDnsServers
             {
                 get { return this._maximumDnsServers; }
@@ -134,6 +161,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumExtraVirtualIPCount;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumExtraVirtualIPCount
             {
                 get { return this._maximumExtraVirtualIPCount; }
@@ -142,6 +172,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumHostedServices;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumHostedServices
             {
                 get { return this._maximumHostedServices; }
@@ -150,6 +183,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumLocalNetworkSites;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumLocalNetworkSites
             {
                 get { return this._maximumLocalNetworkSites; }
@@ -158,6 +194,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumStorageAccounts;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumStorageAccounts
             {
                 get { return this._maximumStorageAccounts; }
@@ -166,6 +205,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private int _maximumVirtualNetworkSites;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public int MaximumVirtualNetworkSites
             {
                 get { return this._maximumVirtualNetworkSites; }
@@ -174,6 +216,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private string _serviceAdminLiveEmailId;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public string ServiceAdminLiveEmailId
             {
                 get { return this._serviceAdminLiveEmailId; }
@@ -182,6 +227,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private string _subscriptionId;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public string SubscriptionId
             {
                 get { return this._subscriptionId; }
@@ -190,6 +238,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private string _subscriptionName;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public string SubscriptionName
             {
                 get { return this._subscriptionName; }
@@ -198,6 +249,9 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
             
             private SubscriptionStatus _subscriptionStatus;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public SubscriptionStatus SubscriptionStatus
             {
                 get { return this._subscriptionStatus; }

@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a setting.
         /// </summary>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -98,7 +98,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/settings/").AbsoluteUri + settingId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/settings/" + settingId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -176,7 +187,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a setting.
         /// </summary>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -204,7 +215,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/settings/").AbsoluteUri + settingId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/settings/" + settingId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -252,7 +274,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new SettingsGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -313,7 +339,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/settings").AbsoluteUri;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/settings";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -361,7 +398,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new SettingsListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -410,7 +451,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Updates a setting.
         /// </summary>
         /// <param name='parameters'>
-        /// The setting value.
+        /// Required. The setting value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -439,7 +480,18 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/api/settings").AbsoluteUri;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/api/settings";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

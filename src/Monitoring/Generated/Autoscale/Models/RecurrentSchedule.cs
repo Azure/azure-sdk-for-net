@@ -29,6 +29,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private IList<string> _days;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<string> Days
         {
             get { return this._days; }
@@ -37,6 +40,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<int> _hours;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<int> Hours
         {
             get { return this._hours; }
@@ -45,6 +51,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<int> _minutes;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<int> Minutes
         {
             get { return this._minutes; }
@@ -53,6 +62,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private string _timeZone;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string TimeZone
         {
             get { return this._timeZone; }

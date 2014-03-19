@@ -71,7 +71,8 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// service in a Windows Azure subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -123,7 +124,18 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/CloudServices/" + parameters.Name + "/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + parameters.Name + "/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -230,7 +242,8 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// service in a Windows Azure subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -348,7 +361,18 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/CloudServices/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

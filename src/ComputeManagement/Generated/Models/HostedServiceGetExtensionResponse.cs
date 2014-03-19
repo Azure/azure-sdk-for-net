@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _id;
         
         /// <summary>
-        /// The identifier of the extension.
+        /// Optional. The identifier of the extension.
         /// </summary>
         public string Id
         {
@@ -44,8 +44,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _providerNamespace;
         
         /// <summary>
-        /// The provider namespace of the extension. The provider namespace for
-        /// Windows Azure extensions is Microsoft.Windows.Azure.Extensions.
+        /// Optional. The provider namespace of the extension. The provider
+        /// namespace for Windows Azure extensions is
+        /// Microsoft.Windows.Azure.Extensions.
         /// </summary>
         public string ProviderNamespace
         {
@@ -56,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publicConfiguration;
         
         /// <summary>
-        /// The public configuration that is defined using the schema returned
-        /// by the List Available Extensions operation.
+        /// Optional. The public configuration that is defined using the schema
+        /// returned by the List Available Extensions operation.
         /// </summary>
         public string PublicConfiguration
         {
@@ -68,10 +69,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _thumbprint;
         
         /// <summary>
-        /// The thumbprint of the certificate that is used to encrypt the
-        /// configuration specified in PrivateConfiguration. If this element
-        /// is not specified, a certificate may be automatically generated and
-        /// added to the cloud service.
+        /// Optional. The thumbprint of the certificate that is used to encrypt
+        /// the configuration specified in PrivateConfiguration. If this
+        /// element is not specified, a certificate may be automatically
+        /// generated and added to the cloud service.
         /// </summary>
         public string Thumbprint
         {
@@ -82,8 +83,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _thumbprintAlgorithm;
         
         /// <summary>
-        /// The thumbprint algorithm of the certificate that is used toencrypt
-        /// the configuration specified in PrivateConfiguration.
+        /// Optional. The thumbprint algorithm of the certificate that is used
+        /// toencrypt the configuration specified in PrivateConfiguration.
         /// </summary>
         public string ThumbprintAlgorithm
         {
@@ -105,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _version;
         
         /// <summary>
-        /// The version of the extension.
+        /// Optional. The version of the extension.
         /// </summary>
         public string Version
         {

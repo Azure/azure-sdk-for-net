@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<AccessControlListRule> _rules;
         
         /// <summary>
-        /// The set of access control rules for the endpoint.
+        /// Optional. The set of access control rules for the endpoint.
         /// </summary>
         public IList<AccessControlListRule> Rules
         {

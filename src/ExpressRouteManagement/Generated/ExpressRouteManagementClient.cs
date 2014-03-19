@@ -122,11 +122,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all golden gate requests.
+        /// Required. The URI used as the base for all golden gate requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -150,8 +150,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// for more information)
         /// </summary>
         /// <param name='operationId'>
-        /// The id  of the operation.
+        /// Required. The id  of the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -209,7 +209,18 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = new Uri(this.BaseUri, "/").AbsoluteUri + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            string baseUrl = this.BaseUri.AbsoluteUri;
+            string url = "/" + this.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

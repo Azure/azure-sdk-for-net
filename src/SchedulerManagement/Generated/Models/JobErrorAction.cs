@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobQueueMessage _queueMessage;
         
         /// <summary>
-        /// Queue and content for a queue message action type.
+        /// Optional. Queue and content for a queue message action type.
         /// </summary>
         public JobQueueMessage QueueMessage
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobHttpRequest _request;
         
         /// <summary>
-        /// Request for a http or https action type.
+        /// Optional. Request for a http or https action type.
         /// </summary>
         public JobHttpRequest Request
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobActionType _type;
         
         /// <summary>
-        /// Type of action. Can be one of http, https, storageQueue.
+        /// Required. Type of action. Can be one of http, https, storageQueue.
         /// </summary>
         public JobActionType Type
         {

@@ -45,10 +45,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
-        /// The Id of the Service Objective to be obtained.
+        /// Required. The Id of the Service Objective to be obtained.
         /// </param>
         /// <returns>
         /// Response containing the service objective for a given server and
@@ -81,10 +81,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
-        /// The Id of the Service Objective to be obtained.
+        /// Required. The Id of the Service Objective to be obtained.
         /// </param>
         /// <returns>
         /// Response containing the service objective for a given server and
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of service objective for a given
@@ -138,7 +138,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of service objective for a given

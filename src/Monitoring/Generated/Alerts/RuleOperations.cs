@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='parameters'>
-        /// The rule to create or update.
+        /// Required. The rule to create or update.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -95,7 +95,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + parameters.Rule.Id;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -119,30 +130,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 
                 if (parameters.Rule != null)
                 {
-                    JObject ruleValue = new JObject();
-                    requestDoc = ruleValue;
-                    
                     if (parameters.Rule.Id != null)
                     {
-                        ruleValue["Id"] = parameters.Rule.Id;
+                        requestDoc = new JObject();
+                        requestDoc["Id"] = parameters.Rule.Id;
                     }
                     
                     if (parameters.Rule.Name != null)
                     {
-                        ruleValue["Name"] = parameters.Rule.Name;
+                        requestDoc = new JObject();
+                        requestDoc["Name"] = parameters.Rule.Name;
                     }
                     
                     if (parameters.Rule.Description != null)
                     {
-                        ruleValue["Description"] = parameters.Rule.Description;
+                        requestDoc = new JObject();
+                        requestDoc["Description"] = parameters.Rule.Description;
                     }
                     
-                    ruleValue["IsEnabled"] = parameters.Rule.IsEnabled;
+                    requestDoc = new JObject();
+                    requestDoc["IsEnabled"] = parameters.Rule.IsEnabled;
                     
                     if (parameters.Rule.Condition != null)
                     {
                         JObject conditionValue = new JObject();
-                        ruleValue["Condition"] = conditionValue;
+                        requestDoc["Condition"] = conditionValue;
                         conditionValue["odata.type"] = parameters.Rule.Condition.GetType().FullName;
                         if (parameters.Rule.Condition is ThresholdRuleCondition)
                         {
@@ -207,10 +219,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
-                        ruleValue["Actions"] = actionsArray;
+                        requestDoc = actionsArray;
                     }
                     
-                    ruleValue["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
+                    requestDoc["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -276,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='ruleId'>
-        /// The id of the rule to delete.
+        /// Required. The id of the rule to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -305,7 +317,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -382,7 +405,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='ruleId'>
-        /// The id of the rule to retrieve.
+        /// Required. The id of the rule to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -410,7 +433,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules/" + ruleId;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -460,7 +494,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -650,7 +688,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = new Uri(this.Client.BaseUri, "/").AbsoluteUri + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/alertrules";
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -700,7 +749,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
