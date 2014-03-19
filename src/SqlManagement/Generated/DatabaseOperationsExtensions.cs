@@ -46,10 +46,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database will be created.
+        /// Required. The name of the SQL Server where the database will be
+        /// created.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the create database operation.
+        /// Required. The parameters for the create database operation.
         /// </param>
         /// <returns>
         /// Response containing the database create response.
@@ -81,10 +82,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database will be created.
+        /// Required. The name of the SQL Server where the database will be
+        /// created.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the create database operation.
+        /// Required. The parameters for the create database operation.
         /// </param>
         /// <returns>
         /// Response containing the database create response.
@@ -104,10 +106,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server on which the database is found.
+        /// Required. The name of the server on which the database is found.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be deleted.
+        /// Required. The name of the database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -142,10 +144,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the server on which the database is found.
+        /// Required. The name of the server on which the database is found.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be deleted.
+        /// Required. The name of the database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -164,10 +166,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// Required. The name of the SQL Server on which the database is
+        /// housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <returns>
         /// Response containing the database get response.
@@ -199,10 +202,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// Required. The name of the SQL Server on which the database is
+        /// housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <returns>
         /// Response containing the database get response.
@@ -220,13 +224,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// Required. The name of the SQL Server on which the database is
+        /// housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the get event logs database operation.
+        /// Required. The parameters for the get event logs database operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -259,13 +264,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// Required. The name of the SQL Server on which the database is
+        /// housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the get event logs database operation.
+        /// Required. The parameters for the get event logs database operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -284,7 +290,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of databases for a given server.
@@ -316,7 +322,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of databases for a given server.
@@ -334,13 +340,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database is housed.
+        /// Required. The name of the SQL Server where the database is housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the update database operation.
+        /// Required. The parameters for the update database operation.
         /// </param>
         /// <returns>
         /// Response containing the database update response.
@@ -372,13 +378,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database is housed.
+        /// Required. The name of the SQL Server where the database is housed.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// Required. The name of the SQL Server database to be obtained.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the update database operation.
+        /// Required. The parameters for the update database operation.
         /// </param>
         /// <returns>
         /// Response containing the database update response.

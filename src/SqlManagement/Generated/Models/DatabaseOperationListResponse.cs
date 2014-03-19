@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<DatabaseOperation> _databaseOperations;
         
         /// <summary>
-        /// Gets or sets the list of database operations' response.
+        /// Optional. Gets or sets the list of database operations' response.
         /// </summary>
         public IList<DatabaseOperation> DatabaseOperations
         {

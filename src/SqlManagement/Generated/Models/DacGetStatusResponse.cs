@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<StatusInfo> _statusInfoList;
         
         /// <summary>
-        /// Gets or sets the list of statuses relevant to this import/export
-        /// request.
+        /// Optional. Gets or sets the list of statuses relevant to this
+        /// import/export request.
         /// </summary>
         public IList<StatusInfo> StatusInfoList
         {

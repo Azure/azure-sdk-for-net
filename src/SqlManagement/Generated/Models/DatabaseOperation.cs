@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _databaseName;
         
         /// <summary>
-        /// Gets or sets the name of the SQL Database on which the operation is
-        /// performed.
+        /// Optional. Gets or sets the name of the SQL Database on which the
+        /// operation is performed.
         /// </summary>
         public string DatabaseName
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _error;
         
         /// <summary>
-        /// Gets or sets the description of the error that occurred during a
-        /// failed operation.
+        /// Optional. Gets or sets the description of the error that occurred
+        /// during a failed operation.
         /// </summary>
         public string Error
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorCode;
         
         /// <summary>
-        /// Gets or sets the code indicating the error that occurred during a
-        /// failed operation.
+        /// Optional. Gets or sets the code indicating the error that occurred
+        /// during a failed operation.
         /// </summary>
         public int ErrorCode
         {
@@ -68,8 +68,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorSeverity;
         
         /// <summary>
-        /// Gets or sets the severity level of the error that occurred during a
-        /// failed operation.
+        /// Optional. Gets or sets the severity level of the error that
+        /// occurred during a failed operation.
         /// </summary>
         public int ErrorSeverity
         {
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorState;
         
         /// <summary>
-        /// Gets or sets the error state.
+        /// Optional. Gets or sets the error state.
         /// </summary>
         public int ErrorState
         {
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _id;
         
         /// <summary>
-        /// Gets or sets unique identifier of the operation..
+        /// Optional. Gets or sets unique identifier of the operation..
         /// </summary>
         public string Id
         {
@@ -102,8 +102,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _lastModifyTime;
         
         /// <summary>
-        /// Gets or sets the timestamp when the record was last modified for a
-        /// long running operation.
+        /// Optional. Gets or sets the timestamp when the record was last
+        /// modified for a long running operation.
         /// </summary>
         public DateTime LastModifyTime
         {
@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Gets or sets the name of the operation.
+        /// Optional. Gets or sets the name of the operation.
         /// </summary>
         public string Name
         {
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _parentLink;
         
         /// <summary>
-        /// Gets or sets the ParentLink of the operation.
+        /// Optional. Gets or sets the ParentLink of the operation.
         /// </summary>
         public string ParentLink
         {
@@ -136,7 +136,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _percentComplete;
         
         /// <summary>
-        /// Gets or sets the percentage of operation that has completed.
+        /// Optional. Gets or sets the percentage of operation that has
+        /// completed.
         /// </summary>
         public int PercentComplete
         {
@@ -147,7 +148,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _selfLink;
         
         /// <summary>
-        /// Gets or sets the SelfLink of the operation.
+        /// Optional. Gets or sets the SelfLink of the operation.
         /// </summary>
         public string SelfLink
         {
@@ -158,7 +159,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _sessionActivityId;
         
         /// <summary>
-        /// Gets or sets session scoped ID of the operation.
+        /// Optional. Gets or sets session scoped ID of the operation.
         /// </summary>
         public string SessionActivityId
         {
@@ -169,7 +170,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Gets or sets the timestamp when the operation started.
+        /// Optional. Gets or sets the timestamp when the operation started.
         /// </summary>
         public DateTime StartTime
         {
@@ -180,7 +181,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _state;
         
         /// <summary>
-        /// Gets or sets the state of the operation.
+        /// Optional. Gets or sets the state of the operation.
         /// </summary>
         public string State
         {
@@ -191,8 +192,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _stateId;
         
         /// <summary>
-        /// Gets or sets current state of the long running operation in numeric
-        /// format.
+        /// Optional. Gets or sets current state of the long running operation
+        /// in numeric format.
         /// </summary>
         public int StateId
         {
@@ -203,7 +204,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _type;
         
         /// <summary>
-        /// Gets or sets the type of resource.
+        /// Optional. Gets or sets the type of resource.
         /// </summary>
         public string Type
         {

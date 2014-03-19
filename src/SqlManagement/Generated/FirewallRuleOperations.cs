@@ -78,11 +78,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL database server to which this rule will be
-        /// applied.
+        /// Required. The name of the SQL database server to which this rule
+        /// will be applied.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Create Firewall Rule operation.
+        /// Required. Parameters for the Create Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -283,11 +283,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server that will be have new firewall rule applied
-        /// to it.
+        /// Required. The name of the server that will be have new firewall
+        /// rule applied to it.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the new firewall rule.
+        /// Required. The name of the new firewall rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -414,7 +414,177 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server for which the call is being made.
+        /// Required. The name of the server for which the call is being made.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule for which the call is being made.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("ruleName", ruleName);
+                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/firewallrules/" + ruleName;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2012-03-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    FirewallRuleGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new FirewallRuleGetResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
+                    if (serviceResourceElement != null && serviceResourceElement.IsEmpty == false)
+                    {
+                        FirewallRule serviceResourceInstance = new FirewallRule();
+                        result.FirewallRule = serviceResourceInstance;
+                        
+                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null && nameElement.IsEmpty == false)
+                        {
+                            string nameInstance = nameElement.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null && typeElement.IsEmpty == false)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (startIPAddressElement != null && startIPAddressElement.IsEmpty == false)
+                        {
+                            string startIPAddressInstance = startIPAddressElement.Value;
+                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                        }
+                        
+                        XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (endIPAddressElement != null && endIPAddressElement.IsEmpty == false)
+                        {
+                            string endIPAddressInstance = endIPAddressElement.Value;
+                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns a list of all the server-level firewall rules for a SQL
+        /// Database server that belongs to a subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serverName'>
+        /// Required. The name of the server for which the call is being made.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -579,14 +749,14 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL database server to which this rule will be
-        /// applied.
+        /// Required. The name of the SQL database server to which this rule
+        /// will be applied.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the firewall rule to be updated.
+        /// Required. The name of the firewall rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Update Firewall Rule operation.
+        /// Required. Parameters for the Update Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

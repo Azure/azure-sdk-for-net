@@ -68,10 +68,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Returns information about a certain Service Objective on a given Id.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
-        /// The Id of the Service Objective to be obtained.
+        /// Required. The Id of the Service Objective to be obtained.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -351,7 +351,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

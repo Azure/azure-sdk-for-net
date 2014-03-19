@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _azureEdition;
         
         /// <summary>
-        /// The edition of this database.
+        /// Optional. The edition of this database.
         /// </summary>
         public string AzureEdition
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacImportParameters.BlobCredentialsParameter _blobCredentials;
         
         /// <summary>
-        /// Gets or sets credentials for getting the DAC.
+        /// Optional. Gets or sets credentials for getting the DAC.
         /// </summary>
         public DacImportParameters.BlobCredentialsParameter BlobCredentials
         {
@@ -55,7 +55,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacImportParameters.ConnectionInfoParameter _connectionInfo;
         
         /// <summary>
-        /// Gets or sets connection information for the SQL Server Database.
+        /// Optional. Gets or sets connection information for the SQL Server
+        /// Database.
         /// </summary>
         public DacImportParameters.ConnectionInfoParameter ConnectionInfo
         {
@@ -66,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _databaseSizeInGB;
         
         /// <summary>
-        /// Gets or sets the size of this database.
+        /// Optional. Gets or sets the size of this database.
         /// </summary>
         public int DatabaseSizeInGB
         {
@@ -89,7 +90,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _storageAccessKey;
             
             /// <summary>
-            /// Gets or sets the key for the Windows Azure Storage account.
+            /// Required. Gets or sets the key for the Windows Azure Storage
+            /// account.
             /// </summary>
             public string StorageAccessKey
             {
@@ -100,8 +102,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private Uri _uri;
             
             /// <summary>
-            /// Gets or sets the URI of the DAC file stored in Windows Azure
-            /// Blob Storage.
+            /// Required. Gets or sets the URI of the DAC file stored in
+            /// Windows Azure Blob Storage.
             /// </summary>
             public Uri Uri
             {
@@ -126,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _databaseName;
             
             /// <summary>
-            /// Gets or sets the name of the database.
+            /// Required. Gets or sets the name of the database.
             /// </summary>
             public string DatabaseName
             {
@@ -137,7 +139,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _password;
             
             /// <summary>
-            /// Gets or sets the password for the database user.
+            /// Required. Gets or sets the password for the database user.
             /// </summary>
             public string Password
             {
@@ -148,7 +150,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serverName;
             
             /// <summary>
-            /// Gets or sets the SQL server name.
+            /// Required. Gets or sets the SQL server name.
             /// </summary>
             public string ServerName
             {
@@ -159,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _userName;
             
             /// <summary>
-            /// Gets or sets the username of the database user.
+            /// Required. Gets or sets the username of the database user.
             /// </summary>
             public string UserName
             {

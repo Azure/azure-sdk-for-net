@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<ServiceObjective> _serviceObjectives;
         
         /// <summary>
-        /// Gets or sets the list of Service Objectives that are existing in a
-        /// server.
+        /// Optional. Gets or sets the list of Service Objectives that are
+        /// existing in a server.
         /// </summary>
         public IList<ServiceObjective> ServiceObjectives
         {

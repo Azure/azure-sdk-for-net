@@ -155,16 +155,16 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all SQL requests.
+        /// Required. The URI used as the base for all SQL requests.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -187,13 +187,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials)
             : this()
