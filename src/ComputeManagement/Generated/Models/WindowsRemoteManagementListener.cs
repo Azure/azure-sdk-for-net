@@ -49,8 +49,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private VirtualMachineWindowsRemoteManagementListenerType _listenerType;
         
         /// <summary>
-        /// Specifies the type of listener. This value can be Http or Https.
-        /// The value is case sensitive.
+        /// Required. Specifies the type of listener. This value can be Http or
+        /// Https. The value is case sensitive.
         /// </summary>
         public VirtualMachineWindowsRemoteManagementListenerType ListenerType
         {

@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Required. Specifies the action that is performed after the capture
-    /// operation finishes.
+    /// Specifies the action that is performed after the capture operation
+    /// finishes.
     /// </summary>
     public enum PostCaptureAction
     {

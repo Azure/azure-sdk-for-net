@@ -29,8 +29,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _certificate;
         
         /// <summary>
-        /// The new client root certificate to upload, represented as a hex
-        /// encoded string
+        /// Required. The new client root certificate to upload, represented as
+        /// a hex encoded string
         /// </summary>
         public string Certificate
         {

@@ -64,10 +64,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// availability of static IP addresses for the given virtual network.
         /// </summary>
         /// <param name='networkName'>
-        /// The name of the virtual network.
+        /// Required. The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
-        /// The address of the static IP.
+        /// Required. The address of the static IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

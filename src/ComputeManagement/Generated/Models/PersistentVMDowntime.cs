@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// The time that the virtual machine was stopped.
+        /// Optional. The time that the virtual machine was stopped.
         /// </summary>
         public DateTime EndTime
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// The time that the virtual machine was started.
+        /// Optional. The time that the virtual machine was started.
         /// </summary>
         public DateTime StartTime
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _status;
         
         /// <summary>
-        /// The status of the virtual machine.
+        /// Optional. The status of the virtual machine.
         /// </summary>
         public string Status
         {

@@ -51,7 +51,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
@@ -87,7 +88,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
@@ -108,10 +110,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the image to delete.
+        /// Required. The name of the image to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the image should also
+        /// Required. Specifies that the source blob for the image should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -148,10 +150,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the image to delete.
+        /// Required. The name of the image to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the image should also
+        /// Required. Specifies that the source blob for the image should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -174,7 +176,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve.
+        /// Required. The name of the OS image to retrieve.
         /// </param>
         /// <returns>
         /// A virtual machine image associated with your subscription.
@@ -209,7 +211,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve.
+        /// Required. The name of the OS image to retrieve.
         /// </param>
         /// <returns>
         /// A virtual machine image associated with your subscription.
@@ -280,10 +282,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the virtual machine image to be updated.
+        /// Required. The name of the virtual machine image to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.
@@ -318,10 +321,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
         /// </param>
         /// <param name='imageName'>
-        /// The name of the virtual machine image to be updated.
+        /// Required. The name of the virtual machine image to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// Parameters returned from the Create Virtual Machine Image operation.

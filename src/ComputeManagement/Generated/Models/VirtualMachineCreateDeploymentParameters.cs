@@ -84,9 +84,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _reservedIPName;
         
         /// <summary>
-        /// Optional and Preview Only. Specifies the name of an existing
-        /// reserved IP to which the deployment will belong. Reserved IPs are
-        /// created by calling the Create Reserved IP operation.
+        /// Optional. Optional and Preview Only. Specifies the name of an
+        /// existing reserved IP to which the deployment will belong. Reserved
+        /// IPs are created by calling the Create Reserved IP operation.
         /// </summary>
         public string ReservedIPName
         {

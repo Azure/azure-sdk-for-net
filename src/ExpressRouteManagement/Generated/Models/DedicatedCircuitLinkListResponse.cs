@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     {
         private IList<AzureDedicatedCircuitLink> _dedicatedCircuitLinks;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<AzureDedicatedCircuitLink> DedicatedCircuitLinks
         {
             get { return this._dedicatedCircuitLinks; }

@@ -88,16 +88,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all cloud service management requests.
+        /// Required. The URI used as the base for all cloud service management
+        /// requests.
         /// </param>
         public CloudServiceManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -121,13 +122,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         public CloudServiceManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -148,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// that particular type of resource.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters provided to the EntitleResource method.
+        /// Required. Parameters provided to the EntitleResource method.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -303,8 +304,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// for more information)
         /// </summary>
         /// <param name='requestId'>
-        /// The request ID for the request you wish to track. The request ID is
-        /// returned in the x-ms-request-id response header for every request.
+        /// Required. The request ID for the request you wish to track. The
+        /// request ID is returned in the x-ms-request-id response header for
+        /// every request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

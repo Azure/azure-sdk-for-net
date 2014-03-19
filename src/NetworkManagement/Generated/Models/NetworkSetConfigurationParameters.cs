@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _configuration;
         
         /// <summary>
-        /// The network configuration for this subscription.
+        /// Required. The network configuration for this subscription.
         /// </summary>
         public string Configuration
         {

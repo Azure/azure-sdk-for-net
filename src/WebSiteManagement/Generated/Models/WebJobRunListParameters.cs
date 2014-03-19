@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _orderBy;
         
         /// <summary>
-        /// The order by query parameter.
+        /// Optional. The order by query parameter.
         /// </summary>
         public string OrderBy
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _top;
         
         /// <summary>
-        /// The top query parameter.
+        /// Optional. The top query parameter.
         /// </summary>
         public string Top
         {

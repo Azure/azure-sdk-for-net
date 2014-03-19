@@ -69,13 +69,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// You can swap a web site from one slot to the production slot.
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -416,10 +417,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Web Site operation.
+        /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1111,10 +1112,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1243,13 +1244,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to delete a web site.
+        /// Required. The parameters to delete a web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1388,10 +1389,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1533,10 +1534,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1663,13 +1664,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2270,10 +2271,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2638,13 +2639,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2938,10 +2939,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3195,10 +3196,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3338,10 +3339,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3545,7 +3546,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Determines if a hostname is available
         /// </summary>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3678,10 +3679,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3805,13 +3806,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// You can swap a web site from one slot to the production slot.
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3912,10 +3914,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4042,13 +4044,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
+        /// Required. Parameters supplied to the Update Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4800,13 +4802,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
+        /// Required. The Update Web Site Configuration parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

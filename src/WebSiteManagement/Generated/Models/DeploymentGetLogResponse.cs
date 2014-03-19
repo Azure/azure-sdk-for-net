@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DeploymentLog _log;
         
         /// <summary>
-        /// The deployment log information.
+        /// Optional. The deployment log information.
         /// </summary>
         public DeploymentLog Log
         {

@@ -27,15 +27,15 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Optional. Configures the Windows Remote Management service on the
-    /// virtual machine, which enables remote Windows PowerShell.
+    /// Configures the Windows Remote Management service on the virtual
+    /// machine, which enables remote Windows PowerShell.
     /// </summary>
     public partial class WindowsRemoteManagementSettings
     {
         private IList<WindowsRemoteManagementListener> _listeners;
         
         /// <summary>
-        /// Required. Contains a collection of information for enabling remote
+        /// Optional. Contains a collection of information for enabling remote
         /// Windows PowerShell.
         /// </summary>
         public IList<WindowsRemoteManagementListener> Listeners

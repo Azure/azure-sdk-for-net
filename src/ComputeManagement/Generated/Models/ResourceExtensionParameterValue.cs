@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Required. Specifies the key, value, and type of the parameter.
+    /// Specifies the key, value, and type of the parameter.
     /// </summary>
     public partial class ResourceExtensionParameterValue
     {
         private string _key;
         
         /// <summary>
-        /// Key
+        /// Optional. Key
         /// </summary>
         public string Key
         {
@@ -43,10 +43,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Public | Private. If this value is set to Private, the
-        /// parameter will not be returned by Get Deployment. You can only
-        /// specify one public parameter and one private parameter for a
-        /// maximum of two parameters.
+        /// Optional. Optional. Public | Private. If this value is set to
+        /// Private, the parameter will not be returned by Get Deployment. You
+        /// can only specify one public parameter and one private parameter
+        /// for a maximum of two parameters.
         /// </summary>
         public string Type
         {
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _value;
         
         /// <summary>
-        /// Value
+        /// Optional. Value
         /// </summary>
         public string Value
         {

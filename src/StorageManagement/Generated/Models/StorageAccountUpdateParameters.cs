@@ -32,6 +32,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     {
         private string _description;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string Description
         {
             get { return this._description; }

@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Incident _incident;
         
         /// <summary>
-        /// The retrieved incident.
+        /// Optional. The retrieved incident.
         /// </summary>
         public Incident Incident
         {

@@ -33,8 +33,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private DedicatedCircuitLinkState _state;
         
         /// <summary>
-        /// State of the dedicated circuit link. Values can be NotProvisioned,
-        /// Provisioning, Provisioned, Deprovisioning, or ProvisioningError.
+        /// Optional. State of the dedicated circuit link. Values can be
+        /// NotProvisioned, Provisioning, Provisioned, Deprovisioning, or
+        /// ProvisioningError.
         /// </summary>
         public DedicatedCircuitLinkState State
         {
@@ -45,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _vnetName;
         
         /// <summary>
-        /// The name of the Vnet that is linked.
+        /// Optional. The name of the Vnet that is linked.
         /// </summary>
         public string VnetName
         {

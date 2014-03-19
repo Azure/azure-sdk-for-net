@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _authorizationType;
         
         /// <summary>
-        /// The type of authorization for the connection to the entity.
+        /// Optional. The type of authorization for the connection to the
+        /// entity.
         /// </summary>
         public string AuthorizationType
         {
@@ -45,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _connectionString;
         
         /// <summary>
-        /// The connection string to the entity.
+        /// Optional. The connection string to the entity.
         /// </summary>
         public string ConnectionString
         {
@@ -56,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _keyName;
         
         /// <summary>
-        /// The name of the key used in the connection.
+        /// Optional. The name of the key used in the connection.
         /// </summary>
         public string KeyName
         {
@@ -67,8 +68,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<AccessRight> _rights;
         
         /// <summary>
-        /// The rights connections to the entity via the connection string will
-        /// have.
+        /// Optional. The rights connections to the entity via the connection
+        /// string will have.
         /// </summary>
         public IList<AccessRight> Rights
         {

@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusConnectionDetail> _connectionDetails;
         
         /// <summary>
-        /// The set of connection details for a service bus entitiy.
+        /// Optional. The set of connection details for a service bus entitiy.
         /// </summary>
         public IList<ServiceBusConnectionDetail> ConnectionDetails
         {

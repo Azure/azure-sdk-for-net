@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _sharedKey;
         
         /// <summary>
-        /// Contains the shared key used by the gateway to authenticate
-        /// connections to sites on a virtual network.
+        /// Optional. Contains the shared key used by the gateway to
+        /// authenticate connections to sites on a virtual network.
         /// </summary>
         public string SharedKey
         {

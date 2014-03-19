@@ -81,7 +81,8 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Management Certificate operation.
+        /// Required. Parameters supplied to the Create Management Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -238,7 +239,7 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='thumbprint'>
-        /// the thumbprint value of the certificate to delete.
+        /// Required. the thumbprint value of the certificate to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -363,8 +364,8 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='thumbprint'>
-        /// The thumbprint value of the certificate to retrieve information
-        /// about.
+        /// Required. The thumbprint value of the certificate to retrieve
+        /// information about.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -174,8 +174,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
-        /// should also be deleted from storage.
+        /// Specifies that the source blob(s) for the virtual machine should
+        /// also be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -523,8 +523,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
-        /// should also be deleted from storage.
+        /// Specifies that the source blob(s) for the virtual machine should
+        /// also be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

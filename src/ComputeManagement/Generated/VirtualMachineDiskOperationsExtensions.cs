@@ -50,19 +50,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to delete the data disk from.
+        /// Required. The name of the role to delete the data disk from.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -99,19 +99,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to delete the data disk from.
+        /// Required. The name of the role to delete the data disk from.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -150,17 +150,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to add the data disk to.
+        /// Required. The name of the role to add the data disk to.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Data Disk
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Data
+        /// Disk operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -212,17 +212,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to add the data disk to.
+        /// Required. The name of the role to add the data disk to.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Data Disk
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Data
+        /// Disk operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -244,7 +244,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Disk operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Disk
+        /// operation.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
@@ -279,7 +280,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Disk operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Disk
+        /// operation.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
@@ -300,19 +302,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to delete the data disk from.
+        /// Required. The name of the role to delete the data disk from.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -356,19 +358,19 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to delete the data disk from.
+        /// Required. The name of the role to delete the data disk from.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -398,10 +400,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk to delete.
+        /// Required. The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -438,10 +440,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk to delete.
+        /// Required. The name of the disk to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <returns>
@@ -464,16 +466,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role.
+        /// Required. The name of the role.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <returns>
         /// The Get Data Disk operation response.
@@ -508,16 +510,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role.
+        /// Required. The name of the role.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <returns>
         /// The Get Data Disk operation response.
@@ -539,7 +541,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk.
+        /// Required. The name of the disk.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
@@ -575,7 +577,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk.
+        /// Required. The name of the disk.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
@@ -646,20 +648,20 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to add the data disk to.
+        /// Required. The name of the role to add the data disk to.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Data Disk
-        /// operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Data
+        /// Disk operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -695,20 +697,20 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='roleName'>
-        /// The name of the role to add the data disk to.
+        /// Required. The name of the role to add the data disk to.
         /// </param>
         /// <param name='logicalUnitNumber'>
-        /// The logical unit number of the disk.
+        /// Required. The logical unit number of the disk.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Data Disk
-        /// operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Data
+        /// Disk operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -730,10 +732,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk being updated.
+        /// Required. The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Disk operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.
@@ -768,10 +771,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineDiskOperations.
         /// </param>
         /// <param name='name'>
-        /// The name of the disk being updated.
+        /// Required. The name of the disk being updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Disk operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Disk
+        /// operation.
         /// </param>
         /// <returns>
         /// A virtual machine disk associated with your subscription.

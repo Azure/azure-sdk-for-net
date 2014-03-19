@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<Job> _jobs;
         
         /// <summary>
-        /// The relevant jobs.
+        /// Optional. The relevant jobs.
         /// </summary>
         public IList<Job> Jobs
         {

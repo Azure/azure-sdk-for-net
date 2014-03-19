@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteGetUsageMetricsResponse.UsageMetric> _usageMetrics;
         
         /// <summary>
-        /// The usage metrics for the web site.
+        /// Optional. The usage metrics for the web site.
         /// </summary>
         public IList<WebSiteGetUsageMetricsResponse.UsageMetric> UsageMetrics
         {
@@ -76,9 +76,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private WebSiteComputeMode _computeMode;
             
             /// <summary>
-            /// The compute mode of the web site. For web sites in Standard
-            /// Mode, the return value is Dedicated. For web sites in Free or
-            /// Shared mode, the return value is Shared.
+            /// Optional. The compute mode of the web site. For web sites in
+            /// Standard Mode, the return value is Dedicated. For web sites in
+            /// Free or Shared mode, the return value is Shared.
             /// </summary>
             public WebSiteComputeMode ComputeMode
             {
@@ -89,8 +89,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _currentValue;
             
             /// <summary>
-            /// The current value of the metric specified, expressed in terms
-            /// of the measurement specified by the Unit element.
+            /// Optional. The current value of the metric specified, expressed
+            /// in terms of the measurement specified by the Unit element.
             /// </summary>
             public string CurrentValue
             {
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _displayName;
             
             /// <summary>
-            /// The display name of the metric (includes spaces).
+            /// Optional. The display name of the metric (includes spaces).
             /// </summary>
             public string DisplayName
             {
@@ -112,14 +112,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _limit;
             
             /// <summary>
-            /// The maximum point that the given metric can reach. The limit
-            /// resets at the time specified by the NextResetTime element. If
-            /// the limit is reached before the reset time, the site will be
-            /// stopped. A value of -1 means unlimited. Resources with limits
-            /// typically include CPU Time, Memory Usage, and File System
-            /// Storage. Important: Site level Limits information is only
-            /// meaningful for Shared and Standard web sites. For free web
-            /// sites, limits are enforced at the webspace level.
+            /// Optional. The maximum point that the given metric can reach.
+            /// The limit resets at the time specified by the NextResetTime
+            /// element. If the limit is reached before the reset time, the
+            /// site will be stopped. A value of -1 means unlimited. Resources
+            /// with limits typically include CPU Time, Memory Usage, and File
+            /// System Storage. Important: Site level Limits information is
+            /// only meaningful for Shared and Standard web sites. For free
+            /// web sites, limits are enforced at the webspace level.
             /// </summary>
             public string Limit
             {
@@ -130,8 +130,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The name of the metric, without spaces. The value is usually
-            /// the same as that of the ResourceName element.
+            /// Optional. The name of the metric, without spaces. The value is
+            /// usually the same as that of the ResourceName element.
             /// </summary>
             public string Name
             {
@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private DateTime _nextResetTime;
             
             /// <summary>
-            /// The time at which the metric will be reset.
+            /// Optional. The time at which the metric will be reset.
             /// </summary>
             public DateTime NextResetTime
             {
@@ -153,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _resourceName;
             
             /// <summary>
-            /// The name of the resource being measured.
+            /// Optional. The name of the resource being measured.
             /// </summary>
             public string ResourceName
             {
@@ -164,9 +164,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private WebSiteMode _siteMode;
             
             /// <summary>
-            /// The scaling for the web site. Web sites in Free Mode return a
-            /// value of Limited. Web sites in Shared Mode return a value of
-            /// Basic. Sites in Standard Mode return null.
+            /// Optional. The scaling for the web site. Web sites in Free Mode
+            /// return a value of Limited. Web sites in Shared Mode return a
+            /// value of Basic. Sites in Standard Mode return null.
             /// </summary>
             public WebSiteMode SiteMode
             {
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _unit;
             
             /// <summary>
-            /// The unit of measure for the given metric.
+            /// Optional. The unit of measure for the given metric.
             /// </summary>
             public string Unit
             {

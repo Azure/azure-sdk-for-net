@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// The affinity group with which this storage account is associated.
+        /// Optional. The affinity group with which this storage account is
+        /// associated.
         /// </summary>
         public string AffinityGroup
         {
@@ -45,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _description;
         
         /// <summary>
-        /// The user supplied description of the storage account.
+        /// Optional. The user supplied description of the storage account.
         /// </summary>
         public string Description
         {
@@ -56,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private IList<Uri> _endpoints;
         
         /// <summary>
-        /// The URLs that are used to perform a retrieval of a public blob,
-        /// queue, or table object.
+        /// Optional. The URLs that are used to perform a retrieval of a public
+        /// blob, queue, or table object.
         /// </summary>
         public IList<Uri> Endpoints
         {
@@ -68,8 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _geoPrimaryRegion;
         
         /// <summary>
-        /// Indicates the primary geographical region in which the storage
-        /// account exists at this time.
+        /// Optional. Indicates the primary geographical region in which the
+        /// storage account exists at this time.
         /// </summary>
         public string GeoPrimaryRegion
         {
@@ -80,10 +81,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private bool _geoReplicationEnabled;
         
         /// <summary>
-        /// Indicates whether the data in the storage account is replicated
-        /// across more than one geographic location so as to enable
-        /// resilience in the face of catastrophic service loss. The value is
-        /// true if geo-replication is enabled; otherwise false.
+        /// Optional. Indicates whether the data in the storage account is
+        /// replicated across more than one geographic location so as to
+        /// enable resilience in the face of catastrophic service loss. The
+        /// value is true if geo-replication is enabled; otherwise false.
         /// </summary>
         public bool GeoReplicationEnabled
         {
@@ -94,9 +95,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _geoSecondaryRegion;
         
         /// <summary>
-        /// Indicates the geographical region in which the storage account is
-        /// being replicated.  The GeoSecondaryRegion element is not returned
-        /// if geo-replication is “off” for this account.
+        /// Optional. Indicates the geographical region in which the storage
+        /// account is being replicated.  The GeoSecondaryRegion element is
+        /// not returned if geo-replication is “off” for this account.
         /// </summary>
         public string GeoSecondaryRegion
         {
@@ -107,9 +108,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _label;
         
         /// <summary>
-        /// The user supplied name of the storage account returned as a base-64
-        /// encoded string. This name can be used identify the storage account
-        /// for your tracking purposes.
+        /// Optional. The user supplied name of the storage account returned as
+        /// a base-64 encoded string. This name can be used identify the
+        /// storage account for your tracking purposes.
         /// </summary>
         public string Label
         {
@@ -120,10 +121,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private System.DateTime? _lastGeoFailoverTime;
         
         /// <summary>
-        /// A timestamp that indicates the most recent instance of a failover
-        /// to the secondary region. In case of multiple failovers only the
-        /// latest failover date and time maintained. The format of the
-        /// returned timestamp is:
+        /// Optional. A timestamp that indicates the most recent instance of a
+        /// failover to the secondary region. In case of multiple failovers
+        /// only the latest failover date and time maintained. The format of
+        /// the returned timestamp is:
         /// [4DigitYear]-[2DigitMonth]-[2DigitDay]T[2DigitMinute]:[2DigitSecond]:[7DigitsOfPrecision]Z.
         /// LastGeoFailoverTime is not returned if there has not been an
         /// instance of a failover.
@@ -137,9 +138,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _location;
         
         /// <summary>
-        /// The geo-location specified when the storage account was created.
-        /// This property is only returned if the storage account is not
-        /// associated with an affinity group.
+        /// Optional. The geo-location specified when the storage account was
+        /// created. This property is only returned if the storage account is
+        /// not associated with an affinity group.
         /// </summary>
         public string Location
         {
@@ -150,8 +151,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private StorageAccountStatus _status;
         
         /// <summary>
-        /// The status of the storage account at the time the operation was
-        /// called.
+        /// Optional. The status of the storage account at the time the
+        /// operation was called.
         /// </summary>
         public StorageAccountStatus Status
         {
@@ -162,7 +163,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? _statusOfGeoPrimaryRegion;
         
         /// <summary>
-        /// Indicates whether the primary storage region is available.
+        /// Optional. Indicates whether the primary storage region is available.
         /// </summary>
         public Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? StatusOfGeoPrimaryRegion
         {
@@ -173,7 +174,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? _statusOfGeoSecondaryRegion;
         
         /// <summary>
-        /// Indicates whether the secondary storage region is available.
+        /// Optional. Indicates whether the secondary storage region is
+        /// available.
         /// </summary>
         public Microsoft.WindowsAzure.Management.Storage.Models.GeoRegionStatus? StatusOfGeoSecondaryRegion
         {

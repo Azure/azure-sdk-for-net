@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _skip;
         
         /// <summary>
-        /// Specify the (0-based) index of the job list from which to begin
-        /// requesting entries.
+        /// Optional. Specify the (0-based) index of the job list from which to
+        /// begin requesting entries.
         /// </summary>
         public int? Skip
         {
@@ -44,7 +44,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _top;
         
         /// <summary>
-        /// Specify the number of jobs to request, in the of range [1..100].
+        /// Optional. Specify the number of jobs to request, in the of range
+        /// [1..100].
         /// </summary>
         public int? Top
         {

@@ -65,10 +65,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Create a cloud service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Delete a cloud service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -365,10 +365,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Create a cloud service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create cloud service operation.
+        /// Required. Parameters supplied to the Create cloud service operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -462,7 +462,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Delete a cloud service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -555,7 +555,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Retreive a cloud service.
         /// </summary>
         /// <param name='cloudServiceName'>
-        /// The cloud service name.
+        /// Required. The cloud service name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

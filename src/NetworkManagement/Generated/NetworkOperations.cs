@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -635,7 +635,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

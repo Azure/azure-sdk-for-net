@@ -35,10 +35,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _availabilitySetName;
         
         /// <summary>
-        /// The name of the availability set the virtual machine belongs to.
-        /// This value controls the virtual machine allocation in the Windows
-        /// Azure environment. Virtual machines specified in the same
-        /// availability set are allocated to different nodes to maximize
+        /// Optional. The name of the availability set the virtual machine
+        /// belongs to. This value controls the virtual machine allocation in
+        /// the Windows Azure environment. Virtual machines specified in the
+        /// same availability set are allocated to different nodes to maximize
         /// availability.
         /// </summary>
         public string AvailabilitySetName
@@ -50,8 +50,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<ConfigurationSet> _configurationSets;
         
         /// <summary>
-        /// Contains the collection of configuration sets that contain system
-        /// and application configuration settings.
+        /// Optional. Contains the collection of configuration sets that
+        /// contain system and application configuration settings.
         /// </summary>
         public IList<ConfigurationSet> ConfigurationSets
         {
@@ -62,8 +62,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DataVirtualHardDisk> _dataVirtualHardDisks;
         
         /// <summary>
-        /// Contains the parameters Windows Azure used to create the data disk
-        /// for the virtual machine.
+        /// Optional. Contains the parameters Windows Azure used to create the
+        /// data disk for the virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
         {
@@ -74,8 +74,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>
-        /// The read-only thumbprint of the certificate that is used with the
-        /// HTTPS listener for WinRM.
+        /// Optional. The read-only thumbprint of the certificate that is used
+        /// with the HTTPS listener for WinRM.
         /// </summary>
         public string DefaultWinRmCertificateThumbprint
         {
@@ -86,8 +86,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _osVersion;
         
         /// <summary>
-        /// The version of the operating system on which the role instances are
-        /// running.
+        /// Optional. The version of the operating system on which the role
+        /// instances are running.
         /// </summary>
         public string OsVersion
         {
@@ -98,8 +98,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>
-        /// Contains the parameters Windows Azure used to create the operating
-        /// system disk for the virtual machine.
+        /// Optional. Contains the parameters Windows Azure used to create the
+        /// operating system disk for the virtual machine.
         /// </summary>
         public OSVirtualHardDisk OSVirtualHardDisk
         {
@@ -110,8 +110,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleName;
         
         /// <summary>
-        /// The name for the virtual machine. The name is unique within Windows
-        /// Azure.
+        /// Optional. The name for the virtual machine. The name is unique
+        /// within Windows Azure.
         /// </summary>
         public string RoleName
         {
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleSize;
         
         /// <summary>
-        /// The size of the virtual machine.
+        /// Optional. The size of the virtual machine.
         /// </summary>
         public string RoleSize
         {
@@ -133,8 +133,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private VirtualMachineRoleType _roleType;
         
         /// <summary>
-        /// The type of the role for the virtual machine. The only supported
-        /// value is PersistentVMRole.
+        /// Optional. The type of the role for the virtual machine. The only
+        /// supported value is PersistentVMRole.
         /// </summary>
         public VirtualMachineRoleType RoleType
         {

@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

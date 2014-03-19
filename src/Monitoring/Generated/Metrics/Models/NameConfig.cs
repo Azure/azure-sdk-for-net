@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Availability metric name config display name.
+        /// Optional. Availability metric name config display name.
         /// </summary>
         public string DisplayName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Availability metric name config name.
+        /// Optional. Availability metric name config name.
         /// </summary>
         public string Name
         {

@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The Delete VM Image operation deletes the specified VM image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The Delete VM Image operation deletes the specified VM image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// Required. The name of the VM image to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

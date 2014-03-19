@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _code;
         
         /// <summary>
-        /// Status code sent by the Resource Extension.
+        /// Optional. Status code sent by the Resource Extension.
         /// </summary>
         public string Code
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private FormattedMessage _formattedMessage;
         
         /// <summary>
-        /// This object encapsulates localized status message from the Resource
-        /// Extension.
+        /// Optional. This object encapsulates localized status message from
+        /// the Resource Extension.
         /// </summary>
         public FormattedMessage FormattedMessage
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _handlerName;
         
         /// <summary>
-        /// Name of the Resource Extension.
+        /// Optional. Name of the Resource Extension.
         /// </summary>
         public string HandlerName
         {
@@ -67,8 +67,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _status;
         
         /// <summary>
-        /// The resource extension status, which can be "Installing", "Ready",
-        /// "NotReady", "Unresponsive"
+        /// Optional. The resource extension status, which can be "Installing",
+        /// "Ready", "NotReady", "Unresponsive"
         /// </summary>
         public string Status
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _version;
         
         /// <summary>
-        /// Version of the Resource Extension.
+        /// Optional. Version of the Resource Extension.
         /// </summary>
         public string Version
         {

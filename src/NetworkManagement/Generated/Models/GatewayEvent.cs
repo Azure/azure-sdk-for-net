@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _data;
         
         /// <summary>
-        /// Additional data associated with this event.
+        /// Optional. Additional data associated with this event.
         /// </summary>
         public string Data
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _id;
         
         /// <summary>
-        /// The event ID.
+        /// Optional. The event ID.
         /// </summary>
         public string Id
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _message;
         
         /// <summary>
-        /// The event message.
+        /// Optional. The event message.
         /// </summary>
         public string Message
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private DateTime _timestamp;
         
         /// <summary>
-        /// The date and time when the event occurred.
+        /// Optional. The date and time when the event occurred.
         /// </summary>
         public DateTime Timestamp
         {

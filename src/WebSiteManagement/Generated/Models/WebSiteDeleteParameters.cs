@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _deleteAllSlots;
         
         /// <summary>
-        /// Delete all slots for the web site.
+        /// Required. Delete all slots for the web site.
         /// </summary>
         public bool DeleteAllSlots
         {
@@ -43,8 +43,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _deleteEmptyServerFarm;
         
         /// <summary>
-        /// If the site being deleted is the last web site in a server farm,
-        /// you can delete the server farm.
+        /// Required. If the site being deleted is the last web site in a
+        /// server farm, you can delete the server farm.
         /// </summary>
         public bool DeleteEmptyServerFarm
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _deleteMetrics;
         
         /// <summary>
-        /// Delete the metrics for the web site.
+        /// Required. Delete the metrics for the web site.
         /// </summary>
         public bool DeleteMetrics
         {

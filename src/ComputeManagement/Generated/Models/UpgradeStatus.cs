@@ -33,10 +33,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int _currentUpgradeDomain;
         
         /// <summary>
-        /// An integer value that identifies the current upgrade domain.
-        /// Upgrade domains are identified with a zero-based index: the first
-        /// upgrade domain has an ID of 0, the second has an ID of 1, and so
-        /// on.
+        /// Optional. An integer value that identifies the current upgrade
+        /// domain. Upgrade domains are identified with a zero-based index:
+        /// the first upgrade domain has an ID of 0, the second has an ID of
+        /// 1, and so on.
         /// </summary>
         public int CurrentUpgradeDomain
         {
@@ -47,8 +47,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private UpgradeDomainState _currentUpgradeDomainState;
         
         /// <summary>
-        /// The current state of the upgrade. Possible values are Before and
-        /// During
+        /// Optional. The current state of the upgrade. Possible values are
+        /// Before and During
         /// </summary>
         public UpgradeDomainState CurrentUpgradeDomainState
         {
@@ -59,7 +59,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DeploymentUpgradeType _upgradeType;
         
         /// <summary>
-        /// The type of the upgrade. Possible values are Auto and Manual.
+        /// Optional. The type of the upgrade. Possible values are Auto and
+        /// Manual.
         /// </summary>
         public DeploymentUpgradeType UpgradeType
         {

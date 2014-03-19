@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _bandwidth;
         
         /// <summary>
-        /// Bandwidth requested for the circuit in Mbps.
+        /// Required. Bandwidth requested for the circuit in Mbps.
         /// </summary>
         public uint Bandwidth
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _circuitName;
         
         /// <summary>
-        /// Name of the dedicated circuit.
+        /// Required. Name of the dedicated circuit.
         /// </summary>
         public string CircuitName
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _location;
         
         /// <summary>
-        /// Location of the dedicated circuit.
+        /// Required. Location of the dedicated circuit.
         /// </summary>
         public string Location
         {
@@ -65,7 +65,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _serviceProviderName;
         
         /// <summary>
-        /// Service provider chosen to create the dedicated circuit with.
+        /// Required. Service provider chosen to create the dedicated circuit
+        /// with.
         /// </summary>
         public string ServiceProviderName
         {

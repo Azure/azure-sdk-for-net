@@ -80,14 +80,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to change deployment configuration for.
+        /// Required. The cloud service to change deployment configuration for.
         /// </param>
         /// <param name='deploymentName'>
-        /// The deployment to change configuration for.
+        /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Change Configuration Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Change Configuration
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -364,14 +364,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to change deployment configuration for.
+        /// Required. The cloud service to change deployment configuration for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to change deployment configuration for.
+        /// Required. The slot to change deployment configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Change Configuration Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Change Configuration
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -644,13 +644,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to create a deployment for.
+        /// Required. The cloud service to create a deployment for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to create a deployment for.
+        /// Required. The slot to create a deployment for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Deployment operation.
+        /// Required. Parameters supplied to the Create Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -950,13 +950,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1093,10 +1093,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1224,13 +1224,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1367,13 +1367,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1506,13 +1506,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1649,13 +1649,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1788,10 +1788,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Swap Deployment operation.
+        /// Required. Parameters supplied to the Swap Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1950,13 +1950,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Deployment Status operation.
+        /// Required. Parameters supplied to the Update Deployment Status
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2109,13 +2110,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Deployment Status operation.
+        /// Required. Parameters supplied to the Update Deployment Status
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2286,13 +2288,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to upgrade.
+        /// Required. The cloud service to upgrade.
         /// </param>
         /// <param name='deploymentName'>
-        /// The deployment to upgrade.
+        /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2612,13 +2614,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to upgrade.
+        /// Required. The cloud service to upgrade.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to upgrade.
+        /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2934,13 +2936,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3114,13 +3116,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3268,14 +3270,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to change deployment configuration for.
+        /// Required. The cloud service to change deployment configuration for.
         /// </param>
         /// <param name='deploymentName'>
-        /// The deployment to change configuration for.
+        /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Change Configuration Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Change Configuration
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3378,14 +3380,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to change deployment configuration for.
+        /// Required. The cloud service to change deployment configuration for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to change deployment configuration for.
+        /// Required. The slot to change deployment configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Change Configuration Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Change Configuration
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3488,13 +3490,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to create a deployment for.
+        /// Required. The cloud service to create a deployment for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to create a deployment for.
+        /// Required. The slot to create a deployment for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Deployment operation.
+        /// Required. Parameters supplied to the Create Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3596,13 +3598,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
+        /// Required. Specifies that the source blob for the disk should also
         /// be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
@@ -3705,10 +3707,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3805,10 +3807,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of the deployment.
+        /// Required. The name of the deployment.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5173,10 +5175,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6543,13 +6545,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6696,13 +6698,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6844,13 +6846,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6953,13 +6955,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7062,13 +7064,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7171,13 +7173,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='roleInstanceName'>
-        /// The name of your role instance.
+        /// Required. The name of your role instance.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7281,13 +7283,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Rollback Update Or Upgrade operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7445,13 +7448,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Rollback Update Or Upgrade operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7604,10 +7608,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Swap Deployment operation.
+        /// Required. Parameters supplied to the Swap Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7709,13 +7713,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Deployment Status operation.
+        /// Required. Parameters supplied to the Update Deployment Status
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7818,13 +7823,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to swap deployments for.
+        /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Deployment Status operation.
+        /// Required. Parameters supplied to the Update Deployment Status
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -7949,13 +7955,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to upgrade.
+        /// Required. The cloud service to upgrade.
         /// </param>
         /// <param name='deploymentName'>
-        /// The deployment to upgrade.
+        /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -8080,13 +8086,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service to upgrade.
+        /// Required. The cloud service to upgrade.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The slot to upgrade.
+        /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -8211,13 +8217,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -8342,13 +8348,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='deploymentSlot'>
-        /// The deployment slot.
+        /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -33,8 +33,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobHistoryStatus _status;
         
         /// <summary>
-        /// Filter the job history to have it only return job execution
-        /// attempts having a particular Status, 'completed' or 'failed'.
+        /// Required. Filter the job history to have it only return job
+        /// execution attempts having a particular Status, 'completed' or
+        /// 'failed'.
         /// </summary>
         public JobHistoryStatus Status
         {

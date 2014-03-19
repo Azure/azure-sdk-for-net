@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _accountKey;
         
         /// <summary>
-        /// The Key of the Media Services account.
+        /// Optional. The Key of the Media Services account.
         /// </summary>
         public string AccountKey
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _accountName;
         
         /// <summary>
-        /// The Name of the Media Services account.
+        /// Optional. The Name of the Media Services account.
         /// </summary>
         public string AccountName
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _accountRegion;
         
         /// <summary>
-        /// The Region of the  Media Services account.
+        /// Optional. The Region of the  Media Services account.
         /// </summary>
         public string AccountRegion
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private MediaServicesAccount.AccountKeys _storageAccountKeys;
         
         /// <summary>
-        /// The Storage Account keys of the Media Services account.
+        /// Optional. The Storage Account keys of the Media Services account.
         /// </summary>
         public MediaServicesAccount.AccountKeys StorageAccountKeys
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _storageAccountName;
         
         /// <summary>
-        /// The Storage Account Name of the Media Services account.
+        /// Optional. The Storage Account Name of the Media Services account.
         /// </summary>
         public string StorageAccountName
         {
@@ -100,8 +100,8 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _primary;
             
             /// <summary>
-            /// The Primary key of the storage account associated with the
-            /// Media Services account.
+            /// Optional. The Primary key of the storage account associated
+            /// with the Media Services account.
             /// </summary>
             public string Primary
             {
@@ -112,8 +112,8 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _secondary;
             
             /// <summary>
-            /// The Secondary key of the sotrage account associated with the
-            /// Media Services account.
+            /// Optional. The Secondary key of the sotrage account associated
+            /// with the Media Services account.
             /// </summary>
             public string Secondary
             {

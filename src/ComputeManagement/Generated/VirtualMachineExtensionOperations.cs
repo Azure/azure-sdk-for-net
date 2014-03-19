@@ -300,10 +300,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='publisherName'>
-        /// The name of the publisher.
+        /// Required. The name of the publisher.
         /// </param>
         /// <param name='extensionName'>
-        /// The name of the extension.
+        /// Required. The name of the extension.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

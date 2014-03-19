@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricDefinitionCollection _metricDefinitionCollection;
         
         /// <summary>
-        /// The retrieved metric definitions.
+        /// Optional. The retrieved metric definitions.
         /// </summary>
         public MetricDefinitionCollection MetricDefinitionCollection
         {

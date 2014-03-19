@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Uri _uri;
         
         /// <summary>
-        /// Contains the URI of the web site repository.
+        /// Optional. Contains the URI of the web site repository.
         /// </summary>
         public Uri Uri
         {

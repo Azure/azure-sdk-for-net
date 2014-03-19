@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int _skip;
         
         /// <summary>
-        /// Specify the (0-based) index of the history list from which to begin
-        /// requesting entries.
+        /// Required. Specify the (0-based) index of the history list from
+        /// which to begin requesting entries.
         /// </summary>
         public int Skip
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int _top;
         
         /// <summary>
-        /// Specify the number of history entries to request, in the of range
-        /// [1..100].
+        /// Required. Specify the number of history entries to request, in the
+        /// of range [1..100].
         /// </summary>
         public int Top
         {

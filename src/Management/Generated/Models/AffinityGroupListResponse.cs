@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<AffinityGroupListResponse.AffinityGroup> _affinityGroups;
         
         /// <summary>
-        /// The affinity groups associated with the specified subscription.
+        /// Optional. The affinity groups associated with the specified
+        /// subscription.
         /// </summary>
         public IList<AffinityGroupListResponse.AffinityGroup> AffinityGroups
         {
@@ -75,10 +76,10 @@ namespace Microsoft.WindowsAzure.Management.Models
             private IList<string> _capabilities;
             
             /// <summary>
-            /// Indicates if the affinity group is able to perform virtual
-            /// machine related operations. If so, the string PersistentVMRole
-            /// will be returned by this element. Otherwise, this element will
-            /// not be present.
+            /// Optional. Indicates if the affinity group is able to perform
+            /// virtual machine related operations. If so, the string
+            /// PersistentVMRole will be returned by this element. Otherwise,
+            /// this element will not be present.
             /// </summary>
             public IList<string> Capabilities
             {
@@ -89,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _description;
             
             /// <summary>
-            /// The user supplied description of this affinity group.
+            /// Optional. The user supplied description of this affinity group.
             /// </summary>
             public string Description
             {
@@ -100,8 +101,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _label;
             
             /// <summary>
-            /// The user supplied label of the affinity group returned as a
-            /// base-64 encoded string.
+            /// Optional. The user supplied label of the affinity group
+            /// returned as a base-64 encoded string.
             /// </summary>
             public string Label
             {
@@ -112,8 +113,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _location;
             
             /// <summary>
-            /// The user specified data center that this affinity groups is
-            /// located in.
+            /// Optional. The user specified data center that this affinity
+            /// groups is located in.
             /// </summary>
             public string Location
             {
@@ -124,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _name;
             
             /// <summary>
-            /// The user supplied name of the affinity group.
+            /// Optional. The user supplied name of the affinity group.
             /// </summary>
             public string Name
             {

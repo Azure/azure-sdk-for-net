@@ -42,9 +42,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private GatewayGetOperationStatusResponse.ErrorDetails _error;
         
         /// <summary>
-        /// If the asynchronous operation failed, the response body includes
-        /// the HTTP status code for the failed request, and also includes
-        /// error information regarding the failure.
+        /// Optional. If the asynchronous operation failed, the response body
+        /// includes the HTTP status code for the failed request, and also
+        /// includes error information regarding the failure.
         /// </summary>
         public GatewayGetOperationStatusResponse.ErrorDetails Error
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private HttpStatusCode _httpStatusCode;
         
         /// <summary>
-        /// The HTTP status code for the asynchronous request.
+        /// Optional. The HTTP status code for the asynchronous request.
         /// </summary>
         public HttpStatusCode HttpStatusCode
         {
@@ -66,8 +66,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _id;
         
         /// <summary>
-        /// The request ID of the asynchronous request. This value is returned
-        /// in the x-ms-request-id response header of the asynchronous request.
+        /// Optional. The request ID of the asynchronous request. This value is
+        /// returned in the x-ms-request-id response header of the
+        /// asynchronous request.
         /// </summary>
         public string Id
         {
@@ -78,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private GatewayOperationStatus _status;
         
         /// <summary>
-        /// The status of the asynchronous request.
+        /// Optional. The status of the asynchronous request.
         /// </summary>
         public GatewayOperationStatus Status
         {
@@ -104,8 +105,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _code;
             
             /// <summary>
-            /// The management service error code returned if the asynchronous
-            /// request failed.
+            /// Optional. The management service error code returned if the
+            /// asynchronous request failed.
             /// </summary>
             public string Code
             {
@@ -116,7 +117,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _message;
             
             /// <summary>
-            /// The management service error message returned if the
+            /// Optional. The management service error message returned if the
             /// asynchronous request failed.
             /// </summary>
             public string Message

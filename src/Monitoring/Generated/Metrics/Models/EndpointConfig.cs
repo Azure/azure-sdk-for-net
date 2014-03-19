@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _configId;
         
         /// <summary>
-        /// The config id for endpoint monitoring config.
+        /// Optional. The config id for endpoint monitoring config.
         /// </summary>
         public string ConfigId
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _location;
         
         /// <summary>
-        /// The location from which the endpoint is monitored.
+        /// Optional. The location from which the endpoint is monitored.
         /// </summary>
         public string Location
         {
@@ -54,8 +54,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// The friendly name for the url for which endpoint monitoring is
-        /// configured.
+        /// Optional. The friendly name for the url for which endpoint
+        /// monitoring is configured.
         /// </summary>
         public string Name
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private Uri _url;
         
         /// <summary>
-        /// The Url to be monitored.
+        /// Optional. The Url to be monitored.
         /// </summary>
         public Uri Url
         {

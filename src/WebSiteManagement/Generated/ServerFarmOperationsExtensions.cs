@@ -58,10 +58,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
+        /// Required. Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <returns>
         /// The Create Server Farm operation response.
@@ -103,10 +103,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
+        /// Required. Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <returns>
         /// The Create Server Farm operation response.
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -206,10 +206,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='serverFarmName'>
-        /// The name of the server farm.
+        /// Required. The name of the server farm.
         /// </param>
         /// <returns>
         /// The Get Server Farm operation response.
@@ -251,10 +251,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='serverFarmName'>
-        /// The name of the server farm.
+        /// Required. The name of the server farm.
         /// </param>
         /// <returns>
         /// The Get Server Farm operation response.
@@ -282,7 +282,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// The List Server Farm operation response.
@@ -324,7 +324,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <returns>
         /// The List Server Farm operation response.
@@ -352,10 +352,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
+        /// Required. Parameters supplied to the Update Server Farm operation.
         /// </param>
         /// <returns>
         /// The Update Server Farm operation response.
@@ -397,10 +397,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IServerFarmOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
+        /// Required. Parameters supplied to the Update Server Farm operation.
         /// </param>
         /// <returns>
         /// The Update Server Farm operation response.

@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _diskLabel;
         
         /// <summary>
-        /// Specifies the friendly name of the VHD to use to create thedata
-        /// disk for the virtual machine.
+        /// Optional. Specifies the friendly name of the VHD to use to create
+        /// thedata disk for the virtual machine.
         /// </summary>
         public string DiskLabel
         {
@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
         
         /// <summary>
-        /// Specifies the platform caching behavior of the data disk blob for
-        /// read/write efficiency. The default vault is ReadOnly.
+        /// Optional. Specifies the platform caching behavior of the data disk
+        /// blob for read/write efficiency. The default vault is ReadOnly.
         /// </summary>
         public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
         {
@@ -57,10 +57,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _logicalDiskSizeInGB;
         
         /// <summary>
-        /// Specifies the size, in GB, of an empty VHD to be attached to the
-        /// virtual machine. The VHD can be created as part of disk attach or
-        /// create virtual machine call by specifying the value for this
-        /// property.  Windows Azure creates the empty VHD based on size
+        /// Optional. Specifies the size, in GB, of an empty VHD to be attached
+        /// to the virtual machine. The VHD can be created as part of disk
+        /// attach or create virtual machine call by specifying the value for
+        /// this property.  Windows Azure creates the empty VHD based on size
         /// preference and attaches the newly created VHD to the virtual
         /// machine.
         /// </summary>
@@ -73,10 +73,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _logicalUnitNumber;
         
         /// <summary>
-        /// Specifies the Logical Unit Number (LUN) for the data disk. The LUN
-        /// specifies the slot in which the data drive appears when mounted
-        /// for usage by the virtual machine. This element is only listed when
-        /// more than one data disk is attached to a virtual machine.
+        /// Optional. Specifies the Logical Unit Number (LUN) for the data
+        /// disk. The LUN specifies the slot in which the data drive appears
+        /// when mounted for usage by the virtual machine. This element is
+        /// only listed when more than one data disk is attached to a virtual
+        /// machine.
         /// </summary>
         public int? LogicalUnitNumber
         {
@@ -87,12 +88,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLink;
         
         /// <summary>
-        /// Optional. If the disk that is being added is already registered in
-        /// the subscription or the VHD for the disk already exists in blob
-        /// storage, this element is ignored. If a VHD file does not exist in
-        /// blob storage, this element defines the location of the new VHD
-        /// that is created when the new disk is added. Example:
-        /// http://example.blob.core.windows.net/disks/mydatadisk.vhd
+        /// Optional. Optional. If the disk that is being added is already
+        /// registered in the subscription or the VHD for the disk already
+        /// exists in blob storage, this element is ignored. If a VHD file
+        /// does not exist in blob storage, this element defines the location
+        /// of the new VHD that is created when the new disk is added.
+        /// Example: http://example.blob.core.windows.net/disks/mydatadisk.vhd
         /// </summary>
         public Uri MediaLink
         {
@@ -103,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Specifies the name of the VHD to use to create thedata disk for the
-        /// virtual machine.
+        /// Optional. Specifies the name of the VHD to use to create thedata
+        /// disk for the virtual machine.
         /// </summary>
         public string Name
         {
@@ -115,11 +116,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _sourceMediaLink;
         
         /// <summary>
-        /// Optional. If the disk that is being added is already registered in
-        /// the subscription or the VHD for the disk does not exist in blob
-        /// storage, this element is ignored. If the VHD file exists in blob
-        /// storage, this element defines the path to the VHD and a disk is
-        /// registered from it and attached to the virtual machine.
+        /// Optional. Optional. If the disk that is being added is already
+        /// registered in the subscription or the VHD for the disk does not
+        /// exist in blob storage, this element is ignored. If the VHD file
+        /// exists in blob storage, this element defines the path to the VHD
+        /// and a disk is registered from it and attached to the virtual
+        /// machine.
         /// </summary>
         public Uri SourceMediaLink
         {

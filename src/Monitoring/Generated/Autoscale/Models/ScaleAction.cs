@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _cooldown;
         
         /// <summary>
-        /// The cooldown interval for scaling action.
+        /// Optional. The cooldown interval for scaling action.
         /// </summary>
         public TimeSpan Cooldown
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleDirection _direction;
         
         /// <summary>
-        /// The direction of scaling.
+        /// Optional. The direction of scaling.
         /// </summary>
         public ScaleDirection Direction
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleType _type;
         
         /// <summary>
-        /// The type of scaling.
+        /// Optional. The type of scaling.
         /// </summary>
         public ScaleType Type
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _value;
         
         /// <summary>
-        /// The rate of scaling.
+        /// Optional. The rate of scaling.
         /// </summary>
         public string Value
         {

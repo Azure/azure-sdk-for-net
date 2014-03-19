@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _metricName;
         
         /// <summary>
-        /// Metric name.
+        /// Optional. Metric name.
         /// </summary>
         public string MetricName
         {
@@ -44,8 +44,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// Metric namespace. When creating a rule on endpoint monitoring
-        /// metrics, WindowsAzure.Availability namespace is required.
+        /// Optional. Metric namespace. When creating a rule on endpoint
+        /// monitoring metrics, WindowsAzure.Availability namespace is
+        /// required.
         /// </summary>
         public string MetricNamespace
         {
@@ -56,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _resourceId;
         
         /// <summary>
-        /// Metric resource id.
+        /// Optional. Metric resource id.
         /// </summary>
         public string ResourceId
         {

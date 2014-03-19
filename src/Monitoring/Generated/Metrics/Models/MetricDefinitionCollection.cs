@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricDefinition> _value;
         
         /// <summary>
-        /// The values for the metric definitions.
+        /// Optional. The values for the metric definitions.
         /// </summary>
         public IList<MetricDefinition> Value
         {

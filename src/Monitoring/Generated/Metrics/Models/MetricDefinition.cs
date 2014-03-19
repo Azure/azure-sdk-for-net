@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Metric display name.
+        /// Optional. Metric display name.
         /// </summary>
         public string DisplayName
         {
@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private bool _isAlertable;
         
         /// <summary>
-        /// Specifies if the metric is alertable. Alerts can be defined on a
-        /// metric only if this property is true.
+        /// Optional. Specifies if the metric is alertable. Alerts can be
+        /// defined on a metric only if this property is true.
         /// </summary>
         public bool IsAlertable
         {
@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricAvailability> _metricAvailabilities;
         
         /// <summary>
-        /// Metric availability specifies the time grain (aggregation interval)
-        /// and the retention period for the metric in a timegrain.
+        /// Optional. Metric availability specifies the time grain (aggregation
+        /// interval) and the retention period for the metric in a timegrain.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
@@ -69,7 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _minimumAlertableTimeWindow;
         
         /// <summary>
-        /// Specifies the minimum alertable time window for the metric.
+        /// Optional. Specifies the minimum alertable time window for the
+        /// metric.
         /// </summary>
         public TimeSpan MinimumAlertableTimeWindow
         {
@@ -80,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Get the metric name.
+        /// Optional. Get the metric name.
         /// </summary>
         public string Name
         {
@@ -91,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// Get the metric namespace.
+        /// Optional. Get the metric namespace.
         /// </summary>
         public string Namespace
         {
@@ -102,9 +103,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _primaryAggregation;
         
         /// <summary>
-        /// Metric primary aggregation specifies the default type for the
-        /// metrics. This indicates if the metric is of type average, total,
-        /// minimum or maximum.
+        /// Optional. Metric primary aggregation specifies the default type for
+        /// the metrics. This indicates if the metric is of type average,
+        /// total, minimum or maximum.
         /// </summary>
         public string PrimaryAggregation
         {
@@ -115,8 +116,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceIdSuffix;
         
         /// <summary>
-        /// Metric resource id suffix specfies the sub-resource path within the
-        /// the resource for the metric.
+        /// Optional. Metric resource id suffix specfies the sub-resource path
+        /// within the the resource for the metric.
         /// </summary>
         public string ResourceIdSuffix
         {
@@ -127,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _unit;
         
         /// <summary>
-        /// The unit for the metric.
+        /// Optional. The unit for the metric.
         /// </summary>
         public string Unit
         {

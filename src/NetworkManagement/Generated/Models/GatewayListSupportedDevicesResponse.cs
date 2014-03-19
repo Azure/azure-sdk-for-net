@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private IList<GatewayListSupportedDevicesResponse.Vendor> _vendors;
         
         /// <summary>
-        /// The set of supported vendors.
+        /// Optional. The set of supported vendors.
         /// </summary>
         public IList<GatewayListSupportedDevicesResponse.Vendor> Vendors
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _version;
         
         /// <summary>
-        /// The version for this device configuration list.
+        /// Optional. The version for this device configuration list.
         /// </summary>
         public string Version
         {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _name;
             
             /// <summary>
-            /// The name of the os family.
+            /// Optional. The name of the os family.
             /// </summary>
             public string Name
             {
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _name;
             
             /// <summary>
-            /// The platform name.
+            /// Optional. The platform name.
             /// </summary>
             public string Name
             {
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<GatewayListSupportedDevicesResponse.OSFamily> _oSFamilies;
             
             /// <summary>
-            /// The supported OS Families for this platform.
+            /// Optional. The supported OS Families for this platform.
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.OSFamily> OSFamilies
             {
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _name;
             
             /// <summary>
-            /// The vendor name.
+            /// Optional. The vendor name.
             /// </summary>
             public string Name
             {
@@ -139,7 +139,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<GatewayListSupportedDevicesResponse.Platform> _platforms;
             
             /// <summary>
-            /// The supported platforms for the vendor.
+            /// Optional. The supported platforms for the vendor.
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.Platform> Platforms
             {

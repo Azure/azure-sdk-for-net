@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionPlan _plan;
         
         /// <summary>
-        /// The plan of the resource.
+        /// Optional. The plan of the resource.
         /// </summary>
         public JobCollectionPlan Plan
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionQuota _quota;
         
         /// <summary>
-        /// Quota settings for the job collection.
+        /// Optional. Quota settings for the job collection.
         /// </summary>
         public JobCollectionQuota Quota
         {

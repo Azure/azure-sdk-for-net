@@ -75,7 +75,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -307,7 +308,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The desired storage account name to check for availability.
+        /// Required. The desired storage account name to check for
+        /// availability.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -460,7 +462,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -556,7 +559,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the storage account.
+        /// Required. The name of the storage account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -678,7 +681,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// Name of the storage account to get.
+        /// Required. Name of the storage account to get.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -938,7 +941,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// The name of the desired storage account.
+        /// Required. The name of the desired storage account.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1348,7 +1351,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Regenerate Keys operation.
+        /// Required. Parameters supplied to the Regenerate Keys operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1523,10 +1526,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// Name of the storage account to update.
+        /// Required. Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Storage Account operation.
+        /// Required. Parameters supplied to the Update Storage Account
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

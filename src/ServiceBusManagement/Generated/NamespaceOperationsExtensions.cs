@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// The response to a query for the availability status of a namespace
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// The response to a query for the availability status of a namespace
@@ -108,10 +108,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// The namespace region.
+        /// Required. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -146,10 +146,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// The namespace region.
+        /// Required. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -168,10 +168,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// The shared access authorization rule.
+        /// Required. The shared access authorization rule.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.
@@ -204,10 +204,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// The shared access authorization rule.
+        /// Required. The shared access authorization rule.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.
@@ -229,7 +229,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -266,7 +266,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -286,10 +286,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='ruleName'>
-        /// The rule name.
+        /// Required. The rule name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -323,10 +323,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='ruleName'>
-        /// The rule name.
+        /// Required. The rule name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -347,7 +347,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -381,7 +381,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -400,10 +400,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <param name='entityName'>
-        /// The entity name to get the authorization rule for.
+        /// Required. The entity name to get the authorization rule for.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.
@@ -436,10 +436,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <param name='entityName'>
-        /// The entity name to get the authorization rule for.
+        /// Required. The entity name to get the authorization rule for.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.
@@ -461,7 +461,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A response to a request for a list of namespaces.
@@ -497,7 +497,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A response to a request for a list of namespaces.
@@ -564,7 +564,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <returns>
         /// A response to a request for a list of authorization rules.
@@ -597,7 +597,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <returns>
         /// A response to a request for a list of authorization rules.
@@ -616,10 +616,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// Updated access authorization rule.
+        /// Optional. Updated access authorization rule.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.
@@ -652,10 +652,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INamespaceOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// Updated access authorization rule.
+        /// Optional. Updated access authorization rule.
         /// </param>
         /// <returns>
         /// A response to a request for a particular authorization rule.

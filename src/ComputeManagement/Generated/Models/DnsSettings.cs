@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DnsServer> _dnsServers;
         
         /// <summary>
-        /// Contains a collection of objects that define the DNS server
-        /// settings.
+        /// Optional. Contains a collection of objects that define the DNS
+        /// server settings.
         /// </summary>
         public IList<DnsServer> DnsServers
         {

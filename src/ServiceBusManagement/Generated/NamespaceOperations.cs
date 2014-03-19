@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -229,10 +229,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// The namespace region.
+        /// Required. The namespace region.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -458,10 +458,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// authorization rule for a namespace
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// The shared access authorization rule.
+        /// Required. The shared access authorization rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -748,7 +748,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -869,10 +869,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// authorization rule for a namespace
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='ruleName'>
-        /// The rule name.
+        /// Required. The rule name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -998,7 +998,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1194,10 +1194,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// a namespace by name.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <param name='entityName'>
-        /// The entity name to get the authorization rule for.
+        /// Required. The entity name to get the authorization rule for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1410,7 +1410,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1788,7 +1788,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for a namespace.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace to get the authorization rule for.
+        /// Required. The namespace to get the authorization rule for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1999,10 +1999,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// rule for a namespace.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='rule'>
-        /// Updated access authorization rule.
+        /// Optional. Updated access authorization rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

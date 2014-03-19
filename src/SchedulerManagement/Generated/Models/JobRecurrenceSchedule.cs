@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<JobScheduleDay> _days;
         
         /// <summary>
-        /// Days of the week that the job should execute on.
+        /// Optional. Days of the week that the job should execute on.
         /// </summary>
         public IList<JobScheduleDay> Days
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<int> _hours;
         
         /// <summary>
-        /// Hours of the day that the job should execute at.
+        /// Optional. Hours of the day that the job should execute at.
         /// </summary>
         public IList<int> Hours
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<int> _minutes;
         
         /// <summary>
-        /// Minutes of the hour that the job should execute at.
+        /// Optional. Minutes of the hour that the job should execute at.
         /// </summary>
         public IList<int> Minutes
         {
@@ -67,8 +67,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<int> _monthDays;
         
         /// <summary>
-        /// Days of the month that the job should execute on.  Must be between
-        /// 1 and 31.
+        /// Optional. Days of the month that the job should execute on.  Must
+        /// be between 1 and 31.
         /// </summary>
         public IList<int> MonthDays
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<JobScheduleMonthlyOccurrence> _monthlyOccurrences;
         
         /// <summary>
-        /// Occurrences of days within a month.
+        /// Optional. Occurrences of days within a month.
         /// </summary>
         public IList<JobScheduleMonthlyOccurrence> MonthlyOccurrences
         {
@@ -90,7 +90,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private IList<int> _months;
         
         /// <summary>
-        /// Months that the job should execute in.  Must be between 1 and 12.
+        /// Optional. Months that the job should execute in.  Must be between 1
+        /// and 12.
         /// </summary>
         public IList<int> Months
         {

@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// for as dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -203,11 +203,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// connection.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update CrossConnection operation.
+        /// Required. Parameters supplied to the Update CrossConnection
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -375,7 +376,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// key.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -713,7 +714,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// for the given azure circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -782,11 +783,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// connection.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

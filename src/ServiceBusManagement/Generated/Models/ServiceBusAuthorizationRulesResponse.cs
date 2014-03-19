@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusSharedAccessAuthorizationRule> _authorizationRules;
         
         /// <summary>
-        /// The list of authorization rules.
+        /// Optional. The list of authorization rules.
         /// </summary>
         public IList<ServiceBusSharedAccessAuthorizationRule> AuthorizationRules
         {

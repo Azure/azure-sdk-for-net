@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _detailsUrl;
         
         /// <summary>
-        /// The details URL.
+        /// Optional. The details URL.
         /// </summary>
         public string DetailsUrl
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _id;
         
         /// <summary>
-        /// The identifier.
+        /// Optional. The identifier.
         /// </summary>
         public string Id
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private DateTime _logTime;
         
         /// <summary>
-        /// The log time stamp.
+        /// Optional. The log time stamp.
         /// </summary>
         public DateTime LogTime
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _message;
         
         /// <summary>
-        /// The deployment message.
+        /// Optional. The deployment message.
         /// </summary>
         public string Message
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private LogEntryType _type;
         
         /// <summary>
-        /// The type.
+        /// Optional. The type.
         /// </summary>
         public LogEntryType Type
         {

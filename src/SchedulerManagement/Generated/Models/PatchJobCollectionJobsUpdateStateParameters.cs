@@ -30,6 +30,9 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     {
         private Patchable<JobState> _state;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public Patchable<JobState> State
         {
             get { return this._state; }

@@ -71,7 +71,8 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// service in a Windows Azure subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -241,7 +242,8 @@ namespace Microsoft.WindowsAzure.Management.Store
         /// service in a Windows Azure subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<ManagementCertificateListResponse.SubscriptionCertificate> _subscriptionCertificates;
         
         /// <summary>
-        /// The management certificates that are valid for your subscription.
+        /// Optional. The management certificates that are valid for your
+        /// subscription.
         /// </summary>
         public IList<ManagementCertificateListResponse.SubscriptionCertificate> SubscriptionCertificates
         {
@@ -76,7 +77,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private DateTime _created;
             
             /// <summary>
-            /// The time that the management certificate was created, in UTC.
+            /// Optional. The time that the management certificate was created,
+            /// in UTC.
             /// </summary>
             public DateTime Created
             {
@@ -87,8 +89,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private byte[] _data;
             
             /// <summary>
-            /// A base64 representation of the data contained in the management
-            /// certificate, in .cer format.
+            /// Optional. A base64 representation of the data contained in the
+            /// management certificate, in .cer format.
             /// </summary>
             public byte[] Data
             {
@@ -99,8 +101,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private byte[] _publicKey;
             
             /// <summary>
-            /// A base64 representation of the management certificate public
-            /// key.
+            /// Optional. A base64 representation of the management certificate
+            /// public key.
             /// </summary>
             public byte[] PublicKey
             {
@@ -111,9 +113,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _thumbprint;
             
             /// <summary>
-            /// The X509 certificate thumb print property of the management
-            /// certificate. This thumb print uniquely identifies the
-            /// certificate.
+            /// Optional. The X509 certificate thumb print property of the
+            /// management certificate. This thumb print uniquely identifies
+            /// the certificate.
             /// </summary>
             public string Thumbprint
             {

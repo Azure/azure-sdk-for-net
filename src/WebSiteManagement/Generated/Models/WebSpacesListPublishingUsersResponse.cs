@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSpacesListPublishingUsersResponse.User> _users;
         
         /// <summary>
-        /// The publishing users.
+        /// Optional. The publishing users.
         /// </summary>
         public IList<WebSpacesListPublishingUsersResponse.User> Users
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The publishing user name.
+            /// Optional. The publishing user name.
             /// </summary>
             public string Name
             {

@@ -58,16 +58,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -111,16 +112,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -139,16 +141,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -181,16 +184,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -223,13 +227,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -276,13 +281,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -310,11 +316,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -356,11 +362,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -382,16 +388,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <returns>
@@ -428,16 +434,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <returns>
@@ -460,13 +466,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -502,13 +508,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -530,16 +536,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -575,16 +581,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -604,14 +610,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -645,14 +651,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -673,13 +679,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -714,13 +720,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -740,13 +746,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -780,13 +786,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -808,16 +814,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -853,16 +860,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -884,14 +892,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -927,14 +935,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -964,16 +972,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1024,16 +1033,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1059,16 +1069,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1108,16 +1119,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1157,13 +1169,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1217,13 +1230,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1258,11 +1272,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1311,11 +1325,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1344,16 +1358,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <returns>
@@ -1397,16 +1411,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <returns>
@@ -1436,13 +1450,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
         /// The Get Virtual Machine operation response.
@@ -1477,13 +1491,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
         /// The Get Virtual Machine operation response.
@@ -1505,13 +1519,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
         /// The Download RDP file operation response.
@@ -1547,13 +1561,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <returns>
         /// The Download RDP file operation response.
@@ -1574,13 +1588,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1623,13 +1637,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1658,16 +1672,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1710,16 +1724,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1746,14 +1760,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1794,14 +1808,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1829,13 +1843,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1877,13 +1891,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1910,13 +1924,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1957,13 +1971,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -1992,16 +2006,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -2044,16 +2059,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -2082,14 +2098,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -2132,14 +2148,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

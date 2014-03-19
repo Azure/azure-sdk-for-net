@@ -101,7 +101,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Subscription Operations operation.
+        /// Required. Parameters supplied to the List Subscription Operations
+        /// operation.
         /// </param>
         /// <returns>
         /// The List Subscription Operations operation response.
@@ -137,7 +138,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Subscription Operations operation.
+        /// Required. Parameters supplied to the List Subscription Operations
+        /// operation.
         /// </param>
         /// <returns>
         /// The List Subscription Operations operation response.
@@ -155,7 +157,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the resource to register.
+        /// Required. Name of the resource to register.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -188,7 +190,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the resource to register.
+        /// Required. Name of the resource to register.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -207,7 +209,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the resource to unregister.
+        /// Required. Name of the resource to unregister.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -240,7 +242,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ISubscriptionOperations.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the resource to unregister.
+        /// Required. Name of the resource to unregister.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

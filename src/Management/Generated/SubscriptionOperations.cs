@@ -314,7 +314,8 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the List Subscription Operations operation.
+        /// Required. Parameters supplied to the List Subscription Operations
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -560,7 +561,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Register a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the resource to register.
+        /// Required. Name of the resource to register.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -681,7 +682,7 @@ namespace Microsoft.WindowsAzure.Management
         /// Unregister a resource with your subscription.
         /// </summary>
         /// <param name='resourceName'>
-        /// Name of the resource to unregister.
+        /// Required. Name of the resource to unregister.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

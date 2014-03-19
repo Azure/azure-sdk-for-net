@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _configurationScript;
         
         /// <summary>
-        /// The requested configuration script for the local network device.
+        /// Optional. The requested configuration script for the local network
+        /// device.
         /// </summary>
         public string ConfigurationScript
         {
