@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private DateTime _activatedTime;
         
         /// <summary>
-        /// The time at which the incident got activated.
+        /// Optional. The time at which the incident got activated.
         /// </summary>
         public DateTime ActivatedTime
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _id;
         
         /// <summary>
-        /// Incident identifier.
+        /// Optional. Incident identifier.
         /// </summary>
         public string Id
         {
@@ -54,7 +54,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _isActive;
         
         /// <summary>
-        /// A boolean to indicate whether the incident is active or resolved.
+        /// Optional. A boolean to indicate whether the incident is active or
+        /// resolved.
         /// </summary>
         public bool IsActive
         {
@@ -65,8 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private System.DateTime? _resolvedTime;
         
         /// <summary>
-        /// The time at which the incident got resolved. If null, it means the
-        /// incident is still active.
+        /// Optional. The time at which the incident got resolved. If null, it
+        /// means the incident is still active.
         /// </summary>
         public System.DateTime? ResolvedTime
         {
@@ -77,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _ruleId;
         
         /// <summary>
-        /// Rule identifier that is associated with the incident.
+        /// Optional. Rule identifier that is associated with the incident.
         /// </summary>
         public string RuleId
         {

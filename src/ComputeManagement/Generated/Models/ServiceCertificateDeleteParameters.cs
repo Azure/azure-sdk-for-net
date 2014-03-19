@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _serviceName;
         
         /// <summary>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </summary>
         public string ServiceName
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _thumbprint;
         
         /// <summary>
-        /// The hexadecimal representation of the thumbprint.
+        /// Required. The hexadecimal representation of the thumbprint.
         /// </summary>
         public string Thumbprint
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _thumbprintAlgorithm;
         
         /// <summary>
-        /// The algorithm for the certificate's thumbprint.
+        /// Required. The algorithm for the certificate's thumbprint.
         /// </summary>
         public string ThumbprintAlgorithm
         {

@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobScheduleDay _day;
         
         /// <summary>
-        /// Day of the occurrence. Must be one of monday, tuesday, wednesday,
-        /// thursday, friday, saturday, sunday.
+        /// Required. Day of the occurrence. Must be one of monday, tuesday,
+        /// wednesday, thursday, friday, saturday, sunday.
         /// </summary>
         public JobScheduleDay Day
         {
@@ -45,7 +45,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _occurrence;
         
         /// <summary>
-        /// Occurrence of the day within the month. Must be between -31 and 31.
+        /// Optional. Occurrence of the day within the month. Must be between
+        /// -31 and 31.
         /// </summary>
         public int? Occurrence
         {

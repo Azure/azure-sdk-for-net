@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Whether or not the namespace is available.
+        /// Optional. Whether or not the namespace is available.
         /// </summary>
         public bool IsAvailable
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _reasonDetails;
         
         /// <summary>
-        /// The reason the namespace is unavailable.
+        /// Optional. The reason the namespace is unavailable.
         /// </summary>
         public string ReasonDetails
         {

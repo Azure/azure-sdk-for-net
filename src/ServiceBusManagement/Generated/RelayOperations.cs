@@ -67,10 +67,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Gets the set of connection strings for a relay.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='relayName'>
-        /// The relay name.
+        /// Required. The relay name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

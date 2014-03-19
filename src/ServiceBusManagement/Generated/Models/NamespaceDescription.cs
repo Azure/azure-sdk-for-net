@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _authorizationType;
         
         /// <summary>
-        /// The authorization type.
+        /// Optional. The authorization type.
         /// </summary>
         public string AuthorizationType
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _connectionString;
         
         /// <summary>
-        /// Namespace connection string.  (see
+        /// Optional. Namespace connection string.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
@@ -58,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _keyName;
         
         /// <summary>
-        /// Default ACS access key to generate the access token.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
+        /// Optional. Default ACS access key to generate the access token.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
         public string KeyName
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<AccessRight> _rights;
         
         /// <summary>
-        /// The rights associated with a namespace.
+        /// Optional. The rights associated with a namespace.
         /// </summary>
         public IList<AccessRight> Rights
         {
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _secondaryConnectionString;
         
         /// <summary>
-        /// Secondary namespace connection string.
+        /// Optional. Secondary namespace connection string.
         /// </summary>
         public string SecondaryConnectionString
         {

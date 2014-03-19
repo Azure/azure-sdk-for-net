@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _geoLocation;
         
         /// <summary>
-        /// The location associated with the cloud service.
+        /// Optional. The location associated with the cloud service.
         /// </summary>
         public string GeoLocation
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private IList<CloudServiceGetResponse.Resource> _resources;
         
         /// <summary>
-        /// A collection of resources.
+        /// Optional. A collection of resources.
         /// </summary>
         public IList<CloudServiceGetResponse.Resource> Resources
         {
@@ -70,7 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _eTag;
             
             /// <summary>
-            /// ETag identifying the current entity revision on the server.
+            /// Optional. ETag identifying the current entity revision on the
+            /// server.
             /// </summary>
             public string ETag
             {
@@ -81,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _label;
             
             /// <summary>
-            /// Label of the resource.
+            /// Optional. Label of the resource.
             /// </summary>
             public string Label
             {
@@ -92,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _name;
             
             /// <summary>
-            /// A name for the resource. The name must be unique within the
-            /// subscription ID and cloud service.
+            /// Optional. A name for the resource. The name must be unique
+            /// within the subscription ID and cloud service.
             /// </summary>
             public string Name
             {
@@ -103,6 +104,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             
             private IDictionary<string, string> _outputItems;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public IDictionary<string, string> OutputItems
             {
                 get { return this._outputItems; }
@@ -112,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _plan;
             
             /// <summary>
-            /// The plan of the resource.
+            /// Optional. The plan of the resource.
             /// </summary>
             public string Plan
             {
@@ -123,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _resourceProviderNamespace;
             
             /// <summary>
-            /// Namespace identifier for the resource provider.
+            /// Optional. Namespace identifier for the resource provider.
             /// </summary>
             public string ResourceProviderNamespace
             {
@@ -134,9 +138,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _schemaVersion;
             
             /// <summary>
-            /// Optional version of the intrinsic properties for the resource.
-            /// If not specified, you must conform to the default contract
-            /// resource.
+            /// Optional. Optional version of the intrinsic properties for the
+            /// resource. If not specified, you must conform to the default
+            /// contract resource.
             /// </summary>
             public string SchemaVersion
             {
@@ -147,7 +151,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _state;
             
             /// <summary>
-            /// The current resource status.
+            /// Optional. The current resource status.
             /// </summary>
             public string State
             {
@@ -158,7 +162,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _subState;
             
             /// <summary>
-            /// An optional, more detailed resource status.
+            /// Optional. An optional, more detailed resource status.
             /// </summary>
             public string SubState
             {
@@ -169,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _type;
             
             /// <summary>
-            /// The Type for the resource.
+            /// Optional. The Type for the resource.
             /// </summary>
             public string Type
             {

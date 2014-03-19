@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _availabilitySetName;
         
         /// <summary>
-        /// The name of the role.
+        /// Optional. The name of the role.
         /// </summary>
         public string AvailabilitySetName
         {
@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<ConfigurationSet> _configurationSets;
         
         /// <summary>
-        /// A collection of values that represents system or application
-        /// configuration settings.
+        /// Optional. A collection of values that represents system or
+        /// application configuration settings.
         /// </summary>
         public IList<ConfigurationSet> ConfigurationSets
         {
@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DataVirtualHardDisk> _dataVirtualHardDisks;
         
         /// <summary>
-        /// Contains the parameters Windows Azure uses to create a data disk
-        /// for a virtual machine.
+        /// Optional. Contains the parameters Windows Azure uses to create a
+        /// data disk for a virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
         {
@@ -69,8 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _defaultWinRmCertificateThumbprint;
         
         /// <summary>
-        /// The read-only thumbprint of the certificate that is used with the
-        /// HTTPS listener for WinRM.
+        /// Optional. The read-only thumbprint of the certificate that is used
+        /// with the HTTPS listener for WinRM.
         /// </summary>
         public string DefaultWinRmCertificateThumbprint
         {
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The friendly name for the role.
+        /// Optional. The friendly name for the role.
         /// </summary>
         public string Label
         {
@@ -92,8 +92,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _oSVersion;
         
         /// <summary>
-        /// The version of the operating system on which the role instances are
-        /// running.
+        /// Optional. The version of the operating system on which the role
+        /// instances are running.
         /// </summary>
         public string OSVersion
         {
@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>
-        /// Contains the parameters Windows Azure uses to create the operating
-        /// system disk for the virtual machine.
+        /// Optional. Contains the parameters Windows Azure uses to create the
+        /// operating system disk for the virtual machine.
         /// </summary>
         public OSVirtualHardDisk OSVirtualHardDisk
         {
@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleName;
         
         /// <summary>
-        /// The name of the role.
+        /// Optional. The name of the role.
         /// </summary>
         public string RoleName
         {
@@ -153,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleSize;
         
         /// <summary>
-        /// The size of the role instance.
+        /// Optional. The size of the role instance.
         /// </summary>
         public string RoleSize
         {
@@ -164,8 +164,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleType;
         
         /// <summary>
-        /// Specifies the type of the role. This element is only listed for
-        /// Virtual Machine deployments and by default is PersistentVMRole.
+        /// Optional. Specifies the type of the role. This element is only
+        /// listed for Virtual Machine deployments and by default is
+        /// PersistentVMRole.
         /// </summary>
         public string RoleType
         {
@@ -176,8 +177,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _vMImageName;
         
         /// <summary>
-        /// Optional. Name of the VMImage from which this Role is to be
-        /// created. If the OSDisk in the VMImage was Specialized, then no
+        /// Optional. Optional. Name of the VMImage from which this Role is to
+        /// be created. If the OSDisk in the VMImage was Specialized, then no
         /// WindowsProvisioningConfigurationSet or
         /// LinuxProvisioningConfigurationSet should be provided. No
         /// OSVirtualHardDisk or DataVirtualHardDisk should be specified when

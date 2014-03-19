@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentStatus _guestAgentStatus;
         
         /// <summary>
-        /// Guest Agent Status.
+        /// Optional. Guest Agent Status.
         /// </summary>
         public GuestAgentStatus GuestAgentStatus
         {
@@ -45,9 +45,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _hostName;
         
         /// <summary>
-        /// The DNS host name of the service in which the role instance is
-        /// running. This element is only listed for Virtual Machine
-        /// deployments.
+        /// Optional. The DNS host name of the service in which the role
+        /// instance is running. This element is only listed for Virtual
+        /// Machine deployments.
         /// </summary>
         public string HostName
         {
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<InstanceEndpoint> _instanceEndpoints;
         
         /// <summary>
-        /// The list of instance endpoints for the role.
+        /// Optional. The list of instance endpoints for the role.
         /// </summary>
         public IList<InstanceEndpoint> InstanceEndpoints
         {
@@ -69,8 +69,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceErrorCode;
         
         /// <summary>
-        /// An error code that can be provided to WindowsAzure support to
-        /// assist in resolution of errors. Typicallythis field will be empty.
+        /// Optional. An error code that can be provided to WindowsAzure
+        /// support to assist in resolution of errors. Typicallythis field
+        /// will be empty.
         /// </summary>
         public string InstanceErrorCode
         {
@@ -81,9 +82,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _instanceFaultDomain;
         
         /// <summary>
-        /// The fault domain that this role instance belongs to. Role instances
-        /// that are part of the same fault domain may all be vulnerable to
-        /// the failure of the same piece of shared hardware.
+        /// Optional. The fault domain that this role instance belongs to. Role
+        /// instances that are part of the same fault domain may all be
+        /// vulnerable to the failure of the same piece of shared hardware.
         /// </summary>
         public int? InstanceFaultDomain
         {
@@ -94,8 +95,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceName;
         
         /// <summary>
-        /// TThe name of the specific role instance, if an instance of the role
-        /// is running.
+        /// Optional. TThe name of the specific role instance, if an instance
+        /// of the role is running.
         /// </summary>
         public string InstanceName
         {
@@ -106,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceSize;
         
         /// <summary>
-        /// The size of the role instance.
+        /// Optional. The size of the role instance.
         /// </summary>
         public string InstanceSize
         {
@@ -117,9 +118,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceStateDetails;
         
         /// <summary>
-        /// The instance state is returned as a string that, when present,
-        /// provides a snapshot of the state of the virtual machine at the
-        /// time the operation was called.
+        /// Optional. The instance state is returned as a string that, when
+        /// present, provides a snapshot of the state of the virtual machine
+        /// at the time the operation was called.
         /// </summary>
         public string InstanceStateDetails
         {
@@ -130,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceStatus;
         
         /// <summary>
-        /// The current status of this instance.
+        /// Optional. The current status of this instance.
         /// </summary>
         public string InstanceStatus
         {
@@ -141,9 +142,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _instanceUpgradeDomain;
         
         /// <summary>
-        /// The update domain that this role instance belongs to. During an
-        /// Upgrade Deployment, all roles in the same update domain are
-        /// updated at the same time.
+        /// Optional. The update domain that this role instance belongs to.
+        /// During an Upgrade Deployment, all roles in the same update domain
+        /// are updated at the same time.
         /// </summary>
         public int? InstanceUpgradeDomain
         {
@@ -154,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _iPAddress;
         
         /// <summary>
-        /// The IP address of the role instance (DIP).
+        /// Optional. The IP address of the role instance (DIP).
         /// </summary>
         public string IPAddress
         {
@@ -165,7 +166,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private RoleInstancePowerState _powerState;
         
         /// <summary>
-        /// The running state of the role instance.
+        /// Optional. The running state of the role instance.
         /// </summary>
         public RoleInstancePowerState PowerState
         {
@@ -176,9 +177,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _remoteAccessCertificateThumbprint;
         
         /// <summary>
-        /// The thumbprint of the RDP server certificate (in Windows) or SSH
-        /// server certificate (in Linux). The thumbprint is only used for
-        /// Virtual Machines that have been created from an image.
+        /// Optional. The thumbprint of the RDP server certificate (in Windows)
+        /// or SSH server certificate (in Linux). The thumbprint is only used
+        /// for Virtual Machines that have been created from an image.
         /// </summary>
         public string RemoteAccessCertificateThumbprint
         {
@@ -189,7 +190,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<ResourceExtensionStatus> _resourceExtensionStatusList;
         
         /// <summary>
-        /// Resource Extension Status List.
+        /// Optional. Resource Extension Status List.
         /// </summary>
         public IList<ResourceExtensionStatus> ResourceExtensionStatusList
         {
@@ -200,7 +201,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _roleName;
         
         /// <summary>
-        /// The name of the role.
+        /// Optional. The name of the role.
         /// </summary>
         public string RoleName
         {

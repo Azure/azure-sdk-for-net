@@ -30,8 +30,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private int? _maxJobCount;
         
         /// <summary>
-        /// Maximum number of jobs that can be created in this job collection.
-        /// Maximum value is dependent on the plan.
+        /// Optional. Maximum number of jobs that can be created in this job
+        /// collection. Maximum value is dependent on the plan.
         /// </summary>
         public int? MaxJobCount
         {
@@ -42,7 +42,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private int? _maxJobOccurrence;
         
         /// <summary>
-        /// Maximum number of occurrences for all jobs in the job collection.
+        /// Optional. Maximum number of occurrences for all jobs in the job
+        /// collection.
         /// </summary>
         public int? MaxJobOccurrence
         {
@@ -53,8 +54,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionMaxRecurrence _maxRecurrence;
         
         /// <summary>
-        /// Defines the maximum recurrences that can be specified in any job in
-        /// this job collection.
+        /// Optional. Defines the maximum recurrences that can be specified in
+        /// any job in this job collection.
         /// </summary>
         public JobCollectionMaxRecurrence MaxRecurrence
         {

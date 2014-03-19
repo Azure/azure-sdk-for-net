@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _count;
         
         /// <summary>
-        /// Count of occurrences that will execute. Optional. Default will
-        /// recur infinitely
+        /// Optional. Count of occurrences that will execute. Optional. Default
+        /// will recur infinitely
         /// </summary>
         public int? Count
         {
@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _endTime;
         
         /// <summary>
-        /// Time in ISO-8601 format after which no more occurrences will
-        /// execute.
+        /// Optional. Time in ISO-8601 format after which no more occurrences
+        /// will execute.
         /// </summary>
         public System.DateTime? EndTime
         {
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobRecurrenceFrequency _frequency;
         
         /// <summary>
-        /// The frequency of recurrence.
+        /// Required. The frequency of recurrence.
         /// </summary>
         public JobRecurrenceFrequency Frequency
         {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private int? _interval;
         
         /// <summary>
-        /// Interval of the recurrence at the given frequency.
+        /// Optional. Interval of the recurrence at the given frequency.
         /// </summary>
         public int? Interval
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobRecurrenceSchedule _schedule;
         
         /// <summary>
-        /// Recurrence schedule for the job.
+        /// Optional. Recurrence schedule for the job.
         /// </summary>
         public JobRecurrenceSchedule Schedule
         {

@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
     {
         private IList<MediaServicesAccountListResponse.MediaServiceAccount> _accounts;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<MediaServicesAccountListResponse.MediaServiceAccount> Accounts
         {
             get { return this._accounts; }
@@ -73,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _accountId;
             
             /// <summary>
-            /// The Id of the Media Services Account.
+            /// Optional. The Id of the Media Services Account.
             /// </summary>
             public string AccountId
             {
@@ -84,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _name;
             
             /// <summary>
-            /// The Name of the Media Services Account.
+            /// Optional. The Name of the Media Services Account.
             /// </summary>
             public string Name
             {
@@ -95,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private Uri _parentUri;
             
             /// <summary>
-            /// The ParentLink of the Media Services Account.
+            /// Optional. The ParentLink of the Media Services Account.
             /// </summary>
             public Uri ParentUri
             {
@@ -106,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _state;
             
             /// <summary>
-            /// The current state of the Media Services Account.
+            /// Optional. The current state of the Media Services Account.
             /// </summary>
             public string State
             {
@@ -117,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private string _type;
             
             /// <summary>
-            /// The type of the Media Services Account.
+            /// Optional. The type of the Media Services Account.
             /// </summary>
             public string Type
             {
@@ -128,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
             private Uri _uri;
             
             /// <summary>
-            /// The SelfLink of the Media Services Account.
+            /// Optional. The SelfLink of the Media Services Account.
             /// </summary>
             public Uri Uri
             {

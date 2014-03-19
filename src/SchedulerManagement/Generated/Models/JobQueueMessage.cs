@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _message;
         
         /// <summary>
-        /// Content of the message to send to the queue.
+        /// Required. Content of the message to send to the queue.
         /// </summary>
         public string Message
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _queueName;
         
         /// <summary>
-        /// Name of the queue to send to.
+        /// Required. Name of the queue to send to.
         /// </summary>
         public string QueueName
         {
@@ -54,7 +54,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _sasToken;
         
         /// <summary>
-        /// SAS key for the storage account to send message to the queue.
+        /// Required. SAS key for the storage account to send message to the
+        /// queue.
         /// </summary>
         public string SasToken
         {
@@ -65,7 +66,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _storageAccountName;
         
         /// <summary>
-        /// Name of the storage account for the queue.
+        /// Required. Name of the storage account for the queue.
         /// </summary>
         public string StorageAccountName
         {

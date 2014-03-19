@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusTopic> _topics;
         
         /// <summary>
-        /// The list of topics.
+        /// Optional. The list of topics.
         /// </summary>
         public IList<ServiceBusTopic> Topics
         {

@@ -111,10 +111,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineExtensionOperations.
         /// </param>
         /// <param name='publisherName'>
-        /// The name of the publisher.
+        /// Required. The name of the publisher.
         /// </param>
         /// <param name='extensionName'>
-        /// The name of the extension.
+        /// Required. The name of the extension.
         /// </param>
         /// <returns>
         /// The List Resource Extensions operation response.
@@ -153,10 +153,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineExtensionOperations.
         /// </param>
         /// <param name='publisherName'>
-        /// The name of the publisher.
+        /// Required. The name of the publisher.
         /// </param>
         /// <param name='extensionName'>
-        /// The name of the extension.
+        /// Required. The name of the extension.
         /// </param>
         /// <returns>
         /// The List Resource Extensions operation response.

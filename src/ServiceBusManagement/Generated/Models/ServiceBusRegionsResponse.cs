@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusLocation> _regions;
         
         /// <summary>
-        /// The available regions.
+        /// Optional. The available regions.
         /// </summary>
         public IList<ServiceBusLocation> Regions
         {

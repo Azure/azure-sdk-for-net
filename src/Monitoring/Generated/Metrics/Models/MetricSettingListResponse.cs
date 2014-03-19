@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricSettingCollection _metricSettingCollection;
         
         /// <summary>
-        /// The retrieved metric settings.
+        /// Optional. The retrieved metric settings.
         /// </summary>
         public MetricSettingCollection MetricSettingCollection
         {

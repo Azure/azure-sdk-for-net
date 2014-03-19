@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSite _webSite;
         
         /// <summary>
-        /// Details for the requested website.
+        /// Optional. Details for the requested website.
         /// </summary>
         public WebSite WebSite
         {

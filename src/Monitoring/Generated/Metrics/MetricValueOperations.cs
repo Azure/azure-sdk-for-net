@@ -65,22 +65,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// resource metrics.
         /// </summary>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNames'>
-        /// The names of the metrics.
+        /// Required. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <param name='timeGrain'>
-        /// The time grain of the metrics.
+        /// Required. The time grain of the metrics.
         /// </param>
         /// <param name='startTime'>
-        /// The start time (in UTC) of the metrics.
+        /// Required. The start time (in UTC) of the metrics.
         /// </param>
         /// <param name='endTime'>
-        /// The end time (in UTC) of the metrics.
+        /// Required. The end time (in UTC) of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -191,7 +191,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricValueListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

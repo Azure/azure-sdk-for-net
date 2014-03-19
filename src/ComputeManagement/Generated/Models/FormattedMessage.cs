@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _language;
         
         /// <summary>
-        /// Language code. Eg. "en-US"
+        /// Optional. Language code. Eg. "en-US"
         /// </summary>
         public string Language
         {
@@ -43,8 +43,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _message;
         
         /// <summary>
-        /// A string containing message about status of the Guest Agent, or
-        /// Resource Extension.
+        /// Optional. A string containing message about status of the Guest
+        /// Agent, or Resource Extension.
         /// </summary>
         public string Message
         {

@@ -53,7 +53,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Management Certificate operation.
+        /// Required. Parameters supplied to the Create Management Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -92,7 +93,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Management Certificate operation.
+        /// Required. Parameters supplied to the Create Management Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -117,7 +119,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='thumbprint'>
-        /// the thumbprint value of the certificate to delete.
+        /// Required. the thumbprint value of the certificate to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -156,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='thumbprint'>
-        /// the thumbprint value of the certificate to delete.
+        /// Required. the thumbprint value of the certificate to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -181,8 +183,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='thumbprint'>
-        /// The thumbprint value of the certificate to retrieve information
-        /// about.
+        /// Required. The thumbprint value of the certificate to retrieve
+        /// information about.
         /// </param>
         /// <returns>
         /// The Get Management Certificate operation response.
@@ -220,8 +222,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IManagementCertificateOperations.
         /// </param>
         /// <param name='thumbprint'>
-        /// The thumbprint value of the certificate to retrieve information
-        /// about.
+        /// Required. The thumbprint value of the certificate to retrieve
+        /// information about.
         /// </param>
         /// <returns>
         /// The Get Management Certificate operation response.

@@ -34,9 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private VirtualHardDiskHostCaching _hostCaching;
         
         /// <summary>
-        /// The current value of the platform caching behavior of data disk
-        /// blob for read/write efficiency. Possible values are: None,
-        /// ReadOnly, ReadWrite.
+        /// Optional. The current value of the platform caching behavior of
+        /// data disk blob for read/write efficiency. Possible values are:
+        /// None, ReadOnly, ReadWrite.
         /// </summary>
         public VirtualHardDiskHostCaching HostCaching
         {
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The description of the data disk.
+        /// Optional. The description of the data disk.
         /// </summary>
         public string Label
         {
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int _logicalDiskSizeInGB;
         
         /// <summary>
-        /// The size, in GB, of the data disk.
+        /// Optional. The size, in GB, of the data disk.
         /// </summary>
         public int LogicalDiskSizeInGB
         {
@@ -69,9 +69,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _logicalUnitNumber;
         
         /// <summary>
-        /// The Logical Unit Number (LUN) for the disk. The LUN specifies the
-        /// slot in which the data drive appears when mounted for usage by the
-        /// virtual machine.
+        /// Optional. The Logical Unit Number (LUN) for the disk. The LUN
+        /// specifies the slot in which the data drive appears when mounted
+        /// for usage by the virtual machine.
         /// </summary>
         public int? LogicalUnitNumber
         {
@@ -82,9 +82,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// The location of physical blob backing the data disk. The blob
-        /// location is in storage account in the subscription specified by
-        /// the SubscriptionId value in the operation call.
+        /// Optional. The location of physical blob backing the data disk. The
+        /// blob location is in storage account in the subscription specified
+        /// by the SubscriptionId value in the operation call.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// The name of the data disk.
+        /// Optional. The name of the data disk.
         /// </summary>
         public string Name
         {

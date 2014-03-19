@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint> _loadBalancedEndpoints;
         
         /// <summary>
-        /// A list of load balanced InputEndpoints to update.
+        /// Optional. A list of load balanced InputEndpoints to update.
         /// </summary>
         public IList<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint> LoadBalancedEndpoints
         {
@@ -71,12 +71,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _loadBalancedEndpointSetName;
             
             /// <summary>
-            /// Specifies whether this endpoint is part of shared LoadBalanced
-            /// endpoint and served by multiple role instances. If not
-            /// specified a BadRequest error will be returned. It must also be
-            /// in use by the deployment (at least one role in the deployment
-            /// must have an endpoint whose LoadBalancedEndpointSetName
-            /// matches this) otherwise a BadRequest error will be returned.
+            /// Required. Specifies whether this endpoint is part of shared
+            /// LoadBalanced endpoint and served by multiple role instances.
+            /// If not specified a BadRequest error will be returned. It must
+            /// also be in use by the deployment (at least one role in the
+            /// deployment must have an endpoint whose
+            /// LoadBalancedEndpointSetName   matches this) otherwise a
+            /// BadRequest error will be returned.
             /// </summary>
             public string LoadBalancedEndpointSetName
             {
@@ -102,12 +103,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private int? _localPort;
             
             /// <summary>
-            /// Specifies the internal port on which a service running inside
-            /// the VM is listening to serve this endpoint. WARNING: If
-            /// specified then ALL the endpoints of this LB set on all the
-            /// roles will be updated to have THIS local port. To keep unique
-            /// local ports on each role for a load balanced endpoint specify
-            /// this as 0 (zero) and if you need to change those use
+            /// Optional. Specifies the internal port on which a service
+            /// running inside the VM is listening to serve this endpoint.
+            /// WARNING: If specified then ALL the endpoints of this LB set on
+            /// all the roles will be updated to have THIS local port. To keep
+            /// unique local ports on each role for a load balanced endpoint
+            /// specify this as 0 (zero) and if you need to change those use
             /// UpdateRole. In case of port conflict with a local port (or
             /// probe port) on a role a BadRequestwill be returned.
             /// </summary>
@@ -132,10 +133,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private int? _port;
             
             /// <summary>
-            /// An integer specifying the public port for this endpoint.
-            /// Allowed values are between 1 and 65535 inclusive. A unqiue
-            /// Port and Protocol combination must be specified for each
-            /// InputEndpoint in the list.
+            /// Optional. An integer specifying the public port for this
+            /// endpoint. Allowed values are between 1 and 65535 inclusive. A
+            /// unqiue Port and Protocol combination must be specified for
+            /// each InputEndpoint in the list.
             /// </summary>
             public int? Port
             {
@@ -146,7 +147,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _protocol;
             
             /// <summary>
-            /// Specifies the transport protocol for the endpoint.
+            /// Optional. Specifies the transport protocol for the endpoint.
             /// </summary>
             public string Protocol
             {
@@ -157,11 +158,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private IList<AccessControlListRule> _rules;
             
             /// <summary>
-            /// A collection of access control rules which control the external
-            /// network traffic reaching to this endpoint. NOTES: (1) To
-            /// remove the ACLs from a load-balanced endpoint just omit this
-            /// element. (2) ACLs are set as specified. There is no merge done
-            /// with existing ACLs.
+            /// Optional. A collection of access control rules which control
+            /// the external network traffic reaching to this endpoint. NOTES:
+            /// (1) To remove the ACLs from a load-balanced endpoint just omit
+            /// this element. (2) ACLs are set as specified. There is no merge
+            /// done with existing ACLs.
             /// </summary>
             public IList<AccessControlListRule> Rules
             {
@@ -172,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _virtualIPAddress;
             
             /// <summary>
-            /// The virtual IP address of the endpoint.
+            /// Optional. The virtual IP address of the endpoint.
             /// </summary>
             public string VirtualIPAddress
             {

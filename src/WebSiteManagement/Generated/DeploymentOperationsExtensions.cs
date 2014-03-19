@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <returns>
         /// The deployment information operation response.
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <returns>
         /// The deployment information operation response.
@@ -92,10 +92,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='deploymentLogId'>
-        /// The deployment log identifier.
+        /// Required. The deployment log identifier.
         /// </param>
         /// <returns>
         /// The get log for a deployments operation response.
@@ -127,10 +127,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='deploymentLogId'>
-        /// The deployment log identifier.
+        /// Required. The deployment log identifier.
         /// </param>
         /// <returns>
         /// The get log for a deployments operation response.
@@ -148,7 +148,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of deployments operation response.
@@ -180,7 +180,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of deployments operation response.
@@ -198,10 +198,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of deployments operation response.
@@ -233,10 +233,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of deployments operation response.
@@ -254,7 +254,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <returns>
         /// The deployment information operation response.
@@ -286,7 +286,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDeploymentOperations.
         /// </param>
         /// <param name='deploymentId'>
-        /// The deployment identifier.
+        /// Required. The deployment identifier.
         /// </param>
         /// <returns>
         /// The deployment information operation response.

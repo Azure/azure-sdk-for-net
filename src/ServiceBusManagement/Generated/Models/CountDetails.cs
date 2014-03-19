@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _activeMessageCount;
         
         /// <summary>
-        /// The current number of active messages.
+        /// Optional. The current number of active messages.
         /// </summary>
         public int ActiveMessageCount
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _deadLetterMessageCount;
         
         /// <summary>
-        /// The current number of dead letters.
+        /// Optional. The current number of dead letters.
         /// </summary>
         public int DeadLetterMessageCount
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _scheduledMessageCount;
         
         /// <summary>
-        /// The current number of scheduled messages.
+        /// Optional. The current number of scheduled messages.
         /// </summary>
         public int ScheduledMessageCount
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _transferDeadLetterMessageCount;
         
         /// <summary>
-        /// The current number of transfer dead letters.
+        /// Optional. The current number of transfer dead letters.
         /// </summary>
         public int TransferDeadLetterMessageCount
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _transferMessageCount;
         
         /// <summary>
-        /// The current number of transfer messages.
+        /// Optional. The current number of transfer messages.
         /// </summary>
         public int TransferMessageCount
         {

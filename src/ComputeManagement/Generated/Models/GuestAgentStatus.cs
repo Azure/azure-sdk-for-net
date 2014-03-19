@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private FormattedMessage _formattedMessage;
         
         /// <summary>
-        /// This object encapsulates localized status message from the Guest
-        /// Agent.
+        /// Optional. This object encapsulates localized status message from
+        /// the Guest Agent.
         /// </summary>
         public FormattedMessage FormattedMessage
         {
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _guestAgentVersion;
         
         /// <summary>
-        /// Version of the Guest Agent installed on the role instance.
+        /// Optional. Version of the Guest Agent installed on the role instance.
         /// </summary>
         public string GuestAgentVersion
         {
@@ -60,7 +60,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _protocolVersion;
         
         /// <summary>
-        /// Protocol version used by the Guest Agent for status reporting.
+        /// Optional. Protocol version used by the Guest Agent for status
+        /// reporting.
         /// </summary>
         public string ProtocolVersion
         {
@@ -71,7 +72,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _status;
         
         /// <summary>
-        /// The guest agent status, which can be: "Ready" or "NotReady"
+        /// Optional. The guest agent status, which can be: "Ready" or
+        /// "NotReady"
         /// </summary>
         public string Status
         {
@@ -82,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _timestamp;
         
         /// <summary>
-        /// UTC time at which the status was reported.
+        /// Optional. UTC time at which the status was reported.
         /// </summary>
         public string Timestamp
         {

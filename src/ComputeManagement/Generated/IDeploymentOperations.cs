@@ -142,8 +142,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of your deployment.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the disk should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -710,8 +710,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of your deployment.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the disk should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the disk should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

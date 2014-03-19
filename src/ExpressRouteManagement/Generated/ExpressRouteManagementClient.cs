@@ -122,11 +122,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all golden gate requests.
+        /// Required. The URI used as the base for all golden gate requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -150,8 +150,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// for more information)
         /// </summary>
         /// <param name='operationId'>
-        /// The id  of the operation.
+        /// Required. The id  of the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

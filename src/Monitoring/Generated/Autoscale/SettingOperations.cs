@@ -66,10 +66,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -139,6 +139,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 
                 if (parameters.Setting != null)
                 {
+                    JObject settingValue = new JObject();
+                    requestDoc = new JObject();
+                    requestDoc["Setting"] = settingValue;
+                    
                     if (parameters.Setting.Profiles != null)
                     {
                         JArray profilesArray = new JArray();
@@ -298,11 +302,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                         }
-                        requestDoc = profilesArray;
+                        settingValue["Profiles"] = profilesArray;
                     }
                     
-                    requestDoc = new JObject();
-                    requestDoc["Enabled"] = parameters.Setting.Enabled;
+                    settingValue["Enabled"] = parameters.Setting.Enabled;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -368,7 +371,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -486,7 +489,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -577,7 +580,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new AutoscaleSettingGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

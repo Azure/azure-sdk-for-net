@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Whether the name is available.
+        /// Optional. Whether the name is available.
         /// </summary>
         public bool IsAvailable
         {

@@ -53,10 +53,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -95,10 +96,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -123,7 +125,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -162,7 +165,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -187,10 +191,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -236,10 +241,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -271,7 +277,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -317,7 +324,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -347,7 +355,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Service Certificate operation.
+        /// Required. Parameters supplied to the Get Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Service Certificate operation response.
@@ -383,7 +392,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Service Certificate operation.
+        /// Required. Parameters supplied to the Get Service Certificate
+        /// operation.
         /// </param>
         /// <returns>
         /// The Get Service Certificate operation response.
@@ -404,7 +414,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your hosted service.
+        /// Required. The DNS prefix name of your hosted service.
         /// </param>
         /// <returns>
         /// The List Service Certificates operation response.
@@ -439,7 +449,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your hosted service.
+        /// Required. The DNS prefix name of your hosted service.
         /// </param>
         /// <returns>
         /// The List Service Certificates operation response.

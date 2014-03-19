@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _productionDeployment;
         
         /// <summary>
-        /// The optional  name of the production deployment.
+        /// Optional. The optional  name of the production deployment.
         /// </summary>
         public string ProductionDeployment
         {

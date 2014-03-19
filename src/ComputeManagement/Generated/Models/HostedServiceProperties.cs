@@ -34,9 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// The affinity group with which this cloud service is associated, if
-        /// any. If the service is associated with an affinity group, the
-        /// Location element is not returned.
+        /// Optional. The affinity group with which this cloud service is
+        /// associated, if any. If the service is associated with an affinity
+        /// group, the Location element is not returned.
         /// </summary>
         public string AffinityGroup
         {
@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DateTime _dateCreated;
         
         /// <summary>
-        /// The date that the cloud service was created, in
+        /// Optional. The date that the cloud service was created, in
         /// [4DigitYear]-[2DigitMonth]-[2DigitDay]T[2DigitHour]:[2DigitMinute]:[2DigitSecond]Z
         /// format. The date 2011-05-11T16:15:26Z is an example that could
         /// bereturned by the DateCreated or DateLastModified elements.
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DateTime _dateLastModified;
         
         /// <summary>
-        /// The date that the cloud service was last updated, in
+        /// Optional. The date that the cloud service was last updated, in
         /// [4DigitYear]-[2DigitMonth]-[2DigitDay]T[2DigitHour]:[2DigitMinute]:[2DigitSecond]Z
         /// format. The date 2011-05-11T16:15:26Z is an example that could be
         /// returned by the DateCreated or DateLastModified elements.
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _description;
         
         /// <summary>
-        /// The description for the cloud service.
+        /// Optional. The description for the cloud service.
         /// </summary>
         public string Description
         {
@@ -107,8 +107,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The user-supplied name of the cloud service. This name can be used
-        /// identify the service for your tracking purposes.
+        /// Optional. The user-supplied name of the cloud service. This name
+        /// can be used identify the service for your tracking purposes.
         /// </summary>
         public string Label
         {
@@ -119,9 +119,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _location;
         
         /// <summary>
-        /// The geo-location of the cloud service in Windows Azure, if the
-        /// service is not associated with an affinity group. If a location
-        /// has been specified, the AffinityGroup element is not returned.
+        /// Optional. The geo-location of the cloud service in Windows Azure,
+        /// if the service is not associated with an affinity group. If a
+        /// location has been specified, the AffinityGroup element is not
+        /// returned.
         /// </summary>
         public string Location
         {
@@ -132,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private HostedServiceStatus _status;
         
         /// <summary>
-        /// The status of the cloud service.
+        /// Optional. The status of the cloud service.
         /// </summary>
         public HostedServiceStatus Status
         {

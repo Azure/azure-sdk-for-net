@@ -45,10 +45,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IStaticIPOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network.
+        /// Required. The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
-        /// The address of the static IP.
+        /// Required. The address of the static IP.
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
@@ -82,10 +82,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IStaticIPOperations.
         /// </param>
         /// <param name='networkName'>
-        /// The name of the virtual network.
+        /// Required. The name of the virtual network.
         /// </param>
         /// <param name='ipAddress'>
-        /// The address of the static IP.
+        /// Required. The address of the static IP.
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,

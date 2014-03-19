@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='parameters'>
-        /// The rule to create or update.
+        /// Required. The rule to create or update.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='ruleId'>
-        /// The id of the rule to delete.
+        /// Required. The id of the rule to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -405,7 +405,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='ruleId'>
-        /// The id of the rule to retrieve.
+        /// Required. The id of the rule to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -494,7 +494,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -745,7 +749,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

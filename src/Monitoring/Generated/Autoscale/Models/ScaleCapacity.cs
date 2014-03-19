@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _default;
         
         /// <summary>
-        /// The default number of instances that are available for the scaling
-        /// action.
+        /// Optional. The default number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Default
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _maximum;
         
         /// <summary>
-        /// The maximum number of instances that are available for the scaling
-        /// action.
+        /// Optional. The maximum number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Maximum
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _minimum;
         
         /// <summary>
-        /// The minimum number of instances that are available for the scaling
-        /// action.
+        /// Optional. The minimum number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Minimum
         {

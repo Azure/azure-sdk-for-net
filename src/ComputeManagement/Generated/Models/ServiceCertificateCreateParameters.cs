@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private CertificateFormat _certificateFormat;
         
         /// <summary>
-        /// The service certificate format. Windows Azure supports the pfx and
-        /// cer file formats.
+        /// Required. The service certificate format. Windows Azure supports
+        /// the pfx and cer file formats.
         /// </summary>
         public CertificateFormat CertificateFormat
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private byte[] _data;
         
         /// <summary>
-        /// The pfx or .cer file.
+        /// Required. The pfx or .cer file.
         /// </summary>
         public byte[] Data
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _password;
         
         /// <summary>
-        /// The password for a .pfx certificate. A .cer certificate does not
-        /// require a password.
+        /// Optional. The password for a .pfx certificate. A .cer certificate
+        /// does not require a password.
         /// </summary>
         public string Password
         {

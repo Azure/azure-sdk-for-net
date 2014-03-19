@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private IList<WebJob> _jobs;
         
         /// <summary>
-        /// The list of jobs.
+        /// Optional. The list of jobs.
         /// </summary>
         public IList<WebJob> Jobs
         {

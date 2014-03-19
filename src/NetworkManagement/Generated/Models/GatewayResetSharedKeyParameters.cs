@@ -32,8 +32,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private int _keyLength;
         
         /// <summary>
-        /// The number of bytes in the shared key.  Minimum is 1 and maximum is
-        /// 128
+        /// Optional. The number of bytes in the shared key.  Minimum is 1 and
+        /// maximum is 128
         /// </summary>
         public int KeyLength
         {

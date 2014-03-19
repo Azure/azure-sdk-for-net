@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -102,11 +102,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update CrossConnection operation.
+        /// Required. Parameters supplied to the Update CrossConnection
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -140,11 +141,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update CrossConnection operation.
+        /// Required. Parameters supplied to the Update CrossConnection
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -165,7 +167,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.
@@ -199,7 +201,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.
@@ -264,7 +266,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.
@@ -297,7 +299,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key of the dedicated circuit.
+        /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.
@@ -316,11 +318,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.
@@ -353,11 +355,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.ICrossConnectionOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Cross Connection Operation Response.

@@ -64,6 +64,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit Link operation creates a new dedicated
         /// circuit link.
         /// </summary>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -203,7 +209,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit link.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit.
+        /// Required. Service key representing the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -344,7 +353,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit link.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -494,6 +506,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Vnets that are linked to the circuit with the specified service
         /// key.
         /// </summary>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -635,6 +650,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit Link operation creates a new dedicated
         /// circuit link.
         /// </summary>
+        /// <param name='serviceKey'>
+        /// Required.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -703,7 +724,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit link.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit.
+        /// Required. Service Key associated with the dedicated circuit.
+        /// </param>
+        /// <param name='vnetName'>
+        /// Required.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

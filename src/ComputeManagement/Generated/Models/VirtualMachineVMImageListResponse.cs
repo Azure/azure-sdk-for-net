@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> _vMImages;
         
         /// <summary>
-        /// The virtual machine VM images associated with your subscription.
+        /// Optional. The virtual machine VM images associated with your
+        /// subscription.
         /// </summary>
         public IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> VMImages
         {
@@ -76,8 +77,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
             
             /// <summary>
-            /// Specifies the platform caching behavior of the data disk blob
-            /// for read/write efficiency. The default vault is ReadOnly.
+            /// Optional. Specifies the platform caching behavior of the data
+            /// disk blob for read/write efficiency. The default vault is
+            /// ReadOnly.
             /// </summary>
             public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
             {
@@ -88,12 +90,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private int _logicalDiskSizeInGB;
             
             /// <summary>
-            /// Specifies the size, in GB, of an empty VHD to be attached to
-            /// the virtual machine. The VHD can be created as part of disk
-            /// attach or create virtual machine call by specifying the value
-            /// for this property.  Windows Azure creates the empty VHD based
-            /// on size preference and attaches the newly created VHD to the
-            /// virtual machine.
+            /// Optional. Specifies the size, in GB, of an empty VHD to be
+            /// attached to the virtual machine. The VHD can be created as
+            /// part of disk attach or create virtual machine call by
+            /// specifying the value for this property.  Windows Azure creates
+            /// the empty VHD based on size preference and attaches the newly
+            /// created VHD to the virtual machine.
             /// </summary>
             public int LogicalDiskSizeInGB
             {
@@ -104,11 +106,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private int? _logicalUnitNumber;
             
             /// <summary>
-            /// Specifies the Logical Unit Number (LUN) for the data disk. The
-            /// LUN specifies the slot in which the data drive appears when
-            /// mounted for usage by the virtual machine. This element is only
-            /// listed when more than one data disk is attached to a virtual
-            /// machine.
+            /// Optional. Specifies the Logical Unit Number (LUN) for the data
+            /// disk. The LUN specifies the slot in which the data drive
+            /// appears when mounted for usage by the virtual machine. This
+            /// element is only listed when more than one data disk is
+            /// attached to a virtual machine.
             /// </summary>
             public int? LogicalUnitNumber
             {
@@ -119,7 +121,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _mediaLink;
             
             /// <summary>
-            /// Specifies the location of the disk in Windows Azure storage.
+            /// Optional. Specifies the location of the disk in Windows Azure
+            /// storage.
             /// </summary>
             public Uri MediaLink
             {
@@ -130,8 +133,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Specifies the name of the VHD to use to create thedata disk for
-            /// the virtual machine.
+            /// Optional. Specifies the name of the VHD to use to create
+            /// thedata disk for the virtual machine.
             /// </summary>
             public string Name
             {
@@ -155,8 +158,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
             
             /// <summary>
-            /// Specifies the platform caching behavior of the operating system
-            /// disk blob for read/write efficiency.
+            /// Optional. Specifies the platform caching behavior of the
+            /// operating system disk blob for read/write efficiency.
             /// </summary>
             public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
             {
@@ -167,12 +170,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private int _logicalDiskSizeInGB;
             
             /// <summary>
-            /// Specifies the size, in GB, of an empty VHD to be attached to
-            /// the virtual machine. The VHD can be created as part of disk
-            /// attach or create virtual machine call by specifying the value
-            /// for this property.  Windows Azure creates the empty VHD based
-            /// on size preference and attaches the newly created VHD to the
-            /// virtual machine.
+            /// Optional. Specifies the size, in GB, of an empty VHD to be
+            /// attached to the virtual machine. The VHD can be created as
+            /// part of disk attach or create virtual machine call by
+            /// specifying the value for this property.  Windows Azure creates
+            /// the empty VHD based on size preference and attaches the newly
+            /// created VHD to the virtual machine.
             /// </summary>
             public int LogicalDiskSizeInGB
             {
@@ -183,7 +186,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _mediaLink;
             
             /// <summary>
-            /// Specifies the location of the disk in Windows Azure storage.
+            /// Optional. Specifies the location of the disk in Windows Azure
+            /// storage.
             /// </summary>
             public Uri MediaLink
             {
@@ -194,8 +198,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Specifies the name an operating system image in the image
-            /// repository.
+            /// Optional. Specifies the name an operating system image in the
+            /// image repository.
             /// </summary>
             public string Name
             {
@@ -206,7 +210,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _operatingSystem;
             
             /// <summary>
-            /// The operating system running in the virtual machine.
+            /// Optional. The operating system running in the virtual machine.
             /// </summary>
             public string OperatingSystem
             {
@@ -217,7 +221,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _oSState;
             
             /// <summary>
-            /// The operating system state in the virtual machine.
+            /// Optional. The operating system state in the virtual machine.
             /// </summary>
             public string OSState
             {
@@ -241,7 +245,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _affinityGroup;
             
             /// <summary>
-            /// The affinity group name of the VM image.
+            /// Optional. The affinity group name of the VM image.
             /// </summary>
             public string AffinityGroup
             {
@@ -252,7 +256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _category;
             
             /// <summary>
-            /// The classification of the VM image.
+            /// Optional. The classification of the VM image.
             /// </summary>
             public string Category
             {
@@ -263,7 +267,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private System.DateTime? _createdTime;
             
             /// <summary>
-            /// The date when the VM image was created.
+            /// Optional. The date when the VM image was created.
             /// </summary>
             public System.DateTime? CreatedTime
             {
@@ -274,7 +278,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> _dataDiskConfigurations;
             
             /// <summary>
-            /// The data disk configurations.
+            /// Optional. The data disk configurations.
             /// </summary>
             public IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> DataDiskConfigurations
             {
@@ -285,7 +289,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _deploymentName;
             
             /// <summary>
-            /// The deployment name of the VM image.
+            /// Optional. The deployment name of the VM image.
             /// </summary>
             public string DeploymentName
             {
@@ -296,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// An identifier for the VM image.
+            /// Optional. An identifier for the VM image.
             /// </summary>
             public string Label
             {
@@ -307,7 +311,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// The name of the VM image.
+            /// Optional. The name of the VM image.
             /// </summary>
             public string Name
             {
@@ -318,7 +322,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private VirtualMachineVMImageListResponse.OSDiskConfiguration _oSDiskConfiguration;
             
             /// <summary>
-            /// The OS disk configuration.
+            /// Optional. The OS disk configuration.
             /// </summary>
             public VirtualMachineVMImageListResponse.OSDiskConfiguration OSDiskConfiguration
             {
@@ -329,7 +333,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _roleName;
             
             /// <summary>
-            /// The role name of the VM image.
+            /// Optional. The role name of the VM image.
             /// </summary>
             public string RoleName
             {
@@ -340,7 +344,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _serviceName;
             
             /// <summary>
-            /// The service name of the VM image.
+            /// Optional. The service name of the VM image.
             /// </summary>
             public string ServiceName
             {

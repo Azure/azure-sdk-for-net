@@ -44,10 +44,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <returns>
@@ -81,10 +81,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <returns>
@@ -104,10 +104,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <returns>
@@ -141,10 +141,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <returns>
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -196,7 +196,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -264,10 +264,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobRunId'>
-        /// The job run identifier.
+        /// Required. The job run identifier.
         /// </param>
         /// <returns>
         /// The Get Web Job Run operation response.
@@ -299,10 +299,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobRunId'>
-        /// The job run identifier.
+        /// Required. The job run identifier.
         /// </param>
         /// <returns>
         /// The Get Web Job Run operation response.
@@ -320,7 +320,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -352,7 +352,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// The get Web Job Operation Response.
@@ -370,7 +370,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -402,7 +402,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -420,7 +420,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -452,7 +452,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -470,10 +470,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Web Job run list operation response.
@@ -505,10 +505,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Web Job run list operation response.
@@ -526,7 +526,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -558,7 +558,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The list of jobs operation response.
@@ -576,7 +576,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -609,7 +609,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -629,10 +629,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='isSingleton'>
-        /// Boolean value indicating if the job is singleton or not.
+        /// Required. Boolean value indicating if the job is singleton or not.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -666,10 +666,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='isSingleton'>
-        /// Boolean value indicating if the job is singleton or not.
+        /// Required. Boolean value indicating if the job is singleton or not.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -688,7 +688,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -721,7 +721,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -740,7 +740,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -773,7 +773,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -792,10 +792,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -828,10 +828,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -850,10 +850,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -886,10 +886,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IWebJobOperations.
         /// </param>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

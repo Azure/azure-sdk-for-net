@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _detailedStatus;
         
         /// <summary>
-        /// The job details status.
+        /// Optional. The job details status.
         /// </summary>
         public string DetailedStatus
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _extraInfoUrl;
         
         /// <summary>
-        /// The extra information url.
+        /// Optional. The extra information url.
         /// </summary>
         public string ExtraInfoUrl
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _historyUrl;
         
         /// <summary>
-        /// The history url.
+        /// Optional. The history url.
         /// </summary>
         public string HistoryUrl
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private WebJobRun _latestRun;
         
         /// <summary>
-        /// The latest run information.
+        /// Optional. The latest run information.
         /// </summary>
         public WebJobRun LatestRun
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _logUrl;
         
         /// <summary>
-        /// The job log url.
+        /// Optional. The job log url.
         /// </summary>
         public string LogUrl
         {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _name;
         
         /// <summary>
-        /// The name.
+        /// Optional. The name.
         /// </summary>
         public string Name
         {
@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _runCommand;
         
         /// <summary>
-        /// The run command.
+        /// Optional. The run command.
         /// </summary>
         public string RunCommand
         {
@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _status;
         
         /// <summary>
-        /// The job status.
+        /// Optional. The job status.
         /// </summary>
         public string Status
         {
@@ -121,7 +121,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private WebJobType _type;
         
         /// <summary>
-        /// The type.
+        /// Optional. The type.
         /// </summary>
         public WebJobType Type
         {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _url;
         
         /// <summary>
-        /// The url.
+        /// Optional. The url.
         /// </summary>
         public Uri Url
         {

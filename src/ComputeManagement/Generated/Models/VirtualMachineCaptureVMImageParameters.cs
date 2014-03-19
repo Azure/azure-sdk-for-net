@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operationType;
         
         /// <summary>
-        /// Required. Must be set to CaptureRoleOperation.
+        /// Optional. Required. Must be set to CaptureRoleOperation.
         /// </summary>
         public string OperationType
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _oSState;
         
         /// <summary>
-        /// Required. The OS state: Generalized | Specialized.
+        /// Optional. Required. The OS state: Generalized | Specialized.
         /// </summary>
         public string OSState
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _vMImageLabel;
         
         /// <summary>
-        /// Required. The VM Template Label.
+        /// Optional. Required. The VM Template Label.
         /// </summary>
         public string VMImageLabel
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _vMImageName;
         
         /// <summary>
-        /// Required. The VM Template Name.
+        /// Optional. Required. The VM Template Name.
         /// </summary>
         public string VMImageName
         {

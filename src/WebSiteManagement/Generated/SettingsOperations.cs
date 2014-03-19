@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a setting.
         /// </summary>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Gets a setting.
         /// </summary>
         /// <param name='settingId'>
-        /// The setting identifier.
+        /// Required. The setting identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -274,7 +274,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new SettingsGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -394,7 +398,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new SettingsListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -443,7 +451,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Updates a setting.
         /// </summary>
         /// <param name='parameters'>
-        /// The setting value.
+        /// Required. The setting value.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

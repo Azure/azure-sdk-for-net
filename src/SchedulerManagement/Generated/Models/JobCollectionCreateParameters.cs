@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionIntrinsicSettings _intrinsicSettings;
         
         /// <summary>
-        /// Intrinsic settings for the scheduler job collections.
+        /// Optional. Intrinsic settings for the scheduler job collections.
         /// </summary>
         public JobCollectionIntrinsicSettings IntrinsicSettings
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _label;
         
         /// <summary>
-        /// Label for the resource.
+        /// Optional. Label for the resource.
         /// </summary>
         public string Label
         {
@@ -55,9 +55,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _schemaVersion;
         
         /// <summary>
-        /// The version of the Intrinsic Properties for your Resource. If not
-        /// specified, you must conform to the contract resource version you
-        /// registered as default.
+        /// Optional. The version of the Intrinsic Properties for your
+        /// Resource. If not specified, you must conform to the contract
+        /// resource version you registered as default.
         /// </summary>
         public string SchemaVersion
         {

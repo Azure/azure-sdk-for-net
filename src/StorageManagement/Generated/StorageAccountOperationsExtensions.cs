@@ -50,7 +50,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -86,7 +87,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -108,7 +110,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The desired storage account name to check for availability.
+        /// Required. The desired storage account name to check for
+        /// availability.
         /// </param>
         /// <returns>
         /// The response to a storage account check name availability request.
@@ -143,7 +146,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The desired storage account name to check for availability.
+        /// Required. The desired storage account name to check for
+        /// availability.
         /// </param>
         /// <returns>
         /// The response to a storage account check name availability request.
@@ -164,7 +168,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -207,7 +212,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Storage Account operation.
+        /// Required. Parameters supplied to the Create Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -236,7 +242,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the storage account.
+        /// Required. The name of the storage account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -272,7 +278,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the storage account.
+        /// Required. The name of the storage account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -294,7 +300,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Name of the storage account to get.
+        /// Required. Name of the storage account to get.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
@@ -329,7 +335,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Name of the storage account to get.
+        /// Required. Name of the storage account to get.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
@@ -350,7 +356,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the desired storage account.
+        /// Required. The name of the desired storage account.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
@@ -385,7 +391,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the desired storage account.
+        /// Required. The name of the desired storage account.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
@@ -456,7 +462,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Regenerate Keys operation.
+        /// Required. Parameters supplied to the Regenerate Keys operation.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
@@ -491,7 +497,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Regenerate Keys operation.
+        /// Required. Parameters supplied to the Regenerate Keys operation.
         /// </param>
         /// <returns>
         /// The primary and secondary access keys for a storage account.
@@ -513,10 +519,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Name of the storage account to update.
+        /// Required. Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Storage Account operation.
+        /// Required. Parameters supplied to the Update Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -553,10 +560,11 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Name of the storage account to update.
+        /// Required. Name of the storage account to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Storage Account operation.
+        /// Required. Parameters supplied to the Update Storage Account
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

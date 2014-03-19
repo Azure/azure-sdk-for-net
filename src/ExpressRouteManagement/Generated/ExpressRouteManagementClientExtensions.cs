@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient.
         /// </param>
         /// <param name='operationId'>
-        /// The id  of the operation.
+        /// Required. The id  of the operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient.
         /// </param>
         /// <param name='operationId'>
-        /// The id  of the operation.
+        /// Required. The id  of the operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

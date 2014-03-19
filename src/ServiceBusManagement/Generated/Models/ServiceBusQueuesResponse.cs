@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusQueue> _queues;
         
         /// <summary>
-        /// The listing of queues.
+        /// Optional. The listing of queues.
         /// </summary>
         public IList<ServiceBusQueue> Queues
         {

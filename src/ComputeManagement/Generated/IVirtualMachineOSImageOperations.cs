@@ -64,8 +64,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the image to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the image should also
-        /// be deleted from storage.
+        /// Specifies that the source blob for the image should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

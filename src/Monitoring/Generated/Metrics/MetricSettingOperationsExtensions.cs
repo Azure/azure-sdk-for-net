@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Metric settings to be created or updated.
+        /// Required. Metric settings to be created or updated.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Metric settings to be created or updated.
+        /// Required. Metric settings to be created or updated.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -94,10 +94,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <returns>
         /// The list metric settings operation response.
@@ -130,10 +130,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The id of the resource.
+        /// Required. The id of the resource.
         /// </param>
         /// <param name='metricNamespace'>
-        /// The namespace of the metrics.
+        /// Required. The namespace of the metrics.
         /// </param>
         /// <returns>
         /// The list metric settings operation response.

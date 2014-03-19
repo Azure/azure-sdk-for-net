@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobState _state;
         
         /// <summary>
-        /// New state to update to: 'enabled' or 'disabled'.
+        /// Required. New state to update to: 'enabled' or 'disabled'.
         /// </summary>
         public JobState State
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _updateStateReason;
         
         /// <summary>
-        /// A description of the circumstances associated with this job state
-        /// update.
+        /// Optional. A description of the circumstances associated with this
+        /// job state update.
         /// </summary>
         public string UpdateStateReason
         {

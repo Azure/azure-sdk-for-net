@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The diagnostics setting information new values.
+        /// Required. The diagnostics setting information new values.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.WebSitesExtensions.IDiagnosticOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The diagnostics setting information new values.
+        /// Required. The diagnostics setting information new values.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

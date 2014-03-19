@@ -32,8 +32,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _peerAsn;
         
         /// <summary>
-        /// Specifies the numeric identifier of the public autonomous system
-        /// (AS) in which the device of the service provider is configured.
+        /// Optional. Specifies the numeric identifier of the public autonomous
+        /// system (AS) in which the device of the service provider is
+        /// configured.
         /// </summary>
         public uint PeerAsn
         {
@@ -44,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _primaryPeerSubnet;
         
         /// <summary>
-        /// Specifies the subnet addresses of the interface to be used for
-        /// establishing the BGP session on the primary port.
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the BGP session on the primary port.
         /// </summary>
         public string PrimaryPeerSubnet
         {
@@ -56,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _secondaryPeerSubnet;
         
         /// <summary>
-        /// Specifies the subnet addresses of the interface to be used for
-        /// establishing the BGP session on the secondary port.
+        /// Optional. Specifies the subnet addresses of the interface to be
+        /// used for establishing the BGP session on the secondary port.
         /// </summary>
         public string SecondaryPeerSubnet
         {
@@ -80,7 +81,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private uint _vlanId;
         
         /// <summary>
-        /// Specifies the identifier that is used to identify the customer.
+        /// Optional. Specifies the identifier that is used to identify the
+        /// customer.
         /// </summary>
         public uint VlanId
         {

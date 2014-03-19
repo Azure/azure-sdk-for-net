@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private IList<CloudServiceListResponse.CloudService> _cloudServices;
         
         /// <summary>
-        /// The list of cloud service locations for this subscription.
+        /// Optional. The list of cloud service locations for this subscription.
         /// </summary>
         public IList<CloudServiceListResponse.CloudService> CloudServices
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _description;
             
             /// <summary>
-            /// The description of the cloud service region.
+            /// Optional. The description of the cloud service region.
             /// </summary>
             public string Description
             {
@@ -87,7 +87,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _geoRegion;
             
             /// <summary>
-            /// The geographical region in which this cloud service can run.
+            /// Optional. The geographical region in which this cloud service
+            /// can run.
             /// </summary>
             public string GeoRegion
             {
@@ -98,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _label;
             
             /// <summary>
-            /// The label of the cloud service region.
+            /// Optional. The label of the cloud service region.
             /// </summary>
             public string Label
             {
@@ -109,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private string _name;
             
             /// <summary>
-            /// The name of the cloud service region.
+            /// Optional. The name of the cloud service region.
             /// </summary>
             public string Name
             {
@@ -120,8 +121,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             private IList<CloudServiceListResponse.CloudService.AddOnResource> _resources;
             
             /// <summary>
-            /// A list of existing resources installed into a cloud service
-            /// region.
+            /// Optional. A list of existing resources installed into a cloud
+            /// service region.
             /// </summary>
             public IList<CloudServiceListResponse.CloudService.AddOnResource> Resources
             {
@@ -145,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _eTag;
                 
                 /// <summary>
-                /// The ETag for this resource.
+                /// Optional. The ETag for this resource.
                 /// </summary>
                 public string ETag
                 {
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _name;
                 
                 /// <summary>
-                /// The user-input name of this item.
+                /// Optional. The user-input name of this item.
                 /// </summary>
                 public string Name
                 {
@@ -167,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _namespace;
                 
                 /// <summary>
-                /// The namespace in which this item resides.
+                /// Optional. The namespace in which this item resides.
                 /// </summary>
                 public string Namespace
                 {
@@ -178,7 +179,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private IDictionary<string, string> _outputItems;
                 
                 /// <summary>
-                /// Output items associated with an individual resource.
+                /// Optional. Output items associated with an individual
+                /// resource.
                 /// </summary>
                 public IDictionary<string, string> OutputItems
                 {
@@ -189,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _plan;
                 
                 /// <summary>
-                /// The plan for this item as selected by the user.
+                /// Optional. The plan for this item as selected by the user.
                 /// </summary>
                 public string Plan
                 {
@@ -200,7 +202,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _schemaVersion;
                 
                 /// <summary>
-                /// The schema version for this resource.
+                /// Optional. The schema version for this resource.
                 /// </summary>
                 public string SchemaVersion
                 {
@@ -211,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _state;
                 
                 /// <summary>
-                /// The state of this resource.
+                /// Optional. The state of this resource.
                 /// </summary>
                 public string State
                 {
@@ -222,8 +224,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private CloudServiceListResponse.CloudService.AddOnResource.OperationStatus _status;
                 
                 /// <summary>
-                /// Operation status items associated with an individual
-                /// resource.
+                /// Optional. Operation status items associated with an
+                /// individual resource.
                 /// </summary>
                 public CloudServiceListResponse.CloudService.AddOnResource.OperationStatus Status
                 {
@@ -234,7 +236,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private string _type;
                 
                 /// <summary>
-                /// The type of store item.
+                /// Optional. The type of store item.
                 /// </summary>
                 public string Type
                 {
@@ -245,7 +247,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 private IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> _usageLimits;
                 
                 /// <summary>
-                /// Usage meters associated with an individual resource.
+                /// Optional. Usage meters associated with an individual
+                /// resource.
                 /// </summary>
                 public IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> UsageLimits
                 {
@@ -270,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _result;
                     
                     /// <summary>
-                    /// The result of this operation status.
+                    /// Optional. The result of this operation status.
                     /// </summary>
                     public string Result
                     {
@@ -281,7 +284,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _type;
                     
                     /// <summary>
-                    /// The type of this operation status.
+                    /// Optional. The type of this operation status.
                     /// </summary>
                     public string Type
                     {
@@ -306,8 +309,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _amountIncluded;
                     
                     /// <summary>
-                    /// Defines the limit of this usage included in this
-                    /// resource's plan.
+                    /// Optional. Defines the limit of this usage included in
+                    /// this resource's plan.
                     /// </summary>
                     public string AmountIncluded
                     {
@@ -318,7 +321,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _amountUsed;
                     
                     /// <summary>
-                    /// The amount of this resource that has already been used.
+                    /// Optional. The amount of this resource that has already
+                    /// been used.
                     /// </summary>
                     public string AmountUsed
                     {
@@ -329,7 +333,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _name;
                     
                     /// <summary>
-                    /// The name of this usage limit.
+                    /// Optional. The name of this usage limit.
                     /// </summary>
                     public string Name
                     {
@@ -340,7 +344,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                     private string _unit;
                     
                     /// <summary>
-                    /// The unit in which this usage limit is measured.
+                    /// Optional. The unit in which this usage limit is
+                    /// measured.
                     /// </summary>
                     public string Unit
                     {

@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<ServiceCertificateListResponse.Certificate> _certificates;
         
         /// <summary>
-        /// The service certificates that are valid for your subscription.
+        /// Optional. The service certificates that are valid for your
+        /// subscription.
         /// </summary>
         public IList<ServiceCertificateListResponse.Certificate> Certificates
         {
@@ -76,8 +77,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _certificateUri;
             
             /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Service Certificate requests against the certificate store.
+            /// Optional. The Service Management API request URI used to
+            /// perform Get Service Certificate requests against the
+            /// certificate store.
             /// </summary>
             public Uri CertificateUri
             {
@@ -88,7 +90,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private byte[] _data;
             
             /// <summary>
-            /// The public part of the service certificate as a .cer file.
+            /// Optional. The public part of the service certificate as a .cer
+            /// file.
             /// </summary>
             public byte[] Data
             {
@@ -99,8 +102,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _thumbprint;
             
             /// <summary>
-            /// The X509 certificate thumb print property of the service
-            /// certificate.
+            /// Optional. The X509 certificate thumb print property of the
+            /// service certificate.
             /// </summary>
             public string Thumbprint
             {
@@ -111,8 +114,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _thumbprintAlgorithm;
             
             /// <summary>
-            /// The algorithm that was used to hash the service certificate.
-            /// Currently SHA-1 is the only supported algorithm.
+            /// Optional. The algorithm that was used to hash the service
+            /// certificate. Currently SHA-1 is the only supported algorithm.
             /// </summary>
             public string ThumbprintAlgorithm
             {

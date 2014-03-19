@@ -69,10 +69,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Delete a continuous job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
@@ -193,10 +193,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Delete a triggered job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='recursive'>
-        /// Removing the specified directory and all its files and
+        /// Required. Removing the specified directory and all its files and
         /// subdirectories. The value must be set to true.
         /// </param>
         /// <param name='cancellationToken'>
@@ -317,7 +317,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// TBD.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -404,7 +404,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -571,7 +575,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -658,7 +662,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -825,10 +833,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a web job run.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobRunId'>
-        /// The job run identifier.
+        /// Required. The job run identifier.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -920,7 +928,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetRunResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1017,7 +1029,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Get a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1104,7 +1116,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1271,7 +1287,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1362,7 +1378,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1536,7 +1556,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the continuous web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1627,7 +1647,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -1801,10 +1825,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the web job runs.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1900,7 +1924,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobRunListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2004,7 +2032,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// List the triggered web jobs.
         /// </summary>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2095,7 +2123,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new WebJobListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -2269,7 +2301,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Run a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2388,10 +2420,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// instance opposed to running on all instances.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='isSingleton'>
-        /// Boolean value indicating if the job is singleton or not.
+        /// Required. Boolean value indicating if the job is singleton or not.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2511,7 +2543,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Start a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2629,7 +2661,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Stop a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2747,10 +2779,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Upload a continuous web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2878,10 +2910,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Upload a triggered web job.
         /// </summary>
         /// <param name='jobName'>
-        /// The job name.
+        /// Required. The job name.
         /// </param>
         /// <param name='jobContent'>
-        /// The job content.
+        /// Required. The job content.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

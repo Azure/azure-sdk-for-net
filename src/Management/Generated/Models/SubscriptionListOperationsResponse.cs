@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _continuationToken;
         
         /// <summary>
-        /// The string that can be used to return the rest of the list.
-        /// Subsequent requests must include this parameter to continue
+        /// Optional. The string that can be used to return the rest of the
+        /// list. Subsequent requests must include this parameter to continue
         /// listing operations from where the last response left off. This
         /// element exists only if the complete list of subscription
         /// operations was not returned.
@@ -50,8 +50,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<SubscriptionListOperationsResponse.SubscriptionOperation> _subscriptionOperations;
         
         /// <summary>
-        /// The list of operations that have been performed on the subscription
-        /// during the specified timeframe.
+        /// Optional. The list of operations that have been performed on the
+        /// subscription during the specified timeframe.
         /// </summary>
         public IList<SubscriptionListOperationsResponse.SubscriptionOperation> SubscriptionOperations
         {
@@ -77,8 +77,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _clientIPAddress;
             
             /// <summary>
-            /// The IP address of the client computer that initiated the
-            /// operation. This element is returned only if
+            /// Optional. The IP address of the client computer that initiated
+            /// the operation. This element is returned only if
             /// UsedServiceManagementApi is true.
             /// </summary>
             public string ClientIPAddress
@@ -90,8 +90,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _subscriptionCertificateThumbprint;
             
             /// <summary>
-            /// The thumbprint of the subscription certificate used to initiate
-            /// the operation.
+            /// Optional. The thumbprint of the subscription certificate used
+            /// to initiate the operation.
             /// </summary>
             public string SubscriptionCertificateThumbprint
             {
@@ -102,9 +102,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             private bool _usedServiceManagementApi;
             
             /// <summary>
-            /// Indicates whether the operation was initiated by using the
-            /// Service Management API. False if it was initiated by another
-            /// source, such as the Management Portal.
+            /// Optional. Indicates whether the operation was initiated by
+            /// using the Service Management API. False if it was initiated by
+            /// another source, such as the Management Portal.
             /// </summary>
             public bool UsedServiceManagementApi
             {
@@ -115,9 +115,10 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _userEmailAddress;
             
             /// <summary>
-            /// The email associated with the Windows Live ID of the user who
-            /// initiated the operation from the Management Portal. This
-            /// element is returned only if UsedServiceManagementApi is false.
+            /// Optional. The email associated with the Windows Live ID of the
+            /// user who initiated the operation from the Management Portal.
+            /// This element is returned only if UsedServiceManagementApi is
+            /// false.
             /// </summary>
             public string UserEmailAddress
             {
@@ -142,8 +143,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private SubscriptionListOperationsResponse.OperationCallerDetails _operationCaller;
             
             /// <summary>
-            /// A collection of attributes that identifies the source of the
-            /// operation.
+            /// Optional. A collection of attributes that identifies the source
+            /// of the operation.
             /// </summary>
             public SubscriptionListOperationsResponse.OperationCallerDetails OperationCaller
             {
@@ -154,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private DateTime _operationCompletedTime;
             
             /// <summary>
-            /// The time that the operation finished executing.
+            /// Optional. The time that the operation finished executing.
             /// </summary>
             public DateTime OperationCompletedTime
             {
@@ -165,7 +166,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _operationId;
             
             /// <summary>
-            /// The globally unique identifier (GUID) of the operation.
+            /// Optional. The globally unique identifier (GUID) of the
+            /// operation.
             /// </summary>
             public string OperationId
             {
@@ -176,7 +178,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _operationName;
             
             /// <summary>
-            /// The name of the performed operation.
+            /// Optional. The name of the performed operation.
             /// </summary>
             public string OperationName
             {
@@ -187,9 +189,10 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _operationObjectId;
             
             /// <summary>
-            /// The target object for the operation. This value is equal to the
-            /// URL for performing an HTTP GET on the object, and corresponds
-            /// to the same values for the ObjectIdFilter in the request.
+            /// Optional. The target object for the operation. This value is
+            /// equal to the URL for performing an HTTP GET on the object, and
+            /// corresponds to the same values for the ObjectIdFilter in the
+            /// request.
             /// </summary>
             public string OperationObjectId
             {
@@ -200,7 +203,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private IDictionary<string, string> _operationParameters;
             
             /// <summary>
-            /// The collection of parameters for the performed operation.
+            /// Optional. The collection of parameters for the performed
+            /// operation.
             /// </summary>
             public IDictionary<string, string> OperationParameters
             {
@@ -211,7 +215,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private DateTime _operationStartedTime;
             
             /// <summary>
-            /// The time that the operation started to execute.
+            /// Optional. The time that the operation started to execute.
             /// </summary>
             public DateTime OperationStartedTime
             {
@@ -222,9 +226,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _operationStatus;
             
             /// <summary>
-            /// An object that contains information on the current status of
-            /// the operation. The object returned has the following XML
-            /// format: <OperationStatus>
+            /// Optional. An object that contains information on the current
+            /// status of the operation. The object returned has the following
+            /// XML format: <OperationStatus>
             /// <ID>339c6c13-1f81-412f-9bc6-00e9c5876695</ID>
             /// <Status>Succeeded</Status>
             /// <HttpStatusCode>200</HttpStatusCode> </OperationStatus>

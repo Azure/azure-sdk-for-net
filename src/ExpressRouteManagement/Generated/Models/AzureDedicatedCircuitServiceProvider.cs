@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private IList<DedicatedCircuitBandwidth> _dedicatedCircuitBandwidths;
         
         /// <summary>
-        /// Bandwidths available to create dedicated circuits.
+        /// Required. Bandwidths available to create dedicated circuits.
         /// </summary>
         public IList<DedicatedCircuitBandwidth> DedicatedCircuitBandwidths
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _dedicatedCircuitLocations;
         
         /// <summary>
-        /// Locations available for peering with Azure.
+        /// Required. Locations available for peering with Azure.
         /// </summary>
         public string DedicatedCircuitLocations
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _name;
         
         /// <summary>
-        /// Name of the dedicated circuit service provider.
+        /// Required. Name of the dedicated circuit service provider.
         /// </summary>
         public string Name
         {
@@ -67,7 +67,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _type;
         
         /// <summary>
-        /// Type of the dedicated circuit service provider. Can be IXP or Telco.
+        /// Required. Type of the dedicated circuit service provider. Can be
+        /// IXP or Telco.
         /// </summary>
         public string Type
         {

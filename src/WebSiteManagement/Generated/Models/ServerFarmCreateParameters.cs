@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _currentNumberOfWorkers;
         
         /// <summary>
-        /// The current number of Virtual Machines (VMs) in the server farm.
+        /// Optional. The current number of Virtual Machines (VMs) in the
+        /// server farm.
         /// </summary>
         public int? CurrentNumberOfWorkers
         {
@@ -44,7 +45,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmWorkerSize? _currentWorkerSize;
         
         /// <summary>
-        /// The current worker size Possible values are Small, Medium, or Large.
+        /// Optional. The current worker size Possible values are Small,
+        /// Medium, or Large.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmWorkerSize? CurrentWorkerSize
         {
@@ -55,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int _numberOfWorkers;
         
         /// <summary>
-        /// The instance count, which is the number of virtual machines
-        /// dedicated to the farm. Supported values are 1-10.
+        /// Required. The instance count, which is the number of virtual
+        /// machines dedicated to the farm. Supported values are 1-10.
         /// </summary>
         public int NumberOfWorkers
         {
@@ -67,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? _status;
         
         /// <summary>
-        /// Server farm status. Possible values are Ready or Pending.
+        /// Optional. Server farm status. Possible values are Ready or Pending.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? Status
         {
@@ -78,7 +80,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private ServerFarmWorkerSize _workerSize;
         
         /// <summary>
-        /// The instance size. Possible values are Small, Medium, or Large.
+        /// Required. The instance size. Possible values are Small, Medium, or
+        /// Large.
         /// </summary>
         public ServerFarmWorkerSize WorkerSize
         {

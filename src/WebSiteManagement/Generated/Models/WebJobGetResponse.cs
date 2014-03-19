@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private WebJob _webJob;
         
         /// <summary>
-        /// The web job.
+        /// Optional. The web job.
         /// </summary>
         public WebJob WebJob
         {

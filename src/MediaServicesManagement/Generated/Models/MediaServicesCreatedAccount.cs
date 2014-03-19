@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _accountId;
         
         /// <summary>
-        /// The Id of the created Media Services account.
+        /// Optional. The Id of the created Media Services account.
         /// </summary>
         public string AccountId
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _accountName;
         
         /// <summary>
-        /// The Name of the created Media Services account.
+        /// Optional. The Name of the created Media Services account.
         /// </summary>
         public string AccountName
         {
@@ -54,8 +54,8 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private string _subscriptionId;
         
         /// <summary>
-        /// The subscription Id associated with the created Media Services
-        /// account.
+        /// Optional. The subscription Id associated with the created Media
+        /// Services account.
         /// </summary>
         public string SubscriptionId
         {

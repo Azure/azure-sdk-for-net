@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Indicates if the site name is available.
+        /// Optional. Indicates if the site name is available.
         /// </summary>
         public bool IsAvailable
         {

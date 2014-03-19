@@ -79,10 +79,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -183,10 +183,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Add Extension operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -383,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -505,11 +505,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -637,7 +637,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The cloud service name that you would like to use.
+        /// Required. The cloud service name that you would like to use.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -782,7 +782,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Hosted Service operation.
+        /// Required. Parameters supplied to the Create Hosted Service
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -983,7 +984,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1105,7 +1106,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1201,11 +1202,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1305,7 +1306,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1520,7 +1521,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2906,11 +2907,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='extensionId'>
-        /// The identifier that was assigned to the extension when it was added
-        /// to the cloud service
+        /// Required. The identifier that was assigned to the extension when it
+        /// was added to the cloud service
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3498,7 +3499,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3687,10 +3688,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='providerNamespace'>
-        /// The provider namespace.
+        /// Required. The provider namespace.
         /// </param>
         /// <param name='extensionType'>
-        /// The extension type name.
+        /// Required. The extension type name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3894,10 +3895,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Hosted Service operation.
+        /// Required. Parameters supplied to the Update Hosted Service
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

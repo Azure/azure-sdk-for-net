@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<NamespaceDescription> _namespaceDescriptions;
         
         /// <summary>
-        /// The descriptions for the namespace.
+        /// Optional. The descriptions for the namespace.
         /// </summary>
         public IList<NamespaceDescription> NamespaceDescriptions
         {

@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<string> _capabilities;
         
         /// <summary>
-        /// Indicates if the virtual machine related operations can be
-        /// performed in this affinity group. If so, the string
+        /// Optional. Indicates if the virtual machine related operations can
+        /// be performed in this affinity group. If so, the string
         /// PersistentVMRole will be returned by this element. Otherwise, this
         /// element will not be present.
         /// </summary>
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _description;
         
         /// <summary>
-        /// The user supplied description of this affinity group.
+        /// Optional. The user supplied description of this affinity group.
         /// </summary>
         public string Description
         {
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<AffinityGroupGetResponse.HostedServiceReference> _hostedServices;
         
         /// <summary>
-        /// The hosted services associated with this affinity group.
+        /// Optional. The hosted services associated with this affinity group.
         /// </summary>
         public IList<AffinityGroupGetResponse.HostedServiceReference> HostedServices
         {
@@ -71,8 +71,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _label;
         
         /// <summary>
-        /// The user supplied label of the affinity group returned as a base-64
-        /// encoded string.
+        /// Optional. The user supplied label of the affinity group returned as
+        /// a base-64 encoded string.
         /// </summary>
         public string Label
         {
@@ -83,8 +83,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _location;
         
         /// <summary>
-        /// The location of the data center that the affinity group is
-        /// associated with.
+        /// Optional. The location of the data center that the affinity group
+        /// is associated with.
         /// </summary>
         public string Location
         {
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _name;
         
         /// <summary>
-        /// The user supplied name of the affinity group.
+        /// Optional. The user supplied name of the affinity group.
         /// </summary>
         public string Name
         {
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<AffinityGroupGetResponse.StorageServiceReference> _storageServices;
         
         /// <summary>
-        /// The storage services associated with this affinity group.
+        /// Optional. The storage services associated with this affinity group.
         /// </summary>
         public IList<AffinityGroupGetResponse.StorageServiceReference> StorageServices
         {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _serviceName;
             
             /// <summary>
-            /// The name of the hosted service.
+            /// Optional. The name of the hosted service.
             /// </summary>
             public string ServiceName
             {
@@ -143,8 +143,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             private Uri _uri;
             
             /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Hosted Service Properties requests against the hosted service.
+            /// Optional. The Service Management API request URI used to
+            /// perform Get Hosted Service Properties requests against the
+            /// hosted service.
             /// </summary>
             public Uri Uri
             {
@@ -168,7 +169,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _serviceName;
             
             /// <summary>
-            /// The user supplied name of the storage account.
+            /// Optional. The user supplied name of the storage account.
             /// </summary>
             public string ServiceName
             {
@@ -179,9 +180,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             private Uri _uri;
             
             /// <summary>
-            /// The Service Management API request URI used to perform Get
-            /// Storage Account Properties requests against the storage
-            /// account.
+            /// Optional. The Service Management API request URI used to
+            /// perform Get Storage Account Properties requests against the
+            /// storage account.
             /// </summary>
             public Uri Uri
             {

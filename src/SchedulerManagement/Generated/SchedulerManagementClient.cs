@@ -71,6 +71,12 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required.
+        /// </param>
         public SchedulerManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
@@ -91,6 +97,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
         public SchedulerManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
@@ -113,8 +122,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// for more information)
         /// </summary>
         /// <param name='requestId'>
-        /// The request ID for the request you wish to track. The request ID is
-        /// returned in the x-ms-request-id response header for every request.
+        /// Required. The request ID for the request you wish to track. The
+        /// request ID is returned in the x-ms-request-id response header for
+        /// every request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

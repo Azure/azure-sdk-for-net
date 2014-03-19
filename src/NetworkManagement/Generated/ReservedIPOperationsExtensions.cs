@@ -46,7 +46,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -87,7 +88,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -114,7 +116,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -148,7 +150,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -168,7 +170,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a network reserved IP.
+        /// Required. Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -209,7 +211,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a network reserved IP.
+        /// Required. Parameters supplied to create a network reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -236,7 +238,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -277,7 +279,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -304,7 +306,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve.
+        /// Required. The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
         /// Preview Only. A reserved IP associated with your subscription.
@@ -337,7 +339,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve.
+        /// Required. The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
         /// Preview Only. A reserved IP associated with your subscription.

@@ -68,10 +68,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -295,10 +295,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -477,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

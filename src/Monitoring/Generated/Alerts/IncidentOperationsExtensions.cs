@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
         /// </param>
         /// <param name='incidentId'>
-        /// The id of the incident to retrieve.
+        /// Required. The id of the incident to retrieve.
         /// </param>
         /// <returns>
         /// The Get Incident operation response.
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
         /// </param>
         /// <param name='incidentId'>
-        /// The id of the incident to retrieve.
+        /// Required. The id of the incident to retrieve.
         /// </param>
         /// <returns>
         /// The Get Incident operation response.
@@ -117,10 +117,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The rule id.
+        /// Required. The rule id.
         /// </param>
         /// <param name='isActive'>
-        /// A boolean to retrieve only active or resolved incidents.
+        /// Required. A boolean to retrieve only active or resolved incidents.
         /// </param>
         /// <returns>
         /// The List incidents operation response.
@@ -149,10 +149,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
         /// </param>
         /// <param name='ruleId'>
-        /// The rule id.
+        /// Required. The rule id.
         /// </param>
         /// <param name='isActive'>
-        /// A boolean to retrieve only active or resolved incidents.
+        /// Required. A boolean to retrieve only active or resolved incidents.
         /// </param>
         /// <returns>
         /// The List incidents operation response.

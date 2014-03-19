@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _accountAdminLiveEmailId;
         
         /// <summary>
-        /// The live ID of the account administrator.
+        /// Optional. The live ID of the account administrator.
         /// </summary>
         public string AccountAdminLiveEmailId
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentCoreCount;
         
         /// <summary>
-        /// The number of currently allocated cores.
+        /// Optional. The number of currently allocated cores.
         /// </summary>
         public int CurrentCoreCount
         {
@@ -56,7 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentDnsServers;
         
         /// <summary>
-        /// The current number of DNS servers allocated on this subscription.
+        /// Optional. The current number of DNS servers allocated on this
+        /// subscription.
         /// </summary>
         public int CurrentDnsServers
         {
@@ -67,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentHostedServices;
         
         /// <summary>
-        /// The number of currently allocated cloud services.
+        /// Optional. The number of currently allocated cloud services.
         /// </summary>
         public int CurrentHostedServices
         {
@@ -78,8 +79,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentLocalNetworkSites;
         
         /// <summary>
-        /// The current number of local virtual network sites that are
-        /// allocated on this subscription.
+        /// Optional. The current number of local virtual network sites that
+        /// are allocated on this subscription.
         /// </summary>
         public int CurrentLocalNetworkSites
         {
@@ -90,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentStorageAccounts;
         
         /// <summary>
-        /// The number of currently allocated storage accounts.
+        /// Optional. The number of currently allocated storage accounts.
         /// </summary>
         public int CurrentStorageAccounts
         {
@@ -101,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _currentVirtualNetworkSites;
         
         /// <summary>
-        /// The number of currently allocated virtual network sites.
+        /// Optional. The number of currently allocated virtual network sites.
         /// </summary>
         public int CurrentVirtualNetworkSites
         {
@@ -112,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumCoreCount;
         
         /// <summary>
-        /// The maximum number of cores that can be allocated on this
+        /// Optional. The maximum number of cores that can be allocated on this
         /// subscription.
         /// </summary>
         public int MaximumCoreCount
@@ -124,8 +125,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumDnsServers;
         
         /// <summary>
-        /// The maximum number of DNS servers that can be allocated on this
-        /// subscription.
+        /// Optional. The maximum number of DNS servers that can be allocated
+        /// on this subscription.
         /// </summary>
         public int MaximumDnsServers
         {
@@ -136,8 +137,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumHostedServices;
         
         /// <summary>
-        /// The maximum number of cloud services that can be allocated on this
-        /// subscription.
+        /// Optional. The maximum number of cloud services that can be
+        /// allocated on this subscription.
         /// </summary>
         public int MaximumHostedServices
         {
@@ -148,8 +149,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumLocalNetworkSites;
         
         /// <summary>
-        /// The maximum number of local virtual network sites that can be
-        /// allocated on this subscription.
+        /// Optional. The maximum number of local virtual network sites that
+        /// can be allocated on this subscription.
         /// </summary>
         public int MaximumLocalNetworkSites
         {
@@ -160,8 +161,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumStorageAccounts;
         
         /// <summary>
-        /// The maximum number of storage accounts that can be allocated on
-        /// this subscription.
+        /// Optional. The maximum number of storage accounts that can be
+        /// allocated on this subscription.
         /// </summary>
         public int MaximumStorageAccounts
         {
@@ -172,8 +173,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private int _maximumVirtualNetworkSites;
         
         /// <summary>
-        /// The maximum number of virtual network sites that can be allocated
-        /// on this subscription.
+        /// Optional. The maximum number of virtual network sites that can be
+        /// allocated on this subscription.
         /// </summary>
         public int MaximumVirtualNetworkSites
         {
@@ -184,7 +185,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _serviceAdminLiveEmailId;
         
         /// <summary>
-        /// The live ID of the subscription administrator.
+        /// Optional. The live ID of the subscription administrator.
         /// </summary>
         public string ServiceAdminLiveEmailId
         {
@@ -195,7 +196,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _subscriptionID;
         
         /// <summary>
-        /// The subscription ID that the operation was called on.
+        /// Optional. The subscription ID that the operation was called on.
         /// </summary>
         public string SubscriptionID
         {
@@ -206,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _subscriptionName;
         
         /// <summary>
-        /// The user-supplied name of the subscription.
+        /// Optional. The user-supplied name of the subscription.
         /// </summary>
         public string SubscriptionName
         {
@@ -217,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private SubscriptionStatus _subscriptionStatus;
         
         /// <summary>
-        /// The subscription status.
+        /// Optional. The subscription status.
         /// </summary>
         public SubscriptionStatus SubscriptionStatus
         {

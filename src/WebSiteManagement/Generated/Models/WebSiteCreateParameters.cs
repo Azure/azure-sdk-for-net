@@ -34,10 +34,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
         
         /// <summary>
-        /// This value should be Shared for the Free or Paid Shared offerings,
-        /// or Dedicated for the Standard offering. The default value is
-        /// Shared. If you set ComputeMode to Dedicated, you must specify a
-        /// value for the ServerFarm element.
+        /// Optional. This value should be Shared for the Free or Paid Shared
+        /// offerings, or Dedicated for the Standard offering. The default
+        /// value is Shared. If you set ComputeMode to Dedicated, you must
+        /// specify a value for the ServerFarm element.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
         {
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _hostNames;
         
         /// <summary>
-        /// Required. The fully qualified domain name for website. Only one
+        /// Optional. The fully qualified domain name for website. Only one
         /// hostname can be specified in the azurewebsites.net domain. The
         /// hostname should match the name of the website. Custom domains can
         /// only be specified for Shared or Standard websites.
@@ -74,8 +74,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// The name of the Server Farm associated with this website. This is a
-        /// required value for Standard mode.
+        /// Optional. The name of the Server Farm associated with this website.
+        /// This is a required value for Standard mode.
         /// </summary>
         public string ServerFarm
         {
@@ -86,9 +86,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? _siteMode;
         
         /// <summary>
-        /// This value is limited for the Free offering Basic for the Paid
-        /// Shared offering. The default value is Limited. Note: Standard mode
-        /// does not use the SiteMode setting; it uses the ComputeMode
+        /// Optional. This value is limited for the Free offering Basic for the
+        /// Paid Shared offering. The default value is Limited. Note: Standard
+        /// mode does not use the SiteMode setting; it uses the ComputeMode
         /// setting. For more information, see Upgrade or Downgrade a Web Site.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteCreateParameters.WebSpaceDetails _webSpace;
         
         /// <summary>
-        /// Information about the web space to create.
+        /// Optional. Information about the web space to create.
         /// </summary>
         public WebSiteCreateParameters.WebSpaceDetails WebSpace
         {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _webSpaceName;
         
         /// <summary>
-        /// The name of the webspace.
+        /// Required. The name of the webspace.
         /// </summary>
         public string WebSpaceName
         {

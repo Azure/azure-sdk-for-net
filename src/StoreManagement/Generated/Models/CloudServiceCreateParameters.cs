@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _description;
         
         /// <summary>
-        /// The description for the cloud service to be created.
+        /// Required. The description for the cloud service to be created.
         /// </summary>
         public string Description
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _geoRegion;
         
         /// <summary>
-        /// The geographical region to create the cloud service in.
+        /// Required. The geographical region to create the cloud service in.
         /// </summary>
         public string GeoRegion
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _label;
         
         /// <summary>
-        /// The label of the cloud service to be created.
+        /// Required. The label of the cloud service to be created.
         /// </summary>
         public string Label
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _name;
         
         /// <summary>
-        /// The name of the cloud service to be created.
+        /// Required. The name of the cloud service to be created.
         /// </summary>
         public string Name
         {

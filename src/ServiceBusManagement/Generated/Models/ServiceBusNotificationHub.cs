@@ -30,6 +30,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     {
         private IList<ServiceBusSharedAccessAuthorizationRule> _authorizationRules;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<ServiceBusSharedAccessAuthorizationRule> AuthorizationRules
         {
             get { return this._authorizationRules; }
@@ -38,6 +41,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         
         private string _name;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string Name
         {
             get { return this._name; }
@@ -46,6 +52,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         
         private string _registrationTtl;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string RegistrationTtl
         {
             get { return this._registrationTtl; }

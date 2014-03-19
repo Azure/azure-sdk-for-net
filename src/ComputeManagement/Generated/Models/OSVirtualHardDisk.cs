@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
         
         /// <summary>
-        /// Specifies the platform caching behavior of the operating system
-        /// disk blob for read/write efficiency.
+        /// Optional. Specifies the platform caching behavior of the operating
+        /// system disk blob for read/write efficiency.
         /// </summary>
         public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
         {
@@ -46,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Specifies the friendly name an operating system image in the image
-        /// repository.
+        /// Optional. Specifies the friendly name an operating system image in
+        /// the image repository.
         /// </summary>
         public string Label
         {
@@ -58,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLink;
         
         /// <summary>
-        /// Specifies the location of the operating system disk in Windows
-        /// Azure storage.
+        /// Optional. Specifies the location of the operating system disk in
+        /// Windows Azure storage.
         /// </summary>
         public Uri MediaLink
         {
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Specifies the name an operating system image in the image
+        /// Optional. Specifies the name an operating system image in the image
         /// repository.
         /// </summary>
         public string Name
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystem;
         
         /// <summary>
-        /// The operating system running in the virtual machine.
+        /// Optional. The operating system running in the virtual machine.
         /// </summary>
         public string OperatingSystem
         {
@@ -93,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _sourceImageName;
         
         /// <summary>
-        /// Specifies the name of the source image that was used to provision
-        /// the virtual machine.
+        /// Optional. Specifies the name of the source image that was used to
+        /// provision the virtual machine.
         /// </summary>
         public string SourceImageName
         {

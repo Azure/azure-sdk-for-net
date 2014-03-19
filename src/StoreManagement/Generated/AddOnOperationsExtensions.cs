@@ -44,17 +44,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The add on name.
+        /// Required. The add on name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -95,17 +96,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The add on name.
+        /// Required. The add on name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -132,17 +134,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace in which this store item resides.
+        /// Required. The namespace in which this store item resides.
         /// </param>
         /// <param name='resourceProviderType'>
-        /// The type of store item to be deleted.
+        /// Required. The type of store item to be deleted.
         /// </param>
         /// <param name='resourceProviderName'>
-        /// The name of this resource provider.
+        /// Required. The name of this resource provider.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -183,17 +185,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace in which this store item resides.
+        /// Required. The namespace in which this store item resides.
         /// </param>
         /// <param name='resourceProviderType'>
-        /// The type of store item to be deleted.
+        /// Required. The type of store item to be deleted.
         /// </param>
         /// <param name='resourceProviderName'>
-        /// The name of this resource provider.
+        /// Required. The name of this resource provider.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -220,17 +222,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The add on name.
+        /// Required. The add on name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -271,17 +274,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The add on name.
+        /// Required. The add on name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -308,17 +312,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace in which this store item resides.
+        /// Required. The namespace in which this store item resides.
         /// </param>
         /// <param name='resourceProviderType'>
-        /// The type of store item to be deleted.
+        /// Required. The type of store item to be deleted.
         /// </param>
         /// <param name='resourceProviderName'>
-        /// The name of this resource provider.
+        /// Required. The name of this resource provider.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -359,17 +363,17 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceProviderNamespace'>
-        /// The namespace in which this store item resides.
+        /// Required. The namespace in which this store item resides.
         /// </param>
         /// <param name='resourceProviderType'>
-        /// The type of store item to be deleted.
+        /// Required. The type of store item to be deleted.
         /// </param>
         /// <param name='resourceProviderName'>
-        /// The name of this resource provider.
+        /// Required. The name of this resource provider.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -396,17 +400,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The addon name.
+        /// Required. The addon name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -447,17 +452,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.IAddOnOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service to which this store item will be
-        /// assigned.
+        /// Required. The name of the cloud service to which this store item
+        /// will be assigned.
         /// </param>
         /// <param name='resourceName'>
-        /// The name of this resource.
+        /// Required. The name of this resource.
         /// </param>
         /// <param name='addOnName'>
-        /// The addon name.
+        /// Required. The addon name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

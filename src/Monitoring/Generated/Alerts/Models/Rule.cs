@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<RuleAction> _actions;
         
         /// <summary>
-        /// Rule actions.
+        /// Optional. Rule actions.
         /// </summary>
         public IList<RuleAction> Actions
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleCondition _condition;
         
         /// <summary>
-        /// Rule condition.
+        /// Optional. Rule condition.
         /// </summary>
         public RuleCondition Condition
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _description;
         
         /// <summary>
-        /// Rule description.
+        /// Optional. Rule description.
         /// </summary>
         public string Description
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _id;
         
         /// <summary>
-        /// Rule identifier.
+        /// Optional. Rule identifier.
         /// </summary>
         public string Id
         {
@@ -78,7 +78,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _isEnabled;
         
         /// <summary>
-        /// A flag that determines whether the rule is enabled or disabled.
+        /// Optional. A flag that determines whether the rule is enabled or
+        /// disabled.
         /// </summary>
         public bool IsEnabled
         {
@@ -89,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private DateTime _lastUpdatedTime;
         
         /// <summary>
-        /// Rule last updated time.
+        /// Optional. Rule last updated time.
         /// </summary>
         public DateTime LastUpdatedTime
         {
@@ -100,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _name;
         
         /// <summary>
-        /// Rule name.
+        /// Optional. Rule name.
         /// </summary>
         public string Name
         {

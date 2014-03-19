@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Microsoft.WindowsAzure.Management.Compute.Models.PostShutdownAction? _postShutdownAction;
         
         /// <summary>
-        /// The state of the roles after shutdown.  Possible values include
-        /// Stopped or StoppedDeallocated
+        /// Optional. The state of the roles after shutdown.  Possible values
+        /// include Stopped or StoppedDeallocated
         /// </summary>
         public Microsoft.WindowsAzure.Management.Compute.Models.PostShutdownAction? PostShutdownAction
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<string> _roles;
         
         /// <summary>
-        /// The set of roles to shut down.
+        /// Optional. The set of roles to shut down.
         /// </summary>
         public IList<string> Roles
         {

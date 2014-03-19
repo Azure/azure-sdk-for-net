@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _name;
         
         /// <summary>
-        /// The name of the queue.
+        /// Optional. The name of the queue.
         /// </summary>
         public string Name
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private ServiceBusQueue _queue;
         
         /// <summary>
-        /// The requested queue.
+        /// Optional. The requested queue.
         /// </summary>
         public ServiceBusQueue Queue
         {

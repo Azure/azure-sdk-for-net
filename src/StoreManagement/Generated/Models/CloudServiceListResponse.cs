@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private IList<CloudServiceListResponse.CloudService> _cloudServices;
         
         /// <summary>
-        /// The list of cloud service locations for this subscription.
+        /// Optional. The list of cloud service locations for this subscription.
         /// </summary>
         public IList<CloudServiceListResponse.CloudService> CloudServices
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             private string _description;
             
             /// <summary>
-            /// The description of the cloud service region.
+            /// Optional. The description of the cloud service region.
             /// </summary>
             public string Description
             {
@@ -87,7 +87,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             private string _geoRegion;
             
             /// <summary>
-            /// The geographical region in which this cloud service can run.
+            /// Optional. The geographical region in which this cloud service
+            /// can run.
             /// </summary>
             public string GeoRegion
             {
@@ -98,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             private string _label;
             
             /// <summary>
-            /// The label of the cloud service region.
+            /// Optional. The label of the cloud service region.
             /// </summary>
             public string Label
             {
@@ -109,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             private string _name;
             
             /// <summary>
-            /// The name of the cloud service region.
+            /// Optional. The name of the cloud service region.
             /// </summary>
             public string Name
             {
@@ -120,8 +121,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             private IList<CloudServiceListResponse.CloudService.AddOnResource> _resources;
             
             /// <summary>
-            /// A list of existing store resources installed into a cloud
-            /// service region.
+            /// Optional. A list of existing store resources installed into a
+            /// cloud service region.
             /// </summary>
             public IList<CloudServiceListResponse.CloudService.AddOnResource> Resources
             {
@@ -145,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _eTag;
                 
                 /// <summary>
-                /// The ETag for this store resource.
+                /// Optional. The ETag for this store resource.
                 /// </summary>
                 public string ETag
                 {
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _name;
                 
                 /// <summary>
-                /// The user-input name of this store item.
+                /// Optional. The user-input name of this store item.
                 /// </summary>
                 public string Name
                 {
@@ -167,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _namespace;
                 
                 /// <summary>
-                /// The namespace in which this store item resides.
+                /// Optional. The namespace in which this store item resides.
                 /// </summary>
                 public string Namespace
                 {
@@ -178,7 +179,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private IDictionary<string, string> _outputItems;
                 
                 /// <summary>
-                /// Output items associated with an individual store resource.
+                /// Optional. Output items associated with an individual store
+                /// resource.
                 /// </summary>
                 public IDictionary<string, string> OutputItems
                 {
@@ -189,7 +191,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _plan;
                 
                 /// <summary>
-                /// The plan for this store item as selected by the user.
+                /// Optional. The plan for this store item as selected by the
+                /// user.
                 /// </summary>
                 public string Plan
                 {
@@ -200,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _schemaVersion;
                 
                 /// <summary>
-                /// The schema version for this resource.
+                /// Optional. The schema version for this resource.
                 /// </summary>
                 public string SchemaVersion
                 {
@@ -211,7 +214,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _state;
                 
                 /// <summary>
-                /// The state of this store resource.
+                /// Optional. The state of this store resource.
                 /// </summary>
                 public string State
                 {
@@ -222,8 +225,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private CloudServiceListResponse.CloudService.AddOnResource.OperationStatus _status;
                 
                 /// <summary>
-                /// Operation status items associated with an individual store
-                /// resource.
+                /// Optional. Operation status items associated with an
+                /// individual store resource.
                 /// </summary>
                 public CloudServiceListResponse.CloudService.AddOnResource.OperationStatus Status
                 {
@@ -234,7 +237,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private string _type;
                 
                 /// <summary>
-                /// The type of store item.
+                /// Optional. The type of store item.
                 /// </summary>
                 public string Type
                 {
@@ -245,7 +248,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 private IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> _usageLimits;
                 
                 /// <summary>
-                /// Usage meters associated with an individual store resource.
+                /// Optional. Usage meters associated with an individual store
+                /// resource.
                 /// </summary>
                 public IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> UsageLimits
                 {
@@ -270,7 +274,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private string _result;
                     
                     /// <summary>
-                    /// The result of this operation status.
+                    /// Optional. The result of this operation status.
                     /// </summary>
                     public string Result
                     {
@@ -281,7 +285,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private string _type;
                     
                     /// <summary>
-                    /// The type of this operation status.
+                    /// Optional. The type of this operation status.
                     /// </summary>
                     public string Type
                     {
@@ -306,8 +310,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private long _amountIncluded;
                     
                     /// <summary>
-                    /// Defines the limit of this usage included in this store
-                    /// resource's plan.
+                    /// Optional. Defines the limit of this usage included in
+                    /// this store resource's plan.
                     /// </summary>
                     public long AmountIncluded
                     {
@@ -318,8 +322,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private long _amountUsed;
                     
                     /// <summary>
-                    /// The amount of this store resource that has already been
-                    /// used.
+                    /// Optional. The amount of this store resource that has
+                    /// already been used.
                     /// </summary>
                     public long AmountUsed
                     {
@@ -330,7 +334,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private string _name;
                     
                     /// <summary>
-                    /// The name of this usage limit.
+                    /// Optional. The name of this usage limit.
                     /// </summary>
                     public string Name
                     {
@@ -341,7 +345,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                     private string _unit;
                     
                     /// <summary>
-                    /// The unit in which this usage limit is measured.
+                    /// Optional. The unit in which this usage limit is
+                    /// measured.
                     /// </summary>
                     public string Unit
                     {
