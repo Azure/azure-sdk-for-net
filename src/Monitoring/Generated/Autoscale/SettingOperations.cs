@@ -137,12 +137,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject autoscaleSettingCreateOrUpdateParametersValue = new JObject();
+                requestDoc = autoscaleSettingCreateOrUpdateParametersValue;
+                
                 if (parameters.Setting != null)
                 {
-                    JObject settingValue = new JObject();
-                    requestDoc = new JObject();
-                    requestDoc["Setting"] = settingValue;
-                    
                     if (parameters.Setting.Profiles != null)
                     {
                         JArray profilesArray = new JArray();
@@ -302,10 +301,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                         }
-                        settingValue["Profiles"] = profilesArray;
+                        autoscaleSettingCreateOrUpdateParametersValue["Profiles"] = profilesArray;
                     }
                     
-                    settingValue["Enabled"] = parameters.Setting.Enabled;
+                    autoscaleSettingCreateOrUpdateParametersValue["Enabled"] = parameters.Setting.Enabled;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
