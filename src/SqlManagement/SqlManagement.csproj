@@ -51,6 +51,7 @@
     <Compile Include="Generated\Models\FirewallRule.cs" />
     <Compile Include="Generated\Models\FirewallRuleCreateParameters.cs" />
     <Compile Include="Generated\Models\FirewallRuleCreateResponse.cs" />
+    <Compile Include="Generated\Models\FirewallRuleGetResponse.cs" />
     <Compile Include="Generated\Models\FirewallRuleListResponse.cs" />
     <Compile Include="Generated\Models\FirewallRuleUpdateParameters.cs" />
     <Compile Include="Generated\Models\FirewallRuleUpdateResponse.cs" />
