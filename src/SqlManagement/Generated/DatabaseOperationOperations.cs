@@ -68,10 +68,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Returns information about one operation on a given operation Guid.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the operation was executed.
+        /// Required. The name of the SQL Server on which the operation was
+        /// executed.
         /// </param>
         /// <param name='operationGuid'>
-        /// The Guid of the SQL Server database operation to be obtained.
+        /// Required. The Guid of the SQL Server database operation to be
+        /// obtained.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -320,10 +322,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// database.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Database to be queried.
+        /// Required. The name of the Database to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -575,7 +577,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Returns the list database operations for a given server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

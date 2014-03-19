@@ -36,7 +36,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<FirewallRule> _firewallRules;
         
         /// <summary>
-        /// Gets or sets the firewall rules for this SQL Database Server.
+        /// Optional. Gets or sets the firewall rules for this SQL Database
+        /// Server.
         /// </summary>
         public IList<FirewallRule> FirewallRules
         {

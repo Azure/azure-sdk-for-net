@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<DatabaseEventLog> _eventLogs;
         
         /// <summary>
-        /// Gets or sets the SQL Server database event logs.
+        /// Optional. Gets or sets the SQL Server database event logs.
         /// </summary>
         public IList<DatabaseEventLog> EventLogs
         {

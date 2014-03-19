@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _eventTypes;
         
         /// <summary>
-        /// Gets or sets the event types.
+        /// Required. Gets or sets the event types.
         /// </summary>
         public string EventTypes
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _intervalSizeInMinutes;
         
         /// <summary>
-        /// Gets or sets the interval size in minutes.
+        /// Required. Gets or sets the interval size in minutes.
         /// </summary>
         public int IntervalSizeInMinutes
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _startDate;
         
         /// <summary>
-        /// Gets or sets the start date.
+        /// Required. Gets or sets the start date.
         /// </summary>
         public DateTime StartDate
         {

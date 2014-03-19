@@ -74,11 +74,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The server that will have the change made to the administrative
-        /// user.
+        /// Required. The server that will have the change made to the
+        /// administrative user.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Manage Administrator Password operation.
+        /// Required. Parameters for the Manage Administrator Password
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -221,7 +222,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server operation.
+        /// Required. Parameters supplied to the Create Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -387,7 +388,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server to be deleted.
+        /// Required. The name of the server to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _administratorUserName;
         
         /// <summary>
-        /// Gets or sets the name of an administrator for this server.
+        /// Optional. Gets or sets the name of an administrator for this server.
         /// </summary>
         public string AdministratorUserName
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IDictionary<string, string> _features;
         
         /// <summary>
-        /// Gets or sets the list of features and the type of database server
-        /// for an individual server.
+        /// Optional. Gets or sets the list of features and the type of
+        /// database server for an individual server.
         /// </summary>
         public IDictionary<string, string> Features
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _location;
         
         /// <summary>
-        /// Gets or sets the name of a data center location that is valid for
-        /// your subscription.
+        /// Optional. Gets or sets the name of a data center location that is
+        /// valid for your subscription.
         /// </summary>
         public string Location
         {
@@ -68,7 +68,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Gets or sets the name of a SQL Server running in your subscription.
+        /// Optional. Gets or sets the name of a SQL Server running in your
+        /// subscription.
         /// </summary>
         public string Name
         {

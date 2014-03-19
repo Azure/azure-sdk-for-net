@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<Server> _servers;
         
         /// <summary>
-        /// Gets or sets the SQL Servers that are valid for your subscription.
+        /// Optional. Gets or sets the SQL Servers that are valid for your
+        /// subscription.
         /// </summary>
         public IList<Server> Servers
         {

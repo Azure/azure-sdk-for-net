@@ -21,30 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Manage Administrator Password operation.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public partial class ServerChangeAdministratorPasswordParameters
+    public partial class FirewallRuleGetResponse : OperationResponse
     {
-        private string _newPassword;
+        private FirewallRule _firewallRule;
         
         /// <summary>
-        /// Required. Gets or sets new password for the administrator.
+        /// Optional. Gets or sets the firewall rule for this SQL Database
+        /// Server.
         /// </summary>
-        public string NewPassword
+        public FirewallRule FirewallRule
         {
-            get { return this._newPassword; }
-            set { this._newPassword = value; }
+            get { return this._firewallRule; }
+            set { this._firewallRule = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ServerChangeAdministratorPasswordParameters class.
+        /// Initializes a new instance of the FirewallRuleGetResponse class.
         /// </summary>
-        public ServerChangeAdministratorPasswordParameters()
+        public FirewallRuleGetResponse()
         {
         }
     }

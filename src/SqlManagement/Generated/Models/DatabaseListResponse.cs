@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<Database> _databases;
         
         /// <summary>
-        /// Gets or sets the SQL Server databases that are housed in a server.
+        /// Optional. Gets or sets the SQL Server databases that are housed in
+        /// a server.
         /// </summary>
         public IList<Database> Databases
         {

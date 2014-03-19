@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     {
         private DatabaseOperation _databaseOperation;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public DatabaseOperation DatabaseOperation
         {
             get { return this._databaseOperation; }

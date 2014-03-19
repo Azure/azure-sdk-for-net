@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     {
         private ServiceObjective _serviceObjective;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public ServiceObjective ServiceObjective
         {
             get { return this._serviceObjective; }

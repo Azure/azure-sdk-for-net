@@ -45,10 +45,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the operation was executed.
+        /// Required. The name of the SQL Server on which the operation was
+        /// executed.
         /// </param>
         /// <param name='operationGuid'>
-        /// The Guid of the SQL Server database operation to be obtained.
+        /// Required. The Guid of the SQL Server database operation to be
+        /// obtained.
         /// </param>
         /// <returns>
         /// Response containing the database operation for a given operation
@@ -81,10 +83,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the operation was executed.
+        /// Required. The name of the SQL Server on which the operation was
+        /// executed.
         /// </param>
         /// <param name='operationGuid'>
-        /// The Guid of the SQL Server database operation to be obtained.
+        /// Required. The Guid of the SQL Server database operation to be
+        /// obtained.
         /// </param>
         /// <returns>
         /// Response containing the database operation for a given operation
@@ -104,10 +108,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Database to be queried.
+        /// Required. The name of the Database to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of database operations for a given
@@ -141,10 +145,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Database to be queried.
+        /// Required. The name of the Database to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of database operations for a given
@@ -163,7 +167,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of database operations for a given
@@ -196,7 +200,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// Required. The name of the SQL Server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of database operations for a given
