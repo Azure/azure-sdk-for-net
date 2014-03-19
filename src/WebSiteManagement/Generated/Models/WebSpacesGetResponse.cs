@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSpaceAvailabilityState _availabilityState;
         
         /// <summary>
-        /// Possible values are Normal or Limited.
+        /// Optional. Possible values are Normal or Limited.
         /// </summary>
         public WebSpaceAvailabilityState AvailabilityState
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _currentNumberOfWorkers;
         
         /// <summary>
-        /// The current number of workers.
+        /// Optional. The current number of workers.
         /// </summary>
         public int? CurrentNumberOfWorkers
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? _currentWorkerSize;
         
         /// <summary>
-        /// The current worker size. Possible values are Small, Medium, or
-        /// Large.
+        /// Optional. The current worker size. Possible values are Small,
+        /// Medium, or Large.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? CurrentWorkerSize
         {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _geoLocation;
         
         /// <summary>
-        /// The location of the datacenter for the web space.
+        /// Optional. The location of the datacenter for the web space.
         /// </summary>
         public string GeoLocation
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _geoRegion;
         
         /// <summary>
-        /// The geographical region where the webspace is located.
+        /// Optional. The geographical region where the webspace is located.
         /// </summary>
         public string GeoRegion
         {
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// The name of the webspace.
+        /// Optional. The name of the webspace.
         /// </summary>
         public string Name
         {
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _plan;
         
         /// <summary>
-        /// The name of the webspace.
+        /// Optional. The name of the webspace.
         /// </summary>
         public string Plan
         {
@@ -112,9 +112,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSpaceStatus _status;
         
         /// <summary>
-        /// The status of the Web Space. Possible values are Ready or Limited.
-        /// Note: The Limited status occurs only if the datacenter is
-        /// encountering an operational issue.
+        /// Optional. The status of the Web Space. Possible values are Ready or
+        /// Limited.  Note: The Limited status occurs only if the datacenter
+        /// is encountering an operational issue.
         /// </summary>
         public WebSpaceStatus Status
         {
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _subscription;
         
         /// <summary>
-        /// The subscription ID.
+        /// Optional. The subscription ID.
         /// </summary>
         public string Subscription
         {
@@ -136,8 +136,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? _workerSize;
         
         /// <summary>
-        /// The worker size. Possible values are Small, Medium, and Large. For
-        /// JSON, the equivalents are 0 = Small, 1 = Medium, 2 = Large.
+        /// Optional. The worker size. Possible values are Small, Medium, and
+        /// Large. For JSON, the equivalents are 0 = Small, 1 = Medium, 2 =
+        /// Large.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? WorkerSize
         {

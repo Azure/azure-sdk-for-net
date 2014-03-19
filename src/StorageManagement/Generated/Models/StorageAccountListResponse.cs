@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     {
         private IList<StorageAccount> _storageAccounts;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<StorageAccount> StorageAccounts
         {
             get { return this._storageAccounts; }

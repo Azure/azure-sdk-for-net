@@ -29,6 +29,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private RecurrenceFrequency _frequency;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public RecurrenceFrequency Frequency
         {
             get { return this._frequency; }
@@ -37,6 +40,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private RecurrentSchedule _schedule;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public RecurrentSchedule Schedule
         {
             get { return this._schedule; }

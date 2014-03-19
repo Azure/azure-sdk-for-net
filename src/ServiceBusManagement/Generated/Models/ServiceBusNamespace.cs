@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private Uri _acsManagementEndpoint;
         
         /// <summary>
-        /// ACS endpoint you can use to obtain access tokens.  (see
+        /// Optional. ACS endpoint you can use to obtain access tokens.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _createdAt;
         
         /// <summary>
-        /// The time the namespace was created.
+        /// Optional. The time the namespace was created.
         /// </summary>
         public DateTime CreatedAt
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _enabled;
         
         /// <summary>
-        /// Whether or not the namespace is currently enabled.
+        /// Optional. Whether or not the namespace is currently enabled.
         /// </summary>
         public bool Enabled
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _name;
         
         /// <summary>
-        /// The name of the namespace.
+        /// Optional. The name of the namespace.
         /// </summary>
         public string Name
         {
@@ -78,10 +78,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _region;
         
         /// <summary>
-        /// Specifies the targeted region in which the namespace should be
-        /// created. It can be any of the following values: East AsiaNorth
-        /// EuropeWest EuropeEast USSoutheast AsiaNorth Central USWest USSouth
-        /// Central US  (see
+        /// Optional. Specifies the targeted region in which the namespace
+        /// should be created. It can be any of the following values: East
+        /// AsiaNorth EuropeWest EuropeEast USSoutheast AsiaNorth Central
+        /// USWest USSouth Central US  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
@@ -94,8 +94,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private Uri _serviceBusEndpoint;
         
         /// <summary>
-        /// Endpoint you can use to perform messaging or relay operations.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
+        /// Optional. Endpoint you can use to perform messaging or relay
+        /// operations.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
         public Uri ServiceBusEndpoint
@@ -107,8 +108,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _status;
         
         /// <summary>
-        /// Status of the namespace. It can be any of these values:1 =
-        /// Created/Active2 = Creating3 = Suspended4 = Deleting  (see
+        /// Optional. Status of the namespace. It can be any of these values:1
+        /// = Created/Active2 = Creating3 = Suspended4 = Deleting  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj873988.aspx
         /// for more information)
         /// </summary>
@@ -121,7 +122,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _subscriptionId;
         
         /// <summary>
-        /// The Id of the Azure subscription associated with the namespace.
+        /// Optional. The Id of the Azure subscription associated with the
+        /// namespace.
         /// </summary>
         public string SubscriptionId
         {

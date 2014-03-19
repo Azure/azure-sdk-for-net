@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<string> _customEmails;
         
         /// <summary>
-        /// The email address of an adminstrative user.
+        /// Optional. The email address of an adminstrative user.
         /// </summary>
         public IList<string> CustomEmails
         {
@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _sendToServiceOwners;
         
         /// <summary>
-        /// This indicates if email is sent to sevice adminstrator and
-        /// co-administrators.
+        /// Optional. This indicates if email is sent to sevice adminstrator
+        /// and co-administrators.
         /// </summary>
         public bool SendToServiceOwners
         {

@@ -44,10 +44,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -80,10 +80,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -102,10 +102,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
@@ -137,10 +137,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='notificationHubName'>
-        /// The notification hub name.
+        /// Required. The notification hub name.
         /// </param>
         /// <returns>
         /// The set of connection details for a service bus entity.
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -191,7 +191,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and

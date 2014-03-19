@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private StorageKeyType _keyType;
         
         /// <summary>
-        /// Specifies which key to regenerate.
+        /// Required. Specifies which key to regenerate.
         /// </summary>
         public StorageKeyType KeyType
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _name;
         
         /// <summary>
-        /// The name of the desired storage account.
+        /// Required. The name of the desired storage account.
         /// </summary>
         public string Name
         {

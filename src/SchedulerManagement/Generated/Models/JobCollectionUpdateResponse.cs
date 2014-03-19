@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _eTag;
         
         /// <summary>
-        /// New ETag of the updated Job Collection.
+        /// Optional. New ETag of the updated Job Collection.
         /// </summary>
         public string ETag
         {

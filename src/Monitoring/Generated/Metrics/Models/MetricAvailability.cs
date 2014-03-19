@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// The retention period for the metric at the specified timegrain.
+        /// Optional. The retention period for the metric at the specified
+        /// timegrain.
         /// </summary>
         public TimeSpan Retention
         {
@@ -44,7 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// The time grain specifies the aggregation interval for the metric.
+        /// Optional. The time grain specifies the aggregation interval for the
+        /// metric.
         /// </summary>
         public TimeSpan TimeGrain
         {

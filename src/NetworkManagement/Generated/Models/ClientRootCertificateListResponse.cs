@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private IList<ClientRootCertificateListResponse.ClientRootCertificate> _clientRootCertificates;
         
         /// <summary>
-        /// The list of client root certificates.
+        /// Optional. The list of client root certificates.
         /// </summary>
         public IList<ClientRootCertificateListResponse.ClientRootCertificate> ClientRootCertificates
         {
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private DateTime _expirationTime;
             
             /// <summary>
-            /// Specifies the time that the certificate will expire.
+            /// Optional. Specifies the time that the certificate will expire.
             /// </summary>
             public DateTime ExpirationTime
             {
@@ -84,7 +84,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _subject;
             
             /// <summary>
-            /// Specifies the distinguished name of the certificate issuer.
+            /// Optional. Specifies the distinguished name of the certificate
+            /// issuer.
             /// </summary>
             public string Subject
             {
@@ -95,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _thumbprint;
             
             /// <summary>
-            /// Specifies the thumbprint of the certificate.
+            /// Optional. Specifies the thumbprint of the certificate.
             /// </summary>
             public string Thumbprint
             {

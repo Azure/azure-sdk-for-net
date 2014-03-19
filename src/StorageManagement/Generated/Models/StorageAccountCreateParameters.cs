@@ -33,11 +33,11 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// Required if Location is not specified. The name of an existing
-        /// affinity group in the specified subscription.  You can include
-        /// either a Location or AffinityGroup element in the request body,
-        /// but not both. To list available affinity groups, use the List
-        /// Affinity Groups operation.
+        /// Optional. Required if Location is not specified. The name of an
+        /// existing affinity group in the specified subscription.  You can
+        /// include either a Location or AffinityGroup element in the request
+        /// body, but not both. To list available affinity groups, use the
+        /// List Affinity Groups operation.
         /// </summary>
         public string AffinityGroup
         {
@@ -121,10 +121,11 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _location;
         
         /// <summary>
-        /// Required if AffinityGroup is not specified. The location where the
-        /// storage account is created.  You can include either a Location or
-        /// AffinityGroup element in the request body, but not both. To list
-        /// available locations, use the List Locations operation.
+        /// Optional. Required if AffinityGroup is not specified. The location
+        /// where the storage account is created.  You can include either a
+        /// Location or AffinityGroup element in the request body, but not
+        /// both. To list available locations, use the List Locations
+        /// operation.
         /// </summary>
         public string Location
         {

@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private AzureDedicatedCircuitLink _dedicatedCircuitLink;
         
         /// <summary>
-        /// Details of the requested dedicated circuit link.
+        /// Optional. Details of the requested dedicated circuit link.
         /// </summary>
         public AzureDedicatedCircuitLink DedicatedCircuitLink
         {

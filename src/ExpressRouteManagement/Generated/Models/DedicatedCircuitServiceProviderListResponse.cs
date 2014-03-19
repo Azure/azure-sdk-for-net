@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     {
         private IList<AzureDedicatedCircuitServiceProvider> _dedicatedCircuitServiceProviders;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<AzureDedicatedCircuitServiceProvider> DedicatedCircuitServiceProviders
         {
             get { return this._dedicatedCircuitServiceProviders; }

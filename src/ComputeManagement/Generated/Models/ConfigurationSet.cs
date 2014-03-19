@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _adminPassword;
         
         /// <summary>
-        /// Required. Specifies the string representing the administrator
+        /// Optional. Specifies the string representing the administrator
         /// password to use for the virtual machine.
         /// </summary>
         public string AdminPassword
@@ -46,9 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _adminUserName;
         
         /// <summary>
-        /// Required. Specifies the name that is used to rename the default
-        /// administrator account. This is a required parameter after version
-        /// 2013-03-01.
+        /// Optional. Specifies the name that is used to rename the default
+        /// administrator account.
         /// </summary>
         public string AdminUserName
         {
@@ -74,7 +73,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _configurationSetType;
         
         /// <summary>
-        /// Specifies the configuration type for the configuration set.
+        /// Optional. Specifies the configuration type for the configuration
+        /// set.
         /// </summary>
         public string ConfigurationSetType
         {
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _hostName;
         
         /// <summary>
-        /// Required. Specifies the host name for the VM. Host names are ASCII
+        /// Optional. Specifies the host name for the VM. Host names are ASCII
         /// character strings 1 to 64 characters in length. This element is
         /// only used with the LinuxProvisioningConfiguration set.
         /// </summary>
@@ -138,8 +138,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<InputEndpoint> _inputEndpoints;
         
         /// <summary>
-        /// Contains a collection of external endpoints for the virtual
-        /// machine.  This element is only used with the
+        /// Optional. Contains a collection of external endpoints for the
+        /// virtual machine.  This element is only used with the
         /// NetworkConfigurationSet type.
         /// </summary>
         public IList<InputEndpoint> InputEndpoints
@@ -201,8 +201,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<string> _subnetNames;
         
         /// <summary>
-        /// The list of Virtual Network subnet names that the deployment
-        /// belongs to.  This element is only used with the
+        /// Optional. The list of Virtual Network subnet names that the
+        /// deployment belongs to.  This element is only used with the
         /// NetworkConfigurationSet type.
         /// </summary>
         public IList<string> SubnetNames
@@ -234,7 +234,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _userName;
         
         /// <summary>
-        /// Required. Specifies the name of a user to be created in the sudoer
+        /// Optional. Specifies the name of a user to be created in the sudoer
         /// group of the virtual machine. User names are ASCII character
         /// strings 1 to 32 characters in length. This element is only used
         /// with the LinuxProvisioningConfiguration set.
@@ -248,7 +248,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _userPassword;
         
         /// <summary>
-        /// Required. Specifies the password for user name. Passwords are ASCII
+        /// Optional. Specifies the password for user name. Passwords are ASCII
         /// character strings 6 to 72 characters in length. This element is
         /// only used with the LinuxProvisioningConfiguration set.
         /// </summary>

@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricName;
         
         /// <summary>
-        /// The name of the metric.
+        /// Optional. The name of the metric.
         /// </summary>
         public string MetricName
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// The namespace of the metric.
+        /// Optional. The namespace of the metric.
         /// </summary>
         public string MetricNamespace
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricSource;
         
         /// <summary>
-        /// The metric source.
+        /// Optional. The metric source.
         /// </summary>
         public string MetricSource
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ComparisonOperationType _operator;
         
         /// <summary>
-        /// The operator that is used to evaluate the metric.
+        /// Optional. The operator that is used to evaluate the metric.
         /// </summary>
         public ComparisonOperationType Operator
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private MetricStatisticType _statistic;
         
         /// <summary>
-        /// How the metrics from multiple instances are combined.
+        /// Optional. How the metrics from multiple instances are combined.
         /// </summary>
         public MetricStatisticType Statistic
         {
@@ -88,7 +88,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private double _threshold;
         
         /// <summary>
-        /// The percentage of usage that triggers the scaling operation.
+        /// Optional. The percentage of usage that triggers the scaling
+        /// operation.
         /// </summary>
         public double Threshold
         {
@@ -99,7 +100,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeAggregationType _timeAggregation;
         
         /// <summary>
-        /// How the data that is collected should be combined over time.
+        /// Optional. How the data that is collected should be combined over
+        /// time.
         /// </summary>
         public TimeAggregationType TimeAggregation
         {
@@ -110,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// The frequency of data collection.
+        /// Optional. The frequency of data collection.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -121,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _timeWindow;
         
         /// <summary>
-        /// The range of time in which instance data is collected.
+        /// Optional. The range of time in which instance data is collected.
         /// </summary>
         public TimeSpan TimeWindow
         {

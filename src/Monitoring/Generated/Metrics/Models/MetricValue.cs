@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _annotation;
         
         /// <summary>
-        /// Specifies annotation for the metric.
+        /// Optional. Specifies annotation for the metric.
         /// </summary>
         public string Annotation
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _average;
         
         /// <summary>
-        /// Specifies the average value in the time interval.
+        /// Optional. Specifies the average value in the time interval.
         /// </summary>
         public double? Average
         {
@@ -54,9 +54,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private int? _count;
         
         /// <summary>
-        /// Specifies the sample count in the time interval. Can be used to
-        /// determine the number of values that contributed to the average
-        /// value.
+        /// Optional. Specifies the sample count in the time interval. Can be
+        /// used to determine the number of values that contributed to the
+        /// average value.
         /// </summary>
         public int? Count
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _maximum;
         
         /// <summary>
-        /// Specifies the maximum value in the time interval.
+        /// Optional. Specifies the maximum value in the time interval.
         /// </summary>
         public double? Maximum
         {
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _minimum;
         
         /// <summary>
-        /// Specifies the minimum value in the time interval.
+        /// Optional. Specifies the minimum value in the time interval.
         /// </summary>
         public double? Minimum
         {
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _timestamp;
         
         /// <summary>
-        /// The timestamp for the metric value.
+        /// Optional. The timestamp for the metric value.
         /// </summary>
         public DateTime Timestamp
         {
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _total;
         
         /// <summary>
-        /// Specifies the total value in the time interval.
+        /// Optional. Specifies the total value in the time interval.
         /// </summary>
         public double? Total
         {

@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _description;
         
         /// <summary>
-        /// Description for the cloud service.
+        /// Required. Description for the cloud service.
         /// </summary>
         public string Description
         {
@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _email;
         
         /// <summary>
-        /// Optional e-mail address to associate with the service.
+        /// Optional. Optional e-mail address to associate with the service.
         /// </summary>
         public string Email
         {
@@ -51,8 +51,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _geoRegion;
         
         /// <summary>
-        /// The region for the cloud service. This field cannot be updated
-        /// after the cloud service is created.
+        /// Required. The region for the cloud service. This field cannot be
+        /// updated after the cloud service is created.
         /// </summary>
         public string GeoRegion
         {
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private string _label;
         
         /// <summary>
-        /// Label for the cloud service.
+        /// Required. Label for the cloud service.
         /// </summary>
         public string Label
         {

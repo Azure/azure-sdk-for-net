@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystemType;
         
         /// <summary>
-        /// Required. The operating system type of the disk. Possible values
+        /// Optional. The operating system type of the disk. Possible values
         /// are: Linux, Windows.
         /// </summary>
         public string OperatingSystemType

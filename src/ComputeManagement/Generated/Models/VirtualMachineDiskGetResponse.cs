@@ -34,10 +34,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// The affinity group in which the disk is located. The AffinityGroup
-        /// value is derived from storage account that contains the blob in
-        /// which the media is located. If the storage account does not belong
-        /// to an affinity group the value is NULL.
+        /// Optional. The affinity group in which the disk is located. The
+        /// AffinityGroup value is derived from storage account that contains
+        /// the blob in which the media is located. If the storage account
+        /// does not belong to an affinity group the value is NULL.
         /// </summary>
         public string AffinityGroup
         {
@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isCorrupted;
         
         /// <summary>
-        /// Specifies thether the disk is known to be corrupt.
+        /// Optional. Specifies thether the disk is known to be corrupt.
         /// </summary>
         public bool? IsCorrupted
         {
@@ -59,8 +59,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isPremium;
         
         /// <summary>
-        /// Specifies whether or not the disk contains a premium virtual
-        /// machine image.
+        /// Optional. Specifies whether or not the disk contains a premium
+        /// virtual machine image.
         /// </summary>
         public bool? IsPremium
         {
@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// The friendly name of the disk.
+        /// Optional. The friendly name of the disk.
         /// </summary>
         public string Label
         {
@@ -82,10 +82,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _location;
         
         /// <summary>
-        /// The geo-location in which the disk is located. The Location value
-        /// is derived from storage account that contains the blob in which
-        /// the disk is located. If the storage account belongs to an affinity
-        /// group the value is NULL.
+        /// Optional. The geo-location in which the disk is located. The
+        /// Location value is derived from storage account that contains the
+        /// blob in which the disk is located. If the storage account belongs
+        /// to an affinity group the value is NULL.
         /// </summary>
         public string Location
         {
@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int _logicalSizeInGB;
         
         /// <summary>
-        /// The size, in GB, of the disk.
+        /// Optional. The size, in GB, of the disk.
         /// </summary>
         public int LogicalSizeInGB
         {
@@ -107,10 +107,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// The location of the blob in the blob store in which the media for
-        /// the disk is located. The blob location belongs to a storage
-        /// account in the subscription specified by the SubscriptionId value
-        /// in the operation call. Example:
+        /// Optional. The location of the blob in the blob store in which the
+        /// media for the disk is located. The blob location belongs to a
+        /// storage account in the subscription specified by the
+        /// SubscriptionId value in the operation call. Example:
         /// http://example.blob.core.windows.net/disks/mydisk.vhd
         /// </summary>
         public Uri MediaLinkUri
@@ -122,8 +122,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// The name of the disk. This is the name that is used when creating
-        /// one or more virtual machines using the disk.
+        /// Optional. The name of the disk. This is the name that is used when
+        /// creating one or more virtual machines using the disk.
         /// </summary>
         public string Name
         {
@@ -134,8 +134,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystemType;
         
         /// <summary>
-        /// The operating system type of the OS image.  Possible Values are:
-        /// Linux, Windows, NULL.
+        /// Optional. The operating system type of the OS image.  Possible
+        /// Values are: Linux, Windows, NULL.
         /// </summary>
         public string OperatingSystemType
         {
@@ -146,10 +146,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _sourceImageName;
         
         /// <summary>
-        /// The name of the OS Image from which the disk was created. This
-        /// property is populated automatically when a disk is created from an
-        /// OS image by calling the Add Role, Create Deployment, or Provision
-        /// Disk operations.
+        /// Optional. The name of the OS Image from which the disk was created.
+        /// This property is populated automatically when a disk is created
+        /// from an OS image by calling the Add Role, Create Deployment, or
+        /// Provision Disk operations.
         /// </summary>
         public string SourceImageName
         {
@@ -160,9 +160,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails _usageDetails;
         
         /// <summary>
-        /// Contains properties that specify a virtual machine that currently
-        /// using the disk. A disk cannot be deleted as long as it is attached
-        /// to a virtual machine.
+        /// Optional. Contains properties that specify a virtual machine that
+        /// currently using the disk. A disk cannot be deleted as long as it
+        /// is attached to a virtual machine.
         /// </summary>
         public VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails UsageDetails
         {
@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _deploymentName;
             
             /// <summary>
-            /// The deployment in which the disk is being used.
+            /// Optional. The deployment in which the disk is being used.
             /// </summary>
             public string DeploymentName
             {
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _hostedServiceName;
             
             /// <summary>
-            /// The hosted service in which the disk is being used.
+            /// Optional. The hosted service in which the disk is being used.
             /// </summary>
             public string HostedServiceName
             {
@@ -210,7 +210,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _roleName;
             
             /// <summary>
-            /// The virtual machine that the disk is attached to.
+            /// Optional. The virtual machine that the disk is attached to.
             /// </summary>
             public string RoleName
             {

@@ -121,16 +121,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all Service Management requests.
+        /// Required. The URI used as the base for all Service Management
+        /// requests.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -153,13 +154,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -184,16 +185,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the webspace for the website where the operation was
-        /// targeted.
+        /// Required. The name of the webspace for the website where the
+        /// operation was targeted.
         /// </param>
         /// <param name='siteName'>
-        /// The name of the site where the operation was targeted.
+        /// Required. The name of the site where the operation was targeted.
         /// </param>
         /// <param name='operationId'>
-        /// The operation ID for the operation you wish to track. The operation
-        /// ID is returned in the Id field in the body of the response for
-        /// long-running operations.
+        /// Required. The operation ID for the operation you wish to track. The
+        /// operation ID is returned in the Id field in the body of the
+        /// response for long-running operations.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

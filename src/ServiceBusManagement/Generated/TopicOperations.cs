@@ -75,10 +75,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='topic'>
-        /// The Service Bus topic.
+        /// Required. The Service Bus topic.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -616,10 +616,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='topicName'>
-        /// The topic.
+        /// Required. The topic.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -954,10 +954,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Gets the set of connection strings for a topic.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='topicName'>
-        /// The topic.
+        /// Required. The topic.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1139,7 +1139,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1479,10 +1479,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='topic'>
-        /// The Service Bus topic.
+        /// Required. The Service Bus topic.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

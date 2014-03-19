@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private IList<GatewayListConnectionsResponse.GatewayConnection> _connections;
         
         /// <summary>
-        /// The list of connections.
+        /// Optional. The list of connections.
         /// </summary>
         public IList<GatewayListConnectionsResponse.GatewayConnection> Connections
         {
@@ -73,9 +73,10 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<string> _allocatedIPAddresses;
             
             /// <summary>
-            /// If LocalNetworkSiteName is defined as VPNClientConnection, this
-            /// element contains a list of IP addresses (represented as
-            /// strings) that are assigned to currently connected VPN clients.
+            /// Optional. If LocalNetworkSiteName is defined as
+            /// VPNClientConnection, this element contains a list of IP
+            /// addresses (represented as strings) that are assigned to
+            /// currently connected VPN clients.
             /// </summary>
             public IList<string> AllocatedIPAddresses
             {
@@ -86,8 +87,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private GatewayConnectivityState _connectivityState;
             
             /// <summary>
-            /// The connection state of the site. You can set the connection
-            /// state to Connected, Connecting or NotConnected.
+            /// Optional. The connection state of the site. You can set the
+            /// connection state to Connected, Connecting or NotConnected.
             /// </summary>
             public GatewayConnectivityState ConnectivityState
             {
@@ -98,8 +99,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private long _egressBytesTransferred;
             
             /// <summary>
-            /// The number of bytes of data transferred out through this
-            /// connection since it was started.
+            /// Optional. The number of bytes of data transferred out through
+            /// this connection since it was started.
             /// </summary>
             public long EgressBytesTransferred
             {
@@ -110,8 +111,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private long _ingressBytesTransferred;
             
             /// <summary>
-            /// The number of bytes of data transferred in through this
-            /// connection since it was started.
+            /// Optional. The number of bytes of data transferred in through
+            /// this connection since it was started.
             /// </summary>
             public long IngressBytesTransferred
             {
@@ -121,6 +122,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             
             private DateTime _lastConnectionEstablished;
             
+            /// <summary>
+            /// Optional.
+            /// </summary>
             public DateTime LastConnectionEstablished
             {
                 get { return this._lastConnectionEstablished; }
@@ -130,7 +134,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private GatewayEvent _lastEvent;
             
             /// <summary>
-            /// A record of the last provisioning event for this connection.
+            /// Optional. A record of the last provisioning event for this
+            /// connection.
             /// </summary>
             public GatewayEvent LastEvent
             {
@@ -141,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _localNetworkSiteName;
             
             /// <summary>
-            /// The name of the local network site represented by the
+            /// Optional. The name of the local network site represented by the
             /// connection.
             /// </summary>
             public string LocalNetworkSiteName

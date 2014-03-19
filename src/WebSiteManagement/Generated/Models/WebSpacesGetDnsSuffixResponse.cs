@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _dnsSuffix;
         
         /// <summary>
-        /// The DNS Suffix used for the web space.
+        /// Optional. The DNS Suffix used for the web space.
         /// </summary>
         public string DnsSuffix
         {

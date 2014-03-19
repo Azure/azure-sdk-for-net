@@ -55,10 +55,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _name;
         
         /// <summary>
-        /// The name of the storage account. This name is the DNS prefix name
-        /// and can be used to access blobs, queues, and tables in the storage
-        /// account.  For example, if the service name is MyStorageAccount you
-        /// could access the blob containers by calling:
+        /// Optional. The name of the storage account. This name is the DNS
+        /// prefix name and can be used to access blobs, queues, and tables in
+        /// the storage account.  For example, if the service name is
+        /// MyStorageAccount you could access the blob containers by calling:
         /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
         /// </summary>
         public string Name
@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private StorageAccountProperties _properties;
         
         /// <summary>
-        /// Details about the storage account.
+        /// Optional. Details about the storage account.
         /// </summary>
         public StorageAccountProperties Properties
         {
@@ -81,8 +81,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private Uri _uri;
         
         /// <summary>
-        /// The Service Management API request URI used to perform Get Storage
-        /// Account Properties requests against the storage account.
+        /// Optional. The Service Management API request URI used to perform
+        /// Get Storage Account Properties requests against the storage
+        /// account.
         /// </summary>
         public Uri Uri
         {

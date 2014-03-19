@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private bool _enabled;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public bool Enabled
         {
             get { return this._enabled; }
@@ -41,6 +44,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<AutoscaleProfile> _profiles;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<AutoscaleProfile> Profiles
         {
             get { return this._profiles; }

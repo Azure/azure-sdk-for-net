@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IDictionary<string, string> _appSettings;
         
         /// <summary>
-        /// A set of name/value pairs that contain application settings for a
-        /// site.
+        /// Optional. A set of name/value pairs that contain application
+        /// settings for a site.
         /// </summary>
         public IDictionary<string, string> AppSettings
         {
@@ -47,8 +47,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> _connectionStrings;
         
         /// <summary>
-        /// Contains connection strings for database and other external
-        /// resources.
+        /// Optional. Contains connection strings for database and other
+        /// external resources.
         /// </summary>
         public IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> ConnectionStrings
         {
@@ -59,12 +59,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _defaultDocuments;
         
         /// <summary>
-        /// Contains one or more string elements that list, in order of
-        /// preference, the name of the file that a web site returns when the
-        /// web site's domain name is requested by itself. For example, if the
-        /// default document for http://contoso.com is default.htm, the page
-        /// http://www.contoso.com/default.htm is returned when the browser is
-        /// pointed to http://www.contoso.com.
+        /// Optional. Contains one or more string elements that list, in order
+        /// of preference, the name of the file that a web site returns when
+        /// the web site's domain name is requested by itself. For example, if
+        /// the default document for http://contoso.com is default.htm, the
+        /// page http://www.contoso.com/default.htm is returned when the
+        /// browser is pointed to http://www.contoso.com.
         /// </summary>
         public IList<string> DefaultDocuments
         {
@@ -75,7 +75,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _detailedErrorLoggingEnabled;
         
         /// <summary>
-        /// True if detailed error logging is enabled; otherwise, false.
+        /// Optional. True if detailed error logging is enabled; otherwise,
+        /// false.
         /// </summary>
         public bool? DetailedErrorLoggingEnabled
         {
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _documentRoot;
         
         /// <summary>
-        /// The document root.
+        /// Optional. The document root.
         /// </summary>
         public string DocumentRoot
         {
@@ -97,8 +98,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteGetConfigurationResponse.HandlerMapping> _handlerMappings;
         
         /// <summary>
-        /// Specifies custom executable programs for handling requests for
-        /// specific file name extensions.
+        /// Optional. Specifies custom executable programs for handling
+        /// requests for specific file name extensions.
         /// </summary>
         public IList<WebSiteGetConfigurationResponse.HandlerMapping> HandlerMappings
         {
@@ -109,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _httpLoggingEnabled;
         
         /// <summary>
-        /// True if HTTP error logging is enabled; otherwise, false.
+        /// Optional. True if HTTP error logging is enabled; otherwise, false.
         /// </summary>
         public bool? HttpLoggingEnabled
         {
@@ -120,7 +121,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _logsDirectorySizeLimit;
         
         /// <summary>
-        /// The limit of the logs directory.
+        /// Optional. The limit of the logs directory.
         /// </summary>
         public int? LogsDirectorySizeLimit
         {
@@ -131,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
         
         /// <summary>
-        /// Managed pipeline modes.
+        /// Optional. Managed pipeline modes.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? ManagedPipelineMode
         {
@@ -142,7 +143,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IDictionary<string, string> _metadata;
         
         /// <summary>
-        /// Contains name/value pairs for source control or other information.
+        /// Optional. Contains name/value pairs for source control or other
+        /// information.
         /// </summary>
         public IDictionary<string, string> Metadata
         {
@@ -153,7 +155,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _netFrameworkVersion;
         
         /// <summary>
-        /// The .NET Framework version. Supported values are v2.0 and v4.0.
+        /// Optional. The .NET Framework version. Supported values are v2.0 and
+        /// v4.0.
         /// </summary>
         public string NetFrameworkVersion
         {
@@ -164,10 +167,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _numberOfWorkers;
         
         /// <summary>
-        /// The number of web workers allotted to the web site. If the site
-        /// mode is Free, this value is 1. If the site mode is Shared, this
-        /// value can range from 1 through 6. If the site mode is Standard,
-        /// this value can range from 1 through 10.
+        /// Optional. The number of web workers allotted to the web site. If
+        /// the site mode is Free, this value is 1. If the site mode is
+        /// Shared, this value can range from 1 through 6. If the site mode is
+        /// Standard, this value can range from 1 through 10.
         /// </summary>
         public int? NumberOfWorkers
         {
@@ -178,8 +181,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _phpVersion;
         
         /// <summary>
-        /// Supported values are an empty string (an empty string disables
-        /// PHP), 5.3, and 5.4.
+        /// Optional. Supported values are an empty string (an empty string
+        /// disables PHP), 5.3, and 5.4.
         /// </summary>
         public string PhpVersion
         {
@@ -190,7 +193,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _publishingPassword;
         
         /// <summary>
-        /// Hash value of the password used for publishing the web site.
+        /// Optional. Hash value of the password used for publishing the web
+        /// site.
         /// </summary>
         public string PublishingPassword
         {
@@ -201,9 +205,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _publishingUserName;
         
         /// <summary>
-        /// The username used for publishing the web site. This is normally a
-        /// dollar sign prepended to the web site name (for example,
-        /// “$contoso”).
+        /// Optional. The username used for publishing the web site. This is
+        /// normally a dollar sign prepended to the web site name (for
+        /// example, “$contoso”).
         /// </summary>
         public string PublishingUserName
         {
@@ -214,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _remoteDebuggingEnabled;
         
         /// <summary>
-        /// True remote debugging is enabled; otherwise, false.
+        /// Optional. True remote debugging is enabled; otherwise, false.
         /// </summary>
         public bool? RemoteDebuggingEnabled
         {
@@ -225,7 +229,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private RemoteDebuggingVersion _remoteDebuggingVersion;
         
         /// <summary>
-        /// True remote debugging version.
+        /// Optional. True remote debugging version.
         /// </summary>
         public RemoteDebuggingVersion RemoteDebuggingVersion
         {
@@ -236,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _requestTracingEnabled;
         
         /// <summary>
-        /// True if request tracing is enabled; otherwise, false.
+        /// Optional. True if request tracing is enabled; otherwise, false.
         /// </summary>
         public bool? RequestTracingEnabled
         {
@@ -247,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private System.DateTime? _requestTracingExpirationTime;
         
         /// <summary>
-        /// Time remaining until request tracing expires.
+        /// Optional. Time remaining until request tracing expires.
         /// </summary>
         public System.DateTime? RequestTracingExpirationTime
         {
@@ -258,9 +262,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _scmType;
         
         /// <summary>
-        /// The source control method that the web site is using (for example,
-        /// Local Git). If deployment from source control has not been set up
-        /// for the web site, this value is None.
+        /// Optional. The source control method that the web site is using (for
+        /// example, Local Git). If deployment from source control has not
+        /// been set up for the web site, this value is None.
         /// </summary>
         public string ScmType
         {
@@ -271,7 +275,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _use32BitWorkerProcess;
         
         /// <summary>
-        /// True if 32-bit mode is enabled; otherwise, false.
+        /// Optional. True if 32-bit mode is enabled; otherwise, false.
         /// </summary>
         public bool? Use32BitWorkerProcess
         {
@@ -282,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _webSocketsEnabled;
         
         /// <summary>
-        /// True if Web Sockets are enabled; otherwise, false.
+        /// Optional. True if Web Sockets are enabled; otherwise, false.
         /// </summary>
         public bool? WebSocketsEnabled
         {
@@ -311,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _connectionString;
             
             /// <summary>
-            /// A database connection string.
+            /// Optional. A database connection string.
             /// </summary>
             public string ConnectionString
             {
@@ -322,7 +326,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The name of the connection string.
+            /// Optional. The name of the connection string.
             /// </summary>
             public string Name
             {
@@ -333,7 +337,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _type;
             
             /// <summary>
-            /// The type of the connection string (for example, "MySQL").
+            /// Optional. The type of the connection string (for example,
+            /// "MySQL").
             /// </summary>
             public string Type
             {
@@ -358,8 +363,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _arguments;
             
             /// <summary>
-            /// A string that contains optional arguments for the script
-            /// processor specified by the
+            /// Optional. A string that contains optional arguments for the
+            /// script processor specified by the
             /// SiteConfig.HandlerMappings.HandlerMapping.ScriptProcessor
             /// element.
             /// </summary>
@@ -372,8 +377,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _extension;
             
             /// <summary>
-            /// A string that specifies the extension of the file type that the
-            /// script processor will handle (for example, *.php).
+            /// Optional. A string that specifies the extension of the file
+            /// type that the script processor will handle (for example,
+            /// *.php).
             /// </summary>
             public string Extension
             {
@@ -384,8 +390,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _scriptProcessor;
             
             /// <summary>
-            /// The absolute path to the location of the executable file that
-            /// will handle the files specified in the
+            /// Optional. The absolute path to the location of the executable
+            /// file that will handle the files specified in the
             /// SiteConfig.HandlerMappings.HandlerMapping.Extension element.
             /// </summary>
             public string ScriptProcessor

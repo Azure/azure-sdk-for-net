@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<LocationsListResponse.Location> _locations;
         
         /// <summary>
-        /// The data center locations that are valid for your subscription.
+        /// Optional. The data center locations that are valid for your
+        /// subscription.
         /// </summary>
         public IList<LocationsListResponse.Location> Locations
         {
@@ -75,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private IList<string> _availableServices;
             
             /// <summary>
-            /// Indicates the services available at a location.
+            /// Optional. Indicates the services available at a location.
             /// </summary>
             public IList<string> AvailableServices
             {
@@ -86,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _displayName;
             
             /// <summary>
-            /// The localized name of data center location.
+            /// Optional. The localized name of data center location.
             /// </summary>
             public string DisplayName
             {
@@ -97,8 +98,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _name;
             
             /// <summary>
-            /// The name of a data center location that is valid for your
-            /// subscription.
+            /// Optional. The name of a data center location that is valid for
+            /// your subscription.
             /// </summary>
             public string Name
             {

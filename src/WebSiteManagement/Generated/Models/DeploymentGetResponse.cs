@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Deployment _deployment;
         
         /// <summary>
-        /// The deployment information.
+        /// Optional. The deployment information.
         /// </summary>
         public Deployment Deployment
         {

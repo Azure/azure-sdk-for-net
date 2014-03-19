@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// IP from your the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -239,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// IP from your the subscription.
         /// </summary>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -359,7 +360,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to create a network reserved IP.
+        /// Required. Parameters supplied to create a network reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -457,7 +458,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the subscription.
         /// </summary>
         /// <param name='ipName'>
-        /// The name of the reserved IP.
+        /// Required. The name of the reserved IP.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -551,7 +552,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// for virtual IP reserved for the subscription.
         /// </summary>
         /// <param name='ipName'>
-        /// The name of the reserved IP to retrieve.
+        /// Required. The name of the reserved IP to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

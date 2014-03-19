@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _certificate;
         
         /// <summary>
-        /// The current client root certificate for the network gateway.
+        /// Optional. The current client root certificate for the network
+        /// gateway.
         /// </summary>
         public string Certificate
         {

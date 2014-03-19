@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private IList<DeploymentLog> _logs;
         
         /// <summary>
-        /// The list of logs.
+        /// Optional. The list of logs.
         /// </summary>
         public IList<DeploymentLog> Logs
         {

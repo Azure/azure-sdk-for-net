@@ -34,7 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleCapacity _capacity;
         
         /// <summary>
-        /// The number of instances that can be used in the scaling action.
+        /// Optional. The number of instances that can be used in the scaling
+        /// action.
         /// </summary>
         public ScaleCapacity Capacity
         {
@@ -45,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeWindow _fixedDate;
         
         /// <summary>
-        /// A specific date for the scaling action. This element is not used if
-        /// the Recurrence element is used.
+        /// Optional. A specific date for the scaling action. This element is
+        /// not used if the Recurrence element is used.
         /// </summary>
         public TimeWindow FixedDate
         {
@@ -57,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _name;
         
         /// <summary>
-        /// The name of the profile.
+        /// Optional. The name of the profile.
         /// </summary>
         public string Name
         {
@@ -68,8 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private Recurrence _recurrence;
         
         /// <summary>
-        /// The frequency and schedule for the scaling action. This element is
-        /// not used if the FixedDate element is used.
+        /// Optional. The frequency and schedule for the scaling action. This
+        /// element is not used if the FixedDate element is used.
         /// </summary>
         public Recurrence Recurrence
         {
@@ -80,8 +81,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IList<ScaleRule> _rules;
         
         /// <summary>
-        /// A collection of rules that provide the triggers and parameters for
-        /// the scaling action.
+        /// Optional. A collection of rules that provide the triggers and
+        /// parameters for the scaling action.
         /// </summary>
         public IList<ScaleRule> Rules
         {

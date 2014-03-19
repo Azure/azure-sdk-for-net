@@ -75,10 +75,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -675,10 +675,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1069,10 +1069,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Gets the set of connection strings for a queue.
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queueName'>
-        /// The queue name.
+        /// Required. The queue name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1257,7 +1257,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1654,10 +1654,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// for more information)
         /// </summary>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// Required. The namespace name.
         /// </param>
         /// <param name='queue'>
-        /// The service bus queue.
+        /// Required. The service bus queue.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         private MediaServicesAccount _account;
         
         /// <summary>
-        /// The retrieved account information
+        /// Optional. The retrieved account information
         /// </summary>
         public MediaServicesAccount Account
         {

@@ -44,7 +44,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -85,7 +86,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -112,7 +114,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -153,7 +156,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Store.ICloudServiceOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters used to specify how the Create procedure will function.
+        /// Required. Parameters used to specify how the Create procedure will
+        /// function.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

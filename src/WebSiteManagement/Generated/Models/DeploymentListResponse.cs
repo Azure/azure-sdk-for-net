@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private IList<Deployment> _deployments;
         
         /// <summary>
-        /// The list of deployments.
+        /// Optional. The list of deployments.
         /// </summary>
         public IList<Deployment> Deployments
         {

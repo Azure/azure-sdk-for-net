@@ -80,9 +80,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool _isPremium;
         
         /// <summary>
-        /// Indicates if the image contains software or associated services
-        /// that will incur charges above the core price for the virtual
-        /// machine.
+        /// Required. Indicates if the image contains software or associated
+        /// services that will incur charges above the core price for the
+        /// virtual machine.
         /// </summary>
         public bool IsPremium
         {
@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _language;
         
         /// <summary>
-        /// Specifies the language of the image.  The Language element is only
-        /// available using version 2013-03-01 or higher.
+        /// Optional. Specifies the language of the image.  The Language
+        /// element is only available using version 2013-03-01 or higher.
         /// </summary>
         public string Language
         {
@@ -191,7 +191,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool _showInGui;
         
         /// <summary>
-        /// Specifies whether the image should appear in the image gallery.
+        /// Required. Specifies whether the image should appear in the image
+        /// gallery.
         /// </summary>
         public bool ShowInGui
         {
@@ -202,10 +203,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _smallIconUri;
         
         /// <summary>
-        /// Specifies the URI to the small icon that is displayed when the
-        /// image is presented in the Windows Azure Management Portal.  The
-        /// SmallIconUri element is only available using version 2013-03-01 or
-        /// higher.
+        /// Optional. Specifies the URI to the small icon that is displayed
+        /// when the image is presented in the Windows Azure Management
+        /// Portal.  The SmallIconUri element is only available using version
+        /// 2013-03-01 or higher.
         /// </summary>
         public Uri SmallIconUri
         {

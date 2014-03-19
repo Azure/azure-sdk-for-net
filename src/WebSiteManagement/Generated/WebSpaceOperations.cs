@@ -69,13 +69,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Creates a source control user allowed to publish to this web space.
         /// </summary>
         /// <param name='username'>
-        /// The user name.
+        /// Required. The user name.
         /// </param>
         /// <param name='password'>
-        /// The user password.
+        /// Required. The user password.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Publishing User operation.
+        /// Optional. Parameters supplied to the Create Publishing User
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -272,7 +273,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1110,10 +1111,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

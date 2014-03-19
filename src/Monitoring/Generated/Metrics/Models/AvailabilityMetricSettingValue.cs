@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<NameConfig> _availableLocations;
         
         /// <summary>
-        /// The locations from which the Urls can be monitored.
+        /// Optional. The locations from which the Urls can be monitored.
         /// </summary>
         public IList<NameConfig> AvailableLocations
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<EndpointConfig> _endpoints;
         
         /// <summary>
-        /// The configuration for Urls to be monitored using endpoint
+        /// Required. The configuration for Urls to be monitored using endpoint
         /// monitoiring.
         /// </summary>
         public IList<EndpointConfig> Endpoints

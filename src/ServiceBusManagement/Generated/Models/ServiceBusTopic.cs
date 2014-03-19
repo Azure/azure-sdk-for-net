@@ -31,7 +31,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _accessedAt;
         
         /// <summary>
-        /// The time the queue was last accessed.
+        /// Optional. The time the queue was last accessed.
         /// </summary>
         public DateTime AccessedAt
         {
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private IList<ServiceBusSharedAccessAuthorizationRule> _authorizationRules;
         
         /// <summary>
-        /// Gets the authorization rules for the description.  (see
+        /// Optional. Gets the authorization rules for the description.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _autoDeleteOnIdle;
         
         /// <summary>
-        /// Implemented.
+        /// Optional. Implemented.
         /// </summary>
         public string AutoDeleteOnIdle
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private CountDetails _countDetails;
         
         /// <summary>
-        /// Current queue statistics.
+        /// Optional. Current queue statistics.
         /// </summary>
         public CountDetails CountDetails
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _createdAt;
         
         /// <summary>
-        /// The time the queue was created at.
+        /// Optional. The time the queue was created at.
         /// </summary>
         public DateTime CreatedAt
         {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _defaultMessageTimeToLive;
         
         /// <summary>
-        /// Determines how long a message lives in the associated
+        /// Optional. Determines how long a message lives in the associated
         /// subscriptions. Subscriptions inherit the TTL from the topic unless
         /// they are created explicitly with a smaller TTL. Based on whether
         /// dead-lettering is enabled, a message whose TTL has expired will
@@ -108,8 +108,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _duplicateDetectionHistoryTimeWindow;
         
         /// <summary>
-        /// Specifies the time span during which the Service Bus will detect
-        /// message duplication.* Range: 1 second - 7 days* Default: 10
+        /// Optional. Specifies the time span during which the Service Bus will
+        /// detect message duplication.* Range: 1 second - 7 days* Default: 10
         /// minutes  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
@@ -123,11 +123,11 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _enableBatchedOperations;
         
         /// <summary>
-        /// Enables or disables service side batching behavior when performing
-        /// operations for the specific queue. When enabled, service bus will
-        /// collect/batch multiple operations to the backend to be more
-        /// connection efficient. If user wants lower operation latency then
-        /// they can disable this feature.  (see
+        /// Optional. Enables or disables service side batching behavior when
+        /// performing operations for the specific queue. When enabled,
+        /// service bus will collect/batch multiple operations to the backend
+        /// to be more connection efficient. If user wants lower operation
+        /// latency then they can disable this feature.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _entityAvailabilityStatus;
         
         /// <summary>
-        /// The current availability status of the topic.
+        /// Optional. The current availability status of the topic.
         /// </summary>
         public string EntityAvailabilityStatus
         {
@@ -151,8 +151,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _filteringMessagesBeforePublishing;
         
         /// <summary>
-        /// Gets or sets whether messages should be filtered before publishing.
-        /// (see
+        /// Optional. Gets or sets whether messages should be filtered before
+        /// publishing.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _isAnonymousAccessible;
         
         /// <summary>
-        /// Gets whether anonymous access is allowed.  (see
+        /// Optional. Gets whether anonymous access is allowed.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -178,12 +178,12 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _maxSizeInMegabytes;
         
         /// <summary>
-        /// Specifies the maximum topic size in megabytes. Any attempt to
-        /// enqueue a message that will cause the topic to exceed this value
-        /// will fail. All messages that are stored in the topic or any of its
-        /// subscriptions count towards this value. Multiple copies of a
-        /// message that reside in one or multiple subscriptions count as a
-        /// single messages. For example, if message m exists once in
+        /// Optional. Specifies the maximum topic size in megabytes. Any
+        /// attempt to enqueue a message that will cause the topic to exceed
+        /// this value will fail. All messages that are stored in the topic or
+        /// any of its subscriptions count towards this value. Multiple copies
+        /// of a message that reside in one or multiple subscriptions count as
+        /// a single messages. For example, if message m exists once in
         /// subscription s1 and twice in subscription s2, m is counted as a
         /// single message. You can only set this parameter at topic creation
         /// time using the following values:* Range: 1 - 5*1024 MB* Default:
@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _name;
         
         /// <summary>
-        /// The name of the topic.
+        /// Optional. The name of the topic.
         /// </summary>
         public string Name
         {
@@ -211,10 +211,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _requiresDuplicateDetection;
         
         /// <summary>
-        /// If enabled, the topic will detect duplicate messages within the
-        /// time span specified by the DuplicateDetectionHistoryTimeWindow
-        /// property. Settable only at topic creation time.* Default: false
-        /// (see
+        /// Optional. If enabled, the topic will detect duplicate messages
+        /// within the time span specified by the
+        /// DuplicateDetectionHistoryTimeWindow property. Settable only at
+        /// topic creation time.* Default: false  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -227,8 +227,8 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _sizeInBytes;
         
         /// <summary>
-        /// Reflects the actual bytes toward the topic quota that messages in
-        /// the topic currently occupy. (read-only)* Range: 0
+        /// Optional. Reflects the actual bytes toward the topic quota that
+        /// messages in the topic currently occupy. (read-only)* Range: 0
         /// -MaxTopicSizeinMegaBytes  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
@@ -242,9 +242,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _status;
         
         /// <summary>
-        /// Gets or sets the current status of the topic (enabled or disabled).
-        /// When a topic is disabled, that topic cannot send or receive
-        /// messages.  (see
+        /// Optional. Gets or sets the current status of the topic (enabled or
+        /// disabled). When a topic is disabled, that topic cannot send or
+        /// receive messages.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private int _subscriptionCount;
         
         /// <summary>
-        /// The current number of subscriptions to the topic.
+        /// Optional. The current number of subscriptions to the topic.
         /// </summary>
         public int SubscriptionCount
         {
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private bool _supportOrdering;
         
         /// <summary>
-        /// Gets or sets whether the topics can be ordered.  (see
+        /// Optional. Gets or sets whether the topics can be ordered.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780749.aspx
         /// for more information)
         /// </summary>
@@ -281,7 +281,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private DateTime _updatedAt;
         
         /// <summary>
-        /// The time the queue was last updated.
+        /// Optional. The time the queue was last updated.
         /// </summary>
         public DateTime UpdatedAt
         {

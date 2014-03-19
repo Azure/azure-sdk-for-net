@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private GatewayType _gatewayType;
         
         /// <summary>
-        /// The routing type for this virtual network gateway.
+        /// Optional. The routing type for this virtual network gateway.
         /// </summary>
         public GatewayType GatewayType
         {

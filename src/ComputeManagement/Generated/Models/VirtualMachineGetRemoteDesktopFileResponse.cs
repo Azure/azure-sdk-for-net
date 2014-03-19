@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private byte[] _remoteDesktopFile;
         
         /// <summary>
-        /// A Remote Desktop Protocol (.rdp) file that can be used to establish
-        /// a remote desktop session to the virtual machine
+        /// Required. A Remote Desktop Protocol (.rdp) file that can be used to
+        /// establish a remote desktop session to the virtual machine
         /// </summary>
         public byte[] RemoteDesktopFile
         {

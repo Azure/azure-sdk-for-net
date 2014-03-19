@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private WebJobRun _jobRun;
         
         /// <summary>
-        /// The web job run.
+        /// Optional. The web job run.
         /// </summary>
         public WebJobRun JobRun
         {

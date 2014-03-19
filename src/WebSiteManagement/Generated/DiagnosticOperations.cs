@@ -148,7 +148,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new DiagnosticGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -197,7 +201,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Update diagnostics settings.
         /// </summary>
         /// <param name='parameters'>
-        /// The diagnostics setting information new values.
+        /// Required. The diagnostics setting information new values.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

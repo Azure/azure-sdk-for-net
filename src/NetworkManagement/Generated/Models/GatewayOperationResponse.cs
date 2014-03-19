@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     {
         private string _operationId;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string OperationId
         {
             get { return this._operationId; }

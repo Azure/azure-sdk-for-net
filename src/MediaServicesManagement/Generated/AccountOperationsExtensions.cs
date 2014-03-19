@@ -42,7 +42,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Media Services Account operation.
+        /// Required. Parameters supplied to the Create Media Services Account
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Media Services Account operation response.
@@ -77,7 +78,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Media Services Account operation.
+        /// Required. Parameters supplied to the Create Media Services Account
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Media Services Account operation response.
@@ -98,7 +100,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the media services account.
+        /// Required. The name of the media services account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,7 +136,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the media services account.
+        /// Required. The name of the media services account.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -156,7 +158,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services account.
+        /// Required. The name of the Media Services account.
         /// </param>
         /// <returns>
         /// The Get Media Services Account operation response.
@@ -191,7 +193,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services account.
+        /// Required. The name of the Media Services account.
         /// </param>
         /// <returns>
         /// The Get Media Services Account operation response.
@@ -265,10 +267,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services Account.
+        /// Required. The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
-        /// The type of key to regenerate (primary or secondary)
+        /// Required. The type of key to regenerate (primary or secondary)
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -305,10 +307,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.MediaServices.IAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// The name of the Media Services Account.
+        /// Required. The name of the Media Services Account.
         /// </param>
         /// <param name='keyType'>
-        /// The type of key to regenerate (primary or secondary)
+        /// Required. The type of key to regenerate (primary or secondary)
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

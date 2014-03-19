@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _plan;
         
         /// <summary>
-        /// The selected plan for this store addon.
+        /// Required. The selected plan for this store addon.
         /// </summary>
         public string Plan
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _promotionCode;
         
         /// <summary>
-        /// The promotion code for this store addon.
+        /// Optional. The promotion code for this store addon.
         /// </summary>
         public string PromotionCode
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         private string _type;
         
         /// <summary>
-        /// The type of store item to be created.
+        /// Required. The type of store item to be created.
         /// </summary>
         public string Type
         {

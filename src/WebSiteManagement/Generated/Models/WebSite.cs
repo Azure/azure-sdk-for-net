@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _adminEnabled;
         
         /// <summary>
-        /// Read-only. This value is always true.
+        /// Optional. Read-only. This value is always true.
         /// </summary>
         public bool AdminEnabled
         {
@@ -45,12 +45,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSpaceAvailabilityState _availabilityState;
         
         /// <summary>
-        /// The state of the availability of management information for the
-        /// site. Possible values are Normal or Limited. Normal means that the
-        /// site is running correctly and that management information for the
-        /// site is available. Limited means that only partial management
-        /// information for the site is available and that detailed site
-        /// information is unavailable.
+        /// Optional. The state of the availability of management information
+        /// for the site. Possible values are Normal or Limited. Normal means
+        /// that the site is running correctly and that management information
+        /// for the site is available. Limited means that only partial
+        /// management information for the site is available and that detailed
+        /// site information is unavailable.
         /// </summary>
         public WebSpaceAvailabilityState AvailabilityState
         {
@@ -61,8 +61,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteComputeMode _computeMode;
         
         /// <summary>
-        /// The Compute Mode for the web site. Possible values are Shared or
-        /// Dedicated.
+        /// Optional. The Compute Mode for the web site. Possible values are
+        /// Shared or Dedicated.
         /// </summary>
         public WebSiteComputeMode ComputeMode
         {
@@ -73,8 +73,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _enabled;
         
         /// <summary>
-        /// true if the site is enabled; otherwise, false. Setting this value
-        /// to false disables the site (takes the site off line).
+        /// Optional. true if the site is enabled; otherwise, false. Setting
+        /// this value to false disables the site (takes the site off line).
         /// </summary>
         public bool Enabled
         {
@@ -85,8 +85,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _enabledHostNames;
         
         /// <summary>
-        /// An array of strings that contains enabled hostnames for the site.
-        /// By default, these are [SiteName].azurewebsites.net and
+        /// Optional. An array of strings that contains enabled hostnames for
+        /// the site. By default, these are [SiteName].azurewebsites.net and
         /// [SiteName].scm.azurewebsites.net.
         /// </summary>
         public IList<string> EnabledHostNames
@@ -98,12 +98,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _hostNames;
         
         /// <summary>
-        /// An array of strings that contains the public hostnames for the
-        /// site, including custom domains. Important: When you add a custom
-        /// domain in a PUT operation, be sure to include every hostname that
-        /// you want for the web site. To delete a custom domain name in a PUT
-        /// operation, include all of the hostnames for the site that you want
-        /// to keep, but leave out the one that you wangt to delete.
+        /// Optional. An array of strings that contains the public hostnames
+        /// for the site, including custom domains. Important: When you add a
+        /// custom domain in a PUT operation, be sure to include every
+        /// hostname that you want for the web site. To delete a custom domain
+        /// name in a PUT operation, include all of the hostnames for the site
+        /// that you want to keep, but leave out the one that you wangt to
+        /// delete.
         /// </summary>
         public IList<string> HostNames
         {
@@ -114,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSite.WebSiteHostNameSslState> _hostNameSslStates;
         
         /// <summary>
-        /// SSL states bound to the website.
+        /// Optional. SSL states bound to the website.
         /// </summary>
         public IList<WebSite.WebSiteHostNameSslState> HostNameSslStates
         {
@@ -125,8 +126,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private DateTime _lastModifiedTimeUtc;
         
         /// <summary>
-        /// A dateTime value that contains, in Coordinated Universal Time, the
-        /// last time the web site was modified.
+        /// Optional. A dateTime value that contains, in Coordinated Universal
+        /// Time, the last time the web site was modified.
         /// </summary>
         public DateTime LastModifiedTimeUtc
         {
@@ -137,7 +138,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// The name of the web site.
+        /// Optional. The name of the web site.
         /// </summary>
         public string Name
         {
@@ -148,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _owner;
         
         /// <summary>
-        /// Owner of the web site.
+        /// Optional. Owner of the web site.
         /// </summary>
         public string Owner
         {
@@ -159,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _repositorySiteName;
         
         /// <summary>
-        /// The name of the repository web site.
+        /// Optional. The name of the repository web site.
         /// </summary>
         public string RepositorySiteName
         {
@@ -170,12 +171,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteRuntimeAvailabilityState _runtimeAvailabilityState;
         
         /// <summary>
-        /// Possible values are Normal, Degraded, or NotAvailable. Normal: the
-        /// web site is running correctly. Degraded: the web site is running
-        /// temporarily in a degraded mode (typically with less memory and a
-        /// shared instance.) Not Available: due to an unexpected issue, the
-        /// site has been excluded from provisioning. This typically occurs
-        /// only for free sites.
+        /// Optional. Possible values are Normal, Degraded, or NotAvailable.
+        /// Normal: the web site is running correctly. Degraded: the web site
+        /// is running temporarily in a degraded mode (typically with less
+        /// memory and a shared instance.) Not Available: due to an unexpected
+        /// issue, the site has been excluded from provisioning. This
+        /// typically occurs only for free sites.
         /// </summary>
         public WebSiteRuntimeAvailabilityState RuntimeAvailabilityState
         {
@@ -186,7 +187,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// String. If a server farm exists, this value is DefaultServerFarm.
+        /// Optional. String. If a server farm exists, this value is
+        /// DefaultServerFarm.
         /// </summary>
         public string ServerFarm
         {
@@ -197,10 +199,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteMode _siteMode;
         
         /// <summary>
-        /// String that represents the web site mode. If the web site mode is
-        /// Free, this value is Limited. If the web site mode is Shared, this
-        /// value is Basic.  Note: The SiteMode value is not used for Reserved
-        /// mode. Reserved mode uses the ComputeMode setting.
+        /// Optional. String that represents the web site mode. If the web site
+        /// mode is Free, this value is Limited. If the web site mode is
+        /// Shared, this value is Basic.  Note: The SiteMode value is not used
+        /// for Reserved mode. Reserved mode uses the ComputeMode setting.
         /// </summary>
         public WebSiteMode SiteMode
         {
@@ -211,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSite.WebSiteProperties _siteProperties;
         
         /// <summary>
-        /// Contains AppSettings, Metadata, and Properties for a site.
+        /// Optional. Contains AppSettings, Metadata, and Properties for a site.
         /// </summary>
         public WebSite.WebSiteProperties SiteProperties
         {
@@ -222,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSite.WebSiteSslCertificate> _sslCertificates;
         
         /// <summary>
-        /// SSL certificates bound to the web site.
+        /// Optional. SSL certificates bound to the web site.
         /// </summary>
         public IList<WebSite.WebSiteSslCertificate> SslCertificates
         {
@@ -233,8 +235,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _state;
         
         /// <summary>
-        /// A string that describes the state of the web site. Possible values
-        /// are Stopped or Running.
+        /// Optional. A string that describes the state of the web site.
+        /// Possible values are Stopped or Running.
         /// </summary>
         public string State
         {
@@ -245,8 +247,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Uri _uri;
         
         /// <summary>
-        /// Direct URL to the web site endpoint on Windows Azure Web Sites,
-        /// including the subscription ID, webspace name, and site name.
+        /// Optional. Direct URL to the web site endpoint on Windows Azure Web
+        /// Sites, including the subscription ID, webspace name, and site name.
         /// </summary>
         public Uri Uri
         {
@@ -257,9 +259,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private WebSiteUsageState _usageState;
         
         /// <summary>
-        /// Possible values are Normal or Exceeded. If any quota is exceeded,
-        /// the UsageState value changes to Exceeded and the site goes off
-        /// line.
+        /// Optional. Possible values are Normal or Exceeded. If any quota is
+        /// exceeded, the UsageState value changes to Exceeded and the site
+        /// goes off line.
         /// </summary>
         public WebSiteUsageState UsageState
         {
@@ -270,8 +272,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _webSpace;
         
         /// <summary>
-        /// The name of the webspace in which the web site is located. This
-        /// property is read-only.
+        /// Optional. The name of the webspace in which the web site is
+        /// located. This property is read-only.
         /// </summary>
         public string WebSpace
         {
@@ -298,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// The URL of the web site.
+            /// Optional. The URL of the web site.
             /// </summary>
             public string Name
             {
@@ -309,8 +311,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private WebSiteSslState _sslState;
             
             /// <summary>
-            /// The SSL state. Possible values are Disabled, SniEnabled, or
-            /// IpBasedEnabled.
+            /// Optional. The SSL state. Possible values are Disabled,
+            /// SniEnabled, or IpBasedEnabled.
             /// </summary>
             public WebSiteSslState SslState
             {
@@ -321,7 +323,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _thumbprint;
             
             /// <summary>
-            /// A string that contains the thumbprint of the SSL certificate.
+            /// Optional. A string that contains the thumbprint of the SSL
+            /// certificate.
             /// </summary>
             public string Thumbprint
             {
@@ -332,8 +335,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _virtualIP;
             
             /// <summary>
-            /// String. The IP address assigned to the hostname if the hostname
-            /// uses IP SSL.
+            /// Optional. String. The IP address assigned to the hostname if
+            /// the hostname uses IP SSL.
             /// </summary>
             public string VirtualIP
             {
@@ -354,8 +357,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IDictionary<string, string> _appSettings;
             
             /// <summary>
-            /// A set of name/value pairs that contain application settings for
-            /// a site.
+            /// Optional. A set of name/value pairs that contain application
+            /// settings for a site.
             /// </summary>
             public IDictionary<string, string> AppSettings
             {
@@ -366,8 +369,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IDictionary<string, string> _metadata;
             
             /// <summary>
-            /// A set of name/value pairs that contain metadata information for
-            /// a site.
+            /// Optional. A set of name/value pairs that contain metadata
+            /// information for a site.
             /// </summary>
             public IDictionary<string, string> Metadata
             {
@@ -378,7 +381,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IDictionary<string, string> _properties;
             
             /// <summary>
-            /// A set of name/value pairs that contain properties for a site.
+            /// Optional. A set of name/value pairs that contain properties for
+            /// a site.
             /// </summary>
             public IDictionary<string, string> Properties
             {
@@ -405,8 +409,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private System.DateTime? _expirationDate;
             
             /// <summary>
-            /// A dateTime value that contains the expiration date of the
-            /// certificate.
+            /// Optional. A dateTime value that contains the expiration date of
+            /// the certificate.
             /// </summary>
             public System.DateTime? ExpirationDate
             {
@@ -417,7 +421,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _friendlyName;
             
             /// <summary>
-            /// A string that contains the friendly name of the certificate.
+            /// Optional. A string that contains the friendly name of the
+            /// certificate.
             /// </summary>
             public string FriendlyName
             {
@@ -428,8 +433,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IList<string> _hostNames;
             
             /// <summary>
-            /// An array of strings that contain the hostnames to which the
-            /// certificate is bound.
+            /// Optional. An array of strings that contain the hostnames to
+            /// which the certificate is bound.
             /// </summary>
             public IList<string> HostNames
             {
@@ -440,8 +445,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private System.DateTime? _issueDate;
             
             /// <summary>
-            /// A dateTime value that contains the date that the certificate
-            /// was issued.
+            /// Optional. A dateTime value that contains the date that the
+            /// certificate was issued.
             /// </summary>
             public System.DateTime? IssueDate
             {
@@ -452,7 +457,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _issuer;
             
             /// <summary>
-            /// A string that identifies the issuer of the certificate.
+            /// Optional. A string that identifies the issuer of the
+            /// certificate.
             /// </summary>
             public string Issuer
             {
@@ -463,7 +469,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private bool? _isToBeDeleted;
             
             /// <summary>
-            /// Boolean. true if the certificate is to be deleted.
+            /// Optional. Boolean. true if the certificate is to be deleted.
             /// </summary>
             public bool? IsToBeDeleted
             {
@@ -474,7 +480,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private bool? _isValid;
             
             /// <summary>
-            /// Boolean. true if the certificate is valid; otherwise, false.
+            /// Optional. Boolean. true if the certificate is valid; otherwise,
+            /// false.
             /// </summary>
             public bool? IsValid
             {
@@ -485,7 +492,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _password;
             
             /// <summary>
-            /// A string that contains the password for the certificate.
+            /// Optional. A string that contains the password for the
+            /// certificate.
             /// </summary>
             public string Password
             {
@@ -496,7 +504,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private byte[] _pfxBlob;
             
             /// <summary>
-            /// A base64Binary value that contains the PfxBlob of the
+            /// Optional. A base64Binary value that contains the PfxBlob of the
             /// certificate.
             /// </summary>
             public byte[] PfxBlob
@@ -508,8 +516,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private Uri _selfLinkUri;
             
             /// <summary>
-            /// An anyURI value that contains the endpoint of the site to which
-            /// the certificate is bound.
+            /// Optional. An anyURI value that contains the endpoint of the
+            /// site to which the certificate is bound.
             /// </summary>
             public Uri SelfLinkUri
             {
@@ -520,8 +528,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _siteName;
             
             /// <summary>
-            /// A string that contains the name of the site to which the
-            /// certificate is bound.
+            /// Optional. A string that contains the name of the site to which
+            /// the certificate is bound.
             /// </summary>
             public string SiteName
             {
@@ -532,8 +540,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _subjectName;
             
             /// <summary>
-            /// A string that contains the name of the entity to whom the
-            /// certificate was issued.
+            /// Optional. A string that contains the name of the entity to whom
+            /// the certificate was issued.
             /// </summary>
             public string SubjectName
             {
@@ -544,7 +552,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _thumbprint;
             
             /// <summary>
-            /// A string that contains the certificate thumbprint.
+            /// Optional. A string that contains the certificate thumbprint.
             /// </summary>
             public string Thumbprint
             {

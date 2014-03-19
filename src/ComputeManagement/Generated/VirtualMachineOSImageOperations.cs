@@ -77,7 +77,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -454,10 +455,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='imageName'>
-        /// The name of the image to delete.
+        /// Required. The name of the image to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob for the image should also
+        /// Required. Specifies that the source blob for the image should also
         /// be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
@@ -585,7 +586,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='imageName'>
-        /// The name of the OS image to retrieve.
+        /// Required. The name of the OS image to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1116,10 +1117,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='imageName'>
-        /// The name of the virtual machine image to be updated.
+        /// Required. The name of the virtual machine image to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine Image operation.
+        /// Required. Parameters supplied to the Update Virtual Machine Image
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

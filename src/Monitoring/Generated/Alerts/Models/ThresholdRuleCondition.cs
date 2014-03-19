@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Condition data source.
+        /// Optional. Condition data source.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private ConditionOperator _operator;
         
         /// <summary>
-        /// Condition operator.
+        /// Optional. Condition operator.
         /// </summary>
         public ConditionOperator Operator
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private double _threshold;
         
         /// <summary>
-        /// Condition threshold.
+        /// Optional. Condition threshold.
         /// </summary>
         public double Threshold
         {
@@ -66,8 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// The time period over which the alert rule is evaluated. Condition
-        /// window size depends on the metric.
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// Condition window size depends on the metric.
         /// </summary>
         public TimeSpan WindowSize
         {

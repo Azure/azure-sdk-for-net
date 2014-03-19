@@ -48,13 +48,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -91,13 +92,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -124,10 +126,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Web Site operation.
+        /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <returns>
         /// The Create Web Space operation response.
@@ -163,10 +165,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Web Site operation.
+        /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <returns>
         /// The Create Web Space operation response.
@@ -191,10 +193,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -234,10 +236,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -261,13 +263,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to delete a web site.
+        /// Required. The parameters to delete a web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -305,13 +307,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to delete a web site.
+        /// Required. The parameters to delete a web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -337,10 +339,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Delete Web Site Repository operation response.
@@ -379,10 +381,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Delete Web Site Repository operation response.
@@ -408,10 +410,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -452,10 +454,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -477,13 +479,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.
@@ -518,13 +520,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.
@@ -546,10 +548,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Configuration operation response.
@@ -585,10 +587,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Configuration operation response.
@@ -609,13 +611,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
@@ -650,13 +652,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
@@ -677,10 +679,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
@@ -715,10 +717,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
@@ -743,10 +745,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Repository operation response.
@@ -785,10 +787,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Repository operation response.
@@ -812,10 +814,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
@@ -853,10 +855,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
@@ -874,7 +876,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Is Hostname Available operation response.
@@ -906,7 +908,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// The Is Hostname Available operation response.
@@ -926,10 +928,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -964,10 +966,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -986,13 +988,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -1029,13 +1032,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// Required. The name of the web site slot to swap with the production
+        /// slot.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -1063,10 +1067,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1104,10 +1108,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1129,13 +1133,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
+        /// Required. Parameters supplied to the Update Web Site operation.
         /// </param>
         /// <returns>
         /// The Update Web Site operation response.
@@ -1170,13 +1174,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Web Site operation.
+        /// Required. Parameters supplied to the Update Web Site operation.
         /// </param>
         /// <returns>
         /// The Update Web Site operation response.
@@ -1198,13 +1202,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
+        /// Required. The Update Web Site Configuration parameters.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1241,13 +1245,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='webSiteName'>
-        /// The name of the web site.
+        /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
+        /// Required. The Update Web Site Configuration parameters.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

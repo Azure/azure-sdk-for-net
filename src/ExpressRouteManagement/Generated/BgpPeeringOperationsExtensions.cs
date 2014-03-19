@@ -47,14 +47,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -87,14 +87,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -114,10 +114,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -151,10 +151,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -173,14 +173,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -213,14 +213,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// A standard express route gateway response including an HTTP status
@@ -240,10 +240,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.
@@ -276,10 +276,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The servicee key representing the dedicated circuit.
+        /// Required. The servicee key representing the dedicated circuit.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.
@@ -298,14 +298,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.
@@ -338,14 +338,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.
@@ -363,10 +363,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -406,10 +406,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the bgp peering to be deleted.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -436,14 +436,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.
@@ -476,14 +476,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// The service key representing the relationship between Azure and the
-        /// customer.
+        /// Required. The service key representing the relationship between
+        /// Azure and the customer.
         /// </param>
         /// <param name='accessType'>
-        /// Whether the peering is private or public.
+        /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
         /// The Get Bgp Peering Operation Response.

@@ -78,10 +78,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -242,7 +243,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -380,10 +382,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your service.
+        /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Required. Parameters supplied to the Create Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -483,7 +486,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Required. Parameters supplied to the Delete Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -580,7 +584,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Get Service Certificate operation.
+        /// Required. Parameters supplied to the Get Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -730,7 +735,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The DNS prefix name of your hosted service.
+        /// Required. The DNS prefix name of your hosted service.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
     {
         private ServiceBusNotificationHub _notificationHub;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public ServiceBusNotificationHub NotificationHub
         {
             get { return this._notificationHub; }

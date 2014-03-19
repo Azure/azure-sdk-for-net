@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private int _bandwidth;
         
         /// <summary>
-        /// Specifies the bandwidth that is assigned to the circuit.
+        /// Optional. Specifies the bandwidth that is assigned to the circuit.
         /// </summary>
         public int Bandwidth
         {
@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _primaryAzurePort;
         
         /// <summary>
-        /// Specifies the name of the primary port. Only available when the
-        /// provisioning state is Provisioning or Provisioned.
+        /// Optional. Specifies the name of the primary port. Only available
+        /// when the provisioning state is Provisioning or Provisioned.
         /// </summary>
         public string PrimaryAzurePort
         {
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Provisioning state of the cross connection. Can be Provisioned,
-        /// NotProvisioned, Provisioning or Deprovisioning.
+        /// Optional. Provisioning state of the cross connection. Can be
+        /// Provisioned, NotProvisioned, Provisioning or Deprovisioning.
         /// </summary>
         public string ProvisioningState
         {
@@ -68,8 +68,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _secondaryAzurePort;
         
         /// <summary>
-        /// Specifies the name of the secondary port. Only available when the
-        /// provisioning state is Provisioning or Provisioned.
+        /// Optional. Specifies the name of the secondary port. Only available
+        /// when the provisioning state is Provisioning or Provisioned.
         /// </summary>
         public string SecondaryAzurePort
         {
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private int _sTag;
         
         /// <summary>
-        /// Specifies the identifier of circuit traffic.
+        /// Optional. Specifies the identifier of circuit traffic.
         /// </summary>
         public int STag
         {
@@ -91,8 +91,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         private string _status;
         
         /// <summary>
-        /// The current status of the circuit. Possible values are: Disabled,
-        /// Disabling, Enabling, Enabled.
+        /// Optional. The current status of the circuit. Possible values are:
+        /// Disabled, Disabling, Enabling, Enabled.
         /// </summary>
         public string Status
         {

@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private string _value;
         
         /// <summary>
-        /// The setting value.
+        /// Optional. The setting value.
         /// </summary>
         public string Value
         {

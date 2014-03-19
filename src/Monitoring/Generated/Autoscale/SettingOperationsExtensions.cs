@@ -36,10 +36,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -69,10 +69,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
         /// </param>
         /// <param name='resourceId'>
-        /// The resource ID.
+        /// Required. The resource ID.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and

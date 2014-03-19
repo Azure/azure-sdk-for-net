@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private MetricTrigger _metricTrigger;
         
         /// <summary>
-        /// The metrics that are used to determine when a scaling action occurs.
+        /// Optional. The metrics that are used to determine when a scaling
+        /// action occurs.
         /// </summary>
         public MetricTrigger MetricTrigger
         {
@@ -44,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleAction _scaleAction;
         
         /// <summary>
-        /// The parameters for the scaling action.
+        /// Optional. The parameters for the scaling action.
         /// </summary>
         public ScaleAction ScaleAction
         {

@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Metric display name.
+        /// Optional. Metric display name.
         /// </summary>
         public string DisplayName
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// The end time in UTC for the metric queried.
+        /// Optional. The end time in UTC for the metric queried.
         /// </summary>
         public DateTime EndTime
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricValue> _metricValues;
         
         /// <summary>
-        /// Metric values.
+        /// Optional. Metric values.
         /// </summary>
         public IList<MetricValue> MetricValues
         {
@@ -67,7 +67,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Metric name.
+        /// Optional. Metric name.
         /// </summary>
         public string Name
         {
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// Metric namespace.
+        /// Optional. Metric namespace.
         /// </summary>
         public string Namespace
         {
@@ -89,7 +89,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _primaryAggregation;
         
         /// <summary>
-        /// Metric primary aggregation.
+        /// Optional. Metric primary aggregation.
         /// </summary>
         public string PrimaryAggregation
         {
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// The start time in UTC for the metric queried.
+        /// Optional. The start time in UTC for the metric queried.
         /// </summary>
         public DateTime StartTime
         {
@@ -111,7 +111,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// The time grain specifies the aggregation period of the metric value.
+        /// Optional. The time grain specifies the aggregation period of the
+        /// metric value.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -122,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _unit;
         
         /// <summary>
-        /// Metric unit.
+        /// Optional. Metric unit.
         /// </summary>
         public string Unit
         {

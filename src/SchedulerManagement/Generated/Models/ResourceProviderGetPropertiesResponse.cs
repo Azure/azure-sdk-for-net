@@ -33,6 +33,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
     {
         private IDictionary<string, string> _properties;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IDictionary<string, string> Properties
         {
             get { return this._properties; }

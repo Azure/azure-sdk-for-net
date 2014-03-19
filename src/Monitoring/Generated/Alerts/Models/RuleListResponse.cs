@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<Rule> _value;
         
         /// <summary>
-        /// Alert rules collection.
+        /// Optional. Alert rules collection.
         /// </summary>
         public IList<Rule> Value
         {

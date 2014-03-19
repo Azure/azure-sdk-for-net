@@ -39,13 +39,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Job Collection operation response.
@@ -77,13 +79,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The Create Job Collection operation response.
@@ -101,10 +105,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -137,10 +141,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -159,13 +163,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The Update Job Collection operation response.
@@ -197,13 +203,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The Update Job Collection operation response.
@@ -222,12 +230,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// A name for the JobCollection. The name must be unique as scoped
-        /// within the CloudService.  The name can be up to 100 characters in
-        /// length.
+        /// Required. A name for the JobCollection. The name must be unique as
+        /// scoped within the CloudService.  The name can be up to 100
+        /// characters in length.
         /// </param>
         /// <returns>
         /// The Check Name Availability operation response.
@@ -260,12 +268,12 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// A name for the JobCollection. The name must be unique as scoped
-        /// within the CloudService.  The name can be up to 100 characters in
-        /// length.
+        /// Required. A name for the JobCollection. The name must be unique as
+        /// scoped within the CloudService.  The name can be up to 100
+        /// characters in length.
         /// </param>
         /// <returns>
         /// The Check Name Availability operation response.
@@ -283,13 +291,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -329,13 +339,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to create.
+        /// Required. The name of the job collection to create.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Job Collection operation.
+        /// Required. Parameters supplied to the Create Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -361,10 +373,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -404,10 +416,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service.
+        /// Required. The name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to delete.
+        /// Required. The name of the job collection to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -433,10 +445,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// Name of the cloud service.
+        /// Required. Name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// Name of the job collection.
+        /// Required. Name of the job collection.
         /// </param>
         /// <returns>
         /// The Get Job Collection operation response.
@@ -468,10 +480,10 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// Name of the cloud service.
+        /// Required. Name of the cloud service.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// Name of the job collection.
+        /// Required. Name of the job collection.
         /// </param>
         /// <returns>
         /// The Get Job Collection operation response.
@@ -489,13 +501,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -535,13 +549,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Scheduler.IJobCollectionOperations.
         /// </param>
         /// <param name='cloudServiceName'>
-        /// The name of the cloud service containing the job collection.
+        /// Required. The name of the cloud service containing the job
+        /// collection.
         /// </param>
         /// <param name='jobCollectionName'>
-        /// The name of the job collection to update.
+        /// Required. The name of the job collection to update.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Job Collection operation.
+        /// Required. Parameters supplied to the Update Job Collection
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

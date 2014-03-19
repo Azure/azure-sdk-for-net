@@ -54,16 +54,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteManagementClient.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the webspace for the website where the operation was
-        /// targeted.
+        /// Required. The name of the webspace for the website where the
+        /// operation was targeted.
         /// </param>
         /// <param name='siteName'>
-        /// The name of the site where the operation was targeted.
+        /// Required. The name of the site where the operation was targeted.
         /// </param>
         /// <param name='operationId'>
-        /// The operation ID for the operation you wish to track. The operation
-        /// ID is returned in the Id field in the body of the response for
-        /// long-running operations.
+        /// Required. The operation ID for the operation you wish to track. The
+        /// operation ID is returned in the Id field in the body of the
+        /// response for long-running operations.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -106,16 +106,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteManagementClient.
         /// </param>
         /// <param name='webSpaceName'>
-        /// The name of the webspace for the website where the operation was
-        /// targeted.
+        /// Required. The name of the webspace for the website where the
+        /// operation was targeted.
         /// </param>
         /// <param name='siteName'>
-        /// The name of the site where the operation was targeted.
+        /// Required. The name of the site where the operation was targeted.
         /// </param>
         /// <param name='operationId'>
-        /// The operation ID for the operation you wish to track. The operation
-        /// ID is returned in the Id field in the body of the response for
-        /// long-running operations.
+        /// Required. The operation ID for the operation you wish to track. The
+        /// operation ID is returned in the Id field in the body of the
+        /// response for long-running operations.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running

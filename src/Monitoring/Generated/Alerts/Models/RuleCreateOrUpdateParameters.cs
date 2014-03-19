@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Rule _rule;
         
         /// <summary>
-        /// The rule to create or update.
+        /// Optional. The rule to create or update.
         /// </summary>
         public Rule Rule
         {

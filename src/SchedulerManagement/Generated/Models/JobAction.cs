@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobErrorAction _errorAction;
         
         /// <summary>
-        /// Error Action for the job.
+        /// Optional. Error Action for the job.
         /// </summary>
         public JobErrorAction ErrorAction
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobQueueMessage _queueMessage;
         
         /// <summary>
-        /// Queue and content for a queue message action type.
+        /// Optional. Queue and content for a queue message action type.
         /// </summary>
         public JobQueueMessage QueueMessage
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobHttpRequest _request;
         
         /// <summary>
-        /// Request for a http or https action type.
+        /// Optional. Request for a http or https action type.
         /// </summary>
         public JobHttpRequest Request
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private RetryPolicy _retryPolicy;
         
         /// <summary>
-        /// Retry Policy for the job action.
+        /// Optional. Retry Policy for the job action.
         /// </summary>
         public RetryPolicy RetryPolicy
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobActionType _type;
         
         /// <summary>
-        /// Type of action. Can be one of http, https, storageQueue.
+        /// Required. Type of action. Can be one of http, https, storageQueue.
         /// </summary>
         public JobActionType Type
         {

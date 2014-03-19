@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<VirtualMachineExtensionListResponse.ResourceExtension> _resourceExtensions;
         
         /// <summary>
-        /// The extensions that are available to add to your cloud service.
+        /// Optional. The extensions that are available to add to your cloud
+        /// service.
         /// </summary>
         public IList<VirtualMachineExtensionListResponse.ResourceExtension> ResourceExtensions
         {
@@ -76,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _description;
             
             /// <summary>
-            /// The description of the extension.
+            /// Optional. The description of the extension.
             /// </summary>
             public string Description
             {
@@ -87,10 +88,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _eula;
             
             /// <summary>
-            /// URI string pointing to the EULA (End User License Agreement) of
-            /// this version of extension. This is optionally specified by the
-            /// third-party publishing the extension instead of Windows Azure,
-            /// at the time of extension creation or update.
+            /// Optional. URI string pointing to the EULA (End User License
+            /// Agreement) of this version of extension. This is optionally
+            /// specified by the third-party publishing the extension instead
+            /// of Windows Azure, at the time of extension creation or update.
             /// </summary>
             public Uri Eula
             {
@@ -101,8 +102,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _homepageUri;
             
             /// <summary>
-            /// URI string pointing to the homepage of this version of
-            /// extension. This is optionally specified by the third-party
+            /// Optional. URI string pointing to the homepage of this version
+            /// of extension. This is optionally specified by the third-party
             /// publishing the extension instead of Windows Azure, at the time
             /// of extension creation or update.
             /// </summary>
@@ -115,10 +116,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private bool _isJsonExtension;
             
             /// <summary>
-            /// Boolean property indicating whether the extension accepts JSON
-            /// or XML based configuration. If this property is 'true' then
-            /// the extension accepts JSON based configuration. If this
-            /// property is 'false' the extension accepts XML based
+            /// Optional. Boolean property indicating whether the extension
+            /// accepts JSON or XML based configuration. If this property is
+            /// 'true' then the extension accepts JSON based configuration. If
+            /// this property is 'false' the extension accepts XML based
             /// confihuration.
             /// </summary>
             public bool IsJsonExtension
@@ -130,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// The label that is used to identify the extension.
+            /// Optional. The label that is used to identify the extension.
             /// </summary>
             public string Label
             {
@@ -141,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// The name of the extension.
+            /// Optional. The name of the extension.
             /// </summary>
             public string Name
             {
@@ -152,10 +153,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _privacyUri;
             
             /// <summary>
-            /// URI string pointing to the privacy document of this version of
-            /// extension. This is optionally specified by the third-party
-            /// publishing the extension instead of Windows Azure, at the time
-            /// of extension creation or update.
+            /// Optional. URI string pointing to the privacy document of this
+            /// version of extension. This is optionally specified by the
+            /// third-party publishing the extension instead of Windows Azure,
+            /// at the time of extension creation or update.
             /// </summary>
             public Uri PrivacyUri
             {
@@ -166,7 +167,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _privateConfigurationSchema;
             
             /// <summary>
-            /// The base64-encoded schema of the private configuration.
+            /// Optional. The base64-encoded schema of the private
+            /// configuration.
             /// </summary>
             public string PrivateConfigurationSchema
             {
@@ -177,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publicConfigurationSchema;
             
             /// <summary>
-            /// The base64-encoded schema of the public configuration.
+            /// Optional. The base64-encoded schema of the public configuration.
             /// </summary>
             public string PublicConfigurationSchema
             {
@@ -188,8 +190,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publisher;
             
             /// <summary>
-            /// The provider namespace of the extension. The provider namespace
-            /// for Windows Azure extensions is Microsoft.Compute.
+            /// Optional. The provider namespace of the extension. The provider
+            /// namespace for Windows Azure extensions is Microsoft.Compute.
             /// </summary>
             public string Publisher
             {
@@ -200,13 +202,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private bool _replicationCompleted;
             
             /// <summary>
-            /// Boolean flag indicating whether this version of extension has
-            /// been replicated to all regions or not. If true, then the given
-            /// extension version can be used in creating or updating
-            /// deployments. Otherwise, the given extension version might
-            /// cause failure in creating or updating deployments. The typical
-            /// time is 20 minutes for a newly-registered or newly-updated
-            /// extension to replicate completely by Windows Azure.
+            /// Optional. Boolean flag indicating whether this version of
+            /// extension has been replicated to all regions or not. If true,
+            /// then the given extension version can be used in creating or
+            /// updating deployments. Otherwise, the given extension version
+            /// might cause failure in creating or updating deployments. The
+            /// typical time is 20 minutes for a newly-registered or
+            /// newly-updated extension to replicate completely by Windows
+            /// Azure.
             /// </summary>
             public bool ReplicationCompleted
             {
@@ -217,7 +220,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _sampleConfig;
             
             /// <summary>
-            /// A sample configuration file for the resource extension.
+            /// Optional. A sample configuration file for the resource
+            /// extension.
             /// </summary>
             public string SampleConfig
             {
@@ -228,7 +232,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _version;
             
             /// <summary>
-            /// The version of the extension.
+            /// Optional. The version of the extension.
             /// </summary>
             public string Version
             {

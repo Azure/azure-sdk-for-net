@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _enableDirectServerReturn;
         
         /// <summary>
-        /// Specifies whether direct server return is enabled for the endpoint.
+        /// Optional. Specifies whether direct server return is enabled for the
+        /// endpoint.
         /// </summary>
         public bool? EnableDirectServerReturn
         {
@@ -44,7 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private EndpointAcl _endpointAcl;
         
         /// <summary>
-        /// Specifies the list of access control rules for the endpoint.
+        /// Optional. Specifies the list of access control rules for the
+        /// endpoint.
         /// </summary>
         public EndpointAcl EndpointAcl
         {
@@ -55,9 +57,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _loadBalancedEndpointSetName;
         
         /// <summary>
-        /// Specifies a name for a set of load-balanced endpoints. Specifying
-        /// this name in multiple endpoints adds them all to the set. This
-        /// element is only listed for Virtual Machine deployments.
+        /// Optional. Specifies a name for a set of load-balanced endpoints.
+        /// Specifying this name in multiple endpoints adds them all to the
+        /// set. This element is only listed for Virtual Machine deployments.
         /// </summary>
         public string LoadBalancedEndpointSetName
         {
@@ -68,9 +70,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private LoadBalancerProbe _loadBalancerProbe;
         
         /// <summary>
-        /// Contains properties that specify the endpoint settings which the
-        /// Windows Azure load balancer uses to monitor the availability of
-        /// this virtual machine before forwarding traffic to the endpoint.
+        /// Optional. Contains properties that specify the endpoint settings
+        /// which the Windows Azure load balancer uses to monitor the
+        /// availability of this virtual machine before forwarding traffic to
+        /// the endpoint.
         /// </summary>
         public LoadBalancerProbe LoadBalancerProbe
         {
@@ -81,9 +84,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _localPort;
         
         /// <summary>
-        /// Specifies the internal port on which the virtual machine is
-        /// listening to serve the endpoint. This element is only listed for
-        /// Virtual Machine deployments.
+        /// Optional. Specifies the internal port on which the virtual machine
+        /// is listening to serve the endpoint. This element is only listed
+        /// for Virtual Machine deployments.
         /// </summary>
         public int? LocalPort
         {
@@ -94,8 +97,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Specifies the name for the external endpoint. This element is only
-        /// listed for Virtual Machine deployments.
+        /// Optional. Specifies the name for the external endpoint. This
+        /// element is only listed for Virtual Machine deployments.
         /// </summary>
         public string Name
         {
@@ -106,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _port;
         
         /// <summary>
-        /// The size of the role instance.
+        /// Optional. The size of the role instance.
         /// </summary>
         public int? Port
         {
@@ -117,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _protocol;
         
         /// <summary>
-        /// Specifies the transport protocol for the endpoint.
+        /// Optional. Specifies the transport protocol for the endpoint.
         /// </summary>
         public string Protocol
         {
@@ -128,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _virtualIPAddress;
         
         /// <summary>
-        /// The ip of the role instance.
+        /// Optional. The ip of the role instance.
         /// </summary>
         public string VirtualIPAddress
         {

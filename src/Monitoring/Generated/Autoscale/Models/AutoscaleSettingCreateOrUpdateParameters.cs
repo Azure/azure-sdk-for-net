@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private AutoscaleSetting _setting;
         
         /// <summary>
-        /// The setting to create or update.
+        /// Optional. The setting to create or update.
         /// </summary>
         public AutoscaleSetting Setting
         {

@@ -70,10 +70,11 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// Initializes a new instance of the SubscriptionClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Credentials used to authenticate requests.
+        /// Required. Credentials used to authenticate requests.
         /// </param>
         /// <param name='baseUri'>
-        /// The URI used as the base for all Service Management requests.
+        /// Required. The URI used as the base for all Service Management
+        /// requests.
         /// </param>
         public SubscriptionClient(CloudCredentials credentials, Uri baseUri)
             : this()
@@ -96,7 +97,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// Initializes a new instance of the SubscriptionClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Credentials used to authenticate requests.
+        /// Required. Credentials used to authenticate requests.
         /// </param>
         public SubscriptionClient(CloudCredentials credentials)
             : this()

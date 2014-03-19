@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private PostShutdownAction _postShutdownAction;
         
         /// <summary>
-        /// The state of the vm after shotdown (stopped or stopped and
-        /// deallocated)
+        /// Optional. The state of the vm after shotdown (stopped or stopped
+        /// and deallocated)
         /// </summary>
         public PostShutdownAction PostShutdownAction
         {

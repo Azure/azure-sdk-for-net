@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Dedicated Circuit operation.
+        /// Required. Parameters supplied to the New Dedicated Circuit
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -241,7 +242,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key representing the dedicated circuit to be deleted.
+        /// Required. Service key representing the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -377,7 +379,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// The service key representing the circuit.
+        /// Required. The service key representing the circuit.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -731,7 +733,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Required. Parameters supplied to the Create Virtual Network Gateway
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -800,7 +803,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// dedicated circuit.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service Key associated with the dedicated circuit to be deleted.
+        /// Required. Service Key associated with the dedicated circuit to be
+        /// deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

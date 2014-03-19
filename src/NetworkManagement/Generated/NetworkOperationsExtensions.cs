@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -249,7 +249,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Required. The updated network configuration.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous

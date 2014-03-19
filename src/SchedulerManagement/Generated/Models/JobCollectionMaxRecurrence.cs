@@ -30,8 +30,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private JobCollectionRecurrenceFrequency _frequency;
         
         /// <summary>
-        /// Defines the maximum recurrences that can be specified in any job in
-        /// this job collection.
+        /// Required. Defines the maximum recurrences that can be specified in
+        /// any job in this job collection.
         /// </summary>
         public JobCollectionRecurrenceFrequency Frequency
         {
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         private int _interval;
         
         /// <summary>
-        /// Defines the interval.
+        /// Required. Defines the interval.
         /// </summary>
         public int Interval
         {

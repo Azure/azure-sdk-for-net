@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='incidentId'>
-        /// The id of the incident to retrieve.
+        /// Required. The id of the incident to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -152,7 +152,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new IncidentGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -306,7 +310,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new IncidentListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
@@ -386,10 +394,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='ruleId'>
-        /// The rule id.
+        /// Required. The rule id.
         /// </param>
         /// <param name='isActive'>
-        /// A boolean to retrieve only active or resolved incidents.
+        /// Required. A boolean to retrieve only active or resolved incidents.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -480,7 +488,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new IncidentListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {

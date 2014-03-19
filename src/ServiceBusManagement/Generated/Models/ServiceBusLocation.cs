@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _code;
         
         /// <summary>
-        /// The region code.
+        /// Optional. The region code.
         /// </summary>
         public string Code
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         private string _fullName;
         
         /// <summary>
-        /// The fulle name of the region.
+        /// Optional. The fulle name of the region.
         /// </summary>
         public string FullName
         {

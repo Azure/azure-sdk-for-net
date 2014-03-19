@@ -83,16 +83,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -738,16 +739,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Begin capturing role as VM template.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -931,13 +933,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1797,11 +1800,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2760,16 +2763,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
@@ -2907,13 +2910,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3050,16 +3053,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3213,14 +3216,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// machines.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3385,13 +3388,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3526,13 +3529,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// machines.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3691,16 +3694,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4553,14 +4557,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// changed using UpdateRole.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4853,16 +4857,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -4958,16 +4963,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Capture role as VM template.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Capture Virtual Machine operation.
+        /// Required. Parameters supplied to the Capture Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5077,13 +5083,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5187,11 +5194,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Machine Deployment
-        /// operation.
+        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Deployment operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -5288,16 +5295,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to delete.
+        /// Required. The name of the virtual machine to delete.
         /// </param>
         /// <param name='deleteFromStorage'>
-        /// Optional. Specifies that the source blob(s) for the virtual machine
+        /// Required. Specifies that the source blob(s) for the virtual machine
         /// should also be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
@@ -5397,13 +5404,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6121,13 +6128,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine.
+        /// Required. The name of the virtual machine.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6263,13 +6270,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to restart.
+        /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6367,16 +6374,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to shutdown.
+        /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown vm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6473,14 +6480,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// machines.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to shutdown and their post
-        /// shutdown state.
+        /// Required. The set of virtual machine roles to shutdown and their
+        /// post shutdown state.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6577,13 +6584,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of the virtual machine to start.
+        /// Required. The name of the virtual machine to start.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6679,13 +6686,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// machines.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// The set of virtual machine roles to start.
+        /// Required. The set of virtual machine roles to start.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6783,16 +6790,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='virtualMachineName'>
-        /// The name of your virtual machine.
+        /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Virtual Machine operation.
+        /// Required. Parameters supplied to the Update Virtual Machine
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -6891,14 +6899,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// changed using UpdateRole.
         /// </summary>
         /// <param name='serviceName'>
-        /// The name of your service.
+        /// Required. The name of your service.
         /// </param>
         /// <param name='deploymentName'>
-        /// The name of your deployment.
+        /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balanced Endpoint Set
-        /// operation.
+        /// Required. Parameters supplied to the Update Load Balanced Endpoint
+        /// Set operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

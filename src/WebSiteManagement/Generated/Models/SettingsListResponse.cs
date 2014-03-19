@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private IDictionary<string, string> _settings;
         
         /// <summary>
-        /// The setting information.
+        /// Optional. The setting information.
         /// </summary>
         public IDictionary<string, string> Settings
         {

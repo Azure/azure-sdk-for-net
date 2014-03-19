@@ -33,12 +33,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// Required if Location is not specified. The name of an existing
-        /// affinity group associated with this subscription. This name is a
-        /// GUID and can be retrieved by examining the name element of the
-        /// response body returned by the List Affinity Groups operation.
-        /// Specify either Location or AffinityGroup, but not both. To list
-        /// available affinity groups, use the List Affinity Groups operation.
+        /// Optional. Required if Location is not specified. The name of an
+        /// existing affinity group associated with this subscription. This
+        /// name is a GUID and can be retrieved by examining the name element
+        /// of the response body returned by the List Affinity Groups
+        /// operation.  Specify either Location or AffinityGroup, but not
+        /// both. To list available affinity groups, use the List Affinity
+        /// Groups operation.
         /// </summary>
         public string AffinityGroup
         {
@@ -105,10 +106,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _location;
         
         /// <summary>
-        /// Required if AffinityGroup is not specified. The location where the
-        /// cloud service will be created.  Specify either Location or
-        /// AffinityGroup, but not both. To list available locations, use the
-        /// List Locations operation.
+        /// Optional. Required if AffinityGroup is not specified. The location
+        /// where the cloud service will be created.  Specify either Location
+        /// or AffinityGroup, but not both. To list available locations, use
+        /// the List Locations operation.
         /// </summary>
         public string Location
         {

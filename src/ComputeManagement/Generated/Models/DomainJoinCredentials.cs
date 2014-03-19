@@ -25,8 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Optional. Specifies the values to use to join the virtual machine to
-    /// the domain.
+    /// Specifies the values to use to join the virtual machine to the domain.
     /// </summary>
     public partial class DomainJoinCredentials
     {

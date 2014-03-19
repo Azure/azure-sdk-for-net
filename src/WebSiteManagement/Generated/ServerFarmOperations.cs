@@ -81,10 +81,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server Farm operation.
+        /// Required. Parameters supplied to the Create Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -312,7 +312,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -441,10 +441,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='serverFarmName'>
-        /// The name of the server farm.
+        /// Required. The name of the server farm.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -628,7 +628,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -813,10 +813,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
-        /// The name of the web space.
+        /// Required. The name of the web space.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Server Farm operation.
+        /// Required. Parameters supplied to the Update Server Farm operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

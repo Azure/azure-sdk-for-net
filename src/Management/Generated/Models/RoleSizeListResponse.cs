@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<RoleSizeListResponse.RoleSize> _roleSizes;
         
         /// <summary>
-        /// The role sizes that are valid for your subscription.
+        /// Optional. The role sizes that are valid for your subscription.
         /// </summary>
         public IList<RoleSizeListResponse.RoleSize> RoleSizes
         {
@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private int _cores;
             
             /// <summary>
-            /// Number of cores available for the role size.
+            /// Optional. Number of cores available for the role size.
             /// </summary>
             public int Cores
             {
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _label;
             
             /// <summary>
-            /// Localized label of the role size.
+            /// Optional. Localized label of the role size.
             /// </summary>
             public string Label
             {
@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private int _memoryInMb;
             
             /// <summary>
-            /// Memory available for the role size.
+            /// Optional. Memory available for the role size.
             /// </summary>
             public int MemoryInMb
             {
@@ -108,7 +108,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _name;
             
             /// <summary>
-            /// The name of a role size that is valid for your subscription.
+            /// Optional. The name of a role size that is valid for your
+            /// subscription.
             /// </summary>
             public string Name
             {
@@ -119,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private bool _supportedByVirtualMachines;
             
             /// <summary>
-            /// Indicating if the role size is supported by VMs.
+            /// Optional. Indicating if the role size is supported by VMs.
             /// </summary>
             public bool SupportedByVirtualMachines
             {
@@ -130,7 +131,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private bool _supportedByWebWorkerRoles;
             
             /// <summary>
-            /// Indicating if the role size is supported by web/worker roles.
+            /// Optional. Indicating if the role size is supported by
+            /// web/worker roles.
             /// </summary>
             public bool SupportedByWebWorkerRoles
             {

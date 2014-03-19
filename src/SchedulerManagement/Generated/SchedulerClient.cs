@@ -78,6 +78,18 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// Required.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// Required.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required.
+        /// </param>
         public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri)
             : this()
         {
@@ -108,6 +120,15 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// Required.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// Required.
+        /// </param>
         public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName)
             : this()
         {

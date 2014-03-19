@@ -34,6 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private AutoscaleSetting _setting;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public AutoscaleSetting Setting
         {
             get { return this._setting; }

@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobAction _action;
         
         /// <summary>
-        /// Action to invoke for the job.
+        /// Required. Action to invoke for the job.
         /// </summary>
         public JobAction Action
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private string _id;
         
         /// <summary>
-        /// Job identifier.
+        /// Required. Job identifier.
         /// </summary>
         public string Id
         {
@@ -55,7 +55,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobRecurrence _recurrence;
         
         /// <summary>
-        /// Recurrence schedule for the job.
+        /// Optional. Recurrence schedule for the job.
         /// </summary>
         public JobRecurrence Recurrence
         {
@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private System.DateTime? _startTime;
         
         /// <summary>
-        /// Start time for the job.  Defined as ISO-8601.
+        /// Optional. Start time for the job.  Defined as ISO-8601.
         /// </summary>
         public System.DateTime? StartTime
         {
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobState _state;
         
         /// <summary>
-        /// Current state of the job.
+        /// Optional. Current state of the job.
         /// </summary>
         public JobState State
         {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         private JobStatus _status;
         
         /// <summary>
-        /// Current status of the job.
+        /// Optional. Current status of the job.
         /// </summary>
         public JobStatus Status
         {

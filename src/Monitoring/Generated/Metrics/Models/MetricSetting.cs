@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// The metric settings namespace. For endpoint monitoring metrics the
-        /// namespace value is WindowsAzure.Availability
+        /// Optional. The metric settings namespace. For endpoint monitoring
+        /// metrics the namespace value is WindowsAzure.Availability
         /// </summary>
         public string Namespace
         {
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceId;
         
         /// <summary>
-        /// The resource id of the service.
+        /// Required. The resource id of the service.
         /// </summary>
         public string ResourceId
         {
@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricSettingValue _value;
         
         /// <summary>
-        /// The metric settings value.
+        /// Required. The metric settings value.
         /// </summary>
         public MetricSettingValue Value
         {
