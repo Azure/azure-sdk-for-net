@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._homepageUri = value; }
             }
             
-            private bool _isJsonExtension;
+            private bool? _isJsonExtension;
             
             /// <summary>
             /// Optional. Boolean property indicating whether the extension
@@ -122,7 +122,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// this property is 'false' the extension accepts XML based
             /// confihuration.
             /// </summary>
-            public bool IsJsonExtension
+            public bool? IsJsonExtension
             {
                 get { return this._isJsonExtension; }
                 set { this._isJsonExtension = value; }
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._publisher = value; }
             }
             
-            private bool _replicationCompleted;
+            private bool? _replicationCompleted;
             
             /// <summary>
             /// Optional. Boolean flag indicating whether this version of
@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// newly-updated extension to replicate completely by Windows
             /// Azure.
             /// </summary>
-            public bool ReplicationCompleted
+            public bool? ReplicationCompleted
             {
                 get { return this._replicationCompleted; }
                 set { this._replicationCompleted = value; }
