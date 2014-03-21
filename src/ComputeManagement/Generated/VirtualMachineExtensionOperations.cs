@@ -224,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement replicationCompletedElement = resourceExtensionsElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false)
+                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
                             {
                                 bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
                                 resourceExtensionInstance.ReplicationCompleted = replicationCompletedInstance;
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement isJsonExtensionElement = resourceExtensionsElement.Element(XName.Get("IsJsonExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false)
+                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false && string.IsNullOrEmpty(isJsonExtensionElement.Value) == false)
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;
@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement replicationCompletedElement = resourceExtensionsElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false)
+                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
                             {
                                 bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
                                 resourceExtensionInstance.ReplicationCompleted = replicationCompletedInstance;
@@ -491,7 +491,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement isJsonExtensionElement = resourceExtensionsElement.Element(XName.Get("IsJsonExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false)
+                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false && string.IsNullOrEmpty(isJsonExtensionElement.Value) == false)
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;
