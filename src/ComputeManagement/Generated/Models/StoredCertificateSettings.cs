@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Specifies the name of the certificate store from which
-        /// retrieve certificate.  For example, “My”.
+        /// retrieve certificate.  For example, "My".
         /// </summary>
         public string StoreName
         {

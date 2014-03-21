@@ -35,7 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the string representing the administrator
-        /// password to use for the virtual machine.
+        /// password to use for the virtual machine. If the VM will be created
+        /// from a 'Specialized' VM image, the password is not required.
         /// </summary>
         public string AdminPassword
         {
@@ -47,7 +48,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the name that is used to rename the default
-        /// administrator account.
+        /// administrator account. If the VM will be created from a
+        /// 'Specialized' VM image, the user name is not required.
         /// </summary>
         public string AdminUserName
         {
