@@ -20,25 +20,22 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Optional. This object contains status information of the Guest Agent
-    /// installed on a RoleInstance. Guest Agent can be installed on a role
-    /// instance by setting "ProvisionGuestAgent" to true in Create Deployment
-    /// or Add Role API calls. Version header: Required to be "2014-04-01" or
-    /// later.
+    /// The status information of the settings passed to the Resource Extension.
     /// </summary>
-    public partial class GuestAgentStatus
+    public partial class ResourceExtensionConfigurationStatus
     {
         private int? _code;
         
         /// <summary>
-        /// Optional. Integer. Status code from the result of applying the GA
-        /// settings.
+        /// Optional. Integer. Status code from the result of applying the
+        /// configuration settings.
         /// </summary>
         public int? Code
         {
@@ -46,11 +43,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._code = value; }
         }
         
+        private System.DateTime? _configurationAppliedTime;
+        
+        /// <summary>
+        /// Optional. UTC time at which the configuration was applied.
+        /// </summary>
+        public System.DateTime? ConfigurationAppliedTime
+        {
+            get { return this._configurationAppliedTime; }
+            set { this._configurationAppliedTime = value; }
+        }
+        
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Guest Agent.
+        /// Optional. This object encapsulates localized status message.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -58,22 +65,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._formattedMessage = value; }
         }
         
-        private string _guestAgentVersion;
-        
-        /// <summary>
-        /// Optional. Version of the Guest Agent installed on the role instance.
-        /// </summary>
-        public string GuestAgentVersion
-        {
-            get { return this._guestAgentVersion; }
-            set { this._guestAgentVersion = value; }
-        }
-        
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Guest Agent.
+        /// Optional. The message.
         /// </summary>
         public GuestAgentMessage Message
         {
@@ -81,28 +76,51 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._message = value; }
         }
         
-        private string _protocolVersion;
+        private string _name;
         
         /// <summary>
-        /// Optional. Protocol version used by the Guest Agent for status
-        /// reporting.
+        /// Optional. Name of the settings passed to the Resource Extension.
         /// </summary>
-        public string ProtocolVersion
+        public string Name
         {
-            get { return this._protocolVersion; }
-            set { this._protocolVersion = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _operation;
+        
+        /// <summary>
+        /// Optional. Operation executed by the Resource Extension for the
+        /// settings passed to it.
+        /// </summary>
+        public string Operation
+        {
+            get { return this._operation; }
+            set { this._operation = value; }
         }
         
         private string _status;
         
         /// <summary>
-        /// Optional. The guest agent status, which can be: "Ready" or
-        /// "NotReady"
+        /// Optional. The status could contain values like: Transitioning,
+        /// Error, Success, or Warning
         /// </summary>
         public string Status
         {
             get { return this._status; }
             set { this._status = value; }
+        }
+        
+        private IList<ResourceExtensionSubStatus> _subStatusList;
+        
+        /// <summary>
+        /// Optional. List of substatus objects which contain additional status
+        /// information reported by the Resource Extension.
+        /// </summary>
+        public IList<ResourceExtensionSubStatus> SubStatusList
+        {
+            get { return this._subStatusList; }
+            set { this._subStatusList = value; }
         }
         
         private System.DateTime? _timestamp;
@@ -117,10 +135,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the GuestAgentStatus class.
+        /// Initializes a new instance of the
+        /// ResourceExtensionConfigurationStatus class.
         /// </summary>
-        public GuestAgentStatus()
+        public ResourceExtensionConfigurationStatus()
         {
+            this._subStatusList = new List<ResourceExtensionSubStatus>();
         }
     }
 }
