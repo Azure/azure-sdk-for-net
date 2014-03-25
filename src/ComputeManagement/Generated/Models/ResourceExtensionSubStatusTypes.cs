@@ -25,13 +25,17 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Known values for the operating system type of the OS in a virtual
-    /// machine image.
+    /// The status could contain values like: Transitioning, Error, Success, or
+    /// Warning
     /// </summary>
-    public static partial class VirtualMachineImageOperatingSystemType
+    public static partial class ResourceExtensionSubStatusTypes
     {
-        public const string Linux = "Linux";
+        public const string Transitioning = "Transitioning";
         
-        public const string Windows = "Windows";
+        public const string Error = "Error";
+        
+        public const string Success = "Success";
+        
+        public const string Warning = "Warning";
     }
 }

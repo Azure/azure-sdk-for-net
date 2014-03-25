@@ -26,14 +26,16 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Optional. The status information of a specific Resource Extension.
+    /// A substatus object contains additional status information reported by
+    /// the Resource Extension.
     /// </summary>
-    public partial class ResourceExtensionStatus
+    public partial class ResourceExtensionSubStatus
     {
         private int? _code;
         
         /// <summary>
-        /// Optional. Status code sent by the Resource Extension.
+        /// Optional. Integer. Status code from the result of applying the sub
+        /// status settings.
         /// </summary>
         public int? Code
         {
@@ -41,23 +43,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._code = value; }
         }
         
-        private ResourceExtensionConfigurationStatus _extensionSettingStatus;
-        
-        /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Resource Extension.
-        /// </summary>
-        public ResourceExtensionConfigurationStatus ExtensionSettingStatus
-        {
-            get { return this._extensionSettingStatus; }
-            set { this._extensionSettingStatus = value; }
-        }
-        
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Resource Extension.
+        /// Optional. This object encapsulates localized status message.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -65,22 +54,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._formattedMessage = value; }
         }
         
-        private string _handlerName;
-        
-        /// <summary>
-        /// Optional. Name of the Resource Extension.
-        /// </summary>
-        public string HandlerName
-        {
-            get { return this._handlerName; }
-            set { this._handlerName = value; }
-        }
-        
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Guest Agent.
+        /// Optional. The message.
         /// </summary>
         public GuestAgentMessage Message
         {
@@ -88,11 +65,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._message = value; }
         }
         
+        private string _name;
+        
+        /// <summary>
+        /// Optional. String. A name for the substatus.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
         private string _status;
         
         /// <summary>
-        /// Optional. The resource extension status, which can be "Installing",
-        /// "Ready", "NotReady", "Unresponsive"
+        /// Optional. The status could contain values like: Transitioning,
+        /// Error, Success, or Warning
         /// </summary>
         public string Status
         {
@@ -100,21 +88,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._status = value; }
         }
         
-        private string _version;
-        
         /// <summary>
-        /// Optional. Version of the Resource Extension.
+        /// Initializes a new instance of the ResourceExtensionSubStatus class.
         /// </summary>
-        public string Version
-        {
-            get { return this._version; }
-            set { this._version = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceExtensionStatus class.
-        /// </summary>
-        public ResourceExtensionStatus()
+        public ResourceExtensionSubStatus()
         {
         }
     }
