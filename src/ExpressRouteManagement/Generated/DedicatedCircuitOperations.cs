@@ -513,14 +513,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         XElement serviceProviderProvisioningStateElement = dedicatedCircuitElement.Element(XName.Get("ServiceProviderProvisioningState", "http://schemas.microsoft.com/windowsazure"));
                         if (serviceProviderProvisioningStateElement != null && serviceProviderProvisioningStateElement.IsEmpty == false)
                         {
-                            ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true);
+                            ProviderProvisioningState serviceProviderProvisioningStateInstance = ((ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true));
                             dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
                         }
                         
                         XElement statusElement = dedicatedCircuitElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true);
+                            DedicatedCircuitState statusInstance = ((DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true));
                             dedicatedCircuitInstance.Status = statusInstance;
                         }
                     }
@@ -687,14 +687,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             XElement serviceProviderProvisioningStateElement = dedicatedCircuitsElement.Element(XName.Get("ServiceProviderProvisioningState", "http://schemas.microsoft.com/windowsazure"));
                             if (serviceProviderProvisioningStateElement != null && serviceProviderProvisioningStateElement.IsEmpty == false)
                             {
-                                ProviderProvisioningState serviceProviderProvisioningStateInstance = (ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true);
+                                ProviderProvisioningState serviceProviderProvisioningStateInstance = ((ProviderProvisioningState)Enum.Parse(typeof(ProviderProvisioningState), serviceProviderProvisioningStateElement.Value, true));
                                 dedicatedCircuitInstance.ServiceProviderProvisioningState = serviceProviderProvisioningStateInstance;
                             }
                             
                             XElement statusElement = dedicatedCircuitsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                DedicatedCircuitState statusInstance = (DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true);
+                                DedicatedCircuitState statusInstance = ((DedicatedCircuitState)Enum.Parse(typeof(DedicatedCircuitState), statusElement.Value, true));
                                 dedicatedCircuitInstance.Status = statusInstance;
                             }
                         }

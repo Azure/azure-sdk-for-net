@@ -49,21 +49,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetResponse Get(this IDeploymentOperations operations, string deploymentId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(deploymentId).Result;
+                return ((IDeploymentOperations)s).GetAsync(deploymentId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -102,21 +92,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetLogResponse GetLog(this IDeploymentOperations operations, string deploymentId, string deploymentLogId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetLogAsync(deploymentId, deploymentLogId).Result;
+                return ((IDeploymentOperations)s).GetLogAsync(deploymentId, deploymentLogId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -155,21 +135,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentListResponse List(this IDeploymentOperations operations, DeploymentListParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(parameters).Result;
+                return ((IDeploymentOperations)s).ListAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -208,21 +178,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentListLogsResponse ListLogs(this IDeploymentOperations operations, string deploymentId, DeploymentListParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListLogsAsync(deploymentId, parameters).Result;
+                return ((IDeploymentOperations)s).ListLogsAsync(deploymentId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -261,21 +221,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentUpdateResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RedeployAsync(deploymentId).Result;
+                return ((IDeploymentOperations)s).RedeployAsync(deploymentId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

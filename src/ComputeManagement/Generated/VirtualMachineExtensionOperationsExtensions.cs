@@ -57,21 +57,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineExtensionListResponse List(this IVirtualMachineExtensionOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IVirtualMachineExtensionOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -121,21 +111,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineExtensionListResponse ListVersions(this IVirtualMachineExtensionOperations operations, string publisherName, string extensionName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListVersionsAsync(publisherName, extensionName).Result;
+                return ((IVirtualMachineExtensionOperations)s).ListVersionsAsync(publisherName, extensionName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

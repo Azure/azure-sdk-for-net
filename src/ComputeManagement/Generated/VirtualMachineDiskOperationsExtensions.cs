@@ -71,21 +71,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage).Result;
+                return ((IVirtualMachineDiskOperations)s).BeginDeletingDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -168,21 +158,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse CreateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateDataDiskAsync(serviceName, deploymentName, roleName, parameters).Result;
+                return ((IVirtualMachineDiskOperations)s).CreateDataDiskAsync(serviceName, deploymentName, roleName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -252,21 +232,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineDiskCreateResponse CreateDisk(this IVirtualMachineDiskOperations operations, VirtualMachineDiskCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateDiskAsync(parameters).Result;
+                return ((IVirtualMachineDiskOperations)s).CreateDiskAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -330,21 +300,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse DeleteDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage).Result;
+                return ((IVirtualMachineDiskOperations)s).DeleteDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -412,21 +372,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse DeleteDisk(this IVirtualMachineDiskOperations operations, string name, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteDiskAsync(name, deleteFromStorage).Result;
+                return ((IVirtualMachineDiskOperations)s).DeleteDiskAsync(name, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -482,21 +432,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineDataDiskGetResponse GetDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber).Result;
+                return ((IVirtualMachineDiskOperations)s).GetDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -548,21 +488,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineDiskGetResponse GetDisk(this IVirtualMachineDiskOperations operations, string name)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetDiskAsync(name).Result;
+                return ((IVirtualMachineDiskOperations)s).GetDiskAsync(name);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -602,21 +532,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineDiskListResponse ListDisks(this IVirtualMachineDiskOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListDisksAsync().Result;
+                return ((IVirtualMachineDiskOperations)s).ListDisksAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -669,21 +589,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse UpdateDataDisk(this IVirtualMachineDiskOperations operations, string serviceName, string deploymentName, string roleName, int logicalUnitNumber, VirtualMachineDataDiskUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, parameters).Result;
+                return ((IVirtualMachineDiskOperations)s).UpdateDataDiskAsync(serviceName, deploymentName, roleName, logicalUnitNumber, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -743,21 +653,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineDiskUpdateResponse UpdateDisk(this IVirtualMachineDiskOperations operations, string name, VirtualMachineDiskUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateDiskAsync(name, parameters).Result;
+                return ((IVirtualMachineDiskOperations)s).UpdateDiskAsync(name, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

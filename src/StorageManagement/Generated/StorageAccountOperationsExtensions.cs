@@ -59,21 +59,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).BeginCreatingAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -118,21 +108,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckNameAvailabilityAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).CheckNameAvailabilityAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -184,21 +164,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Create(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -250,21 +220,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).DeleteAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -307,21 +267,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountGetResponse Get(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).GetAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -363,21 +313,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountGetKeysResponse GetKeys(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetKeysAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).GetKeysAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -416,21 +356,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountListResponse List(this IStorageAccountOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IStorageAccountOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -469,21 +399,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountRegenerateKeysResponse RegenerateKeys(this IStorageAccountOperations operations, StorageAccountRegenerateKeysParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegenerateKeysAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).RegenerateKeysAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -531,21 +451,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Update(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(accountName, parameters).Result;
+                return ((IStorageAccountOperations)s).UpdateAsync(accountName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

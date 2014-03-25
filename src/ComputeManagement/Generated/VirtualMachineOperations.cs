@@ -5530,7 +5530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleTypeElement = persistentVMRoleElement.Element(XName.Get("RoleType", "http://schemas.microsoft.com/windowsazure"));
                         if (roleTypeElement != null && roleTypeElement.IsEmpty == false)
                         {
-                            VirtualMachineRoleType roleTypeInstance = (VirtualMachineRoleType)Enum.Parse(typeof(VirtualMachineRoleType), roleTypeElement.Value, true);
+                            VirtualMachineRoleType roleTypeInstance = ((VirtualMachineRoleType)Enum.Parse(typeof(VirtualMachineRoleType), roleTypeElement.Value, true));
                             result.RoleType = roleTypeInstance;
                         }
                         
@@ -5876,7 +5876,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement protocolElement3 = listenersElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
                                             if (protocolElement3 != null && protocolElement3.IsEmpty == false)
                                             {
-                                                VirtualMachineWindowsRemoteManagementListenerType protocolInstance3 = (VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement3.Value, true);
+                                                VirtualMachineWindowsRemoteManagementListenerType protocolInstance3 = ((VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement3.Value, true));
                                                 listenerInstance.ListenerType = protocolInstance3;
                                             }
                                             
@@ -5993,7 +5993,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement hostCachingElement = dataVirtualHardDisksElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                 if (hostCachingElement != null && hostCachingElement.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement.Value) == false)
                                 {
-                                    VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
+                                    VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
                                     dataVirtualHardDiskInstance.HostCaching = hostCachingInstance;
                                 }
                                 
@@ -6050,7 +6050,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement hostCachingElement2 = oSVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                             if (hostCachingElement2 != null && hostCachingElement2.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement2.Value) == false)
                             {
-                                VirtualHardDiskHostCaching hostCachingInstance2 = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true);
+                                VirtualHardDiskHostCaching hostCachingInstance2 = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true));
                                 oSVirtualHardDiskInstance.HostCaching = hostCachingInstance2;
                             }
                             

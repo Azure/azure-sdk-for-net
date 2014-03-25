@@ -262,21 +262,21 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         JToken accountIdValue = responseDoc["AccountId"];
                         if (accountIdValue != null && accountIdValue.Type != JTokenType.Null)
                         {
-                            string accountIdInstance = (string)accountIdValue;
+                            string accountIdInstance = ((string)accountIdValue);
                             accountInstance.AccountId = accountIdInstance;
                         }
                         
                         JToken accountNameValue = responseDoc["AccountName"];
                         if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
                         {
-                            string accountNameInstance = (string)accountNameValue;
+                            string accountNameInstance = ((string)accountNameValue);
                             accountInstance.AccountName = accountNameInstance;
                         }
                         
                         JToken subscriptionValue = responseDoc["Subscription"];
                         if (subscriptionValue != null && subscriptionValue.Type != JTokenType.Null)
                         {
-                            string subscriptionInstance = (string)subscriptionValue;
+                            string subscriptionInstance = ((string)subscriptionValue);
                             accountInstance.SubscriptionId = subscriptionInstance;
                         }
                     }
@@ -541,14 +541,14 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         JToken accountNameValue = responseDoc["AccountName"];
                         if (accountNameValue != null && accountNameValue.Type != JTokenType.Null)
                         {
-                            string accountNameInstance = (string)accountNameValue;
+                            string accountNameInstance = ((string)accountNameValue);
                             accountInstance.AccountName = accountNameInstance;
                         }
                         
                         JToken accountKeyValue = responseDoc["AccountKey"];
                         if (accountKeyValue != null && accountKeyValue.Type != JTokenType.Null)
                         {
-                            string accountKeyInstance = (string)accountKeyValue;
+                            string accountKeyInstance = ((string)accountKeyValue);
                             accountInstance.AccountKey = accountKeyInstance;
                         }
                         
@@ -561,14 +561,14 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                             JToken primaryValue = accountKeysValue["Primary"];
                             if (primaryValue != null && primaryValue.Type != JTokenType.Null)
                             {
-                                string primaryInstance = (string)primaryValue;
+                                string primaryInstance = ((string)primaryValue);
                                 accountKeysInstance.Primary = primaryInstance;
                             }
                             
                             JToken secondaryValue = accountKeysValue["Secondary"];
                             if (secondaryValue != null && secondaryValue.Type != JTokenType.Null)
                             {
-                                string secondaryInstance = (string)secondaryValue;
+                                string secondaryInstance = ((string)secondaryValue);
                                 accountKeysInstance.Secondary = secondaryInstance;
                             }
                         }
@@ -576,14 +576,14 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                         JToken accountRegionValue = responseDoc["AccountRegion"];
                         if (accountRegionValue != null && accountRegionValue.Type != JTokenType.Null)
                         {
-                            string accountRegionInstance = (string)accountRegionValue;
+                            string accountRegionInstance = ((string)accountRegionValue);
                             accountInstance.AccountRegion = accountRegionInstance;
                         }
                         
                         JToken storageAccountNameValue = responseDoc["StorageAccountName"];
                         if (storageAccountNameValue != null && storageAccountNameValue.Type != JTokenType.Null)
                         {
-                            string storageAccountNameInstance = (string)storageAccountNameValue;
+                            string storageAccountNameInstance = ((string)storageAccountNameValue);
                             accountInstance.StorageAccountName = storageAccountNameInstance;
                         }
                     }

@@ -68,21 +68,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServerFarmCreateResponse Create(this IServerFarmOperations operations, string webSpaceName, ServerFarmCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(webSpaceName, parameters).Result;
+                return ((IServerFarmOperations)s).CreateAsync(webSpaceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -142,21 +132,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IServerFarmOperations operations, string webSpaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(webSpaceName).Result;
+                return ((IServerFarmOperations)s).DeleteAsync(webSpaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -216,21 +196,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServerFarmGetResponse Get(this IServerFarmOperations operations, string webSpaceName, string serverFarmName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(webSpaceName, serverFarmName).Result;
+                return ((IServerFarmOperations)s).GetAsync(webSpaceName, serverFarmName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -289,21 +259,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServerFarmListResponse List(this IServerFarmOperations operations, string webSpaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(webSpaceName).Result;
+                return ((IServerFarmOperations)s).ListAsync(webSpaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -362,21 +322,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServerFarmUpdateResponse Update(this IServerFarmOperations operations, string webSpaceName, ServerFarmUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(webSpaceName, parameters).Result;
+                return ((IServerFarmOperations)s).UpdateAsync(webSpaceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

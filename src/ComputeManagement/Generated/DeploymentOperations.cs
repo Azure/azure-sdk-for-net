@@ -3918,7 +3918,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement deploymentSlotElement = deploymentElement.Element(XName.Get("DeploymentSlot", "http://schemas.microsoft.com/windowsazure"));
                         if (deploymentSlotElement != null && deploymentSlotElement.IsEmpty == false)
                         {
-                            DeploymentSlot deploymentSlotInstance = (DeploymentSlot)Enum.Parse(typeof(DeploymentSlot), deploymentSlotElement.Value, true);
+                            DeploymentSlot deploymentSlotInstance = ((DeploymentSlot)Enum.Parse(typeof(DeploymentSlot), deploymentSlotElement.Value, true));
                             result.DeploymentSlot = deploymentSlotInstance;
                         }
                         
@@ -3932,7 +3932,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement statusElement = deploymentElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            DeploymentStatus statusInstance = (DeploymentStatus)Enum.Parse(typeof(DeploymentStatus), statusElement.Value, true);
+                            DeploymentStatus statusInstance = ((DeploymentStatus)Enum.Parse(typeof(DeploymentStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
@@ -4412,7 +4412,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement powerStateElement = roleInstanceListElement.Element(XName.Get("PowerState", "http://schemas.microsoft.com/windowsazure"));
                                 if (powerStateElement != null && powerStateElement.IsEmpty == false)
                                 {
-                                    RoleInstancePowerState powerStateInstance = (RoleInstancePowerState)Enum.Parse(typeof(RoleInstancePowerState), powerStateElement.Value, true);
+                                    RoleInstancePowerState powerStateInstance = ((RoleInstancePowerState)Enum.Parse(typeof(RoleInstancePowerState), powerStateElement.Value, true));
                                     roleInstanceInstance.PowerState = powerStateInstance;
                                 }
                                 
@@ -4441,14 +4441,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement upgradeTypeElement = upgradeStatusElement.Element(XName.Get("UpgradeType", "http://schemas.microsoft.com/windowsazure"));
                             if (upgradeTypeElement != null && upgradeTypeElement.IsEmpty == false)
                             {
-                                DeploymentUpgradeType upgradeTypeInstance = (DeploymentUpgradeType)Enum.Parse(typeof(DeploymentUpgradeType), upgradeTypeElement.Value, true);
+                                DeploymentUpgradeType upgradeTypeInstance = ((DeploymentUpgradeType)Enum.Parse(typeof(DeploymentUpgradeType), upgradeTypeElement.Value, true));
                                 upgradeStatusInstance.UpgradeType = upgradeTypeInstance;
                             }
                             
                             XElement currentUpgradeDomainStateElement = upgradeStatusElement.Element(XName.Get("CurrentUpgradeDomainState", "http://schemas.microsoft.com/windowsazure"));
                             if (currentUpgradeDomainStateElement != null && currentUpgradeDomainStateElement.IsEmpty == false)
                             {
-                                UpgradeDomainState currentUpgradeDomainStateInstance = (UpgradeDomainState)Enum.Parse(typeof(UpgradeDomainState), currentUpgradeDomainStateElement.Value, true);
+                                UpgradeDomainState currentUpgradeDomainStateInstance = ((UpgradeDomainState)Enum.Parse(typeof(UpgradeDomainState), currentUpgradeDomainStateElement.Value, true));
                                 upgradeStatusInstance.CurrentUpgradeDomainState = currentUpgradeDomainStateInstance;
                             }
                             
@@ -4817,7 +4817,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement protocolElement4 = listenersElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
                                                     if (protocolElement4 != null && protocolElement4.IsEmpty == false)
                                                     {
-                                                        VirtualMachineWindowsRemoteManagementListenerType protocolInstance4 = (VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement4.Value, true);
+                                                        VirtualMachineWindowsRemoteManagementListenerType protocolInstance4 = ((VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement4.Value, true));
                                                         listenerInstance.ListenerType = protocolInstance4;
                                                     }
                                                     
@@ -5024,7 +5024,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement hostCachingElement = dataVirtualHardDisksElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                         if (hostCachingElement != null && hostCachingElement.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement.Value) == false)
                                         {
-                                            VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
+                                            VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
                                             dataVirtualHardDiskInstance.HostCaching = hostCachingInstance;
                                         }
                                         
@@ -5088,7 +5088,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement hostCachingElement2 = oSVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                     if (hostCachingElement2 != null && hostCachingElement2.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement2.Value) == false)
                                     {
-                                        VirtualHardDiskHostCaching hostCachingInstance2 = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true);
+                                        VirtualHardDiskHostCaching hostCachingInstance2 = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true));
                                         oSVirtualHardDiskInstance.HostCaching = hostCachingInstance2;
                                     }
                                     
@@ -5503,7 +5503,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement deploymentSlotElement = deploymentElement.Element(XName.Get("DeploymentSlot", "http://schemas.microsoft.com/windowsazure"));
                         if (deploymentSlotElement != null && deploymentSlotElement.IsEmpty == false)
                         {
-                            DeploymentSlot deploymentSlotInstance = (DeploymentSlot)Enum.Parse(typeof(DeploymentSlot), deploymentSlotElement.Value, true);
+                            DeploymentSlot deploymentSlotInstance = ((DeploymentSlot)Enum.Parse(typeof(DeploymentSlot), deploymentSlotElement.Value, true));
                             result.DeploymentSlot = deploymentSlotInstance;
                         }
                         
@@ -5517,7 +5517,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement statusElement = deploymentElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            DeploymentStatus statusInstance = (DeploymentStatus)Enum.Parse(typeof(DeploymentStatus), statusElement.Value, true);
+                            DeploymentStatus statusInstance = ((DeploymentStatus)Enum.Parse(typeof(DeploymentStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
@@ -5997,7 +5997,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement powerStateElement = roleInstanceListElement.Element(XName.Get("PowerState", "http://schemas.microsoft.com/windowsazure"));
                                 if (powerStateElement != null && powerStateElement.IsEmpty == false)
                                 {
-                                    RoleInstancePowerState powerStateInstance = (RoleInstancePowerState)Enum.Parse(typeof(RoleInstancePowerState), powerStateElement.Value, true);
+                                    RoleInstancePowerState powerStateInstance = ((RoleInstancePowerState)Enum.Parse(typeof(RoleInstancePowerState), powerStateElement.Value, true));
                                     roleInstanceInstance.PowerState = powerStateInstance;
                                 }
                                 
@@ -6026,14 +6026,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement upgradeTypeElement = upgradeStatusElement.Element(XName.Get("UpgradeType", "http://schemas.microsoft.com/windowsazure"));
                             if (upgradeTypeElement != null && upgradeTypeElement.IsEmpty == false)
                             {
-                                DeploymentUpgradeType upgradeTypeInstance = (DeploymentUpgradeType)Enum.Parse(typeof(DeploymentUpgradeType), upgradeTypeElement.Value, true);
+                                DeploymentUpgradeType upgradeTypeInstance = ((DeploymentUpgradeType)Enum.Parse(typeof(DeploymentUpgradeType), upgradeTypeElement.Value, true));
                                 upgradeStatusInstance.UpgradeType = upgradeTypeInstance;
                             }
                             
                             XElement currentUpgradeDomainStateElement = upgradeStatusElement.Element(XName.Get("CurrentUpgradeDomainState", "http://schemas.microsoft.com/windowsazure"));
                             if (currentUpgradeDomainStateElement != null && currentUpgradeDomainStateElement.IsEmpty == false)
                             {
-                                UpgradeDomainState currentUpgradeDomainStateInstance = (UpgradeDomainState)Enum.Parse(typeof(UpgradeDomainState), currentUpgradeDomainStateElement.Value, true);
+                                UpgradeDomainState currentUpgradeDomainStateInstance = ((UpgradeDomainState)Enum.Parse(typeof(UpgradeDomainState), currentUpgradeDomainStateElement.Value, true));
                                 upgradeStatusInstance.CurrentUpgradeDomainState = currentUpgradeDomainStateInstance;
                             }
                             
@@ -6402,7 +6402,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement protocolElement4 = listenersElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
                                                     if (protocolElement4 != null && protocolElement4.IsEmpty == false)
                                                     {
-                                                        VirtualMachineWindowsRemoteManagementListenerType protocolInstance4 = (VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement4.Value, true);
+                                                        VirtualMachineWindowsRemoteManagementListenerType protocolInstance4 = ((VirtualMachineWindowsRemoteManagementListenerType)Enum.Parse(typeof(VirtualMachineWindowsRemoteManagementListenerType), protocolElement4.Value, true));
                                                         listenerInstance.ListenerType = protocolInstance4;
                                                     }
                                                     
@@ -6609,7 +6609,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement hostCachingElement = dataVirtualHardDisksElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                         if (hostCachingElement != null && hostCachingElement.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement.Value) == false)
                                         {
-                                            VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
+                                            VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
                                             dataVirtualHardDiskInstance.HostCaching = hostCachingInstance;
                                         }
                                         
@@ -6673,7 +6673,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement hostCachingElement2 = oSVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                     if (hostCachingElement2 != null && hostCachingElement2.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement2.Value) == false)
                                     {
-                                        VirtualHardDiskHostCaching hostCachingInstance2 = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true);
+                                        VirtualHardDiskHostCaching hostCachingInstance2 = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true));
                                         oSVirtualHardDiskInstance.HostCaching = hostCachingInstance2;
                                     }
                                     

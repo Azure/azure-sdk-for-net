@@ -519,7 +519,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement profileElement = gatewayElement.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
                                 if (profileElement != null && profileElement.IsEmpty == false)
                                 {
-                                    GatewayProfile profileInstance = (GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, true);
+                                    GatewayProfile profileInstance = ((GatewayProfile)Enum.Parse(typeof(GatewayProfile), profileElement.Value, true));
                                     gatewayInstance.Profile = profileInstance;
                                 }
                                 

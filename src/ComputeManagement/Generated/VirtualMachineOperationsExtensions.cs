@@ -76,21 +76,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCapturingOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCapturingOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginCapturingOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -159,21 +149,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCapturingVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCapturingVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginCapturingVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -242,21 +222,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginCreatingAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -328,21 +298,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreatingDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingDeploymentAsync(serviceName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginCreatingDeploymentAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -406,21 +366,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeleting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage).Result;
+                return ((IVirtualMachineOperations)s).BeginDeletingAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -480,21 +430,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginRestarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRestartingAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).BeginRestartingAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -553,21 +493,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginShutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -625,21 +555,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginShuttingDownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginShuttingDownRolesAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginShuttingDownRolesAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -693,21 +613,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginStarting(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginStartingAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).BeginStartingAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -760,21 +670,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginStartingRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginStartingRolesAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginStartingRolesAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -832,21 +732,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdating(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginUpdatingAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -907,21 +797,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdatingLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).BeginUpdatingLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -997,21 +877,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse CaptureOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CaptureOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).CaptureOSImageAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1094,21 +964,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse CaptureVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CaptureVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).CaptureVMImageAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1191,21 +1051,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Create(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).CreateAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1291,21 +1141,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse CreateDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateDeploymentAsync(serviceName, parameters).Result;
+                return ((IVirtualMachineOperations)s).CreateDeploymentAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1383,21 +1223,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Delete(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage).Result;
+                return ((IVirtualMachineOperations)s).DeleteAsync(serviceName, deploymentName, virtualMachineName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1463,21 +1293,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineGetResponse Get(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).GetAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1532,21 +1352,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineGetRemoteDesktopFileResponse GetRemoteDesktopFile(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetRemoteDesktopFileAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).GetRemoteDesktopFileAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1609,21 +1419,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Restart(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RestartAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).RestartAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1696,21 +1496,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Shutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).ShutdownAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1782,21 +1572,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse ShutdownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ShutdownRolesAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).ShutdownRolesAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1864,21 +1644,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Start(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.StartAsync(serviceName, deploymentName, virtualMachineName).Result;
+                return ((IVirtualMachineOperations)s).StartAsync(serviceName, deploymentName, virtualMachineName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1945,21 +1715,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse StartRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.StartRolesAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).StartRolesAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2031,21 +1791,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Update(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(serviceName, deploymentName, virtualMachineName, parameters).Result;
+                return ((IVirtualMachineOperations)s).UpdateAsync(serviceName, deploymentName, virtualMachineName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2120,21 +1870,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse UpdateLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters).Result;
+                return ((IVirtualMachineOperations)s).UpdateLoadBalancedEndpointSetAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

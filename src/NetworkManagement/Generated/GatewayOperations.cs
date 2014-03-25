@@ -1574,7 +1574,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement gatewayTypeElement = gatewayElement.Element(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
                         if (gatewayTypeElement != null && gatewayTypeElement.IsEmpty == false)
                         {
-                            GatewayType gatewayTypeInstance = (GatewayType)Enum.Parse(typeof(GatewayType), gatewayTypeElement.Value, true);
+                            GatewayType gatewayTypeInstance = ((GatewayType)Enum.Parse(typeof(GatewayType), gatewayTypeElement.Value, true));
                             result.GatewayType = gatewayTypeInstance;
                         }
                     }
@@ -1875,14 +1875,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            GatewayOperationStatus statusInstance = (GatewayOperationStatus)Enum.Parse(typeof(GatewayOperationStatus), statusElement.Value, true);
+                            GatewayOperationStatus statusInstance = ((GatewayOperationStatus)Enum.Parse(typeof(GatewayOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
                         if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
+                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
@@ -2200,7 +2200,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                             XElement connectivityStateElement = connectionsElement.Element(XName.Get("ConnectivityState", "http://schemas.microsoft.com/windowsazure"));
                             if (connectivityStateElement != null && connectivityStateElement.IsEmpty == false)
                             {
-                                GatewayConnectivityState connectivityStateInstance = (GatewayConnectivityState)Enum.Parse(typeof(GatewayConnectivityState), connectivityStateElement.Value, true);
+                                GatewayConnectivityState connectivityStateInstance = ((GatewayConnectivityState)Enum.Parse(typeof(GatewayConnectivityState), connectivityStateElement.Value, true));
                                 connectionInstance.ConnectivityState = connectivityStateInstance;
                             }
                             
