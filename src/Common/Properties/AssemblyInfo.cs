@@ -19,8 +19,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Windows Azure Common Library")]
 [assembly: AssemblyDescription("Provides infrastructure for common error handling, tracing, configuration, and HTTP/REST-based pipeline manipulation. The package also exposes the CloudContext type, which enables centralized discovery of available Windows Azure libraries.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

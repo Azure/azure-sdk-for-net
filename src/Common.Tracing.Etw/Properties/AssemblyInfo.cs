@@ -21,8 +21,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Windows Azure Common Library ETW Logger")]
 [assembly: AssemblyDescription("Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
