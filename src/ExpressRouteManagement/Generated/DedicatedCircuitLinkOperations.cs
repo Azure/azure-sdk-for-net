@@ -460,7 +460,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         XElement stateElement = dedicatedCircuitLinkElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
+                            DedicatedCircuitLinkState stateInstance = ((DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true));
                             dedicatedCircuitLinkInstance.State = stateInstance;
                         }
                         
@@ -604,7 +604,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             XElement stateElement = dedicatedCircuitLinksElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null && stateElement.IsEmpty == false)
                             {
-                                DedicatedCircuitLinkState stateInstance = (DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true);
+                                DedicatedCircuitLinkState stateInstance = ((DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true));
                                 dedicatedCircuitLinkInstance.State = stateInstance;
                             }
                             

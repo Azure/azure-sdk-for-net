@@ -1097,7 +1097,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         XElement stateElement = resourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            JobCollectionState stateInstance = (JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true);
+                            JobCollectionState stateInstance = ((JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true));
                             result.State = stateInstance;
                         }
                         
@@ -1124,7 +1124,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
                             if (planElement != null && planElement.IsEmpty == false)
                             {
-                                JobCollectionPlan planInstance = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true);
+                                JobCollectionPlan planInstance = ((JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true));
                                 intrinsicSettingsInstance.Plan = planInstance;
                             }
                             
@@ -1157,7 +1157,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                     XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
                                     if (frequencyElement != null && frequencyElement.IsEmpty == false)
                                     {
-                                        JobCollectionRecurrenceFrequency frequencyInstance = (JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true);
+                                        JobCollectionRecurrenceFrequency frequencyInstance = ((JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true));
                                         maxRecurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     
@@ -1193,7 +1193,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
                                 if (httpCodeElement != null && httpCodeElement.IsEmpty == false)
                                 {
-                                    HttpStatusCode httpCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true);
+                                    HttpStatusCode httpCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true));
                                     errorInstance.StatusCode = httpCodeInstance;
                                 }
                                 
@@ -1208,7 +1208,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
                             if (resultElement != null && resultElement.IsEmpty == false)
                             {
-                                SchedulerOperationStatus resultInstance = (SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true);
+                                SchedulerOperationStatus resultInstance = ((SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true));
                                 operationStatusInstance.Status = resultInstance;
                             }
                         }

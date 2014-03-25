@@ -70,21 +70,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse BeginCreating(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(cloudServiceName, resourceName, addOnName, parameters).Result;
+                return ((IAddOnOperations)s).BeginCreatingAsync(cloudServiceName, resourceName, addOnName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -159,21 +149,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse BeginDeleting(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName).Result;
+                return ((IAddOnOperations)s).BeginDeletingAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -248,21 +228,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Create(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(cloudServiceName, resourceName, addOnName, parameters).Result;
+                return ((IAddOnOperations)s).CreateAsync(cloudServiceName, resourceName, addOnName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -337,21 +307,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Delete(this IAddOnOperations operations, string cloudServiceName, string resourceProviderNamespace, string resourceProviderType, string resourceProviderName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName).Result;
+                return ((IAddOnOperations)s).DeleteAsync(cloudServiceName, resourceProviderNamespace, resourceProviderType, resourceProviderName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -426,21 +386,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Update(this IAddOnOperations operations, string cloudServiceName, string resourceName, string addOnName, AddOnUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(cloudServiceName, resourceName, addOnName, parameters).Result;
+                return ((IAddOnOperations)s).UpdateAsync(cloudServiceName, resourceName, addOnName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

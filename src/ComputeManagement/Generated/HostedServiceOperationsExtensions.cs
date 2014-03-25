@@ -72,21 +72,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse AddExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.AddExtensionAsync(serviceName, parameters).Result;
+                return ((IHostedServiceOperations)s).AddExtensionAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -151,21 +141,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginAddingExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginAddingExtensionAsync(serviceName, parameters).Result;
+                return ((IHostedServiceOperations)s).BeginAddingExtensionAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -216,21 +196,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingAll(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAllAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).BeginDeletingAllAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -278,21 +248,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingExtensionAsync(serviceName, extensionId).Result;
+                return ((IHostedServiceOperations)s).BeginDeletingExtensionAsync(serviceName, extensionId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -339,21 +299,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceCheckNameAvailabilityResponse CheckNameAvailability(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckNameAvailabilityAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).CheckNameAvailabilityAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -397,21 +347,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Create(this IHostedServiceOperations operations, HostedServiceCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IHostedServiceOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -456,21 +396,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).DeleteAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -521,21 +451,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse DeleteAll(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAllAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).DeleteAllAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -597,21 +517,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse DeleteExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteExtensionAsync(serviceName, extensionId).Result;
+                return ((IHostedServiceOperations)s).DeleteExtensionAsync(serviceName, extensionId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -668,21 +578,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceGetResponse Get(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).GetAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -731,21 +631,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceGetDetailedResponse GetDetailed(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetDetailedAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).GetDetailedAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -795,21 +685,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceGetExtensionResponse GetExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetExtensionAsync(serviceName, extensionId).Result;
+                return ((IHostedServiceOperations)s).GetExtensionAsync(serviceName, extensionId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -852,21 +732,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceListResponse List(this IHostedServiceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IHostedServiceOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -905,21 +775,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceListAvailableExtensionsResponse ListAvailableExtensions(this IHostedServiceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAvailableExtensionsAsync().Result;
+                return ((IHostedServiceOperations)s).ListAvailableExtensionsAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -961,21 +821,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceListExtensionsResponse ListExtensions(this IHostedServiceOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListExtensionsAsync(serviceName).Result;
+                return ((IHostedServiceOperations)s).ListExtensionsAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1023,21 +873,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static HostedServiceListAvailableExtensionsResponse ListExtensionVersions(this IHostedServiceOperations operations, string providerNamespace, string extensionType)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListExtensionVersionsAsync(providerNamespace, extensionType).Result;
+                return ((IHostedServiceOperations)s).ListExtensionVersionsAsync(providerNamespace, extensionType);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1090,21 +930,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Update(this IHostedServiceOperations operations, string serviceName, HostedServiceUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(serviceName, parameters).Result;
+                return ((IHostedServiceOperations)s).UpdateAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

@@ -770,7 +770,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         XElement stateElement = bgpPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null && stateElement.IsEmpty == false)
                         {
-                            BGPPeeringState stateInstance = (BGPPeeringState)Enum.Parse(typeof(BGPPeeringState), stateElement.Value, true);
+                            BGPPeeringState stateInstance = ((BGPPeeringState)Enum.Parse(typeof(BGPPeeringState), stateElement.Value, true));
                             bgpPeeringInstance.State = stateInstance;
                         }
                         

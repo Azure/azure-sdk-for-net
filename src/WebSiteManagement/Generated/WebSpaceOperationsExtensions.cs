@@ -61,21 +61,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesCreatePublishingUserResponse CreatePublishingUser(this IWebSpaceOperations operations, string username, string password, WebSpacesCreatePublishingUserParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreatePublishingUserAsync(username, password, parameters).Result;
+                return ((IWebSpaceOperations)s).CreatePublishingUserAsync(username, password, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -121,21 +111,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesGetResponse Get(this IWebSpaceOperations operations, string webSpaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(webSpaceName).Result;
+                return ((IWebSpaceOperations)s).GetAsync(webSpaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -171,21 +151,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesGetDnsSuffixResponse GetDnsSuffix(this IWebSpaceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetDnsSuffixAsync().Result;
+                return ((IWebSpaceOperations)s).GetDnsSuffixAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -218,21 +188,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesListResponse List(this IWebSpaceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IWebSpaceOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -265,21 +225,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesListGeoRegionsResponse ListGeoRegions(this IWebSpaceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListGeoRegionsAsync().Result;
+                return ((IWebSpaceOperations)s).ListGeoRegionsAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -309,21 +259,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesListPublishingUsersResponse ListPublishingUsers(this IWebSpaceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListPublishingUsersAsync().Result;
+                return ((IWebSpaceOperations)s).ListPublishingUsersAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -362,21 +302,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSpacesListWebSitesResponse ListWebSites(this IWebSpaceOperations operations, string webSpaceName, WebSiteListParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListWebSitesAsync(webSpaceName, parameters).Result;
+                return ((IWebSpaceOperations)s).ListWebSitesAsync(webSpaceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

@@ -75,21 +75,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteOperationStatusResponse GetOperationStatus(this IWebSiteManagementClient operations, string webSpaceName, string siteName, string operationId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(webSpaceName, siteName, operationId).Result;
+                return ((IWebSiteManagementClient)s).GetOperationStatusAsync(webSpaceName, siteName, operationId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -143,21 +133,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RegisterSubscription(this IWebSiteManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegisterSubscriptionAsync().Result;
+                return ((IWebSiteManagementClient)s).RegisterSubscriptionAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -189,21 +169,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse UnregisterSubscription(this IWebSiteManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UnregisterSubscriptionAsync().Result;
+                return ((IWebSiteManagementClient)s).UnregisterSubscriptionAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

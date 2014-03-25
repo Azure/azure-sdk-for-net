@@ -54,21 +54,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SubscriptionGetResponse Get(this ISubscriptionOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync().Result;
+                return ((ISubscriptionOperations)s).GetAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -109,21 +99,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SubscriptionListOperationsResponse ListOperations(this ISubscriptionOperations operations, SubscriptionListOperationsParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListOperationsAsync(parameters).Result;
+                return ((ISubscriptionOperations)s).ListOperationsAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -165,21 +145,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RegisterResource(this ISubscriptionOperations operations, string resourceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegisterResourceAsync(resourceName).Result;
+                return ((ISubscriptionOperations)s).RegisterResourceAsync(resourceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -217,21 +187,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse UnregisterResource(this ISubscriptionOperations operations, string resourceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UnregisterResourceAsync(resourceName).Result;
+                return ((ISubscriptionOperations)s).UnregisterResourceAsync(resourceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

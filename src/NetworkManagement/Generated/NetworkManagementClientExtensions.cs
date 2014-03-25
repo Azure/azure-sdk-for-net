@@ -66,21 +66,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse GetOperationStatus(this INetworkManagementClient operations, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(requestId).Result;
+                return ((INetworkManagementClient)s).GetOperationStatusAsync(requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

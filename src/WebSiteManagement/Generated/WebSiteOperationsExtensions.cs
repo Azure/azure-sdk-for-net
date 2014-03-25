@@ -67,21 +67,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName).Result;
+                return ((IWebSiteOperations)s).BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -136,21 +126,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteCreateResponse Create(this IWebSiteOperations operations, string webSpaceName, WebSiteCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(webSpaceName, parameters).Result;
+                return ((IWebSiteOperations)s).CreateAsync(webSpaceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -204,21 +184,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse CreateRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateRepositoryAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).CreateRepositoryAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -277,21 +247,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(webSpaceName, webSiteName, parameters).Result;
+                return ((IWebSiteOperations)s).DeleteAsync(webSpaceName, webSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -349,21 +309,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteDeleteRepositoryResponse DeleteRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteRepositoryAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).DeleteRepositoryAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -421,21 +371,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse GeneratePassword(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GeneratePasswordAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).GeneratePasswordAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -492,21 +432,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetResponse Get(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(webSpaceName, webSiteName, parameters).Result;
+                return ((IWebSiteOperations)s).GetAsync(webSpaceName, webSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -558,21 +488,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetConfigurationResponse GetConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConfigurationAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).GetConfigurationAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -624,21 +544,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetHistoricalUsageMetricsResponse GetHistoricalUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters).Result;
+                return ((IWebSiteOperations)s).GetHistoricalUsageMetricsAsync(webSpaceName, webSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -689,21 +599,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetPublishProfileResponse GetPublishProfile(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetPublishProfileAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).GetPublishProfileAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -755,21 +655,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetRepositoryResponse GetRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetRepositoryAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).GetRepositoryAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -824,21 +714,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteGetUsageMetricsResponse GetUsageMetrics(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetUsageMetricsAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).GetUsageMetricsAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -883,21 +763,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteIsHostnameAvailableResponse IsHostnameAvailable(this IWebSiteOperations operations, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.IsHostnameAvailableAsync(webSiteName).Result;
+                return ((IWebSiteOperations)s).IsHostnameAvailableAsync(webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -939,21 +809,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Restart(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RestartAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).RestartAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1007,21 +867,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteOperationStatusResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName).Result;
+                return ((IWebSiteOperations)s).SwapSlotsAsync(webSpaceName, webSiteName, slotName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1078,21 +928,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse SyncRepository(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.SyncRepositoryAsync(webSpaceName, webSiteName).Result;
+                return ((IWebSiteOperations)s).SyncRepositoryAsync(webSpaceName, webSiteName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1146,21 +986,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static WebSiteUpdateResponse Update(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(webSpaceName, webSiteName, parameters).Result;
+                return ((IWebSiteOperations)s).UpdateAsync(webSpaceName, webSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1216,21 +1046,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse UpdateConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateConfigurationAsync(webSpaceName, webSiteName, parameters).Result;
+                return ((IWebSiteOperations)s).UpdateConfigurationAsync(webSpaceName, webSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

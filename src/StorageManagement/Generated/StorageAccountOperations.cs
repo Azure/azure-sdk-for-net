@@ -837,7 +837,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                StorageAccountStatus statusInstance = (StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true);
+                                StorageAccountStatus statusInstance = ((StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true));
                                 storageServicePropertiesInstance.Status = statusInstance;
                             }
                             
@@ -867,7 +867,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement statusOfPrimaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfPrimary", "http://schemas.microsoft.com/windowsazure"));
                             if (statusOfPrimaryElement != null && statusOfPrimaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
                             {
-                                GeoRegionStatus statusOfPrimaryInstance = (GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true);
+                                GeoRegionStatus statusOfPrimaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true));
                                 storageServicePropertiesInstance.StatusOfGeoPrimaryRegion = statusOfPrimaryInstance;
                             }
                             
@@ -888,7 +888,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement statusOfSecondaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfSecondary", "http://schemas.microsoft.com/windowsazure"));
                             if (statusOfSecondaryElement != null && statusOfSecondaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
                             {
-                                GeoRegionStatus statusOfSecondaryInstance = (GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true);
+                                GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                 storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
                             }
                         }
@@ -1246,7 +1246,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                                 if (statusElement != null && statusElement.IsEmpty == false)
                                 {
-                                    StorageAccountStatus statusInstance = (StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true);
+                                    StorageAccountStatus statusInstance = ((StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true));
                                     storageServicePropertiesInstance.Status = statusInstance;
                                 }
                                 
@@ -1276,7 +1276,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement statusOfPrimaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfPrimary", "http://schemas.microsoft.com/windowsazure"));
                                 if (statusOfPrimaryElement != null && statusOfPrimaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
                                 {
-                                    GeoRegionStatus statusOfPrimaryInstance = (GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true);
+                                    GeoRegionStatus statusOfPrimaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true));
                                     storageServicePropertiesInstance.StatusOfGeoPrimaryRegion = statusOfPrimaryInstance;
                                 }
                                 
@@ -1297,7 +1297,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement statusOfSecondaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfSecondary", "http://schemas.microsoft.com/windowsazure"));
                                 if (statusOfSecondaryElement != null && statusOfSecondaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
                                 {
-                                    GeoRegionStatus statusOfSecondaryInstance = (GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true);
+                                    GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                     storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
                                 }
                             }

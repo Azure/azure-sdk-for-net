@@ -1069,7 +1069,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement hostCachingElement = dataVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                         if (hostCachingElement != null && hostCachingElement.IsEmpty == false)
                         {
-                            VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
+                            VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
                             result.HostCaching = hostCachingInstance;
                         }
                         

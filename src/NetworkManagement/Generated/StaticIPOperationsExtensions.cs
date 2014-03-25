@@ -56,21 +56,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static NetworkStaticIPAvailabilityResponse Check(this IStaticIPOperations operations, string networkName, string ipAddress)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckAsync(networkName, ipAddress).Result;
+                return ((IStaticIPOperations)s).CheckAsync(networkName, ipAddress);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

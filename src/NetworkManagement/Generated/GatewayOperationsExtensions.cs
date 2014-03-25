@@ -64,21 +64,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse BeginConnectDisconnectOrTesting(this IGatewayOperations operations, string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginConnectDisconnectOrTestingAsync(networkName, localNetworkSiteName, parameters).Result;
+                return ((IGatewayOperations)s).BeginConnectDisconnectOrTestingAsync(networkName, localNetworkSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -135,21 +125,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse BeginCreating(this IGatewayOperations operations, string networkName, GatewayCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(networkName, parameters).Result;
+                return ((IGatewayOperations)s).BeginCreatingAsync(networkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -197,21 +177,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse BeginDeleting(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(networkName).Result;
+                return ((IGatewayOperations)s).BeginDeletingAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -256,21 +226,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse BeginFailover(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginFailoverAsync(networkName).Result;
+                return ((IGatewayOperations)s).BeginFailoverAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -324,21 +284,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse BeginResetSharedKey(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginResetSharedKeyAsync(networkName, localNetworkName, parameters).Result;
+                return ((IGatewayOperations)s).BeginResetSharedKeyAsync(networkName, localNetworkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -407,21 +357,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse ConnectDisconnectOrTest(this IGatewayOperations operations, string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ConnectDisconnectOrTestAsync(networkName, localNetworkSiteName, parameters).Result;
+                return ((IGatewayOperations)s).ConnectDisconnectOrTestAsync(networkName, localNetworkSiteName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -492,21 +432,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse Create(this IGatewayOperations operations, string networkName, GatewayCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(networkName, parameters).Result;
+                return ((IGatewayOperations)s).CreateAsync(networkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -568,21 +498,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse Delete(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(networkName).Result;
+                return ((IGatewayOperations)s).DeleteAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -641,21 +561,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse Failover(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.FailoverAsync(networkName).Result;
+                return ((IGatewayOperations)s).FailoverAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -711,21 +621,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse GenerateVpnClientPackage(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GenerateVpnClientPackageAsync(networkName, parameters).Result;
+                return ((IGatewayOperations)s).GenerateVpnClientPackageAsync(networkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -774,21 +674,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetResponse Get(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(networkName).Result;
+                return ((IGatewayOperations)s).GetAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -838,21 +728,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetDeviceConfigurationScriptResponse GetDeviceConfigurationScript(this IGatewayOperations operations, string networkName, GatewayGetDeviceConfigurationScriptParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetDeviceConfigurationScriptAsync(networkName, parameters).Result;
+                return ((IGatewayOperations)s).GetDeviceConfigurationScriptAsync(networkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -908,21 +788,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse GetOperationStatus(this IGatewayOperations operations, string operationId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(operationId).Result;
+                return ((IGatewayOperations)s).GetOperationStatusAsync(operationId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -977,21 +847,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetSharedKeyResponse GetSharedKey(this IGatewayOperations operations, string networkName, string localNetworkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetSharedKeyAsync(networkName, localNetworkName).Result;
+                return ((IGatewayOperations)s).GetSharedKeyAsync(networkName, localNetworkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1039,21 +899,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayListConnectionsResponse ListConnections(this IGatewayOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListConnectionsAsync(networkName).Result;
+                return ((IGatewayOperations)s).ListConnectionsAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1094,21 +944,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayListSupportedDevicesResponse ListSupportedDevices(this IGatewayOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListSupportedDevicesAsync().Result;
+                return ((IGatewayOperations)s).ListSupportedDevicesAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1165,21 +1005,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayGetOperationStatusResponse ResetSharedKey(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ResetSharedKeyAsync(networkName, localNetworkName, parameters).Result;
+                return ((IGatewayOperations)s).ResetSharedKeyAsync(networkName, localNetworkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

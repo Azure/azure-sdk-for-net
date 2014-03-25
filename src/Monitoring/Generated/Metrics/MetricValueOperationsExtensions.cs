@@ -62,21 +62,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static MetricValueListResponse List(this IMetricValueOperations operations, string resourceId, IList<string> metricNames, string metricNamespace, TimeSpan timeGrain, DateTime startTime, DateTime endTime)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(resourceId, metricNames, metricNamespace, timeGrain, startTime, endTime).Result;
+                return ((IMetricValueOperations)s).ListAsync(resourceId, metricNames, metricNamespace, timeGrain, startTime, endTime);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

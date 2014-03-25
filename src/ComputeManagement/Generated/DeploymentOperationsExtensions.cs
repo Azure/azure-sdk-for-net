@@ -70,21 +70,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginChangingConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginChangingConfigurationByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginChangingConfigurationByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -152,21 +142,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginChangingConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -233,21 +213,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginCreatingAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -313,21 +283,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingByNameAsync(serviceName, deploymentName, deleteFromStorage).Result;
+                return ((IDeploymentOperations)s).BeginDeletingByNameAsync(serviceName, deploymentName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -389,21 +349,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).BeginDeletingBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -465,21 +415,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginRebootingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRebootingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginRebootingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -545,21 +485,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginRebootingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -625,21 +555,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginReimagingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginReimagingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginReimagingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -705,21 +625,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginReimagingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginReimagingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginReimagingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -782,21 +692,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginSwapping(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginSwappingAsync(serviceName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginSwappingAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -860,21 +760,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdatingStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingStatusByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpdatingStatusByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -942,21 +832,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdatingStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpdatingStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1045,21 +925,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpgradingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpgradingByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpgradingByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1169,21 +1039,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpgradingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpgradingBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpgradingBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1293,21 +1153,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginWalkingUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginWalkingUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginWalkingUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1417,21 +1267,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginWalkingUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginWalkingUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginWalkingUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1527,21 +1367,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse ChangeConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ChangeConfigurationByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).ChangeConfigurationByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1623,21 +1453,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse ChangeConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ChangeConfigurationBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).ChangeConfigurationBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1718,21 +1538,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Create(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).CreateAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1812,21 +1622,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse DeleteByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteByNameAsync(serviceName, deploymentName, deleteFromStorage).Result;
+                return ((IDeploymentOperations)s).DeleteByNameAsync(serviceName, deploymentName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1902,21 +1702,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse DeleteBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).DeleteBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -1976,21 +1766,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetResponse GetByName(this IDeploymentOperations operations, string serviceName, string deploymentName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetByNameAsync(serviceName, deploymentName).Result;
+                return ((IDeploymentOperations)s).GetByNameAsync(serviceName, deploymentName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2038,21 +1818,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetResponse GetBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).GetBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2110,21 +1880,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse GetPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetPackageByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).GetPackageByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2192,21 +1952,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse GetPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetPackageBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).GetPackageBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2280,21 +2030,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse RebootRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RebootRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).RebootRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2374,21 +2114,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse RebootRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2468,21 +2198,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse ReimageRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ReimageRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).ReimageRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2562,21 +2282,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse ReimageRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ReimageRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).ReimageRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2651,21 +2361,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RollbackUpdateOrUpgradeByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RollbackUpdateOrUpgradeByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).RollbackUpdateOrUpgradeByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2735,21 +2435,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RollbackUpdateOrUpgradeByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RollbackUpdateOrUpgradeByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).RollbackUpdateOrUpgradeByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2821,21 +2511,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse Swap(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.SwapAsync(serviceName, parameters).Result;
+                return ((IDeploymentOperations)s).SwapAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2913,21 +2593,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse UpdateStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateStatusByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).UpdateStatusByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -3009,21 +2679,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse UpdateStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).UpdateStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -3126,21 +2786,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse UpgradeByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpgradeByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).UpgradeByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -3264,21 +2914,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse UpgradeBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpgradeBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).UpgradeBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -3402,21 +3042,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse WalkUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.WalkUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).WalkUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -3540,21 +3170,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse WalkUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.WalkUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).WalkUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

@@ -47,21 +47,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCreateResponse Create(this IJobOperations operations, JobCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IJobOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -102,21 +92,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCreateOrUpdateResponse CreateOrUpdate(this IJobOperations operations, string jobId, JobCreateOrUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateOrUpdateAsync(jobId, parameters).Result;
+                return ((IJobOperations)s).CreateOrUpdateAsync(jobId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -156,21 +136,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IJobOperations operations, string jobId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(jobId).Result;
+                return ((IJobOperations)s).DeleteAsync(jobId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -205,21 +175,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobGetResponse Get(this IJobOperations operations, string jobId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(jobId).Result;
+                return ((IJobOperations)s).GetAsync(jobId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -256,21 +216,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobGetHistoryResponse GetHistory(this IJobOperations operations, string jobId, JobGetHistoryParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetHistoryAsync(jobId, parameters).Result;
+                return ((IJobOperations)s).GetHistoryAsync(jobId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -311,21 +261,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobGetHistoryResponse GetHistoryWithFilter(this IJobOperations operations, string jobId, JobGetHistoryWithFilterParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetHistoryWithFilterAsync(jobId, parameters).Result;
+                return ((IJobOperations)s).GetHistoryWithFilterAsync(jobId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -363,21 +303,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobListResponse List(this IJobOperations operations, JobListParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(parameters).Result;
+                return ((IJobOperations)s).ListAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -413,21 +343,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobListResponse ListWithFilter(this IJobOperations operations, JobListWithFilterParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListWithFilterAsync(parameters).Result;
+                return ((IJobOperations)s).ListWithFilterAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -463,21 +383,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCollectionJobsUpdateStateResponse UpdateJobCollectionState(this IJobOperations operations, PatchJobCollectionJobsUpdateStateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateJobCollectionStateAsync(parameters).Result;
+                return ((IJobOperations)s).UpdateJobCollectionStateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -514,21 +424,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobUpdateStateResponse UpdateState(this IJobOperations operations, string jobId, JobUpdateStateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateStateAsync(jobId, parameters).Result;
+                return ((IJobOperations)s).UpdateStateAsync(jobId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

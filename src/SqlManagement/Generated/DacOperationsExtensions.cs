@@ -55,21 +55,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DacImportExportResponse Export(this IDacOperations operations, string serverName, DacExportParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ExportAsync(serverName, parameters).Result;
+                return ((IDacOperations)s).ExportAsync(serverName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -120,21 +110,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DacGetStatusResponse GetStatus(this IDacOperations operations, string serverName, string fullyQualifiedServerName, string username, string password, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetStatusAsync(serverName, fullyQualifiedServerName, username, password, requestId).Result;
+                return ((IDacOperations)s).GetStatusAsync(serverName, fullyQualifiedServerName, username, password, requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -185,21 +165,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DacImportExportResponse Import(this IDacOperations operations, string serverName, DacImportParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ImportAsync(serverName, parameters).Result;
+                return ((IDacOperations)s).ImportAsync(serverName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

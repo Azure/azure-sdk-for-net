@@ -67,21 +67,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationStatusResponse GetOperationStatus(this IServiceBusManagementClient operations, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(requestId).Result;
+                return ((IServiceBusManagementClient)s).GetOperationStatusAsync(requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -132,21 +122,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusRegionsResponse GetServiceBusRegions(this IServiceBusManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetServiceBusRegionsAsync().Result;
+                return ((IServiceBusManagementClient)s).GetServiceBusRegionsAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

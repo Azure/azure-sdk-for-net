@@ -59,21 +59,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string networkName, ClientRootCertificateCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(networkName, parameters).Result;
+                return ((IClientRootCertificateOperations)s).CreateAsync(networkName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -124,21 +114,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static GatewayOperationResponse Delete(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(networkName, certificateThumbprint).Result;
+                return ((IClientRootCertificateOperations)s).DeleteAsync(networkName, certificateThumbprint);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -189,21 +169,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ClientRootCertificateGetResponse Get(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(networkName, certificateThumbprint).Result;
+                return ((IClientRootCertificateOperations)s).GetAsync(networkName, certificateThumbprint);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -251,21 +221,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ClientRootCertificateListResponse List(this IClientRootCertificateOperations operations, string networkName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(networkName).Result;
+                return ((IClientRootCertificateOperations)s).ListAsync(networkName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

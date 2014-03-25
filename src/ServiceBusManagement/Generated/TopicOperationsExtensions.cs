@@ -59,21 +59,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusTopicResponse Create(this ITopicOperations operations, string namespaceName, ServiceBusTopic topic)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(namespaceName, topic).Result;
+                return ((ITopicOperations)s).CreateAsync(namespaceName, topic);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -125,21 +115,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusTopicResponse Get(this ITopicOperations operations, string namespaceName, string topicName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(namespaceName, topicName).Result;
+                return ((ITopicOperations)s).GetAsync(namespaceName, topicName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -186,21 +166,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusConnectionDetailsResponse GetConnectionDetails(this ITopicOperations operations, string namespaceName, string topicName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConnectionDetailsAsync(namespaceName, topicName).Result;
+                return ((ITopicOperations)s).GetConnectionDetailsAsync(namespaceName, topicName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -242,21 +212,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusTopicsResponse List(this ITopicOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(namespaceName).Result;
+                return ((ITopicOperations)s).ListAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -300,21 +260,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusTopicResponse Update(this ITopicOperations operations, string namespaceName, ServiceBusTopic topic)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(namespaceName, topic).Result;
+                return ((ITopicOperations)s).UpdateAsync(namespaceName, topic);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
