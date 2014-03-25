@@ -7,7 +7,7 @@
     Management Libraries is a group of all our management packages
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Libraries">
-      <PackageVersion>0.9.7-preview</PackageVersion>
+      <PackageVersion>1.0.0</PackageVersion>
       <SkipSymbolSourcePackage>true</SkipSymbolSourcePackage>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
