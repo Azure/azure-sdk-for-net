@@ -70,8 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete Data Disk operation removes the specified data disk from
-        /// a virtual machine.  (see
+        /// The Begin Deleting Data Disk operation removes the specified data
+        /// disk from a virtual machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157179.aspx
         /// for more information)
         /// </summary>
@@ -221,23 +221,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Add Data Disk operation adds a data disk to a virtual machine.
-        /// There are three ways to create the data disk using the Add Data
-        /// Disk operation.  Option 1 – Attach an empty data disk to the role
-        /// by specifying the disk label and location of the disk image.  Do
-        /// not include the DiskName and SourceMediaLink elements in the
-        /// request body.  Include the MediaLink element and reference a blob
-        /// that is in the same geographical region as the role.  You can also
-        /// omit the MediaLink element. In this usage, Windows Azure will
-        /// create the data disk in the storage account configured as default
-        /// for the role.   Option 2 – Attach an existing data disk that is in
-        /// the image repository.  Do not include the DiskName and
-        /// SourceMediaLink elements in the request body.  Specify the data
-        /// disk to use by including the DiskName element.  Note: If included
-        /// the in the response body, the MediaLink and LogicalDiskSizeInGB
-        /// elements are ignored.  Option 3 - Specify the location of a blob
-        /// in your storage account that contain a disk image to use.  Include
-        /// the SourceMediaLink element. Note: If the MediaLink element
+        /// The Create Data Disk operation adds a data disk to a virtual
+        /// machine. There are three ways to create the data disk using the
+        /// Add Data Disk operation. Option 1 – Attach an empty data disk to
+        /// the role by specifying the disk label and location of the disk
+        /// image. Do not include the DiskName and SourceMediaLink elements in
+        /// the request body. Include the MediaLink element and reference a
+        /// blob that is in the same geographical region as the role. You can
+        /// also omit the MediaLink element. In this usage, Azure will create
+        /// the data disk in the storage account configured as default for the
+        /// role. Option 2 – Attach an existing data disk that is in the image
+        /// repository. Do not include the DiskName and SourceMediaLink
+        /// elements in the request body. Specify the data disk to use by
+        /// including the DiskName element. Note: If included the in the
+        /// response body, the MediaLink and LogicalDiskSizeInGB elements are
+        /// ignored. Option 3 - Specify the location of a blob in your storage
+        /// account that contain a disk image to use. Include the
+        /// SourceMediaLink element. Note: If the MediaLink element
         /// isincluded, it is ignored.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157199.aspx
         /// for more information)
@@ -439,7 +439,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Add Disk operation adds a disk to the user image repository.
+        /// The Create Disk operation adds a disk to the user image repository.
         /// The disk can be an operating system disk or a data disk.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157178.aspx
         /// for more information)
@@ -731,12 +731,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteDataDiskAsync(string serviceName, string deploymentName, string roleName, int logicalUnitNumber, bool deleteFromStorage, CancellationToken cancellationToken)
         {

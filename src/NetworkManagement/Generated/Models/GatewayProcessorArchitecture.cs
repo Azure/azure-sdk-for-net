@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The processor architecture for the generated vpn client package.
+    /// The processor architecture for the generated VPN client package.
     /// </summary>
     public enum GatewayProcessorArchitecture
     {

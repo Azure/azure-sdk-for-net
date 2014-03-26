@@ -33,13 +33,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// Optional. Required if Location is not specified. The name of an
-        /// existing affinity group associated with this subscription. This
+        /// Optional. The name of an existing affinity group associated with
+        /// this subscription. Required if Location is not specified. This
         /// name is a GUID and can be retrieved by examining the name element
         /// of the response body returned by the List Affinity Groups
-        /// operation.  Specify either Location or AffinityGroup, but not
-        /// both. To list available affinity groups, use the List Affinity
-        /// Groups operation.
+        /// operation. Specify either Location or AffinityGroup, but not both.
+        /// To list available affinity groups, use the List Affinity Groups
+        /// operation.
         /// </summary>
         public string AffinityGroup
         {
@@ -63,15 +63,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended cloud service
-        /// property. Each extended property must have both a defined name and
+        /// property. Each extended property must have a defined name and a
         /// value. You can have a maximum of 50 extended property name and
-        /// value pairs.  The maximum length of the Name element is 64
+        /// value pairs. The maximum length of the name element is 64
         /// characters, only alphanumeric characters and underscores are valid
         /// in the name, and it must start with a letter. Attempting to use
         /// other characters, starting with a non-letter character, or
         /// entering a name that is identical to that of another extended
-        /// property owned by the same service, will result in a status code
-        /// 400 (Bad Request) error.  Each extended property value has a
+        /// property owned by the same service will result in a status code
+        /// 400 (Bad Request) error. Each extended property value has a
         /// maximum length of 255 characters.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
@@ -106,10 +106,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Required if AffinityGroup is not specified. The location
-        /// where the cloud service will be created.  Specify either Location
-        /// or AffinityGroup, but not both. To list available locations, use
-        /// the List Locations operation.
+        /// Optional. The location where the cloud service will be created.
+        /// Required if AffinityGroup is not specified. Specify either
+        /// Location or AffinityGroup, but not both. To list available
+        /// locations, use the List Locations operation.
         /// </summary>
         public string Location
         {
@@ -120,9 +120,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _serviceName;
         
         /// <summary>
-        /// Required. A name for the cloud service that is unique within
-        /// Windows Azure. This name is the DNS prefix name and can be used to
-        /// access the service.
+        /// Required. A name for the cloud service that is unique within Azure.
+        /// This name is the DNS prefix name and can be used to access the
+        /// service.
         /// </summary>
         public string ServiceName
         {

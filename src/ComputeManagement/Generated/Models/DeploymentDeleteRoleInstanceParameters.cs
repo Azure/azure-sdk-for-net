@@ -20,21 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Describes the capabilities associated with an affinity group.
+    /// Parameters supplied to the delete role instance by deployment name
+    /// operation.
     /// </summary>
-    public static partial class AffinityGroupCapabilities
+    public partial class DeploymentDeleteRoleInstanceParameters
     {
+        private IList<string> _name;
+        
         /// <summary>
-        /// Indicates if the virtual machine-related operations can be
-        /// performed in this affinity group. If so, the string
-        /// PersistentVMRole will be returned by this element. Otherwise, this
-        /// element will not be present.
+        /// Optional.
         /// </summary>
-        public const string PersistentVMRole = "PersistentVMRole";
+        public IList<string> Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DeploymentDeleteRoleInstanceParameters class.
+        /// </summary>
+        public DeploymentDeleteRoleInstanceParameters()
+        {
+            this._name = new List<string>();
+        }
     }
 }

@@ -45,10 +45,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _path;
         
         /// <summary>
-        /// Required. Specifies the full path of a file, on the virtual
-        /// machine, which stores the SSH public key. If the file already
-        /// exists, the specified key is appended to the file.
-        /// Example:/home/user/.ssh/authorized_keys
+        /// Required. Specifies the full path of a file on the virtual machine
+        /// which stores the SSH public key. If the file already exists, the
+        /// specified key is appended to the file. Example:
+        /// /home/user/.ssh/authorized_keys.
         /// </summary>
         public string Path
         {

@@ -44,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _label;
         
         /// <summary>
-        /// Required. A base-64 encoded name for the affinity group. The name
-        /// can be up to 100 characters in length.  Its value defaults to the
+        /// Required. A base-64-encoded name for the affinity group. The name
+        /// can be up to 100 characters in length. Its value defaults to the
         /// Name of the affinity group if not provided.
         /// </summary>
         public string Label

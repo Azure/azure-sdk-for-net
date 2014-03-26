@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Specifies the environment in which to deploy the virtual
-        /// machine.  Possible values are: Staging, Production.
+        /// machine. Possible values are: Staging or Production.
         /// </summary>
         public DeploymentSlot DeploymentSlot
         {
@@ -46,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DnsSettings _dnsSettings;
         
         /// <summary>
-        /// Optional. Contains a list of DNS servers to associate with
-        /// themachine.
+        /// Optional. Contains a list of DNS servers to associate with the
+        /// machine.
         /// </summary>
         public DnsSettings DnsSettings
         {
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. A name for the hosted service. The name can be up to 100
-        /// characters in length.  It is recommended that the label be unique
+        /// characters in length. It is recommended that the label be unique
         /// within the subscription. The name can be used identify the hosted
         /// service for tracking purposes.
         /// </summary>
@@ -110,7 +110,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the name of an existing virtual network to
-        /// which the deployment will belong.  Virtual networks are created by
+        /// which the deployment will belong. Virtual networks are created by
         /// calling the Set Network Configuration operation.
         /// </summary>
         public string VirtualNetworkName

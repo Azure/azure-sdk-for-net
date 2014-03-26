@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Optional. The current value of the platform caching behavior of
         /// data disk blob for read/write efficiency. Possible values are:
-        /// None, ReadOnly, ReadWrite.
+        /// None, ReadOnly, or ReadWrite.
         /// </summary>
         public VirtualHardDiskHostCaching HostCaching
         {
@@ -82,9 +82,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Optional. The location of physical blob backing the data disk. The
-        /// blob location is in storage account in the subscription specified
-        /// by the SubscriptionId value in the operation call.
+        /// Optional. The location of the physical blob backing the data disk.
+        /// The blob location is in the storage account in the subscription
+        /// specified by the SubscriptionId value in the operation call.
         /// </summary>
         public Uri MediaLinkUri
         {

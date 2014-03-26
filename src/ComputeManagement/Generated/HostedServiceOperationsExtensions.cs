@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -41,11 +41,11 @@ namespace Microsoft.WindowsAzure
     {
         /// <summary>
         /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// cloud service. In Azure, a process can run as an extension of a
+        /// cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -63,12 +63,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse AddExtension(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
@@ -81,11 +81,11 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// cloud service. In Azure, a process can run as an extension of a
+        /// cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -103,12 +103,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> AddExtensionAsync(this IHostedServiceOperations operations, string serviceName, HostedServiceAddExtensionParameters parameters)
         {
@@ -116,12 +116,12 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// The Begin Adding Extension operation adds an available extension to
+        /// your cloud service. In Azure, a process can run as an extension of
+        /// a cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -133,7 +133,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Begin Adding Extension
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -149,12 +150,12 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// The Begin Adding Extension operation adds an available extension to
+        /// your cloud service. In Azure, a process can run as an extension of
+        /// a cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -166,7 +167,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Begin Adding Extension
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -178,8 +180,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Begin Deleting All Hosted Service operation deletes the
+        /// specified cloud service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -204,8 +206,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Begin Deleting All Hosted Service operation deletes the
+        /// specified cloud service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -226,8 +228,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Extension operation deletes the specified extension from
-        /// a cloud service.  (see
+        /// The Begin Deleting Extension operation deletes the specified
+        /// extension from a cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169560.aspx
         /// for more information)
         /// </summary>
@@ -256,8 +258,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Extension operation deletes the specified extension from
-        /// a cloud service.  (see
+        /// The Begin Deleting Extension operation deletes the specified
+        /// extension from a cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169560.aspx
         /// for more information)
         /// </summary>
@@ -329,7 +331,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Create Hosted Service operation creates a new cloud service in
-        /// Windows Azure.  (see
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441304.aspx
         /// for more information)
         /// </summary>
@@ -356,7 +358,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Create Hosted Service operation creates a new cloud service in
-        /// Windows Azure.  (see
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441304.aspx
         /// for more information)
         /// </summary>
@@ -379,7 +381,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -405,7 +407,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -426,8 +428,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Delete All Hosted Service operation deletes the specified cloud
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -442,12 +444,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse DeleteAll(this IHostedServiceOperations operations, string serviceName)
         {
@@ -459,8 +461,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Delete All Hosted Service operation deletes the specified cloud
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -475,12 +477,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteAllAsync(this IHostedServiceOperations operations, string serviceName)
         {
@@ -508,12 +510,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse DeleteExtension(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
@@ -545,12 +547,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteExtensionAsync(this IHostedServiceOperations operations, string serviceName, string extensionId)
         {
@@ -560,7 +562,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The Get Hosted Service Properties operation retrieves system
         /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
+        /// include the service name and service type; and the name of the
         /// affinity group to which the service belongs, or its location if it
         /// is not part of an affinity group.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
@@ -588,7 +590,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The Get Hosted Service Properties operation retrieves system
         /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
+        /// include the service name and service type; and the name of the
         /// affinity group to which the service belongs, or its location if it
         /// is not part of an affinity group.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
@@ -610,11 +612,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Hosted Service Properties operation retrieves system
-        /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
-        /// affinity group to which the service belongs, or its location if it
-        /// is not part of an affinity group; and information on the
+        /// The Get Detailed Hosted Service Properties operation retrieves
+        /// system properties for the specified cloud service. These
+        /// properties include the service name and service type; the name of
+        /// the affinity group to which the service belongs, or its location
+        /// if it is not part of an affinity group; and information on the
         /// deployments of the service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
         /// for more information)
@@ -639,11 +641,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Hosted Service Properties operation retrieves system
-        /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
-        /// affinity group to which the service belongs, or its location if it
-        /// is not part of an affinity group; and information on the
+        /// The Get Detailed Hosted Service Properties operation retrieves
+        /// system properties for the specified cloud service. These
+        /// properties include the service name and service type; the name of
+        /// the affinity group to which the service belongs, or its location
+        /// if it is not part of an affinity group; and information on the
         /// deployments of the service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
         /// for more information)
@@ -728,7 +730,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <returns>
-        /// The Get Hosted Service operation response.
+        /// The List Hosted Service operation response.
         /// </returns>
         public static HostedServiceListResponse List(this IHostedServiceOperations operations)
         {
@@ -750,7 +752,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IHostedServiceOperations.
         /// </param>
         /// <returns>
-        /// The Get Hosted Service operation response.
+        /// The List Hosted Service operation response.
         /// </returns>
         public static Task<HostedServiceListResponse> ListAsync(this IHostedServiceOperations operations)
         {
@@ -761,8 +763,8 @@ namespace Microsoft.WindowsAzure
         /// The List Available Extensions operation lists the extensions that
         /// are available to add to your cloud service. In Windows Azure, a
         /// process can run as an extension of a cloud service. For example,
-        /// Remote Desktop Access or the Windows Azure Diagnostics Agent can
-        /// run as extensions to the cloud service.  (see
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169559.aspx
         /// for more information)
         /// </summary>
@@ -786,8 +788,8 @@ namespace Microsoft.WindowsAzure
         /// The List Available Extensions operation lists the extensions that
         /// are available to add to your cloud service. In Windows Azure, a
         /// process can run as an extension of a cloud service. For example,
-        /// Remote Desktop Access or the Windows Azure Diagnostics Agent can
-        /// run as extensions to the cloud service.  (see
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169559.aspx
         /// for more information)
         /// </summary>
@@ -851,10 +853,10 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The List Extension Versions operation lists the versions of an
-        /// extension that are available to add to a cloud service. In Windows
-        /// Azure, a process can run as an extension of a cloud service. For
-        /// example, Remote Desktop Access or the Windows Azure Diagnostics
-        /// Agent can run as extensions to the cloud service.  (see
+        /// extension that are available to add to a cloud service. In Azure,
+        /// a process can run as an extension of a cloud service. For example,
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
         /// for more information)
         /// </summary>
@@ -882,10 +884,10 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The List Extension Versions operation lists the versions of an
-        /// extension that are available to add to a cloud service. In Windows
-        /// Azure, a process can run as an extension of a cloud service. For
-        /// example, Remote Desktop Access or the Windows Azure Diagnostics
-        /// Agent can run as extensions to the cloud service.  (see
+        /// extension that are available to add to a cloud service. In Azure,
+        /// a process can run as an extension of a cloud service. For example,
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
         /// for more information)
         /// </summary>
@@ -909,7 +911,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Update Hosted Service operation can update the label or
-        /// description of a cloud service in Windows Azure.  (see
+        /// description of a cloud service in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx
         /// for more information)
         /// </summary>
@@ -939,7 +941,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Update Hosted Service operation can update the label or
-        /// description of a cloud service in Windows Azure.  (see
+        /// description of a cloud service in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx
         /// for more information)
         /// </summary>

@@ -37,8 +37,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IVirtualMachineOSImageOperations
     {
         /// <summary>
-        /// The Add OS Image operation adds an operating system image that is
-        /// stored in a storage account and is available from the image
+        /// The Create OS Image operation adds an operating system image that
+        /// is stored in a storage account and is available from the image
         /// repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157192.aspx
         /// for more information)

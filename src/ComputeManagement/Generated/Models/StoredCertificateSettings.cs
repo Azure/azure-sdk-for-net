@@ -25,20 +25,20 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Service certificates with which to provision to the new virtual
-    /// machine. Stored certificate settings reference certificates that
-    /// already exist in the Windows Azure hosted service. Prior to
-    /// configuring the stored certificates for the virtual machine, you must
-    /// call the Add Service Certificate operation or add the certificate via
-    /// the Windows Azure Management portal.
+    /// Service certificates with which to provision the new virtual machine.
+    /// Stored certificate settings reference certificates that already exist
+    /// in the Azure hosted service. Prior to configuring the stored
+    /// certificates for the virtual machine, you must call the Add Service
+    /// Certificate operation or add the certificate via the Azure Management
+    /// portal.
     /// </summary>
     public partial class StoredCertificateSettings
     {
         private string _storeName;
         
         /// <summary>
-        /// Required. Specifies the name of the certificate store from which
-        /// retrieve certificate.  For example, "My".
+        /// Required. Specifies the name of the certificate store from which to
+        /// retrieve certificates.  For example, "My".
         /// </summary>
         public string StoreName
         {

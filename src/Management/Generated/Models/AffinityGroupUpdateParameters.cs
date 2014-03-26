@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _label;
         
         /// <summary>
-        /// Required. A name for the affinity specified as a base-64 encoded
+        /// Required. A name for the affinity specified as a base-64-encoded
         /// string. The label can be up to 100 characters in length.
         /// </summary>
         public string Label

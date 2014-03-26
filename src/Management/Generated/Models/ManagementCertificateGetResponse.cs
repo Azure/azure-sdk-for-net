@@ -45,8 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private byte[] _data;
         
         /// <summary>
-        /// Optional. A base64 representation of the raw data contained in the
-        /// management certificate in .cer format.
+        /// Optional. A base-64 representation of the raw data contained in the
+        /// management certificate, in cer format.
         /// </summary>
         public byte[] Data
         {
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private byte[] _publicKey;
         
         /// <summary>
-        /// Optional. A base64 representation of the management certificate
+        /// Optional. A base-64 representation of the management certificate
         /// public key.
         /// </summary>
         public byte[] PublicKey
@@ -69,8 +69,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _thumbprint;
         
         /// <summary>
-        /// Optional. The thumb print that uniquely identifies the management
-        /// certificate. This thumb print is the same value as the one
+        /// Optional. The thumbprint that uniquely identifies the management
+        /// certificate. This thumbprint is the same value as the one
         /// specified by the request URI.
         /// </summary>
         public string Thumbprint

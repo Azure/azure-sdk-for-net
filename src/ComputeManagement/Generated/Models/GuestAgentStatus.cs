@@ -49,8 +49,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Guest Agent.
+        /// Optional. This object encapsulates a formatted localized status
+        /// message from the Guest Agent.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
+        /// Optional. This object encapsulates a localized status message from
         /// the Guest Agent.
         /// </summary>
         public GuestAgentMessage Message
@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The guest agent status, which can be: "Ready" or
-        /// "NotReady"
+        /// "NotReady".
         /// </summary>
         public string Status
         {

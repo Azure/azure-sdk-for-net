@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The Get Hosted Service operation response.
+    /// The List Hosted Service operation response.
     /// </summary>
     public partial class HostedServiceListResponse : OperationResponse, IEnumerable<HostedServiceListResponse.HostedService>
     {
@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// prefix name and can be used to access the cloud service. For
             /// example, if the cloud service name is MyService you could
             /// access the cloud service by calling:
-            /// http://MyService.cloudapp.net
+            /// http://MyService.cloudapp.net.
             /// </summary>
             public string ServiceName
             {
@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The Service Management API request URI used to
-            /// perform Get Hosted Service Properties requests against the
+            /// perform List Hosted Service Properties requests against the
             /// cloud service.
             /// </summary>
             public Uri Uri

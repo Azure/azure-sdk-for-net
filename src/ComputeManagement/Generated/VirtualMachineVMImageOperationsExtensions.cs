@@ -33,21 +33,22 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class VirtualMachineVMImageOperationsExtensions
     {
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Begin Deleting Virtual Machine Image operation deletes the
+        /// specified virtual machine image.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -63,14 +64,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Begin Deleting Virtual Machine Image operation deletes the
+        /// specified virtual machine image.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -82,25 +84,26 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Delete Virtual Machine Image operation deletes the specified
+        /// virtual machine image.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Delete(this IVirtualMachineVMImageOperations operations, string vmImageName)
         {
@@ -112,25 +115,26 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Delete Virtual Machine Image operation deletes the specified
+        /// virtual machine image.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
         /// </param>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
         {
@@ -138,8 +142,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The List VM Images operation retrieves a list of the virtual
-        /// machine images.
+        /// The List Virtual Machine Images operation retrieves a list of the
+        /// virtual machine images.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -158,8 +162,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The List VM Images operation retrieves a list of the virtual
-        /// machine images.
+        /// The List Virtual Machine Images operation retrieves a list of the
+        /// virtual machine images.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

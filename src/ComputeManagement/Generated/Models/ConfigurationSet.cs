@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Optional. Specifies the computer name for the virtual machine. If
         /// the computer name is not specified, a name is created based on the
-        /// name of the role.  Computer names must be 1 to 15 characters in
+        /// name of the role. Computer names must be 1 to 15 characters in
         /// length. This element is only used with the
         /// WindowsProvisioningConfiguration set.
         /// </summary>
@@ -84,6 +84,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._configurationSetType = value; }
         }
         
+        private string _customData;
+        
+        /// <summary>
+        /// Optional. Optional. Provides base64 encoded custom data to be
+        /// passed to VM.
+        /// </summary>
+        public string CustomData
+        {
+            get { return this._customData; }
+            set { this._customData = value; }
+        }
+        
         private bool? _disableSshPasswordAuthentication;
         
         /// <summary>
@@ -101,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private DomainJoinSettings _domainJoin;
         
         /// <summary>
-        /// Optional.  Contains properties that specify a domain to which the
+        /// Optional. Contains properties that specify a domain to which the
         /// virtual machine will be joined. This element is only used with the
         /// WindowsProvisioningConfiguration set.
         /// </summary>
@@ -141,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Contains a collection of external endpoints for the
-        /// virtual machine.  This element is only used with the
+        /// virtual machine. This element is only used with the
         /// NetworkConfigurationSet type.
         /// </summary>
         public IList<InputEndpoint> InputEndpoints
@@ -179,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies a Customer Address, i.e. an IP address assigned
-        /// to a VM in a VNet's SubNet, for example: 10.0.0.4.
+        /// to a VM in a VNet's SubNet. For example: 10.0.0.4.
         /// </summary>
         public string StaticVirtualNetworkIPAddress
         {
@@ -204,7 +216,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The list of Virtual Network subnet names that the
-        /// deployment belongs to.  This element is only used with the
+        /// deployment belongs to. This element is only used with the
         /// NetworkConfigurationSet type.
         /// </summary>
         public IList<string> SubnetNames
@@ -216,13 +228,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional.  Specifies the time zone for the virtual machine. This
+        /// Optional. Specifies the time zone for the virtual machine. This
         /// element is only used with the WindowsProvisioningConfiguration
-        /// set.  For a complete list of supported time zone entries, you can:
-        /// Refer to the values listed in the registry entry
+        /// set. For a complete list of supported time zone entries, you can
+        /// refer to the values listed in the registry entry
         /// HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows
         /// NT\\CurrentVersion\\Time Zones on a computer running Windows 7,
-        /// Windows Server 2008, and Windows Server 2008 R2.  You can use the
+        /// Windows Server 2008, and Windows Server 2008 R2 or you can use the
         /// tzutil command-line tool to list the valid time. The tzutil tool
         /// is installed by default on Windows 7, Windows Server 2008, and
         /// Windows Server 2008 R2.

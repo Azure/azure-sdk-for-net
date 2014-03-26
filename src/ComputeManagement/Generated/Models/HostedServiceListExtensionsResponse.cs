@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         }
         
         /// <summary>
-        /// An extension that were added to a cloud service.
+        /// An extension that was added to a cloud service.
         /// </summary>
         public partial class Extension
         {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The provider namespace of the extension. The provider
-            /// namespace for Windows Azure extensions is
+            /// namespace for Azure extensions is
             /// Microsoft.Windows.Azure.Extensions.
             /// </summary>
             public string ProviderNamespace
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The public configuration that is defined using the
-            /// schema returned by the List Available Extensions operation.
+            /// schema returned by the List Extensions operation.
             /// </summary>
             public string PublicConfiguration
             {
@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The thumbprint algorithm of the certificate that is
-            /// used toencrypt the configuration specified in
+            /// used to encrypt the configuration specified in
             /// PrivateConfiguration.
             /// </summary>
             public string ThumbprintAlgorithm

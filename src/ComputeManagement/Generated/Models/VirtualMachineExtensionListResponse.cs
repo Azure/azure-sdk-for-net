@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// Optional. URI string pointing to the EULA (End User License
             /// Agreement) of this version of extension. This is optionally
             /// specified by the third-party publishing the extension instead
-            /// of Windows Azure, at the time of extension creation or update.
+            /// of Azure, at the time of extension creation or update.
             /// </summary>
             public Uri Eula
             {
@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// <summary>
             /// Optional. URI string pointing to the homepage of this version
             /// of extension. This is optionally specified by the third-party
-            /// publishing the extension instead of Windows Azure, at the time
-            /// of extension creation or update.
+            /// publishing the extension instead of Azure, at the time of
+            /// extension creation or update.
             /// </summary>
             public Uri HomepageUri
             {
@@ -116,11 +116,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private bool? _isJsonExtension;
             
             /// <summary>
-            /// Optional. Boolean property indicating whether the extension
-            /// accepts JSON or XML based configuration. If this property is
-            /// 'true' then the extension accepts JSON based configuration. If
-            /// this property is 'false' the extension accepts XML based
-            /// confihuration.
+            /// Optional. Indicates whether the extension accepts JSON or XML
+            /// based configuration. If this property is 'true' the extension
+            /// accepts JSON based configuration. If this property is 'false'
+            /// the extension accepts XML based configuration.
             /// </summary>
             public bool? IsJsonExtension
             {
@@ -155,8 +154,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// <summary>
             /// Optional. URI string pointing to the privacy document of this
             /// version of extension. This is optionally specified by the
-            /// third-party publishing the extension instead of Windows Azure,
-            /// at the time of extension creation or update.
+            /// third-party publishing the extension instead of Azure, at the
+            /// time of extension creation or update.
             /// </summary>
             public Uri PrivacyUri
             {
@@ -191,7 +190,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The provider namespace of the extension. The provider
-            /// namespace for Windows Azure extensions is Microsoft.Compute.
+            /// namespace for Azure extensions is Microsoft.Compute.
             /// </summary>
             public string Publisher
             {
@@ -202,14 +201,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private bool? _replicationCompleted;
             
             /// <summary>
-            /// Optional. Boolean flag indicating whether this version of
-            /// extension has been replicated to all regions or not. If true,
-            /// then the given extension version can be used in creating or
-            /// updating deployments. Otherwise, the given extension version
-            /// might cause failure in creating or updating deployments. The
-            /// typical time is 20 minutes for a newly-registered or
-            /// newly-updated extension to replicate completely by Windows
-            /// Azure.
+            /// Optional. Indicates whether this version of extension has been
+            /// replicated to all regions or not. If true, then the given
+            /// extension version can be used in creating or updating
+            /// deployments. Otherwise, the given extension version might
+            /// cause failure in creating or updating deployments. The typical
+            /// time is 20 minutes for a newly-registered or newly-updated
+            /// extension to replicate completely by Azure.
             /// </summary>
             public bool? ReplicationCompleted
             {

@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
-        /// and if not, provide a list of suggestions.
+        /// and if not, provides a list of suggestions.
         /// </returns>
         public static NetworkStaticIPAvailabilityResponse Check(this IStaticIPOperations operations, string networkName, string ipAddress)
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
-        /// and if not, provide a list of suggestions.
+        /// and if not, provides a list of suggestions.
         /// </returns>
         public static Task<NetworkStaticIPAvailabilityResponse> CheckAsync(this IStaticIPOperations operations, string networkName, string ipAddress)
         {

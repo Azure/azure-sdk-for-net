@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -41,10 +41,10 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Resource Extensions operation lists the resource
         /// extensions that are available to add to a Virtual Machine. In
-        /// Windows Azure, a process can run as a resource extension of a
-        /// Virtual Machine. For example, Remote Desktop Access or the Windows
-        /// Azure Diagnostics Agent can run as resource extensions to the
-        /// Virtual Machine.  (see
+        /// Azure, a process can run as a resource extension of a Virtual
+        /// Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495441.aspx
         /// for more information)
         /// </summary>
@@ -67,10 +67,10 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Resource Extensions operation lists the resource
         /// extensions that are available to add to a Virtual Machine. In
-        /// Windows Azure, a process can run as a resource extension of a
-        /// Virtual Machine. For example, Remote Desktop Access or the Windows
-        /// Azure Diagnostics Agent can run as resource extensions to the
-        /// Virtual Machine.  (see
+        /// Azure, a process can run as a resource extension of a Virtual
+        /// Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495441.aspx
         /// for more information)
         /// </summary>
@@ -89,10 +89,10 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Resource Extension Versions operation lists the versions
         /// of a resource extension that are available to add to a Virtual
-        /// Machine. In Windows Azure, a process can run as a resource
-        /// extension of a Virtual Machine. For example, Remote Desktop Access
-        /// or the Windows Azure Diagnostics Agent can run as resource
-        /// extensions to the Virtual Machine.  (see
+        /// Machine. In Azure, a process can run as a resource extension of a
+        /// Virtual Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495440.aspx
         /// for more information)
         /// </summary>
@@ -121,10 +121,10 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Resource Extension Versions operation lists the versions
         /// of a resource extension that are available to add to a Virtual
-        /// Machine. In Windows Azure, a process can run as a resource
-        /// extension of a Virtual Machine. For example, Remote Desktop Access
-        /// or the Windows Azure Diagnostics Agent can run as resource
-        /// extensions to the Virtual Machine.  (see
+        /// Machine. In Azure, a process can run as a resource extension of a
+        /// Virtual Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495440.aspx
         /// for more information)
         /// </summary>

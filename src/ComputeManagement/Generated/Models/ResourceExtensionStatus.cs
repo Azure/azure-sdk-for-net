@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private ResourceExtensionConfigurationStatus _extensionSettingStatus;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
+        /// Optional. This object encapsulates the extension setting status for
         /// the Resource Extension.
         /// </summary>
         public ResourceExtensionConfigurationStatus ExtensionSettingStatus
@@ -56,8 +56,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Resource Extension.
+        /// Optional. This object encapsulates a formatted localized status
+        /// message from the Resource Extension.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
+        /// Optional. This object encapsulates a localized status message from
         /// the Guest Agent.
         /// </summary>
         public GuestAgentMessage Message
@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The resource extension status, which can be "Installing",
-        /// "Ready", "NotReady", "Unresponsive"
+        /// "Ready", "NotReady", or "Unresponsive".
         /// </summary>
         public string Status
         {

@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// <summary>
         /// Optional. Indicates the geographical region in which the storage
         /// account is being replicated.  The GeoSecondaryRegion element is
-        /// not returned if geo-replication is “off” for this account.
+        /// not returned if geo-replication is "off" for this account.
         /// </summary>
         public string GeoSecondaryRegion
         {

@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _messageResourceId;
         
         /// <summary>
-        /// Optional. The message resource Id.
+        /// Optional. The message resource ID.
         /// </summary>
         public string MessageResourceId
         {

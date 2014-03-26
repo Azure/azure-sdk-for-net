@@ -81,15 +81,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended cloud service
-        /// property. Each extended property must have both a defined name and
+        /// property. Each extended property must have a defined name and a
         /// value. You can have a maximum of 50 extended property name and
-        /// value pairs.  The maximum length of the Name element is 64
+        /// value pairs.  The maximum length of the name element is 64
         /// characters, only alphanumeric characters and underscores are valid
         /// in the name, and it must start with a letter. Attempting to use
         /// other characters, starting with a non-letter character, or
         /// entering a name that is identical to that of another extended
-        /// property owned by the same service, will result in a status code
-        /// 400 (Bad Request) error.  Each extended property value has a
+        /// property owned by the same service will result in a status code
+        /// 400 (Bad Request) error. Each extended property value has a
         /// maximum length of 255 characters.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Optional. The user supplied name of the deployment. This name can
+        /// Optional. The user-supplied name of the deployment. This name can
         /// be used identify the deployment for tracking purposes.
         /// </summary>
         public string Label
@@ -137,8 +137,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Indicates whether the deployment is locked for new write
-        /// operations. True if the deployment is locked because an existing
-        /// operation is updating the deployment; otherwise false.
+        /// operations because an existing operation is updating the
+        /// deployment.
         /// </summary>
         public bool Locked
         {
@@ -218,8 +218,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Indicates whether the Rollback Update Or Upgrade
-        /// operation is allowed at this time. True if the operation is
-        /// allowed; otherwise false.
+        /// operation is allowed at this time.
         /// </summary>
         public bool RollbackAllowed
         {
@@ -230,10 +229,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _sdkVersion;
         
         /// <summary>
-        /// Optional. The version of the Windows Azure SDK that was used to
-        /// generate the .cspkg that created this deployment.  The first two
-        /// numerical components of the returned version represent the version
-        /// of the SDK used to create the package.
+        /// Optional. The version of the Azure SDK that was used to generate
+        /// the .cspkg that created this deployment. The first two numerical
+        /// components of the returned version represent the version of the
+        /// SDK used to create the package.
         /// </summary>
         public string SdkVersion
         {
@@ -267,8 +266,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private UpgradeStatus _upgradeStatus;
         
         /// <summary>
-        /// Optional. Specifies information about an update occurring on the
-        /// deployment.
+        /// Optional. Information about an update occurring on the deployment.
         /// </summary>
         public UpgradeStatus UpgradeStatus
         {
@@ -281,7 +279,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Optional. The URL used to access the hosted service. For example,
         /// if the service name is MyService you could access the access the
-        /// service by calling: http://MyService.cloudapp.net
+        /// service by calling: http://MyService.cloudapp.net.
         /// </summary>
         public Uri Uri
         {
@@ -292,8 +290,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<VirtualIPAddress> _virtualIPAddresses;
         
         /// <summary>
-        /// Optional. The virtual IP addresses that are specified for
-        /// thedeployment.
+        /// Optional. The virtual IP addresses that are specified for the
+        /// deployment.
         /// </summary>
         public IList<VirtualIPAddress> VirtualIPAddresses
         {

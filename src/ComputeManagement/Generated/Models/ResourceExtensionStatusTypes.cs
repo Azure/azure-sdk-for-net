@@ -26,7 +26,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
     /// The resource extension status, which can be "Installing", "Ready",
-    /// "NotReady", "Unresponsive"
+    /// "NotReady", or "Unresponsive".
     /// </summary>
     public static partial class ResourceExtensionStatusTypes
     {
