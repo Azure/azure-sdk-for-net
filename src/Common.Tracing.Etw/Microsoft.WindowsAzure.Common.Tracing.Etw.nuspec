@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Tracing.Etw</id>
-    <title>Windows Azure Common Library ETW Logger</title>
+    <title>Microsoft Azure Common Library ETW Logger</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -11,12 +11,12 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net/tree/src/Common.Tracing.Etw</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This package provides a logging implementation for the Windows Azure Libraries exposing events via ETW (Event Tracing for Windows).</summary>
-    <description>Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.
+    <summary>This package provides a logging implementation for the Microsoft Azure Libraries exposing events via ETW (Event Tracing for Windows).</summary>
+    <description>Exposes Microsoft Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source.
     
 The ETW tracing provider requires .NET Framework 4.5 or newer.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" SDK ETW "Event Tracing" windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" SDK ETW "Event Tracing" windowsazureofficial</tags>
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Common.Tracing.Etw.dll" />

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Libraries</id>
-    <title>Windows Azure Management Libraries</title>
+    <title>Microsoft Azure Management Libraries</title>
     <releaseNotes>Projects also have .NET 4.0 support now: __BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -11,9 +11,9 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Windows Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
-    <description>This set of packages open up a rich surface area of Windows Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support:
-- Windows Azure Virtual Machines
+    <summary>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Microsoft Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
+    <description>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support:
+- Microsoft Azure Virtual Machines
 - Hosted Services
 - Infrastructure services
 - Monitoring
@@ -26,10 +26,10 @@
 
 Using the full .NET Framework is recommended during preview.
 
-Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Windows Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Windows Azure services.
+Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Microsoft Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Microsoft Azure services.
     </description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>windowsazureofficial management cloud libraries "windows azure management"</tags>
+    <tags>windowsazureofficial management cloud libraries "Microsoft azure management"</tags>
     <dependencies>
       <group>
         <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
