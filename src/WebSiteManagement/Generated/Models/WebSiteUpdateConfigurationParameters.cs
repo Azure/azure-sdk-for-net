@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// <summary>
         /// Optional. The username used for publishing the web site. This is
         /// normally a dollar sign prepended to the web site name (for
-        /// example, “$contoso”).
+        /// example, "$contoso").
         /// </summary>
         public string PublishingUserName
         {
