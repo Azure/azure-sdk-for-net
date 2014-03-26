@@ -99,4 +99,7 @@
   <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5196.28575-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Specification.1.0.5198.18213-prerelease\tools\Microsoft.WindowsAzure.Management.Specification.dll" DestinationFolder="." />
+  </Target>
 </Project>

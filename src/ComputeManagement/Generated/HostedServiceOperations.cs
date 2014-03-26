@@ -70,11 +70,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// cloud service. In Azure, a process can run as an extension of a
+        /// cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -91,12 +91,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> AddExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken)
         {
@@ -173,12 +173,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Add Extension operation adds an available extension to your
-        /// cloud service. In Windows Azure, a process can run as an extension
-        /// of a cloud service. For example, Remote Desktop Access or the
-        /// Windows Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You can find the available extension by using the List
-        /// Available Extensions operation.  (see
+        /// The Begin Adding Extension operation adds an available extension to
+        /// your cloud service. In Azure, a process can run as an extension of
+        /// a cloud service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// can find the available extension by using the List Available
+        /// Extensions operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169558.aspx
         /// for more information)
         /// </summary>
@@ -186,7 +186,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Required. The name of the cloud service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Add Extension operation.
+        /// Required. Parameters supplied to the Begin Adding Extension
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -377,8 +378,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Begin Deleting All Hosted Service operation deletes the
+        /// specified cloud service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -499,8 +500,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete Extension operation deletes the specified extension from
-        /// a cloud service.  (see
+        /// The Begin Deleting Extension operation deletes the specified
+        /// extension from a cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169560.aspx
         /// for more information)
         /// </summary>
@@ -777,7 +778,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Create Hosted Service operation creates a new cloud service in
-        /// Windows Azure.  (see
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441304.aspx
         /// for more information)
         /// </summary>
@@ -979,7 +980,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -1100,8 +1101,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete Hosted Service operation deletes the specified cloud
-        /// service from Windows Azure.  (see
+        /// The Delete All Hosted Service operation deletes the specified cloud
+        /// service from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -1115,12 +1116,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAllAsync(string serviceName, CancellationToken cancellationToken)
         {
@@ -1215,12 +1216,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteExtensionAsync(string serviceName, string extensionId, CancellationToken cancellationToken)
         {
@@ -1299,7 +1300,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The Get Hosted Service Properties operation retrieves system
         /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
+        /// include the service name and service type; and the name of the
         /// affinity group to which the service belongs, or its location if it
         /// is not part of an affinity group.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
@@ -1511,11 +1512,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Get Hosted Service Properties operation retrieves system
-        /// properties for the specified cloud service. These properties
-        /// include the service name and service type; the name of the
-        /// affinity group to which the service belongs, or its location if it
-        /// is not part of an affinity group; and information on the
+        /// The Get Detailed Hosted Service Properties operation retrieves
+        /// system properties for the specified cloud service. These
+        /// properties include the service name and service type; the name of
+        /// the affinity group to which the service belongs, or its location
+        /// if it is not part of an affinity group; and information on the
         /// deployments of the service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460806.aspx
         /// for more information)
@@ -2634,6 +2635,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         }
                                                     }
                                                 }
+                                                
+                                                XElement customDataElement = configurationSetsElement.Element(XName.Get("CustomData", "http://schemas.microsoft.com/windowsazure"));
+                                                if (customDataElement != null && customDataElement.IsEmpty == false)
+                                                {
+                                                    string customDataInstance = customDataElement.Value;
+                                                    configurationSetInstance.CustomData = customDataInstance;
+                                                }
                                             }
                                         }
                                         
@@ -2746,7 +2754,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 if (diskLabelElement != null && diskLabelElement.IsEmpty == false)
                                                 {
                                                     string diskLabelInstance = diskLabelElement.Value;
-                                                    dataVirtualHardDiskInstance.DiskLabel = diskLabelInstance;
+                                                    dataVirtualHardDiskInstance.Label = diskLabelInstance;
                                                 }
                                                 
                                                 XElement diskNameElement = dataVirtualHardDisksElement.Element(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
@@ -3320,7 +3328,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Hosted Service operation response.
+        /// The List Hosted Service operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -3523,8 +3531,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The List Available Extensions operation lists the extensions that
         /// are available to add to your cloud service. In Windows Azure, a
         /// process can run as an extension of a cloud service. For example,
-        /// Remote Desktop Access or the Windows Azure Diagnostics Agent can
-        /// run as extensions to the cloud service.  (see
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn169559.aspx
         /// for more information)
         /// </summary>
@@ -3950,10 +3958,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The List Extension Versions operation lists the versions of an
-        /// extension that are available to add to a cloud service. In Windows
-        /// Azure, a process can run as an extension of a cloud service. For
-        /// example, Remote Desktop Access or the Windows Azure Diagnostics
-        /// Agent can run as extensions to the cloud service.  (see
+        /// extension that are available to add to a cloud service. In Azure,
+        /// a process can run as an extension of a cloud service. For example,
+        /// Remote Desktop Access or the Azure Diagnostics Agent can run as
+        /// extensions to the cloud service.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495437.aspx
         /// for more information)
         /// </summary>
@@ -4209,7 +4217,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Update Hosted Service operation can update the label or
-        /// description of a cloud service in Windows Azure.  (see
+        /// description of a cloud service in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441303.aspx
         /// for more information)
         /// </summary>

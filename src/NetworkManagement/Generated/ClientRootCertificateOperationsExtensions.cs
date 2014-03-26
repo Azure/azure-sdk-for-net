@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure
     {
         /// <summary>
         /// The Upload Client Root Certificate operation is used to upload a
-        /// new client root certificate to Windows Azure.  (see
+        /// new client root certificate to Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
         /// for more information)
         /// </summary>
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upload client certificate
+        /// Required. Parameters supplied to the Upload Client Root Certificate
         /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Upload Client Root Certificate operation is used to upload a
-        /// new client root certificate to Windows Azure.  (see
+        /// new client root certificate to Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205129.aspx
         /// for more information)
         /// </summary>
@@ -80,7 +80,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upload client certificate
+        /// Required. Parameters supplied to the Upload Client Root Certificate
         /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Delete Client Root Certificate operation deletes a previously
-        /// uploaded client root certificate. from Windows Azure  (see
+        /// uploaded client root certificate from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205128.aspx
         /// for more information)
         /// </summary>
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Delete Client Root Certificate operation deletes a previously
-        /// uploaded client root certificate. from Windows Azure  (see
+        /// uploaded client root certificate from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205128.aspx
         /// for more information)
         /// </summary>
@@ -149,7 +149,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The Get Client Root Certificate operation returns the public
         /// portion of a previously uploaded client root certificate in a
-        /// base-64 encoded format from Windows Azure.  (see
+        /// base-64-encoded format from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205127.aspx
         /// for more information)
         /// </summary>
@@ -164,8 +164,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
+        /// Response to the Get Client Root Certificate operation.
         /// </returns>
         public static ClientRootCertificateGetResponse Get(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
@@ -179,7 +178,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The Get Client Root Certificate operation returns the public
         /// portion of a previously uploaded client root certificate in a
-        /// base-64 encoded format from Windows Azure.  (see
+        /// base-64-encoded format from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205127.aspx
         /// for more information)
         /// </summary>
@@ -194,8 +193,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
-        /// request ID.
+        /// Response to the Get Client Root Certificate operation.
         /// </returns>
         public static Task<ClientRootCertificateGetResponse> GetAsync(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
         {
@@ -205,7 +203,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Client Root Certificates operation returns a list of all
         /// the client root certificates that are associated with the
-        /// specified virtual network in Windows Azure.  (see
+        /// specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205130.aspx
         /// for more information)
         /// </summary>
@@ -217,7 +215,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
-        /// The response to the list client root certificates request.
+        /// The response for the List Client Root Certificates operation.
         /// </returns>
         public static ClientRootCertificateListResponse List(this IClientRootCertificateOperations operations, string networkName)
         {
@@ -231,7 +229,7 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The List Client Root Certificates operation returns a list of all
         /// the client root certificates that are associated with the
-        /// specified virtual network in Windows Azure.  (see
+        /// specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205130.aspx
         /// for more information)
         /// </summary>
@@ -243,7 +241,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
-        /// The response to the list client root certificates request.
+        /// The response for the List Client Root Certificates operation.
         /// </returns>
         public static Task<ClientRootCertificateListResponse> ListAsync(this IClientRootCertificateOperations operations, string networkName)
         {

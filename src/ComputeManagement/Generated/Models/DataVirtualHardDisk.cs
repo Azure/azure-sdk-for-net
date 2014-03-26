@@ -30,23 +30,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class DataVirtualHardDisk
     {
-        private string _diskLabel;
-        
-        /// <summary>
-        /// Optional. Specifies the friendly name of the VHD to use to create
-        /// thedata disk for the virtual machine.
-        /// </summary>
-        public string DiskLabel
-        {
-            get { return this._diskLabel; }
-            set { this._diskLabel = value; }
-        }
-        
         private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
         
         /// <summary>
         /// Optional. Specifies the platform caching behavior of the data disk
-        /// blob for read/write efficiency. The default vault is ReadOnly.
+        /// blob for read/write efficiency. The default value is ReadOnly.
         /// </summary>
         public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
         {
@@ -54,15 +42,27 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._hostCaching = value; }
         }
         
+        private string _label;
+        
+        /// <summary>
+        /// Optional. Specifies the friendly name of the VHD used to create the
+        /// data disk for the virtual machine.
+        /// </summary>
+        public string Label
+        {
+            get { return this._label; }
+            set { this._label = value; }
+        }
+        
         private int? _logicalDiskSizeInGB;
         
         /// <summary>
         /// Optional. Specifies the size, in GB, of an empty VHD to be attached
-        /// to the virtual machine. The VHD can be created as part of disk
-        /// attach or create virtual machine call by specifying the value for
-        /// this property.  Windows Azure creates the empty VHD based on size
-        /// preference and attaches the newly created VHD to the virtual
-        /// machine.
+        /// to the virtual machine. The VHD can be created as part of an
+        /// attached disk or created as a virtual machine call by specifying
+        /// the value for this property. Azure creates the empty VHD based on
+        /// the size preference and attaches the newly created VHD to the
+        /// virtual machine.
         /// </summary>
         public int? LogicalDiskSizeInGB
         {
@@ -92,8 +92,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// registered in the subscription or the VHD for the disk already
         /// exists in blob storage, this element is ignored. If a VHD file
         /// does not exist in blob storage, this element defines the location
-        /// of the new VHD that is created when the new disk is added.
-        /// Example: http://example.blob.core.windows.net/disks/mydatadisk.vhd
+        /// of the new VHD that is created when the new disk is added.Example:
+        /// http://example.blob.core.windows.net/disks/mydatadisk.vhd
         /// </summary>
         public Uri MediaLink
         {
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Specifies the name of the VHD to use to create thedata
+        /// Optional. Specifies the name of the VHD used to create the data
         /// disk for the virtual machine.
         /// </summary>
         public string Name

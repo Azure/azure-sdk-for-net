@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// This object encapsulates localized status message from the Guest Agent.
+    /// This object encapsulates a localized status message from the Guest
+    /// Agent.
     /// </summary>
     public partial class GuestAgentFormattedMessage
     {
         private string _language;
         
         /// <summary>
-        /// Optional. Language code. Eg. "en-US"
+        /// Optional. Language code. Eg. "en-US".
         /// </summary>
         public string Language
         {
@@ -43,8 +44,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _message;
         
         /// <summary>
-        /// Optional. A string containing message about status of the Guest
-        /// Agent, or Resource Extension.
+        /// Optional. A string containing a message about the status of the
+        /// Guest Agent or Resource Extension.
         /// </summary>
         public string Message
         {

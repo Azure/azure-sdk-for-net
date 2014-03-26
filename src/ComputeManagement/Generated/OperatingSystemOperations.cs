@@ -37,8 +37,8 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
-    /// Operations for determining the version of the Windows Azure Guest
-    /// Operating System on which your service is running.  (see
+    /// Operations for determining the version of the Azure Guest Operating
+    /// System on which your service is running.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684169.aspx for
     /// more information)
     /// </summary>
@@ -71,11 +71,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// guest operating system that are currently available in Windows
         /// Azure. The 2010-10-28 version of List Operating Systems also
         /// indicates what family an operating system version belongs to.
-        /// Currently Windows Azure supports two operating system families:
-        /// the Windows Azure guest operating system that is substantially
-        /// compatible with Windows Server 2008 SP2, and the Windows Azure
+        /// Currently Azure supports two operating system families: the Azure
         /// guest operating system that is substantially compatible with
-        /// Windows Server 2008 R2.  (see
+        /// Windows Server 2008 SP2, and the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684168.aspx
         /// for more information)
         /// </summary>
@@ -245,12 +244,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The List OS Families operation lists the guest operating system
-        /// families available in Windows Azure, and also lists the operating
-        /// system versions available for each family. Currently Windows Azure
-        /// supports two operating system families: the Windows Azure guest
-        /// operating system that is substantially compatible with Windows
-        /// Server 2008 SP2, and the Windows Azure guest operating system that
-        /// is substantially compatible with Windows Server 2008 R2.  (see
+        /// families available in Azure, and also lists the operating system
+        /// versions available for each family. Currently Azure supports two
+        /// operating system families: the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 SP2, and the
+        /// Azure guest operating system that is substantially compatible with
+        /// Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441291.aspx
         /// for more information)
         /// </summary>

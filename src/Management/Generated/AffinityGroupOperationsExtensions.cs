@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
         /// </param>
         /// <param name='affinityGroupName'>
-        /// Required. The name of your affinity group.
+        /// Required. The name of the affinity group.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -126,7 +126,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
         /// </param>
         /// <param name='affinityGroupName'>
-        /// Required. The name of your affinity group.
+        /// Required. The name of the affinity group.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -237,7 +237,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
         /// </param>
         /// <param name='affinityGroupName'>
-        /// Required. The name of your affinity group.
+        /// Required. The name of the affinity group.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Update Affinity Group
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.IAffinityGroupOperations.
         /// </param>
         /// <param name='affinityGroupName'>
-        /// Required. The name of your affinity group.
+        /// Required. The name of the affinity group.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Update Affinity Group

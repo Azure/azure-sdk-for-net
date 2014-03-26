@@ -26,8 +26,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// A standard storage response including an HTTP status code and request
-    /// ID.
+    /// Response to the Get Client Root Certificate operation.
     /// </summary>
     public partial class ClientRootCertificateGetResponse : OperationResponse
     {

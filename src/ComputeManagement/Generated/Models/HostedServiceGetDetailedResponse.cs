@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private DnsSettings _dnsSettings;
             
             /// <summary>
-            /// Optional. The custom DNS settings that are specified for
+            /// Optional. The custom DNS settings that are specified for the
             /// deployment.
             /// </summary>
             public DnsSettings DnsSettings
@@ -106,15 +106,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. Represents the name of an extended cloud service
-            /// property. Each extended property must have both a defined name
-            /// and value. You can have a maximum of 50 extended property name
-            /// and value pairs.  The maximum length of the Name element is 64
+            /// property. Each extended property must have a defined name and
+            /// a value. You can have a maximum of 50 extended property name
+            /// and value pairs. The maximum length of the name element is 64
             /// characters, only alphanumeric characters and underscores are
             /// valid in the name, and it must start with a letter. Attempting
             /// to use other characters, starting with a non-letter character,
             /// or entering a name that is identical to that of another
-            /// extended property owned by the same service, will result in a
-            /// status code 400 (Bad Request) error.  Each extended property
+            /// extended property owned by the same service will result in a
+            /// status code 400 (Bad Request) error. Each extended property
             /// value has a maximum length of 255 characters.
             /// </summary>
             public IDictionary<string, string> ExtendedProperties
@@ -150,8 +150,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. Indicates whether the deployment is locked for new
-            /// write operations. True if the deployment is locked because an
-            /// existing operation is updating the deployment; otherwise false.
+            /// write operations because an existing operation is updating the
+            /// deployment.
             /// </summary>
             public bool Locked
             {
@@ -162,7 +162,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Optional.
+            /// Optional. The name of the deployment.
             /// </summary>
             public string Name
             {
@@ -219,8 +219,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. Indicates whether the Rollback Update Or Upgrade
-            /// operation is allowed at this time. True if the operation is
-            /// allowed; otherwise false.
+            /// operation is allowed at this time.
             /// </summary>
             public bool RollbackAllowed
             {
@@ -231,8 +230,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _sdkVersion;
             
             /// <summary>
-            /// Optional. The version of the Windows Azure SDK that was used to
-            /// generate the .cspkg that created this deployment.  The first
+            /// Optional. The version of the Azure SDK that was used to
+            /// generate the .cspkg that created this deployment. The first
             /// two numerical components of the returned version represent the
             /// version of the SDK used to create the package.
             /// </summary>
@@ -280,9 +279,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _uri;
             
             /// <summary>
-            /// Optional. The URL used to access the hosted service.  For
+            /// Optional. The URL used to access the hosted service. For
             /// example, if the service name is MyService you could access the
-            /// access the service by calling: http://MyService.cloudapp.net
+            /// access the service by calling: http://MyService.cloudapp.net.
             /// </summary>
             public Uri Uri
             {

@@ -71,9 +71,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Contains properties that specify the endpoint settings
-        /// which the Windows Azure load balancer uses to monitor the
-        /// availability of this virtual machine before forwarding traffic to
-        /// the endpoint.
+        /// which the Azure load balancer uses to monitor the availability of
+        /// this virtual machine before forwarding traffic to the endpoint.
         /// </summary>
         public LoadBalancerProbe LoadBalancerProbe
         {
@@ -131,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _virtualIPAddress;
         
         /// <summary>
-        /// Optional. The ip of the role instance.
+        /// Optional. The virtual IP address of the role instance.
         /// </summary>
         public string VirtualIPAddress
         {

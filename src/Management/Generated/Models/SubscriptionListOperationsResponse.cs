@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         }
         
         /// <summary>
-        /// A collection of attributes that identifies the source of the
+        /// A collection of attributes that identify the source of the
         /// operation.
         /// </summary>
         public partial class OperationCallerDetails
@@ -103,8 +103,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             
             /// <summary>
             /// Optional. Indicates whether the operation was initiated by
-            /// using the Service Management API. False if it was initiated by
-            /// another source, such as the Management Portal.
+            /// using the Service Management API. This will be false if it was
+            /// initiated by another source, such as the Management Portal.
             /// </summary>
             public bool UsedServiceManagementApi
             {
@@ -143,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             private SubscriptionListOperationsResponse.OperationCallerDetails _operationCaller;
             
             /// <summary>
-            /// Optional. A collection of attributes that identifies the source
+            /// Optional. A collection of attributes that identify the source
             /// of the operation.
             /// </summary>
             public SubscriptionListOperationsResponse.OperationCallerDetails OperationCaller
@@ -231,9 +231,9 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// XML format: <OperationStatus>
             /// <ID>339c6c13-1f81-412f-9bc6-00e9c5876695</ID>
             /// <Status>Succeeded</Status>
-            /// <HttpStatusCode>200</HttpStatusCode> </OperationStatus>
+            /// <HttpStatusCode>200</HttpStatusCode> </OperationStatus>.
             /// Possible values of the Status element, whichholds the
-            /// operation status, are: Succeeded, Failed, InProgress.
+            /// operation status, are: Succeeded, Failed, or InProgress.
             /// </summary>
             public string OperationStatus
             {

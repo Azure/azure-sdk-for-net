@@ -35,10 +35,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IVirtualMachineVMImageOperations
     {
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Begin Deleting Virtual Machine Image operation deletes the
+        /// specified virtual machine image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// The name of the virtual machine image to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -50,10 +51,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginDeletingAsync(string vmImageName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Delete Virtual Machine Image operation deletes the specified
+        /// virtual machine image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// The name of the VM image to delete.
+        /// The name of the virtual machine image to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -62,18 +64,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         Task<OperationStatusResponse> DeleteAsync(string vmImageName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The List VM Images operation retrieves a list of the virtual
-        /// machine images.
+        /// The List Virtual Machine Images operation retrieves a list of the
+        /// virtual machine images.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -56,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The provider namespace of the extension. The provider
-        /// namespace for Windows Azure extensions is
+        /// namespace for Azure extensions is
         /// Microsoft.Windows.Azure.Extensions.
         /// </summary>
         public string ProviderNamespace
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The thumbprint algorithm of the certificate that is used
-        /// toencrypt the configuration specified in PrivateConfiguration.
+        /// to encrypt the configuration specified in PrivateConfiguration.
         /// </summary>
         public string ThumbprintAlgorithm
         {

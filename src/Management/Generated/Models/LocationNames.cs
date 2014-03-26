@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Models
 {
     /// <summary>
-    /// Known location names for Windows Azure.  You can obtain a complete list
-    /// of the latest locations available to your subscription from the List
+    /// Known location names for Azure. You can obtain a complete list of the
+    /// latest locations available to your subscription from the List
     /// Locations Operation.
     /// </summary>
     public static partial class LocationNames

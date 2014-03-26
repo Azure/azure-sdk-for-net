@@ -26,8 +26,8 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The parameters Windows Azure uses to create theoperating system disk
-    /// for the virtual machine.
+    /// The parameters Azure uses to create the operating system disk for the
+    /// virtual machine.
     /// </summary>
     public partial class OSVirtualHardDisk
     {
@@ -46,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _label;
         
         /// <summary>
-        /// Optional. Specifies the friendly name an operating system image in
-        /// the image repository.
+        /// Optional. Specifies the friendly name of an operating system image
+        /// in the image repository.
         /// </summary>
         public string Label
         {
@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the location of the operating system disk in
-        /// Windows Azure storage.
+        /// Azure storage.
         /// </summary>
         public Uri MediaLink
         {
@@ -70,8 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Specifies the name an operating system image in the image
-        /// repository.
+        /// Optional. Specifies the name of an operating system image in the
+        /// image repository.
         /// </summary>
         public string Name
         {

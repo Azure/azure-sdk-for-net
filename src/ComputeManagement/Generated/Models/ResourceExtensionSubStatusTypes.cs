@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The status could contain values like: Transitioning, Error, Success, or
-    /// Warning
+    /// The resource extension substatus, containing values like Transitioning,
+    /// Error, Success, or Warning.
     /// </summary>
     public static partial class ResourceExtensionSubStatusTypes
     {

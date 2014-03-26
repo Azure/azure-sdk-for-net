@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Optional. Specifies the Uri to the icon that is displayed for the
+        /// Optional. Specifies the URI to the icon that is displayed for the
         /// image in the Management Portal.
         /// </summary>
         public Uri IconUri
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Required. Specifies the friendly name of the image to be updated.
         /// You cannot use this operation to update images provided by the
-        /// Windows Azure platform.
+        /// Azure platform.
         /// </summary>
         public string Label
         {
@@ -106,8 +106,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _language;
         
         /// <summary>
-        /// Optional. Specifies the language of the image.  The Language
-        /// element is only available using version 2013-03-01 or higher.
+        /// Optional. Specifies the language of the image. The Language element
+        /// is only available using version 2013-03-01 or higher.
         /// </summary>
         public string Language
         {
@@ -155,9 +155,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the URI to the small icon that is displayed
-        /// when the image is presented in the Windows Azure Management
-        /// Portal.  The SmallIconUri element is only available using version
-        /// 2013-03-01 or higher.
+        /// when the image is presented in the Azure Management Portal. The
+        /// SmallIconUri element is only available using version 2013-03-01 or
+        /// higher.
         /// </summary>
         public Uri SmallIconUri
         {

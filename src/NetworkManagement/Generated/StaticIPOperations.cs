@@ -35,6 +35,10 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
+    /// <summary>
+    /// The Network Management API includes operations for managing the static
+    /// IPs for your subscription.
+    /// </summary>
     internal partial class StaticIPOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IStaticIPOperations
     {
         /// <summary>
@@ -74,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
-        /// and if not, provide a list of suggestions.
+        /// and if not, provides a list of suggestions.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkStaticIPAvailabilityResponse> CheckAsync(string networkName, string ipAddress, CancellationToken cancellationToken)
         {

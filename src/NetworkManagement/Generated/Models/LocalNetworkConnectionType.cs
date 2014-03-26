@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
+    /// <summary>
+    /// Possible values for the Local Network Connection Type.
+    /// </summary>
     public enum LocalNetworkConnectionType
     {
         IPSecurity = 0,

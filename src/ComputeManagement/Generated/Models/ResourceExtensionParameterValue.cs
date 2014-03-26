@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _key;
         
         /// <summary>
-        /// Optional. Key
+        /// Optional. The key of the parameter.
         /// </summary>
         public string Key
         {
@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _value;
         
         /// <summary>
-        /// Optional. Value
+        /// Optional. The value of the parameter.
         /// </summary>
         public string Value
         {

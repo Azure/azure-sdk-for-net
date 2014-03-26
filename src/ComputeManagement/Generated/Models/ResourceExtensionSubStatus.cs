@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// A substatus object contains additional status information reported by
+    /// A substatus object containing additional status information reported by
     /// the Resource Extension.
     /// </summary>
     public partial class ResourceExtensionSubStatus
@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _code;
         
         /// <summary>
-        /// Optional. Integer. Status code from the result of applying the sub
-        /// status settings.
+        /// Optional. Integer status code from the result of applying the
+        /// substatus settings.
         /// </summary>
         public int? Code
         {
@@ -46,7 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message.
+        /// Optional. This object encapsulates a formatted localized status
+        /// message.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -57,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. The message.
+        /// Optional. This object encapsulates a localized status message.
         /// </summary>
         public GuestAgentMessage Message
         {
@@ -68,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Optional. String. A name for the substatus.
+        /// Optional. A name for the substatus.
         /// </summary>
         public string Name
         {
@@ -79,8 +80,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _status;
         
         /// <summary>
-        /// Optional. The status could contain values like: Transitioning,
-        /// Error, Success, or Warning
+        /// Optional. The resource extension substatus, containing values like
+        /// Transitioning, Error, Success, or Warning.
         /// </summary>
         public string Status
         {

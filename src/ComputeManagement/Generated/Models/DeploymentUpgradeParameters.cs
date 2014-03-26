@@ -46,14 +46,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended deployment property.
-        /// Each extended property must have both a defined name and value.
-        /// You can have a maximum of 25 extended property name/value pairs.
-        /// The maximum length of the Name element is 64 characters, only
-        /// alphanumeric characters and underscores are valid in the Name, and
+        /// Each extended property must have a defined name and a value. You
+        /// can have a maximum of 25 extended property name/value pairs. The
+        /// maximum length of the name element is 64 characters, only
+        /// alphanumeric characters and underscores are valid in the name, and
         /// the name must start with a letter. Attempting to use other
-        /// characters, starting the Name with a non-letter character, or
+        /// characters, starting the name with a non-letter character, or
         /// entering a name that is identical to that of another extended
-        /// property owned by the same hosted service, will result in a status
+        /// property owned by the same hosted service will result in a status
         /// code 400 (Bad Request) error.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
@@ -66,11 +66,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents an extension that is added to the cloud
-        /// service. In Windows Azure, a process can run as an extension of a
-        /// cloud service. For example, Remote Desktop Access or the Windows
-        /// Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You must add an extension to the cloud service by using
-        /// Add Extension before it can be added to the deployment.
+        /// service. In Azure, a process can run as an extension of a cloud
+        /// service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// must add an extension to the cloud service by using Add Extension
+        /// before it can be added to the deployment.
         /// </summary>
         public ExtensionConfiguration ExtensionConfiguration
         {
@@ -82,8 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Specifies whether the rollback should proceed even when
-        /// it will cause local data to be lost from some role instances. True
-        /// if the rollback should proceed; otherwise false.
+        /// it will cause local data to be lost from some role instances.
         /// </summary>
         public bool Force
         {
@@ -111,8 +110,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Required. The type of update to initiate. Role instances are
         /// allocated to update domains when the service is deployed. Updates
         /// can be initiated manually in each update domain or initiated
-        /// automatically in all update domains. Possible values are: Auto,
-        /// Manual.  If not specified, the default value is Auto. If set to
+        /// automatically in all update domains. Possible values are Auto or
+        /// Manual. If not specified, the default value is Auto. If set to
         /// Manual, WalkUpgradeDomain must be called to apply the update. If
         /// set to Auto, the update is automatically applied to each update
         /// domain in sequence.
@@ -129,9 +128,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Required. A URL that refers to the location of the service package
         /// in the Blob service. The service package can be located either in
         /// a storage account beneath the same subscription or a Shared Access
-        /// Signature (SAS) URI from any storage account. For more info about
-        /// Shared Access Signatures, see Delegating Access with a Shared
-        /// Access Signature (REST API) at
+        /// Signature (SAS) URI from any storage account. For more information
+        /// about Shared Access Signatures, see Delegating Access with a
+        /// Shared Access Signature (REST API) at
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee395415.aspx.
         /// </summary>
         public Uri PackageUri

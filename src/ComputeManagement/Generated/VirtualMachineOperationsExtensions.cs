@@ -33,23 +33,27 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class VirtualMachineOperationsExtensions
     {
         /// <summary>
-        /// The Capture Role operation creates a copy of the operating system
-        /// virtual hard disk (VHD) that is deployed in the virtual machine,
-        /// saves the VHD copy in the same storage location as the operating
-        /// system VHD, and registers the copy as an image in your image
-        /// gallery. From the captured image, you can create additional
+        /// The Begin Capturing Role operation creates a copy of the operating
+        /// system virtual hard disk (VHD) that is deployed in the virtual
+        /// machine, saves the VHD copy in the same storage location as the
+        /// operating system VHD, and registers the copy as an image in your
+        /// image gallery. From the captured image, you can create additional
         /// customized virtual machines. For more information about images and
-        /// disks, see Manage Disks and Images. For more information about
-        /// capturing images, see How to Capture an Image of a Virtual Machine
-        /// Running Windows Server 2008 R2 or How to Capture an Image of a
-        /// Virtual Machine Running Linux.  (see
+        /// disks, see Manage Disks and Images at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj672979.aspx.
+        /// For more information about capturing images, see How to Capture an
+        /// Image of a Virtual Machine Running Windows Server 2008 R2 at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-capture-image-windows-server/
+        /// or How to Capture an Image of a Virtual Machine Running Linux at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-linux-capture-image/.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
         /// for more information)
         /// </summary>
@@ -67,8 +71,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Capture Virtual Machine
-        /// operation.
+        /// Required. Parameters supplied to the Begin Capturing Virtual
+        /// Machine operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -84,16 +88,20 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Capture Role operation creates a copy of the operating system
-        /// virtual hard disk (VHD) that is deployed in the virtual machine,
-        /// saves the VHD copy in the same storage location as the operating
-        /// system VHD, and registers the copy as an image in your image
-        /// gallery. From the captured image, you can create additional
+        /// The Begin Capturing Role operation creates a copy of the operating
+        /// system virtual hard disk (VHD) that is deployed in the virtual
+        /// machine, saves the VHD copy in the same storage location as the
+        /// operating system VHD, and registers the copy as an image in your
+        /// image gallery. From the captured image, you can create additional
         /// customized virtual machines. For more information about images and
-        /// disks, see Manage Disks and Images. For more information about
-        /// capturing images, see How to Capture an Image of a Virtual Machine
-        /// Running Windows Server 2008 R2 or How to Capture an Image of a
-        /// Virtual Machine Running Linux.  (see
+        /// disks, see Manage Disks and Images at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj672979.aspx.
+        /// For more information about capturing images, see How to Capture an
+        /// Image of a Virtual Machine Running Windows Server 2008 R2 at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-capture-image-windows-server/
+        /// or How to Capture an Image of a Virtual Machine Running Linux at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-linux-capture-image/.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
         /// for more information)
         /// </summary>
@@ -111,8 +119,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual machine to restart.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Capture Virtual Machine
-        /// operation.
+        /// Required. Parameters supplied to the Begin Capturing Virtual
+        /// Machine operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -186,17 +194,17 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Role operation adds a virtual machine to an existing
-        /// deployment.  You can refer to the OSDisk in the Add Role operation
-        /// in the following ways.  Platform/User Image – Set the
+        /// The Begin Creating Role operation adds a virtual machine to an
+        /// existing deployment. You can refer to the OSDisk in the Add Role
+        /// operation in the following ways: Platform/User Image – Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
-        /// control the name and location of target disk.  When DiskName and
+        /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned.  UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk –
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored.  Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx
@@ -213,7 +221,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Required. Parameters supplied to the Begin Creating Virtual Machine
         /// operation.
         /// </param>
         /// <returns>
@@ -230,17 +238,17 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Role operation adds a virtual machine to an existing
-        /// deployment.  You can refer to the OSDisk in the Add Role operation
-        /// in the following ways.  Platform/User Image – Set the
+        /// The Begin Creating Role operation adds a virtual machine to an
+        /// existing deployment. You can refer to the OSDisk in the Add Role
+        /// operation in the following ways: Platform/User Image – Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
-        /// control the name and location of target disk.  When DiskName and
+        /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned.  UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk –
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored.  Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx
@@ -257,7 +265,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Required. Parameters supplied to the Begin Creating Virtual Machine
         /// operation.
         /// </param>
         /// <returns>
@@ -270,14 +278,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Create Virtual Machine Deployment operation provisions a
-        /// virtual machine based on the supplied configuration.  When you
+        /// The Begin Creating Virtual Machine Deployment operation provisions
+        /// a virtual machine based on the supplied configuration. When you
         /// create a deployment of a virtual machine, you should make sure
         /// that the cloud service and the disk or image that you use are
         /// located in the same region. For example, if the cloud service was
         /// created in the West US region, the disk or image that you use
-        /// should also be located in a stor4age account in the West US
-        /// region.  (see
+        /// should also be located in a storage account in the West US region.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157194.aspx
         /// for more information)
         /// </summary>
@@ -289,7 +297,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Required. Parameters supplied to the Begin Creating Virtual Machine
         /// Deployment operation.
         /// </param>
         /// <returns>
@@ -306,14 +314,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Create Virtual Machine Deployment operation provisions a
-        /// virtual machine based on the supplied configuration.  When you
+        /// The Begin Creating Virtual Machine Deployment operation provisions
+        /// a virtual machine based on the supplied configuration. When you
         /// create a deployment of a virtual machine, you should make sure
         /// that the cloud service and the disk or image that you use are
         /// located in the same region. For example, if the cloud service was
         /// created in the West US region, the disk or image that you use
-        /// should also be located in a stor4age account in the West US
-        /// region.  (see
+        /// should also be located in a storage account in the West US region.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157194.aspx
         /// for more information)
         /// </summary>
@@ -325,7 +333,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Virtual Machine
+        /// Required. Parameters supplied to the Begin Creating Virtual Machine
         /// Deployment operation.
         /// </param>
         /// <returns>
@@ -338,8 +346,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Role operation deletes the specified virtual machine.
-        /// (see
+        /// The Begin Deleting Role operation deletes the specified virtual
+        /// machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157184.aspx
         /// for more information)
         /// </summary>
@@ -374,8 +382,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Role operation deletes the specified virtual machine.
-        /// (see
+        /// The Begin Deleting Role operation deletes the specified virtual
+        /// machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157184.aspx
         /// for more information)
         /// </summary>
@@ -406,8 +414,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Restart role operation restarts the specified virtual machine.
-        /// (see
+        /// The Begin Restarting role operation restarts the specified virtual
+        /// machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
         /// for more information)
         /// </summary>
@@ -438,8 +446,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Restart role operation restarts the specified virtual machine.
-        /// (see
+        /// The Begin Restarting role operation restarts the specified virtual
+        /// machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157197.aspx
         /// for more information)
         /// </summary>
@@ -532,8 +540,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Shutdown Roles operation stops the specified set of virtual
-        /// machines.
+        /// The Begin Shutting Down Roles operation stops the specified set of
+        /// virtual machines.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469421.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -546,8 +556,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to shutdown and their
-        /// post shutdown state.
+        /// Required. Parameters to pass to the Begin Shutting Down Roles
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -563,8 +573,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Shutdown Roles operation stops the specified set of virtual
-        /// machines.
+        /// The Begin Shutting Down Roles operation stops the specified set of
+        /// virtual machines.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469421.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -577,8 +589,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to shutdown and their
-        /// post shutdown state.
+        /// Required. Parameters to pass to the Begin Shutting Down Roles
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -590,8 +602,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Start Role operation starts the specified virtual machine.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj157189.aspx
+        /// The Begin Starting Role operation starts the specified virtual
+        /// machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157189.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -621,8 +634,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Start Role operation starts the specified virtual machine.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj157189.aspx
+        /// The Begin Starting Role operation starts the specified virtual
+        /// machine.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157189.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -648,8 +662,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Start Roles operation starts the specified set of virtual
-        /// machines.
+        /// The Begin Starting Roles operation starts the specified set of
+        /// virtual machines.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469419.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -662,7 +678,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to start.
+        /// Required. Parameters to pass to the Begin Starting Roles operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -678,8 +694,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Start Roles operation starts the specified set of virtual
-        /// machines.
+        /// The Begin Starting Roles operation starts the specified set of
+        /// virtual machines.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469419.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -692,7 +710,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to start.
+        /// Required. Parameters to pass to the Begin Starting Roles operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -704,8 +722,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Role operation adds a virtual machine to an existing
-        /// deployment.  (see
+        /// The Begin Updating Role operation adds a virtual machine to an
+        /// existing deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157187.aspx
         /// for more information)
         /// </summary>
@@ -723,7 +741,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Virtual Machine
+        /// Required. Parameters supplied to the Begin Updating Virtual Machine
         /// operation.
         /// </param>
         /// <returns>
@@ -740,8 +758,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Role operation adds a virtual machine to an existing
-        /// deployment.  (see
+        /// The Begin Updating Role operation adds a virtual machine to an
+        /// existing deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157187.aspx
         /// for more information)
         /// </summary>
@@ -759,7 +777,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your virtual machine.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Virtual Machine
+        /// Required. Parameters supplied to the Begin Updating Virtual Machine
         /// operation.
         /// </param>
         /// <returns>
@@ -772,10 +790,12 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The UpdateLoadBalancedEndpointSet operation changes the specified
-        /// load-balanced InputEndpoints on all the roles of an Infrastructure
-        /// as a Service deployment. Non load-balanced endpoints must be
-        /// changed using UpdateRole.
+        /// The Begin Updating Load Balanced Endpoint Set operation changes the
+        /// specified load-balanced InputEndpoints on all the roles of an
+        /// Infrastructure as a Service deployment. Non-load-balanced
+        /// endpoints must be changed using UpdateRole.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469417.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -788,8 +808,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balanced Endpoint
-        /// Set operation.
+        /// Required. Parameters supplied to the Begin Updating Load Balanced
+        /// Endpoint Set operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -805,10 +825,12 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The UpdateLoadBalancedEndpointSet operation changes the specified
-        /// load-balanced InputEndpoints on all the roles of an Infrastructure
-        /// as a Service deployment. Non load-balanced endpoints must be
-        /// changed using UpdateRole.
+        /// The Begin Updating Load Balanced Endpoint Set operation changes the
+        /// specified load-balanced InputEndpoints on all the roles of an
+        /// Infrastructure as a Service deployment. Non-load-balanced
+        /// endpoints must be changed using UpdateRole.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469417.aspx
+        /// for more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -821,8 +843,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balanced Endpoint
-        /// Set operation.
+        /// Required. Parameters supplied to the Begin Updating Load Balanced
+        /// Endpoint Set operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -840,10 +862,14 @@ namespace Microsoft.WindowsAzure
         /// system VHD, and registers the copy as an image in your image
         /// gallery. From the captured image, you can create additional
         /// customized virtual machines. For more information about images and
-        /// disks, see Manage Disks and Images. For more information about
-        /// capturing images, see How to Capture an Image of a Virtual Machine
-        /// Running Windows Server 2008 R2 or How to Capture an Image of a
-        /// Virtual Machine Running Linux.  (see
+        /// disks, see Manage Disks and Images at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj672979.aspx.
+        /// For more information about capturing images, see How to Capture an
+        /// Image of a Virtual Machine Running Windows Server 2008 R2 at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-capture-image-windows-server/
+        /// or How to Capture an Image of a Virtual Machine Running Linux at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-linux-capture-image/.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
         /// for more information)
         /// </summary>
@@ -868,12 +894,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse CaptureOSImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
@@ -891,10 +917,14 @@ namespace Microsoft.WindowsAzure
         /// system VHD, and registers the copy as an image in your image
         /// gallery. From the captured image, you can create additional
         /// customized virtual machines. For more information about images and
-        /// disks, see Manage Disks and Images. For more information about
-        /// capturing images, see How to Capture an Image of a Virtual Machine
-        /// Running Windows Server 2008 R2 or How to Capture an Image of a
-        /// Virtual Machine Running Linux.  (see
+        /// disks, see Manage Disks and Images at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj672979.aspx.
+        /// For more information about capturing images, see How to Capture an
+        /// Image of a Virtual Machine Running Windows Server 2008 R2 at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-capture-image-windows-server/
+        /// or How to Capture an Image of a Virtual Machine Running Linux at
+        /// http://www.windowsazure.com/en-us/documentation/articles/virtual-machines-linux-capture-image/.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157201.aspx
         /// for more information)
         /// </summary>
@@ -919,12 +949,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CaptureOSImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureOSImageParameters parameters)
         {
@@ -955,12 +985,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse CaptureVMImage(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
@@ -995,12 +1025,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CaptureVMImageAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineCaptureVMImageParameters parameters)
         {
@@ -1008,17 +1038,17 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Role operation adds a virtual machine to an existing
-        /// deployment.  You can refer to the OSDisk in the Add Role operation
-        /// in the following ways.  Platform/User Image – Set the
+        /// The Create Role operation adds a virtual machine to an existing
+        /// deployment. You can refer to the OSDisk in the Add Role operation
+        /// in the following ways: Platform/User Image – Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
-        /// control the name and location of target disk.  When DiskName and
+        /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned.  UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk –
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored.  Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx
@@ -1042,12 +1072,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Create(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
@@ -1059,17 +1089,17 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Role operation adds a virtual machine to an existing
-        /// deployment.  You can refer to the OSDisk in the Add Role operation
-        /// in the following ways.  Platform/User Image – Set the
+        /// The Create Role operation adds a virtual machine to an existing
+        /// deployment. You can refer to the OSDisk in the Add Role operation
+        /// in the following ways: Platform/User Image – Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
-        /// control the name and location of target disk.  When DiskName and
+        /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned.  UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk –
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored.  Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx
@@ -1093,12 +1123,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CreateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineCreateParameters parameters)
         {
@@ -1107,13 +1137,13 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Create Virtual Machine Deployment operation provisions a
-        /// virtual machine based on the supplied configuration.  When you
+        /// virtual machine based on the supplied configuration. When you
         /// create a deployment of a virtual machine, you should make sure
         /// that the cloud service and the disk or image that you use are
         /// located in the same region. For example, if the cloud service was
         /// created in the West US region, the disk or image that you use
-        /// should also be located in a stor4age account in the West US
-        /// region.  (see
+        /// should also be located in a storage account in the West US region.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157194.aspx
         /// for more information)
         /// </summary>
@@ -1132,12 +1162,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse CreateDeployment(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
@@ -1150,13 +1180,13 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Create Virtual Machine Deployment operation provisions a
-        /// virtual machine based on the supplied configuration.  When you
+        /// virtual machine based on the supplied configuration. When you
         /// create a deployment of a virtual machine, you should make sure
         /// that the cloud service and the disk or image that you use are
         /// located in the same region. For example, if the cloud service was
         /// created in the West US region, the disk or image that you use
-        /// should also be located in a stor4age account in the West US
-        /// region.  (see
+        /// should also be located in a storage account in the West US region.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157194.aspx
         /// for more information)
         /// </summary>
@@ -1175,12 +1205,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CreateDeploymentAsync(this IVirtualMachineOperations operations, string serviceName, VirtualMachineCreateDeploymentParameters parameters)
         {
@@ -1214,12 +1244,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Delete(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
@@ -1257,12 +1287,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, bool deleteFromStorage)
         {
@@ -1410,12 +1440,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Restart(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
@@ -1449,12 +1479,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> RestartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
@@ -1481,18 +1511,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown virtual machine operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Shutdown(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
@@ -1523,18 +1553,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual machine to shutdown.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the shutdown vm operation.
+        /// Required. The parameters for the shutdown virtual machine operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ShutdownAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineShutdownParameters parameters)
         {
@@ -1556,19 +1586,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to shutdown and their
-        /// post shutdown state.
+        /// Required. Parameters to pass to the Shutdown Roles operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse ShutdownRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
@@ -1594,19 +1623,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to shutdown and their
-        /// post shutdown state.
+        /// Required. Parameters to pass to the Shutdown Roles operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ShutdownRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineShutdownRolesParameters parameters)
         {
@@ -1635,12 +1663,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Start(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
@@ -1673,12 +1701,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> StartAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName)
         {
@@ -1700,18 +1728,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to start.
+        /// Required. Parameters to pass to the Start Roles operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse StartRoles(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
@@ -1737,18 +1765,18 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The set of virtual machine roles to start.
+        /// Required. Parameters to pass to the Start Roles operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> StartRolesAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineStartRolesParameters parameters)
         {
@@ -1782,12 +1810,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Update(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
@@ -1825,12 +1853,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpdateAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, string virtualMachineName, VirtualMachineUpdateParameters parameters)
         {
@@ -1838,10 +1866,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The UpdateLoadBalancedEndpointSet operation changes the specified
-        /// load-balanced InputEndpoints on all the roles of an Infrastructure
-        /// as a Service deployment. Non load-balanced endpoints must be
-        /// changed using UpdateRole.
+        /// The Update Load Balanced Endpoint Set operation changes the
+        /// specified load-balanced InputEndpoints on all the roles of an
+        /// Infrastructure as a Service deployment. Non-load-balanced
+        /// endpoints must be changed using UpdateRole.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1861,12 +1889,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse UpdateLoadBalancedEndpointSet(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {
@@ -1878,10 +1906,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The UpdateLoadBalancedEndpointSet operation changes the specified
-        /// load-balanced InputEndpoints on all the roles of an Infrastructure
-        /// as a Service deployment. Non load-balanced endpoints must be
-        /// changed using UpdateRole.
+        /// The Update Load Balanced Endpoint Set operation changes the
+        /// specified load-balanced InputEndpoints on all the roles of an
+        /// Infrastructure as a Service deployment. Non-load-balanced
+        /// endpoints must be changed using UpdateRole.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -1901,12 +1929,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpdateLoadBalancedEndpointSetAsync(this IVirtualMachineOperations operations, string serviceName, string deploymentName, VirtualMachineUpdateLoadBalancedSetParameters parameters)
         {

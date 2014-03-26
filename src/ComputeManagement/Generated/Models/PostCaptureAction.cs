@@ -39,7 +39,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Causes the virtual machine to be redeployed after the image is
         /// captured by using the specified information in
-        /// ProvisioningConfiguration
+        /// ProvisioningConfiguration.
         /// </summary>
         Reprovision = 1,
     }

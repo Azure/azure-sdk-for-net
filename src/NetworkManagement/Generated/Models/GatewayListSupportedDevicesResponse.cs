@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The respoonse to the get supported platform configuration request.
+    /// The response to the list supported devices request.
     /// </summary>
     public partial class GatewayListSupportedDevicesResponse : OperationResponse
     {
@@ -68,7 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _name;
             
             /// <summary>
-            /// Optional. The name of the os family.
+            /// Optional. The name of the OS family.
             /// </summary>
             public string Name
             {
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         }
         
         /// <summary>
-        /// The name and supported OS Families for this vendor on the platform.
+        /// The name and supported OS families for this vendor on the platform.
         /// </summary>
         public partial class Platform
         {
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<GatewayListSupportedDevicesResponse.OSFamily> _oSFamilies;
             
             /// <summary>
-            /// Optional. The supported OS Families for this platform.
+            /// Optional. The supported OS families for this platform.
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.OSFamily> OSFamilies
             {
