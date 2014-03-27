@@ -16,7 +16,6 @@
 - Microsoft Azure Virtual Machines
 - Hosted Services
 - Infrastructure services
-- Monitoring
 - Scheduler
 - Service Bus
 - Storage Accounts
@@ -40,7 +39,6 @@ Management operations require the X509Certificate2 type that is not present in t
         <dependency id="Microsoft.WindowsAzure.Management.Network" version="__VERSION_Microsoft.WindowsAzure.Management.Network__" />
         <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
         <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
-        <dependency id="Microsoft.WindowsAzure.Management.Monitoring" version="__VERSION_Microsoft.WindowsAzure.Management.Monitoring__" />
         <dependency id="Microsoft.WindowsAzure.Management.MediaServices" version="__VERSION_Microsoft.WindowsAzure.Management.MediaServices__" />
       </group>
     </dependencies>
