@@ -31,6 +31,7 @@
     <Compile Include="Credentials\BasicAuthenticationCloudCredentials.cs" />
     <Compile Include="Credentials\TokenCloudCredentials.cs" />
     <Compile Include="Credentials\SubscriptionCloudCredentials.cs" />
+    <Compile Include="Exception\CloudError.cs" />
     <Compile Include="Exception\CloudExceptionType.cs" />
     <Compile Include="Exception\CloudHttpErrorInfo.cs" />
     <Compile Include="Exception\CloudHttpRequestErrorInfo.cs" />
@@ -40,6 +41,7 @@
     <Compile Include="Internals\ICloudSettingsFormat.cs" />
     <Compile Include="Configuration\JsonSettingsFormat.cs" />
     <Compile Include="Internals\IndisposableDelegatingHandler.cs" />
+    <Compile Include="Internals\ParserHelper.cs" />
     <Compile Include="Internals\TypeConversion.cs" />
     <Compile Include="Internals\UriHelper.cs" />
     <Compile Include="Models\OperationResponse.cs" />
