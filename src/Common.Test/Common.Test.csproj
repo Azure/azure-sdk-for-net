@@ -70,6 +70,7 @@
     <Compile Include="Fakes\FakeServiceClientWithCredentials.cs" />
     <Compile Include="Fakes\FakeServiceClient.cs" />
     <Compile Include="Fakes\RecordedDelegatingHandler.cs" />
+    <Compile Include="Internals\ParserHelperTests.cs" />
     <Compile Include="OData\FilterStringTest.cs" />
     <Compile Include="Internals\UriHelperTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
