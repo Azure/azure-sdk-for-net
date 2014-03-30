@@ -72,6 +72,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -79,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string vmImageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -95,12 +99,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
+                tracingParameters.Add("deleteFromStorage", deleteFromStorage);
                 Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/vmimages/" + vmImageName + "?comp=media";
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/vmimages/" + vmImageName + "?";
+            if (deleteFromStorage == true)
+            {
+                url = url + "comp=media";
+            }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -192,6 +201,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -206,7 +219,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string vmImageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -216,6 +229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
+                tracingParameters.Add("deleteFromStorage", deleteFromStorage);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             try
@@ -226,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, cancellationToken).ConfigureAwait(false);
+                OperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, deleteFromStorage, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
