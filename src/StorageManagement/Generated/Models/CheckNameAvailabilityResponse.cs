@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private bool _isAvailable;
         
         /// <summary>
-        /// Optional. The result of the availability request.  True if the name
-        /// is available, false otherwise
+        /// Optional. The result of the availability request indicating if the
+        /// name is available.
         /// </summary>
         public bool IsAvailable
         {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         
         /// <summary>
         /// Optional. The reason for unavailability, if the requested name is
-        /// unavailable
+        /// unavailable.
         /// </summary>
         public string Reason
         {

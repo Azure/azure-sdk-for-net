@@ -32,17 +32,17 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class StorageManagementClientExtensions
     {
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -59,12 +59,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse GetOperationStatus(this IStorageManagementClient operations, string requestId)
         {
@@ -76,10 +76,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -96,12 +96,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> GetOperationStatusAsync(this IStorageManagementClient operations, string requestId)
         {
