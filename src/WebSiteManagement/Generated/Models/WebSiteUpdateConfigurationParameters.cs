@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Update Web Site Configuration parameters.
+    /// The parameters supplied Update Configuration Web Site operation.
     /// </summary>
     public partial class WebSiteUpdateConfigurationParameters
     {
@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. A set of name/value pairs that contain application
-        /// settings for a site.
+        /// settings for a web site.
         /// </summary>
         public IDictionary<string, string> AppSettings
         {
@@ -46,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> _connectionStrings;
         
         /// <summary>
-        /// Optional. Contains connection strings for database and other
-        /// external resources.
+        /// Optional. Connection strings for database and other external
+        /// resources.
         /// </summary>
         public IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> ConnectionStrings
         {
@@ -58,12 +58,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _defaultDocuments;
         
         /// <summary>
-        /// Optional. Contains one or more string elements that list, in order
-        /// of preference, the name of the file that a web site returns when
-        /// the web site's domain name is requested by itself. For example, if
-        /// the default document for http://contoso.com is default.htm, the
-        /// page http://www.contoso.com/default.htm is returned when the
-        /// browser is pointed to http://www.contoso.com.
+        /// Optional. Elements that list, in order of preference, the name of
+        /// the file that a web site returns when the web site's domain name
+        /// is requested by itself. For example, if the default document for
+        /// http://contoso.com is default.htm, the page
+        /// http://www.contoso.com/default.htm is returned when the browser is
+        /// pointed to http://www.contoso.com.
         /// </summary>
         public IList<string> DefaultDocuments
         {
@@ -74,8 +74,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _detailedErrorLoggingEnabled;
         
         /// <summary>
-        /// Optional. True if detailed error logging is enabled; otherwise,
-        /// false.
+        /// Optional. Indicated if detailed error logging is enabled.
         /// </summary>
         public bool? DetailedErrorLoggingEnabled
         {
@@ -109,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _httpLoggingEnabled;
         
         /// <summary>
-        /// Optional. True if HTTP error logging is enabled; otherwise, false.
+        /// Optional. Indicates if HTTP error logging is enabled.
         /// </summary>
         public bool? HttpLoggingEnabled
         {
@@ -120,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private int? _logsDirectorySizeLimit;
         
         /// <summary>
-        /// Optional. The limit of the logs directory.
+        /// Optional. The size limit of the logs directory.
         /// </summary>
         public int? LogsDirectorySizeLimit
         {
@@ -131,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
         
         /// <summary>
-        /// Optional. Managed pipeline modes.
+        /// Optional. The managed pipeline mode.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? ManagedPipelineMode
         {
@@ -142,8 +141,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IDictionary<string, string> _metadata;
         
         /// <summary>
-        /// Optional. Contains name/value pairs for source control or other
-        /// information.
+        /// Optional. Name/value pairs for source control or other information.
         /// </summary>
         public IDictionary<string, string> Metadata
         {
@@ -180,8 +178,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _phpVersion;
         
         /// <summary>
-        /// Optional. Supported values are an empty string (an empty string
-        /// disables PHP), 5.3, and 5.4.
+        /// Optional. The web site's PHP version. Supported values are an empty
+        /// string (an empty string disables PHP), 5.3, and 5.4.
         /// </summary>
         public string PhpVersion
         {
@@ -204,7 +202,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _publishingUserName;
         
         /// <summary>
-        /// Optional. The username used for publishing the web site. This is
+        /// Optional. The user name used for publishing the web site. This is
         /// normally a dollar sign prepended to the web site name (for
         /// example, "$contoso").
         /// </summary>
@@ -217,7 +215,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _remoteDebuggingEnabled;
         
         /// <summary>
-        /// Optional. True remote debugging is enabled; otherwise, false.
+        /// Optional. Indicates if remote debugging is enabled.
         /// </summary>
         public bool? RemoteDebuggingEnabled
         {
@@ -228,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private RemoteDebuggingVersion _remoteDebuggingVersion;
         
         /// <summary>
-        /// Optional. True remote debugging version.
+        /// Optional. The remote debugging version.
         /// </summary>
         public RemoteDebuggingVersion RemoteDebuggingVersion
         {
@@ -239,7 +237,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _requestTracingEnabled;
         
         /// <summary>
-        /// Optional. True if request tracing is enabled; otherwise, false.
+        /// Optional. Indicates if request tracing is enabled.
         /// </summary>
         public bool? RequestTracingEnabled
         {
@@ -274,7 +272,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _use32BitWorkerProcess;
         
         /// <summary>
-        /// Optional. True if 32-bit mode is enabled; otherwise, false.
+        /// Optional. Indicates if 32-bit mode is enabled.
         /// </summary>
         public bool? Use32BitWorkerProcess
         {
@@ -285,7 +283,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _webSocketsEnabled;
         
         /// <summary>
-        /// Optional. True if Web Sockets are enabled; otherwise, false.
+        /// Optional. Indicates if Web Sockets are enabled.
         /// </summary>
         public bool? WebSocketsEnabled
         {
@@ -307,14 +305,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Connection string for database and other external resources.
+        /// Connection string information for database and other external
+        /// resources.
         /// </summary>
         public partial class ConnectionStringInfo
         {
             private string _connectionString;
             
             /// <summary>
-            /// Optional. A database connection string.
+            /// Optional. The database connection string.
             /// </summary>
             public string ConnectionString
             {

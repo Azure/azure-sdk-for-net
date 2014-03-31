@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Details operation response.
+    /// The Get Web Site operation response.
     /// </summary>
     public partial class WebSiteGetResponse : OperationResponse
     {
         private WebSite _webSite;
         
         /// <summary>
-        /// Optional. Details for the requested website.
+        /// Optional. Details for the requested web site.
         /// </summary>
         public WebSite WebSite
         {

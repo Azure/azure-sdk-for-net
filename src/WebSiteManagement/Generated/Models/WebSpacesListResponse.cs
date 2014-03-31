@@ -120,7 +120,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _geoRegion;
             
             /// <summary>
-            /// Optional. The geographical region where the webspace is located.
+            /// Optional. The geographical region where the web space is
+            /// located.
             /// </summary>
             public string GeoRegion
             {
@@ -131,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// Optional. The name of the webspace.
+            /// Optional. The name of the web space.
             /// </summary>
             public string Name
             {
@@ -142,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _plan;
             
             /// <summary>
-            /// Optional. The name of the webspace.
+            /// Optional. The web space plan name.
             /// </summary>
             public string Plan
             {
@@ -154,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             
             /// <summary>
             /// Optional. The status of the Web Space. Possible values are
-            /// Ready or Limited.  Note: The Limited status occurs only if the
+            /// Ready or Limited. Note: The Limited status occurs only if the
             /// datacenter is encountering an operational issue.
             /// </summary>
             public WebSpaceStatus Status
@@ -179,7 +180,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// <summary>
             /// Optional. The worker size. Possible values are Small, Medium,
             /// and Large. For JSON, the equivalents are 0 = Small, 1 =
-            /// Medium, 2 = Large.
+            /// Medium, and 2 = Large.
             /// </summary>
             public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceWorkerSize? WorkerSize
             {
