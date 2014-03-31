@@ -41,6 +41,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='vmImageName'>
         /// The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Specifies that the source blob for the image should also be deleted
+        /// from storage.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -48,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> BeginDeletingAsync(string vmImageName, CancellationToken cancellationToken);
+        Task<OperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Virtual Machine Image operation deletes the specified
@@ -56,6 +60,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </summary>
         /// <param name='vmImageName'>
         /// The name of the virtual machine image to delete.
+        /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Specifies that the source blob for the image should also be deleted
+        /// from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -71,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<OperationStatusResponse> DeleteAsync(string vmImageName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> DeleteAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Virtual Machine Images operation retrieves a list of the

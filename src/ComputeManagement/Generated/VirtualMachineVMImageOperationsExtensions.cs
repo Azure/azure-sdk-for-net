@@ -50,15 +50,19 @@ namespace Microsoft.WindowsAzure
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse BeginDeleting(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static OperationResponse BeginDeleting(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVirtualMachineVMImageOperations)s).BeginDeletingAsync(vmImageName);
+                return ((IVirtualMachineVMImageOperations)s).BeginDeletingAsync(vmImageName, deleteFromStorage);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -74,13 +78,17 @@ namespace Microsoft.WindowsAzure
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> BeginDeletingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static Task<OperationResponse> BeginDeletingAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
-            return operations.BeginDeletingAsync(vmImageName, CancellationToken.None);
+            return operations.BeginDeletingAsync(vmImageName, deleteFromStorage, CancellationToken.None);
         }
         
         /// <summary>
@@ -94,6 +102,10 @@ namespace Microsoft.WindowsAzure
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -105,11 +117,11 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse Delete(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static OperationStatusResponse Delete(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IVirtualMachineVMImageOperations)s).DeleteAsync(vmImageName);
+                return ((IVirtualMachineVMImageOperations)s).DeleteAsync(vmImageName, deleteFromStorage);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -125,6 +137,10 @@ namespace Microsoft.WindowsAzure
         /// <param name='vmImageName'>
         /// Required. The name of the virtual machine image to delete.
         /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
+        /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
@@ -136,9 +152,9 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineVMImageOperations operations, string vmImageName)
+        public static Task<OperationStatusResponse> DeleteAsync(this IVirtualMachineVMImageOperations operations, string vmImageName, bool deleteFromStorage)
         {
-            return operations.DeleteAsync(vmImageName, CancellationToken.None);
+            return operations.DeleteAsync(vmImageName, deleteFromStorage, CancellationToken.None);
         }
         
         /// <summary>
