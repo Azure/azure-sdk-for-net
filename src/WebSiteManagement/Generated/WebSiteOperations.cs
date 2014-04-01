@@ -460,6 +460,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     throw new ArgumentNullException("parameters.WebSpace.Plan");
                 }
             }
+            if (parameters.WebSpaceName == null)
+            {
+                throw new ArgumentNullException("parameters.WebSpaceName");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -509,7 +513,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 XElement siteElement = new XElement(XName.Get("Site", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(siteElement);
                 
-                if (parameters.HostNames != null && parameters.HostNames.Count > 0)
+                if (parameters.HostNames != null)
                 {
                     XElement hostNamesSequenceElement = new XElement(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
                     foreach (string hostNamesItem in parameters.HostNames)
@@ -546,12 +550,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteElement.Add(siteModeElement);
                 }
                 
-                if (parameters.WebSpaceName != null)
-                {
-                    XElement webSpaceElement = new XElement(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                    webSpaceElement.Value = parameters.WebSpaceName;
-                    siteElement.Add(webSpaceElement);
-                }
+                XElement webSpaceElement = new XElement(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                webSpaceElement.Value = parameters.WebSpaceName;
+                siteElement.Add(webSpaceElement);
                 
                 if (parameters.WebSpace != null)
                 {
