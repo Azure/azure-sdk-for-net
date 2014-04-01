@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     public enum StorageAccountStatus
     {
         /// <summary>
-        /// The Storage Account had been created.
+        /// The Storage Account has been created.
         /// </summary>
         Created = 0,
         

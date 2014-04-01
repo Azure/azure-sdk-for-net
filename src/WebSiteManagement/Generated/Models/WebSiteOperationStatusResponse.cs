@@ -30,9 +30,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The response body contains the status of the specified long-running
     /// operation, indicating whether it has succeeded, is inprogress, has
-    /// time dout, or has failed. Note that this status is distinct from the
+    /// timed out, or has failed. Note that this status is distinct from the
     /// HTTP status code returned for the Get Operation Status operation
-    /// itself.  If the long-running operation failed, the response body
+    /// itself. If the long-running operation failed, the response body
     /// includes error information regarding the failure.
     /// </summary>
     public partial class WebSiteOperationStatusResponse : OperationResponse
@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _geoMasterOperationId;
         
         /// <summary>
-        /// Optional. The GeoMaster Operation Id for this operation, if any.
+        /// Optional. The GeoMaster Operation ID for this operation, if any.
         /// </summary>
         public string GeoMasterOperationId
         {
@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _operationId;
         
         /// <summary>
-        /// Optional. The operation Id for this operation.  Used to poll for
+        /// Optional. The Operation ID for this operation. Used to poll for
         /// operation status.
         /// </summary>
         public string OperationId
@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Information about an error that occured suring the operation.
+        /// Information about an error that occured during the operation.
         /// </summary>
         public partial class Error
         {
@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _extendedCode;
             
             /// <summary>
-            /// Optional. The error extended code.
+            /// Optional. The extended error code.
             /// </summary>
             public string ExtendedCode
             {

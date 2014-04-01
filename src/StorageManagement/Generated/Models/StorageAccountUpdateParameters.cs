@@ -45,17 +45,17 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended storage account
-        /// property. Each extended property must have both a defined name and
+        /// property. Each extended property must have a defined name and a
         /// value. You can have a maximum of 50 extended property name/value
-        /// pairs.  The maximum length of the Name element is 64 characters,
+        /// pairs. The maximum length of the Name element is 64 characters,
         /// only alphanumeric characters and underscores are valid in the
         /// Name, and the name must start with a letter. Attempting to use
         /// other characters, starting the Name with a non-letter character,
         /// or entering a name that is identical to that of another extended
-        /// property owned by the same storage account, will result in a
-        /// status code 400 (Bad Request) error.  Each extended property value
-        /// has a maximum length of 255 characters.  You can delete an
-        /// extended property by setting the value to NULL.
+        /// property owned by the same storage account will result in a status
+        /// code 400 (Bad Request) error. Each extended property value has a
+        /// maximum length of 255 characters. You can delete an extended
+        /// property by setting the value to NULL.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
@@ -66,21 +66,20 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private bool? _geoReplicationEnabled;
         
         /// <summary>
-        /// Optional. Enables or disables geo-replication on the specified the
-        /// storage. If set to true, the data in the storage account is
-        /// replicated across more than one geographic location so as to
-        /// enable resilience in the face of catastrophic service loss. If set
-        /// to false, geo-replication is disabled. If the element is not
-        /// included in the request body, the current value is left unchanged.
-        /// Important: If you have enabled geo-replication you can elect to
-        /// disable it by setting this element to false. When disabled, your
-        /// data is no longer replicated to a secondary data center and any
-        /// data in the secondary location will be removed.  Enabling
-        /// geo-replication once it has been disabled will result in the
-        /// storage account being billed for replicating the current copy of
-        /// data to the secondary data center. After the existing copy of the
-        /// data is replicated to the secondary data center, updates are
-        /// geo-replicated at no additional charge.
+        /// Optional. Indicates whether geo-replication is enabled on the
+        /// specified storage account. If set to true, the data in the storage
+        /// account is replicated across more than one geographic location so
+        /// as to enable resiliency in the face of catastrophic service loss.
+        /// If the element is not included in the request body, the current
+        /// value is left unchanged. Important: If you have enabled
+        /// geo-replication, you can elect to disable it by setting this
+        /// element to false. When disabled, your data is no longer replicated
+        /// to a secondary data center and any data in the secondary location
+        /// will be removed. Enabling geo-replication once it has been
+        /// disabled will result in the storage account being billed for
+        /// replicating the current copy of data to the secondary data center.
+        /// After the existing copy of the data is replicated to the secondary
+        /// data center, updates are geo-replicated at no additional charge.
         /// </summary>
         public bool? GeoReplicationEnabled
         {
@@ -91,9 +90,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _label;
         
         /// <summary>
-        /// Optional. A name for the storage account that is base64-encoded.
-        /// The label may be up to 100 characters in length. The name can be
-        /// used identify the storage account for your tracking purposes.
+        /// Optional. A name for the storage account, base64-encoded. The name
+        /// may be up to 100 characters in length. The name can be used
+        /// identify the storage account for your tracking purposes.
         /// </summary>
         public string Label
         {

@@ -69,13 +69,13 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
-        /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// The Begin Creating Storage Account operation creates a new storage
+        /// account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Storage Account
+        /// Required. Parameters supplied to the Begin Creating Storage Account
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         
         /// <summary>
         /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
+        /// name is available for use in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
         /// for more information)
         /// </summary>
@@ -457,7 +457,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         
         /// <summary>
         /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
@@ -472,12 +472,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(StorageAccountCreateParameters parameters, CancellationToken cancellationToken)
         {
@@ -553,13 +553,13 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
-        /// The Delete Storage Account operation deletes the specifiedstorage
-        /// account from Windows Azure.  (see
+        /// The Delete Storage Account operation deletes the specified storage
+        /// account from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264517.aspx
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// Required. The name of the storage account.
+        /// Required. The name of the storage account to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -681,7 +681,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// for more information)
         /// </summary>
         /// <param name='accountName'>
-        /// Required. Name of the storage account to get.
+        /// Required. Name of the storage account to get properties for.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1519,9 +1519,9 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
-        /// The Update Storage Account operation updates the label, the
+        /// The Update Storage Account operation updates the label and the
         /// description, and enables or disables the geo-replication status
-        /// for a storage account in Windows Azure.  (see
+        /// for a storage account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264516.aspx
         /// for more information)
         /// </summary>

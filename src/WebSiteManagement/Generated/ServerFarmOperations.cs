@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -304,7 +304,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -433,7 +433,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -620,7 +620,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see

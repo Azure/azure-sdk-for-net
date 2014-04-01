@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
+        /// Creates a source control user with permissions to publish to this
+        /// web space.
         /// </summary>
         /// <param name='username'>
         /// Required. The user name.
@@ -267,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
+        /// You can retrieve details for a specified web space name by issuing
         /// an HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
         /// for more information)
@@ -485,7 +486,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the dns suffix for this subscription.
+        /// Get the DNS Suffix for this subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -606,7 +607,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can list the webspaces under the current subscription by
+        /// You can list the web spaces under the current subscription by
         /// issuing a GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
         /// for more information)
@@ -822,13 +823,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the available geo regions for this webspace.
+        /// Get the available geo regions for this web space.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DNS Suffix operation response.
+        /// The List Geo Regions operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
         {

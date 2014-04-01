@@ -34,10 +34,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
         
         /// <summary>
-        /// Optional. This value should be Shared for the Free or Paid Shared
-        /// offerings, or Dedicated for the Standard offering. The default
-        /// value is Shared. If you set ComputeMode to Dedicated, you must
-        /// specify a value for the ServerFarm element.
+        /// Optional. The compute mode for the web site. This value should be
+        /// Shared for the Free or Paid Shared offerings or Dedicated for the
+        /// Standard offering. The default value is Shared. If you set
+        /// ComputeMode to Dedicated, you must specify a value for the
+        /// ServerFarm element.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
         {
@@ -48,10 +49,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _hostNames;
         
         /// <summary>
-        /// Optional. The fully qualified domain name for website. Only one
-        /// hostname can be specified in the azurewebsites.net domain. The
-        /// hostname should match the name of the website. Custom domains can
-        /// only be specified for Shared or Standard websites.
+        /// Optional. The fully qualified domain name for web site. Only one
+        /// host name can be specified in the azurewebsites.net domain. The
+        /// host name should match the name of the web site. Custom domains
+        /// can only be specified for Shared or Standard web sites.
         /// </summary>
         public IList<string> HostNames
         {
@@ -62,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// Required. The name of the website. This should match the hostname
+        /// Required. The name of the web site. This should match the host name
         /// in the default domain.
         /// </summary>
         public string Name
@@ -74,8 +75,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. The name of the Server Farm associated with this website.
-        /// This is a required value for Standard mode.
+        /// Optional. The name of the Server Farm associated with this web
+        /// site. This is a required value for Standard mode.
         /// </summary>
         public string ServerFarm
         {
@@ -86,10 +87,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? _siteMode;
         
         /// <summary>
-        /// Optional. This value is limited for the Free offering Basic for the
-        /// Paid Shared offering. The default value is Limited. Note: Standard
-        /// mode does not use the SiteMode setting; it uses the ComputeMode
-        /// setting. For more information, see Upgrade or Downgrade a Web Site.
+        /// Optional. The web site mode. This value is Limited for the Free
+        /// offering and Basic for the Paid and Shared offerings. The default
+        /// value is Limited. Note: Standard mode does not use the SiteMode
+        /// setting; it uses the ComputeMode setting. For more information,
+        /// see Upgrade or Downgrade a Web Site.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
         {
@@ -111,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _webSpaceName;
         
         /// <summary>
-        /// Required. The name of the webspace.
+        /// Optional. The name of the web space.
         /// </summary>
         public string WebSpaceName
         {
@@ -135,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _geoRegion;
             
             /// <summary>
-            /// Required. The geographical region of the webspace that will be
+            /// Required. The geographical region of the web space that will be
             /// created.
             /// </summary>
             public string GeoRegion
@@ -147,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// Required. The name of the webspace.
+            /// Required. The name of the web space.
             /// </summary>
             public string Name
             {
@@ -158,7 +160,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _plan;
             
             /// <summary>
-            /// Required. This value must be VirtualDedicatedPlan.
+            /// Required. The web space plan. This value must be
+            /// VirtualDedicatedPlan.
             /// </summary>
             public string Plan
             {
