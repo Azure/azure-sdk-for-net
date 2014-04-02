@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Tracing.Etw</id>
     <title>Microsoft Azure Common Library ETW Logger</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
