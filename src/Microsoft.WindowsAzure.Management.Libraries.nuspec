@@ -17,7 +17,6 @@
 - Hosted Services
 - Infrastructure services
 - Scheduler
-- Service Bus
 - Storage Accounts
 - Subscription information
 - Networks
@@ -34,7 +33,6 @@ Management operations require the X509Certificate2 type that is not present in t
         <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
         <dependency id="Microsoft.WindowsAzure.Management" version="__VERSION_Microsoft.WindowsAzure.Management__" />
         <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
-        <dependency id="Microsoft.WindowsAzure.Management.ServiceBus" version="__VERSION_Microsoft.WindowsAzure.Management.ServiceBus__" />
         <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
         <dependency id="Microsoft.WindowsAzure.Management.Network" version="__VERSION_Microsoft.WindowsAzure.Management.Network__" />
         <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
