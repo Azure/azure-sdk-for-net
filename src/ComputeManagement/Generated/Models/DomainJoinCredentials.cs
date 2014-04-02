@@ -33,11 +33,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the name of the domain used to authenticate an
-        /// account. The value is a fully qualified DNS domain.  If the
-        /// domains name is not specified, Username must specify the user
-        /// principal name (UPN) format (user@fully-qualified-DNS-domain) or
-        /// the fully-qualified-DNS-domain\\username format.  Example:
-        /// example.com
+        /// account. The value is a fully qualified DNS domain. If the domains
+        /// name is not specified, Username must specify the user principal
+        /// name (UPN) format (user@fully-qualified-DNS-domain) or the
+        /// fully-qualified-DNS-domain\\username format. Example: example.com.
         /// </summary>
         public string Domain
         {

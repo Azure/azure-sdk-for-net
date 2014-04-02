@@ -44,8 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _deploymentName;
         
         /// <summary>
-        /// Optional. The name of the deployment the IP belongs to, if being
-        /// used.
+        /// Optional. The name of the deployment the IP belongs to, if used.
         /// </summary>
         public string DeploymentName
         {
@@ -56,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _label;
         
         /// <summary>
-        /// Optional. The friendly identifier of the site.
+        /// Optional. The friendly identifier for the site.
         /// </summary>
         public string Label
         {
@@ -78,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _serviceName;
         
         /// <summary>
-        /// Optional. The name of the service the IP belongs to, if being used.
+        /// Optional. The name of the service the IP belongs to, if used.
         /// </summary>
         public string ServiceName
         {

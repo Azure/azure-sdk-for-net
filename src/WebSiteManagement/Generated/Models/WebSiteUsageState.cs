@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// Usage of a website's quota.
+    /// Usage of a web site's quota.
     /// </summary>
     public enum WebSiteUsageState
     {

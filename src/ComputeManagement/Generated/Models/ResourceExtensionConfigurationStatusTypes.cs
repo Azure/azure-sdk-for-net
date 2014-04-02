@@ -24,12 +24,18 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
-    public enum HostingResources
+    /// <summary>
+    /// The status of the resource extension configuration, containing values
+    /// like Transitioning, Error, Success, or Warning.
+    /// </summary>
+    public static partial class ResourceExtensionConfigurationStatusTypes
     {
-        WebRole = 0,
+        public const string Transitioning = "Transitioning";
         
-        WorkerRole = 1,
+        public const string Error = "Error";
         
-        WebOrWorkerRole = 2,
+        public const string Success = "Success";
+        
+        public const string Warning = "Warning";
     }
 }

@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
+    /// <summary>
+    /// Possible values for the Virtual Network State.
+    /// </summary>
     public static partial class VirtualNetworkState
     {
         public const string Created = "Created";

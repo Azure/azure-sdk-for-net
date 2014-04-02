@@ -20,18 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Known values for the operating system type of the OS in a virtual
-    /// machine image.
+    /// Parameters supplied to the delete role instance by deployment name
+    /// operation.
     /// </summary>
-    public static partial class VirtualMachineImageOperatingSystemType
+    public partial class DeploymentDeleteRoleInstanceParameters
     {
-        public const string Linux = "Linux";
+        private IList<string> _name;
         
-        public const string Windows = "Windows";
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DeploymentDeleteRoleInstanceParameters class.
+        /// </summary>
+        public DeploymentDeleteRoleInstanceParameters()
+        {
+            this._name = new List<string>();
+        }
     }
 }

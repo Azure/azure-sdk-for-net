@@ -417,14 +417,14 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            CloudServiceOperationStatus statusInstance = (CloudServiceOperationStatus)Enum.Parse(typeof(CloudServiceOperationStatus), statusElement.Value, true);
+                            CloudServiceOperationStatus statusInstance = ((CloudServiceOperationStatus)Enum.Parse(typeof(CloudServiceOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
                         if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
+                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         

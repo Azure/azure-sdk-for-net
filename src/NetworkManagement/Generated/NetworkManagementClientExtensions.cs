@@ -30,17 +30,17 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
     public static partial class NetworkManagementClientExtensions
     {
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -57,37 +57,27 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
         public static OperationStatusResponse GetOperationStatus(this INetworkManagementClient operations, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(requestId).Result;
+                return ((INetworkManagementClient)s).GetOperationStatusAsync(requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -104,9 +94,9 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.

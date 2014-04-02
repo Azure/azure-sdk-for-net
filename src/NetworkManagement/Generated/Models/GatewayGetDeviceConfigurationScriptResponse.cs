@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// The configuration script returned from the get device configuration
-    /// script request.
+    /// script operation.
     /// </summary>
     public partial class GatewayGetDeviceConfigurationScriptResponse : OperationResponse
     {

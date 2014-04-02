@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// prefix name and can be used to access the cloud service. For
         /// example, if the cloud service name is MyService you could access
         /// the access the cloud service by calling:
-        /// http://MyService.cloudapp.net
+        /// http://MyService.cloudapp.net.
         /// </summary>
         public string ServiceName
         {
@@ -60,8 +60,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _uri;
         
         /// <summary>
-        /// Optional. The Service Management API request URI used to performGet
-        /// Hosted Service Properties requests against the cloud service.
+        /// Optional. The Service Management API request URI used to perform
+        /// Get Hosted Service Properties requests against the cloud service.
         /// </summary>
         public Uri Uri
         {

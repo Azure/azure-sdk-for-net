@@ -37,11 +37,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IServiceCertificateOperations
     {
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.   (see
+        /// The Begin Creating Service Certificate operation adds a certificate
+        /// to a hosted service. This operation is an asynchronous operation.
+        /// To determine whether the management service has finished
+        /// processing the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -49,7 +48,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Service Certificate operation.
+        /// Parameters supplied to the Begin Creating Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -61,16 +61,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginCreatingAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// The Begin Deleting Service Certificate operation deletes a service
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Delete Service Certificate operation.
+        /// Parameters supplied to the Begin Deleting Service Certificate
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -82,11 +83,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginDeletingAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.  This overload will   (see
+        /// The Create Service Certificate operation adds a certificate to a
+        /// hosted service. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -103,21 +103,21 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         Task<OperationStatusResponse> CreateAsync(string serviceName, ServiceCertificateCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
@@ -131,12 +131,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         Task<OperationStatusResponse> DeleteAsync(ServiceCertificateDeleteParameters parameters, CancellationToken cancellationToken);
         

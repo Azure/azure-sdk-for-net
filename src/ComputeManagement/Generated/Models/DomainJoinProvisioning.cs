@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _accountData;
         
         /// <summary>
-        /// Optional. The account infor for joining the domain.
+        /// Optional. The account info for joining the domain.
         /// </summary>
         public string AccountData
         {

@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSite> _webSites;
         
         /// <summary>
-        /// Optional. The websites associated with the specified web space.
+        /// Optional. The web sites associated with the specified web space.
         /// </summary>
         public IList<WebSite> WebSites
         {

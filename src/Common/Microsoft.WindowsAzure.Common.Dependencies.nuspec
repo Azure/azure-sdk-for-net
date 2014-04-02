@@ -2,8 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Dependencies</id>
-    <title>Windows Azure Common Library Dependencies</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <title>Microsoft Azure Common Library Dependencies</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,8 +10,8 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Windows Azure Management Libraries and should not be directly added to your project.</summary>
-    <description>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Windows Azure Management Libraries and should not be directly added to your project.</description>
+    <summary>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Microsoft Azure Management Libraries and should not be directly added to your project.</summary>
+    <description>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Microsoft Azure Management Libraries and should not be directly added to your project.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <!-- A subset of tags here as this library is less useful on its own. -->
     <tags>windowsazureofficial</tags>

@@ -593,7 +593,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         JToken profilesArray = responseDoc["Profiles"];
                         if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken profilesValue in (JArray)profilesArray)
+                            foreach (JToken profilesValue in ((JArray)profilesArray))
                             {
                                 AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                 settingInstance.Profiles.Add(autoscaleProfileInstance);
@@ -601,7 +601,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 JToken nameValue = profilesValue["Name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     autoscaleProfileInstance.Name = nameInstance;
                                 }
                                 
@@ -614,21 +614,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken minimumValue = capacityValue["Minimum"];
                                     if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                     {
-                                        string minimumInstance = (string)minimumValue;
+                                        string minimumInstance = ((string)minimumValue);
                                         capacityInstance.Minimum = minimumInstance;
                                     }
                                     
                                     JToken maximumValue = capacityValue["Maximum"];
                                     if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                     {
-                                        string maximumInstance = (string)maximumValue;
+                                        string maximumInstance = ((string)maximumValue);
                                         capacityInstance.Maximum = maximumInstance;
                                     }
                                     
                                     JToken defaultValue = capacityValue["Default"];
                                     if (defaultValue != null && defaultValue.Type != JTokenType.Null)
                                     {
-                                        string defaultInstance = (string)defaultValue;
+                                        string defaultInstance = ((string)defaultValue);
                                         capacityInstance.Default = defaultInstance;
                                     }
                                 }
@@ -636,7 +636,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 JToken rulesArray = profilesValue["Rules"];
                                 if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken rulesValue in (JArray)rulesArray)
+                                    foreach (JToken rulesValue in ((JArray)rulesArray))
                                     {
                                         ScaleRule scaleRuleInstance = new ScaleRule();
                                         autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
@@ -650,63 +650,63 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken metricNameValue = metricTriggerValue["MetricName"];
                                             if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                             {
-                                                string metricNameInstance = (string)metricNameValue;
+                                                string metricNameInstance = ((string)metricNameValue);
                                                 metricTriggerInstance.MetricName = metricNameInstance;
                                             }
                                             
                                             JToken metricNamespaceValue = metricTriggerValue["MetricNamespace"];
                                             if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                             {
-                                                string metricNamespaceInstance = (string)metricNamespaceValue;
+                                                string metricNamespaceInstance = ((string)metricNamespaceValue);
                                                 metricTriggerInstance.MetricNamespace = metricNamespaceInstance;
                                             }
                                             
                                             JToken metricSourceValue = metricTriggerValue["MetricSource"];
                                             if (metricSourceValue != null && metricSourceValue.Type != JTokenType.Null)
                                             {
-                                                string metricSourceInstance = (string)metricSourceValue;
+                                                string metricSourceInstance = ((string)metricSourceValue);
                                                 metricTriggerInstance.MetricSource = metricSourceInstance;
                                             }
                                             
                                             JToken timeGrainValue = metricTriggerValue["TimeGrain"];
                                             if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                                TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                                 metricTriggerInstance.TimeGrain = timeGrainInstance;
                                             }
                                             
                                             JToken statisticValue = metricTriggerValue["Statistic"];
                                             if (statisticValue != null && statisticValue.Type != JTokenType.Null)
                                             {
-                                                MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, true);
+                                                MetricStatisticType statisticInstance = ((MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), ((string)statisticValue), true));
                                                 metricTriggerInstance.Statistic = statisticInstance;
                                             }
                                             
                                             JToken timeWindowValue = metricTriggerValue["TimeWindow"];
                                             if (timeWindowValue != null && timeWindowValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan((string)timeWindowValue);
+                                                TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan(((string)timeWindowValue));
                                                 metricTriggerInstance.TimeWindow = timeWindowInstance;
                                             }
                                             
                                             JToken timeAggregationValue = metricTriggerValue["TimeAggregation"];
                                             if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
                                             {
-                                                TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, true);
+                                                TimeAggregationType timeAggregationInstance = ((TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), ((string)timeAggregationValue), true));
                                                 metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                             }
                                             
                                             JToken operatorValue = metricTriggerValue["Operator"];
                                             if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                             {
-                                                ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, true);
+                                                ComparisonOperationType operatorInstance = ((ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), ((string)operatorValue), true));
                                                 metricTriggerInstance.Operator = operatorInstance;
                                             }
                                             
                                             JToken thresholdValue = metricTriggerValue["Threshold"];
                                             if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                             {
-                                                double thresholdInstance = (double)thresholdValue;
+                                                double thresholdInstance = ((double)thresholdValue);
                                                 metricTriggerInstance.Threshold = thresholdInstance;
                                             }
                                         }
@@ -720,28 +720,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             JToken directionValue = scaleActionValue["Direction"];
                                             if (directionValue != null && directionValue.Type != JTokenType.Null)
                                             {
-                                                ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, true);
+                                                ScaleDirection directionInstance = ((ScaleDirection)Enum.Parse(typeof(ScaleDirection), ((string)directionValue), true));
                                                 scaleActionInstance.Direction = directionInstance;
                                             }
                                             
                                             JToken typeValue = scaleActionValue["Type"];
                                             if (typeValue != null && typeValue.Type != JTokenType.Null)
                                             {
-                                                ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, true);
+                                                ScaleType typeInstance = ((ScaleType)Enum.Parse(typeof(ScaleType), ((string)typeValue), true));
                                                 scaleActionInstance.Type = typeInstance;
                                             }
                                             
                                             JToken valueValue = scaleActionValue["Value"];
                                             if (valueValue != null && valueValue.Type != JTokenType.Null)
                                             {
-                                                string valueInstance = (string)valueValue;
+                                                string valueInstance = ((string)valueValue);
                                                 scaleActionInstance.Value = valueInstance;
                                             }
                                             
                                             JToken cooldownValue = scaleActionValue["Cooldown"];
                                             if (cooldownValue != null && cooldownValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan((string)cooldownValue);
+                                                TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan(((string)cooldownValue));
                                                 scaleActionInstance.Cooldown = cooldownInstance;
                                             }
                                         }
@@ -757,21 +757,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken timeZoneValue = fixedDateValue["TimeZone"];
                                     if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
                                     {
-                                        string timeZoneInstance = (string)timeZoneValue;
+                                        string timeZoneInstance = ((string)timeZoneValue);
                                         fixedDateInstance.TimeZone = timeZoneInstance;
                                     }
                                     
                                     JToken startValue = fixedDateValue["Start"];
                                     if (startValue != null && startValue.Type != JTokenType.Null)
                                     {
-                                        DateTime startInstance = (DateTime)startValue;
+                                        DateTime startInstance = ((DateTime)startValue);
                                         fixedDateInstance.Start = startInstance;
                                     }
                                     
                                     JToken endValue = fixedDateValue["End"];
                                     if (endValue != null && endValue.Type != JTokenType.Null)
                                     {
-                                        DateTime endInstance = (DateTime)endValue;
+                                        DateTime endInstance = ((DateTime)endValue);
                                         fixedDateInstance.End = endInstance;
                                     }
                                 }
@@ -785,7 +785,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     JToken frequencyValue = recurrenceValue["Frequency"];
                                     if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                     {
-                                        RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, true);
+                                        RecurrenceFrequency frequencyInstance = ((RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), ((string)frequencyValue), true));
                                         recurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     
@@ -798,34 +798,34 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         JToken timeZoneValue2 = scheduleValue["TimeZone"];
                                         if (timeZoneValue2 != null && timeZoneValue2.Type != JTokenType.Null)
                                         {
-                                            string timeZoneInstance2 = (string)timeZoneValue2;
+                                            string timeZoneInstance2 = ((string)timeZoneValue2);
                                             scheduleInstance.TimeZone = timeZoneInstance2;
                                         }
                                         
                                         JToken daysArray = scheduleValue["Days"];
                                         if (daysArray != null && daysArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken daysValue in (JArray)daysArray)
+                                            foreach (JToken daysValue in ((JArray)daysArray))
                                             {
-                                                scheduleInstance.Days.Add((string)daysValue);
+                                                scheduleInstance.Days.Add(((string)daysValue));
                                             }
                                         }
                                         
                                         JToken hoursArray = scheduleValue["Hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken hoursValue in (JArray)hoursArray)
+                                            foreach (JToken hoursValue in ((JArray)hoursArray))
                                             {
-                                                scheduleInstance.Hours.Add((int)hoursValue);
+                                                scheduleInstance.Hours.Add(((int)hoursValue));
                                             }
                                         }
                                         
                                         JToken minutesArray = scheduleValue["Minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken minutesValue in (JArray)minutesArray)
+                                            foreach (JToken minutesValue in ((JArray)minutesArray))
                                             {
-                                                scheduleInstance.Minutes.Add((int)minutesValue);
+                                                scheduleInstance.Minutes.Add(((int)minutesValue));
                                             }
                                         }
                                     }
@@ -836,7 +836,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         JToken enabledValue = responseDoc["Enabled"];
                         if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                         {
-                            bool enabledInstance = (bool)enabledValue;
+                            bool enabledInstance = ((bool)enabledValue);
                             settingInstance.Enabled = enabledInstance;
                         }
                     }

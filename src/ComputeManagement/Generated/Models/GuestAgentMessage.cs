@@ -20,43 +20,44 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// This object encapsulates localized status message from the Guest Agent.
+    /// The guest agent message.
     /// </summary>
-    public partial class FormattedMessage
+    public partial class GuestAgentMessage
     {
-        private string _language;
+        private string _messageResourceId;
         
         /// <summary>
-        /// Optional. Language code. Eg. "en-US"
+        /// Optional. The message resource ID.
         /// </summary>
-        public string Language
+        public string MessageResourceId
         {
-            get { return this._language; }
-            set { this._language = value; }
+            get { return this._messageResourceId; }
+            set { this._messageResourceId = value; }
         }
         
-        private string _message;
+        private IList<string> _paramList;
         
         /// <summary>
-        /// Optional. A string containing message about status of the Guest
-        /// Agent, or Resource Extension.
+        /// Optional. The guest agent message parameter list.
         /// </summary>
-        public string Message
+        public IList<string> ParamList
         {
-            get { return this._message; }
-            set { this._message = value; }
+            get { return this._paramList; }
+            set { this._paramList = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the FormattedMessage class.
+        /// Initializes a new instance of the GuestAgentMessage class.
         /// </summary>
-        public FormattedMessage()
+        public GuestAgentMessage()
         {
+            this._paramList = new List<string>();
         }
     }
 }

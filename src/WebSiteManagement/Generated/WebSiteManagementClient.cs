@@ -37,11 +37,10 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
-    /// The Windows Azure Web Sites management API provides a RESTful set of
-    /// web services that interact with Windows Azure Web Sites service to
-    /// manage your web sites. The API has entities that capture the
-    /// relationship between an end user and the Windows Azure Web Sites
-    /// service.  (see
+    /// The Web Sites Management API provides a RESTful set of web services
+    /// that interact with the Windows Azure Web Sites service to manage your
+    /// web sites. The API has entities that capture the relationship between
+    /// an end user and Windows Azure Web Sites service.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
     /// more information)
     /// </summary>
@@ -60,13 +59,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// When you create an Azure subscription, it is uniquely identified by
+        /// a subscription ID. The subscription ID forms part of the URI for
+        /// every call that you make to the Service Management API. The Azure
+        /// Service Management API uses mutual authentication of management
+        /// certificates over SSL to ensure that a request made to the service
+        /// is secure. No anonymous requests are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -88,7 +86,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private IWebSiteOperations _webSites;
         
         /// <summary>
-        /// Operations for managing the web sites in a web space.
+        /// Operations for managing the web sites in a web space.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
+        /// for more information)
         /// </summary>
         public virtual IWebSiteOperations WebSites
         {
@@ -121,13 +121,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Required. The URI used as the base for all Service Management
@@ -154,13 +153,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -176,11 +174,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling a long-running operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, timed out, or is still in
-        /// progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling a long-running operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, timed out, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -193,7 +190,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </param>
         /// <param name='operationId'>
         /// Required. The operation ID for the operation you wish to track. The
-        /// operation ID is returned in the Id field in the body of the
+        /// operation ID is returned in the ID field in the body of the
         /// response for long-running operations.
         /// </param>
         /// <param name='cancellationToken'>
@@ -202,9 +199,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The response body contains the status of the specified long-running
         /// operation, indicating whether it has succeeded, is inprogress, has
-        /// time dout, or has failed. Note that this status is distinct from
+        /// timed out, or has failed. Note that this status is distinct from
         /// the HTTP status code returned for the Get Operation Status
-        /// operation itself.  If the long-running operation failed, the
+        /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> GetOperationStatusAsync(string webSpaceName, string siteName, string operationId, CancellationToken cancellationToken)
@@ -491,7 +488,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            WebSiteOperationStatus statusInstance = (WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true);
+                            WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                     }
@@ -526,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Register your subscription to use Windows Azure Web Sites.
+        /// Register your subscription to use Azure Web Sites.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -639,7 +636,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Unregister your subscription to use Windows Azure Web Sites.
+        /// Unregister your subscription to use Azure Web Sites.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

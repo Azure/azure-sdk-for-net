@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Store</id>
-    <title>Windows Azure Store Management Library</title>
+    <title>Microsoft Azure Store Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>    
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -11,10 +11,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides store management operations for Windows Azure.</summary>
-    <description>Provides store management operations for Windows Azure.</description>
+    <summary>Provides store management operations for Microsoft Azure.</summary>
+    <description>Provides store management operations for Microsoft Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure cloud management store REST HTTP client core common windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management store REST HTTP client core common windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Store.dll" />

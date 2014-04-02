@@ -46,14 +46,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended deployment property.
-        /// Each extended property must have both a defined name and value.
-        /// You can have a maximum of 25 extended property name/value pairs.
-        /// The maximum length of the Name element is 64 characters, only
-        /// alphanumeric characters and underscores are valid in the Name, and
+        /// Each extended property must have a defined name and a value. You
+        /// can have a maximum of 25 extended property name/value pairs. The
+        /// maximum length of the name element is 64 characters, only
+        /// alphanumeric characters and underscores are valid in the name, and
         /// the name must start with a letter. Attempting to use other
-        /// characters, starting the Name with a non-letter character, or
+        /// characters, starting the name with a non-letter character, or
         /// entering a name that is identical to that of another extended
-        /// property owned by the same hosted service, will result in a status
+        /// property owned by the same hosted service will result in a status
         /// code 400 (Bad Request) error.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
@@ -66,11 +66,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents an extension that is added to the cloud
-        /// service. In Windows Azure, a process can run as an extension of a
-        /// cloud service. For example, Remote Desktop Access or the Windows
-        /// Azure Diagnostics Agent can run as extensions to the cloud
-        /// service. You must add an extension to the cloud service by using
-        /// Add Extension before it can be added to the deployment.
+        /// service. In Azure, a process can run as an extension of a cloud
+        /// service. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as extensions to the cloud service. You
+        /// must add an extension to the cloud service by using Add Extension
+        /// before it can be added to the deployment.
         /// </summary>
         public ExtensionConfiguration ExtensionConfiguration
         {
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Indicates whether to start the deployment immediately
-        /// after it is created. The default value is false.  If false, the
+        /// after it is created. The default value is false. If false, the
         /// service model is still deployed to the virtual machines but the
         /// code is not run immediately. Instead, the service is Suspended
         /// until you call Update Deployment Status and set the status

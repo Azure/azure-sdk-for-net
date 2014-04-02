@@ -60,21 +60,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static FirewallRuleCreateResponse Create(this IFirewallRuleOperations operations, string serverName, FirewallRuleCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(serverName, parameters).Result;
+                return ((IFirewallRuleOperations)s).CreateAsync(serverName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -125,21 +115,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IFirewallRuleOperations operations, string serverName, string ruleName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(serverName, ruleName).Result;
+                return ((IFirewallRuleOperations)s).DeleteAsync(serverName, ruleName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -190,21 +170,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static FirewallRuleGetResponse Get(this IFirewallRuleOperations operations, string serverName, string ruleName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serverName, ruleName).Result;
+                return ((IFirewallRuleOperations)s).GetAsync(serverName, ruleName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -251,21 +221,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static FirewallRuleListResponse List(this IFirewallRuleOperations operations, string serverName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(serverName).Result;
+                return ((IFirewallRuleOperations)s).ListAsync(serverName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -315,21 +275,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static FirewallRuleUpdateResponse Update(this IFirewallRuleOperations operations, string serverName, string ruleName, FirewallRuleUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(serverName, ruleName, parameters).Result;
+                return ((IFirewallRuleOperations)s).UpdateAsync(serverName, ruleName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

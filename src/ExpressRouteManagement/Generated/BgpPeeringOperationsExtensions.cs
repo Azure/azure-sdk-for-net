@@ -62,21 +62,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginNewAsync(serviceKey, accessType, parameters).Result;
+                return ((IBgpPeeringOperations)s).BeginNewAsync(serviceKey, accessType, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -125,21 +115,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationResponse BeginRemove(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRemoveAsync(serviceKey, accessType).Result;
+                return ((IBgpPeeringOperations)s).BeginRemoveAsync(serviceKey, accessType);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -188,21 +168,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationResponse BeginUpdate(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdateAsync(serviceKey, accessType, parameters).Result;
+                return ((IBgpPeeringOperations)s).BeginUpdateAsync(serviceKey, accessType, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -250,21 +220,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static BgpPeeringGetResponse Get(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serviceKey, accessType).Result;
+                return ((IBgpPeeringOperations)s).GetAsync(serviceKey, accessType);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -312,21 +272,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static BgpPeeringGetResponse New(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.NewAsync(serviceKey, accessType, parameters).Result;
+                return ((IBgpPeeringOperations)s).NewAsync(serviceKey, accessType, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -381,21 +331,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationStatusResponse Remove(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RemoveAsync(serviceKey, accessType).Result;
+                return ((IBgpPeeringOperations)s).RemoveAsync(serviceKey, accessType);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -450,21 +390,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static BgpPeeringGetResponse Update(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(serviceKey, accessType, parameters).Result;
+                return ((IBgpPeeringOperations)s).UpdateAsync(serviceKey, accessType, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

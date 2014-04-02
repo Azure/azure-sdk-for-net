@@ -34,11 +34,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Specifies the action that is performed after the capture
-        /// operation finishes.  Possible values are:  Delete – this value
+        /// operation finishes. Possible values are: Delete – this value
         /// causes the virtual machine to be deleted after the image has been
-        /// captured.   Reprovision – this value causes the virtual machine to
-        /// be redeployed after the image is captured by using the specified
-        /// information in ProvisioningConfiguration.
+        /// captured; or Reprovision – this value causes the virtual machine
+        /// to be redeployed after the image is captured by using the
+        /// specified information in ProvisioningConfiguration.
         /// </summary>
         public PostCaptureAction PostCaptureAction
         {
@@ -64,7 +64,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Required. Specifies the friendly name of the captured image. This
         /// is the value that appears in the Name column for the image in the
-        /// Windows Azure Management Portal.
+        /// Azure Management Portal.
         /// </summary>
         public string TargetImageLabel
         {

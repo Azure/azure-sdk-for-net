@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> _vMImages;
         
         /// <summary>
-        /// Optional. The virtual machine VM images associated with your
+        /// Optional. The virtual machine images associated with your
         /// subscription.
         /// </summary>
         public IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> VMImages
@@ -92,9 +92,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// <summary>
             /// Optional. Specifies the size, in GB, of an empty VHD to be
             /// attached to the virtual machine. The VHD can be created as
-            /// part of disk attach or create virtual machine call by
-            /// specifying the value for this property.  Windows Azure creates
-            /// the empty VHD based on size preference and attaches the newly
+            /// part of disk attach or create virtual machine calls by
+            /// specifying the value for this property. Azure creates the
+            /// empty VHD based on size preference and attaches the newly
             /// created VHD to the virtual machine.
             /// </summary>
             public int LogicalDiskSizeInGB
@@ -133,8 +133,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Optional. Specifies the name of the VHD to use to create
-            /// thedata disk for the virtual machine.
+            /// Optional. Specifies the name of the VHD to use to create the
+            /// data disk for the virtual machine.
             /// </summary>
             public string Name
             {
@@ -172,9 +172,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// <summary>
             /// Optional. Specifies the size, in GB, of an empty VHD to be
             /// attached to the virtual machine. The VHD can be created as
-            /// part of disk attach or create virtual machine call by
-            /// specifying the value for this property.  Windows Azure creates
-            /// the empty VHD based on size preference and attaches the newly
+            /// part of disk attach or create virtual machine calls by
+            /// specifying the value for this property. Azure creates the
+            /// empty VHD based on size preference and attaches the newly
             /// created VHD to the virtual machine.
             /// </summary>
             public int LogicalDiskSizeInGB
@@ -198,8 +198,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Optional. Specifies the name an operating system image in the
-            /// image repository.
+            /// Optional. Specifies the name of an operating system image in
+            /// the image repository.
             /// </summary>
             public string Name
             {
@@ -245,7 +245,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _affinityGroup;
             
             /// <summary>
-            /// Optional. The affinity group name of the VM image.
+            /// Optional. The affinity group name of the virtual machine image.
             /// </summary>
             public string AffinityGroup
             {
@@ -256,7 +256,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _category;
             
             /// <summary>
-            /// Optional. The classification of the VM image.
+            /// Optional. The classification of the virtual machine image.
             /// </summary>
             public string Category
             {
@@ -267,7 +267,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private System.DateTime? _createdTime;
             
             /// <summary>
-            /// Optional. The date when the VM image was created.
+            /// Optional. The date when the virtual machine image was created.
             /// </summary>
             public System.DateTime? CreatedTime
             {
@@ -289,7 +289,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _deploymentName;
             
             /// <summary>
-            /// Optional. The deployment name of the VM image.
+            /// Optional. The deployment name of the virtual machine image.
             /// </summary>
             public string DeploymentName
             {
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _label;
             
             /// <summary>
-            /// Optional. An identifier for the VM image.
+            /// Optional. An identifier for the virtual machine image.
             /// </summary>
             public string Label
             {
@@ -311,7 +311,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _name;
             
             /// <summary>
-            /// Optional. The name of the VM image.
+            /// Optional. The name of the virtual machine image.
             /// </summary>
             public string Name
             {
@@ -333,7 +333,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _roleName;
             
             /// <summary>
-            /// Optional. The role name of the VM image.
+            /// Optional. The role name of the virtual machine image.
             /// </summary>
             public string RoleName
             {
@@ -344,7 +344,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _serviceName;
             
             /// <summary>
-            /// Optional. The service name of the VM image.
+            /// Optional. The service name of the virtual machine image.
             /// </summary>
             public string ServiceName
             {

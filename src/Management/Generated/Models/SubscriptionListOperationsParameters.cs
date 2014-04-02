@@ -78,11 +78,11 @@ namespace Microsoft.WindowsAzure.Management.Models
         private Microsoft.WindowsAzure.OperationStatus? _operationStatus;
         
         /// <summary>
-        /// Optional. Returns subscription operations only for thespecified
-        /// result status, either Succeeded, Failed, or InProgress.This filter
-        /// can be combined with the ObjectIdFilter to selectsubscription
-        /// operations for an object with a specific resultstatus. If no
-        /// result status is specified, a filter is not applied.
+        /// Optional. Returns subscription operations only for the specified
+        /// result status, either Succeeded, Failed, or InProgress. This
+        /// filter can be combined with the ObjectIdFilter to select
+        /// subscription operations for an object with a specific result
+        /// status. If no result status is specified, a filter is not applied.
         /// </summary>
         public Microsoft.WindowsAzure.OperationStatus? OperationStatus
         {
@@ -93,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Required. The start of the timeframe to begin listingsubscription
-        /// operations in UTC format. This parameter and theEndTime parameter
+        /// Required. The start of the timeframe to begin listing subscription
+        /// operations in UTC format. This parameter and the EndTime parameter
         /// indicate the timeframe to retrieve subscription operations. This
         /// parameter cannot indicate a start date of more than 90 days in the
         /// past.

@@ -89,8 +89,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private byte[] _data;
             
             /// <summary>
-            /// Optional. A base64 representation of the data contained in the
-            /// management certificate, in .cer format.
+            /// Optional. A base-64 representation of the data contained in the
+            /// management certificate, in cer format.
             /// </summary>
             public byte[] Data
             {
@@ -101,8 +101,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private byte[] _publicKey;
             
             /// <summary>
-            /// Optional. A base64 representation of the management certificate
-            /// public key.
+            /// Optional. A base-64 representation of the management
+            /// certificate public key.
             /// </summary>
             public byte[] PublicKey
             {
@@ -113,8 +113,8 @@ namespace Microsoft.WindowsAzure.Management.Models
             private string _thumbprint;
             
             /// <summary>
-            /// Optional. The X509 certificate thumb print property of the
-            /// management certificate. This thumb print uniquely identifies
+            /// Optional. The X509 certificate thumbprint property of the
+            /// management certificate. This thumbprint uniquely identifies
             /// the certificate.
             /// </summary>
             public string Thumbprint

@@ -28,19 +28,31 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// <summary>
     /// Optional. This object contains status information of the Guest Agent
     /// installed on a RoleInstance. Guest Agent can be installed on a role
-    /// instance by setting “ProvisionGuestAgent” to true in Create Deployment
+    /// instance by setting "ProvisionGuestAgent" to true in Create Deployment
     /// or Add Role API calls. Version header: Required to be "2014-04-01" or
     /// later.
     /// </summary>
     public partial class GuestAgentStatus
     {
-        private FormattedMessage _formattedMessage;
+        private int? _code;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
-        /// the Guest Agent.
+        /// Optional. Integer. Status code from the result of applying the GA
+        /// settings.
         /// </summary>
-        public FormattedMessage FormattedMessage
+        public int? Code
+        {
+            get { return this._code; }
+            set { this._code = value; }
+        }
+        
+        private GuestAgentFormattedMessage _formattedMessage;
+        
+        /// <summary>
+        /// Optional. This object encapsulates a formatted localized status
+        /// message from the Guest Agent.
+        /// </summary>
+        public GuestAgentFormattedMessage FormattedMessage
         {
             get { return this._formattedMessage; }
             set { this._formattedMessage = value; }
@@ -55,6 +67,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._guestAgentVersion; }
             set { this._guestAgentVersion = value; }
+        }
+        
+        private GuestAgentMessage _message;
+        
+        /// <summary>
+        /// Optional. This object encapsulates a localized status message from
+        /// the Guest Agent.
+        /// </summary>
+        public GuestAgentMessage Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         private string _protocolVersion;
@@ -73,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The guest agent status, which can be: "Ready" or
-        /// "NotReady"
+        /// "NotReady".
         /// </summary>
         public string Status
         {
@@ -81,12 +105,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._status = value; }
         }
         
-        private string _timestamp;
+        private System.DateTime? _timestamp;
         
         /// <summary>
         /// Optional. UTC time at which the status was reported.
         /// </summary>
-        public string Timestamp
+        public System.DateTime? Timestamp
         {
             get { return this._timestamp; }
             set { this._timestamp = value; }

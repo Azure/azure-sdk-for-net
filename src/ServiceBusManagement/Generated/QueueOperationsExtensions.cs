@@ -59,21 +59,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusQueueResponse Create(this IQueueOperations operations, string namespaceName, ServiceBusQueueCreateParameters queue)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(namespaceName, queue).Result;
+                return ((IQueueOperations)s).CreateAsync(namespaceName, queue);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -125,21 +115,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusQueueResponse Get(this IQueueOperations operations, string namespaceName, string queueName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(namespaceName, queueName).Result;
+                return ((IQueueOperations)s).GetAsync(namespaceName, queueName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -186,21 +166,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusConnectionDetailsResponse GetConnectionDetails(this IQueueOperations operations, string namespaceName, string queueName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConnectionDetailsAsync(namespaceName, queueName).Result;
+                return ((IQueueOperations)s).GetConnectionDetailsAsync(namespaceName, queueName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -245,21 +215,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusQueuesResponse List(this IQueueOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(namespaceName).Result;
+                return ((IQueueOperations)s).ListAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -307,21 +267,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusQueueResponse Update(this IQueueOperations operations, string namespaceName, ServiceBusQueue queue)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(namespaceName, queue).Result;
+                return ((IQueueOperations)s).UpdateAsync(namespaceName, queue);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

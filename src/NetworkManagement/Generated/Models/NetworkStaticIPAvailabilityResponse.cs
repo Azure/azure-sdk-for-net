@@ -28,7 +28,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
     /// A response that indicates the availability of a static IP address, and
-    /// if not, provide a list of suggestions.
+    /// if not, provides a list of suggestions.
     /// </summary>
     public partial class NetworkStaticIPAvailabilityResponse : OperationResponse
     {

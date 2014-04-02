@@ -2,8 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.MediaServices</id>
-    <title>Windows Azure Media Services Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <title>Microsoft Azure Media Services Management Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Windows Azure Media Services management functionality.</summary>
-    <description>Provides Windows Azure Media Services management functionality.</description>
+    <summary>Provides Microsoft Azure Media Services management functionality.</summary>
+    <description>Provides Microsoft Azure Media Services management functionality.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure media encoding management "media services" "media services management" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure media encoding management "media services" "media services management" REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.MediaServices.dll" />

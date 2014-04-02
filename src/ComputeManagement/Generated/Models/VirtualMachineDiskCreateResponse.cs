@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// media for the disk is located. The blob location belongs to a
         /// storage account in the subscription specified by the
         /// SubscriptionId value in the operation call. Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// http://example.blob.core.windows.net/disks/mydisk.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -148,8 +148,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Contains properties that specify a virtual machine that
-        /// currently using the disk. A disk cannot be deleted as long as it
-        /// is attached to a virtual machine.
+        /// is currently using the disk. A disk cannot be deleted as long as
+        /// it is attached to a virtual machine.
         /// </summary>
         public VirtualMachineDiskCreateResponse.VirtualMachineDiskUsageDetails UsageDetails
         {

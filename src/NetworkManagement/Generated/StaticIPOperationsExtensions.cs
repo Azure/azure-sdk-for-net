@@ -30,7 +30,7 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
@@ -52,25 +52,15 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
-        /// and if not, provide a list of suggestions.
+        /// and if not, provides a list of suggestions.
         /// </returns>
         public static NetworkStaticIPAvailabilityResponse Check(this IStaticIPOperations operations, string networkName, string ipAddress)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckAsync(networkName, ipAddress).Result;
+                return ((IStaticIPOperations)s).CheckAsync(networkName, ipAddress);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -89,7 +79,7 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <returns>
         /// A response that indicates the availability of a static IP address,
-        /// and if not, provide a list of suggestions.
+        /// and if not, provides a list of suggestions.
         /// </returns>
         public static Task<NetworkStaticIPAvailabilityResponse> CheckAsync(this IStaticIPOperations operations, string networkName, string ipAddress)
         {

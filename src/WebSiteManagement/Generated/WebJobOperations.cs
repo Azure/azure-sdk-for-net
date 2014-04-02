@@ -418,42 +418,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             webJobInstance.Name = nameInstance;
                         }
                         
                         JToken runCommandValue = responseDoc["run_command"];
                         if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                         {
-                            string runCommandInstance = (string)runCommandValue;
+                            string runCommandInstance = ((string)runCommandValue);
                             webJobInstance.RunCommand = runCommandInstance;
                         }
                         
                         JToken typeValue = responseDoc["type"];
                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                         {
-                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                             webJobInstance.Type = typeInstance;
                         }
                         
                         JToken urlValue = responseDoc["url"];
                         if (urlValue != null && urlValue.Type != JTokenType.Null)
                         {
-                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                             webJobInstance.Url = urlInstance;
                         }
                         
                         JToken historyUrlValue = responseDoc["history_url"];
                         if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                         {
-                            string historyUrlInstance = (string)historyUrlValue;
+                            string historyUrlInstance = ((string)historyUrlValue);
                             webJobInstance.HistoryUrl = historyUrlInstance;
                         }
                         
                         JToken extraInfoUrlValue = responseDoc["extra_info_url"];
                         if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                         {
-                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                             webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                         }
                         
@@ -466,56 +466,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                             JToken idValue = latestRunValue["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string idInstance = (string)idValue;
+                                string idInstance = ((string)idValue);
                                 latestRunInstance.Id = idInstance;
                             }
                             
                             JToken statusValue = latestRunValue["status"];
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string statusInstance = (string)statusValue;
+                                string statusInstance = ((string)statusValue);
                                 latestRunInstance.Status = statusInstance;
                             }
                             
                             JToken startTimeValue = latestRunValue["start_time"];
                             if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
                                 latestRunInstance.StartTime = startTimeInstance;
                             }
                             
                             JToken endTimeValue = latestRunValue["end_time"];
                             if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                DateTime endTimeInstance = ((DateTime)endTimeValue);
                                 latestRunInstance.EndTime = endTimeInstance;
                             }
                             
                             JToken durationValue = latestRunValue["duration"];
                             if (durationValue != null && durationValue.Type != JTokenType.Null)
                             {
-                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                 latestRunInstance.Duration = durationInstance;
                             }
                             
                             JToken outputUrlValue = latestRunValue["output_url"];
                             if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                             {
-                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                 latestRunInstance.OutputUrl = outputUrlInstance;
                             }
                             
                             JToken errorUrlValue = latestRunValue["error_url"];
                             if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                             {
-                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                 latestRunInstance.ErrorUrl = errorUrlInstance;
                             }
                             
                             JToken urlValue2 = latestRunValue["url"];
                             if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                             {
-                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                 latestRunInstance.Url = urlInstance2;
                             }
                         }
@@ -523,21 +523,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken statusValue2 = responseDoc["status"];
                         if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                         {
-                            string statusInstance2 = (string)statusValue2;
+                            string statusInstance2 = ((string)statusValue2);
                             webJobInstance.Status = statusInstance2;
                         }
                         
                         JToken detailedStatusValue = responseDoc["detailed_status"];
                         if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                         {
-                            string detailedStatusInstance = (string)detailedStatusValue;
+                            string detailedStatusInstance = ((string)detailedStatusValue);
                             webJobInstance.DetailedStatus = detailedStatusInstance;
                         }
                         
                         JToken logUrlValue = responseDoc["log_url"];
                         if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                         {
-                            string logUrlInstance = (string)logUrlValue;
+                            string logUrlInstance = ((string)logUrlValue);
                             webJobInstance.LogUrl = logUrlInstance;
                         }
                     }
@@ -676,42 +676,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             webJobInstance.Name = nameInstance;
                         }
                         
                         JToken runCommandValue = responseDoc["run_command"];
                         if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                         {
-                            string runCommandInstance = (string)runCommandValue;
+                            string runCommandInstance = ((string)runCommandValue);
                             webJobInstance.RunCommand = runCommandInstance;
                         }
                         
                         JToken typeValue = responseDoc["type"];
                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                         {
-                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                             webJobInstance.Type = typeInstance;
                         }
                         
                         JToken urlValue = responseDoc["url"];
                         if (urlValue != null && urlValue.Type != JTokenType.Null)
                         {
-                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                             webJobInstance.Url = urlInstance;
                         }
                         
                         JToken historyUrlValue = responseDoc["history_url"];
                         if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                         {
-                            string historyUrlInstance = (string)historyUrlValue;
+                            string historyUrlInstance = ((string)historyUrlValue);
                             webJobInstance.HistoryUrl = historyUrlInstance;
                         }
                         
                         JToken extraInfoUrlValue = responseDoc["extra_info_url"];
                         if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                         {
-                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                             webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                         }
                         
@@ -724,56 +724,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                             JToken idValue = latestRunValue["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string idInstance = (string)idValue;
+                                string idInstance = ((string)idValue);
                                 latestRunInstance.Id = idInstance;
                             }
                             
                             JToken statusValue = latestRunValue["status"];
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string statusInstance = (string)statusValue;
+                                string statusInstance = ((string)statusValue);
                                 latestRunInstance.Status = statusInstance;
                             }
                             
                             JToken startTimeValue = latestRunValue["start_time"];
                             if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
                                 latestRunInstance.StartTime = startTimeInstance;
                             }
                             
                             JToken endTimeValue = latestRunValue["end_time"];
                             if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                DateTime endTimeInstance = ((DateTime)endTimeValue);
                                 latestRunInstance.EndTime = endTimeInstance;
                             }
                             
                             JToken durationValue = latestRunValue["duration"];
                             if (durationValue != null && durationValue.Type != JTokenType.Null)
                             {
-                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                 latestRunInstance.Duration = durationInstance;
                             }
                             
                             JToken outputUrlValue = latestRunValue["output_url"];
                             if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                             {
-                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                 latestRunInstance.OutputUrl = outputUrlInstance;
                             }
                             
                             JToken errorUrlValue = latestRunValue["error_url"];
                             if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                             {
-                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                 latestRunInstance.ErrorUrl = errorUrlInstance;
                             }
                             
                             JToken urlValue2 = latestRunValue["url"];
                             if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                             {
-                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                 latestRunInstance.Url = urlInstance2;
                             }
                         }
@@ -781,21 +781,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken statusValue2 = responseDoc["status"];
                         if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                         {
-                            string statusInstance2 = (string)statusValue2;
+                            string statusInstance2 = ((string)statusValue2);
                             webJobInstance.Status = statusInstance2;
                         }
                         
                         JToken detailedStatusValue = responseDoc["detailed_status"];
                         if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                         {
-                            string detailedStatusInstance = (string)detailedStatusValue;
+                            string detailedStatusInstance = ((string)detailedStatusValue);
                             webJobInstance.DetailedStatus = detailedStatusInstance;
                         }
                         
                         JToken logUrlValue = responseDoc["log_url"];
                         if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                         {
-                            string logUrlInstance = (string)logUrlValue;
+                            string logUrlInstance = ((string)logUrlValue);
                             webJobInstance.LogUrl = logUrlInstance;
                         }
                     }
@@ -942,56 +942,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken idValue = responseDoc["id"];
                         if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string idInstance = (string)idValue;
+                            string idInstance = ((string)idValue);
                             jobRunInstance.Id = idInstance;
                         }
                         
                         JToken statusValue = responseDoc["status"];
                         if (statusValue != null && statusValue.Type != JTokenType.Null)
                         {
-                            string statusInstance = (string)statusValue;
+                            string statusInstance = ((string)statusValue);
                             jobRunInstance.Status = statusInstance;
                         }
                         
                         JToken startTimeValue = responseDoc["start_time"];
                         if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
+                            DateTime startTimeInstance = ((DateTime)startTimeValue);
                             jobRunInstance.StartTime = startTimeInstance;
                         }
                         
                         JToken endTimeValue = responseDoc["end_time"];
                         if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime endTimeInstance = (DateTime)endTimeValue;
+                            DateTime endTimeInstance = ((DateTime)endTimeValue);
                             jobRunInstance.EndTime = endTimeInstance;
                         }
                         
                         JToken durationValue = responseDoc["duration"];
                         if (durationValue != null && durationValue.Type != JTokenType.Null)
                         {
-                            TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                            TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                             jobRunInstance.Duration = durationInstance;
                         }
                         
                         JToken outputUrlValue = responseDoc["output_url"];
                         if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                         {
-                            Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                            Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                             jobRunInstance.OutputUrl = outputUrlInstance;
                         }
                         
                         JToken errorUrlValue = responseDoc["error_url"];
                         if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                         {
-                            Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                            Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                             jobRunInstance.ErrorUrl = errorUrlInstance;
                         }
                         
                         JToken urlValue = responseDoc["url"];
                         if (urlValue != null && urlValue.Type != JTokenType.Null)
                         {
-                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                             jobRunInstance.Url = urlInstance;
                         }
                     }
@@ -1130,42 +1130,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken nameValue = responseDoc["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             webJobInstance.Name = nameInstance;
                         }
                         
                         JToken runCommandValue = responseDoc["run_command"];
                         if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                         {
-                            string runCommandInstance = (string)runCommandValue;
+                            string runCommandInstance = ((string)runCommandValue);
                             webJobInstance.RunCommand = runCommandInstance;
                         }
                         
                         JToken typeValue = responseDoc["type"];
                         if (typeValue != null && typeValue.Type != JTokenType.Null)
                         {
-                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                            WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                             webJobInstance.Type = typeInstance;
                         }
                         
                         JToken urlValue = responseDoc["url"];
                         if (urlValue != null && urlValue.Type != JTokenType.Null)
                         {
-                            Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                            Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                             webJobInstance.Url = urlInstance;
                         }
                         
                         JToken historyUrlValue = responseDoc["history_url"];
                         if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                         {
-                            string historyUrlInstance = (string)historyUrlValue;
+                            string historyUrlInstance = ((string)historyUrlValue);
                             webJobInstance.HistoryUrl = historyUrlInstance;
                         }
                         
                         JToken extraInfoUrlValue = responseDoc["extra_info_url"];
                         if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                         {
-                            string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                            string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                             webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                         }
                         
@@ -1178,56 +1178,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                             JToken idValue = latestRunValue["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
-                                string idInstance = (string)idValue;
+                                string idInstance = ((string)idValue);
                                 latestRunInstance.Id = idInstance;
                             }
                             
                             JToken statusValue = latestRunValue["status"];
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
-                                string statusInstance = (string)statusValue;
+                                string statusInstance = ((string)statusValue);
                                 latestRunInstance.Status = statusInstance;
                             }
                             
                             JToken startTimeValue = latestRunValue["start_time"];
                             if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime startTimeInstance = (DateTime)startTimeValue;
+                                DateTime startTimeInstance = ((DateTime)startTimeValue);
                                 latestRunInstance.StartTime = startTimeInstance;
                             }
                             
                             JToken endTimeValue = latestRunValue["end_time"];
                             if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime endTimeInstance = (DateTime)endTimeValue;
+                                DateTime endTimeInstance = ((DateTime)endTimeValue);
                                 latestRunInstance.EndTime = endTimeInstance;
                             }
                             
                             JToken durationValue = latestRunValue["duration"];
                             if (durationValue != null && durationValue.Type != JTokenType.Null)
                             {
-                                TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                 latestRunInstance.Duration = durationInstance;
                             }
                             
                             JToken outputUrlValue = latestRunValue["output_url"];
                             if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                             {
-                                Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                 latestRunInstance.OutputUrl = outputUrlInstance;
                             }
                             
                             JToken errorUrlValue = latestRunValue["error_url"];
                             if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                             {
-                                Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                 latestRunInstance.ErrorUrl = errorUrlInstance;
                             }
                             
                             JToken urlValue2 = latestRunValue["url"];
                             if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                             {
-                                Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                 latestRunInstance.Url = urlInstance2;
                             }
                         }
@@ -1235,21 +1235,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken statusValue2 = responseDoc["status"];
                         if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                         {
-                            string statusInstance2 = (string)statusValue2;
+                            string statusInstance2 = ((string)statusValue2);
                             webJobInstance.Status = statusInstance2;
                         }
                         
                         JToken detailedStatusValue = responseDoc["detailed_status"];
                         if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                         {
-                            string detailedStatusInstance = (string)detailedStatusValue;
+                            string detailedStatusInstance = ((string)detailedStatusValue);
                             webJobInstance.DetailedStatus = detailedStatusInstance;
                         }
                         
                         JToken logUrlValue = responseDoc["log_url"];
                         if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                         {
-                            string logUrlInstance = (string)logUrlValue;
+                            string logUrlInstance = ((string)logUrlValue);
                             webJobInstance.LogUrl = logUrlInstance;
                         }
                     }
@@ -1389,7 +1389,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in (JArray)jobsArray)
+                            foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1397,42 +1397,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken nameValue = jobsValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
                                 JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                                 {
-                                    string runCommandInstance = (string)runCommandValue;
+                                    string runCommandInstance = ((string)runCommandValue);
                                     webJobInstance.RunCommand = runCommandInstance;
                                 }
                                 
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken urlValue = jobsValue["url"];
                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                                     webJobInstance.Url = urlInstance;
                                 }
                                 
                                 JToken historyUrlValue = jobsValue["history_url"];
                                 if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                                 {
-                                    string historyUrlInstance = (string)historyUrlValue;
+                                    string historyUrlInstance = ((string)historyUrlValue);
                                     webJobInstance.HistoryUrl = historyUrlInstance;
                                 }
                                 
                                 JToken extraInfoUrlValue = jobsValue["extra_info_url"];
                                 if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                                 {
-                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                                    string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                                     webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                                 }
                                 
@@ -1445,56 +1445,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     JToken idValue = latestRunValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance = (string)idValue;
+                                        string idInstance = ((string)idValue);
                                         latestRunInstance.Id = idInstance;
                                     }
                                     
                                     JToken statusValue = latestRunValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = (string)statusValue;
+                                        string statusInstance = ((string)statusValue);
                                         latestRunInstance.Status = statusInstance;
                                     }
                                     
                                     JToken startTimeValue = latestRunValue["start_time"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
                                         latestRunInstance.StartTime = startTimeInstance;
                                     }
                                     
                                     JToken endTimeValue = latestRunValue["end_time"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
                                         latestRunInstance.EndTime = endTimeInstance;
                                     }
                                     
                                     JToken durationValue = latestRunValue["duration"];
                                     if (durationValue != null && durationValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                         latestRunInstance.Duration = durationInstance;
                                     }
                                     
                                     JToken outputUrlValue = latestRunValue["output_url"];
                                     if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                        Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                         latestRunInstance.OutputUrl = outputUrlInstance;
                                     }
                                     
                                     JToken errorUrlValue = latestRunValue["error_url"];
                                     if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                        Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                         latestRunInstance.ErrorUrl = errorUrlInstance;
                                     }
                                     
                                     JToken urlValue2 = latestRunValue["url"];
                                     if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                                     {
-                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                        Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                         latestRunInstance.Url = urlInstance2;
                                     }
                                 }
@@ -1502,21 +1502,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken statusValue2 = jobsValue["status"];
                                 if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                                 {
-                                    string statusInstance2 = (string)statusValue2;
+                                    string statusInstance2 = ((string)statusValue2);
                                     webJobInstance.Status = statusInstance2;
                                 }
                                 
                                 JToken detailedStatusValue = jobsValue["detailed_status"];
                                 if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                                 {
-                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    string detailedStatusInstance = ((string)detailedStatusValue);
                                     webJobInstance.DetailedStatus = detailedStatusInstance;
                                 }
                                 
                                 JToken logUrlValue = jobsValue["log_url"];
                                 if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                                 {
-                                    string logUrlInstance = (string)logUrlValue;
+                                    string logUrlInstance = ((string)logUrlValue);
                                     webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
@@ -1658,7 +1658,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in (JArray)jobsArray)
+                            foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -1666,42 +1666,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken nameValue = jobsValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
                                 JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                                 {
-                                    string runCommandInstance = (string)runCommandValue;
+                                    string runCommandInstance = ((string)runCommandValue);
                                     webJobInstance.RunCommand = runCommandInstance;
                                 }
                                 
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken urlValue = jobsValue["url"];
                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                                     webJobInstance.Url = urlInstance;
                                 }
                                 
                                 JToken historyUrlValue = jobsValue["history_url"];
                                 if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                                 {
-                                    string historyUrlInstance = (string)historyUrlValue;
+                                    string historyUrlInstance = ((string)historyUrlValue);
                                     webJobInstance.HistoryUrl = historyUrlInstance;
                                 }
                                 
                                 JToken extraInfoUrlValue = jobsValue["extra_info_url"];
                                 if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                                 {
-                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                                    string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                                     webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                                 }
                                 
@@ -1714,56 +1714,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     JToken idValue = latestRunValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance = (string)idValue;
+                                        string idInstance = ((string)idValue);
                                         latestRunInstance.Id = idInstance;
                                     }
                                     
                                     JToken statusValue = latestRunValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = (string)statusValue;
+                                        string statusInstance = ((string)statusValue);
                                         latestRunInstance.Status = statusInstance;
                                     }
                                     
                                     JToken startTimeValue = latestRunValue["start_time"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
                                         latestRunInstance.StartTime = startTimeInstance;
                                     }
                                     
                                     JToken endTimeValue = latestRunValue["end_time"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
                                         latestRunInstance.EndTime = endTimeInstance;
                                     }
                                     
                                     JToken durationValue = latestRunValue["duration"];
                                     if (durationValue != null && durationValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                         latestRunInstance.Duration = durationInstance;
                                     }
                                     
                                     JToken outputUrlValue = latestRunValue["output_url"];
                                     if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                        Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                         latestRunInstance.OutputUrl = outputUrlInstance;
                                     }
                                     
                                     JToken errorUrlValue = latestRunValue["error_url"];
                                     if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                        Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                         latestRunInstance.ErrorUrl = errorUrlInstance;
                                     }
                                     
                                     JToken urlValue2 = latestRunValue["url"];
                                     if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                                     {
-                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                        Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                         latestRunInstance.Url = urlInstance2;
                                     }
                                 }
@@ -1771,21 +1771,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken statusValue2 = jobsValue["status"];
                                 if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                                 {
-                                    string statusInstance2 = (string)statusValue2;
+                                    string statusInstance2 = ((string)statusValue2);
                                     webJobInstance.Status = statusInstance2;
                                 }
                                 
                                 JToken detailedStatusValue = jobsValue["detailed_status"];
                                 if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                                 {
-                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    string detailedStatusInstance = ((string)detailedStatusValue);
                                     webJobInstance.DetailedStatus = detailedStatusInstance;
                                 }
                                 
                                 JToken logUrlValue = jobsValue["log_url"];
                                 if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                                 {
-                                    string logUrlInstance = (string)logUrlValue;
+                                    string logUrlInstance = ((string)logUrlValue);
                                     webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }
@@ -1935,7 +1935,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken runsArray = responseDoc["runs"];
                         if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken runsValue in (JArray)runsArray)
+                            foreach (JToken runsValue in ((JArray)runsArray))
                             {
                                 WebJobRun webJobRunInstance = new WebJobRun();
                                 result.JobRuns.Add(webJobRunInstance);
@@ -1943,56 +1943,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken idValue = runsValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = (string)idValue;
+                                    string idInstance = ((string)idValue);
                                     webJobRunInstance.Id = idInstance;
                                 }
                                 
                                 JToken statusValue = runsValue["status"];
                                 if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
-                                    string statusInstance = (string)statusValue;
+                                    string statusInstance = ((string)statusValue);
                                     webJobRunInstance.Status = statusInstance;
                                 }
                                 
                                 JToken startTimeValue = runsValue["start_time"];
                                 if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
                                     webJobRunInstance.StartTime = startTimeInstance;
                                 }
                                 
                                 JToken endTimeValue = runsValue["end_time"];
                                 if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
                                     webJobRunInstance.EndTime = endTimeInstance;
                                 }
                                 
                                 JToken durationValue = runsValue["duration"];
                                 if (durationValue != null && durationValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                    TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                     webJobRunInstance.Duration = durationInstance;
                                 }
                                 
                                 JToken outputUrlValue = runsValue["output_url"];
                                 if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                 {
-                                    Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                    Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                     webJobRunInstance.OutputUrl = outputUrlInstance;
                                 }
                                 
                                 JToken errorUrlValue = runsValue["error_url"];
                                 if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                 {
-                                    Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                    Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                     webJobRunInstance.ErrorUrl = errorUrlInstance;
                                 }
                                 
                                 JToken urlValue = runsValue["url"];
                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                                     webJobRunInstance.Url = urlInstance;
                                 }
                             }
@@ -2134,7 +2134,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken jobsValue in (JArray)jobsArray)
+                            foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 WebJob webJobInstance = new WebJob();
                                 result.Jobs.Add(webJobInstance);
@@ -2142,42 +2142,42 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken nameValue = jobsValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     webJobInstance.Name = nameInstance;
                                 }
                                 
                                 JToken runCommandValue = jobsValue["run_command"];
                                 if (runCommandValue != null && runCommandValue.Type != JTokenType.Null)
                                 {
-                                    string runCommandInstance = (string)runCommandValue;
+                                    string runCommandInstance = ((string)runCommandValue);
                                     webJobInstance.RunCommand = runCommandInstance;
                                 }
                                 
                                 JToken typeValue = jobsValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType((string)typeValue);
+                                    WebJobType typeInstance = WebSiteExtensionsClient.ParseWebJobType(((string)typeValue));
                                     webJobInstance.Type = typeInstance;
                                 }
                                 
                                 JToken urlValue = jobsValue["url"];
                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                 {
-                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                                     webJobInstance.Url = urlInstance;
                                 }
                                 
                                 JToken historyUrlValue = jobsValue["history_url"];
                                 if (historyUrlValue != null && historyUrlValue.Type != JTokenType.Null)
                                 {
-                                    string historyUrlInstance = (string)historyUrlValue;
+                                    string historyUrlInstance = ((string)historyUrlValue);
                                     webJobInstance.HistoryUrl = historyUrlInstance;
                                 }
                                 
                                 JToken extraInfoUrlValue = jobsValue["extra_info_url"];
                                 if (extraInfoUrlValue != null && extraInfoUrlValue.Type != JTokenType.Null)
                                 {
-                                    string extraInfoUrlInstance = (string)extraInfoUrlValue;
+                                    string extraInfoUrlInstance = ((string)extraInfoUrlValue);
                                     webJobInstance.ExtraInfoUrl = extraInfoUrlInstance;
                                 }
                                 
@@ -2190,56 +2190,56 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                     JToken idValue = latestRunValue["id"];
                                     if (idValue != null && idValue.Type != JTokenType.Null)
                                     {
-                                        string idInstance = (string)idValue;
+                                        string idInstance = ((string)idValue);
                                         latestRunInstance.Id = idInstance;
                                     }
                                     
                                     JToken statusValue = latestRunValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
-                                        string statusInstance = (string)statusValue;
+                                        string statusInstance = ((string)statusValue);
                                         latestRunInstance.Status = statusInstance;
                                     }
                                     
                                     JToken startTimeValue = latestRunValue["start_time"];
                                     if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
                                         latestRunInstance.StartTime = startTimeInstance;
                                     }
                                     
                                     JToken endTimeValue = latestRunValue["end_time"];
                                     if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
                                         latestRunInstance.EndTime = endTimeInstance;
                                     }
                                     
                                     JToken durationValue = latestRunValue["duration"];
                                     if (durationValue != null && durationValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan durationInstance = TimeSpan.Parse((string)durationValue, CultureInfo.InvariantCulture);
+                                        TimeSpan durationInstance = TimeSpan.Parse(((string)durationValue), CultureInfo.InvariantCulture);
                                         latestRunInstance.Duration = durationInstance;
                                     }
                                     
                                     JToken outputUrlValue = latestRunValue["output_url"];
                                     if (outputUrlValue != null && outputUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri outputUrlInstance = TypeConversion.TryParseUri((string)outputUrlValue);
+                                        Uri outputUrlInstance = TypeConversion.TryParseUri(((string)outputUrlValue));
                                         latestRunInstance.OutputUrl = outputUrlInstance;
                                     }
                                     
                                     JToken errorUrlValue = latestRunValue["error_url"];
                                     if (errorUrlValue != null && errorUrlValue.Type != JTokenType.Null)
                                     {
-                                        Uri errorUrlInstance = TypeConversion.TryParseUri((string)errorUrlValue);
+                                        Uri errorUrlInstance = TypeConversion.TryParseUri(((string)errorUrlValue));
                                         latestRunInstance.ErrorUrl = errorUrlInstance;
                                     }
                                     
                                     JToken urlValue2 = latestRunValue["url"];
                                     if (urlValue2 != null && urlValue2.Type != JTokenType.Null)
                                     {
-                                        Uri urlInstance2 = TypeConversion.TryParseUri((string)urlValue2);
+                                        Uri urlInstance2 = TypeConversion.TryParseUri(((string)urlValue2));
                                         latestRunInstance.Url = urlInstance2;
                                     }
                                 }
@@ -2247,21 +2247,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                                 JToken statusValue2 = jobsValue["status"];
                                 if (statusValue2 != null && statusValue2.Type != JTokenType.Null)
                                 {
-                                    string statusInstance2 = (string)statusValue2;
+                                    string statusInstance2 = ((string)statusValue2);
                                     webJobInstance.Status = statusInstance2;
                                 }
                                 
                                 JToken detailedStatusValue = jobsValue["detailed_status"];
                                 if (detailedStatusValue != null && detailedStatusValue.Type != JTokenType.Null)
                                 {
-                                    string detailedStatusInstance = (string)detailedStatusValue;
+                                    string detailedStatusInstance = ((string)detailedStatusValue);
                                     webJobInstance.DetailedStatus = detailedStatusInstance;
                                 }
                                 
                                 JToken logUrlValue = jobsValue["log_url"];
                                 if (logUrlValue != null && logUrlValue.Type != JTokenType.Null)
                                 {
-                                    string logUrlInstance = (string)logUrlValue;
+                                    string logUrlInstance = ((string)logUrlValue);
                                     webJobInstance.LogUrl = logUrlInstance;
                                 }
                             }

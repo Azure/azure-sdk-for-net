@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Historical Usage Metrics operation response.
+    /// The Get Historical Usage Metrics Web Site operation response.
     /// </summary>
     public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric>
     {

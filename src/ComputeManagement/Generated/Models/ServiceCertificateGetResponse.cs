@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The public portion of the X.509 service certificate as a
-        /// form of the .cer file.
+        /// form of the cer file.
         /// </summary>
         public byte[] Data
         {

@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<SshSettingKeyPair> _keyPairs;
         
         /// <summary>
-        /// Optional. Specifies the collection of SSH public keys.
+        /// Optional. Specifies the collection of SSH key pairs.
         /// </summary>
         public IList<SshSettingKeyPair> KeyPairs
         {

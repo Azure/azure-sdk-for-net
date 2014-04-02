@@ -33,19 +33,20 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class DeploymentOperationsExtensions
     {
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Begin Changing Deployment Configuration By Name operation
+        /// initiates a change to the deployment configuration. This operation
+        /// is an asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -61,8 +62,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Begin Changing Configuration
+        /// Deployment By Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -70,30 +71,21 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginChangingConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginChangingConfigurationByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginChangingConfigurationByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Begin Changing Deployment Configuration By Name operation
+        /// initiates a change to the deployment configuration. This operation
+        /// is an asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -109,8 +101,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Begin Changing Configuration
+        /// Deployment By Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -122,12 +114,13 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Begin Changing Deployment Configuration By Slot operation
+        /// initiates a change to the deployment configuration. This operation
+        /// is an asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -143,8 +136,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to change deployment configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Begin Changing Configuration
+        /// Deployment By Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -152,30 +145,21 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginChangingConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginChangingConfigurationBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Begin Changing Deployment Configuration By Slot operation
+        /// initiates a change to the deployment configuration. This operation
+        /// is an asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -191,8 +175,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to change deployment configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Begin Changing Configuration
+        /// Deployment By Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -204,13 +188,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Create Deployment operation uploads a new service package and
-        /// creates a new deployment in the staging or production
-        /// environments.  The Create Deployment operation is an asynchronous
-        /// operation. To determine whether the management service has
-        /// finished processing the request, call Get Operation Status. For
-        /// more information on asynchronous operations, see Tracking
-        /// Asynchronous Service Management Requests.  (see
+        /// The Begin Creating Deployment operation uploads a new service
+        /// package and creates a new deployment in the staging or production
+        /// environments. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status. For more information on
+        /// asynchronous operations, see Tracking Asynchronous Service
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460813.aspx
         /// for more information)
         /// </summary>
@@ -225,7 +211,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to create a deployment for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Deployment operation.
+        /// Required. Parameters supplied to the Begin Creating Deployment
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -233,31 +220,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginCreatingAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Create Deployment operation uploads a new service package and
-        /// creates a new deployment in the staging or production
-        /// environments.  The Create Deployment operation is an asynchronous
-        /// operation. To determine whether the management service has
-        /// finished processing the request, call Get Operation Status. For
-        /// more information on asynchronous operations, see Tracking
-        /// Asynchronous Service Management Requests.  (see
+        /// The Begin Creating Deployment operation uploads a new service
+        /// package and creates a new deployment in the staging or production
+        /// environments. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status. For more information on
+        /// asynchronous operations, see Tracking Asynchronous Service
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460813.aspx
         /// for more information)
         /// </summary>
@@ -272,7 +251,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to create a deployment for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Deployment operation.
+        /// Required. Parameters supplied to the Begin Creating Deployment
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -284,12 +264,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Begin Deleting Deployment By Name operation deletes the
+        /// specified deployment. This operation is an asynchronous operation.
+        /// To determine whether the Management service has finished
+        /// processing the request, call Get Operation Status. For more
+        /// information on asynchronous operations, see Tracking Asynchronous
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -313,30 +295,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingByNameAsync(serviceName, deploymentName, deleteFromStorage).Result;
+                return ((IDeploymentOperations)s).BeginDeletingByNameAsync(serviceName, deploymentName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Begin Deleting Deployment By Name operation deletes the
+        /// specified deployment. This operation is an asynchronous operation.
+        /// To determine whether the Management service has finished
+        /// processing the request, call Get Operation Status. For more
+        /// information on asynchronous operations, see Tracking Asynchronous
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -364,12 +338,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Begin Deleting Deployment By Slot operation deletes the
+        /// specified deployment. This operation is an asynchronous operation.
+        /// To determine whether the Management service has finished
+        /// processing the request, call Get Operation Status. For more
+        /// information on asynchronous operations, see Tracking Asynchronous
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -389,30 +365,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeletingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).BeginDeletingBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Begin Deleting Deployment By Slot operation deletes the
+        /// specified deployment. This operation is an asynchronous operation.
+        /// To determine whether the Management service has finished
+        /// processing the request, call Get Operation Status. For more
+        /// information on asynchronous operations, see Tracking Asynchronous
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -436,13 +404,135 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The name of the deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginDeletingRoleInstanceByBeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginDeletingRoleInstanceByBeploymentSlotAsync(serviceName, deploymentSlot, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The name of the deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginDeletingRoleInstanceByBeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return operations.BeginDeletingRoleInstanceByBeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginDeletingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginDeletingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return operations.BeginDeletingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Begin Rebooting Role Instance By Deployment Name operation
+        /// requests a reboot of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -465,31 +555,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginRebootingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRebootingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginRebootingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Rebooting Role Instance By Deployment Name operation
+        /// requests a reboot of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -516,13 +598,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Rebooting Role Instance By Deployment Slot operation
+        /// requests a reboot of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -545,31 +629,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginRebootingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Rebooting Role Instance By Deployment Slot operation
+        /// requests a reboot of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -596,13 +672,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Reimaging Role Instance By Deployment Name operation
+        /// requests a reimage of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -625,31 +703,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginReimagingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginReimagingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginReimagingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Reimaging Role Instance By Deployment Name operation
+        /// requests a reimage of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -676,13 +746,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Reimaging Role Instance By Deployment Slot operation
+        /// requests a reimage of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -705,31 +777,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginReimagingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginReimagingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).BeginReimagingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
+        /// The Begin Reimaging Role Instance By Deployment Slot operation
+        /// requests a reimage of a role instance that is running in a
+        /// deployment. This operation is an asynchronous operation. To
+        /// determine whether the Management service has finished processing
+        /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -756,13 +820,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Swap Deployment operation initiates a virtual IP address swap
-        /// between the staging and production deployment environments for a
-        /// service. If the service is currently running in the staging
-        /// environment, it will be swapped to the production environment. If
-        /// it is running in the production environment, it will be swapped to
-        /// staging. For more information on this type of upgrade, see
-        /// Performing Virtual IP Swap Upgrades.  (see
+        /// The Begin Swapping Deployment operation initiates a virtual IP
+        /// address swap between the staging and production deployment
+        /// environments for a service. If the service is currently running in
+        /// the staging environment, it will be swapped to the production
+        /// environment. If it is running in the production environment, it
+        /// will be swapped to staging. For more information on this type of
+        /// upgrade, see Performing Virtual IP Swap Upgrades at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee517253.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460814.aspx
         /// for more information)
         /// </summary>
@@ -774,7 +840,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Swap Deployment operation.
+        /// Required. Parameters supplied to the Begin Swapping Deployment
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -782,31 +849,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginSwapping(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginSwappingAsync(serviceName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginSwappingAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Swap Deployment operation initiates a virtual IP address swap
-        /// between the staging and production deployment environments for a
-        /// service. If the service is currently running in the staging
-        /// environment, it will be swapped to the production environment. If
-        /// it is running in the production environment, it will be swapped to
-        /// staging. For more information on this type of upgrade, see
-        /// Performing Virtual IP Swap Upgrades.  (see
+        /// The Begin Swapping Deployment operation initiates a virtual IP
+        /// address swap between the staging and production deployment
+        /// environments for a service. If the service is currently running in
+        /// the staging environment, it will be swapped to the production
+        /// environment. If it is running in the production environment, it
+        /// will be swapped to staging. For more information on this type of
+        /// upgrade, see Performing Virtual IP Swap Upgrades at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee517253.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460814.aspx
         /// for more information)
         /// </summary>
@@ -818,7 +877,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The cloud service to swap deployments for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Swap Deployment operation.
+        /// Required. Parameters supplied to the Begin Swapping Deployment
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -830,13 +890,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Begin Updating Deployment Status By Deployment Name operation
+        /// initiates a change in the running status of a deployment. The
+        /// status of a deployment can be running or suspended. This operation
+        /// is an asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -851,8 +913,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Begin Updating Deployment
+        /// Status By Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -860,31 +922,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdatingStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingStatusByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpdatingStatusByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Begin Updating Deployment Status By Deployment Name operation
+        /// initiates a change in the running status of a deployment. The
+        /// status of a deployment can be running or suspended. This operation
+        /// is an asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -899,8 +953,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Begin Updating Deployment
+        /// Status By Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -912,13 +966,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Begin Updating Deployment Status By Deployment Slot operation
+        /// initiates a change in the running status of a deployment. The
+        /// status of a deployment can be running or suspended. This operation
+        /// is an asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -933,8 +989,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Begin Updating Deployment
+        /// Status By Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -942,31 +998,23 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpdatingStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpdatingStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Begin Updating Deployment Status By Deployment Slot operation
+        /// initiates a change in the running status of a deployment. The
+        /// status of a deployment can be running or suspended. This operation
+        /// is an asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -981,8 +1029,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Begin Updating Deployment
+        /// Status By Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -994,36 +1042,41 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Begin Upgrading Deployment By Name operation initiates an
+        /// update of role instances in a deployment using the package and
+        /// configuration that you specify. For more information about
+        /// updating role instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -1037,7 +1090,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Begin Upgrading Deployment By
+        /// Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1045,54 +1099,49 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpgradingByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpgradingByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpgradingByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Begin Upgrading Deployment By Name operation initiates an
+        /// update of role instances in a deployment using the package and
+        /// configuration that you specify. For more information about
+        /// updating role instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -1106,7 +1155,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Begin Upgrading Deployment By
+        /// Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1118,36 +1168,41 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
+        /// The Begin Upgrading Deployment By Slot operation initiates an
+        /// update of role instances in a deployment using the package and
+        /// configuration that you specify. For more information about
+        /// updating role instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.This
         /// operation is an asynchronous operation. To determine whether the
         /// request has been processed, call Get Operation Status. For more
         /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.  To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -1161,7 +1216,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Begin Upgrading Deployment By
+        /// Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1169,54 +1225,49 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginUpgradingBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpgradingBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginUpgradingBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
+        /// The Begin Upgrading Deployment By Slot operation initiates an
+        /// update of role instances in a deployment using the package and
+        /// configuration that you specify. For more information about
+        /// updating role instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.This
         /// operation is an asynchronous operation. To determine whether the
         /// request has been processed, call Get Operation Status. For more
         /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.  To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -1230,7 +1281,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Begin Upgrading Deployment By
+        /// Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1242,35 +1294,38 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Begin Walking Upgrade Domain By Deployment Name operation
+        /// specifies an update domain in which a role instance must be
+        /// updated. For more information about updating role instances, see
+        /// Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -1285,7 +1340,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Begin Walking Upgrade Domain
+        /// By Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1293,53 +1349,46 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginWalkingUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginWalkingUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).BeginWalkingUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Begin Walking Upgrade Domain By Deployment Name operation
+        /// specifies an update domain in which a role instance must be
+        /// updated. For more information about updating role instances, see
+        /// Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -1354,7 +1403,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Begin Walking Upgrade Domain
+        /// By Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1366,35 +1416,38 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Begin Walking Upgrade Domain By Deployment Slot operation
+        /// specifies an update domain in which a role instance must be
+        /// updated. For more information about updating role instances, see
+        /// Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -1409,7 +1462,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Begin Walking Upgrade Domain
+        /// By Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1417,53 +1471,46 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginWalkingUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginWalkingUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).BeginWalkingUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Begin Walking Upgrade Domain By Deployment Slot operation
+        /// specifies an update domain in which a role instance must be
+        /// updated. For more information about updating role instances, see
+        /// Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -1478,7 +1525,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Begin Walking Upgrade Domain
+        /// By Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -1490,12 +1538,13 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Change Deployment Configuration By Name operation initiates a
+        /// change to the deployment configuration. This operation is an
+        /// asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -1511,46 +1560,37 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Change ConfigurationDeployment
+        /// By Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse ChangeConfigurationByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ChangeConfigurationByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).ChangeConfigurationByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Change Deployment Configuration By Name operation initiates a
+        /// change to the deployment configuration. This operation is an
+        /// asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -1566,19 +1606,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to change configuration for.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Required. Parameters supplied to the Change ConfigurationDeployment
+        /// By Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ChangeConfigurationByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentChangeConfigurationParameters parameters)
         {
@@ -1586,12 +1626,13 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Change Deployment Configuration By Slot operation initiates a
+        /// change to the deployment configuration. This operation is an
+        /// asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -1608,45 +1649,36 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Deployment By Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse ChangeConfigurationBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ChangeConfigurationBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).ChangeConfigurationBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Change Deployment Configuration operation initiates a change to
-        /// the deployment configuration.  The Change Deployment Configuration
-        /// operation is an asynchronous operation. To determine whether the
-        /// Management service has finished processing the request, call Get
-        /// Operation Status.  For more information on asynchronous
-        /// operations, see Tracking Asynchronous Service Management Requests.
+        /// The Change Deployment Configuration By Slot operation initiates a
+        /// change to the deployment configuration. This operation is an
+        /// asynchronous operation. To determine whether the Management
+        /// service has finished processing the request, call Get Operation
+        /// Status. For more information on asynchronous operations, see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
         /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460809.aspx
         /// for more information)
@@ -1663,18 +1695,18 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Change Configuration
-        /// Deployment operation.
+        /// Deployment By Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ChangeConfigurationBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentChangeConfigurationParameters parameters)
         {
@@ -1684,11 +1716,13 @@ namespace Microsoft.WindowsAzure
         /// <summary>
         /// The Create Deployment operation uploads a new service package and
         /// creates a new deployment in the staging or production
-        /// environments.  The Create Deployment operation is an asynchronous
-        /// operation. To determine whether the management service has
-        /// finished processing the request, call Get Operation Status. For
-        /// more information on asynchronous operations, see Tracking
-        /// Asynchronous Service Management Requests.  (see
+        /// environments. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status. For more information on
+        /// asynchronous operations, see Tracking Asynchronous Service
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460813.aspx
         /// for more information)
         /// </summary>
@@ -1709,40 +1743,32 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Create(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).CreateAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The Create Deployment operation uploads a new service package and
         /// creates a new deployment in the staging or production
-        /// environments.  The Create Deployment operation is an asynchronous
-        /// operation. To determine whether the management service has
-        /// finished processing the request, call Get Operation Status. For
-        /// more information on asynchronous operations, see Tracking
-        /// Asynchronous Service Management Requests.  (see
+        /// environments. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status. For more information on
+        /// asynchronous operations, see Tracking Asynchronous Service
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460813.aspx
         /// for more information)
         /// </summary>
@@ -1763,12 +1789,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CreateAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentCreateParameters parameters)
         {
@@ -1776,12 +1802,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
+        /// The Delete Deployment By Name operation deletes the specified
+        /// deployment. This operation is an asynchronous operation. To
         /// determine whether the Management service has finished processing
         /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -1803,39 +1831,31 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse DeleteByName(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteByNameAsync(serviceName, deploymentName, deleteFromStorage).Result;
+                return ((IDeploymentOperations)s).DeleteByNameAsync(serviceName, deploymentName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
+        /// The Delete Deployment By Name operation deletes the specified
+        /// deployment. This operation is an asynchronous operation. To
         /// determine whether the Management service has finished processing
         /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460815.aspx
         /// for more information)
         /// </summary>
@@ -1857,12 +1877,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, bool deleteFromStorage)
         {
@@ -1870,8 +1890,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
+        /// The Delete Deployment By Slot operation deletes the specified
+        /// deployment. This operation is an asynchronous operation. To
         /// determine whether the Management service has finished processing
         /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
@@ -1893,35 +1913,25 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse DeleteBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).DeleteBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Deployment operation deletes the specified deployment.
-        /// The Delete Deployment operation is an asynchronous operation. To
+        /// The Delete Deployment By Slot operation deletes the specified
+        /// deployment. This operation is an asynchronous operation. To
         /// determine whether the Management service has finished processing
         /// the request, call Get Operation Status. For more information on
         /// asynchronous operations, see Tracking Asynchronous Service
@@ -1943,12 +1953,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
@@ -1956,8 +1966,156 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Deployment operation returns configuration information,
-        /// status, and system properties for a deployment.  (see
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse DeleteRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters roleInstanceName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).DeleteRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes a role instance from a
+        /// deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> DeleteRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters roleInstanceName)
+        {
+            return operations.DeleteRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes the role instances from
+        /// a deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The name of the deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse DeleteRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).DeleteRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Delete Role Instances operation deletes the role instances from
+        /// a deployment in a cloud service.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn469418.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The name of the deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters to delete the role.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> DeleteRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, DeploymentDeleteRoleInstanceParameters parameters)
+        {
+            return operations.DeleteRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Deployment By Name operation returns configuration
+        /// information, status, and system properties for a deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460804.aspx
         /// for more information)
         /// </summary>
@@ -1976,26 +2134,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetResponse GetByName(this IDeploymentOperations operations, string serviceName, string deploymentName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetByNameAsync(serviceName, deploymentName).Result;
+                return ((IDeploymentOperations)s).GetByNameAsync(serviceName, deploymentName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Deployment operation returns configuration information,
-        /// status, and system properties for a deployment.  (see
+        /// The Get Deployment By Name operation returns configuration
+        /// information, status, and system properties for a deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460804.aspx
         /// for more information)
         /// </summary>
@@ -2018,8 +2166,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Deployment operation returns configuration information,
-        /// status, and system properties for a deployment.  (see
+        /// The Get Deployment By Slot operation returns configuration
+        /// information, status, and system properties for a deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460804.aspx
         /// for more information)
         /// </summary>
@@ -2038,26 +2186,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DeploymentGetResponse GetBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetBySlotAsync(serviceName, deploymentSlot).Result;
+                return ((IDeploymentOperations)s).GetBySlotAsync(serviceName, deploymentSlot);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Deployment operation returns configuration information,
-        /// status, and system properties for a deployment.  (see
+        /// The Get Deployment By Slot operation returns configuration
+        /// information, status, and system properties for a deployment.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460804.aspx
         /// for more information)
         /// </summary>
@@ -2080,14 +2218,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Package operation retrieves a cloud service package for a
-        /// deployment and stores the package files in Windows Azure Blob
-        /// storage.  The following package files are placed in storage:
-        /// Service configuration file - The cloud service configuration file
-        /// (.cscfg) provides configuration settings for the cloud service and
-        /// individual roles, including the number of role instances.
-        /// Service package - The service package (.cspkg) contains the
-        /// application code and the service definition file.  (see
+        /// The Get Package By Name operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
         /// for more information)
         /// </summary>
@@ -2102,7 +2240,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package By Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2110,32 +2248,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse GetPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetPackageByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).GetPackageByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Package operation retrieves a cloud service package for a
-        /// deployment and stores the package files in Windows Azure Blob
-        /// storage.  The following package files are placed in storage:
-        /// Service configuration file - The cloud service configuration file
-        /// (.cscfg) provides configuration settings for the cloud service and
-        /// individual roles, including the number of role instances.
-        /// Service package - The service package (.cspkg) contains the
-        /// application code and the service definition file.  (see
+        /// The Get Package By Name operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
         /// for more information)
         /// </summary>
@@ -2150,7 +2278,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package By Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2162,14 +2290,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Package operation retrieves a cloud service package for a
-        /// deployment and stores the package files in Windows Azure Blob
-        /// storage.  The following package files are placed in storage:
-        /// Service configuration file - The cloud service configuration file
-        /// (.cscfg) provides configuration settings for the cloud service and
-        /// individual roles, including the number of role instances.
-        /// Service package - The service package (.cspkg) contains the
-        /// application code and the service definition file.  (see
+        /// The Get Package By Slot operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
         /// for more information)
         /// </summary>
@@ -2184,7 +2312,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package By Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2192,32 +2320,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse GetPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetPackageBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).GetPackageBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Get Package operation retrieves a cloud service package for a
-        /// deployment and stores the package files in Windows Azure Blob
-        /// storage.  The following package files are placed in storage:
-        /// Service configuration file - The cloud service configuration file
-        /// (.cscfg) provides configuration settings for the cloud service and
-        /// individual roles, including the number of role instances.
-        /// Service package - The service package (.cspkg) contains the
-        /// application code and the service definition file.  (see
+        /// The Get Package By Slot operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
         /// for more information)
         /// </summary>
@@ -2232,7 +2350,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Get Package operation.
+        /// Required. Parameters supplied to the Get Package By Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2244,13 +2362,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reboot Role Instance By Deployment Name operation requests a
+        /// reboot of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -2271,40 +2390,31 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse RebootRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RebootRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).RebootRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reboot Role Instance By Deployment Name operation requests a
+        /// reboot of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -2325,12 +2435,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> RebootRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
@@ -2338,13 +2448,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reboot Role Instance By Deployment Slot operation requests a
+        /// reboot of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -2365,40 +2476,31 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse RebootRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reboot Role Instance operation requests a reboot of a role
-        /// instance that is running in a deployment.  The Reboot Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reboot Role Instance By Deployment Slot operation requests a
+        /// reboot of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441298.aspx
         /// for more information)
         /// </summary>
@@ -2419,12 +2521,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
@@ -2432,13 +2534,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reimage Role Instance By Deployment Name operation requests a
+        /// reimage of a role instance that is running in a deployment.This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -2459,40 +2562,31 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse ReimageRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ReimageRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).ReimageRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reimage Role Instance By Deployment Name operation requests a
+        /// reimage of a role instance that is running in a deployment.This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -2513,12 +2607,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName)
         {
@@ -2526,13 +2620,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reimage Role Instance By Deployment Slot operation requests a
+        /// reimage of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -2553,40 +2648,31 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse ReimageRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ReimageRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName).Result;
+                return ((IDeploymentOperations)s).ReimageRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Reimage Role Instance operation requests a reimage of a role
-        /// instance that is running in a deployment.  The Reimage Role
-        /// Instance operation is an asynchronous operation. To determine
-        /// whether the Management service has finished processing the
-        /// request, call Get Operation Status. For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  (see
+        /// The Reimage Role Instance By Deployment Slot operation requests a
+        /// reimage of a role instance that is running in a deployment. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// Management service has finished processing the request, call Get
+        /// Operation Status. For more information on asynchronous operations,
+        /// see Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441292.aspx
         /// for more information)
         /// </summary>
@@ -2607,12 +2693,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> ReimageRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
@@ -2620,14 +2706,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Rollback Update Or Upgrade operation cancels an in-progress
-        /// configuration update and returns the deployment to its state
-        /// before the update was started.  The Rollback Update Or Upgrade
-        /// operation can only be called when an update is in progress on the
-        /// deployment. The deployment status can be detected by calling the
-        /// Get Deployment operation or Get Hosted Service Properties
-        /// operation and inspecting the RollbackAllowed element. If the value
-        /// returned is true a rollback can be performed.  (see
+        /// The Rollback Update Or Upgrade By Deployment Name operation cancels
+        /// an in-progress configuration update and returns the deployment to
+        /// its state before the update was started. This operation can only
+        /// be called when an update is in progress on the deployment. The
+        /// deployment status can be detected by calling the Get Deployment
+        /// operation or Get Hosted Service Properties operation and
+        /// inspecting the RollbackAllowed element. If the value returned is
+        /// true a rollback can be performed.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh403977.aspx
         /// for more information)
         /// </summary>
@@ -2642,8 +2728,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Rollback Update Or Upgrade
-        /// operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2651,32 +2737,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RollbackUpdateOrUpgradeByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RollbackUpdateOrUpgradeByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).RollbackUpdateOrUpgradeByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Rollback Update Or Upgrade operation cancels an in-progress
-        /// configuration update and returns the deployment to its state
-        /// before the update was started.  The Rollback Update Or Upgrade
-        /// operation can only be called when an update is in progress on the
-        /// deployment. The deployment status can be detected by calling the
-        /// Get Deployment operation or Get Hosted Service Properties
-        /// operation and inspecting the RollbackAllowed element. If the value
-        /// returned is true a rollback can be performed.  (see
+        /// The Rollback Update Or Upgrade By Deployment Name operation cancels
+        /// an in-progress configuration update and returns the deployment to
+        /// its state before the update was started. This operation can only
+        /// be called when an update is in progress on the deployment. The
+        /// deployment status can be detected by calling the Get Deployment
+        /// operation or Get Hosted Service Properties operation and
+        /// inspecting the RollbackAllowed element. If the value returned is
+        /// true a rollback can be performed.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh403977.aspx
         /// for more information)
         /// </summary>
@@ -2691,8 +2767,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Rollback Update Or Upgrade
-        /// operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2704,14 +2780,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Rollback Update Or Upgrade operation cancels an in-progress
-        /// configuration update and returns the deployment to its state
-        /// before the update was started.  The Rollback Update Or Upgrade
-        /// operation can only be called when an update is in progress on the
-        /// deployment. The deployment status can be detected by calling the
-        /// Get Deployment operation or Get Hosted Service Properties
-        /// operation and inspecting the RollbackAllowed element. If the value
-        /// returned is true a rollback can be performed.  (see
+        /// The Rollback Update Or Upgrade By Deployment Slot operation cancels
+        /// an in-progress configuration update and returns the deployment to
+        /// its state before the update was started. This operation can only
+        /// be called when an update is in progress on the deployment. The
+        /// deployment status can be detected by calling the Get Deployment
+        /// operation or Get Hosted Service Properties operation and
+        /// inspecting the RollbackAllowed element. If the value returned is
+        /// true a rollback can be performed.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh403977.aspx
         /// for more information)
         /// </summary>
@@ -2726,8 +2802,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Rollback Update Or Upgrade
-        /// operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2735,32 +2811,22 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RollbackUpdateOrUpgradeByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentRollbackUpdateOrUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RollbackUpdateOrUpgradeByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).RollbackUpdateOrUpgradeByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Rollback Update Or Upgrade operation cancels an in-progress
-        /// configuration update and returns the deployment to its state
-        /// before the update was started.  The Rollback Update Or Upgrade
-        /// operation can only be called when an update is in progress on the
-        /// deployment. The deployment status can be detected by calling the
-        /// Get Deployment operation or Get Hosted Service Properties
-        /// operation and inspecting the RollbackAllowed element. If the value
-        /// returned is true a rollback can be performed.  (see
+        /// The Rollback Update Or Upgrade By Deployment Slot operation cancels
+        /// an in-progress configuration update and returns the deployment to
+        /// its state before the update was started. This operation can only
+        /// be called when an update is in progress on the deployment. The
+        /// deployment status can be detected by calling the Get Deployment
+        /// operation or Get Hosted Service Properties operation and
+        /// inspecting the RollbackAllowed element. If the value returned is
+        /// true a rollback can be performed.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh403977.aspx
         /// for more information)
         /// </summary>
@@ -2775,8 +2841,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Rollback Update Or Upgrade
-        /// operation.
+        /// Required. Parameters supplied to the Rollback Update Or Upgrade By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -2794,7 +2860,9 @@ namespace Microsoft.WindowsAzure
         /// environment, it will be swapped to the production environment. If
         /// it is running in the production environment, it will be swapped to
         /// staging. For more information on this type of upgrade, see
-        /// Performing Virtual IP Swap Upgrades.  (see
+        /// Performing Virtual IP Swap Upgrades at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee517253.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460814.aspx
         /// for more information)
         /// </summary>
@@ -2812,30 +2880,20 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Swap(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.SwapAsync(serviceName, parameters).Result;
+                return ((IDeploymentOperations)s).SwapAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -2845,7 +2903,9 @@ namespace Microsoft.WindowsAzure
         /// environment, it will be swapped to the production environment. If
         /// it is running in the production environment, it will be swapped to
         /// staging. For more information on this type of upgrade, see
-        /// Performing Virtual IP Swap Upgrades.  (see
+        /// Performing Virtual IP Swap Upgrades at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee517253.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460814.aspx
         /// for more information)
         /// </summary>
@@ -2863,12 +2923,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> SwapAsync(this IDeploymentOperations operations, string serviceName, DeploymentSwapParameters parameters)
         {
@@ -2876,13 +2936,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Update Deployment Status By Deployment Name operation initiates
+        /// a change in the running status of a deployment. The status of a
+        /// deployment can be running or suspended. This operation is an
+        /// asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -2897,47 +2959,39 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Update Deployment Status By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse UpdateStatusByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateStatusByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).UpdateStatusByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Update Deployment Status By Deployment Name operation initiates
+        /// a change in the running status of a deployment. The status of a
+        /// deployment can be running or suspended. This operation is an
+        /// asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -2952,19 +3006,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Update Deployment Status By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpdateStatusByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpdateStatusParameters parameters)
         {
@@ -2972,13 +3026,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Update Deployment Status By Deployment Slot operation initiates
+        /// a change in the running status of a deployment. The status of a
+        /// deployment can be running or suspended. This operation is an
+        /// asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -2993,47 +3049,39 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Update Deployment Status By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse UpdateStatusByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).UpdateStatusByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Deployment Status operation initiates a change in the
-        /// running status of a deployment. The status of a deployment can be
-        /// running or suspended.  The Update Deployment Status operation is
-        /// an asynchronous operation. To determine whether the Management
+        /// The Update Deployment Status By Deployment Slot operation initiates
+        /// a change in the running status of a deployment. The status of a
+        /// deployment can be running or suspended. This operation is an
+        /// asynchronous operation. To determine whether the Management
         /// service has finished processing the request, call Get Operation
         /// Status. For more information on asynchronous operations, see
-        /// Tracking Asynchronous Service Management Requests.  (see
+        /// Tracking Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460808.aspx
         /// for more information)
         /// </summary>
@@ -3048,19 +3096,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Deployment Status
-        /// operation.
+        /// Required. Parameters supplied to the Update Deployment Status By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpdateStatusByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpdateStatusParameters parameters)
         {
@@ -3068,36 +3116,41 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Upgrade Deployment By Name operation initiates an update of
+        /// role instances in a deployment using the package and configuration
+        /// that you specify. For more information about updating role
+        /// instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -3111,69 +3164,65 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment By Name
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse UpgradeByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpgradeByNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).UpgradeByNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Upgrade Deployment By Name operation initiates an update of
+        /// role instances in a deployment using the package and configuration
+        /// that you specify. For more information about updating role
+        /// instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -3187,18 +3236,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment By Name
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpgradeByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentUpgradeParameters parameters)
         {
@@ -3206,36 +3256,41 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Upgrade Deployment By Slot operation initiates an update of
+        /// role instances in a deployment using the package and configuration
+        /// that you specify. For more information about updating role
+        /// instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -3249,69 +3304,65 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment By Slot
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse UpgradeBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpgradeBySlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).UpgradeBySlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Upgrade Deployment operation initiates an update of role
-        /// instances in a deployment using the package and configuration that
-        /// you specify. For more information about updating role instances,
-        /// see Update a Windows Azure Service.  The Upgrade Deployment
-        /// operation is an asynchronous operation. To determine whether the
-        /// request has been processed, call Get Operation Status. For more
-        /// information on asynchronous operations, see Tracking Asynchronous
-        /// Service Management Requests.To perform an automatic update of a
-        /// deployment, call Upgrade Deployment or Change Deployment
-        /// Configuration with the Mode element set to automatic. The update
-        /// proceeds from that point without a need for further input. You can
-        /// call Get Operation Status to determine when the update is
-        /// complete.  To perform a manual update, first call Upgrade
-        /// Deployment with the Mode element set to manual. Next, call Walk
-        /// Upgrade Domain to update each domain within the deployment. You
-        /// should make sure that the operation is complete by calling Get
-        /// Operation Status before updating the next domain.  Important: An
-        /// update that adds or removes role instances will result in a
-        /// configuration update to all roles that are deployed in the cloud
-        /// service. Existing role instances need to be notified of new role
-        /// instances so that all role instances can communicate together in
-        /// the cloud service.  By default, a cloud service is deployed with
-        /// five update domains, which are updated one at a time during an
-        /// in-place update. For information on modifying the number of update
-        /// domains in the service definition file, see Windows Azure Service
-        /// Definition Schema (.csdef File).  To determine the update domain
-        /// in which a particular instance is running in Windows Azure, use
-        /// the UpdateDomain property of the RoleInstance class. See the
-        /// Windows Azure Managed Library Reference for more information.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
+        /// The Upgrade Deployment By Slot operation initiates an update of
+        /// role instances in a deployment using the package and configuration
+        /// that you specify. For more information about updating role
+        /// instances, see Update an Azure Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the request has been processed, call Get Operation Status. For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// To perform an automatic update of a deployment, call Upgrade
+        /// Deployment or Change Deployment Configuration with the Mode
+        /// element set to automatic. The update proceeds from that point
+        /// without a need for further input. You can call Get Operation
+        /// Status to determine when the update is complete. To perform a
+        /// manual update, first call Upgrade Deployment with the Mode element
+        /// set to manual. Next, call Walk Upgrade Domain to update each
+        /// domain within the deployment. You should make sure that the
+        /// operation is complete by calling Get Operation Status before
+        /// updating the next domain. Important: An update that adds or
+        /// removes role instances will result in a configuration update to
+        /// all roles that are deployed in the cloud service. Existing role
+        /// instances need to be notified of new role instances so that all
+        /// role instances can communicate together in the cloud service. By
+        /// default, a cloud service is deployed with five update domains,
+        /// which are updated one at a time during an in-place update. For
+        /// information on modifying the number of update domains in the
+        /// service definition file, see the Azure Service Definition Schema
+        /// (.csdef File). To determine the update domain in which a
+        /// particular instance is running in Windows Azure, use the
+        /// UpdateDomain property of the RoleInstance class. See the Azure
+        /// Managed Library Reference at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dd179380.aspx
+        /// for more information.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460793.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -3325,18 +3376,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The slot to upgrade.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Upgrade Deployment operation.
+        /// Required. Parameters supplied to the Upgrade Deployment By Slot
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> UpgradeBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentUpgradeParameters parameters)
         {
@@ -3344,35 +3396,38 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Walk Upgrade Domain By Deployment Name operation specifies an
+        /// update domain in which a role instance must be updated. For more
+        /// information about updating role instances, see Update an Azure
+        /// Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -3387,68 +3442,62 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse WalkUpgradeDomainByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.WalkUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters).Result;
+                return ((IDeploymentOperations)s).WalkUpgradeDomainByDeploymentNameAsync(serviceName, deploymentName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Walk Upgrade Domain By Deployment Name operation specifies an
+        /// update domain in which a role instance must be updated. For more
+        /// information about updating role instances, see Update an Azure
+        /// Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -3463,18 +3512,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of your deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain By
+        /// Deployment Name operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentWalkUpgradeDomainParameters parameters)
         {
@@ -3482,35 +3532,38 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Walk Upgrade Domain By Deployment Slot operation specifies an
+        /// update domain in which a role instance must be updated. For more
+        /// information about updating role instances, see Update an Azure
+        /// Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -3525,68 +3578,62 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse WalkUpgradeDomainByDeploymentSlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.WalkUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters).Result;
+                return ((IDeploymentOperations)s).WalkUpgradeDomainByDeploymentSlotAsync(serviceName, deploymentSlot, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Walk Upgrade Domain operation specifies an update domain in
-        /// which a role instance must be updated. For more information about
-        /// updating role instances, see Update a Windows Azure Service.  The
-        /// Walk Upgrade Domain operation is an asynchronous operation. To
-        /// determine whether the Management service has finished processing
-        /// the request, call Get Operation Status.  For more information on
-        /// asynchronous operations, see Tracking Asynchronous Service
-        /// Management Requests.  Prior to calling the Walk Upgrade Domain
-        /// operation you must have called Upgrade Deployment, Change
-        /// Deployment Configuration, or Rollback Update Or Upgrade.  By
-        /// default, a service is deployed with five update domains, which are
-        /// updated one at a time during an in-place update. For information
-        /// on modifying the number of update domains in the service
-        /// definition file, see Windows Azure Service Definition Schema
-        /// (.csdef File).  To perform a manual update of your deployment,
-        /// proceed in this order:  Call Upgrade Deployment with the Mode
-        /// element set to manual.   Call Walk Upgrade Domain to update each
-        /// domain within the deployment. Update domains must be updated in
-        /// order. For example, begin with domain 0, proceed to domain 1, and
-        /// so on.  Important: An update that adds or removes role instances
-        /// will result in a configuration update to all roles that are
-        /// deployed in the cloud service. Existing role instances need to be
-        /// notified of new role instances so that all role instances can
-        /// communicate together in the cloud service.  While an update is in
-        /// progress, call Get Deployment to determine its status. If the
-        /// update is in progress, Get Deployment returns an UpgradeStatus
-        /// element that contains information about the update. If the update
-        /// is complete, or if no update is in progress, then the
-        /// UpgradeStatus element is null.  (see
+        /// The Walk Upgrade Domain By Deployment Slot operation specifies an
+        /// update domain in which a role instance must be updated. For more
+        /// information about updating role instances, see Update an Azure
+        /// Service at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/hh472157.aspx.
+        /// This operation is an asynchronous operation. To determine whether
+        /// the Management service has finished processing the request, call
+        /// Get Operation Status. For more information on asynchronous
+        /// operations, see Tracking Asynchronous Service Management Requests
+        /// at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// Prior to calling the Walk Upgrade Domain operation you must have
+        /// called Upgrade Deployment, Change Deployment Configuration, or
+        /// Rollback Update Or Upgrade. By default, a service is deployed with
+        /// five update domains, which are updated one at a time during an
+        /// in-place update. For information on modifying the number of update
+        /// domains in the service definition file, see the Azure Service
+        /// Definition Schema (.csdef File). To perform a manual update of
+        /// your deployment, proceed in this order: Call Upgrade Deployment
+        /// with the Mode element set to manual. Call Walk Upgrade Domain to
+        /// update each domain within the deployment. Update domains must be
+        /// updated in order. For example, begin with domain 0, proceed to
+        /// domain 1, and so on. Important: An update that adds or removes
+        /// role instances will result in a configuration update to all roles
+        /// that are deployed in the cloud service. Existing role instances
+        /// need to be notified of new role instances so that all role
+        /// instances can communicate together in the cloud service. While an
+        /// update is in progress, call Get Deployment to determine its
+        /// status. If the update is in progress, Get Deployment returns an
+        /// UpgradeStatus element that contains information about the update.
+        /// If the update is complete, or if no update is in progress, then
+        /// the UpgradeStatus element is null.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460800.aspx
         /// for more information)
         /// </summary>
@@ -3601,18 +3648,19 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment slot.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Walk Upgrade Domain operation.
+        /// Required. Parameters supplied to the Walk Upgrade Domain By
+        /// Deployment Slot operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> WalkUpgradeDomainByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentWalkUpgradeDomainParameters parameters)
         {

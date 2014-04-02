@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// <summary>
             /// Required. The identifier of the extension. The identifier is
             /// created when the extension is added to the cloud service. You
-            /// can find the Id of an extension that was added to a cloud
+            /// can find the ID of an extension that was added to a cloud
             /// service by using List Extensions.
             /// </summary>
             public string Id

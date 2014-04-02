@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _subscriptionName;
         
         /// <summary>
-        /// Optional. The user-supplied name of the subscription.
+        /// Optional. The user-supplied name for the subscription.
         /// </summary>
         public string SubscriptionName
         {
