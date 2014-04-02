@@ -31,7 +31,7 @@ complete SDK, please see the [Windows Azure .NET Developer Center](http://www.wi
   - Media Services Management
   - Scheduler Client & Management
   - Storage
-  - Virtual Network
+  - Network
   - Web Sites
 - Media Services
 
