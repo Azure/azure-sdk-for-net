@@ -21,8 +21,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Windows Azure Common Library Log4Net Logger")]
 [assembly: AssemblyDescription("Exposes Windows Azure Libraries events via Log4Net.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

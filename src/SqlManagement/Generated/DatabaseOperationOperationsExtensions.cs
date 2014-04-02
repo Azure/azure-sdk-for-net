@@ -58,21 +58,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DatabaseOperationGetResponse Get(this IDatabaseOperationOperations operations, string serverName, string operationGuid)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serverName, operationGuid).Result;
+                return ((IDatabaseOperationOperations)s).GetAsync(serverName, operationGuid);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -119,21 +109,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DatabaseOperationListResponse ListByDatabase(this IDatabaseOperationOperations operations, string serverName, string databaseName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListByDatabaseAsync(serverName, databaseName).Result;
+                return ((IDatabaseOperationOperations)s).ListByDatabaseAsync(serverName, databaseName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -175,21 +155,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DatabaseOperationListResponse ListByServer(this IDatabaseOperationOperations operations, string serverName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListByServerAsync(serverName).Result;
+                return ((IDatabaseOperationOperations)s).ListByServerAsync(serverName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

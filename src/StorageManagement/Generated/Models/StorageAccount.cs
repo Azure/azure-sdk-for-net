@@ -36,14 +36,14 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// <summary>
         /// Optional. Represents the name of an extended storage account
         /// property. Each extended property must have both a defined name and
-        /// value. You can have a maximum of 50 extended property name/value
-        /// pairs.  The maximum length of the Name element is 64 characters,
+        /// a value. You can have a maximum of 50 extended property name/value
+        /// pairs. The maximum length of the Name element is 64 characters,
         /// only alphanumeric characters and underscores are valid in the
         /// Name, and the name must start with a letter. Attempting to use
         /// other characters, starting the Name with a non-letter character,
         /// or entering a name that is identical to that of another extended
         /// property owned by the same storage account, will result in a
-        /// status code 400 (Bad Request) error.  Each extended property value
+        /// status code 400 (Bad Request) error. Each extended property value
         /// has a maximum length of 255 characters.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
@@ -57,9 +57,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// <summary>
         /// Optional. The name of the storage account. This name is the DNS
         /// prefix name and can be used to access blobs, queues, and tables in
-        /// the storage account.  For example, if the service name is
-        /// MyStorageAccount you could access the blob containers by calling:
-        /// http://MyStorageAccount.blob.core.windows.net/mycontainer/
+        /// the storage account. For example, if the service name is
+        /// MyStorageAccount, you could access the blob containers by calling:
+        /// http://MyStorageAccount.blob.core.windows.net/mycontainer/.
         /// </summary>
         public string Name
         {

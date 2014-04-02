@@ -54,21 +54,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusConnectionDetailsResponse GetConnectionDetails(this IRelayOperations operations, string namespaceName, string relayName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConnectionDetailsAsync(namespaceName, relayName).Result;
+                return ((IRelayOperations)s).GetConnectionDetailsAsync(namespaceName, relayName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

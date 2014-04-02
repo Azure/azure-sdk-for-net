@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             
             /// <summary>
             /// Optional. The connection state of the site. You can set the
-            /// connection state to Connected, Connecting or NotConnected.
+            /// connection state to Connected, Connecting, or NotConnected.
             /// </summary>
             public GatewayConnectivityState ConnectivityState
             {
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private DateTime _lastConnectionEstablished;
             
             /// <summary>
-            /// Optional.
+            /// Optional. The time that the last connection was established.
             /// </summary>
             public DateTime LastConnectionEstablished
             {

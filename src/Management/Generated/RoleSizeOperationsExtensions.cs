@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -51,21 +51,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static RoleSizeListResponse List(this IRoleSizeOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IRoleSizeOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

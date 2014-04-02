@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in (JArray)valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricValueSet metricValueSetInstance = new MetricValueSet();
                                 metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
@@ -213,63 +213,63 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 JToken nameValue = valueValue["Name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     metricValueSetInstance.Name = nameInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
                                 if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
-                                    string namespaceInstance = (string)namespaceValue;
+                                    string namespaceInstance = ((string)namespaceValue);
                                     metricValueSetInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["DisplayName"];
                                 if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                 {
-                                    string displayNameInstance = (string)displayNameValue;
+                                    string displayNameInstance = ((string)displayNameValue);
                                     metricValueSetInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["Unit"];
                                 if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
-                                    string unitInstance = (string)unitValue;
+                                    string unitInstance = ((string)unitValue);
                                     metricValueSetInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
                                 if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
                                 {
-                                    string primaryAggregationInstance = (string)primaryAggregationValue;
+                                    string primaryAggregationInstance = ((string)primaryAggregationValue);
                                     metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
                                 
                                 JToken timeGrainValue = valueValue["TimeGrain"];
                                 if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                     metricValueSetInstance.TimeGrain = timeGrainInstance;
                                 }
                                 
                                 JToken startTimeValue = valueValue["StartTime"];
                                 if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
                                     metricValueSetInstance.StartTime = startTimeInstance;
                                 }
                                 
                                 JToken endTimeValue = valueValue["EndTime"];
                                 if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
                                     metricValueSetInstance.EndTime = endTimeInstance;
                                 }
                                 
                                 JToken metricValuesArray = valueValue["MetricValues"];
                                 if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken metricValuesValue in (JArray)metricValuesArray)
+                                    foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
                                     {
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricValueSetInstance.MetricValues.Add(metricValueInstance);
@@ -277,49 +277,49 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken timestampValue = metricValuesValue["Timestamp"];
                                         if (timestampValue != null && timestampValue.Type != JTokenType.Null)
                                         {
-                                            DateTime timestampInstance = (DateTime)timestampValue;
+                                            DateTime timestampInstance = ((DateTime)timestampValue);
                                             metricValueInstance.Timestamp = timestampInstance;
                                         }
                                         
                                         JToken averageValue = metricValuesValue["Average"];
                                         if (averageValue != null && averageValue.Type != JTokenType.Null)
                                         {
-                                            double averageInstance = (double)averageValue;
+                                            double averageInstance = ((double)averageValue);
                                             metricValueInstance.Average = averageInstance;
                                         }
                                         
                                         JToken minimumValue = metricValuesValue["Minimum"];
                                         if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                         {
-                                            double minimumInstance = (double)minimumValue;
+                                            double minimumInstance = ((double)minimumValue);
                                             metricValueInstance.Minimum = minimumInstance;
                                         }
                                         
                                         JToken maximumValue = metricValuesValue["Maximum"];
                                         if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                         {
-                                            double maximumInstance = (double)maximumValue;
+                                            double maximumInstance = ((double)maximumValue);
                                             metricValueInstance.Maximum = maximumInstance;
                                         }
                                         
                                         JToken totalValue = metricValuesValue["Total"];
                                         if (totalValue != null && totalValue.Type != JTokenType.Null)
                                         {
-                                            double totalInstance = (double)totalValue;
+                                            double totalInstance = ((double)totalValue);
                                             metricValueInstance.Total = totalInstance;
                                         }
                                         
                                         JToken annotationValue = metricValuesValue["Annotation"];
                                         if (annotationValue != null && annotationValue.Type != JTokenType.Null)
                                         {
-                                            string annotationInstance = (string)annotationValue;
+                                            string annotationInstance = ((string)annotationValue);
                                             metricValueInstance.Annotation = annotationInstance;
                                         }
                                         
                                         JToken countValue = metricValuesValue["Count"];
                                         if (countValue != null && countValue.Type != JTokenType.Null)
                                         {
-                                            int countInstance = (int)countValue;
+                                            int countInstance = ((int)countValue);
                                             metricValueInstance.Count = countInstance;
                                         }
                                     }

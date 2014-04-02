@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The compute mode for a website.
+    /// The compute mode for a web site.
     /// </summary>
     public enum WebSiteComputeMode
     {

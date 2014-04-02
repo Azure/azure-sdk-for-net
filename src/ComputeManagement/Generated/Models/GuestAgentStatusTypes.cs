@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The guest agent status, which can be: "Ready" or "NotReady"
+    /// The guest agent status, which can be: "Ready" or "NotReady".
     /// </summary>
     public static partial class GuestAgentStatusTypes
     {

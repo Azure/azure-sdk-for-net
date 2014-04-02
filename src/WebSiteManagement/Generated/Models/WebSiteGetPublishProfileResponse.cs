@@ -28,14 +28,14 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Publish Profile operation response.
+    /// The Get Publish Profile Web Site operation response.
     /// </summary>
     public partial class WebSiteGetPublishProfileResponse : OperationResponse, IEnumerable<WebSiteGetPublishProfileResponse.PublishProfile>
     {
         private IList<WebSiteGetPublishProfileResponse.PublishProfile> _publishProfiles;
         
         /// <summary>
-        /// Optional. Contains one or more publish profiles.
+        /// Optional. The web site publish profiles.
         /// </summary>
         public IList<WebSiteGetPublishProfileResponse.PublishProfile> PublishProfiles
         {
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Contains attributes that contain information for a single database
+        /// Attributes that contain information for a single database
         /// connection.
         /// </summary>
         public partial class Database
@@ -77,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _connectionString;
             
             /// <summary>
-            /// Optional. Contains a database connection string.
+            /// Optional. The database connection string.
             /// </summary>
             public string ConnectionString
             {
@@ -88,7 +88,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _name;
             
             /// <summary>
-            /// Optional. Contains the friendly name of the connection string.
+            /// Optional. The friendly name of the connection string.
             /// </summary>
             public string Name
             {
@@ -99,8 +99,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _providerName;
             
             /// <summary>
-            /// Optional. Contains the type of database provider (for example,
-            /// "SQL" or "MySQL").
+            /// Optional. The name of database provider (for example, "SQL" or
+            /// "MySQL").
             /// </summary>
             public string ProviderName
             {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _type;
             
             /// <summary>
-            /// Optional.
+            /// Optional. The type of database provider.
             /// </summary>
             public string Type
             {
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Contains attributes that hold publish profile values.
+        /// Attributes that hold publish profile values.
         /// </summary>
         public partial class PublishProfile
         {
@@ -146,8 +146,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private IList<WebSiteGetPublishProfileResponse.Database> _databases;
             
             /// <summary>
-            /// Optional. Contains connection information for the databases
-            /// used by the web site application.
+            /// Optional. Connection information for the databases used by the
+            /// web site application.
             /// </summary>
             public IList<WebSiteGetPublishProfileResponse.Database> Databases
             {
@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private Uri _destinationAppUri;
             
             /// <summary>
-            /// Optional. The URL of the website that will be published to.
+            /// Optional. The URL of the web site that will be published to.
             /// </summary>
             public Uri DestinationAppUri
             {
@@ -169,9 +169,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private bool _ftpPassiveMode;
             
             /// <summary>
-            /// Optional. True or False depending on whether FTP passive mode
-            /// is being used. This attribute applies only if publishMethod is
-            /// set to FTP.
+            /// Optional. Indicates if FTP passive mode is being used. This
+            /// attribute applies only if publishMethod is set to FTP.
             /// </summary>
             public bool FtpPassiveMode
             {
@@ -193,8 +192,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _mSDeploySite;
             
             /// <summary>
-            /// Optional. The name of the site that will be published to. This
-            /// attribute applies only if publishMethod is set to MSDeploy.
+            /// Optional. The name of the web site that will be published to.
+            /// This attribute applies only if publishMethod is set to
+            /// MSDeploy.
             /// </summary>
             public string MSDeploySite
             {
@@ -263,8 +263,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private string _userName;
             
             /// <summary>
-            /// Optional. The name for the identity that will be used for
-            /// publishing.
+            /// Optional. The name of the user that will be used for publishing.
             /// </summary>
             public string UserName
             {

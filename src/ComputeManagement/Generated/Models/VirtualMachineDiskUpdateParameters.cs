@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _hasOperatingSystem;
         
         /// <summary>
-        /// Optional.  Specifies whether the disk contains an operation system.
+        /// Optional. Specifies whether the disk contains an operating system.
         /// Note: Only a disk with an operating system installed can be
         /// mounted as OS Drive.
         /// </summary>
@@ -56,11 +56,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Optional. Specifies the location of the blob in Windows Azure
-        /// storage. The blob location must belong to a storage account in the
-        /// subscription specified by the SubscriptionId value in the
-        /// operation call.  Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// Optional. Specifies the location of the blob in Azure storage. The
+        /// blob location must belong to a storage account in the subscription
+        /// specified by the SubscriptionId value in the operation call.
+        /// Example: http://example.blob.core.windows.net/disks/mydisk.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -71,9 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Required. Specifies a name for the disk. Windows Azure uses the
-        /// name to identify the disk when creating virtual machines from the
-        /// disk.
+        /// Required. Specifies a name for the disk. Azure uses the name to
+        /// identify the disk when creating virtual machines from the disk.
         /// </summary>
         public string Name
         {
@@ -85,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The operating system type of the disk. Possible values
-        /// are: Linux, Windows.
+        /// are: Linux or Windows.
         /// </summary>
         public string OperatingSystemType
         {

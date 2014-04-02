@@ -206,10 +206,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private Uri _mediaLinkUri;
             
             /// <summary>
-            /// Optional. The location of the blob in Windows Azure storage.
-            /// The blob location belongs to a storage account in the
-            /// subscription specified by the SubscriptionId value in the
-            /// operation call.  Example:
+            /// Optional. The location of the blob in Azure storage. The blob
+            /// location belongs to a storage account in the subscription
+            /// specified by the SubscriptionId value in the operation call.
+            /// Example:
             /// http://example.blob.core.windows.net/disks/myimage.vhd
             /// </summary>
             public Uri MediaLinkUri
@@ -284,8 +284,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private string _publisherName;
             
             /// <summary>
-            /// Optional. The name of the publisher of this OS Image in Windows
-            /// Azure.
+            /// Optional. The name of the publisher of this OS Image in Azure.
             /// </summary>
             public string PublisherName
             {
@@ -309,9 +308,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. Specifies the URI to the small icon that is displayed
-            /// when the image is presented in the Windows Azure Management
-            /// Portal.  The SmallIconUri element is only available using
-            /// version 2013-03-01 or higher.
+            /// when the image is presented in the Azure Management Portal.
+            /// The SmallIconUri element is only available using version
+            /// 2013-03-01 or higher.
             /// </summary>
             public Uri SmallIconUri
             {

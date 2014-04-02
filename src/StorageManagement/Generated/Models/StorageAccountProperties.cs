@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _description;
         
         /// <summary>
-        /// Optional. The user supplied description of the storage account.
+        /// Optional. The user-supplied description of the storage account.
         /// </summary>
         public string Description
         {
@@ -81,10 +81,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private bool _geoReplicationEnabled;
         
         /// <summary>
-        /// Optional. Indicates whether the data in the storage account is
+        /// Optional. Indicates whether geo-replication is
+        /// enabled.Geo-replication means data in the storage account is
         /// replicated across more than one geographic location so as to
-        /// enable resilience in the face of catastrophic service loss. The
-        /// value is true if geo-replication is enabled; otherwise false.
+        /// enable resilience in the face of catastrophic service loss.
         /// </summary>
         public bool GeoReplicationEnabled
         {
@@ -96,8 +96,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         
         /// <summary>
         /// Optional. Indicates the geographical region in which the storage
-        /// account is being replicated.  The GeoSecondaryRegion element is
-        /// not returned if geo-replication is “off” for this account.
+        /// account is being replicated. The GeoSecondaryRegion element is not
+        /// returned if geo-replication is "off" for this account.
         /// </summary>
         public string GeoSecondaryRegion
         {
@@ -108,8 +108,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _label;
         
         /// <summary>
-        /// Optional. The user supplied name of the storage account returned as
-        /// a base-64 encoded string. This name can be used identify the
+        /// Optional. The user-supplied name of the storage account, returned
+        /// as a base-64 encoded string. This name can be used identify the
         /// storage account for your tracking purposes.
         /// </summary>
         public string Label
@@ -122,9 +122,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         
         /// <summary>
         /// Optional. A timestamp that indicates the most recent instance of a
-        /// failover to the secondary region. In case of multiple failovers
-        /// only the latest failover date and time maintained. The format of
-        /// the returned timestamp is:
+        /// failover to the secondary region. In the case of multiple
+        /// failovers, only the latest failover date and time is maintained.
+        /// The format of the returned timestamp is:
         /// [4DigitYear]-[2DigitMonth]-[2DigitDay]T[2DigitMinute]:[2DigitSecond]:[7DigitsOfPrecision]Z.
         /// LastGeoFailoverTime is not returned if there has not been an
         /// instance of a failover.

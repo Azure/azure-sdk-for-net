@@ -33,8 +33,8 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _affinityGroup;
         
         /// <summary>
-        /// Optional. Required if Location is not specified. The name of an
-        /// existing affinity group in the specified subscription.  You can
+        /// Optional. The name of an existing affinity group in the specified
+        /// subscription. Required if Location is not specified. You can
         /// include either a Location or AffinityGroup element in the request
         /// body, but not both. To list available affinity groups, use the
         /// List Affinity Groups operation.
@@ -61,16 +61,16 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended storage account
-        /// property. Each extended property must have both a defined name and
+        /// property. Each extended property must have a defined name and a
         /// value. You can have a maximum of 50 extended property name/value
-        /// pairs.  The maximum length of the Name element is 64 characters,
+        /// pairs. The maximum length of the Name element is 64 characters,
         /// only alphanumeric characters and underscores are valid in the
         /// Name, and the name must start with a letter. Attempting to use
         /// other characters, starting the Name with a non-letter character,
         /// or entering a name that is identical to that of another extended
-        /// property owned by the same storage account, will result in a
-        /// status code 400 (Bad Request) error.  Each extended property value
-        /// has a maximum length of 255 characters.
+        /// property owned by the same storage account will result in a status
+        /// code 400 (Bad Request) error. Each extended property value has a
+        /// maximum length of 255 characters.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
@@ -81,11 +81,11 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private bool _geoReplicationEnabled;
         
         /// <summary>
-        /// Optional. Specifies whether the storage account is created with the
+        /// Optional. Specifies whether the storage account is created with
         /// geo-replication enabled. If the element is not included in the
         /// request body, the default value is true. If set to true, the data
         /// in the storage account is replicated across more than one
-        /// geographic location so as to enable resilience in the face of
+        /// geographic location to enable resilience in the face of
         /// catastrophic service loss.
         /// </summary>
         public bool GeoReplicationEnabled
@@ -97,10 +97,10 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _label;
         
         /// <summary>
-        /// Required. A name for the storage account specified as
-        /// abase64-encoded string. The name may be up to 100 characters
-        /// inlength. The name can be used identify the storage account for
-        /// yourtracking purposes.
+        /// Required. A name for the storage account, specified as
+        /// abase64-encoded string. The name may be up to 100 characters in
+        /// length. The name can be used identify the storage account for your
+        /// tracking purposes.
         /// </summary>
         public string Label
         {
@@ -121,9 +121,9 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Required if AffinityGroup is not specified. The location
-        /// where the storage account is created.  You can include either a
-        /// Location or AffinityGroup element in the request body, but not
+        /// Optional. The location where the storage account is created.
+        /// Required if AffinityGroup is not specified. You can include either
+        /// a Location or AffinityGroup element in the request body, but not
         /// both. To list available locations, use the List Locations
         /// operation.
         /// </summary>
@@ -136,12 +136,12 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private string _name;
         
         /// <summary>
-        /// Required. A name for the storage account that is unique within
-        /// Windows Azure. Storage account names must be between 3 and 24
-        /// characters in length and use numbers and lower-case letters only.
-        /// This name is the DNS prefix name and can be used to access blobs,
-        /// queues, and tables in the storage account.  For example:
-        /// http://ServiceName.blob.core.windows.net/mycontainer/
+        /// Required. A name for the storage account, unique within Azure.
+        /// Storage account names must be between 3 and 24 characters in
+        /// length, and must use numbers and lower-case letters only. This
+        /// name is the DNS prefix name and can be used to access blobs,
+        /// queues, and tables in the storage account. For example:
+        /// http://ServiceName.blob.core.windows.net/mycontainer/.
         /// </summary>
         public string Name
         {

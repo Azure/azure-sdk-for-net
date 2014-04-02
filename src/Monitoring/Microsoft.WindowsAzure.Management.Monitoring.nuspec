@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Monitoring</id>
-    <title>Windows Azure Monitoring Services Management Library</title>
+    <title>Microsoft Azure Monitoring Services Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -11,10 +11,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Windows Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Windows Azure services.</summary>
-    <description>Provides Windows Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Windows Azure services.</description>
+    <summary>Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Microsoft Azure services.</summary>
+    <description>Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Microsoft Azure services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure monitoring "monitoring services" metrics alerts autoscale REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure monitoring "monitoring services" metrics alerts autoscale REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Monitoring.dll" />

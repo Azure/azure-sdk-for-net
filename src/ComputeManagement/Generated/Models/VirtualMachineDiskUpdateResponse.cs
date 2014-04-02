@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isPremium;
         
         /// <summary>
-        /// Optional. Specifies whether the comtained image is a premium image
+        /// Optional. Specifies whether the contained image is a premium image.
         /// </summary>
         public bool? IsPremium
         {

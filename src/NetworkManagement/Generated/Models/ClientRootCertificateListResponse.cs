@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The response to the list client root certificates request.
+    /// The response for the List Client Root Certificates operation.
     /// </summary>
     public partial class ClientRootCertificateListResponse : OperationResponse, IEnumerable<ClientRootCertificateListResponse.ClientRootCertificate>
     {

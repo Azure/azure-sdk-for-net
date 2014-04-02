@@ -171,7 +171,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
                                 XElement subscriptionStatusElement = subscriptionsElement2.Element(XName.Get("SubscriptionStatus", "http://schemas.microsoft.com/windowsazure"));
                                 if (subscriptionStatusElement != null && subscriptionStatusElement.IsEmpty == false)
                                 {
-                                    SubscriptionStatus subscriptionStatusInstance = (SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, true);
+                                    SubscriptionStatus subscriptionStatusInstance = ((SubscriptionStatus)Enum.Parse(typeof(SubscriptionStatus), subscriptionStatusElement.Value, true));
                                     subscriptionInstance.SubscriptionStatus = subscriptionStatusInstance;
                                 }
                                 

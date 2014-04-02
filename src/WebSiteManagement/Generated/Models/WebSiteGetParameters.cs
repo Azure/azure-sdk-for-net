@@ -26,7 +26,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site operation parameters.
+    /// Parameters supplied to the Get Web Site operation.
     /// </summary>
     public partial class WebSiteGetParameters
     {

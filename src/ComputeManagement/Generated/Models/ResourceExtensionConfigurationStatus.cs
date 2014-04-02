@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private int? _code;
         
         /// <summary>
-        /// Optional. Integer. Status code from the result of applying the
+        /// Optional. Integer status code from the result of applying the
         /// configuration settings.
         /// </summary>
         public int? Code
@@ -57,7 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentFormattedMessage _formattedMessage;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message.
+        /// Optional. This object encapsulates a formatted localized status
+        /// message.
         /// </summary>
         public GuestAgentFormattedMessage FormattedMessage
         {
@@ -68,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private GuestAgentMessage _message;
         
         /// <summary>
-        /// Optional. The message.
+        /// Optional. This object encapsulates a localized status message.
         /// </summary>
         public GuestAgentMessage Message
         {
@@ -102,8 +103,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _status;
         
         /// <summary>
-        /// Optional. The status could contain values like: Transitioning,
-        /// Error, Success, or Warning
+        /// Optional. The status of the resourse extension, containing values
+        /// like Transitioning, Error, Success, or Warning.
         /// </summary>
         public string Status
         {

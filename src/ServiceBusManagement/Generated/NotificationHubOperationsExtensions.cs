@@ -55,21 +55,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNotificationHubResponse Get(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(namespaceName, notificationHubName).Result;
+                return ((INotificationHubOperations)s).GetAsync(namespaceName, notificationHubName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -112,21 +102,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusConnectionDetailsResponse GetConnectionDetails(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConnectionDetailsAsync(namespaceName, notificationHubName).Result;
+                return ((INotificationHubOperations)s).GetConnectionDetailsAsync(namespaceName, notificationHubName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -166,21 +146,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNotificationHubsResponse List(this INotificationHubOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(namespaceName).Result;
+                return ((INotificationHubOperations)s).ListAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

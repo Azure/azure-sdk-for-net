@@ -56,21 +56,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginNewAsync(parameters).Result;
+                return ((IDedicatedCircuitOperations)s).BeginNewAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -111,21 +101,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationResponse BeginRemove(this IDedicatedCircuitOperations operations, string serviceKey)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginRemoveAsync(serviceKey).Result;
+                return ((IDedicatedCircuitOperations)s).BeginRemoveAsync(serviceKey);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -165,21 +145,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DedicatedCircuitGetResponse Get(this IDedicatedCircuitOperations operations, string serviceKey)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(serviceKey).Result;
+                return ((IDedicatedCircuitOperations)s).GetAsync(serviceKey);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -214,21 +184,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DedicatedCircuitListResponse List(this IDedicatedCircuitOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IDedicatedCircuitOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -263,21 +223,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static DedicatedCircuitGetResponse New(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.NewAsync(parameters).Result;
+                return ((IDedicatedCircuitOperations)s).NewAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -324,21 +274,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ExpressRouteOperationStatusResponse Remove(this IDedicatedCircuitOperations operations, string serviceKey)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RemoveAsync(serviceKey).Result;
+                return ((IDedicatedCircuitOperations)s).RemoveAsync(serviceKey);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

@@ -29,9 +29,9 @@ using Microsoft.WindowsAzure.Management.Models;
 namespace Microsoft.WindowsAzure.Management
 {
     /// <summary>
-    /// Operations for managing affinity groups beneath your subscription.
-    /// (see http://msdn.microsoft.com/en-us/library/windowsazure/ee460798.aspx
-    /// for more information)
+    /// Operations for managing affinity groups in your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460798.aspx for
+    /// more information)
     /// </summary>
     public partial interface IAffinityGroupOperations
     {
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='affinityGroupName'>
-        /// The name of your affinity group.
+        /// The name of the affinity group.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management
         /// for more information)
         /// </summary>
         /// <param name='affinityGroupName'>
-        /// The name of your affinity group.
+        /// The name of the affinity group.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Update Affinity Group operation.

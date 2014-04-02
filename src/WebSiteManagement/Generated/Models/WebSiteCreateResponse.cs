@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Create Web Space operation response.
+    /// The Create Web Site operation response.
     /// </summary>
     public partial class WebSiteCreateResponse : OperationResponse
     {
         private WebSite _webSite;
         
         /// <summary>
-        /// Optional. Details of the created website.
+        /// Optional. Details of the created web site.
         /// </summary>
         public WebSite WebSite
         {

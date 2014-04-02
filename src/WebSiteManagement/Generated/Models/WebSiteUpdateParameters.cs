@@ -35,11 +35,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. The state of the availability of management information
-        /// for the site. Possible values are Normal or Limited. Normal means
-        /// that the site is running correctly and that management information
-        /// for the site is available. Limited means that only partial
-        /// management information for the site is available and that detailed
-        /// site information is unavailable.
+        /// for the web site. Possible values are Normal or Limited. Normal
+        /// means that the web site is running correctly and that management
+        /// information for the web site is available. Limited means that only
+        /// partial management information for the web site is available and
+        /// that detailed web site information is unavailable.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceAvailabilityState? AvailabilityState
         {
@@ -62,8 +62,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _enabled;
         
         /// <summary>
-        /// Optional. true if the site is enabled; otherwise, false. Setting
-        /// this value to false disables the site (takes the site off line).
+        /// Optional. Indicates if the site is enabled. Setting this value to
+        /// false disables the site (takes the site offline).
         /// </summary>
         public bool? Enabled
         {
@@ -74,13 +74,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _hostNames;
         
         /// <summary>
-        /// Optional. An array of strings that contains the public hostnames
-        /// for the site, including custom domains. Important: When you add a
-        /// custom domain in a PUT operation, be sure to include every
-        /// hostname that you want for the web site. To delete a custom domain
-        /// name in a PUT operation, include all of the hostnames for the site
-        /// that you want to keep, but leave out the one that you wangt to
-        /// delete.
+        /// Optional. An array of strings that contains the public host names
+        /// for the web site, including custom domains. Important: When you
+        /// add a custom domain in a PUT operation, be sure to include every
+        /// host name that you want for the web site. To delete a custom
+        /// domain name in a PUT operation, include all of the host names for
+        /// the web site that you want to keep, but leave out the one that you
+        /// want to delete.
         /// </summary>
         public IList<string> HostNames
         {
@@ -91,7 +91,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteUpdateParameters.WebSiteHostNameSslState> _hostNameSslStates;
         
         /// <summary>
-        /// Optional. SSL states bound to the website.
+        /// Optional. SSL states bound to the web site.
         /// </summary>
         public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStates
         {
@@ -102,12 +102,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? _runtimeAvailabilityState;
         
         /// <summary>
-        /// Optional. Possible values are Normal, Degraded, or NotAvailable.
-        /// Normal: the web site is running correctly. Degraded: the web site
-        /// is running temporarily in a degraded mode (typically with less
-        /// memory and a shared instance.) Not Available: due to an unexpected
-        /// issue, the site has been excluded from provisioning. This
-        /// typically occurs only for free sites.
+        /// Optional. The current runtime availability state. Possible values
+        /// are Normal, Degraded, or NotAvailable: Normal: the web site is
+        /// running correctly; Degraded: the web site is running temporarily
+        /// in a degraded mode (typically with less memory and a shared
+        /// instance). Not Available: due to an unexpected issue, the web site
+        /// has been excluded from provisioning. This typically occurs only
+        /// for free sites.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? RuntimeAvailabilityState
         {
@@ -118,8 +119,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. String. If a server farm exists, this value is
-        /// DefaultServerFarm.
+        /// Optional. String specifying the server farm. If a server farm
+        /// exists, this value is DefaultServerFarm.
         /// </summary>
         public string ServerFarm
         {
@@ -132,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// <summary>
         /// Optional. String that represents the web site mode. If the web site
         /// mode is Free, this value is Limited. If the web site mode is
-        /// Shared, this value is Basic.  Note: The SiteMode value is not used
+        /// Shared, this value is Basic. Note: The SiteMode value is not used
         /// for Reserved mode. Reserved mode uses the ComputeMode setting.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. A string that describes the state of the web site.
-        /// Possible values include Stopped, Running or QuotaExceeded.
+        /// Possible values include Stopped, Running, or QuotaExceeded.
         /// </summary>
         public string State
         {
@@ -175,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// SSL states bound to a website.
+        /// SSL state bound to the web site.
         /// </summary>
         public partial class WebSiteHostNameSslState
         {
@@ -206,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             private bool? _toUpdate;
             
             /// <summary>
-            /// Optional.
+            /// Optional. Indicates whether the SSL state will be updated.
             /// </summary>
             public bool? ToUpdate
             {
@@ -223,14 +224,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Contains SSL certificate properties.
+        /// The properties for an SSL certificate.
         /// </summary>
         public partial class WebSiteSslCertificate
         {
             private bool? _isToBeDeleted;
             
             /// <summary>
-            /// Optional. Boolean. true if the certificate is to be deleted.
+            /// Optional. Indicates if the certificate is to be deleted.
             /// </summary>
             public bool? IsToBeDeleted
             {

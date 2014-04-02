@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Specifies the protocol to use to inspect the virtual machine
+    /// Specifies the protocol to use when inspecting the virtual machine
     /// availability status.
     /// </summary>
     public enum LoadBalancerProbeTransportProtocol

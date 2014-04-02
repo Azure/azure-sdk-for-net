@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The status could contain values like: Transitioning, Error, Success, or
-    /// Warning
+    /// The status of the resource extension configuration, containing values
+    /// like Transitioning, Error, Success, or Warning.
     /// </summary>
     public static partial class ResourceExtensionConfigurationStatusTypes
     {

@@ -26,7 +26,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters for the start roles operation.
+    /// Parameters for the Start Roles operation.
     /// </summary>
     public partial class VirtualMachineStartRolesParameters
     {

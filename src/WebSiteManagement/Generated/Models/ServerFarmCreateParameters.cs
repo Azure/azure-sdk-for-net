@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmWorkerSize? _currentWorkerSize;
         
         /// <summary>
-        /// Optional. The current worker size Possible values are Small,
+        /// Optional. The current worker size. Possible values are Small,
         /// Medium, or Large.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmWorkerSize? CurrentWorkerSize
@@ -69,7 +69,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? _status;
         
         /// <summary>
-        /// Optional. Server farm status. Possible values are Ready or Pending.
+        /// Optional. The server farm status. Possible values are Ready or
+        /// Pending.
         /// </summary>
         public Microsoft.WindowsAzure.Management.WebSites.Models.ServerFarmStatus? Status
         {

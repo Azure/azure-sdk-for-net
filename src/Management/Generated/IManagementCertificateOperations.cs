@@ -31,18 +31,17 @@ namespace Microsoft.WindowsAzure.Management
     /// <summary>
     /// You can use management certificates, which are also known as
     /// subscription certificates, to authenticate clients attempting to
-    /// connect to resources associated with your Windows Azure subscription.
-    /// (see
+    /// connect to resources associated with your Azure subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154124.aspx for
     /// more information)
     /// </summary>
     public partial interface IManagementCertificateOperations
     {
         /// <summary>
-        /// The Add Management Certificate operation adds a certificate to the
-        /// list of management certificates. Management certificates, which
-        /// are also known as subscription certificates, authenticate clients
-        /// attempting to connect to resources associated with your Windows
+        /// The Create Management Certificate operation adds a certificate to
+        /// the list of management certificates. Management certificates,
+        /// which are also known as subscription certificates, authenticate
+        /// clients attempting to connect to resources associated with your
         /// Azure subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154123.aspx
         /// for more information)
@@ -64,12 +63,12 @@ namespace Microsoft.WindowsAzure.Management
         /// from the list of management certificates. Management certificates,
         /// which are also known as subscription certificates, authenticate
         /// clients attempting to connect to resources associated with your
-        /// Windows Azure subscription.  (see
+        /// Azure subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154127.aspx
         /// for more information)
         /// </summary>
         /// <param name='thumbprint'>
-        /// the thumbprint value of the certificate to delete.
+        /// The thumbprint value of the certificate to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -85,7 +84,7 @@ namespace Microsoft.WindowsAzure.Management
         /// about the management certificate with the specified thumbprint.
         /// Management certificates, which are also known as subscription
         /// certificates, authenticate clients attempting to connect to
-        /// resources associated with your Windows Azure subscription.  (see
+        /// resources associated with your Azure subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154131.aspx
         /// for more information)
         /// </summary>
@@ -106,8 +105,8 @@ namespace Microsoft.WindowsAzure.Management
         /// information about all of the management certificates associated
         /// with the specified subscription. Management certificates, which
         /// are also known as subscription certificates, authenticate clients
-        /// attempting to connect to resources associated with your Windows
-        /// Azure subscription.  (see
+        /// attempting to connect to resources associated with your Azure
+        /// subscription.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154105.aspx
         /// for more information)
         /// </summary>

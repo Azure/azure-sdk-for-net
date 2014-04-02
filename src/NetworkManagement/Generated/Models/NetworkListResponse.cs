@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The response structure for the Server List operation.
+    /// The response structure for the Network Operations List operation.
     /// </summary>
     public partial class NetworkListResponse : OperationResponse, IEnumerable<NetworkListResponse.VirtualNetworkSite>
     {
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<string> _addressPrefixes;
             
             /// <summary>
-            /// Optional. Address spaces, in CIDR format in the virtual network
+            /// Optional. Address spaces, in CIDR format in the virtual network.
             /// </summary>
             public IList<string> AddressPrefixes
             {
@@ -179,7 +179,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private NetworkListResponse.VPNClientAddressPool _vPNClientAddressPool;
             
             /// <summary>
-            /// Optional. The VPNClientAddressPool reserves a pool of IP
+            /// Optional. The VPN Client Address Pool reserves a pool of IP
             /// addresses for VPN clients. This object is used for
             /// point-to-site connectivity.
             /// </summary>
@@ -263,7 +263,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             
             /// <summary>
             /// Optional. Represents an address space, in CIDR format that
-            /// defines the subnet
+            /// defines the subnet.
             /// </summary>
             public string AddressPrefix
             {
@@ -274,7 +274,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _name;
             
             /// <summary>
-            /// Optional. Name for the subnet.
+            /// Optional. Name of the subnet.
             /// </summary>
             public string Name
             {
@@ -325,7 +325,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private IList<NetworkListResponse.DnsServer> _dnsServers;
             
             /// <summary>
-            /// Optional. The list of on DNS Servers associated with the
+            /// Optional. The list of available DNS Servers associated with the
             /// virtual network site.
             /// </summary>
             public IList<NetworkListResponse.DnsServer> DnsServers
@@ -337,9 +337,9 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private NetworkListResponse.Gateway _gateway;
             
             /// <summary>
-            /// Optional. Gateway that contains a list of Local Network Sites
-            /// which enables the Virtual network site to communicate with a
-            /// customer’s on premise networks.
+            /// Optional. The gateway that contains a list of Local Network
+            /// Sites which enable the Virtual Network Site to communicate
+            /// with a customer’s on-premise networks.
             /// </summary>
             public NetworkListResponse.Gateway Gateway
             {
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             private string _label;
             
             /// <summary>
-            /// Optional. The friendly identifier of the site.
+            /// Optional. The friendly identifier for the site.
             /// </summary>
             public string Label
             {
@@ -385,7 +385,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             
             /// <summary>
             /// Optional. Current status of the virtual network. (Created,
-            /// Creating, Updating, Deleting, Unavailable)
+            /// Creating, Updating, Deleting, or Unavailable.)
             /// </summary>
             public string State
             {
@@ -417,7 +417,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         }
         
         /// <summary>
-        /// The VPNClientAddressPool reserves a pool of IP addresses for VPN
+        /// The VPN Client Address Pool reserves a pool of IP addresses for VPN
         /// clients. This object is used for point-to-site connectivity.
         /// </summary>
         public partial class VPNClientAddressPool

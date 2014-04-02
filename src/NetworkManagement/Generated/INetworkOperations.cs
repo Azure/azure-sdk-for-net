@@ -28,16 +28,22 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
+    /// <summary>
+    /// The Network Management API includes operations for managing the virtual
+    /// networks for your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
+    /// more information)
+    /// </summary>
     public partial interface INetworkOperations
     {
         /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// The Begin Setting Network Configuration operation asynchronously
+        /// configures the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Parameters supplied to the Set Network Configuration operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -72,18 +78,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Network Operations List operation.
         /// </returns>
         Task<NetworkListResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
         /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
         /// <param name='parameters'>
-        /// The updated network configuration.
+        /// Parameters supplied to the Set Network Configuration operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -92,9 +98,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.

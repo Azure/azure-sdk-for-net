@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The publishing user name
+        /// Optional. The publishing user name.
         /// </summary>
         public string Name
         {
@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _publishingPassword;
         
         /// <summary>
-        /// Required. The publishing user password
+        /// Required. The publishing user password.
         /// </summary>
         public string PublishingPassword
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _publishingUserName;
         
         /// <summary>
-        /// Required. The publishing user username
+        /// Required. The publishing user username.
         /// </summary>
         public string PublishingUserName
         {

@@ -70,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _iconUri;
         
         /// <summary>
-        /// Optional. Specifies the Uri to the icon that is displayed for the
+        /// Optional. Specifies the URI to the icon that is displayed for the
         /// image in the Management Portal.
         /// </summary>
         public Uri IconUri
@@ -117,8 +117,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _language;
         
         /// <summary>
-        /// Optional. Specifies the language of the image.  The Language
-        /// element is only available using version 2013-03-01 or higher.
+        /// Optional. Specifies the language of the image. The Language element
+        /// is only available using version 2013-03-01 or higher.
         /// </summary>
         public string Language
         {
@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Optional. The geo-location in which this media is located. The
         /// Location value is derived from storage account that contains the
         /// blob in which the media is located. If the storage account belongs
-        /// to an affinity group the value is NULL.  If the version is set to
+        /// to an affinity group the value is NULL. If the version is set to
         /// 2012-08-01 or later, the locations are returned for platform
         /// images; otherwise, this value is NULL for platform images.
         /// </summary>
@@ -156,11 +156,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Optional. Specifies the location of the blob in Windows Azure
-        /// storage. The blob location must belong to a storage account in the
-        /// subscription specified by the SubscriptionId value in the
-        /// operation call.  Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// Optional. Specifies the location of the blob in Azure storage. The
+        /// blob location must belong to a storage account in the subscription
+        /// specified by the SubscriptionId value in the operation call.
+        /// Example: http://example.blob.core.windows.net/disks/mydisk.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -171,8 +170,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Specifies a name that Windows Azure uses to identify the
-        /// image when creating one or more virtual machines.
+        /// Optional. Specifies a name that Azure uses to identify the image
+        /// when creating one or more virtual machines.
         /// </summary>
         public string Name
         {
@@ -184,7 +183,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The operating system type of the OS image. Possible
-        /// values are: Linux, Windows.
+        /// values are: Linux or Windows.
         /// </summary>
         public string OperatingSystemType
         {
@@ -255,9 +254,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the URI to the small icon that is displayed
-        /// when the image is presented in the Windows Azure Management
-        /// Portal.  The SmallIconUri element is only available using version
-        /// 2013-03-01 or higher.
+        /// when the image is presented in the Azure Management Portal. The
+        /// SmallIconUri element is only available using version 2013-03-01 or
+        /// higher.
         /// </summary>
         public Uri SmallIconUri
         {

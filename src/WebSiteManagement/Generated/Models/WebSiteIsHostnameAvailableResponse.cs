@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Is Hostname Available operation response.
+    /// The Is Hostname Available Web Site operation response.
     /// </summary>
     public partial class WebSiteIsHostnameAvailableResponse : OperationResponse
     {

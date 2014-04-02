@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                 if (parameters.MetricSetting.Value is AvailabilityMetricSettingValue)
                 {
-                    AvailabilityMetricSettingValue derived = (AvailabilityMetricSettingValue)parameters.MetricSetting.Value;
+                    AvailabilityMetricSettingValue derived = ((AvailabilityMetricSettingValue)parameters.MetricSetting.Value);
                     
                     if (derived.AvailableLocations != null)
                     {
@@ -389,7 +389,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in (JArray)valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
                                 metricSettingCollectionInstance.Value.Add(metricSettingInstance);
@@ -397,21 +397,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 JToken resourceIdValue = valueValue["ResourceId"];
                                 if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                 {
-                                    string resourceIdInstance = (string)resourceIdValue;
+                                    string resourceIdInstance = ((string)resourceIdValue);
                                     metricSettingInstance.ResourceId = resourceIdInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
                                 if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
-                                    string namespaceInstance = (string)namespaceValue;
+                                    string namespaceInstance = ((string)namespaceValue);
                                     metricSettingInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken valueValue2 = valueValue["Value"];
                                 if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                 {
-                                    string typeName = (string)valueValue2["odata.type"];
+                                    string typeName = ((string)valueValue2["odata.type"]);
                                     if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.AvailabilityMetricSettingValue")
                                     {
                                         AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
@@ -419,7 +419,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken availableLocationsArray = valueValue2["AvailableLocations"];
                                         if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken availableLocationsValue in (JArray)availableLocationsArray)
+                                            foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
                                                 availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
@@ -427,14 +427,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                                 JToken nameValue = availableLocationsValue["Name"];
                                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance = (string)nameValue;
+                                                    string nameInstance = ((string)nameValue);
                                                     nameConfigInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken displayNameValue = availableLocationsValue["DisplayName"];
                                                 if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                                 {
-                                                    string displayNameInstance = (string)displayNameValue;
+                                                    string displayNameInstance = ((string)displayNameValue);
                                                     nameConfigInstance.DisplayName = displayNameInstance;
                                                 }
                                             }
@@ -443,7 +443,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken endpointsArray = valueValue2["Endpoints"];
                                         if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken endpointsValue in (JArray)endpointsArray)
+                                            foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();
                                                 availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);
@@ -451,28 +451,28 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                                 JToken configIdValue = endpointsValue["ConfigId"];
                                                 if (configIdValue != null && configIdValue.Type != JTokenType.Null)
                                                 {
-                                                    string configIdInstance = (string)configIdValue;
+                                                    string configIdInstance = ((string)configIdValue);
                                                     endpointConfigInstance.ConfigId = configIdInstance;
                                                 }
                                                 
                                                 JToken nameValue2 = endpointsValue["Name"];
                                                 if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                                 {
-                                                    string nameInstance2 = (string)nameValue2;
+                                                    string nameInstance2 = ((string)nameValue2);
                                                     endpointConfigInstance.Name = nameInstance2;
                                                 }
                                                 
                                                 JToken locationValue = endpointsValue["Location"];
                                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                                 {
-                                                    string locationInstance = (string)locationValue;
+                                                    string locationInstance = ((string)locationValue);
                                                     endpointConfigInstance.Location = locationInstance;
                                                 }
                                                 
                                                 JToken urlValue = endpointsValue["Url"];
                                                 if (urlValue != null && urlValue.Type != JTokenType.Null)
                                                 {
-                                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
+                                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
                                                     endpointConfigInstance.Url = urlInstance;
                                                 }
                                             }

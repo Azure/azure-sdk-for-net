@@ -31,15 +31,15 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
     public static partial class NetworkOperationsExtensions
     {
         /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// The Begin Setting Network Configuration operation asynchronously
+        /// configures the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
@@ -48,7 +48,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The updated network configuration.
+        /// Required. Parameters supplied to the Set Network Configuration
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -56,26 +57,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginSettingConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginSettingConfigurationAsync(parameters).Result;
+                return ((INetworkOperations)s).BeginSettingConfigurationAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// The Begin Setting Network Configuration operation asynchronously
+        /// configures the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
@@ -84,7 +75,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The updated network configuration.
+        /// Required. Parameters supplied to the Set Network Configuration
+        /// operation.
         /// </param>
         /// <returns>
         /// A standard storage response including an HTTP status code and
@@ -110,21 +102,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static NetworkGetConfigurationResponse GetConfiguration(this INetworkOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetConfigurationAsync().Result;
+                return ((INetworkOperations)s).GetConfigurationAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -156,25 +138,15 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Network Operations List operation.
         /// </returns>
         public static NetworkListResponse List(this INetworkOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((INetworkOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -188,7 +160,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Network Operations List operation.
         /// </returns>
         public static Task<NetworkListResponse> ListAsync(this INetworkOperations operations)
         {
@@ -197,7 +169,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
@@ -206,41 +178,32 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The updated network configuration.
+        /// Required. Parameters supplied to the Set Network Configuration
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
         public static OperationStatusResponse SetConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.SetConfigurationAsync(parameters).Result;
+                return ((INetworkOperations)s).SetConfigurationAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The Set Network Configuration operation asynchronously configures
-        /// the virtual network  (see
+        /// the virtual network.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157181.aspx
         /// for more information)
         /// </summary>
@@ -249,15 +212,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Network.INetworkOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The updated network configuration.
+        /// Required. Parameters supplied to the Set Network Configuration
+        /// operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.

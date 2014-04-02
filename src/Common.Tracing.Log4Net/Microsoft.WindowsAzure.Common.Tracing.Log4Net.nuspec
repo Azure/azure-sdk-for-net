@@ -2,8 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Tracing.Log4Net</id>
-    <title>Windows Azure Common Library Log4Net Logger</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <title>Microsoft Azure Common Library Log4Net Logger</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net/</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This package provides a logging implementation for the Windows Azure Libraries exposing HTTP messaging via Log4Net.</summary>
-    <description>Exposes Windows Azure Libraries HTTP messaging via Log4Net.</description>
+    <summary>This package provides a logging implementation for the Microsoft Azure Libraries exposing HTTP messaging via Log4Net.</summary>
+    <description>Exposes Microsoft Azure Libraries HTTP messaging via Log4Net.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" SDK Log4Net windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" SDK Log4Net windowsazureofficial</tags>
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Common.Tracing.Log4Net.dll" />
