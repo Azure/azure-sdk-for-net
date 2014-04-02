@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Dependencies</id>
     <title>Microsoft Azure Common Library Dependencies</title>
-    <releaseNotes></releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
