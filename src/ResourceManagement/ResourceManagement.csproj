@@ -9,7 +9,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.Resources</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.Resources</AssemblyName>
+    <AssemblyName>Microsoft.Azure.ResourceManager</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
