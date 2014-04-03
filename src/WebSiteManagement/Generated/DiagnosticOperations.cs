@@ -156,13 +156,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken settingsSequenceElement = (JToken)responseDoc;
+                        JToken settingsSequenceElement = ((JToken)responseDoc);
                         if (settingsSequenceElement != null && settingsSequenceElement.Type != JTokenType.Null)
                         {
                             foreach (JProperty property in settingsSequenceElement)
                             {
-                                string settingsKey = (string)property.Name;
-                                string settingsValue = (string)property.Value;
+                                string settingsKey = ((string)property.Name);
+                                string settingsValue = ((string)property.Value);
                                 result.Settings.Add(settingsKey, settingsValue);
                             }
                         }
@@ -292,7 +292,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);

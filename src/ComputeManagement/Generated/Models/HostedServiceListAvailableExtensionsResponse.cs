@@ -74,6 +74,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class ExtensionImage
         {
+            private bool? _blockRoleUponFailure;
+            
+            /// <summary>
+            /// Optional. Indicates whether this version of extension blocks
+            /// the role upon failure.
+            /// </summary>
+            public bool? BlockRoleUponFailure
+            {
+                get { return this._blockRoleUponFailure; }
+                set { this._blockRoleUponFailure = value; }
+            }
+            
             private string _description;
             
             /// <summary>
@@ -83,6 +95,34 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._description; }
                 set { this._description = value; }
+            }
+            
+            private Uri _eula;
+            
+            /// <summary>
+            /// Optional. URI string pointing to the EULA (End User License
+            /// Agreement) of this version of extension. This is optionally
+            /// specified by the third-party publishing the extension instead
+            /// of Azure, at the time of extension creation or update.
+            /// </summary>
+            public Uri Eula
+            {
+                get { return this._eula; }
+                set { this._eula = value; }
+            }
+            
+            private Uri _homepageUri;
+            
+            /// <summary>
+            /// Optional. URI string pointing to the homepage of this version
+            /// of extension. This is optionally specified by the third-party
+            /// publishing the extension instead of Azure, at the time of
+            /// extension creation or update.
+            /// </summary>
+            public Uri HomepageUri
+            {
+                get { return this._homepageUri; }
+                set { this._homepageUri = value; }
             }
             
             private string _hostingResources;
@@ -97,6 +137,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._hostingResources = value; }
             }
             
+            private bool? _isJsonExtension;
+            
+            /// <summary>
+            /// Optional. Boolean property indicating whether the extension
+            /// accepts JSON or XML based configuration. If this property is
+            /// 'true' then the extension accepts JSON based configuration. If
+            /// this property is 'false' the extension accepts XML based
+            /// configuration.
+            /// </summary>
+            public bool? IsJsonExtension
+            {
+                get { return this._isJsonExtension; }
+                set { this._isJsonExtension = value; }
+            }
+            
             private string _label;
             
             /// <summary>
@@ -106,6 +161,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._label; }
                 set { this._label = value; }
+            }
+            
+            private Uri _privacyUri;
+            
+            /// <summary>
+            /// Optional. URI string pointing to the privacy document of this
+            /// version of extension. This is optionally specified by the
+            /// third-party publishing the extension instead of Azure, at the
+            /// time of extension creation or update.
+            /// </summary>
+            public Uri PrivacyUri
+            {
+                get { return this._privacyUri; }
+                set { this._privacyUri = value; }
             }
             
             private string _privateConfigurationSchema;
@@ -123,7 +192,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             
             /// <summary>
             /// Optional. The provider namespace of the extension. The provider
-            /// namespace for Windows Azure extensions is
+            /// namespace for Azure extensions is
             /// Microsoft.Windows.Azure.Extensions.
             /// </summary>
             public string ProviderNamespace
@@ -141,6 +210,35 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._publicConfigurationSchema; }
                 set { this._publicConfigurationSchema = value; }
+            }
+            
+            private bool? _replicationCompleted;
+            
+            /// <summary>
+            /// Optional. Indicates whether this version of extension has been
+            /// replicated to all regions or not. If true, then the given
+            /// extension version can be used in creating or updating
+            /// deployments. Otherwise, the given extension version might
+            /// cause failure in creating or updating deployments. The typical
+            /// time is 20 minutes for a newly-registered or newly-updated
+            /// extension to replicate completely by Azure.
+            /// </summary>
+            public bool? ReplicationCompleted
+            {
+                get { return this._replicationCompleted; }
+                set { this._replicationCompleted = value; }
+            }
+            
+            private string _sampleConfig;
+            
+            /// <summary>
+            /// Optional. A sample configuration file for the resource
+            /// extension.
+            /// </summary>
+            public string SampleConfig
+            {
+                get { return this._sampleConfig; }
+                set { this._sampleConfig = value; }
             }
             
             private string _thumbprintAlgorithm;

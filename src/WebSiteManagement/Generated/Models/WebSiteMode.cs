@@ -25,18 +25,18 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The operation mode of a website.
+    /// The operation mode of a web site.
     /// </summary>
     public enum WebSiteMode
     {
         /// <summary>
-        /// This value is Limited for the Free offering.  The default value is
+        /// This value is Limited for the Free offering. The default value is
         /// Limited.
         /// </summary>
         Limited = 0,
         
         /// <summary>
-        /// Basic for the Paid Shared offering.
+        /// This value is Basic for the Paid and Shared offerings.
         /// </summary>
         Basic = 1,
     }

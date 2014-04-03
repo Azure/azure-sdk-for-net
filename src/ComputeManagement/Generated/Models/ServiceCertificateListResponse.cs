@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private byte[] _data;
             
             /// <summary>
-            /// Optional. The public part of the service certificate as a .cer
+            /// Optional. The public part of the service certificate as a cer
             /// file.
             /// </summary>
             public byte[] Data

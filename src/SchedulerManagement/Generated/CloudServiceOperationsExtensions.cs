@@ -50,21 +50,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(cloudServiceName, parameters).Result;
+                return ((ICloudServiceOperations)s).BeginCreatingAsync(cloudServiceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -105,21 +95,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeleting(this ICloudServiceOperations operations, string cloudServiceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(cloudServiceName).Result;
+                return ((ICloudServiceOperations)s).BeginDeletingAsync(cloudServiceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -167,21 +147,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CloudServiceOperationStatusResponse Create(this ICloudServiceOperations operations, string cloudServiceName, CloudServiceCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(cloudServiceName, parameters).Result;
+                return ((ICloudServiceOperations)s).CreateAsync(cloudServiceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -236,21 +206,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CloudServiceOperationStatusResponse Delete(this ICloudServiceOperations operations, string cloudServiceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(cloudServiceName).Result;
+                return ((ICloudServiceOperations)s).DeleteAsync(cloudServiceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -294,21 +254,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CloudServiceGetResponse Get(this ICloudServiceOperations operations, string cloudServiceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(cloudServiceName).Result;
+                return ((ICloudServiceOperations)s).GetAsync(cloudServiceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -342,21 +292,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CloudServiceListResponse List(this ICloudServiceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((ICloudServiceOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

@@ -33,15 +33,15 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class StorageAccountOperationsExtensions
     {
         /// <summary>
-        /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// The Begin Creating Storage Account operation creates a new storage
+        /// account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Storage Account
+        /// Required. Parameters supplied to the Begin Creating Storage Account
         /// operation.
         /// </param>
         /// <returns>
@@ -59,26 +59,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).BeginCreatingAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// The Begin Creating Storage Account operation creates a new storage
+        /// account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
@@ -87,7 +77,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Storage Account
+        /// Required. Parameters supplied to the Begin Creating Storage Account
         /// operation.
         /// </param>
         /// <returns>
@@ -101,7 +91,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
+        /// name is available for use in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
         /// for more information)
         /// </summary>
@@ -118,26 +108,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CheckNameAvailabilityResponse CheckNameAvailability(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckNameAvailabilityAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).CheckNameAvailabilityAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The Check Name Availability operation checks if a storage account
-        /// name is available for use in Windows Azure.  (see
+        /// name is available for use in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154125.aspx
         /// for more information)
         /// </summary>
@@ -159,7 +139,7 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
@@ -175,35 +155,25 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Create(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The Create Storage Account operation creates a new storage account
-        /// in Windows Azure.  (see
+        /// in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264518.aspx
         /// for more information)
         /// </summary>
@@ -219,12 +189,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CreateAsync(this IStorageAccountOperations operations, StorageAccountCreateParameters parameters)
         {
@@ -232,8 +202,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Storage Account operation deletes the specifiedstorage
-        /// account from Windows Azure.  (see
+        /// The Delete Storage Account operation deletes the specified storage
+        /// account from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264517.aspx
         /// for more information)
         /// </summary>
@@ -242,7 +212,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Required. The name of the storage account.
+        /// Required. The name of the storage account to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -250,26 +220,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).DeleteAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Storage Account operation deletes the specifiedstorage
-        /// account from Windows Azure.  (see
+        /// The Delete Storage Account operation deletes the specified storage
+        /// account from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264517.aspx
         /// for more information)
         /// </summary>
@@ -278,7 +238,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Required. The name of the storage account.
+        /// Required. The name of the storage account to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -300,28 +260,18 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Required. Name of the storage account to get.
+        /// Required. Name of the storage account to get properties for.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
         /// </returns>
         public static StorageAccountGetResponse Get(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).GetAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -335,7 +285,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Storage.IStorageAccountOperations.
         /// </param>
         /// <param name='accountName'>
-        /// Required. Name of the storage account to get.
+        /// Required. Name of the storage account to get properties for.
         /// </param>
         /// <returns>
         /// The Get Storage Account Properties operation response.
@@ -363,21 +313,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountGetKeysResponse GetKeys(this IStorageAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetKeysAsync(accountName).Result;
+                return ((IStorageAccountOperations)s).GetKeysAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -416,21 +356,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountListResponse List(this IStorageAccountOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IStorageAccountOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -469,21 +399,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static StorageAccountRegenerateKeysResponse RegenerateKeys(this IStorageAccountOperations operations, StorageAccountRegenerateKeysParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegenerateKeysAsync(parameters).Result;
+                return ((IStorageAccountOperations)s).RegenerateKeysAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -508,9 +428,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Storage Account operation updates the label, the
+        /// The Update Storage Account operation updates the label and the
         /// description, and enables or disables the geo-replication status
-        /// for a storage account in Windows Azure.  (see
+        /// for a storage account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264516.aspx
         /// for more information)
         /// </summary>
@@ -531,27 +451,17 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Update(this IStorageAccountOperations operations, string accountName, StorageAccountUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(accountName, parameters).Result;
+                return ((IStorageAccountOperations)s).UpdateAsync(accountName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Update Storage Account operation updates the label, the
+        /// The Update Storage Account operation updates the label and the
         /// description, and enables or disables the geo-replication status
-        /// for a storage account in Windows Azure.  (see
+        /// for a storage account in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh264516.aspx
         /// for more information)
         /// </summary>

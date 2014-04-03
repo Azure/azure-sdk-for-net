@@ -30,24 +30,36 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class ResourceExtensionStatus
     {
-        private string _code;
+        private int? _code;
         
         /// <summary>
         /// Optional. Status code sent by the Resource Extension.
         /// </summary>
-        public string Code
+        public int? Code
         {
             get { return this._code; }
             set { this._code = value; }
         }
         
-        private FormattedMessage _formattedMessage;
+        private ResourceExtensionConfigurationStatus _extensionSettingStatus;
         
         /// <summary>
-        /// Optional. This object encapsulates localized status message from
+        /// Optional. This object encapsulates the extension setting status for
         /// the Resource Extension.
         /// </summary>
-        public FormattedMessage FormattedMessage
+        public ResourceExtensionConfigurationStatus ExtensionSettingStatus
+        {
+            get { return this._extensionSettingStatus; }
+            set { this._extensionSettingStatus = value; }
+        }
+        
+        private GuestAgentFormattedMessage _formattedMessage;
+        
+        /// <summary>
+        /// Optional. This object encapsulates a formatted localized status
+        /// message from the Resource Extension.
+        /// </summary>
+        public GuestAgentFormattedMessage FormattedMessage
         {
             get { return this._formattedMessage; }
             set { this._formattedMessage = value; }
@@ -64,11 +76,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._handlerName = value; }
         }
         
+        private GuestAgentMessage _message;
+        
+        /// <summary>
+        /// Optional. This object encapsulates a localized status message from
+        /// the Guest Agent.
+        /// </summary>
+        public GuestAgentMessage Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
+        }
+        
         private string _status;
         
         /// <summary>
         /// Optional. The resource extension status, which can be "Installing",
-        /// "Ready", "NotReady", "Unresponsive"
+        /// "Ready", "NotReady", or "Unresponsive".
         /// </summary>
         public string Status
         {

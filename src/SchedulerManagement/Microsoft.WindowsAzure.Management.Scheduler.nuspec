@@ -2,9 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Scheduler</id>
-    <title>Windows Azure Scheduler Management Library</title>
-    <releaseNotes>Cloud Service client amounts are now represented as string types.
-__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <title>Microsoft Azure Scheduler Management Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -12,10 +10,10 @@ __BASELINE_RELEASE_NOTES__</releaseNotes>
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Windows Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</summary>
-    <description>Provides Windows Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</description>
+    <summary>Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</summary>
+    <description>Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure scheduler REST HTTP cron scheduler client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure scheduler REST HTTP cron scheduler client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Scheduler.dll" />

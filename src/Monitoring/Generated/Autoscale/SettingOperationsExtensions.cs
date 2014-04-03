@@ -47,21 +47,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse CreateOrUpdate(this ISettingOperations operations, string resourceId, AutoscaleSettingCreateOrUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateOrUpdateAsync(resourceId, parameters).Result;
+                return ((ISettingOperations)s).CreateOrUpdateAsync(resourceId, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <param name='operations'>
@@ -96,21 +86,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this ISettingOperations operations, string resourceId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(resourceId).Result;
+                return ((ISettingOperations)s).DeleteAsync(resourceId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <param name='operations'>
@@ -142,21 +122,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static AutoscaleSettingGetResponse Get(this ISettingOperations operations, string resourceId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(resourceId).Result;
+                return ((ISettingOperations)s).GetAsync(resourceId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <param name='operations'>

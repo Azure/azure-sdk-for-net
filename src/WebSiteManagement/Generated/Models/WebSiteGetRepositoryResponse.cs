@@ -26,14 +26,14 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Repository operation response.
+    /// The Get Repository Web Site operation response.
     /// </summary>
     public partial class WebSiteGetRepositoryResponse : OperationResponse
     {
         private Uri _uri;
         
         /// <summary>
-        /// Optional. Contains the URI of the web site repository.
+        /// Optional. The URI of the web site repository.
         /// </summary>
         public Uri Uri
         {

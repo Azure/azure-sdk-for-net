@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DataVirtualHardDisk> _dataVirtualHardDisks;
         
         /// <summary>
-        /// Optional. Contains the parameters Windows Azure uses to create a
-        /// data disk for a virtual machine.
+        /// Optional. Contains the parameters Azure uses to create a data disk
+        /// for a virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
         {
@@ -104,7 +104,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>
-        /// Optional. Contains the parameters Windows Azure uses to create the
+        /// Optional. Contains the parameters Azure uses to create the
         /// operating system disk for the virtual machine.
         /// </summary>
         public OSVirtualHardDisk OSVirtualHardDisk
@@ -117,8 +117,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Indicates whether the WindowsAzureGuestAgent service is
-        /// installed on the Virtual Machine. To run a resource extension in
-        /// aVirtual Machine, this service must be installed.
+        /// installed on the Virtual Machine. To run a resource extension in a
+        /// Virtual Machine, this service must be installed.
         /// </summary>
         public bool? ProvisionGuestAgent
         {
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the type of the role. This element is only
-        /// listed for Virtual Machine deployments and by default is
+        /// listed for Virtual Machine deployments, and by default is
         /// PersistentVMRole.
         /// </summary>
         public string RoleType
@@ -177,9 +177,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _vMImageName;
         
         /// <summary>
-        /// Optional. Optional. Name of the VMImage from which this Role is to
-        /// be created. If the OSDisk in the VMImage was Specialized, then no
-        /// WindowsProvisioningConfigurationSet or
+        /// Optional. Optional. The name of the VMImage from which this Role is
+        /// to be created. If the OSDisk in the VMImage was Specialized, then
+        /// no WindowsProvisioningConfigurationSet or
         /// LinuxProvisioningConfigurationSet should be provided. No
         /// OSVirtualHardDisk or DataVirtualHardDisk should be specified when
         /// using this argument.

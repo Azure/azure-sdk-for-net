@@ -33,15 +33,15 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class VirtualMachineOSImageOperationsExtensions
     {
         /// <summary>
-        /// The Add OS Image operation adds an operating system image that is
-        /// stored in a storage account and is available from the image
+        /// The Create OS Image operation adds an operating system image that
+        /// is stored in a storage account and is available from the image
         /// repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157192.aspx
         /// for more information)
@@ -59,26 +59,16 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineOSImageCreateResponse Create(this IVirtualMachineOSImageOperations operations, VirtualMachineOSImageCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IVirtualMachineOSImageOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Add OS Image operation adds an operating system image that is
-        /// stored in a storage account and is available from the image
+        /// The Create OS Image operation adds an operating system image that
+        /// is stored in a storage account and is available from the image
         /// repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157192.aspx
         /// for more information)
@@ -122,21 +112,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IVirtualMachineOSImageOperations operations, string imageName, bool deleteFromStorage)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(imageName, deleteFromStorage).Result;
+                return ((IVirtualMachineOSImageOperations)s).DeleteAsync(imageName, deleteFromStorage);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -183,21 +163,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineOSImageGetResponse Get(this IVirtualMachineOSImageOperations operations, string imageName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(imageName).Result;
+                return ((IVirtualMachineOSImageOperations)s).GetAsync(imageName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -236,21 +206,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineOSImageListResponse List(this IVirtualMachineOSImageOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IVirtualMachineOSImageOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -293,21 +253,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static VirtualMachineOSImageUpdateResponse Update(this IVirtualMachineOSImageOperations operations, string imageName, VirtualMachineOSImageUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(imageName, parameters).Result;
+                return ((IVirtualMachineOSImageOperations)s).UpdateAsync(imageName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

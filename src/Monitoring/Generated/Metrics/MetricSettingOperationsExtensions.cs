@@ -48,21 +48,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse CreateOrUpdate(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateOrUpdateAsync(parameters).Result;
+                return ((IMetricSettingOperations)s).CreateOrUpdateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -104,21 +94,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static MetricSettingListResponse List(this IMetricSettingOperations operations, string resourceId, string metricNamespace)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(resourceId, metricNamespace).Result;
+                return ((IMetricSettingOperations)s).ListAsync(resourceId, metricNamespace);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

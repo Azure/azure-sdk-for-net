@@ -39,7 +39,9 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
-    /// Operations for managing the web sites in a web space.
+    /// Operations for managing the web sites in a web space.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
+    /// more information)
     /// </summary>
     internal partial class WebSiteOperations : IServiceOperations<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations
     {
@@ -84,9 +86,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The response body contains the status of the specified long-running
         /// operation, indicating whether it has succeeded, is inprogress, has
-        /// time dout, or has failed. Note that this status is distinct from
+        /// timed out, or has failed. Note that this status is distinct from
         /// the HTTP status code returned for the Get Operation Status
-        /// operation itself.  If the long-running operation failed, the
+        /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
@@ -375,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            WebSiteOperationStatus statusInstance = (WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true);
+                            WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                     }
@@ -426,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Create Web Space operation response.
+        /// The Create Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken)
         {
@@ -624,14 +626,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement availabilityStateElement = siteElement2.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (availabilityStateElement != null && availabilityStateElement.IsEmpty == false)
                         {
-                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true);
+                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
                         XElement computeModeElement2 = siteElement2.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
                         if (computeModeElement2 != null && computeModeElement2.IsEmpty == false)
                         {
-                            WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true);
+                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true));
                             webSiteInstance.ComputeMode = computeModeInstance;
                         }
                         
@@ -669,7 +671,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement != null && sslStateElement.IsEmpty == false)
                                 {
-                                    WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true);
+                                    WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
                                     webSiteHostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
@@ -756,7 +758,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement runtimeAvailabilityStateElement = siteElement2.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (runtimeAvailabilityStateElement != null && runtimeAvailabilityStateElement.IsEmpty == false)
                         {
-                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true);
+                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
@@ -1006,7 +1008,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement siteModeElement2 = siteElement2.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
                         if (siteModeElement2 != null && siteModeElement2.IsEmpty == false)
                         {
-                            WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true);
+                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true));
                             webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
@@ -1060,7 +1062,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement usageStateElement = siteElement2.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
                         if (usageStateElement != null && usageStateElement.IsEmpty == false)
                         {
-                            WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true);
+                            WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
                             webSiteInstance.UsageState = usageStateInstance;
                         }
                         
@@ -1102,12 +1104,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository create operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -1250,7 +1250,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters to delete a web site.
+        /// Required. Parameters supplied to the Delete Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1379,12 +1379,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository delete operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -1398,7 +1396,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Delete Web Site Repository operation response.
+        /// The Delete Repository Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
@@ -1524,10 +1522,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         
         /// <summary>
         /// You can generate a new random password for publishing a site by
-        /// issuing an HTTP POST request.  Tip: If you want to verify that the
-        /// publish password has changed, call HTTP GET on /publishxml before
-        /// calling /newpassword. In the publish XML, note the hash value in
-        /// the userPWD attribute. After calling /newpassword, call
+        /// issuing an HTTP POST request. Tip: If you want to verify that the
+        /// publish password has changed, issue an HTTP GET on /publishxml
+        /// before calling /newpassword. In the publish XML, note the hash
+        /// value in the userPWD attribute. After calling /newpassword, call
         /// /publishxml again. You can then compare the new value of userPWD
         /// in the Publish XML with the one you noted earlier.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236428.aspx
@@ -1670,13 +1668,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Optional. Additional parameters.
+        /// Optional. Parameters supplied to the Get Web Site Operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Details operation response.
+        /// The Get Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken)
         {
@@ -1786,14 +1784,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement availabilityStateElement = siteElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (availabilityStateElement != null && availabilityStateElement.IsEmpty == false)
                         {
-                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true);
+                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
                         XElement computeModeElement = siteElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
                         if (computeModeElement != null && computeModeElement.IsEmpty == false)
                         {
-                            WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true);
+                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true));
                             webSiteInstance.ComputeMode = computeModeInstance;
                         }
                         
@@ -1831,7 +1829,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement != null && sslStateElement.IsEmpty == false)
                                 {
-                                    WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true);
+                                    WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
                                     webSiteHostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
@@ -1918,7 +1916,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement runtimeAvailabilityStateElement = siteElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (runtimeAvailabilityStateElement != null && runtimeAvailabilityStateElement.IsEmpty == false)
                         {
-                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true);
+                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
@@ -2168,7 +2166,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement siteModeElement = siteElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
                         if (siteModeElement != null && siteModeElement.IsEmpty == false)
                         {
-                            WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true);
+                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true));
                             webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
@@ -2222,7 +2220,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement usageStateElement = siteElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
                         if (usageStateElement != null && usageStateElement.IsEmpty == false)
                         {
-                            WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true);
+                            WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
                             webSiteInstance.UsageState = usageStateInstance;
                         }
                         
@@ -2265,8 +2263,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
+        /// HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
         /// for more information)
         /// </summary>
@@ -2280,7 +2277,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// The Get Configuration Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
@@ -2485,7 +2482,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement managedPipelineModeElement = siteConfigElement.Element(XName.Get("ManagedPipelineMode", "http://schemas.microsoft.com/windowsazure"));
                         if (managedPipelineModeElement != null && managedPipelineModeElement.IsEmpty == false && string.IsNullOrEmpty(managedPipelineModeElement.Value) == false)
                         {
-                            ManagedPipelineMode managedPipelineModeInstance = (ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), managedPipelineModeElement.Value, true);
+                            ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), managedPipelineModeElement.Value, true));
                             result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
@@ -2553,7 +2550,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             if (isNil == false)
                             {
-                                RemoteDebuggingVersion remoteDebuggingVersionInstance = (RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), remoteDebuggingVersionElement.Value, true);
+                                RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), remoteDebuggingVersionElement.Value, true));
                                 result.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
                             }
                         }
@@ -2645,13 +2642,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The Get Web Site Historical Usage Metrics parameters.
+        /// Required. Parameters supplied to the Get Historical Usage Metrics
+        /// Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Historical Usage Metrics operation response.
+        /// The Get Historical Usage Metrics Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken)
         {
@@ -2948,7 +2946,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Publish Profile operation response.
+        /// The Get Publish Profile Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
@@ -3186,12 +3184,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository get operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -3205,7 +3201,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Repository operation response.
+        /// The Get Repository Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
@@ -3330,11 +3326,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
+        /// You can retrieve current usage metrics for a site by issuing an
+        /// HTTP GET request. The metrics returned include CPU Time, Data In,
+        /// Data Out, Local Bytes Read, Local Bytes Written, Network Bytes
+        /// Read, Network Bytes Written, WP Stop Requests, Memory Usage, CPU
+        /// Time - Minute Limit, and File System Storage.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
         /// for more information)
         /// </summary>
@@ -3348,7 +3344,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
+        /// The Get Usage Metrics Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
         {
@@ -3450,7 +3446,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement computeModeElement = usageMetricsElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
                                 if (computeModeElement != null && computeModeElement.IsEmpty == false)
                                 {
-                                    WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true);
+                                    WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true));
                                     usageInstance.ComputeMode = computeModeInstance;
                                 }
                                 
@@ -3499,7 +3495,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement siteModeElement = usageMetricsElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
                                 if (siteModeElement != null && siteModeElement.IsEmpty == false)
                                 {
-                                    WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true);
+                                    WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true));
                                     usageInstance.SiteMode = siteModeInstance;
                                 }
                                 
@@ -3543,7 +3539,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Determines if a hostname is available
+        /// Determines if a host name is available.
         /// </summary>
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
@@ -3552,7 +3548,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Is Hostname Available operation response.
+        /// The Is Hostname Available Web Site operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken)
         {
@@ -3821,9 +3817,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The response body contains the status of the specified long-running
         /// operation, indicating whether it has succeeded, is inprogress, has
-        /// time dout, or has failed. Note that this status is distinct from
+        /// timed out, or has failed. Note that this status is distinct from
         /// the HTTP status code returned for the Get Operation Status
-        /// operation itself.  If the long-running operation failed, the
+        /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken)
@@ -3906,9 +3902,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
         /// site. This API executes a repository sync operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
@@ -4317,14 +4313,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement availabilityStateElement2 = siteElement2.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (availabilityStateElement2 != null && availabilityStateElement2.IsEmpty == false)
                         {
-                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement2.Value, true);
+                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement2.Value, true));
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
                         XElement computeModeElement2 = siteElement2.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
                         if (computeModeElement2 != null && computeModeElement2.IsEmpty == false)
                         {
-                            WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true);
+                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true));
                             webSiteInstance.ComputeMode = computeModeInstance;
                         }
                         
@@ -4362,7 +4358,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement sslStateElement2 = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement2 != null && sslStateElement2.IsEmpty == false)
                                 {
-                                    WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement2.Value, true);
+                                    WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement2.Value, true));
                                     webSiteHostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
@@ -4449,7 +4445,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement runtimeAvailabilityStateElement2 = siteElement2.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (runtimeAvailabilityStateElement2 != null && runtimeAvailabilityStateElement2.IsEmpty == false)
                         {
-                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement2.Value, true);
+                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement2.Value, true));
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
@@ -4699,7 +4695,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement siteModeElement2 = siteElement2.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
                         if (siteModeElement2 != null && siteModeElement2.IsEmpty == false)
                         {
-                            WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true);
+                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true));
                             webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
@@ -4753,7 +4749,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement usageStateElement = siteElement2.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
                         if (usageStateElement != null && usageStateElement.IsEmpty == false)
                         {
-                            WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true);
+                            WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
                             webSiteInstance.UsageState = usageStateInstance;
                         }
                         
@@ -4795,10 +4791,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// You can update the config settings for a web site by issuing an
+        /// HTTP PUT with a request body containing the updated settings.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -4808,7 +4803,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Required. The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The Update Web Site Configuration parameters.
+        /// Required. Parameters supplied to the Update Configuration Web Site
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

@@ -25,8 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The service certificate format. Windows Azure supports the pfx and cer
-    /// file formats.
+    /// The service certificate format. Azure supports the pfx and cer file
+    /// formats.
     /// </summary>
     public enum CertificateFormat
     {

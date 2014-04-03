@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Microsoft.WindowsAzure.ConfigurationManager</id>
-    <title>Windows Azure Configuration Manager</title>
+    <title>Microsoft Azure Configuration Manager</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -10,9 +10,9 @@
     <projectUrl>http://go.microsoft.com/fwlink/?linkid=252450</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Windows Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</description>
-    <summary>Windows Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</summary>
-    <tags>Microsoft "Windows Azure" Configuration "Configuration Manager" cloud windowsazureofficial</tags>
+    <description>Microsoft Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</description>
+    <summary>Microsoft Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</summary>
+    <tags>Microsoft "Microsoft Azure" Configuration "Configuration Manager" cloud windowsazureofficial</tags>
     <references>
       <reference file="Microsoft.WindowsAzure.Configuration.dll" />
     </references>

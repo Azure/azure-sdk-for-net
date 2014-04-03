@@ -29,7 +29,9 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
-    /// Operations for managing the web sites in a web space.
+    /// Operations for managing the web sites in a web space.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx for
+    /// more information)
     /// </summary>
     public partial interface IWebSiteOperations
     {
@@ -51,9 +53,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The response body contains the status of the specified long-running
         /// operation, indicating whether it has succeeded, is inprogress, has
-        /// time dout, or has failed. Note that this status is distinct from
+        /// timed out, or has failed. Note that this status is distinct from
         /// the HTTP status code returned for the Get Operation Status
-        /// operation itself.  If the long-running operation failed, the
+        /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
         Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
@@ -75,17 +77,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Create Web Space operation response.
+        /// The Create Web Site operation response.
         /// </returns>
         Task<WebSiteCreateResponse> CreateAsync(string webSpaceName, WebSiteCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository create operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to delete a web site.
+        /// Parameters supplied to the Delete Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -131,12 +131,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<OperationResponse> DeleteAsync(string webSpaceName, string webSiteName, WebSiteDeleteParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository delete operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -150,16 +148,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Delete Web Site Repository operation response.
+        /// The Delete Repository Web Site operation response.
         /// </returns>
         Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can generate a new random password for publishing a site by
-        /// issuing an HTTP POST request.  Tip: If you want to verify that the
-        /// publish password has changed, call HTTP GET on /publishxml before
-        /// calling /newpassword. In the publish XML, note the hash value in
-        /// the userPWD attribute. After calling /newpassword, call
+        /// issuing an HTTP POST request. Tip: If you want to verify that the
+        /// publish password has changed, issue an HTTP GET on /publishxml
+        /// before calling /newpassword. In the publish XML, note the hash
+        /// value in the userPWD attribute. After calling /newpassword, call
         /// /publishxml again. You can then compare the new value of userPWD
         /// in the Publish XML with the one you noted earlier.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236428.aspx
@@ -193,20 +191,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters.
+        /// Parameters supplied to the Get Web Site Operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Details operation response.
+        /// The Get Web Site operation response.
         /// </returns>
         Task<WebSiteGetResponse> GetAsync(string webSpaceName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
+        /// HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
         /// for more information)
         /// </summary>
@@ -220,7 +217,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// The Get Configuration Web Site operation response.
         /// </returns>
         Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
@@ -237,13 +234,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Get Web Site Historical Usage Metrics parameters.
+        /// Parameters supplied to the Get Historical Usage Metrics Web Site
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Historical Usage Metrics operation response.
+        /// The Get Historical Usage Metrics Web Site operation response.
         /// </returns>
         Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
         
@@ -263,17 +261,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Publish Profile operation response.
+        /// The Get Publish Profile Web Site operation response.
         /// </returns>
         Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
-        /// site. You can create a repository for your web site by issuing an
-        /// HTTP POST request, or retrieve information about the repository by
-        /// using HTTP GET.  (see
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
+        /// site. This API executes a repository get operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
         /// </summary>
@@ -287,16 +283,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Repository operation response.
+        /// The Get Repository Web Site operation response.
         /// </returns>
         Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve a site's current usage metrics by issuing an HTTP
-        /// GET request. The metrics returned include CPU Time, Data In, Data
-        /// Out, Local bytes read, Local bytes written, Network bytes read,
-        /// Network bytes written, WP stop requests, Memory Usage, CPU Time -
-        /// Minute Limit, and File System Storage.  (see
+        /// You can retrieve current usage metrics for a site by issuing an
+        /// HTTP GET request. The metrics returned include CPU Time, Data In,
+        /// Data Out, Local Bytes Read, Local Bytes Written, Network Bytes
+        /// Read, Network Bytes Written, WP Stop Requests, Memory Usage, CPU
+        /// Time - Minute Limit, and File System Storage.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166991.aspx
         /// for more information)
         /// </summary>
@@ -310,12 +306,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Usage Metrics operation response.
+        /// The Get Usage Metrics Web Site operation response.
         /// </returns>
         Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Determines if a hostname is available
+        /// Determines if a host name is available.
         /// </summary>
         /// <param name='webSiteName'>
         /// The name of the web site.
@@ -324,7 +320,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Is Hostname Available operation response.
+        /// The Is Hostname Available Web Site operation response.
         /// </returns>
         Task<WebSiteIsHostnameAvailableResponse> IsHostnameAvailableAsync(string webSiteName, CancellationToken cancellationToken);
         
@@ -366,17 +362,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <returns>
         /// The response body contains the status of the specified long-running
         /// operation, indicating whether it has succeeded, is inprogress, has
-        /// time dout, or has failed. Note that this status is distinct from
+        /// timed out, or has failed. Note that this status is distinct from
         /// the HTTP status code returned for the Get Operation Status
-        /// operation itself.  If the long-running operation failed, the
+        /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
         Task<WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// A web site repository is essentially a GIT repository that you can
-        /// use to manage your web site content. By using GIT source control
-        /// tools, you can push or pull version controlled changes to your
+        /// A web site repository is essentially a Git repository that you can
+        /// use to manage your web site content. By using Git source control
+        /// tools, you can push or pull version-controlled changes to your
         /// site. This API executes a repository sync operation.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166967.aspx
         /// for more information)
@@ -420,10 +416,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteUpdateResponse> UpdateAsync(string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can retrieve the config settings for a web site by issuing an
-        /// HTTP GET request, or update them by using HTTP PUT with a request
-        /// body that contains the settings to be updated.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// You can update the config settings for a web site by issuing an
+        /// HTTP PUT with a request body containing the updated settings.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -433,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The name of the web site.
         /// </param>
         /// <param name='parameters'>
-        /// The Update Web Site Configuration parameters.
+        /// Parameters supplied to the Update Configuration Web Site operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

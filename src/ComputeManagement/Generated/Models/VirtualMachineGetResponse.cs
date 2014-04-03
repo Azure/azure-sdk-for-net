@@ -62,8 +62,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<DataVirtualHardDisk> _dataVirtualHardDisks;
         
         /// <summary>
-        /// Optional. Contains the parameters Windows Azure used to create the
-        /// data disk for the virtual machine.
+        /// Optional. Contains the parameters Azure used to create the data
+        /// disk for the virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
         {
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>
-        /// Optional. Contains the parameters Windows Azure used to create the
+        /// Optional. Contains the parameters Azure used to create the
         /// operating system disk for the virtual machine.
         /// </summary>
         public OSVirtualHardDisk OSVirtualHardDisk
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The name for the virtual machine. The name is unique
-        /// within Windows Azure.
+        /// within Azure.
         /// </summary>
         public string RoleName
         {

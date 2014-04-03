@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Usage Metrics operation response.
+    /// The Get Usage Metrics Web Site operation response.
     /// </summary>
     public partial class WebSiteGetUsageMetricsResponse : OperationResponse, IEnumerable<WebSiteGetUsageMetricsResponse.UsageMetric>
     {
@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// with limits typically include CPU Time, Memory Usage, and File
             /// System Storage. Important: Site level Limits information is
             /// only meaningful for Shared and Standard web sites. For free
-            /// web sites, limits are enforced at the webspace level.
+            /// web sites, limits are enforced at the web space level.
             /// </summary>
             public string Limit
             {

@@ -27,6 +27,12 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
+    /// <summary>
+    /// The Network Management API includes operations for managing the
+    /// gateways for your subscription.  (see
+    /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx for
+    /// more information)
+    /// </summary>
     public partial interface IGatewayOperations
     {
         /// <summary>
@@ -44,7 +50,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Parameters supplied to the Begin Connect Disconnect Or Testing
+        /// Gateway operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -56,8 +63,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
+        /// The Begin Creating Virtual network Gateway operation creates a new
+        /// network gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
@@ -65,7 +72,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Parameters supplied to the Begin Creating Virtual Network Gateway
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -77,8 +85,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginCreatingAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// The Begin Deleting Virtual Network Gateway operation deletes a
+        /// network gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
@@ -95,8 +103,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginDeletingAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Failover Virtual network Gateway operation causes a network
-        /// gateway failover for the specified virtual network in Windows
+        /// The Begin Failover Virtual Network Gateway operation causes a
+        /// network gateway failover for the specified virtual network in
         /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
@@ -114,10 +122,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginFailoverAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
-        /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
+        /// The Begin Reset Virtual Network Gateway Shared Key operation resets
+        /// the shared key on the virtual network gateway for the specified
+        /// virtual network connection to the specified local network in
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
@@ -128,8 +136,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the local network.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters to the Virtual Network Gateway Reset Shared Key
-        /// request.
+        /// Parameters supplied to the Begin Virtual Network Gateway Reset
+        /// Shared Key request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -155,18 +163,19 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the site to connect to.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Parameters supplied to the Connect Disconnect Or Testing Gateway
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -175,7 +184,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         /// <summary>
         /// The Create Virtual network Gateway operation creates a new network
-        /// gateways account in Windows Azure.  (see
+        /// gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
@@ -190,11 +199,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -202,8 +211,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> CreateAsync(string networkName, GatewayCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete Virtual network Gateway operation deletes a network
-        /// gateway for the specified virtual network in Windows Azure.  (see
+        /// The Delete Virtual Network Gateway operation deletes a network
+        /// gateway for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154129.aspx
         /// for more information)
         /// </summary>
@@ -215,11 +224,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -227,9 +236,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> DeleteAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Failover Virtual network Gateway operation causes a network
-        /// gateway failover for the specified virtual network in Windows
-        /// Azure.  (see
+        /// The Failover Virtual Network Gateway operation causes a network
+        /// gateway failover for the specified virtual network in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154118.aspx
         /// for more information)
         /// </summary>
@@ -241,11 +249,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -253,8 +261,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> FailoverAsync(string networkName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Generate VPN Client Package creates a VPN client package for
-        /// the specified virtual network and gateway in Windows Azure.  (see
+        /// The Generate VPN Client Package operation creates a VPN client
+        /// package for the specified virtual network and gateway in Azure.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
         /// for more information)
         /// </summary>
@@ -262,7 +271,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Virtual Network Gateway operation.
+        /// Parameters supplied to the Generate VPN Client Package operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -274,9 +283,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(string networkName, GatewayGenerateVpnClientPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get Virtual network Gateway operation gets information on the
-        /// network gateway for the specified vitrual network in Windows
-        /// Azure.  (see
+        /// The Get Virtual Network Gateway operation gets information about
+        /// the network gateway for the specified virtual network in Azure.
+        /// (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154109.aspx
         /// for more information)
         /// </summary>
@@ -303,36 +312,36 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The name of the virtual network for this gateway.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the GetDeviceConfigurationScript request.
+        /// The parameters for the Get Device Configuration Script operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The configuration script returned from the get device configuration
-        /// script request.
+        /// script operation.
         /// </returns>
         Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(string networkName, GatewayGetDeviceConfigurationScriptParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get Virtual network Gateway operation status gets information
-        /// on the status of network gateway operations in Windows Azure.
-        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
+        /// The Get Virtual Network Gateway Operation Status gets information
+        /// on the status of network gateway operations in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
         /// for more information)
         /// </summary>
         /// <param name='operationId'>
-        /// The id  of the network operation.
+        /// The ID of the network operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -340,10 +349,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> GetOperationStatusAsync(string operationId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get Virtual network Gateway shared key operation gets the
+        /// The Get Virtual Network Gateway Shared Key operation gets the
         /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
+        /// virtual network connection to the specified local network in
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154122.aspx
         /// for more information)
         /// </summary>
@@ -390,15 +399,15 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The respoonse to the get supported platform configuration request.
+        /// The response to the list supported devices request.
         /// </returns>
         Task<GatewayListSupportedDevicesResponse> ListSupportedDevicesAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Reset Virtual network Gateway shared key operation resets the
+        /// The Reset Virtual Network Gateway Shared Key operation resets the
         /// shared key on the virtual network gateway for the specified
-        /// vitrual network connection to the specified local network in
-        /// Windows Azure.  (see
+        /// virtual network connection to the specified local network in
+        /// Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
         /// for more information)
         /// </summary>
@@ -417,11 +426,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// operation, indicating whether it has succeeded, is in progress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.

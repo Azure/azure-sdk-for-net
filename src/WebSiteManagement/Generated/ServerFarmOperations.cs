@@ -73,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -236,7 +236,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (currentWorkerSizeElement2 != null && currentWorkerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true));
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
@@ -257,14 +257,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (workerSizeElement2 != null && workerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true);
+                            ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true));
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement2 != null && statusElement2.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true);
+                            ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true));
                             result.Status = statusInstance;
                         }
                     }
@@ -304,7 +304,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -433,7 +433,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -552,7 +552,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement currentWorkerSizeElement = serverFarmElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (currentWorkerSizeElement != null && currentWorkerSizeElement.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true));
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
@@ -573,14 +573,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (workerSizeElement != null && workerSizeElement.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true);
+                            ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true));
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement = serverFarmElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true);
+                            ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                     }
@@ -620,7 +620,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -736,7 +736,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement currentWorkerSizeElement = serverFarmsElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
                             if (currentWorkerSizeElement != null && currentWorkerSizeElement.IsEmpty == false)
                             {
-                                ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true);
+                                ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement.Value, true));
                                 serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                             }
                             
@@ -757,14 +757,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement workerSizeElement = serverFarmsElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                             if (workerSizeElement != null && workerSizeElement.IsEmpty == false)
                             {
-                                ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true);
+                                ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement.Value, true));
                                 serverFarmInstance.WorkerSize = workerSizeInstance;
                             }
                             
                             XElement statusElement = serverFarmsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true);
+                                ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement.Value, true));
                                 serverFarmInstance.Status = statusInstance;
                             }
                         }
@@ -805,7 +805,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// farm details by using HTTP GET, change server farm properties by
         /// using HTTP PUT, and delete a server farm by using HTTP DELETE. A
         /// request body is required for server farm creation (HTTP POST) and
-        /// server farm update (HTTP PUT).  Warning: Creating a server farm
+        /// server farm update (HTTP PUT). Warning: Creating a server farm
         /// changes your webspace’s Compute Mode from Shared to Dedicated. You
         /// will be charged from the moment the server farm is created, even
         /// if all your sites are still running in Free mode.  (see
@@ -968,7 +968,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement currentWorkerSizeElement2 = serverFarmElement2.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (currentWorkerSizeElement2 != null && currentWorkerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true);
+                            ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), currentWorkerSizeElement2.Value, true));
                             result.CurrentWorkerSize = currentWorkerSizeInstance;
                         }
                         
@@ -989,14 +989,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (workerSizeElement2 != null && workerSizeElement2.IsEmpty == false)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = (ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true);
+                            ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), workerSizeElement2.Value, true));
                             result.WorkerSize = workerSizeInstance;
                         }
                         
                         XElement statusElement2 = serverFarmElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement2 != null && statusElement2.IsEmpty == false)
                         {
-                            ServerFarmStatus statusInstance = (ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true);
+                            ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), statusElement2.Value, true));
                             result.Status = statusInstance;
                         }
                     }

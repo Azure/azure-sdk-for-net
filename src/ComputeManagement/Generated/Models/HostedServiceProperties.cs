@@ -49,8 +49,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Optional. The date that the cloud service was created, in
         /// [4DigitYear]-[2DigitMonth]-[2DigitDay]T[2DigitHour]:[2DigitMinute]:[2DigitSecond]Z
-        /// format. The date 2011-05-11T16:15:26Z is an example that could
-        /// bereturned by the DateCreated or DateLastModified elements.
+        /// format. The date 2011-05-11T16:15:26Z is an example that could be
+        /// returned by the DateCreated or DateLastModified elements.
         /// </summary>
         public DateTime DateCreated
         {
@@ -87,15 +87,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Represents the name of an extended cloud service
-        /// property. Each extended property must have both a defined name and
+        /// property. Each extended property must have a defined name and a
         /// value. You can have a maximum of 50 extended property name and
-        /// value pairs.  The maximum length of the Name element is 64
+        /// value pairs. The maximum length of the name element is 64
         /// characters, only alphanumeric characters and underscores are valid
         /// in the name, and it must start with a letter. Attempting to use
         /// other characters, starting with a non-letter character, or
         /// entering a name that is identical to that of another extended
-        /// property owned by the same service, will result in a status code
-        /// 400 (Bad Request) error.  Each extended property value has a
+        /// property owned by the same service will result in a status code
+        /// 400 (Bad Request) error. Each extended property value has a
         /// maximum length of 255 characters.
         /// </summary>
         public IDictionary<string, string> ExtendedProperties

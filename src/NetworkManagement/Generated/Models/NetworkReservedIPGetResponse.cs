@@ -56,8 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _deploymentName;
         
         /// <summary>
-        /// Optional. The name of the deployment the IP belongs to, if being
-        /// used.
+        /// Optional. The name of the deployment the IP belongs to, if used.
         /// </summary>
         public string DeploymentName
         {
@@ -80,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private bool _inUse;
         
         /// <summary>
-        /// Optional. The indicator of whether the reserved IP is being used.
+        /// Optional. The indicator of whether the reserved IP is used.
         /// </summary>
         public bool InUse
         {
@@ -113,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         private string _serviceName;
         
         /// <summary>
-        /// Optional. The name of the service the IP belongs to, if being used.
+        /// Optional. The name of the service the IP belongs to, if used.
         /// </summary>
         public string ServiceName
         {
@@ -125,7 +124,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         
         /// <summary>
         /// Optional. Current status of the reserved IP. (Created, Creating,
-        /// Updating, Deleting, Unavailable)
+        /// Updating, Deleting, or Unavailable.)
         /// </summary>
         public string State
         {

@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         {
                                             foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
-                                                authorizationRuleInstance.Rights.Add((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true));
+                                                authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
                                             }
                                         }
                                         
@@ -435,7 +435,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         {
                                             foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
-                                                entryInstance.Rights.Add((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true));
+                                                entryInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
                                             }
                                         }
                                     }
@@ -625,7 +625,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                                 {
                                                     foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                                     {
-                                                        authorizationRuleInstance.Rights.Add((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true));
+                                                        authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
                                                     }
                                                 }
                                                 

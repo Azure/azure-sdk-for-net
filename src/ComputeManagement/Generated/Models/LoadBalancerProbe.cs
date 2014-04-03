@@ -26,9 +26,9 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Contains properties that specify the endpoint settings which the
-    /// Windows Azure load balancer uses to monitor the availability of this
-    /// virtual machine before forwarding traffic to the endpoint
+    /// Contains properties that specify the endpoint settings which the Azure
+    /// load balancer uses to monitor the availability of this virtual machine
+    /// before forwarding traffic to the endpoint.
     /// </summary>
     public partial class LoadBalancerProbe
     {
