@@ -81,7 +81,6 @@ namespace Microsoft.WindowsAzure
         /// <param name="requestContent">The HTTP request content.</param>
         /// <param name="response">The HTTP response.</param>
         /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="defaultTo">The content type to default to if none of the types matches.</param>
         /// <param name="innerException">Optional inner exception.</param>
         /// <returns>A CloudException representing the failure.</returns>
         public static CloudException Create(
@@ -89,109 +88,13 @@ namespace Microsoft.WindowsAzure
             string requestContent,
             HttpResponseMessage response,
             string responseContent,
-            CloudExceptionType defaultTo,
             Exception innerException = null)
-        {
-            if (response.Content != null && response.Content.Headers.ContentType != null)
-            {
-                if (response.Content.Headers.ContentType.MediaType.Equals("application/json") ||
-                    response.Content.Headers.ContentType.MediaType.Equals("text/json"))
-                {
-                    return CreateFromJson(request, requestContent, response, responseContent, innerException);
-                } 
-                else if (response.Content.Headers.ContentType.MediaType.Equals("application/xml") ||
-                       response.Content.Headers.ContentType.MediaType.Equals("text/xml"))
-                {
-                    return CreateFromXml(request, requestContent, response, responseContent, innerException);
-                }
-            }
-
-            if (defaultTo == CloudExceptionType.Json)
-            {
-                return CreateFromJson(request, requestContent, response, responseContent, innerException);
-            }
-            else
-            {
-                return CreateFromXml(request, requestContent, response, responseContent, innerException);
-            }
-        }
-
-        /// <summary>
-        /// Create a CloudException from a failed response sending XML content.
-        /// </summary>
-        /// <param name="request">The HTTP request.</param>
-        /// <param name="requestContent">The HTTP request content.</param>
-        /// <param name="response">The HTTP response.</param>
-        /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="innerException">Optional inner exception.</param>
-        /// <returns>A CloudException representing the failure.</returns>
-        public static CloudException CreateFromXml(
-            HttpRequestMessage request,
-            string requestContent,
-            HttpResponseMessage response,
-            string responseContent,
-            Exception innerException = null)
-        {
-            return Create(
-                request,
-                requestContent,
-                response,
-                responseContent,
-                innerException,
-                ParseXmlError);
-        }
-
-        /// <summary>
-        /// Create a CloudException from a failed response sending JSON content.
-        /// </summary>
-        /// <param name="request">The HTTP request.</param>
-        /// <param name="requestContent">The HTTP request content.</param>
-        /// <param name="response">The HTTP response.</param>
-        /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="innerException">Optional inner exception.</param>
-        /// <returns>A CloudException representing the failure.</returns>
-        public static CloudException CreateFromJson(
-            HttpRequestMessage request,
-            string requestContent,
-            HttpResponseMessage response,
-            string responseContent,
-            Exception innerException = null)
-        {
-            return Create(
-                request,
-                requestContent,
-                response,
-                responseContent,
-                innerException,
-                ParseJsonError);
-        }
-
-        /// <summary>
-        /// Create a CloudException from a failed response.
-        /// </summary>
-        /// <param name="request">The HTTP request.</param>
-        /// <param name="requestContent">The HTTP request content.</param>
-        /// <param name="response">The HTTP response.</param>
-        /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="innerException">Optional inner exception.</param>
-        /// <param name="parseError">
-        /// Function to parse the response content and return the error code
-        /// and error message as a Tuple.
-        /// </param>
-        /// <returns>A CloudException representing the failure.</returns>
-        private static CloudException Create(
-            HttpRequestMessage request,
-            string requestContent,
-            HttpResponseMessage response,
-            string responseContent,
-            Exception innerException,
-            Func<string, Tuple<string, string>> parseError)
         {
             // Get the error code and message
-            Tuple<string, string> tuple = parseError(responseContent);
-            string code = tuple.Item1;
-            string message = tuple.Item2;
-            
+            CloudError cloudError = ParseXmlOrJsonError(responseContent);
+            string code = cloudError.Code;
+            string message = cloudError.Message;
+
             // Get the most descriptive message that we can
             string exceptionMessage =
                 (code != null && message != null) ? code + ": " + message :
@@ -213,13 +116,118 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
+        /// Create a CloudException from a failed response.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="defaultTo">The content type to default to if none of the types matches.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException Create(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            CloudExceptionType defaultTo,
+            Exception innerException = null)
+        {
+            return Create(request, requestContent, response, responseContent, innerException);
+        }
+
+        /// <summary>
+        /// Create a CloudException from a failed response sending XML content.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException CreateFromXml(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            Exception innerException = null)
+        {
+            return Create(
+                request,
+                requestContent,
+                response,
+                responseContent,
+                innerException);
+        }
+
+        /// <summary>
+        /// Create a CloudException from a failed response sending JSON content.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException CreateFromJson(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            Exception innerException = null)
+        {
+            return Create(
+                request,
+                requestContent,
+                response,
+                responseContent,
+                innerException);
+        }
+
+        /// <summary>
+        /// Parse the response content as either an XML or JSON error message.
+        /// </summary>
+        /// <param name="content">The response content.</param>
+        /// <returns>
+        /// An object containing the parsed error code and message.
+        /// </returns>
+        public static CloudError ParseXmlOrJsonError(string content)
+        {
+            if (string.IsNullOrEmpty(content))
+            {
+                return new CloudError {OriginalMessage = content};
+            }
+            else
+            {
+                if (ParserHelper.IsJson(content))
+                {
+                    return ParseJsonError(content);
+                } 
+                else if (ParserHelper.IsXml(content))
+                {
+                    return ParseXmlError(content);
+                }
+                else
+                {
+                    return new CloudError { OriginalMessage = content };
+                }
+            }
+        }
+
+        /// <summary>
         /// Parse the response content as an XML error message.
         /// </summary>
         /// <param name="content">The response content.</param>
         /// <returns>
-        /// A tuple containing the parsed error code and message.
+        /// An object containing the parsed error code and message.
         /// </returns>
-        private static Tuple<string, string> ParseXmlError(string content)
+        public static CloudError ParseXmlError(string content)
         {
             string code = null;
             string message = null;
@@ -233,11 +241,11 @@ namespace Microsoft.WindowsAzure
                     {
                         // Check local names only because some services will
                         // use different namespaces or no namespace at all
-                        if (element.Name.LocalName == "Code")
+                        if ("Code".Equals(element.Name.LocalName, StringComparison.CurrentCultureIgnoreCase))
                         {
                             code = element.Value;
                         }
-                        else if (element.Name.LocalName == "Message")
+                        else if ("Message".Equals(element.Name.LocalName, StringComparison.CurrentCultureIgnoreCase))
                         {
                             message = element.Value;
                         }
@@ -249,7 +257,7 @@ namespace Microsoft.WindowsAzure
                 }
             }
 
-            return Tuple.Create(code, message);
+            return new CloudError { Code = code, Message = message, OriginalMessage = content };
         }
 
         /// <summary>
@@ -257,9 +265,9 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name="content">The response content.</param>
         /// <returns>
-        /// A tuple containing the parsed error code and message.
+        /// An object containing the parsed error code and message.
         /// </returns>
-        private static Tuple<string, string> ParseJsonError(string content)
+        public static CloudError ParseJsonError(string content)
         {
             string code = null;
             string message = null;
@@ -268,9 +276,20 @@ namespace Microsoft.WindowsAzure
             {
                 try
                 {
-                    JObject response = JObject.Parse(content);
-                    code = response.GetValue("Code", StringComparison.CurrentCultureIgnoreCase).ToString();
-                    message = response.GetValue("Message", StringComparison.CurrentCultureIgnoreCase).ToString();
+                    var response = JObject.Parse(content);
+                    
+                    if (response.GetValue("error", StringComparison.CurrentCultureIgnoreCase) != null)
+                    {
+                        var errorToken =
+                            response.GetValue("error", StringComparison.CurrentCultureIgnoreCase) as JObject;
+                        message = errorToken.GetValue("message", StringComparison.CurrentCultureIgnoreCase).ToString();
+                        code = errorToken.GetValue("code", StringComparison.CurrentCultureIgnoreCase).ToString();
+                    }
+                    else
+                    {
+                        message = response.GetValue("message", StringComparison.CurrentCultureIgnoreCase).ToString();
+                        code = response.GetValue("code", StringComparison.CurrentCultureIgnoreCase).ToString();
+                    }
                 }
                 catch
                 {
@@ -278,7 +297,7 @@ namespace Microsoft.WindowsAzure
                 }
             }
 
-            return Tuple.Create(code, message);
+            return new CloudError { Code = code, Message = message, OriginalMessage = content };
         }
     }
 }
