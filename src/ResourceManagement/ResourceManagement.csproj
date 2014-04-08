@@ -91,10 +91,9 @@
     <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.0\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
