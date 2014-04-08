@@ -150,13 +150,13 @@
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
     <MSBuild Projects="$(CommonSolution)"
-             Properties="$(DeveloperBuildProperties)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
     <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
     <MSBuild Projects="$(ManagementLibrariesSolution)"
-             Properties="$(DeveloperBuildProperties)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
     <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
   </Target>
