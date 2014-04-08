@@ -1274,7 +1274,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/?comp=delete";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1435,7 +1439,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/?comp=delete";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1603,7 +1611,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1744,7 +1756,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reboot";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1889,7 +1905,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName;
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2030,7 +2050,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
+<<<<<<< HEAD
             string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName + "?comp=reimage";
+=======
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/hostedservices/" + serviceName + "/deployments/" + deploymentName + "/?comp=status";
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

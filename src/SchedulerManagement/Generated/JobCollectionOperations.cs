@@ -1124,7 +1124,11 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
                             if (planElement != null && planElement.IsEmpty == false)
                             {
+<<<<<<< HEAD
                                 JobCollectionPlan planInstance = ((JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true));
+=======
+                                JobCollectionPlan planInstance = (JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true);
+>>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
                                 intrinsicSettingsInstance.Plan = planInstance;
                             }
                             
