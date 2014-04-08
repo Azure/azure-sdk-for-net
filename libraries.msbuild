@@ -2,7 +2,8 @@
 <Project DefaultTargets="DeveloperBuild" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- Product properties -->
   <PropertyGroup>
-    <ProductSolution>WindowsAzureLibraries.sln</ProductSolution>
+    <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
+    <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
     <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
@@ -127,10 +128,16 @@
   Regular developer build
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
@@ -139,10 +146,16 @@
   Clean produced binaries and object files
   -->
   <Target Name="Clean">
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Clean" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
     <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
@@ -163,10 +176,16 @@
   <Target Name="OfficialBuild"
           DependsOnTargets="BuildEngineeringDependencies;Clean">
     <CallTarget Targets="BuildServerPreparation" />
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ProductSolution)"
+    <MSBuild Projects="$(CommonSolution)"
+             Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
+             Properties="$(OfficialMSBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ManagementLibrariesSolution)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
@@ -350,7 +369,8 @@
     <Exec Command="$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" />
     <Exec Command="$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)"
           EchoOff="true" />
-    <Exec Command="$(NuGetCommand) restore WindowsAzureLibraries.sln $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
 
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
@@ -381,9 +401,10 @@
 
     <!-- Useful variables to log -->
     <Message Text="Build Properties and Variables" Importance="high" />
-    <Message Text="Solution      : $(ProductSolution)" />
-    <Message Text="Product       : $(ProductFriendlyName)" />
-    <Message Text="Source folder : $(ProductSourceFolder)" />
+    <Message Text="Common Solution    : $(CommonSolution)" />
+    <Message Text="Libraries Solution : $(ManagementLibrariesSolution)" />
+    <Message Text="Product            : $(ProductFriendlyName)" />
+    <Message Text="Source folder      : $(ProductSourceFolder)" />
 
     <!-- Modify local files -->
     <CallTarget Targets="BurnBuildVersions" />
