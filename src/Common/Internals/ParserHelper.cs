@@ -33,7 +33,8 @@ namespace Microsoft.WindowsAzure.Common.Internals
         /// Checks if content is possibly an XML.
         /// </summary>
         /// <param name="content">String to check.</param>
-        /// <param name="validate">If set to true will validate entire XML for validity otherwise will just check the first character.</param>
+        /// <param name="validate">If set to true will validate entire XML for validity 
+        /// otherwise will just check the first character.</param>
         /// <returns>True is content is possibly an XML otherwise false.</returns>
         public static bool IsXml(string content, bool validate = false)
         {
@@ -65,7 +66,8 @@ namespace Microsoft.WindowsAzure.Common.Internals
         /// Checks if content is possibly a JSON.
         /// </summary>
         /// <param name="content">String to check.</param>
-        /// <param name="validate">If set to true will validate entire JSON for validity otherwise will just check the first character.</param>
+        /// <param name="validate">If set to true will validate entire JSON for validity 
+        /// otherwise will just check the first character.</param>
         /// <returns>True is content is possibly an JSON otherwise false.</returns>
         public static bool IsJson(string content, bool validate = false)
         {

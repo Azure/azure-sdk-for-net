@@ -81,28 +81,6 @@ namespace Microsoft.WindowsAzure
         /// <param name="requestContent">The HTTP request content.</param>
         /// <param name="response">The HTTP response.</param>
         /// <param name="responseContent">The HTTP response content.</param>
-        /// <param name="defaultTo">The content type to default to if none of the types matches.</param>
-        /// <param name="innerException">Optional inner exception.</param>
-        /// <returns>A CloudException representing the failure.</returns>
-        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
-        public static CloudException Create(
-            HttpRequestMessage request,
-            string requestContent,
-            HttpResponseMessage response,
-            string responseContent,
-            CloudExceptionType defaultTo,
-            Exception innerException = null)
-        {
-            return Create(request, requestContent, response, responseContent, innerException);
-        }
-
-        /// <summary>
-        /// Create a CloudException from a failed response.
-        /// </summary>
-        /// <param name="request">The HTTP request.</param>
-        /// <param name="requestContent">The HTTP request content.</param>
-        /// <param name="response">The HTTP response.</param>
-        /// <param name="responseContent">The HTTP response content.</param>
         /// <param name="innerException">Optional inner exception.</param>
         /// <returns>A CloudException representing the failure.</returns>
         public static CloudException Create(
@@ -138,7 +116,82 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Parse the response content as either XML or JSON error message.
+        /// Create a CloudException from a failed response.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="defaultTo">The content type to default to if none of the types matches.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException Create(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            CloudExceptionType defaultTo,
+            Exception innerException = null)
+        {
+            return Create(request, requestContent, response, responseContent, innerException);
+        }
+
+        /// <summary>
+        /// Create a CloudException from a failed response sending XML content.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException CreateFromXml(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            Exception innerException = null)
+        {
+            return Create(
+                request,
+                requestContent,
+                response,
+                responseContent,
+                innerException);
+        }
+
+        /// <summary>
+        /// Create a CloudException from a failed response sending JSON content.
+        /// This method is obsolete. Use Create without defaultTo parameter.
+        /// </summary>
+        /// <param name="request">The HTTP request.</param>
+        /// <param name="requestContent">The HTTP request content.</param>
+        /// <param name="response">The HTTP response.</param>
+        /// <param name="responseContent">The HTTP response content.</param>
+        /// <param name="innerException">Optional inner exception.</param>
+        /// <returns>A CloudException representing the failure.</returns>
+        [Obsolete("This method is obsolete. Use Create without defaultTo parameter.")]
+        public static CloudException CreateFromJson(
+            HttpRequestMessage request,
+            string requestContent,
+            HttpResponseMessage response,
+            string responseContent,
+            Exception innerException = null)
+        {
+            return Create(
+                request,
+                requestContent,
+                response,
+                responseContent,
+                innerException);
+        }
+
+        /// <summary>
+        /// Parse the response content as either an XML or JSON error message.
         /// </summary>
         /// <param name="content">The response content.</param>
         /// <returns>
@@ -227,7 +280,8 @@ namespace Microsoft.WindowsAzure
                     
                     if (response.GetValue("error", StringComparison.CurrentCultureIgnoreCase) != null)
                     {
-                        var errorToken = response.GetValue("error", StringComparison.CurrentCultureIgnoreCase) as JObject;
+                        var errorToken =
+                            response.GetValue("error", StringComparison.CurrentCultureIgnoreCase) as JObject;
                         message = errorToken.GetValue("message", StringComparison.CurrentCultureIgnoreCase).ToString();
                         code = errorToken.GetValue("code", StringComparison.CurrentCultureIgnoreCase).ToString();
                     }

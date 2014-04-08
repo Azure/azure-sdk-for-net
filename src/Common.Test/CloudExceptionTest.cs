@@ -35,43 +35,43 @@ namespace Microsoft.WindowsAzure.Common.Test
         private HttpResponseMessage serverErrorResponseWithParent2;
         private string genericMessageString = "{'key'='value'}";
         private string jsonErrorMessageString = @"{
-                                    'code': 'BadRequest',
-                                    'message': 'The provided database ‘foo’ has an invalid username.',
-                                    'target': 'query',
-                                    'details': [
-                                      {
-                                       'code': '301',
-                                       'target': '$search',
-                                       'message': '$search query option not supported.',
-                                      }
-                                    ]
-                                }";
+                    'code': 'BadRequest',
+                    'message': 'The provided database ‘foo’ has an invalid username.',
+                    'target': 'query',
+                    'details': [
+                        {
+                        'code': '301',
+                        'target': '$search',
+                        'message': '$search query option not supported.',
+                        }
+                    ]
+                }";
         private string jsonErrorMessageStringWithCamelCase = @"{
-                                    'Code': 'BadRequest',
-                                    'Message': 'The provided database ‘foo’ has an invalid username.',
-                                    'Target': 'query',
-                                    'Details': [
-                                      {
-                                       'Code': '301',
-                                       'Target': '$search',
-                                       'Message': '$search query option not supported.',
-                                      }
-                                    ]
-                                }";
+                    'Code': 'BadRequest',
+                    'Message': 'The provided database ‘foo’ has an invalid username.',
+                    'Target': 'query',
+                    'Details': [
+                        {
+                        'Code': '301',
+                        'Target': '$search',
+                        'Message': '$search query option not supported.',
+                        }
+                    ]
+                }";
         private string jsonErrorMessageWithParent = @"{
-                                    'error' : {
-                                        'code': 'BadRequest',
-                                        'message': 'The provided database ‘foo’ has an invalid username.',
-                                        'target': 'query',
-                                        'details': [
-                                        {
-                                            'code': '301',
-                                            'target': '$search',
-                                            'message': '$search query option not supported.',
-                                        }
-                                        ]
-                                    }
-                                }";
+                    'error' : {
+                        'code': 'BadRequest',
+                        'message': 'The provided database ‘foo’ has an invalid username.',
+                        'target': 'query',
+                        'details': [
+                        {
+                            'code': '301',
+                            'target': '$search',
+                            'message': '$search query option not supported.',
+                        }
+                        ]
+                    }
+                }";
         private string jsonErrorMessageWithParent2 = @"{'error':{'code':'ResourceGroupNotFound','message':
                 'Resource group `ResourceGroup_crosoftAwillAofferAmoreAWebAservicemnopqrstuvwxyz1` could not be found.'}}";
 
