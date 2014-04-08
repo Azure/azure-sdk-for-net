@@ -301,18 +301,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                         }
-<<<<<<< HEAD
                         autoscaleSettingCreateOrUpdateParametersValue["Profiles"] = profilesArray;
                     }
                     
                     autoscaleSettingCreateOrUpdateParametersValue["Enabled"] = parameters.Setting.Enabled;
-=======
-                        requestDoc = profilesArray;
-                    }
-                    
-                    requestDoc = new JObject();
-                    requestDoc["Enabled"] = parameters.Setting.Enabled;
->>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

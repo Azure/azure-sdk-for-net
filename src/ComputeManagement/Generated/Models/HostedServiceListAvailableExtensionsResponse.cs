@@ -97,11 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._description = value; }
             }
             
-<<<<<<< HEAD
             private Uri _eula;
-=======
-            private string _hostingResources;
->>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             
             /// <summary>
             /// Optional. URI string pointing to the EULA (End User License
@@ -109,7 +105,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// specified by the third-party publishing the extension instead
             /// of Azure, at the time of extension creation or update.
             /// </summary>
-<<<<<<< HEAD
             public Uri Eula
             {
                 get { return this._eula; }
@@ -136,8 +131,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// Optional. The type of resource that supports the extension.
             /// This value can be WebRole, WorkerRole, or WebRole|WorkerRole.
             /// </summary>
-=======
->>>>>>> 5b5d9f7b57739a2061fc8688b969d112e6a43d1e
             public string HostingResources
             {
                 get { return this._hostingResources; }
