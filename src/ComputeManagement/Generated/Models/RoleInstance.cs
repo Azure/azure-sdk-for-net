@@ -69,9 +69,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceErrorCode;
         
         /// <summary>
-        /// Optional. An error code that can be provided to WindowsAzure
-        /// support to assist in resolution of errors. Typicallythis field
-        /// will be empty.
+        /// Optional. An error code that can be provided to Windows Azure
+        /// support to assist in resolution of errors. This field will
+        /// typically be empty.
         /// </summary>
         public string InstanceErrorCode
         {
@@ -95,8 +95,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceName;
         
         /// <summary>
-        /// Optional. TThe name of the specific role instance, if an instance
-        /// of the role is running.
+        /// Optional. The name of the specific role instance, if an instance of
+        /// the role is running.
         /// </summary>
         public string InstanceName
         {
@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _instanceStateDetails;
         
         /// <summary>
-        /// Optional. The instance state is returned as a string that, when
+        /// Optional. The instance state, returned as a string that, when
         /// present, provides a snapshot of the state of the virtual machine
         /// at the time the operation was called.
         /// </summary>

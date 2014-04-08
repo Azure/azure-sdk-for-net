@@ -37,6 +37,10 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network
 {
+    /// <summary>
+    /// The Network Management API includes operations for managing the
+    /// reserved IPs for your subscription.
+    /// </summary>
     internal partial class ReservedIPOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IReservedIPOperations
     {
         /// <summary>
@@ -62,11 +66,11 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The Create Reserved IP operation creates a reserved
-        /// IP from your the subscription.
+        /// Preview Only. The Begin Creating Reserved IP operation creates a
+        /// reserved IP from your the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Virtual Machine Image
+        /// Required. Parameters supplied to the Begin Creating Reserved IP
         /// operation.
         /// </param>
         /// <param name='cancellationToken'>
@@ -76,9 +80,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -236,8 +240,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The Delete Reserved IP operation removes a reserved
-        /// IP from your the subscription.
+        /// Preview Only. The Begin Deleting Reserved IP operation removes a
+        /// reserved IP from your the subscription.
         /// </summary>
         /// <param name='ipName'>
         /// Required. The name of the reserved IP.
@@ -360,7 +364,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// the subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to create a network reserved IP.
+        /// Required. Parameters supplied to the Create Reserved IP operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -369,9 +373,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -467,9 +471,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -549,7 +553,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         /// <summary>
         /// Preview Only. The Get Reserved IP operation retrieves the details
-        /// for virtual IP reserved for the subscription.
+        /// for the virtual IP reserved for the subscription.
         /// </summary>
         /// <param name='ipName'>
         /// Required. The name of the reserved IP to retrieve.
@@ -739,14 +743,14 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The List Reserved IP operation retrieves the virtual
-        /// IPs reserved for the subscription.
+        /// Preview Only. The List Reserved IP operation retrieves all of the
+        /// virtual IPs reserved for the subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Preview Only. The response structure for the Server List operation
+        /// Preview Only. The response structure for the Server List operation.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken)
         {

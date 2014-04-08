@@ -66,10 +66,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Begin Deleting Virtual Machine Image operation deletes the
+        /// specified virtual machine image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
+        /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -78,7 +83,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string vmImageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             // Validate
             if (vmImageName == null)
@@ -94,12 +99,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
+                tracingParameters.Add("deleteFromStorage", deleteFromStorage);
                 Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
             }
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/vmimages/" + vmImageName + "?comp=media";
+            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/vmimages/" + vmImageName + "?";
+            if (deleteFromStorage == true)
+            {
+                url = url + "comp=media";
+            }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -185,10 +195,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete VM Image operation deletes the specified VM image.
+        /// The Delete Virtual Machine Image operation deletes the specified
+        /// virtual machine image.
         /// </summary>
         /// <param name='vmImageName'>
-        /// Required. The name of the VM image to delete.
+        /// Required. The name of the virtual machine image to delete.
+        /// </param>
+        /// <param name='deleteFromStorage'>
+        /// Required. Specifies that the source blob for the image should also
+        /// be deleted from storage.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -197,14 +212,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string vmImageName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string vmImageName, bool deleteFromStorage, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -214,6 +229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vmImageName", vmImageName);
+                tracingParameters.Add("deleteFromStorage", deleteFromStorage);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             try
@@ -224,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, cancellationToken).ConfigureAwait(false);
+                OperationResponse response = await client.VirtualMachineVMImages.BeginDeletingAsync(vmImageName, deleteFromStorage, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -278,8 +294,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The List VM Images operation retrieves a list of the virtual
-        /// machine images.
+        /// The List Virtual Machine Images operation retrieves a list of the
+        /// virtual machine images.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -409,7 +425,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement hostCachingElement = oSDiskConfigurationElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                 if (hostCachingElement != null && hostCachingElement.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement.Value) == false)
                                 {
-                                    VirtualHardDiskHostCaching hostCachingInstance = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true);
+                                    VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
                                     oSDiskConfigurationInstance.HostCaching = hostCachingInstance;
                                 }
                                 
@@ -460,7 +476,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement hostCachingElement2 = dataDiskConfigurationsElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                                     if (hostCachingElement2 != null && hostCachingElement2.IsEmpty == false && string.IsNullOrEmpty(hostCachingElement2.Value) == false)
                                     {
-                                        VirtualHardDiskHostCaching hostCachingInstance2 = (VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true);
+                                        VirtualHardDiskHostCaching hostCachingInstance2 = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement2.Value, true));
                                         dataDiskConfigurationInstance.HostCaching = hostCachingInstance2;
                                     }
                                     

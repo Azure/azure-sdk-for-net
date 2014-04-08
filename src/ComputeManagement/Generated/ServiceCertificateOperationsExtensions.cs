@@ -33,18 +33,17 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
     public static partial class ServiceCertificateOperationsExtensions
     {
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.   (see
+        /// The Begin Creating Service Certificate operation adds a certificate
+        /// to a hosted service. This operation is an asynchronous operation.
+        /// To determine whether the management service has finished
+        /// processing the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -56,8 +55,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Service Certificate
-        /// operation.
+        /// Required. Parameters supplied to the Begin Creating Service
+        /// Certificate operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -65,29 +64,18 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginCreating(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(serviceName, parameters).Result;
+                return ((IServiceCertificateOperations)s).BeginCreatingAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.   (see
+        /// The Begin Creating Service Certificate operation adds a certificate
+        /// to a hosted service. This operation is an asynchronous operation.
+        /// To determine whether the management service has finished
+        /// processing the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -99,8 +87,8 @@ namespace Microsoft.WindowsAzure
         /// Required. The DNS prefix name of your service.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Service Certificate
-        /// operation.
+        /// Required. Parameters supplied to the Begin Creating Service
+        /// Certificate operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -112,11 +100,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// The Begin Deleting Service Certificate operation deletes a service
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
@@ -125,8 +113,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Delete Service Certificate
-        /// operation.
+        /// Required. Parameters supplied to the Begin Deleting Service
+        /// Certificate operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,29 +122,19 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeleting(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(parameters).Result;
+                return ((IServiceCertificateOperations)s).BeginDeletingAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// The Begin Deleting Service Certificate operation deletes a service
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
@@ -165,8 +143,8 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Compute.IServiceCertificateOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Delete Service Certificate
-        /// operation.
+        /// Required. Parameters supplied to the Begin Deleting Service
+        /// Certificate operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -178,11 +156,10 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.  This overload will   (see
+        /// The Create Service Certificate operation adds a certificate to a
+        /// hosted service. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -201,38 +178,27 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Create(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(serviceName, parameters).Result;
+                return ((IServiceCertificateOperations)s).CreateAsync(serviceName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// The Add Service Certificate operation adds a certificate to a
-        /// hosted service.  The Add Service Certificate operation is an
-        /// asynchronous operation. To determine whether the management
-        /// service has finished processing the request, call Get Operation
-        /// Status.  This overload will   (see
+        /// The Create Service Certificate operation adds a certificate to a
+        /// hosted service. This operation is an asynchronous operation. To
+        /// determine whether the management service has finished processing
+        /// the request, call Get Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460817.aspx
         /// for more information)
         /// </summary>
@@ -251,12 +217,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> CreateAsync(this IServiceCertificateOperations operations, string serviceName, ServiceCertificateCreateParameters parameters)
         {
@@ -265,10 +231,10 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
@@ -284,38 +250,28 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static OperationStatusResponse Delete(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(parameters).Result;
+                return ((IServiceCertificateOperations)s).DeleteAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The Delete Service Certificate operation deletes a service
-        /// certificate from the certificate store of a hosted service.  The
-        /// Delete Service Certificate operation is an asynchronous operation.
-        /// To determine whether the management service has finished
-        /// processing the request, call Get Operation Status.  (see
+        /// certificate from the certificate store of a hosted service. This
+        /// operation is an asynchronous operation. To determine whether the
+        /// management service has finished processing the request, call Get
+        /// Operation Status.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460803.aspx
         /// for more information)
         /// </summary>
@@ -331,12 +287,12 @@ namespace Microsoft.WindowsAzure
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public static Task<OperationStatusResponse> DeleteAsync(this IServiceCertificateOperations operations, ServiceCertificateDeleteParameters parameters)
         {
@@ -363,21 +319,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceCertificateGetResponse Get(this IServiceCertificateOperations operations, ServiceCertificateGetParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(parameters).Result;
+                return ((IServiceCertificateOperations)s).GetAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -421,21 +367,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceCertificateListResponse List(this IServiceCertificateOperations operations, string serviceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync(serviceName).Result;
+                return ((IServiceCertificateOperations)s).ListAsync(serviceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

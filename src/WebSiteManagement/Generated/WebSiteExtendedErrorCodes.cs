@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites
 {
     /// <summary>
-    /// In addition to standard HTTP status codes, the Windows Azure Web Sites
+    /// In addition to standard HTTP status codes, the Azure Web Sites
     /// Management REST API returns extended error codes and error messages.
     /// The extended codes do not replace the standard HTTP status codes, but
     /// provide additional, actionable information that can be used in
@@ -153,7 +153,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string NumberOfSitesLimit = "03001";
         
         /// <summary>
-        /// NumberOfWorkers exceeds the maximum allowed.
+        /// Number of workers exceeds the maximum allowed.
         /// </summary>
         public const string NumberOfWorkersLimit = "03002";
         
@@ -168,7 +168,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string WebSpaceAlreadyExists = "03004";
         
         /// <summary>
-        /// Cannot find webspace {0} for subscription {1}
+        /// Cannot find webspace {0} for subscription {1}.
         /// </summary>
         public const string WebSpaceNotFound = "03005";
         
@@ -194,7 +194,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string NoWorkersAvailable = "03009";
         
         /// <summary>
-        /// Failed to create web space {0} on storage volume {1}: {2}
+        /// Failed to create web space {0} on storage volume {1}: {2}.
         /// </summary>
         public const string WebSpaceCreateError = "03010";
         
@@ -224,8 +224,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string HostNameAlreadyExists = "04005";
         
         /// <summary>
-        /// No CNAME pointing from {0} to a site in a default DNS zone (or too
-        /// many).
+        /// No CNAME (or too many CNAMEs) pointing from {0} to a site in a
+        /// default DNS zone.
         /// </summary>
         public const string InvalidCustomHostNameValidation = "04006";
         
@@ -341,17 +341,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string PublishingUserNameIsEmpty = "06009";
         
         /// <summary>
-        /// An error occurred when adding the {0} entry: {1}
+        /// An error occurred when adding the {0} entry: {1}.
         /// </summary>
         public const string ErrorAdding = "51001";
         
         /// <summary>
-        /// An error occurred when deleting the {0} entry: {1}
+        /// An error occurred when deleting the {0} entry: {1}.
         /// </summary>
         public const string ErrorDeleting = "51002";
         
         /// <summary>
-        /// An error occurred when updating the {0} entry: {1}
+        /// An error occurred when updating the {0} entry: {1}.
         /// </summary>
         public const string ErrorUpdating = "51003";
         
@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string SubscriptionConflict = "52001";
         
         /// <summary>
-        /// Subscripton Name cannot be null or empty.
+        /// Subscription Name cannot be null or empty.
         /// </summary>
         public const string SubscriptionNonEmpty = "52002";
         
@@ -376,7 +376,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string SubscriptionNotFound = "52003";
         
         /// <summary>
-        /// Subscription {0} is Suspended.
+        /// Subscription {0} is suspended.
         /// </summary>
         public const string SubscriptionSuspended = "52004";
         
@@ -401,7 +401,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public const string NonEmptyWebSpace = "53003";
         
         /// <summary>
-        /// An Error occurred when picking Stamp for WebSpace {0}.
+        /// An error occurred when picking Stamp for WebSpace {0}.
         /// </summary>
         public const string ErrorPickingStamp = "53004";
         

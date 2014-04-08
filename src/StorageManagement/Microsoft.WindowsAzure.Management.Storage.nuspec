@@ -2,8 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Storage</id>
-    <title>Windows Azure Storage Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>    
+    <title>Microsoft Azure Storage Management Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</summary>
-    <description>Provides storage management operations for Windows Azure, including the ability to create, delete, and configure storage service accounts and credentials.</description>
+    <summary>Provides storage management operations for Microsoft Azure, including the ability to create, delete, and configure storage service accounts and credentials.</summary>
+    <description>Provides storage management operations for Microsoft Azure, including the ability to create, delete, and configure storage service accounts and credentials.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Storage.dll" />
@@ -24,7 +23,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
     </dependencies>
   </metadata>
   <files>

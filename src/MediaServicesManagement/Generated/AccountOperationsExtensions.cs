@@ -50,21 +50,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static MediaServicesAccountCreateResponse Create(this IAccountOperations operations, MediaServicesAccountCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(parameters).Result;
+                return ((IAccountOperations)s).CreateAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -108,21 +98,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this IAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(accountName).Result;
+                return ((IAccountOperations)s).DeleteAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -165,21 +145,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static MediaServicesAccountGetResponse Get(this IAccountOperations operations, string accountName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(accountName).Result;
+                return ((IAccountOperations)s).GetAsync(accountName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -219,21 +189,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static MediaServicesAccountListResponse List(this IAccountOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IAccountOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -278,21 +238,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RegenerateKey(this IAccountOperations operations, string accountName, MediaServicesKeyType keyType)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegenerateKeyAsync(accountName, keyType).Result;
+                return ((IAccountOperations)s).RegenerateKeyAsync(accountName, keyType);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

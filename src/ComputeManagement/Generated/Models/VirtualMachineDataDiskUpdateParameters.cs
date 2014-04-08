@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Required. Specifies the platform caching behavior of data disk blob
         /// for read/write efficiency. The default vault is ReadOnly. Possible
-        /// values are: None, ReadOnly, ReadWrite.  Warning: Setting this
+        /// values are: None, ReadOnly, or ReadWrite. Warning: Setting this
         /// property impacts the consistency of the disk.
         /// </summary>
         public VirtualHardDiskHostCaching HostCaching
@@ -65,8 +65,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Optional. Specifies the size, in GB, of an empty disk to be
         /// attached to the role. The disk can be created as part of disk
         /// attach or create VM role call by specifying the value for this
-        /// property.  Windows Azure creates the empty disk based on size
-        /// preference and attaches the newly created disk to the Role.
+        /// property. Azure creates the empty disk based on size preference
+        /// and attaches the newly created disk to the Role.
         /// </summary>
         public int LogicalDiskSizeInGB
         {
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// <summary>
         /// Optional. Specifies the Logical Unit Number (LUN) for the disk. The
         /// LUN specifies the slot in which the data drive appears when
-        /// mounted for usage by the virtual machine.  Valid LUN values are 0
+        /// mounted for usage by the virtual machine. Valid LUN values are 0
         /// through 15.
         /// </summary>
         public int? LogicalUnitNumber
@@ -91,11 +91,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Required. Specifies the location of the blob in Windows Azure blob
-        /// store where the media for the disk is located. The blob location
-        /// must belong to the storage account in the subscription specified
-        /// by the SubscriptionId value in the operation call. Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// Required. Specifies the location of the blob in Azure blob store
+        /// where the media for the disk is located. The blob location must
+        /// belong to the storage account in the subscription specified by the
+        /// SubscriptionId value in the operation call. Example:
+        /// http://example.blob.core.windows.net/disks/mydisk.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -106,9 +106,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Specifies the name of the disk. Windows Azure uses the
-        /// specified disk to create the data disk for the machine and
-        /// populates this field with the disk name.
+        /// Optional. Specifies the name of the disk. Azure uses the specified
+        /// disk to create the data disk for the machine and populates this
+        /// field with the disk name.
         /// </summary>
         public string Name
         {

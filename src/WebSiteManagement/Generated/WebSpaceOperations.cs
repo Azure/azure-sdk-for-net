@@ -66,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Creates a source control user allowed to publish to this web space.
+        /// Creates a source control user with permissions to publish to this
+        /// web space.
         /// </summary>
         /// <param name='username'>
         /// Required. The user name.
@@ -267,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve details for a specified webspace name by issuing
+        /// You can retrieve details for a specified web space name by issuing
         /// an HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
         /// for more information)
@@ -369,7 +370,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (availabilityStateElement != null && availabilityStateElement.IsEmpty == false)
                         {
-                            WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true);
+                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                             result.AvailabilityState = availabilityStateInstance;
                         }
                         
@@ -400,7 +401,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             if (isNil2 == false)
                             {
-                                WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true);
+                                WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
                                 result.CurrentWorkerSize = currentWorkerSizeInstance;
                             }
                         }
@@ -436,7 +437,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true);
+                            WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
@@ -450,7 +451,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (workerSizeElement != null && workerSizeElement.IsEmpty == false && string.IsNullOrEmpty(workerSizeElement.Value) == false)
                         {
-                            WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true);
+                            WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
                             result.WorkerSize = workerSizeInstance;
                         }
                     }
@@ -485,7 +486,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the dns suffix for this subscription.
+        /// Get the DNS Suffix for this subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -606,7 +607,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can list the webspaces under the current subscription by
+        /// You can list the web spaces under the current subscription by
         /// issuing a GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166961.aspx
         /// for more information)
@@ -705,7 +706,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                             if (availabilityStateElement != null && availabilityStateElement.IsEmpty == false)
                             {
-                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true);
+                                WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                                 webSpaceInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
@@ -736,7 +737,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 }
                                 if (isNil2 == false)
                                 {
-                                    WebSpaceWorkerSize currentWorkerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true);
+                                    WebSpaceWorkerSize currentWorkerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), currentWorkerSizeElement.Value, true));
                                     webSpaceInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                                 }
                             }
@@ -772,7 +773,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null && statusElement.IsEmpty == false)
                             {
-                                WebSpaceStatus statusInstance = (WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true);
+                                WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
                                 webSpaceInstance.Status = statusInstance;
                             }
                             
@@ -786,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                             if (workerSizeElement != null && workerSizeElement.IsEmpty == false && string.IsNullOrEmpty(workerSizeElement.Value) == false)
                             {
-                                WebSpaceWorkerSize workerSizeInstance = (WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true);
+                                WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
                                 webSpaceInstance.WorkerSize = workerSizeInstance;
                             }
                         }
@@ -822,13 +823,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Get the available geo regions for this webspace.
+        /// Get the available geo regions for this web space.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get DNS Suffix operation response.
+        /// The List Geo Regions operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListGeoRegionsResponse> ListGeoRegionsAsync(CancellationToken cancellationToken)
         {
@@ -1227,14 +1228,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                             if (availabilityStateElement != null && availabilityStateElement.IsEmpty == false)
                             {
-                                WebSpaceAvailabilityState availabilityStateInstance = (WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true);
+                                WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                                 siteInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
                             XElement computeModeElement = sitesElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
                             if (computeModeElement != null && computeModeElement.IsEmpty == false)
                             {
-                                WebSiteComputeMode computeModeInstance = (WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true);
+                                WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true));
                                 siteInstance.ComputeMode = computeModeInstance;
                             }
                             
@@ -1272,7 +1273,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                     if (sslStateElement != null && sslStateElement.IsEmpty == false)
                                     {
-                                        WebSiteSslState sslStateInstance = (WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true);
+                                        WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
                                         webSiteHostNameSslStateInstance.SslState = sslStateInstance;
                                     }
                                     
@@ -1359,7 +1360,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                             if (runtimeAvailabilityStateElement != null && runtimeAvailabilityStateElement.IsEmpty == false)
                             {
-                                WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = (WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true);
+                                WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
                                 siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                             }
                             
@@ -1609,7 +1610,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement siteModeElement = sitesElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
                             if (siteModeElement != null && siteModeElement.IsEmpty == false)
                             {
-                                WebSiteMode siteModeInstance = (WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true);
+                                WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true));
                                 siteInstance.SiteMode = siteModeInstance;
                             }
                             
@@ -1663,7 +1664,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
                             if (usageStateElement != null && usageStateElement.IsEmpty == false)
                             {
-                                WebSiteUsageState usageStateInstance = (WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true);
+                                WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
                                 siteInstance.UsageState = usageStateInstance;
                             }
                             

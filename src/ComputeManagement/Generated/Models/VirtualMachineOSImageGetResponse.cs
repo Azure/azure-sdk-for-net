@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// AffinityGroup value is derived from storage account that contains
         /// the blob in which the media is located. If the storage account
         /// does not belong to an affinity group the value is NULL and the
-        /// element is not displayed in the response.  This value is NULL for
+        /// element is not displayed in the response. This value is NULL for
         /// platform images.
         /// </summary>
         public string AffinityGroup
@@ -134,8 +134,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _language;
         
         /// <summary>
-        /// Optional. Specifies the language of the image.  The Language
-        /// element is only available using version 2013-03-01 or higher.
+        /// Optional. Specifies the language of the image. The Language element
+        /// is only available using version 2013-03-01 or higher.
         /// </summary>
         public string Language
         {
@@ -149,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Optional. The geo-location in which this media is located. The
         /// Location value is derived from storage account that contains the
         /// blob in which the media is located. If the storage account belongs
-        /// to an affinity group the value is NULL.  If the version is set to
+        /// to an affinity group the value is NULL. If the version is set to
         /// 2012-08-01 or later, the locations are returned for platform
         /// images; otherwise, this value is NULL for platform images.
         /// </summary>
@@ -173,10 +173,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private Uri _mediaLinkUri;
         
         /// <summary>
-        /// Optional. The location of the blob in Windows Azure storage. The
-        /// blob location belongs to a storage account in the subscription
+        /// Optional. The location of the blob in Azure storage. The blob
+        /// location belongs to a storage account in the subscription
         /// specified by the SubscriptionId value in the operation call.
-        /// Example: http://example.blob.core.windows.net/disks/myimage.vhd
+        /// Example: http://example.blob.core.windows.net/disks/myimage.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -201,7 +201,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. The operating system type of the OS image. Possible
-        /// values are: Linux, Windows.
+        /// values are: Linux or Windows.
         /// </summary>
         public string OperatingSystemType
         {
@@ -236,8 +236,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _publisherName;
         
         /// <summary>
-        /// Optional. The name of the publisher of this OS Image in Windows
-        /// Azure.
+        /// Optional. The name of the publisher of this OS Image in Azure.
         /// </summary>
         public string PublisherName
         {
@@ -260,8 +259,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _showInGui;
         
         /// <summary>
-        /// Optional. Indicates whther the image should be shown in the windows
-        /// azure portal.
+        /// Optional. Indicates whether the image should be shown in the Azure
+        /// portal.
         /// </summary>
         public bool? ShowInGui
         {
@@ -273,9 +272,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Specifies the URI to the small icon that is displayed
-        /// when the image is presented in the Windows Azure Management
-        /// Portal.  The SmallIconUri element is only available using version
-        /// 2013-03-01 or higher.
+        /// when the image is presented in the Azure Management Portal. The
+        /// SmallIconUri element is only available using version 2013-03-01 or
+        /// higher.
         /// </summary>
         public Uri SmallIconUri
         {

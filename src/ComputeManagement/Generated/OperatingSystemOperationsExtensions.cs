@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL, and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -43,11 +43,10 @@ namespace Microsoft.WindowsAzure
         /// guest operating system that are currently available in Windows
         /// Azure. The 2010-10-28 version of List Operating Systems also
         /// indicates what family an operating system version belongs to.
-        /// Currently Windows Azure supports two operating system families:
-        /// the Windows Azure guest operating system that is substantially
-        /// compatible with Windows Server 2008 SP2, and the Windows Azure
+        /// Currently Azure supports two operating system families: the Azure
         /// guest operating system that is substantially compatible with
-        /// Windows Server 2008 R2.  (see
+        /// Windows Server 2008 SP2, and the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684168.aspx
         /// for more information)
         /// </summary>
@@ -60,21 +59,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperatingSystemListResponse List(this IOperatingSystemOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((IOperatingSystemOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -82,11 +71,10 @@ namespace Microsoft.WindowsAzure
         /// guest operating system that are currently available in Windows
         /// Azure. The 2010-10-28 version of List Operating Systems also
         /// indicates what family an operating system version belongs to.
-        /// Currently Windows Azure supports two operating system families:
-        /// the Windows Azure guest operating system that is substantially
-        /// compatible with Windows Server 2008 SP2, and the Windows Azure
+        /// Currently Azure supports two operating system families: the Azure
         /// guest operating system that is substantially compatible with
-        /// Windows Server 2008 R2.  (see
+        /// Windows Server 2008 SP2, and the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684168.aspx
         /// for more information)
         /// </summary>
@@ -104,12 +92,12 @@ namespace Microsoft.WindowsAzure
         
         /// <summary>
         /// The List OS Families operation lists the guest operating system
-        /// families available in Windows Azure, and also lists the operating
-        /// system versions available for each family. Currently Windows Azure
-        /// supports two operating system families: the Windows Azure guest
-        /// operating system that is substantially compatible with Windows
-        /// Server 2008 SP2, and the Windows Azure guest operating system that
-        /// is substantially compatible with Windows Server 2008 R2.  (see
+        /// families available in Azure, and also lists the operating system
+        /// versions available for each family. Currently Azure supports two
+        /// operating system families: the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 SP2, and the
+        /// Azure guest operating system that is substantially compatible with
+        /// Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441291.aspx
         /// for more information)
         /// </summary>
@@ -122,31 +110,21 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperatingSystemListFamiliesResponse ListFamilies(this IOperatingSystemOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListFamiliesAsync().Result;
+                return ((IOperatingSystemOperations)s).ListFamiliesAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
         /// The List OS Families operation lists the guest operating system
-        /// families available in Windows Azure, and also lists the operating
-        /// system versions available for each family. Currently Windows Azure
-        /// supports two operating system families: the Windows Azure guest
-        /// operating system that is substantially compatible with Windows
-        /// Server 2008 SP2, and the Windows Azure guest operating system that
-        /// is substantially compatible with Windows Server 2008 R2.  (see
+        /// families available in Azure, and also lists the operating system
+        /// versions available for each family. Currently Azure supports two
+        /// operating system families: the Azure guest operating system that
+        /// is substantially compatible with Windows Server 2008 SP2, and the
+        /// Azure guest operating system that is substantially compatible with
+        /// Windows Server 2008 R2.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441291.aspx
         /// for more information)
         /// </summary>

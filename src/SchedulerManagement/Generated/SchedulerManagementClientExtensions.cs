@@ -61,21 +61,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SchedulerOperationStatusResponse GetOperationStatus(this ISchedulerManagementClient operations, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(requestId).Result;
+                return ((ISchedulerManagementClient)s).GetOperationStatusAsync(requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -124,21 +114,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ResourceProviderGetPropertiesResponse GetResourceProviderProperties(this ISchedulerManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetResourceProviderPropertiesAsync().Result;
+                return ((ISchedulerManagementClient)s).GetResourceProviderPropertiesAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -170,21 +150,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse RegisterResourceProvider(this ISchedulerManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.RegisterResourceProviderAsync().Result;
+                return ((ISchedulerManagementClient)s).RegisterResourceProviderAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -216,21 +186,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse UnregisterResourceProvider(this ISchedulerManagementClient operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UnregisterResourceProviderAsync().Result;
+                return ((ISchedulerManagementClient)s).UnregisterResourceProviderAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

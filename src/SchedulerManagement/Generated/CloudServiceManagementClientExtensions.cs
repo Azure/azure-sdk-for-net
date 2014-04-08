@@ -49,21 +49,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse EntitleResource(this ICloudServiceManagementClient operations, EntitleResourceParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.EntitleResourceAsync(parameters).Result;
+                return ((ICloudServiceManagementClient)s).EntitleResourceAsync(parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -117,21 +107,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CloudServiceOperationStatusResponse GetOperationStatus(this ICloudServiceManagementClient operations, string requestId)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetOperationStatusAsync(requestId).Result;
+                return ((ICloudServiceManagementClient)s).GetOperationStatusAsync(requestId);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

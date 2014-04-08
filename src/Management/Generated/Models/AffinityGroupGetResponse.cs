@@ -35,7 +35,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private IList<string> _capabilities;
         
         /// <summary>
-        /// Optional. Indicates if the virtual machine related operations can
+        /// Optional. Indicates if the virtual machine-related operations can
         /// be performed in this affinity group. If so, the string
         /// PersistentVMRole will be returned by this element. Otherwise, this
         /// element will not be present.
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _description;
         
         /// <summary>
-        /// Optional. The user supplied description of this affinity group.
+        /// Optional. The user-supplied description for this affinity group.
         /// </summary>
         public string Description
         {
@@ -71,8 +71,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _label;
         
         /// <summary>
-        /// Optional. The user supplied label of the affinity group returned as
-        /// a base-64 encoded string.
+        /// Optional. The user-supplied label for the affinity group, returned
+        /// as a base-64-encoded string.
         /// </summary>
         public string Label
         {
@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The user supplied name of the affinity group.
+        /// Optional. The user-supplied name for the affinity group.
         /// </summary>
         public string Name
         {

@@ -69,10 +69,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The List Resource Extensions operation lists the resource
         /// extensions that are available to add to a Virtual Machine. In
-        /// Windows Azure, a process can run as a resource extension of a
-        /// Virtual Machine. For example, Remote Desktop Access or the Windows
-        /// Azure Diagnostics Agent can run as resource extensions to the
-        /// Virtual Machine.  (see
+        /// Azure, a process can run as a resource extension of a Virtual
+        /// Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495441.aspx
         /// for more information)
         /// </summary>
@@ -224,7 +224,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement replicationCompletedElement = resourceExtensionsElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false)
+                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
                             {
                                 bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
                                 resourceExtensionInstance.ReplicationCompleted = replicationCompletedInstance;
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement isJsonExtensionElement = resourceExtensionsElement.Element(XName.Get("IsJsonExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false)
+                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false && string.IsNullOrEmpty(isJsonExtensionElement.Value) == false)
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;
@@ -292,10 +292,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The List Resource Extension Versions operation lists the versions
         /// of a resource extension that are available to add to a Virtual
-        /// Machine. In Windows Azure, a process can run as a resource
-        /// extension of a Virtual Machine. For example, Remote Desktop Access
-        /// or the Windows Azure Diagnostics Agent can run as resource
-        /// extensions to the Virtual Machine.  (see
+        /// Machine. In Azure, a process can run as a resource extension of a
+        /// Virtual Machine. For example, Remote Desktop Access or the Azure
+        /// Diagnostics Agent can run as resource extensions to the Virtual
+        /// Machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn495440.aspx
         /// for more information)
         /// </summary>
@@ -463,7 +463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement replicationCompletedElement = resourceExtensionsElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false)
+                            if (replicationCompletedElement != null && replicationCompletedElement.IsEmpty == false && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
                             {
                                 bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
                                 resourceExtensionInstance.ReplicationCompleted = replicationCompletedInstance;
@@ -491,7 +491,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                             
                             XElement isJsonExtensionElement = resourceExtensionsElement.Element(XName.Get("IsJsonExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false)
+                            if (isJsonExtensionElement != null && isJsonExtensionElement.IsEmpty == false && string.IsNullOrEmpty(isJsonExtensionElement.Value) == false)
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;

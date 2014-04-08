@@ -26,7 +26,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Site Historical Usage Metrics parameters.
+    /// Parameters supplied to the Get Historical Usage Metrics Web Site
+    /// operation.
     /// </summary>
     public partial class WebSiteGetHistoricalUsageMetricsParameters
     {

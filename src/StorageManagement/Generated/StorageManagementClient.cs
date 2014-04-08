@@ -38,7 +38,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
     /// The Service Management API provides programmatic access to much of the
     /// functionality available through the Management Portal. The Service
     /// Management API is a REST API. All API operations are performed over
-    /// SSL and mutually authenticated using X.509 v3 certificates.  (see
+    /// SSL and are mutually authenticated using X.509 v3 certificates.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
@@ -57,13 +57,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// When you create an Azure subscription, it is uniquely identified by
+        /// a subscription ID. The subscription ID forms part of the URI for
+        /// every call that you make to the Service Management API. The Azure
+        /// Service Management API uses mutual authentication of management
+        /// certificates over SSL to ensure that a request made to the service
+        /// is secure. No anonymous requests are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -97,13 +96,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Required. The URI used as the base for all Service Management
@@ -130,13 +128,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         public StorageManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -152,10 +149,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
         }
         
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -171,12 +168,12 @@ namespace Microsoft.WindowsAzure.Management.Storage
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationStatusResponse> GetOperationStatusAsync(string requestId, CancellationToken cancellationToken)
         {
@@ -273,14 +270,14 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true);
+                            OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
                         if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
+                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         

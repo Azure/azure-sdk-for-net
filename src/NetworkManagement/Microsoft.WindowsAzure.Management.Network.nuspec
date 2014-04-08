@@ -2,8 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Network</id>
-    <title>Windows Azure Network Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
+    <title>Microsoft Azure Network Management Library</title>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -11,10 +10,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides network management capabilities for Windows Azure.</summary>
-    <description>Provides network management capabilities for Windows Azure.</description>
+    <summary>Provides network management capabilities for Microsoft Azure.</summary>
+    <description>Provides network management capabilities for Microsoft Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure network management "networks" "networks management" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure network management "networks" "networks management" REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Network.dll" />
@@ -24,7 +23,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="__VERSION_Microsoft.WindowsAzure.Common__" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
     </dependencies>
   </metadata>
   <files>

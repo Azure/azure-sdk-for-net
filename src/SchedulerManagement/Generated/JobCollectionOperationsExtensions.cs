@@ -54,21 +54,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCollectionCreateResponse BeginCreating(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginCreatingAsync(cloudServiceName, jobCollectionName, parameters).Result;
+                return ((IJobCollectionOperations)s).BeginCreatingAsync(cloudServiceName, jobCollectionName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -116,21 +106,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse BeginDeleting(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginDeletingAsync(cloudServiceName, jobCollectionName).Result;
+                return ((IJobCollectionOperations)s).BeginDeletingAsync(cloudServiceName, jobCollectionName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -178,21 +158,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCollectionUpdateResponse BeginUpdating(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.BeginUpdatingAsync(cloudServiceName, jobCollectionName, parameters).Result;
+                return ((IJobCollectionOperations)s).BeginUpdatingAsync(cloudServiceName, jobCollectionName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -242,21 +212,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCollectionCheckNameAvailabilityResponse CheckNameAvailability(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckNameAvailabilityAsync(cloudServiceName, jobCollectionName).Result;
+                return ((IJobCollectionOperations)s).CheckNameAvailabilityAsync(cloudServiceName, jobCollectionName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -314,21 +274,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SchedulerOperationStatusResponse Create(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName, JobCollectionCreateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(cloudServiceName, jobCollectionName, parameters).Result;
+                return ((IJobCollectionOperations)s).CreateAsync(cloudServiceName, jobCollectionName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -391,21 +341,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SchedulerOperationStatusResponse Delete(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(cloudServiceName, jobCollectionName).Result;
+                return ((IJobCollectionOperations)s).DeleteAsync(cloudServiceName, jobCollectionName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -455,21 +395,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static JobCollectionGetResponse Get(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(cloudServiceName, jobCollectionName).Result;
+                return ((IJobCollectionOperations)s).GetAsync(cloudServiceName, jobCollectionName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -524,21 +454,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static SchedulerOperationStatusResponse Update(this IJobCollectionOperations operations, string cloudServiceName, string jobCollectionName, JobCollectionUpdateParameters parameters)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAsync(cloudServiceName, jobCollectionName, parameters).Result;
+                return ((IJobCollectionOperations)s).UpdateAsync(cloudServiceName, jobCollectionName, parameters);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

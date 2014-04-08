@@ -57,21 +57,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static CheckNamespaceAvailabilityResponse CheckAvailability(this INamespaceOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CheckAvailabilityAsync(namespaceName).Result;
+                return ((INamespaceOperations)s).CheckAvailabilityAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -118,21 +108,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNamespaceResponse Create(this INamespaceOperations operations, string namespaceName, string region)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAsync(namespaceName, region).Result;
+                return ((INamespaceOperations)s).CreateAsync(namespaceName, region);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -178,21 +158,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusAuthorizationRuleResponse CreateAuthorizationRule(this INamespaceOperations operations, string namespaceName, ServiceBusSharedAccessAuthorizationRule rule)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.CreateAuthorizationRuleAsync(namespaceName, rule).Result;
+                return ((INamespaceOperations)s).CreateAuthorizationRuleAsync(namespaceName, rule);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -237,21 +207,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse Delete(this INamespaceOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAsync(namespaceName).Result;
+                return ((INamespaceOperations)s).DeleteAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -297,21 +257,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static OperationResponse DeleteAuthorizationRule(this INamespaceOperations operations, string namespaceName, string ruleName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.DeleteAuthorizationRuleAsync(namespaceName, ruleName).Result;
+                return ((INamespaceOperations)s).DeleteAuthorizationRuleAsync(namespaceName, ruleName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -354,21 +304,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNamespaceResponse Get(this INamespaceOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAsync(namespaceName).Result;
+                return ((INamespaceOperations)s).GetAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -410,21 +350,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusAuthorizationRuleResponse GetAuthorizationRule(this INamespaceOperations operations, string namespaceName, string entityName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetAuthorizationRuleAsync(namespaceName, entityName).Result;
+                return ((INamespaceOperations)s).GetAuthorizationRuleAsync(namespaceName, entityName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -468,21 +398,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNamespaceDescriptionResponse GetNamespaceDescription(this INamespaceOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.GetNamespaceDescriptionAsync(namespaceName).Result;
+                return ((INamespaceOperations)s).GetNamespaceDescriptionAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -521,21 +441,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusNamespacesResponse List(this INamespaceOperations operations)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAsync().Result;
+                return ((INamespaceOperations)s).ListAsync();
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -571,21 +481,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusAuthorizationRulesResponse ListAuthorizationRules(this INamespaceOperations operations, string namespaceName)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.ListAuthorizationRulesAsync(namespaceName).Result;
+                return ((INamespaceOperations)s).ListAuthorizationRulesAsync(namespaceName);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
@@ -626,21 +526,11 @@ namespace Microsoft.WindowsAzure
         /// </returns>
         public static ServiceBusAuthorizationRuleResponse UpdateAuthorizationRule(this INamespaceOperations operations, string namespaceName, ServiceBusSharedAccessAuthorizationRule rule)
         {
-            try
+            return Task.Factory.StartNew((object s) => 
             {
-                return operations.UpdateAuthorizationRuleAsync(namespaceName, rule).Result;
+                return ((INamespaceOperations)s).UpdateAuthorizationRuleAsync(namespaceName, rule);
             }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>

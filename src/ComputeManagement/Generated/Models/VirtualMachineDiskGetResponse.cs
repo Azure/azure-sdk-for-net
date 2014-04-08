@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private bool? _isCorrupted;
         
         /// <summary>
-        /// Optional. Specifies thether the disk is known to be corrupt.
+        /// Optional. Specifies whether the disk is known to be corrupt.
         /// </summary>
         public bool? IsCorrupted
         {
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// media for the disk is located. The blob location belongs to a
         /// storage account in the subscription specified by the
         /// SubscriptionId value in the operation call. Example:
-        /// http://example.blob.core.windows.net/disks/mydisk.vhd
+        /// http://example.blob.core.windows.net/disks/mydisk.vhd.
         /// </summary>
         public Uri MediaLinkUri
         {
@@ -134,8 +134,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _operatingSystemType;
         
         /// <summary>
-        /// Optional. The operating system type of the OS image.  Possible
-        /// Values are: Linux, Windows, NULL.
+        /// Optional. The operating system type of the OS image. Possible
+        /// Values are: Linux, Windows, or NULL.
         /// </summary>
         public string OperatingSystemType
         {
@@ -161,8 +161,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Optional. Contains properties that specify a virtual machine that
-        /// currently using the disk. A disk cannot be deleted as long as it
-        /// is attached to a virtual machine.
+        /// is currently using the disk. A disk cannot be deleted as long as
+        /// it is attached to a virtual machine.
         /// </summary>
         public VirtualMachineDiskGetResponse.VirtualMachineDiskUsageDetails UsageDetails
         {

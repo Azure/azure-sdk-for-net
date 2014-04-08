@@ -166,35 +166,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken idValue = responseDoc["Id"];
                         if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string idInstance = (string)idValue;
+                            string idInstance = ((string)idValue);
                             incidentInstance.Id = idInstance;
                         }
                         
                         JToken ruleIdValue = responseDoc["RuleId"];
                         if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
                         {
-                            string ruleIdInstance = (string)ruleIdValue;
+                            string ruleIdInstance = ((string)ruleIdValue);
                             incidentInstance.RuleId = ruleIdInstance;
                         }
                         
                         JToken isActiveValue = responseDoc["IsActive"];
                         if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
                         {
-                            bool isActiveInstance = (bool)isActiveValue;
+                            bool isActiveInstance = ((bool)isActiveValue);
                             incidentInstance.IsActive = isActiveInstance;
                         }
                         
                         JToken activatedTimeValue = responseDoc["ActivatedTime"];
                         if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime activatedTimeInstance = (DateTime)activatedTimeValue;
+                            DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
                             incidentInstance.ActivatedTime = activatedTimeInstance;
                         }
                         
                         JToken resolvedTimeValue = responseDoc["ResolvedTime"];
                         if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
+                            DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
                             incidentInstance.ResolvedTime = resolvedTimeInstance;
                         }
                     }
@@ -321,7 +321,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in (JArray)valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();
                                 result.Value.Add(incidentInstance);
@@ -329,35 +329,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = (string)idValue;
+                                    string idInstance = ((string)idValue);
                                     incidentInstance.Id = idInstance;
                                 }
                                 
                                 JToken ruleIdValue = valueValue["RuleId"];
                                 if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
                                 {
-                                    string ruleIdInstance = (string)ruleIdValue;
+                                    string ruleIdInstance = ((string)ruleIdValue);
                                     incidentInstance.RuleId = ruleIdInstance;
                                 }
                                 
                                 JToken isActiveValue = valueValue["IsActive"];
                                 if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
                                 {
-                                    bool isActiveInstance = (bool)isActiveValue;
+                                    bool isActiveInstance = ((bool)isActiveValue);
                                     incidentInstance.IsActive = isActiveInstance;
                                 }
                                 
                                 JToken activatedTimeValue = valueValue["ActivatedTime"];
                                 if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime activatedTimeInstance = (DateTime)activatedTimeValue;
+                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
                                     incidentInstance.ActivatedTime = activatedTimeInstance;
                                 }
                                 
                                 JToken resolvedTimeValue = valueValue["ResolvedTime"];
                                 if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
+                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
                                     incidentInstance.ResolvedTime = resolvedTimeInstance;
                                 }
                             }
@@ -499,7 +499,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in (JArray)valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();
                                 result.Value.Add(incidentInstance);
@@ -507,35 +507,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken idValue = valueValue["Id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = (string)idValue;
+                                    string idInstance = ((string)idValue);
                                     incidentInstance.Id = idInstance;
                                 }
                                 
                                 JToken ruleIdValue = valueValue["RuleId"];
                                 if (ruleIdValue != null && ruleIdValue.Type != JTokenType.Null)
                                 {
-                                    string ruleIdInstance = (string)ruleIdValue;
+                                    string ruleIdInstance = ((string)ruleIdValue);
                                     incidentInstance.RuleId = ruleIdInstance;
                                 }
                                 
                                 JToken isActiveValue = valueValue["IsActive"];
                                 if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
                                 {
-                                    bool isActiveInstance = (bool)isActiveValue;
+                                    bool isActiveInstance = ((bool)isActiveValue);
                                     incidentInstance.IsActive = isActiveInstance;
                                 }
                                 
                                 JToken activatedTimeValue = valueValue["ActivatedTime"];
                                 if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime activatedTimeInstance = (DateTime)activatedTimeValue;
+                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
                                     incidentInstance.ActivatedTime = activatedTimeInstance;
                                 }
                                 
                                 JToken resolvedTimeValue = valueValue["ResolvedTime"];
                                 if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
+                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
                                     incidentInstance.ResolvedTime = resolvedTimeInstance;
                                 }
                             }

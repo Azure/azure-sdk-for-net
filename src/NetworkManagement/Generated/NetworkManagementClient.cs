@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
     /// The Service Management API includes operations for managing the virtual
-    /// networks your subscription.  (see
+    /// networks for your subscription.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx for
     /// more information)
     /// </summary>
@@ -56,13 +56,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// When you create an Azure subscription, it is uniquely identified by
+        /// a subscription ID. The subscription ID forms part of the URI for
+        /// every call that you make to the Service Management API. The Azure
+        /// Service Management API uses mutual authentication of management
+        /// certificates over SSL to ensure that a request made to the service
+        /// is secure. No anonymous requests are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -71,6 +70,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         private IClientRootCertificateOperations _clientRootCertificates;
         
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// client root certificates for your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
+        /// for more information)
+        /// </summary>
         public virtual IClientRootCertificateOperations ClientRootCertificates
         {
             get { return this._clientRootCertificates; }
@@ -78,6 +83,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         private IGatewayOperations _gateways;
         
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// gateways for your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154113.aspx
+        /// for more information)
+        /// </summary>
         public virtual IGatewayOperations Gateways
         {
             get { return this._gateways; }
@@ -85,6 +96,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         private INetworkOperations _networks;
         
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// virtual networks for your subscription.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157182.aspx
+        /// for more information)
+        /// </summary>
         public virtual INetworkOperations Networks
         {
             get { return this._networks; }
@@ -92,6 +109,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         private IReservedIPOperations _reservedIPs;
         
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// reserved IPs for your subscription.
+        /// </summary>
         public virtual IReservedIPOperations ReservedIPs
         {
             get { return this._reservedIPs; }
@@ -99,6 +120,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         private IStaticIPOperations _staticIPs;
         
+        /// <summary>
+        /// The Network Management API includes operations for managing the
+        /// static IPs for your subscription.
+        /// </summary>
         public virtual IStaticIPOperations StaticIPs
         {
             get { return this._staticIPs; }
@@ -122,13 +147,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Required. The URI used as the base for all SQL requests.
@@ -154,13 +178,12 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
         /// </param>
         public NetworkManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -176,10 +199,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// The Get Operation Status operation returns the status of
-        /// thespecified operation. After calling an asynchronous operation,
-        /// you can call Get Operation Status to determine whether the
-        /// operation has succeeded, failed, or is still in progress.  (see
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460783.aspx
         /// for more information)
         /// </summary>
@@ -195,9 +218,9 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// The response body contains the status of the specified asynchronous
         /// operation, indicating whether it has succeeded, is inprogress, or
         /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself.  If
+        /// code returned for the Get Operation Status operation itself. If
         /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request.  If the
+        /// the HTTP status code for the successful request. If the
         /// asynchronous operation failed, the response body includes the HTTP
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
@@ -297,14 +320,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null && statusElement.IsEmpty == false)
                         {
-                            OperationStatus statusInstance = (OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true);
+                            OperationStatus statusInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
                         if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
                         {
-                            HttpStatusCode httpStatusCodeInstance = (HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true);
+                            HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         

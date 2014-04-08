@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         private StorageAccount _storageAccount;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The requested storage account.
         /// </summary>
         public StorageAccount StorageAccount
         {

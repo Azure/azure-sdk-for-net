@@ -29,7 +29,6 @@
     <Compile Include="Generated\IServiceCertificateOperations.cs" />
     <Compile Include="Generated\IVirtualMachineDiskOperations.cs" />
     <Compile Include="Generated\IVirtualMachineExtensionOperations.cs" />
-    <Compile Include="Generated\IVirtualMachineImageOperations.cs" />
     <Compile Include="Generated\IVirtualMachineOperations.cs" />
     <Compile Include="Generated\IVirtualMachineOSImageOperations.cs" />
     <Compile Include="Generated\IVirtualMachineVMImageOperations.cs" />
@@ -42,6 +41,7 @@
     <Compile Include="Generated\Models\DeploymentChangeConfigurationMode.cs" />
     <Compile Include="Generated\Models\DeploymentChangeConfigurationParameters.cs" />
     <Compile Include="Generated\Models\DeploymentCreateParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentDeleteRoleInstanceParameters.cs" />
     <Compile Include="Generated\Models\DeploymentGetPackageParameters.cs" />
     <Compile Include="Generated\Models\DeploymentGetResponse.cs" />
     <Compile Include="Generated\Models\DeploymentRollbackUpdateOrUpgradeParameters.cs" />
@@ -60,7 +60,8 @@
     <Compile Include="Generated\Models\DomainJoinSettings.cs" />
     <Compile Include="Generated\Models\EndpointAcl.cs" />
     <Compile Include="Generated\Models\ExtensionConfiguration.cs" />
-    <Compile Include="Generated\Models\FormattedMessage.cs" />
+    <Compile Include="Generated\Models\GuestAgentFormattedMessage.cs" />
+    <Compile Include="Generated\Models\GuestAgentMessage.cs" />
     <Compile Include="Generated\Models\GuestAgentStatus.cs" />
     <Compile Include="Generated\Models\GuestAgentStatusTypes.cs" />
     <Compile Include="Generated\Models\HostedServiceAddExtensionParameters.cs" />
@@ -75,7 +76,6 @@
     <Compile Include="Generated\Models\HostedServiceProperties.cs" />
     <Compile Include="Generated\Models\HostedServiceStatus.cs" />
     <Compile Include="Generated\Models\HostedServiceUpdateParameters.cs" />
-    <Compile Include="Generated\Models\HostingResources.cs" />
     <Compile Include="Generated\Models\InputEndpoint.cs" />
     <Compile Include="Generated\Models\InputEndpointTransportProtocol.cs" />
     <Compile Include="Generated\Models\InstanceEndpoint.cs" />
@@ -88,10 +88,14 @@
     <Compile Include="Generated\Models\PersistentVMDowntime.cs" />
     <Compile Include="Generated\Models\PostCaptureAction.cs" />
     <Compile Include="Generated\Models\PostShutdownAction.cs" />
+    <Compile Include="Generated\Models\ResourceExtensionConfigurationStatus.cs" />
+    <Compile Include="Generated\Models\ResourceExtensionConfigurationStatusTypes.cs" />
     <Compile Include="Generated\Models\ResourceExtensionParameterValue.cs" />
     <Compile Include="Generated\Models\ResourceExtensionReference.cs" />
     <Compile Include="Generated\Models\ResourceExtensionStatus.cs" />
     <Compile Include="Generated\Models\ResourceExtensionStatusTypes.cs" />
+    <Compile Include="Generated\Models\ResourceExtensionSubStatus.cs" />
+    <Compile Include="Generated\Models\ResourceExtensionSubStatusTypes.cs" />
     <Compile Include="Generated\Models\Role.cs" />
     <Compile Include="Generated\Models\RoleInstance.cs" />
     <Compile Include="Generated\Models\RoleInstancePowerState.cs" />
@@ -112,7 +116,6 @@
     <Compile Include="Generated\Models\VirtualHardDiskHostCaching.cs" />
     <Compile Include="Generated\Models\VirtualIPAddress.cs" />
     <Compile Include="Generated\Models\VirtualMachineCaptureOSImageParameters.cs" />
-    <Compile Include="Generated\Models\VirtualMachineCaptureParameters.cs" />
     <Compile Include="Generated\Models\VirtualMachineCaptureVMImageParameters.cs" />
     <Compile Include="Generated\Models\VirtualMachineCreateDeploymentParameters.cs" />
     <Compile Include="Generated\Models\VirtualMachineCreateParameters.cs" />
@@ -128,13 +131,6 @@
     <Compile Include="Generated\Models\VirtualMachineExtensionListResponse.cs" />
     <Compile Include="Generated\Models\VirtualMachineGetRemoteDesktopFileResponse.cs" />
     <Compile Include="Generated\Models\VirtualMachineGetResponse.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageCreateParameters.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageCreateResponse.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageGetResponse.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageListResponse.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageOperatingSystemType.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageUpdateParameters.cs" />
-    <Compile Include="Generated\Models\VirtualMachineImageUpdateResponse.cs" />
     <Compile Include="Generated\Models\VirtualMachineOSImageCreateParameters.cs" />
     <Compile Include="Generated\Models\VirtualMachineOSImageCreateResponse.cs" />
     <Compile Include="Generated\Models\VirtualMachineOSImageGetResponse.cs" />
@@ -161,8 +157,6 @@
     <Compile Include="Generated\VirtualMachineDiskOperationsExtensions.cs" />
     <Compile Include="Generated\VirtualMachineExtensionOperations.cs" />
     <Compile Include="Generated\VirtualMachineExtensionOperationsExtensions.cs" />
-    <Compile Include="Generated\VirtualMachineImageOperations.cs" />
-    <Compile Include="Generated\VirtualMachineImageOperationsExtensions.cs" />
     <Compile Include="Generated\VirtualMachineOperations.cs" />
     <Compile Include="Generated\VirtualMachineOperationsExtensions.cs" />
     <Compile Include="Generated\VirtualMachineOSImageOperations.cs" />
@@ -180,13 +174,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{856a1d19-c3bf-439a-bebf-e822a332bc12}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
+    <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hydra.xml" />
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.0\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
@@ -198,13 +191,13 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5190.36656-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5190.36656-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5197.38639-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5197.38639-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5190.36656-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5190.36656-prerelease\build\Hydra.Generator.targets')" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5197.38639-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5197.38639-prerelease\build\Hydra.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementComputeSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5190.40728-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Compute.Specification.1.0.5202.11464-prerelease\tools\Microsoft.WindowsAzure.Management.Compute.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

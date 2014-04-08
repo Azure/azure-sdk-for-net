@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Delete Web Site operation parameters.
+    /// Parameters supplied to the Delete Web Site operation.
     /// </summary>
     public partial class WebSiteDeleteParameters
     {
         private bool _deleteAllSlots;
         
         /// <summary>
-        /// Required. Delete all slots for the web site.
+        /// Required. Indicates if all slots for the web site should be deleted.
         /// </summary>
         public bool DeleteAllSlots
         {
@@ -43,8 +43,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _deleteEmptyServerFarm;
         
         /// <summary>
-        /// Required. If the site being deleted is the last web site in a
-        /// server farm, you can delete the server farm.
+        /// Required. Indicates if the server farm should be deleted. You can
+        /// delete the server farm if the web site being deleted is the last
+        /// web site in a server farm.
         /// </summary>
         public bool DeleteEmptyServerFarm
         {
@@ -55,7 +56,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool _deleteMetrics;
         
         /// <summary>
-        /// Required. Delete the metrics for the web site.
+        /// Required. Indicates if the metrics for the web site should be
+        /// deleted.
         /// </summary>
         public bool DeleteMetrics
         {
