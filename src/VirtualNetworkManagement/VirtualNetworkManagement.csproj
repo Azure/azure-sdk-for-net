@@ -15,7 +15,6 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuspec" />
     <None Include="Microsoft.WindowsAzure.Management.VirtualNetworks.nuget.proj" />
     <None Include="packages.config" />
