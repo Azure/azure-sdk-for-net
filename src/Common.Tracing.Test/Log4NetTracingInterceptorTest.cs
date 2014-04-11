@@ -193,7 +193,7 @@ namespace Microsoft.WindowsAzure.Common.Tracing.Test
         {
             Log4NetTracingInterceptor logger = new Log4NetTracingInterceptor("app.config");
             string invocationId = null;
-            string expected = string.Format("ERROR - invocationId: {0}, {1}\r\n", invocationId, null);
+            string expected = string.Format("ERROR - invocationId: \r\n", invocationId, null);
 
             logger.Error(invocationId, null);
             string actual = File.ReadAllText(logFileName);
