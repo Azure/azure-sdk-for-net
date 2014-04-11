@@ -27,17 +27,5 @@ namespace Microsoft.WindowsAzure.Configuration.Test
 
             Assert.Null(actual);
         }
-
-        [Fact]
-        public void TestGetSettingWithExistingSettings()
-        {
-            //this is the setting from the "vstest.executionengine.x86.exe.config"
-            string key = "TestProjectRetargetTo35Allowed";
-            string expected = "true";
-
-            string actual = CloudConfigurationManager.GetSetting(key);
-
-            Assert.Equal<string>(expected, actual);
-        }
     }
 }
