@@ -162,6 +162,31 @@
   </Target>
 
   <!--
+  Run tests
+  -->
+  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll"
+    Condition="Exists('.\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll')" />
+  <ItemGroup>
+    <TestProjFiles Include=".\**\*.Test.csproj"
+      Exclude=".\src\Common.WindowsPhone.Test\*.csproj">
+      <TestDll>%(RootDir)%(Directory)bin\$(Configuration)\Microsoft.WindowsAzure.%(FileName).dll</TestDll>
+    </TestProjFiles>
+    <TestProjFiles Include=".\src\Common.WindowsPhone.Test\*.csproj">
+      <TestDll>%(RootDir)%(Directory)bin\x86\$(Configuration)\Microsoft.WindowsAzure.%(FileName).dll</TestDll>
+    </TestProjFiles>
+  </ItemGroup>
+
+  <Target Name="RunTests">
+    <MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
+    <xunit Assembly="%(TestProjFiles.TestDll)" ContinueOnError="ErrorAndContinue" />
+  </Target>
+
+  <Target Name="FindTests">
+    <Message Text="%(TestProjFiles.TestDll)" />
+  </Target>
+
+
+  <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
   inside the binaries\unsigned folder.
