@@ -1,11 +1,13 @@
 @echo off
 
+if defined SDKNetRoot exit /b 0
+
+if exist "%USERPROFILE%\SetNugetFeed.cmd" call "%USERPROFILE%\SetNugetFeed.cmd"
+
 if not defined PRIVATE_FEED_URL (
-    echo Error: you will beed to set up Private Feed URL 
+    echo Error correct error message
 	exit /b 1
 )
-
-if defined SDKNetRoot exit /b 0
 
 set "SDKNetRoot=%~dp0"
 set "SDKNetRoot=%SDKNetRoot:~0,-7%"
@@ -21,7 +23,5 @@ if exist "%ADXSDKProgramFiles%\Microsoft Visual Studio 12.0" (
 ) else (
     set ADXSDKVSVersion=11.0
 )
-
-if note define 
 
 call "%ADXSDKProgramFiles%\Microsoft Visual Studio %ADXSDKVSVersion%\VC\vcvarsall.bat" x86
