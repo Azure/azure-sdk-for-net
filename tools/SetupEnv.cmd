@@ -5,7 +5,8 @@ if defined SDKNetRoot exit /b 0
 if exist "%USERPROFILE%\SetNugetFeed.cmd" call "%USERPROFILE%\SetNugetFeed.cmd"
 
 if not defined PRIVATE_FEED_URL (
-    echo Error correct error message
+    echo Error, please set following environment variables so build script can download Hydra Spec Nuget Packages:
+	echo     PRIVATE_FEED_URL, PRIVATE_FEED_USER_NAME and PRIVATE_FEED_PASSWORD
 	exit /b 1
 )
 

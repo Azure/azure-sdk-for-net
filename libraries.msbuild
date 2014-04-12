@@ -162,10 +162,9 @@
   </Target>
 
   <!--
-  Run tests
+  Run all tests
   -->
-  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll"
-    Condition="Exists('.\packages\xunit.1.9.2\lib\net20\xunit.runner.msbuild.dll')" />
+  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="tools\xunit.runner.msbuild.dll" />
   <ItemGroup>
     <TestProjFiles Include=".\**\*.Test.csproj">
       <TestDll>%(RootDir)%(Directory)bin\$(Configuration)\Microsoft.WindowsAzure.%(FileName).dll</TestDll>
@@ -173,12 +172,7 @@
   </ItemGroup>
 
   <Target Name="RunTests">
-    <MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
     <xunit Assembly="%(TestProjFiles.TestDll)" ContinueOnError="ErrorAndContinue" />
-  </Target>
-
-  <Target Name="FindTests">
-    <Message Text="%(TestProjFiles.TestDll)" />
   </Target>
 
   <!--
