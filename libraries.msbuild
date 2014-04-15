@@ -162,6 +162,20 @@
   </Target>
 
   <!--
+  Run all tests
+  -->
+  <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="tools\xunit.runner.msbuild.dll" />
+  <ItemGroup>
+    <TestProjFiles Include=".\**\*.Test.csproj">
+      <TestDll>%(RootDir)%(Directory)bin\$(Configuration)\Microsoft.WindowsAzure.%(FileName).dll</TestDll>
+    </TestProjFiles>
+  </ItemGroup>
+
+  <Target Name="RunTests">
+    <xunit Assembly="%(TestProjFiles.TestDll)" ContinueOnError="ErrorAndContinue" />
+  </Target>
+
+  <!--
   An official build is designed for use while shipping. It generates a release
   build and places binaries ready for the official Microsoft signing process
   inside the binaries\unsigned folder.

@@ -13,36 +13,19 @@
 //  limitations under the License.
 //
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+using Xunit;
 namespace Microsoft.WindowsAzure.Configuration.Test
 {
-    [TestClass]
     public class CloudConfigurationManagerTest
     {
-        [TestMethod]
+        [Fact]
         public void TestGetSettingWithNonExistingSettings()
         {
             string key = "my settings";
 
             string actual = CloudConfigurationManager.GetSetting(key);
 
-            Assert.IsNull(actual);
-        }
-
-        [TestMethod]
-        public void TestGetSettingWithExistingSettings()
-        {
-            string key = "StopTestRunCallTimeoutInSeconds";
-            string expected = "5";
-
-            string actual = CloudConfigurationManager.GetSetting(key);
-
-            Assert.AreEqual<string>(expected, actual);
+            Assert.Null(actual);
         }
     }
 }
