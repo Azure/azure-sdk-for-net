@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/deployments/" + deploymentId;
+            string url = "/api/deployments/" + deploymentId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -368,7 +368,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/deployments/" + deploymentId + "/log/" + deploymentLogId;
+            string url = "/api/deployments/" + deploymentId.Trim() + "/log/" + deploymentLogId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -534,11 +534,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string url = "/api/deployments/";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -815,14 +815,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/deployments/" + deploymentId + "/log";
+            string url = "/api/deployments/" + deploymentId.Trim() + "/log";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top);
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy);
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -997,7 +997,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/deployments/" + deploymentId;
+            string url = "/api/deployments/" + deploymentId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

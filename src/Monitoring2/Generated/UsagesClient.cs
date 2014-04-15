@@ -430,7 +430,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + resourceUri + "/usages?";
+            string url = "/" + resourceUri.Trim() + "/usages?";
             url = url + "api-version=2014-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
             // Trim '/' character from the end of baseUrl and beginning of url.

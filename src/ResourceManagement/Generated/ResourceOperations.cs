@@ -132,8 +132,8 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/" + identity.ResourceProviderNamespace + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + identity.ResourceName + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion);
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -307,9 +307,9 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/" + identity.ResourceProviderNamespace + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + identity.ResourceName + "?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
             url = url + "validating=" + Uri.EscapeUriString(ResourceManagementClient.ResourceValidationModeToString(parameters.ValidationMode));
-            url = url + "&api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion);
+            url = url + "&api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -528,8 +528,8 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/" + identity.ResourceProviderNamespace + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + identity.ResourceName + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion);
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -679,8 +679,8 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/" + identity.ResourceProviderNamespace + "/" + identity.ParentResourcePath + "/" + identity.ResourceType + "/" + identity.ResourceName + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion);
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -862,10 +862,10 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
-                url = url + "resourceGroups/" + Uri.EscapeUriString(parameters.ResourceGroupName) + "/";
+                url = url + "resourceGroups/" + Uri.EscapeUriString(parameters.ResourceGroupName.Trim()) + "/";
             }
             url = url + "resources?";
             url = url + "api-version=2014-04-01-preview";
@@ -875,7 +875,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters != null && parameters.ResourceType != null)
             {
-                url = url + "&$filter=resourceType eq '" + Uri.EscapeUriString(parameters.ResourceType) + "'";
+                url = url + "&$filter=resourceType eq '" + Uri.EscapeUriString(parameters.ResourceType.Trim()) + "'";
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1075,7 +1075,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = nextLink.Trim();
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

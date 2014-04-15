@@ -1231,7 +1231,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
             url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
@@ -1244,7 +1244,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1694,9 +1694,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId) + "' and ";
+            url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId.Trim()) + "' and ";
             url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
@@ -1708,7 +1708,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2158,9 +2158,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource) + "' and ";
+            url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource.Trim()) + "' and ";
             url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
@@ -2172,7 +2172,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2622,9 +2622,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri) + "' and ";
+            url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri.Trim()) + "' and ";
             url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
@@ -2636,7 +2636,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3086,9 +3086,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName) + "' and ";
+            url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName.Trim()) + "' and ";
             url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
@@ -3100,7 +3100,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3550,9 +3550,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider) + "' and ";
+            url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider.Trim()) + "' and ";
             url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
@@ -3564,7 +3564,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
+                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

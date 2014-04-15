@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/queues/" + queue.Name.Trim() + "/";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -712,7 +712,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/Queues/" + queueName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1106,7 +1106,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues/" + queueName + "/ConnectionDetails";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/Queues/" + queueName.Trim() + "/ConnectionDetails";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1286,7 +1286,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/Queues";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/Queues";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1691,7 +1691,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/queues/" + queue.Name + "/";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/queues/" + queue.Name.Trim() + "/";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

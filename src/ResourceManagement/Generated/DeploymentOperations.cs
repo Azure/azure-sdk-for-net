@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/deployments/" + deploymentName + "/cancel?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/cancel?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/deployments/" + deploymentName + "?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -530,7 +530,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/deployments/" + deploymentName + "?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -746,12 +746,12 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/";
-            url = url + "resourcegroups/" + Uri.EscapeUriString(resourceGroupName) + "/";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/";
+            url = url + "resourcegroups/" + Uri.EscapeUriString(resourceGroupName.Trim()) + "/";
             url = url + "deployments/?";
             if (parameters != null && parameters.ProvisioningState != null)
             {
-                url = url + "$filter=provisioningState eq '" + Uri.EscapeUriString(parameters.ProvisioningState) + "'";
+                url = url + "$filter=provisioningState eq '" + Uri.EscapeUriString(parameters.ProvisioningState.Trim()) + "'";
             }
             if (parameters != null && parameters.Top != null)
             {
@@ -980,7 +980,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = nextLink.Trim();
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1225,7 +1225,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/deployments/" + deploymentName + "/validate?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/validate?";
             url = url + "&api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

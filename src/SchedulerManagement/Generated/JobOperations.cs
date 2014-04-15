@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -980,7 +980,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1719,7 +1719,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1838,7 +1838,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2358,7 +2358,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
             url = url + "api-version=2014-04-01";
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
             url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
@@ -2580,7 +2580,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "/history?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=status eq " + Uri.EscapeUriString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
             url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
@@ -2794,7 +2794,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
             if (parameters.Skip != null)
             {
@@ -3323,7 +3323,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=state eq " + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State));
             if (parameters.Skip != null)
@@ -3851,7 +3851,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4393,7 +4393,7 @@ namespace Microsoft.WindowsAzure.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/cloudservices/" + this.Client.CloudServiceName + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName + "/jobs/" + jobId + "?";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

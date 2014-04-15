@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -313,9 +313,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
-            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings?";
+            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
+            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
