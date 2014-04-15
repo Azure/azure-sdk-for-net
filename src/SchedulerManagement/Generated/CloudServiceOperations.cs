@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -276,7 +276,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -588,7 +588,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName;
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -795,7 +795,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId + "/CloudServices";
+            string url = this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

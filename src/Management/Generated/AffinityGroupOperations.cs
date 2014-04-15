@@ -124,7 +124,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/affinitygroups";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -276,7 +276,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/affinitygroups/" + affinityGroupName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -398,7 +398,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/affinitygroups/" + affinityGroupName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -605,7 +605,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/affinitygroups";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -801,7 +801,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/affinitygroups/" + affinityGroupName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/affinitygroups/" + affinityGroupName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

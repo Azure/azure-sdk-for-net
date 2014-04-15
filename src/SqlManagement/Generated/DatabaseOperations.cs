@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -413,7 +413,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases/" + databaseName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases/" + databaseName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -540,7 +540,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases/" + databaseName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases/" + databaseName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -811,10 +811,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases/" + databaseName + "/events?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases/" + databaseName.Trim() + "/events?";
             url = url + "startDate=" + Uri.EscapeUriString(parameters.StartDate.ToString());
             url = url + "&intervalSizeInMinutes=" + Uri.EscapeUriString(parameters.IntervalSizeInMinutes.ToString());
-            url = url + "&eventTypes=" + Uri.EscapeUriString(parameters.EventTypes);
+            url = url + "&eventTypes=" + Uri.EscapeUriString(parameters.EventTypes.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1068,7 +1068,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases?contentview=generic";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases?contentview=generic";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1344,7 +1344,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/sqlservers/servers/" + serverName + "/databases/" + databaseName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databases/" + databaseName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

@@ -99,7 +99,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/settings/" + settingId;
+            string url = "/api/settings/" + settingId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -216,7 +216,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/api/settings/" + settingId;
+            string url = "/api/settings/" + settingId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

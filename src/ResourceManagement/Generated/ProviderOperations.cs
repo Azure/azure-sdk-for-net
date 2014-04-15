@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/" + resourceProviderNamespace + "?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/" + resourceProviderNamespace.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers?";
             if (parameters != null && parameters.Top != null)
             {
                 url = url + "$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = nextLink;
+            string url = nextLink.Trim();
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -633,7 +633,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/" + resourceProviderNamespace + "/register?";
+            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/" + resourceProviderNamespace.Trim() + "/register?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

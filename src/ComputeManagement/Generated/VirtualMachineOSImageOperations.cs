@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/images";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -490,7 +490,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName + "?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/images/" + imageName.Trim() + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
@@ -615,7 +615,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/images/" + imageName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -877,7 +877,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/images";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/images";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1159,7 +1159,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/images/" + imageName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/images/" + imageName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

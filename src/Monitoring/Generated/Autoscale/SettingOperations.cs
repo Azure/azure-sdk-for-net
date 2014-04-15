@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
-            url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/autoscalesettings?";
+            url = url + "resourceId=" + Uri.EscapeUriString(resourceId.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -400,8 +400,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
-            url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/autoscalesettings?";
+            url = url + "resourceId=" + Uri.EscapeUriString(resourceId.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -518,8 +518,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/autoscalesettings?";
-            url = url + "resourceId=" + Uri.EscapeUriString(resourceId);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/autoscalesettings?";
+            url = url + "resourceId=" + Uri.EscapeUriString(resourceId.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

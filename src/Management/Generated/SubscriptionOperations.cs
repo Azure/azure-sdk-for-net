@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -344,12 +344,12 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/operations?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/operations?";
             url = url + "&StartTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             url = url + "&EndTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
             if (parameters.ObjectIdFilter != null)
             {
-                url = url + "&ObjectIdFilter=" + Uri.EscapeUriString(parameters.ObjectIdFilter);
+                url = url + "&ObjectIdFilter=" + Uri.EscapeUriString(parameters.ObjectIdFilter.Trim());
             }
             if (parameters.OperationStatus != null)
             {
@@ -357,7 +357,7 @@ namespace Microsoft.WindowsAzure.Management
             }
             if (parameters.ContinuationToken != null)
             {
-                url = url + "&ContinuationToken=" + Uri.EscapeUriString(parameters.ContinuationToken);
+                url = url + "&ContinuationToken=" + Uri.EscapeUriString(parameters.ContinuationToken.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -591,8 +591,8 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services?";
-            url = url + "service=" + Uri.EscapeUriString(resourceName);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services?";
+            url = url + "service=" + Uri.EscapeUriString(resourceName.Trim());
             url = url + "&action=register";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -712,8 +712,8 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services?";
-            url = url + "service=" + Uri.EscapeUriString(resourceName);
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services?";
+            url = url + "service=" + Uri.EscapeUriString(resourceName.Trim());
             url = url + "&action=unregister";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

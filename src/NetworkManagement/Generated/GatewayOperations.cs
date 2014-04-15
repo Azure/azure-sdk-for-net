@@ -124,7 +124,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkSiteName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/connection/" + localNetworkSiteName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -293,7 +293,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -446,7 +446,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -585,7 +585,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -747,7 +747,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/connection/" + localNetworkName.Trim() + "/sharedkey";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1310,7 +1310,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/vpnclientpackage";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/vpnclientpackage";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1464,7 +1464,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1661,18 +1661,18 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/vpndeviceconfigurationscript?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/vpndeviceconfigurationscript?";
             if (parameters.Vendor != null)
             {
-                url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor);
+                url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor.Trim());
             }
             if (parameters.Platform != null)
             {
-                url = url + "&platform=" + Uri.EscapeUriString(parameters.Platform);
+                url = url + "&platform=" + Uri.EscapeUriString(parameters.Platform.Trim());
             }
             if (parameters.OSFamily != null)
             {
-                url = url + "&OSfamily=" + Uri.EscapeUriString(parameters.OSFamily);
+                url = url + "&OSfamily=" + Uri.EscapeUriString(parameters.OSFamily.Trim());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1807,7 +1807,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/operation/" + operationId;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/operation/" + operationId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1989,7 +1989,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connection/" + localNetworkName + "/sharedkey";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/connection/" + localNetworkName.Trim() + "/sharedkey";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2127,7 +2127,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/connections";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/connections";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2335,7 +2335,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/supporteddevices";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/supporteddevices";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

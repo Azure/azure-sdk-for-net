@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "?";
             url = url + "op=checkavailability";
             url = url + "&address=" + Uri.EscapeUriString(ipAddress);
             // Trim '/' character from the end of baseUrl and beginning of url.

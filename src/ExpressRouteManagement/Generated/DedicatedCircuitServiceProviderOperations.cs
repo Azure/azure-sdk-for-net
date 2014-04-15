@@ -87,7 +87,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

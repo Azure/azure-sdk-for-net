@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/locations";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/locations";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

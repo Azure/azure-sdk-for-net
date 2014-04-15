@@ -59,6 +59,22 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._credentials; }
         }
         
+        private int _longRunningOperationInitialTimeout;
+        
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
+        }
+        
         private IDeploymentOperationOperations _deploymentOperations;
         
         /// <summary>
@@ -120,6 +136,8 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -210,7 +228,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string url = operationStatusLink;
+            string url = operationStatusLink.Trim();
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

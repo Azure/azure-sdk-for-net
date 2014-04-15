@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Gallery
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/Microsoft.Gallery/galleryitems/" + itemIdentity;
+            string url = "/Microsoft.Gallery/galleryitems/" + itemIdentity.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Gallery
             string url = "/Microsoft.Gallery/galleryitems?";
             if (parameters != null && parameters.Filter != null)
             {
-                url = url + "$filter=" + Uri.EscapeUriString(parameters.Filter);
+                url = url + "$filter=" + Uri.EscapeUriString(parameters.Filter.Trim());
             }
             if (parameters != null && parameters.Top != null)
             {

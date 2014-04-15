@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingCredentials";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces?properties=publishingCredentials";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -303,7 +303,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces/" + webSpaceName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -510,7 +510,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=dnssuffix";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces?properties=dnssuffix";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -634,7 +634,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -847,7 +847,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=georegions";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces?properties=georegions";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1002,7 +1002,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces?properties=publishingUsers";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces?properties=publishingUsers";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1145,7 +1145,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites?";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites?";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
                 url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));

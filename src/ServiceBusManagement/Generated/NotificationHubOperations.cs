@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/NotificationHubs/" + notificationHubName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/NotificationHubs/" + notificationHubName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/NotificationHubs/" + notificationHubName + "/ConnectionDetails";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/NotificationHubs/" + notificationHubName.Trim() + "/ConnectionDetails";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -507,7 +507,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/servicebus/namespaces/" + namespaceName + "/NotificationHubs";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/servicebus/namespaces/" + namespaceName.Trim() + "/NotificationHubs";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

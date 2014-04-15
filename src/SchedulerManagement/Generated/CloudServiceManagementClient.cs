@@ -187,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/EntitleResource";
+            string url = this.Credentials.SubscriptionId.Trim() + "/EntitleResource";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -343,7 +343,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string url = this.Credentials.SubscriptionId.Trim() + "/operations/" + requestId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
