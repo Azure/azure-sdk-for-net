@@ -166,7 +166,7 @@
   -->
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="tools\xunit.runner.msbuild.dll" />
   <ItemGroup>
-    <TestProjFiles Include=".\**\*.Test\bin\$(Configuration)\*Test.dll"/>
+    <TestProjFiles Include=".\**\*.Test\bin\*\*Test.dll"/>
   </ItemGroup>
 
   <Target Name="RunTests">
