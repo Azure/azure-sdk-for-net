@@ -166,12 +166,13 @@
   -->
   <UsingTask TaskName="Xunit.Runner.msbuild.xunit" AssemblyFile="tools\xunit.runner.msbuild.dll" />
   <ItemGroup>
-    <TestProjFiles Include=".\**\*.Test\bin\*\*Test.dll"/>
+    <TestDlls Include=".\src\*.Test\bin\*\*Test.dll"/>
   </ItemGroup>
 
   <Target Name="RunTests">
     <MakeDir Directories="$(MSBuildProjectDirectory)\TestResults"/>
-    <xunit Assemblies="@(TestProjFiles)" Html="$(MSBuildProjectDirectory)\TestResults\MAML.xunit.results.html" ContinueOnError="ErrorAndContinue" />
+	<Message Text="%(TestDlls.Filename)" />
+    <xunit Assemblies="@(TestDlls)" Html="$(MSBuildProjectDirectory)\TestResults\MAML.xunit.results.html" ContinueOnError="ErrorAndContinue" />
   </Target>
 
   <!--
