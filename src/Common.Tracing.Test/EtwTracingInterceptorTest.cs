@@ -25,7 +25,7 @@ using Xunit.Extensions;
 
 namespace Microsoft.WindowsAzure.Common.Tracing.Test
 {
-    public class EtwTracingInterceptorTest : IDisposable
+    class EtwTracingInterceptorTest : IDisposable
     {
         // Globally defined session is needed since we are running multiple traces
         private TraceEventSession eventSession;
