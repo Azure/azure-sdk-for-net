@@ -161,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/operations/" + requestId;
+            string url = this.Credentials.SubscriptionId.Trim() + "/operations/" + requestId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -323,7 +323,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/resourceproviders/scheduler/Properties?";
+            string url = this.Credentials.SubscriptionId.Trim() + "/resourceproviders/scheduler/Properties?";
             url = url + "resourceType=JobCollections";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -451,7 +451,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/services?";
+            string url = this.Credentials.SubscriptionId.Trim() + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=register";
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -564,7 +564,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId + "/services?";
+            string url = this.Credentials.SubscriptionId.Trim() + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=unregister";
             // Trim '/' character from the end of baseUrl and beginning of url.

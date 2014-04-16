@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -347,7 +347,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -468,7 +468,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -646,7 +646,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -830,7 +830,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/mediaservices/Accounts/" + accountName + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim() + "/AccountKeys/" + keyType + "/Regenerate";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

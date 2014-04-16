@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/clientrootcertificates";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -270,7 +270,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/clientrootcertificates/" + certificateThumbprint.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -416,7 +416,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates/" + certificateThumbprint;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/clientrootcertificates/" + certificateThumbprint.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -543,7 +543,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/services/networking/" + networkName + "/gateway/clientrootcertificates";
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "/gateway/clientrootcertificates";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

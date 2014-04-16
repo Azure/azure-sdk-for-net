@@ -50,6 +50,16 @@ namespace Microsoft.Azure.Management.Resources
             get; 
         }
         
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
         /// <summary>
         /// Operations for managing deployment operations.
         /// </summary>

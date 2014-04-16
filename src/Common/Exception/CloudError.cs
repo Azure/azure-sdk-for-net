@@ -13,24 +13,26 @@
 // limitations under the License.
 //
 
-using Microsoft.Phone.Controls;
-using System.Threading;
-using Microsoft.VisualStudio.TestPlatform.Core;
-using vstest_executionengine_platformbridge;
-using Microsoft.VisualStudio.TestPlatform.TestExecutor;
-
-namespace Common.Phone.Test
+namespace Microsoft.WindowsAzure
 {
-    public partial class MainPage : PhoneApplicationPage
+    /// <summary>
+    /// Representation of the error object from the server.
+    /// </summary>
+    public class CloudError
     {
-        // Constructor
-        public MainPage()
-        {
-            InitializeComponent();
+        /// <summary>
+        /// Parsed error message.
+        /// </summary>
+        public string Message { get; set; }
 
-            var wrapper = new TestExecutorServiceWrapper();
-            new Thread(new ServiceMain((param0, param1) => wrapper.SendMessage((ContractName)param0, param1)).Run).Start();
+        /// <summary>
+        /// Parsed error code.
+        /// </summary>
+        public string Code { get; set; }
 
-        }
+        /// <summary>
+        /// Original error body
+        /// </summary>
+        public string OriginalMessage { get; set; }
     }
 }

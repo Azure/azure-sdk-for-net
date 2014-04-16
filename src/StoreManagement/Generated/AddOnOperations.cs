@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim() + "/resources/" + parameters.Type.Trim() + "/" + resourceName.Trim() + "/" + addOnName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -319,7 +319,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + resourceProviderNamespace + "/" + resourceProviderType + "/" + resourceProviderName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim() + "/resources/" + resourceProviderNamespace.Trim() + "/" + resourceProviderType.Trim() + "/" + resourceProviderName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -703,7 +703,7 @@ namespace Microsoft.WindowsAzure.Management.Store
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId + "/CloudServices/" + cloudServiceName + "/resources/" + parameters.Type + "/" + resourceName + "/" + addOnName;
+            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + cloudServiceName.Trim() + "/resources/" + parameters.Type.Trim() + "/" + resourceName.Trim() + "/" + addOnName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

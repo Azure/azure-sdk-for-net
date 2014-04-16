@@ -235,7 +235,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId + "/services/WebSpaces/" + webSpaceName + "/sites/" + siteName + "/operations/" + operationId;
+            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -548,7 +548,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId + "/services?";
+            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
             url = url + "service=website";
             url = url + "&action=register";
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -661,7 +661,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId + "/services?";
+            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
             url = url + "service=website";
             url = url + "&action=unregister";
             // Trim '/' character from the end of baseUrl and beginning of url.
