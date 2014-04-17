@@ -389,6 +389,23 @@
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
+  
+  <!--
+  Force nuget package restore so that packages that include .targets files
+  don't need to be checked into source control. Skips all private packages.
+  -->
+  <Target Name="ForceRestorePublicPackages">
+    <PropertyGroup>
+      <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
+      <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
+    </PropertyGroup>
+
+    <Exec Command="$(NuGetCommand) restore $(CommonSolution)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution)" ContinueOnError="ErrorAndContinue" />
+
+    <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
+    <Delete Files="$(NuGetRestoreConfigFile)" />
+  </Target>
 
   <!--
   We have some important work to do when building our official product bits.
