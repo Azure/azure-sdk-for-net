@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<NameConfig> _availableLocations;
         
         /// <summary>
-        /// Optional. The locations from which the Urls can be monitored.
+        /// The locations from which the Urls can be monitored.
         /// </summary>
         public IList<NameConfig> AvailableLocations
         {
@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<EndpointConfig> _endpoints;
         
         /// <summary>
-        /// Required. The configuration for Urls to be monitored using endpoint
+        /// The configuration for Urls to be monitored using endpoint
         /// monitoiring.
         /// </summary>
         public IList<EndpointConfig> Endpoints
@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _configId;
         
         /// <summary>
-        /// Optional. The config id for endpoint monitoring config.
+        /// The config id for endpoint monitoring config.
         /// </summary>
         public string ConfigId
         {
@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The location from which the endpoint is monitored.
+        /// The location from which the endpoint is monitored.
         /// </summary>
         public string Location
         {
@@ -108,8 +108,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The friendly name for the url for which endpoint
-        /// monitoring is configured.
+        /// The friendly name for the url for which endpoint monitoring is
+        /// configured.
         /// </summary>
         public string Name
         {
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private Uri _url;
         
         /// <summary>
-        /// Optional. The Url to be monitored.
+        /// The Url to be monitored.
         /// </summary>
         public Uri Url
         {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<string> _metricNames;
         
         /// <summary>
-        /// Required. The names of the metrics.
+        /// The names of the metrics.
         /// </summary>
         public IList<string> MetricNames
         {
@@ -155,7 +155,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceId;
         
         /// <summary>
-        /// Required. The id of the resource.
+        /// The id of the resource.
         /// </summary>
         public string ResourceId
         {
@@ -181,7 +181,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// Required. The end time of the metrics.
+        /// The end time of the metrics.
         /// </summary>
         public DateTime EndTime
         {
@@ -192,7 +192,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<string> _metricNames;
         
         /// <summary>
-        /// Required. The names of the metrics.
+        /// The names of the metrics.
         /// </summary>
         public IList<string> MetricNames
         {
@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceId;
         
         /// <summary>
-        /// Required. The id of the resource.
+        /// The id of the resource.
         /// </summary>
         public string ResourceId
         {
@@ -214,7 +214,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Required. The start time of the metrics.
+        /// The start time of the metrics.
         /// </summary>
         public DateTime StartTime
         {
@@ -225,7 +225,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Required. The time grain of the metrics.
+        /// The time grain of the metrics.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -251,8 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _retention;
         
         /// <summary>
-        /// Optional. The retention period for the metric at the specified
-        /// timegrain.
+        /// The retention period for the metric at the specified timegrain.
         /// </summary>
         public TimeSpan Retention
         {
@@ -263,8 +262,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The time grain specifies the aggregation interval for the
-        /// metric.
+        /// The time grain specifies the aggregation interval for the metric.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -288,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Metric display name.
+        /// Metric display name.
         /// </summary>
         public string DisplayName
         {
@@ -299,8 +297,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private bool _isAlertable;
         
         /// <summary>
-        /// Optional. Specifies if the metric is alertable. Alerts can be
-        /// defined on a metric only if this property is true.
+        /// Specifies if the metric is alertable. Alerts can be defined on a
+        /// metric only if this property is true.
         /// </summary>
         public bool IsAlertable
         {
@@ -311,8 +309,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricAvailability> _metricAvailabilities;
         
         /// <summary>
-        /// Optional. Metric availability specifies the time grain (aggregation
-        /// interval) and the retention period for the metric in a timegrain.
+        /// Metric availability specifies the time grain (aggregation interval)
+        /// and the retention period for the metric in a timegrain.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
@@ -323,8 +321,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _minimumAlertableTimeWindow;
         
         /// <summary>
-        /// Optional. Specifies the minimum alertable time window for the
-        /// metric.
+        /// Specifies the minimum alertable time window for the metric.
         /// </summary>
         public TimeSpan MinimumAlertableTimeWindow
         {
@@ -335,7 +332,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Get the metric name.
+        /// Get the metric name.
         /// </summary>
         public string Name
         {
@@ -346,7 +343,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// Optional. Get the metric namespace.
+        /// Get the metric namespace.
         /// </summary>
         public string Namespace
         {
@@ -357,9 +354,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _primaryAggregation;
         
         /// <summary>
-        /// Optional. Metric primary aggregation specifies the default type for
-        /// the metrics. This indicates if the metric is of type average,
-        /// total, minimum or maximum.
+        /// Metric primary aggregation specifies the default type for the
+        /// metrics. This indicates if the metric is of type average, total,
+        /// minimum or maximum.
         /// </summary>
         public string PrimaryAggregation
         {
@@ -370,8 +367,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceIdSuffix;
         
         /// <summary>
-        /// Optional. Metric resource id suffix specfies the sub-resource path
-        /// within the the resource for the metric.
+        /// Metric resource id suffix specfies the sub-resource path within the
+        /// the resource for the metric.
         /// </summary>
         public string ResourceIdSuffix
         {
@@ -382,7 +379,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. The unit for the metric.
+        /// The unit for the metric.
         /// </summary>
         public string Unit
         {
@@ -407,7 +404,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricDefinition> _value;
         
         /// <summary>
-        /// Optional. The values for the metric definitions.
+        /// The values for the metric definitions.
         /// </summary>
         public IList<MetricDefinition> Value
         {
@@ -432,7 +429,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricDefinitionCollection _metricDefinitionCollection;
         
         /// <summary>
-        /// Optional. The retrieved metric definitions.
+        /// The retrieved metric definitions.
         /// </summary>
         public MetricDefinitionCollection MetricDefinitionCollection
         {
@@ -457,8 +454,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// Optional. The metric settings namespace. For endpoint monitoring
-        /// metrics the namespace value is WindowsAzure.Availability
+        /// The metric settings namespace. For endpoint monitoring metrics the
+        /// namespace value is WindowsAzure.Availability
         /// </summary>
         public string Namespace
         {
@@ -469,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _resourceId;
         
         /// <summary>
-        /// Required. The resource id of the service.
+        /// The resource id of the service.
         /// </summary>
         public string ResourceId
         {
@@ -480,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricSettingValue _value;
         
         /// <summary>
-        /// Required. The metric settings value.
+        /// The metric settings value.
         /// </summary>
         public MetricSettingValue Value
         {
@@ -504,7 +501,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricSetting> _value;
         
         /// <summary>
-        /// Optional. The collection.
+        /// The collection.
         /// </summary>
         public IList<MetricSetting> Value
         {
@@ -529,7 +526,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricSettingCollection _metricSettingCollection;
         
         /// <summary>
-        /// Optional. The retrieved metric settings.
+        /// The retrieved metric settings.
         /// </summary>
         public MetricSettingCollection MetricSettingCollection
         {
@@ -553,7 +550,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricSetting _metricSetting;
         
         /// <summary>
-        /// Required. Required. The metric setting.
+        /// Required. The metric setting.
         /// </summary>
         public MetricSetting MetricSetting
         {
@@ -590,7 +587,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _annotation;
         
         /// <summary>
-        /// Optional. Specifies annotation for the metric.
+        /// Specifies annotation for the metric.
         /// </summary>
         public string Annotation
         {
@@ -601,7 +598,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _average;
         
         /// <summary>
-        /// Optional. Specifies the average value in the time interval.
+        /// Specifies the average value in the time interval.
         /// </summary>
         public double? Average
         {
@@ -612,9 +609,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private int? _count;
         
         /// <summary>
-        /// Optional. Specifies the sample count in the time interval. Can be
-        /// used to determine the number of values that contributed to the
-        /// average value.
+        /// Specifies the sample count in the time interval. Can be used to
+        /// determine the number of values that contributed to the average
+        /// value.
         /// </summary>
         public int? Count
         {
@@ -625,7 +622,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _maximum;
         
         /// <summary>
-        /// Optional. Specifies the maximum value in the time interval.
+        /// Specifies the maximum value in the time interval.
         /// </summary>
         public double? Maximum
         {
@@ -636,7 +633,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _minimum;
         
         /// <summary>
-        /// Optional. Specifies the minimum value in the time interval.
+        /// Specifies the minimum value in the time interval.
         /// </summary>
         public double? Minimum
         {
@@ -647,7 +644,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _timestamp;
         
         /// <summary>
-        /// Optional. The timestamp for the metric value.
+        /// The timestamp for the metric value.
         /// </summary>
         public DateTime Timestamp
         {
@@ -658,7 +655,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private double? _total;
         
         /// <summary>
-        /// Optional. Specifies the total value in the time interval.
+        /// Specifies the total value in the time interval.
         /// </summary>
         public double? Total
         {
@@ -682,7 +679,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private MetricValueSetCollection _metricValueSetCollection;
         
         /// <summary>
-        /// Optional. The retrieved metric value sets.
+        /// The retrieved metric value sets.
         /// </summary>
         public MetricValueSetCollection MetricValueSetCollection
         {
@@ -706,7 +703,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Metric display name.
+        /// Metric display name.
         /// </summary>
         public string DisplayName
         {
@@ -717,7 +714,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _endTime;
         
         /// <summary>
-        /// Optional. The end time in UTC for the metric queried.
+        /// The end time in UTC for the metric queried.
         /// </summary>
         public DateTime EndTime
         {
@@ -728,7 +725,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricValue> _metricValues;
         
         /// <summary>
-        /// Optional. Metric values.
+        /// Metric values.
         /// </summary>
         public IList<MetricValue> MetricValues
         {
@@ -739,7 +736,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Metric name.
+        /// Metric name.
         /// </summary>
         public string Name
         {
@@ -750,7 +747,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _namespace;
         
         /// <summary>
-        /// Optional. Metric namespace.
+        /// Metric namespace.
         /// </summary>
         public string Namespace
         {
@@ -761,7 +758,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _primaryAggregation;
         
         /// <summary>
-        /// Optional. Metric primary aggregation.
+        /// Metric primary aggregation.
         /// </summary>
         public string PrimaryAggregation
         {
@@ -772,7 +769,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. The start time in UTC for the metric queried.
+        /// The start time in UTC for the metric queried.
         /// </summary>
         public DateTime StartTime
         {
@@ -783,8 +780,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// Optional. The time grain specifies the aggregation period of the
-        /// metric value.
+        /// The time grain specifies the aggregation period of the metric value.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -795,7 +791,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. Metric unit.
+        /// Metric unit.
         /// </summary>
         public string Unit
         {
@@ -820,7 +816,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private IList<MetricValueSet> _value;
         
         /// <summary>
-        /// Optional. The collection.
+        /// The collection.
         /// </summary>
         public IList<MetricValueSet> Value
         {
@@ -845,7 +841,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Availability metric name config display name.
+        /// Availability metric name config display name.
         /// </summary>
         public string DisplayName
         {
@@ -856,7 +852,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Availability metric name config name.
+        /// Availability metric name config name.
         /// </summary>
         public string Name
         {
@@ -940,11 +936,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Models
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
 {
-    public static partial class MetricsClientExtensions
-    {
-    }
-    
-    public partial interface IMetricsClient : IDisposable
+    public partial interface IMetricsClient
     {
         /// <summary>
         /// Optional base uri parameter.
@@ -976,6 +968,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             get; 
         }
+    }
+    
+    public static partial class MetricsClientExtensions
+    {
     }
     
     public partial class MetricsClient : ServiceClient<MetricsClient>, IMetricsClient
@@ -1037,10 +1033,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Windows Azure subscription id.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Optional base uri parameter.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1063,7 +1059,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Windows Azure subscription id.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1076,51 +1072,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
-        }
-    }
-    
-    public static partial class MetricDefinitionOperationsExtensions
-    {
-        /// <summary>
-        /// The List Metric Definitions operation lists the metric definitions
-        /// for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Metric Definitions operation response.
-        /// </returns>
-        public static MetricDefinitionListResponse List(this IMetricDefinitionOperations operations, ListMetricDefinitionParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IMetricDefinitionOperations)s).ListAsync(parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The List Metric Definitions operation lists the metric definitions
-        /// for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Metric Definitions operation response.
-        /// </returns>
-        public static Task<MetricDefinitionListResponse> ListAsync(this IMetricDefinitionOperations operations, ListMetricDefinitionParameters parameters)
-        {
-            return operations.ListAsync(parameters, CancellationToken.None);
         }
     }
     
@@ -1137,6 +1088,55 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// The List Metric Definitions operation response.
         /// </returns>
         Task<MetricDefinitionListResponse> ListAsync(ListMetricDefinitionParameters parameters, CancellationToken cancellationToken);
+    }
+    
+    public static partial class MetricDefinitionOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static MetricDefinitionListResponse List(this IMetricDefinitionOperations operations, ListMetricDefinitionParameters parameters)
+        {
+            try
+            {
+                return operations.ListAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricDefinitionOperations.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static Task<MetricDefinitionListResponse> ListAsync(this IMetricDefinitionOperations operations, ListMetricDefinitionParameters parameters)
+        {
+            return operations.ListAsync(parameters, CancellationToken.None);
+        }
     }
     
     internal partial class MetricDefinitionOperations : IServiceOperations<MetricsClient>, IMetricDefinitionOperations
@@ -1167,9 +1167,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// The List Metric Definitions operation lists the metric definitions
         /// for the resource.
         /// </summary>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1204,20 +1201,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId.Trim() + "?";
-            url = url + "api-version=2014-01";
+            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId + "?";
+            url = url + "api-version=2014-04-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1229,7 +1215,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1267,102 +1253,98 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricDefinitionListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
+                    JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    if (responseDoc != null)
                     {
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
                         
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        JArray valueArray = (JArray)responseDoc["Value"];
+                        if (valueArray != null)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            foreach (JToken valueValue in valueArray)
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
                                 
                                 JToken nameValue = valueValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                if (nameValue != null)
                                 {
-                                    string nameInstance = ((string)nameValue);
+                                    string nameInstance = (string)nameValue;
                                     metricDefinitionInstance.Name = nameInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                if (namespaceValue != null)
                                 {
-                                    string namespaceInstance = ((string)namespaceValue);
+                                    string namespaceInstance = (string)namespaceValue;
                                     metricDefinitionInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken resourceIdSuffixValue = valueValue["ResourceIdSuffix"];
-                                if (resourceIdSuffixValue != null && resourceIdSuffixValue.Type != JTokenType.Null)
+                                if (resourceIdSuffixValue != null)
                                 {
-                                    string resourceIdSuffixInstance = ((string)resourceIdSuffixValue);
+                                    string resourceIdSuffixInstance = (string)resourceIdSuffixValue;
                                     metricDefinitionInstance.ResourceIdSuffix = resourceIdSuffixInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["DisplayName"];
-                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                if (displayNameValue != null)
                                 {
-                                    string displayNameInstance = ((string)displayNameValue);
+                                    string displayNameInstance = (string)displayNameValue;
                                     metricDefinitionInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["Unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                if (unitValue != null)
                                 {
-                                    string unitInstance = ((string)unitValue);
+                                    string unitInstance = (string)unitValue;
                                     metricDefinitionInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
-                                if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
+                                if (primaryAggregationValue != null)
                                 {
-                                    string primaryAggregationInstance = ((string)primaryAggregationValue);
+                                    string primaryAggregationInstance = (string)primaryAggregationValue;
                                     metricDefinitionInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
                                 
-                                JToken metricAvailabilitiesArray = valueValue["MetricAvailabilities"];
-                                if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
+                                JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
+                                if (metricAvailabilitiesArray != null)
                                 {
-                                    foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
+                                    foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
                                         
                                         JToken timeGrainValue = metricAvailabilitiesValue["TimeGrain"];
-                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                        if (timeGrainValue != null)
                                         {
-                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
+                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                             metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                         }
                                         
                                         JToken retentionValue = metricAvailabilitiesValue["Retention"];
-                                        if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                        if (retentionValue != null)
                                         {
-                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
+                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
                                             metricAvailabilityInstance.Retention = retentionInstance;
                                         }
                                     }
                                 }
                                 
                                 JToken minimumAlertableTimeWindowValue = valueValue["MinimumAlertableTimeWindow"];
-                                if (minimumAlertableTimeWindowValue != null && minimumAlertableTimeWindowValue.Type != JTokenType.Null)
+                                if (minimumAlertableTimeWindowValue != null)
                                 {
-                                    TimeSpan minimumAlertableTimeWindowInstance = TypeConversion.From8601TimeSpan(((string)minimumAlertableTimeWindowValue));
+                                    TimeSpan minimumAlertableTimeWindowInstance = TypeConversion.From8601TimeSpan((string)minimumAlertableTimeWindowValue);
                                     metricDefinitionInstance.MinimumAlertableTimeWindow = minimumAlertableTimeWindowInstance;
                                 }
                                 
                                 JToken isAlertableValue = valueValue["IsAlertable"];
-                                if (isAlertableValue != null && isAlertableValue.Type != JTokenType.Null)
+                                if (isAlertableValue != null)
                                 {
-                                    bool isAlertableInstance = ((bool)isAlertableValue);
+                                    bool isAlertableInstance = (bool)isAlertableValue;
                                     metricDefinitionInstance.IsAlertable = isAlertableInstance;
                                 }
                             }
@@ -1396,101 +1378,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     httpRequest.Dispose();
                 }
             }
-        }
-    }
-    
-    public static partial class MetricSettingOperationsExtensions
-    {
-        /// <summary>
-        /// The Put Metric Settings operation creates or updates the metric
-        /// settings for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Metric settings to be created or updated.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse CreateOrUpdate(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IMetricSettingOperations)s).CreateOrUpdateAsync(parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The Put Metric Settings operation creates or updates the metric
-        /// settings for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Metric settings to be created or updated.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
-        {
-            return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Metric Settings operation lists the metric settings for
-        /// the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
-        /// </param>
-        /// <param name='resourceId'>
-        /// Required. The id of the resource.
-        /// </param>
-        /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.
-        /// </param>
-        /// <returns>
-        /// The list metric settings operation response.
-        /// </returns>
-        public static MetricSettingListResponse List(this IMetricSettingOperations operations, string resourceId, string metricNamespace)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IMetricSettingOperations)s).ListAsync(resourceId, metricNamespace);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The List Metric Settings operation lists the metric settings for
-        /// the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
-        /// </param>
-        /// <param name='resourceId'>
-        /// Required. The id of the resource.
-        /// </param>
-        /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.
-        /// </param>
-        /// <returns>
-        /// The list metric settings operation response.
-        /// </returns>
-        public static Task<MetricSettingListResponse> ListAsync(this IMetricSettingOperations operations, string resourceId, string metricNamespace)
-        {
-            return operations.ListAsync(resourceId, metricNamespace, CancellationToken.None);
         }
     }
     
@@ -1531,6 +1418,121 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         Task<MetricSettingListResponse> ListAsync(string resourceId, string metricNamespace, CancellationToken cancellationToken);
     }
     
+    public static partial class MetricSettingOperationsExtensions
+    {
+        /// <summary>
+        /// The Put Metric Settings operation creates or updates the metric
+        /// settings for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Metric settings to be created or updated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse CreateOrUpdate(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
+        {
+            try
+            {
+                return operations.CreateOrUpdateAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Put Metric Settings operation creates or updates the metric
+        /// settings for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Metric settings to be created or updated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> CreateOrUpdateAsync(this IMetricSettingOperations operations, MetricSettingsPutParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Metric Settings operation lists the metric settings for
+        /// the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The id of the resource.
+        /// </param>
+        /// <param name='metricNamespace'>
+        /// The namespace of the metrics.
+        /// </param>
+        /// <returns>
+        /// The list metric settings operation response.
+        /// </returns>
+        public static MetricSettingListResponse List(this IMetricSettingOperations operations, string resourceId, string metricNamespace)
+        {
+            try
+            {
+                return operations.ListAsync(resourceId, metricNamespace).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Metric Settings operation lists the metric settings for
+        /// the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricSettingOperations.
+        /// </param>
+        /// <param name='resourceId'>
+        /// The id of the resource.
+        /// </param>
+        /// <param name='metricNamespace'>
+        /// The namespace of the metrics.
+        /// </param>
+        /// <returns>
+        /// The list metric settings operation response.
+        /// </returns>
+        public static Task<MetricSettingListResponse> ListAsync(this IMetricSettingOperations operations, string resourceId, string metricNamespace)
+        {
+            return operations.ListAsync(resourceId, metricNamespace, CancellationToken.None);
+        }
+    }
+    
     internal partial class MetricSettingOperations : IServiceOperations<MetricsClient>, IMetricSettingOperations
     {
         /// <summary>
@@ -1560,7 +1562,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// settings for the resource.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Metric settings to be created or updated.
+        /// Metric settings to be created or updated.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1601,18 +1603,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings";
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings";
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1624,7 +1615,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1649,7 +1640,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                 if (parameters.MetricSetting.Value is AvailabilityMetricSettingValue)
                 {
-                    AvailabilityMetricSettingValue derived = ((AvailabilityMetricSettingValue)parameters.MetricSetting.Value);
+                    AvailabilityMetricSettingValue derived = (AvailabilityMetricSettingValue)parameters.MetricSetting.Value;
                     
                     if (derived.AvailableLocations != null)
                     {
@@ -1697,7 +1688,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                             
                             if (endpointsItem.Url != null)
                             {
-                                endpointConfigValue["Url"] = endpointsItem.Url.AbsoluteUri;
+                                endpointConfigValue["Url"] = endpointsItem.Url.ToString();
                             }
                         }
                         valueValue["Endpoints"] = endpointsArray;
@@ -1771,10 +1762,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// the resource.
         /// </summary>
         /// <param name='resourceId'>
-        /// Required. The id of the resource.
+        /// The id of the resource.
         /// </param>
         /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.
+        /// The namespace of the metrics.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1807,20 +1798,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
-            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
+            string url = this.Client.BaseUri + "/" + this.Client.Credentials.SubscriptionId + "/services/monitoring/metricsettings?";
+            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId);
+            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1832,7 +1812,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1870,104 +1850,101 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricSettingListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
+                    JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    if (responseDoc != null)
                     {
                         MetricSettingCollection metricSettingCollectionInstance = new MetricSettingCollection();
                         result.MetricSettingCollection = metricSettingCollectionInstance;
                         
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        JArray valueArray = (JArray)responseDoc["Value"];
+                        if (valueArray != null)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            foreach (JToken valueValue in valueArray)
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
                                 metricSettingCollectionInstance.Value.Add(metricSettingInstance);
                                 
                                 JToken resourceIdValue = valueValue["ResourceId"];
-                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
+                                if (resourceIdValue != null)
                                 {
-                                    string resourceIdInstance = ((string)resourceIdValue);
+                                    string resourceIdInstance = (string)resourceIdValue;
                                     metricSettingInstance.ResourceId = resourceIdInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                if (namespaceValue != null)
                                 {
-                                    string namespaceInstance = ((string)namespaceValue);
+                                    string namespaceInstance = (string)namespaceValue;
                                     metricSettingInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken valueValue2 = valueValue["Value"];
-                                if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
+                                if (valueValue2 != null)
                                 {
-                                    string typeName = ((string)valueValue2["odata.type"]);
+                                    string typeName = (string)valueValue2["odata.type"];
                                     if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.AvailabilityMetricSettingValue")
                                     {
                                         AvailabilityMetricSettingValue availabilityMetricSettingValueInstance = new AvailabilityMetricSettingValue();
                                         
-                                        JToken availableLocationsArray = valueValue2["AvailableLocations"];
-                                        if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
+                                        JArray availableLocationsArray = (JArray)valueValue2["AvailableLocations"];
+                                        if (availableLocationsArray != null)
                                         {
-                                            foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
+                                            foreach (JToken availableLocationsValue in availableLocationsArray)
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
                                                 availabilityMetricSettingValueInstance.AvailableLocations.Add(nameConfigInstance);
                                                 
                                                 JToken nameValue = availableLocationsValue["Name"];
-                                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                                if (nameValue != null)
                                                 {
-                                                    string nameInstance = ((string)nameValue);
+                                                    string nameInstance = (string)nameValue;
                                                     nameConfigInstance.Name = nameInstance;
                                                 }
                                                 
                                                 JToken displayNameValue = availableLocationsValue["DisplayName"];
-                                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                                if (displayNameValue != null)
                                                 {
-                                                    string displayNameInstance = ((string)displayNameValue);
+                                                    string displayNameInstance = (string)displayNameValue;
                                                     nameConfigInstance.DisplayName = displayNameInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken endpointsArray = valueValue2["Endpoints"];
-                                        if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
+                                        JArray endpointsArray = (JArray)valueValue2["Endpoints"];
+                                        if (endpointsArray != null)
                                         {
-                                            foreach (JToken endpointsValue in ((JArray)endpointsArray))
+                                            foreach (JToken endpointsValue in endpointsArray)
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();
                                                 availabilityMetricSettingValueInstance.Endpoints.Add(endpointConfigInstance);
                                                 
                                                 JToken configIdValue = endpointsValue["ConfigId"];
-                                                if (configIdValue != null && configIdValue.Type != JTokenType.Null)
+                                                if (configIdValue != null)
                                                 {
-                                                    string configIdInstance = ((string)configIdValue);
+                                                    string configIdInstance = (string)configIdValue;
                                                     endpointConfigInstance.ConfigId = configIdInstance;
                                                 }
                                                 
                                                 JToken nameValue2 = endpointsValue["Name"];
-                                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                                if (nameValue2 != null)
                                                 {
-                                                    string nameInstance2 = ((string)nameValue2);
+                                                    string nameInstance2 = (string)nameValue2;
                                                     endpointConfigInstance.Name = nameInstance2;
                                                 }
                                                 
                                                 JToken locationValue = endpointsValue["Location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                                if (locationValue != null)
                                                 {
-                                                    string locationInstance = ((string)locationValue);
+                                                    string locationInstance = (string)locationValue;
                                                     endpointConfigInstance.Location = locationInstance;
                                                 }
                                                 
                                                 JToken urlValue = endpointsValue["Url"];
-                                                if (urlValue != null && urlValue.Type != JTokenType.Null)
+                                                if (urlValue != null)
                                                 {
-                                                    Uri urlInstance = TypeConversion.TryParseUri(((string)urlValue));
+                                                    // how
+                                                    Uri urlInstance = TypeConversion.TryParseUri((string)urlValue);
                                                     endpointConfigInstance.Url = urlInstance;
                                                 }
                                             }
@@ -2009,51 +1986,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         }
     }
     
-    public static partial class MetricValueOperationsExtensions
-    {
-        /// <summary>
-        /// The List Metric Value operation lists the metric value sets for the
-        /// resource metrics.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Metric values operation response.
-        /// </returns>
-        public static MetricValueListResponse List(this IMetricValueOperations operations, ListMetricParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IMetricValueOperations)s).ListAsync(parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The List Metric Value operation lists the metric value sets for the
-        /// resource metrics.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Metric values operation response.
-        /// </returns>
-        public static Task<MetricValueListResponse> ListAsync(this IMetricValueOperations operations, ListMetricParameters parameters)
-        {
-            return operations.ListAsync(parameters, CancellationToken.None);
-        }
-    }
-    
     public partial interface IMetricValueOperations
     {
         /// <summary>
@@ -2067,6 +1999,55 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// The List Metric values operation response.
         /// </returns>
         Task<MetricValueListResponse> ListAsync(ListMetricParameters parameters, CancellationToken cancellationToken);
+    }
+    
+    public static partial class MetricValueOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric Value operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static MetricValueListResponse List(this IMetricValueOperations operations, ListMetricParameters parameters)
+        {
+            try
+            {
+                return operations.ListAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Metric Value operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Metrics.IMetricValueOperations.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static Task<MetricValueListResponse> ListAsync(this IMetricValueOperations operations, ListMetricParameters parameters)
+        {
+            return operations.ListAsync(parameters, CancellationToken.None);
+        }
     }
     
     internal partial class MetricValueOperations : IServiceOperations<MetricsClient>, IMetricValueOperations
@@ -2097,9 +2078,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// The List Metric Value operation lists the metric value sets for the
         /// resource metrics.
         /// </summary>
-        /// <param name='parameters'>
-        /// Required.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -2138,23 +2116,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId.Trim() + "?";
-            url = url + "api-version=2014-01";
+            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId + "?";
+            url = url + "api-version=2014-04-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
-            url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(parameters.TimeGrain));
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
+            url = url + "&TimeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(parameters.TimeGrain));
+            url = url + "&StartTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
+            url = url + "&EndTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2166,7 +2133,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2204,135 +2171,131 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricValueListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
+                    JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    if (responseDoc != null)
                     {
                         MetricValueSetCollection metricValueSetCollectionInstance = new MetricValueSetCollection();
                         result.MetricValueSetCollection = metricValueSetCollectionInstance;
                         
-                        JToken valueArray = responseDoc["Value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        JArray valueArray = (JArray)responseDoc["Value"];
+                        if (valueArray != null)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            foreach (JToken valueValue in valueArray)
                             {
                                 MetricValueSet metricValueSetInstance = new MetricValueSet();
                                 metricValueSetCollectionInstance.Value.Add(metricValueSetInstance);
                                 
                                 JToken nameValue = valueValue["Name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                if (nameValue != null)
                                 {
-                                    string nameInstance = ((string)nameValue);
+                                    string nameInstance = (string)nameValue;
                                     metricValueSetInstance.Name = nameInstance;
                                 }
                                 
                                 JToken namespaceValue = valueValue["Namespace"];
-                                if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
+                                if (namespaceValue != null)
                                 {
-                                    string namespaceInstance = ((string)namespaceValue);
+                                    string namespaceInstance = (string)namespaceValue;
                                     metricValueSetInstance.Namespace = namespaceInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["DisplayName"];
-                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                if (displayNameValue != null)
                                 {
-                                    string displayNameInstance = ((string)displayNameValue);
+                                    string displayNameInstance = (string)displayNameValue;
                                     metricValueSetInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["Unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                if (unitValue != null)
                                 {
-                                    string unitInstance = ((string)unitValue);
+                                    string unitInstance = (string)unitValue;
                                     metricValueSetInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken primaryAggregationValue = valueValue["PrimaryAggregation"];
-                                if (primaryAggregationValue != null && primaryAggregationValue.Type != JTokenType.Null)
+                                if (primaryAggregationValue != null)
                                 {
-                                    string primaryAggregationInstance = ((string)primaryAggregationValue);
+                                    string primaryAggregationInstance = (string)primaryAggregationValue;
                                     metricValueSetInstance.PrimaryAggregation = primaryAggregationInstance;
                                 }
                                 
                                 JToken timeGrainValue = valueValue["TimeGrain"];
-                                if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                if (timeGrainValue != null)
                                 {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
+                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                     metricValueSetInstance.TimeGrain = timeGrainInstance;
                                 }
                                 
                                 JToken startTimeValue = valueValue["StartTime"];
-                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                if (startTimeValue != null)
                                 {
-                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
                                     metricValueSetInstance.StartTime = startTimeInstance;
                                 }
                                 
                                 JToken endTimeValue = valueValue["EndTime"];
-                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
+                                if (endTimeValue != null)
                                 {
-                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
+                                    DateTime endTimeInstance = (DateTime)endTimeValue;
                                     metricValueSetInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                JToken metricValuesArray = valueValue["MetricValues"];
-                                if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
+                                JArray metricValuesArray = (JArray)valueValue["MetricValues"];
+                                if (metricValuesArray != null)
                                 {
-                                    foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
+                                    foreach (JToken metricValuesValue in metricValuesArray)
                                     {
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricValueSetInstance.MetricValues.Add(metricValueInstance);
                                         
                                         JToken timestampValue = metricValuesValue["Timestamp"];
-                                        if (timestampValue != null && timestampValue.Type != JTokenType.Null)
+                                        if (timestampValue != null)
                                         {
-                                            DateTime timestampInstance = ((DateTime)timestampValue);
+                                            DateTime timestampInstance = (DateTime)timestampValue;
                                             metricValueInstance.Timestamp = timestampInstance;
                                         }
                                         
                                         JToken averageValue = metricValuesValue["Average"];
-                                        if (averageValue != null && averageValue.Type != JTokenType.Null)
+                                        if (averageValue != null)
                                         {
-                                            double averageInstance = ((double)averageValue);
+                                            double averageInstance = (double)averageValue;
                                             metricValueInstance.Average = averageInstance;
                                         }
                                         
                                         JToken minimumValue = metricValuesValue["Minimum"];
-                                        if (minimumValue != null && minimumValue.Type != JTokenType.Null)
+                                        if (minimumValue != null)
                                         {
-                                            double minimumInstance = ((double)minimumValue);
+                                            double minimumInstance = (double)minimumValue;
                                             metricValueInstance.Minimum = minimumInstance;
                                         }
                                         
                                         JToken maximumValue = metricValuesValue["Maximum"];
-                                        if (maximumValue != null && maximumValue.Type != JTokenType.Null)
+                                        if (maximumValue != null)
                                         {
-                                            double maximumInstance = ((double)maximumValue);
+                                            double maximumInstance = (double)maximumValue;
                                             metricValueInstance.Maximum = maximumInstance;
                                         }
                                         
                                         JToken totalValue = metricValuesValue["Total"];
-                                        if (totalValue != null && totalValue.Type != JTokenType.Null)
+                                        if (totalValue != null)
                                         {
-                                            double totalInstance = ((double)totalValue);
+                                            double totalInstance = (double)totalValue;
                                             metricValueInstance.Total = totalInstance;
                                         }
                                         
                                         JToken annotationValue = metricValuesValue["Annotation"];
-                                        if (annotationValue != null && annotationValue.Type != JTokenType.Null)
+                                        if (annotationValue != null)
                                         {
-                                            string annotationInstance = ((string)annotationValue);
+                                            string annotationInstance = (string)annotationValue;
                                             metricValueInstance.Annotation = annotationInstance;
                                         }
                                         
                                         JToken countValue = metricValuesValue["Count"];
-                                        if (countValue != null && countValue.Type != JTokenType.Null)
+                                        if (countValue != null)
                                         {
-                                            int countInstance = ((int)countValue);
+                                            int countInstance = (int)countValue;
                                             metricValueInstance.Count = countInstance;
                                         }
                                     }

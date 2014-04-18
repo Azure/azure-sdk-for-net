@@ -27,15 +27,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Insights;
+using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.Monitoring.Events;
-using Microsoft.WindowsAzure.Management.Monitoring.Events.Models;
-using Microsoft.WindowsAzure.Management.Monitoring.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
+namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// The event count summary.
@@ -862,12 +861,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
             set { this._endTime = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Monitoring.Events.Models.EventChannels? _eventChannels;
+        private Microsoft.Azure.Insights.Models.EventChannels? _eventChannels;
         
         /// <summary>
         /// The event channels.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Monitoring.Events.Models.EventChannels? EventChannels
+        public Microsoft.Azure.Insights.Models.EventChannels? EventChannels
         {
             get { return this._eventChannels; }
             set { this._eventChannels = value; }
@@ -911,6 +910,41 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// Initializes a new instance of the ListEventsParameters class.
         /// </summary>
         public ListEventsParameters()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The localizable string class.
+    /// </summary>
+    public partial class LocalizableString
+    {
+        private string _localizedValue;
+        
+        /// <summary>
+        /// The locale specific value.
+        /// </summary>
+        public string LocalizedValue
+        {
+            get { return this._localizedValue; }
+            set { this._localizedValue = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// The invariant value.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the LocalizableString class.
+        /// </summary>
+        public LocalizableString()
         {
         }
     }
@@ -971,49 +1005,162 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         {
         }
     }
-}
-
-namespace Microsoft.WindowsAzure.Management.Monitoring.Models
-{
+    
     /// <summary>
-    /// The localizable string class.
+    /// Usage Metric data.
     /// </summary>
-    public partial class LocalizableString
+    public partial class UsageMetric
     {
-        private string _localizedValue;
+        private double _currentValue;
         
         /// <summary>
-        /// The locale specific value.
+        /// The current value for the usage metric.
         /// </summary>
-        public string LocalizedValue
+        public double CurrentValue
         {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
+            get { return this._currentValue; }
+            set { this._currentValue = value; }
         }
         
-        private string _value;
+        private string _displayName;
         
         /// <summary>
-        /// The invariant value.
+        /// Get the usage display name.
         /// </summary>
-        public string Value
+        public string DisplayName
+        {
+            get { return this._displayName; }
+            set { this._displayName = value; }
+        }
+        
+        private double _limit;
+        
+        /// <summary>
+        /// The quota limit the usage metric.
+        /// </summary>
+        public double Limit
+        {
+            get { return this._limit; }
+            set { this._limit = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Get the usage metric name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _nextResetTime;
+        
+        /// <summary>
+        /// When the current value gets reset.
+        /// </summary>
+        public string NextResetTime
+        {
+            get { return this._nextResetTime; }
+            set { this._nextResetTime = value; }
+        }
+        
+        private System.TimeSpan? _quotaPeriod;
+        
+        /// <summary>
+        /// When the current value gets reset.
+        /// </summary>
+        public System.TimeSpan? QuotaPeriod
+        {
+            get { return this._quotaPeriod; }
+            set { this._quotaPeriod = value; }
+        }
+        
+        private string _unit;
+        
+        /// <summary>
+        /// The unit for the usage metric.
+        /// </summary>
+        public string Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageMetric class.
+        /// </summary>
+        public UsageMetric()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents collection of usage metrics.
+    /// </summary>
+    public partial class UsageMetricCollection
+    {
+        private IList<UsageMetric> _properties;
+        
+        /// <summary>
+        /// The usage values.
+        /// </summary>
+        public IList<UsageMetric> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private IList<UsageMetric> _value;
+        
+        /// <summary>
+        /// The usage values.
+        /// </summary>
+        public IList<UsageMetric> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the LocalizableString class.
+        /// Initializes a new instance of the UsageMetricCollection class.
         /// </summary>
-        public LocalizableString()
+        public UsageMetricCollection()
+        {
+            this._properties = new List<UsageMetric>();
+            this._value = new List<UsageMetric>();
+        }
+    }
+    
+    /// <summary>
+    /// The List Usage Metric operation response.
+    /// </summary>
+    public partial class UsageMetricListResponse : OperationResponse
+    {
+        private UsageMetricCollection _usageMetricCollection;
+        
+        /// <summary>
+        /// The list of usage metrics.
+        /// </summary>
+        public UsageMetricCollection UsageMetricCollection
+        {
+            get { return this._usageMetricCollection; }
+            set { this._usageMetricCollection = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageMetricListResponse class.
+        /// </summary>
+        public UsageMetricListResponse()
         {
         }
     }
 }
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Events
+namespace Microsoft.Azure.Insights
 {
-    public partial interface IEventsClient
+    public partial interface IInsightsClient
     {
         /// <summary>
         /// Optional base uri parameter.
@@ -1024,7 +1171,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
@@ -1032,27 +1185,24 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Summary information with the event count.
+        /// Operations for event data.
         /// </summary>
-        ICountSummaryOperations CountSummary
+        IEventOperations EventOperations
         {
             get; 
         }
         
-        /// <summary>
-        /// Operations for event data.
-        /// </summary>
-        IEventDataOperations EventData
+        IUsageMetricsOperations UsageMetricOperations
         {
             get; 
         }
     }
     
-    public static partial class EventsClientExtensions
+    public static partial class InsightsClientExtensions
     {
     }
     
-    public partial class EventsClient : ServiceClient<EventsClient>, IEventsClient
+    public partial class InsightsClient : ServiceClient<InsightsClient>, IInsightsClient
     {
         private Uri _baseUri;
         
@@ -1067,54 +1217,63 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
         }
         
-        private ICountSummaryOperations _countSummary;
-        
-        /// <summary>
-        /// Summary information with the event count.
-        /// </summary>
-        public virtual ICountSummaryOperations CountSummary
-        {
-            get { return this._countSummary; }
-        }
-        
-        private IEventDataOperations _eventData;
+        private IEventOperations _eventOperations;
         
         /// <summary>
         /// Operations for event data.
         /// </summary>
-        public virtual IEventDataOperations EventData
+        public virtual IEventOperations EventOperations
         {
-            get { return this._eventData; }
+            get { return this._eventOperations; }
+        }
+        
+        private IUsageMetricsOperations _usageMetricOperations;
+        
+        public virtual IUsageMetricsOperations UsageMetricOperations
+        {
+            get { return this._usageMetricOperations; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
-        private EventsClient()
+        private InsightsClient()
             : base()
         {
-            this._countSummary = new CountSummaryOperations(this);
-            this._eventData = new EventDataOperations(this);
+            this._eventOperations = new EventOperations(this);
+            this._usageMetricOperations = new UsageMetricsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Optional base uri parameter.
         /// </param>
-        public EventsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -1132,12 +1291,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </param>
-        public EventsClient(SubscriptionCloudCredentials credentials)
+        public InsightsClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)
@@ -1145,16 +1310,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    public partial interface ICountSummaryOperations
+    public partial interface IEventOperations
     {
         /// <summary>
         /// The count of events in a subscription.
@@ -1210,24 +1375,89 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The event count summary response.
         /// </returns>
         Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(GetCountSummaryForResourceProviderParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken);
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    public static partial class CountSummaryOperationsExtensions
+    public static partial class EventOperationsExtensions
     {
         /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummary(this ICountSummaryOperations operations, GetCountSummaryParameters parameters)
+        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, GetCountSummaryParameters parameters)
         {
             try
             {
@@ -1250,13 +1480,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this ICountSummaryOperations operations, GetCountSummaryParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, GetCountSummaryParameters parameters)
         {
             return operations.GetCountSummaryAsync(parameters, CancellationToken.None);
         }
@@ -1265,13 +1494,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for an event source.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForEventSource(this ICountSummaryOperations operations, GetCountSummaryForEventSourceParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForEventSource(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
         {
             try
             {
@@ -1294,13 +1522,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for an event source.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(this ICountSummaryOperations operations, GetCountSummaryForEventSourceParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
         {
             return operations.GetCountSummaryForEventSourceAsync(parameters, CancellationToken.None);
         }
@@ -1309,13 +1536,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResource(this ICountSummaryOperations operations, GetCountSummaryForResourceParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResource(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
         {
             try
             {
@@ -1338,13 +1564,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
         {
             return operations.GetCountSummaryForResourceAsync(parameters, CancellationToken.None);
         }
@@ -1353,13 +1578,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource group.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceGroup(this ICountSummaryOperations operations, GetCountSummaryForResourceGroupParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResourceGroup(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
         {
             try
             {
@@ -1382,13 +1606,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource group.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceGroupParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
         {
             return operations.GetCountSummaryForResourceGroupAsync(parameters, CancellationToken.None);
         }
@@ -1397,13 +1620,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource provider.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceProvider(this ICountSummaryOperations operations, GetCountSummaryForResourceProviderParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResourceProvider(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
         {
             try
             {
@@ -1426,41 +1648,291 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource provider.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceProviderParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
         {
             return operations.GetCountSummaryForResourceProviderAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEvents(this IEventOperations operations, ListEventsParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, ListEventsParameters parameters)
+        {
+            return operations.ListEventsAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForCorrelationId(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForCorrelationIdAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForCorrelationIdAsync(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
+        {
+            return operations.ListEventsForCorrelationIdAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForEventSource(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForEventSourceAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForEventSourceAsync(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
+        {
+            return operations.ListEventsForEventSourceAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResource(this IEventOperations operations, ListEventsForResourceParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceAsync(this IEventOperations operations, ListEventsForResourceParameters parameters)
+        {
+            return operations.ListEventsForResourceAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResourceGroup(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceGroupAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceGroupAsync(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
+        {
+            return operations.ListEventsForResourceGroupAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResourceProvider(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceProviderAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceProviderAsync(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
+        {
+            return operations.ListEventsForResourceProviderAsync(parameters, CancellationToken.None);
         }
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    internal partial class CountSummaryOperations : IServiceOperations<EventsClient>, ICountSummaryOperations
+    internal partial class EventOperations : IServiceOperations<InsightsClient>, IEventOperations
     {
         /// <summary>
-        /// Initializes a new instance of the CountSummaryOperations class.
+        /// Initializes a new instance of the EventOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal CountSummaryOperations(EventsClient client)
+        internal EventOperations(InsightsClient client)
         {
             this._client = client;
         }
         
-        private EventsClient _client;
+        private InsightsClient _client;
         
         /// <summary>
-        /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.EventsClient.
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
         /// </summary>
-        public EventsClient Client
+        public InsightsClient Client
         {
             get { return this._client; }
         }
@@ -1496,10 +1968,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -1686,10 +2158,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&eventSource=" + Uri.EscapeUriString(parameters.EventSource);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + ":date";
             }
             
             // Create HTTP transport objects
@@ -1876,10 +2348,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceUri=" + Uri.EscapeUriString(parameters.ResourceUri);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2066,10 +2538,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceGroupName=" + Uri.EscapeUriString(parameters.ResourceGroupName);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2256,10 +2728,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceProvider=" + Uri.EscapeUriString(parameters.ResourceProvider);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2409,376 +2881,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 }
             }
         }
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    public partial interface IEventDataOperations
-    {
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken);
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    public static partial class EventDataOperationsExtensions
-    {
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEvents(this IEventDataOperations operations, ListEventsParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsAsync(this IEventDataOperations operations, ListEventsParameters parameters)
-        {
-            return operations.ListEventsAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForCorrelationId(this IEventDataOperations operations, ListEventsForCorrelationIdParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForCorrelationIdAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForCorrelationIdAsync(this IEventDataOperations operations, ListEventsForCorrelationIdParameters parameters)
-        {
-            return operations.ListEventsForCorrelationIdAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForEventSource(this IEventDataOperations operations, ListEventsForEventSourceParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForEventSourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForEventSourceAsync(this IEventDataOperations operations, ListEventsForEventSourceParameters parameters)
-        {
-            return operations.ListEventsForEventSourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResource(this IEventDataOperations operations, ListEventsForResourceParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceAsync(this IEventDataOperations operations, ListEventsForResourceParameters parameters)
-        {
-            return operations.ListEventsForResourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceGroup(this IEventDataOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceGroupAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceGroupAsync(this IEventDataOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            return operations.ListEventsForResourceGroupAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceProvider(this IEventDataOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceProviderAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceProviderAsync(this IEventDataOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            return operations.ListEventsForResourceProviderAsync(parameters, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    internal partial class EventDataOperations : IServiceOperations<EventsClient>, IEventDataOperations
-    {
-        /// <summary>
-        /// Initializes a new instance of the EventDataOperations class.
-        /// </summary>
-        /// <param name='client'>
-        /// Reference to the service client.
-        /// </param>
-        internal EventDataOperations(EventsClient client)
-        {
-            this._client = client;
-        }
-        
-        private EventsClient _client;
-        
-        /// <summary>
-        /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.EventsClient.
-        /// </summary>
-        public EventsClient Client
-        {
-            get { return this._client; }
-        }
         
         /// <summary>
         /// The List Event Values operation lists the events.
@@ -2811,10 +2913,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -3263,10 +3365,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -3711,10 +3813,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -4163,10 +4265,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -4615,10 +4717,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -5067,10 +5169,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -5451,6 +5553,330 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         {
                             string nextLinkInstance = (string)nextLinkValue;
                             eventDataCollectionInstance.NextLink = nextLinkInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    public partial interface IUsageMetricsOperations
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
+    }
+    
+    public static partial class UsageMetricsOperationsExtensions
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            try
+            {
+                return operations.ListAsync(resourceUri, metricNames).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
+        }
+    }
+    
+    internal partial class UsageMetricsOperations : IServiceOperations<InsightsClient>, IUsageMetricsOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the UsageMetricsOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal UsageMetricsOperations(InsightsClient client)
+        {
+            this._client = client;
+        }
+        
+        private InsightsClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
+        /// </summary>
+        public InsightsClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("metricNames", metricNames);
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/usages?";
+            url = url + "api-version=2014-04-01";
+            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    UsageMetricListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new UsageMetricListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null)
+                    {
+                        UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
+                        result.UsageMetricCollection = usageMetricCollectionInstance;
+                        
+                        JArray valueArray = (JArray)responseDoc["value"];
+                        if (valueArray != null)
+                        {
+                            foreach (JToken valueValue in valueArray)
+                            {
+                                UsageMetric usageMetricInstance = new UsageMetric();
+                                usageMetricCollectionInstance.Value.Add(usageMetricInstance);
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null)
+                                {
+                                    string nameInstance = (string)nameValue;
+                                    usageMetricInstance.Name = nameInstance;
+                                }
+                                
+                                JToken displayNameValue = valueValue["displayName"];
+                                if (displayNameValue != null)
+                                {
+                                    string displayNameInstance = (string)displayNameValue;
+                                    usageMetricInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                JToken currentValueValue = valueValue["currentValue"];
+                                if (currentValueValue != null)
+                                {
+                                    double currentValueInstance = (double)currentValueValue;
+                                    usageMetricInstance.CurrentValue = currentValueInstance;
+                                }
+                                
+                                JToken limitValue = valueValue["limit"];
+                                if (limitValue != null)
+                                {
+                                    double limitInstance = (double)limitValue;
+                                    usageMetricInstance.Limit = limitInstance;
+                                }
+                                
+                                JToken unitValue = valueValue["unit"];
+                                if (unitValue != null)
+                                {
+                                    string unitInstance = (string)unitValue;
+                                    usageMetricInstance.Unit = unitInstance;
+                                }
+                                
+                                JToken nextResetTimeValue = valueValue["nextResetTime"];
+                                if (nextResetTimeValue != null)
+                                {
+                                    string nextResetTimeInstance = (string)nextResetTimeValue;
+                                    usageMetricInstance.NextResetTime = nextResetTimeInstance;
+                                }
+                                
+                                JToken quotaPeriodValue = valueValue["quotaPeriod"];
+                                if (quotaPeriodValue != null)
+                                {
+                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan((string)quotaPeriodValue);
+                                    usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
+                                }
+                            }
+                        }
+                        
+                        JArray propertiesArray = (JArray)responseDoc["properties"];
+                        if (propertiesArray != null)
+                        {
+                            foreach (JToken propertiesValue in propertiesArray)
+                            {
+                                UsageMetric usageMetricInstance2 = new UsageMetric();
+                                usageMetricCollectionInstance.Properties.Add(usageMetricInstance2);
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null)
+                                {
+                                    string nameInstance2 = (string)nameValue2;
+                                    usageMetricInstance2.Name = nameInstance2;
+                                }
+                                
+                                JToken displayNameValue2 = propertiesValue["displayName"];
+                                if (displayNameValue2 != null)
+                                {
+                                    string displayNameInstance2 = (string)displayNameValue2;
+                                    usageMetricInstance2.DisplayName = displayNameInstance2;
+                                }
+                                
+                                JToken currentValueValue2 = propertiesValue["currentValue"];
+                                if (currentValueValue2 != null)
+                                {
+                                    double currentValueInstance2 = (double)currentValueValue2;
+                                    usageMetricInstance2.CurrentValue = currentValueInstance2;
+                                }
+                                
+                                JToken limitValue2 = propertiesValue["limit"];
+                                if (limitValue2 != null)
+                                {
+                                    double limitInstance2 = (double)limitValue2;
+                                    usageMetricInstance2.Limit = limitInstance2;
+                                }
+                                
+                                JToken unitValue2 = propertiesValue["unit"];
+                                if (unitValue2 != null)
+                                {
+                                    string unitInstance2 = (string)unitValue2;
+                                    usageMetricInstance2.Unit = unitInstance2;
+                                }
+                                
+                                JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
+                                if (nextResetTimeValue2 != null)
+                                {
+                                    string nextResetTimeInstance2 = (string)nextResetTimeValue2;
+                                    usageMetricInstance2.NextResetTime = nextResetTimeInstance2;
+                                }
+                                
+                                JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
+                                if (quotaPeriodValue2 != null)
+                                {
+                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan((string)quotaPeriodValue2);
+                                    usageMetricInstance2.QuotaPeriod = quotaPeriodInstance2;
+                                }
+                            }
                         }
                     }
                     
