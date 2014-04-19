@@ -25,59 +25,58 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Server operation.
+    /// Represents a recovery operation for an Azure SQL Database.
     /// </summary>
-    public partial class ServerCreateParameters
+    public partial class RecoverDatabaseOperation
     {
-        private string _administratorPassword;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets the administrator password.
+        /// Optional. Gets the ID of the operation.
         /// </summary>
-        public string AdministratorPassword
+        public string Id
         {
-            get { return this._administratorPassword; }
-            set { this._administratorPassword = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private string _administratorUserName;
+        private string _sourceDatabaseName;
         
         /// <summary>
-        /// Required. Gets or sets the administrator username.
+        /// Optional. Gets the name of the source Azure SQL Database.
         /// </summary>
-        public string AdministratorUserName
+        public string SourceDatabaseName
         {
-            get { return this._administratorUserName; }
-            set { this._administratorUserName = value; }
+            get { return this._sourceDatabaseName; }
+            set { this._sourceDatabaseName = value; }
         }
         
-        private string _location;
+        private string _sourceServerName;
         
         /// <summary>
-        /// Required. Gets or sets the region in which this server will be
-        /// created.
+        /// Optional. Gets the name of the source Azure SQL Database Server.
         /// </summary>
-        public string Location
+        public string SourceServerName
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._sourceServerName; }
+            set { this._sourceServerName = value; }
         }
         
-        private string _version;
+        private string _targetDatabaseName;
         
         /// <summary>
-        /// Optional. Gets or sets the version of server to create.
+        /// Optional. Gets the name of the target Azure SQL Database.
         /// </summary>
-        public string Version
+        public string TargetDatabaseName
         {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._targetDatabaseName; }
+            set { this._targetDatabaseName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerCreateParameters class.
+        /// Initializes a new instance of the RecoverDatabaseOperation class.
         /// </summary>
-        public ServerCreateParameters()
+        public RecoverDatabaseOperation()
         {
         }
     }

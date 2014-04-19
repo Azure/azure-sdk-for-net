@@ -309,6 +309,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 locationElement.Value = parameters.Location;
                 serverElement.Add(locationElement);
                 
+                if (parameters.Version != null)
+                {
+                    XElement versionElement = new XElement(XName.Get("Version", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                    versionElement.Value = parameters.Version;
+                    serverElement.Add(versionElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
@@ -619,6 +626,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 string locationInstance = locationElement.Value;
                                 serverInstance.Location = locationInstance;
+                            }
+                            
+                            XElement versionElement = serversElement.Element(XName.Get("Version", "http://schemas.microsoft.com/sqlazure/2010/12/"));
+                            if (versionElement != null && versionElement.IsEmpty == false)
+                            {
+                                string versionInstance = versionElement.Value;
+                                serverInstance.Version = versionInstance;
                             }
                             
                             XElement featuresSequenceElement = serversElement.Element(XName.Get("Features", "http://schemas.microsoft.com/sqlazure/2010/12/"));

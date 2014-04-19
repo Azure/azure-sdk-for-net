@@ -67,6 +67,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
+        /// The SQL Database Management API includes operations for managing
+        /// SQL Server database copies for a subscription.
+        /// </summary>
+        IDatabaseCopyOperations DatabaseCopies
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The SQL Database Management API includes operations for get/stop
         /// SQL Databases' operations for a subscription.
         /// </summary>
@@ -95,6 +104,51 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// for more information)
         /// </summary>
         IFirewallRuleOperations FirewallRules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The SQL Database Management API includes operations for getting SQL
+        /// Database server quotas.
+        /// </summary>
+        IQuotaOperations Quotas
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Contains operations for getting Azure SQL Databases that can be
+        /// recovered.
+        /// </summary>
+        IRecoverableDatabaseOperations RecoverableDatabases
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Contains the operation to create recovery requests for Azure SQL
+        /// Databases.
+        /// </summary>
+        IRecoverDatabaseOperations RecoverDatabaseOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Contains operations for getting dropped Azure SQL Databases that
+        /// can be restored.
+        /// </summary>
+        IRestorableDroppedDatabaseOperations RestorableDroppedDatabases
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Contains the operation to create restore requests for Azure SQL
+        /// Databases.
+        /// </summary>
+        IRestoreDatabaseOperations RestoreDatabaseOperations
         {
             get; 
         }

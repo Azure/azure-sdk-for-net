@@ -25,25 +25,14 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Database operation.
+    /// Recoverable Azure SQL Database.
     /// </summary>
-    public partial class DatabaseCreateParameters
+    public partial class RecoverableDatabase
     {
-        private string _collationName;
-        
-        /// <summary>
-        /// Optional. Gets or sets the collation name for the new database.
-        /// </summary>
-        public string CollationName
-        {
-            get { return this._collationName; }
-            set { this._collationName = value; }
-        }
-        
         private string _edition;
         
         /// <summary>
-        /// Optional. Gets or sets the edition for the new database.
+        /// Optional. Gets the edition of the database.
         /// </summary>
         public string Edition
         {
@@ -51,33 +40,32 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._edition = value; }
         }
         
-        private long? _maximumDatabaseSizeInBytes;
+        private string _entityId;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of this database, in bytes.
+        /// Optional. Gets the entity ID of the database.
         /// </summary>
-        public long? MaximumDatabaseSizeInBytes
+        public string EntityId
         {
-            get { return this._maximumDatabaseSizeInBytes; }
-            set { this._maximumDatabaseSizeInBytes = value; }
+            get { return this._entityId; }
+            set { this._entityId = value; }
         }
         
-        private int? _maximumDatabaseSizeInGB;
+        private DateTime _lastAvailableBackupDate;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of this database, in
-        /// Gigabytes.
+        /// Optional. Gets the last available backup date for this database.
         /// </summary>
-        public int? MaximumDatabaseSizeInGB
+        public DateTime LastAvailableBackupDate
         {
-            get { return this._maximumDatabaseSizeInGB; }
-            set { this._maximumDatabaseSizeInGB = value; }
+            get { return this._lastAvailableBackupDate; }
+            set { this._lastAvailableBackupDate = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name for the new database.
+        /// Optional. Gets the name of the database.
         /// </summary>
         public string Name
         {
@@ -85,21 +73,22 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._name = value; }
         }
         
-        private string _serviceObjectiveId;
+        private string _serverName;
         
         /// <summary>
-        /// Optional. Gets or sets the id of this service objective.
+        /// Optional. Gets the name of the Azure SQL Database Server where the
+        /// database resided.
         /// </summary>
-        public string ServiceObjectiveId
+        public string ServerName
         {
-            get { return this._serviceObjectiveId; }
-            set { this._serviceObjectiveId = value; }
+            get { return this._serverName; }
+            set { this._serverName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DatabaseCreateParameters class.
+        /// Initializes a new instance of the RecoverableDatabase class.
         /// </summary>
-        public DatabaseCreateParameters()
+        public RecoverableDatabase()
         {
         }
     }

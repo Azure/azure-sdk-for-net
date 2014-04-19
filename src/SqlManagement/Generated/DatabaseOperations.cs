@@ -93,10 +93,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Edition == null)
-            {
-                throw new ArgumentNullException("parameters.Edition");
-            }
             if (parameters.Name == null)
             {
                 throw new ArgumentNullException("parameters.Name");
@@ -154,19 +150,32 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 nameElement.Value = parameters.Name;
                 serviceResourceElement.Add(nameElement);
                 
-                XElement editionElement = new XElement(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
-                editionElement.Value = parameters.Edition;
-                serviceResourceElement.Add(editionElement);
+                if (parameters.Edition != null)
+                {
+                    XElement editionElement = new XElement(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
+                    editionElement.Value = parameters.Edition;
+                    serviceResourceElement.Add(editionElement);
+                }
                 
-                XElement maxSizeGBElement = new XElement(XName.Get("MaxSizeGB", "http://schemas.microsoft.com/windowsazure"));
-                maxSizeGBElement.Value = parameters.MaximumDatabaseSizeInGB.ToString();
-                serviceResourceElement.Add(maxSizeGBElement);
+                if (parameters.MaximumDatabaseSizeInGB != null)
+                {
+                    XElement maxSizeGBElement = new XElement(XName.Get("MaxSizeGB", "http://schemas.microsoft.com/windowsazure"));
+                    maxSizeGBElement.Value = parameters.MaximumDatabaseSizeInGB.ToString();
+                    serviceResourceElement.Add(maxSizeGBElement);
+                }
                 
                 if (parameters.CollationName != null)
                 {
                     XElement collationNameElement = new XElement(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                     collationNameElement.Value = parameters.CollationName;
                     serviceResourceElement.Add(collationNameElement);
+                }
+                
+                if (parameters.MaximumDatabaseSizeInBytes != null)
+                {
+                    XElement maxSizeBytesElement = new XElement(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                    maxSizeBytesElement.Value = parameters.MaximumDatabaseSizeInBytes.ToString();
+                    serviceResourceElement.Add(maxSizeBytesElement);
                 }
                 
                 if (parameters.ServiceObjectiveId != null)
@@ -262,6 +271,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.MaximumDatabaseSizeInGB = maxSizeGBInstance;
                         }
                         
+                        XElement maxSizeBytesElement2 = serviceResourceElement2.Element(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                        if (maxSizeBytesElement2 != null && maxSizeBytesElement2.IsEmpty == false)
+                        {
+                            long maxSizeBytesInstance = long.Parse(maxSizeBytesElement2.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.MaximumDatabaseSizeInBytes = maxSizeBytesInstance;
+                        }
+                        
                         XElement collationNameElement2 = serviceResourceElement2.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                         if (collationNameElement2 != null && collationNameElement2.IsEmpty == false)
                         {
@@ -337,6 +353,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             string serviceObjectiveIdInstance = serviceObjectiveIdElement2.Value;
                             serviceResourceInstance.ServiceObjectiveId = serviceObjectiveIdInstance;
+                        }
+                        
+                        XElement assignedServiceObjectiveIdElement = serviceResourceElement2.Element(XName.Get("AssignedServiceObjectiveId", "http://schemas.microsoft.com/windowsazure"));
+                        if (assignedServiceObjectiveIdElement != null && assignedServiceObjectiveIdElement.IsEmpty == false)
+                        {
+                            string assignedServiceObjectiveIdInstance = assignedServiceObjectiveIdElement.Value;
+                            serviceResourceInstance.AssignedServiceObjectiveId = assignedServiceObjectiveIdInstance;
+                        }
+                        
+                        XElement recoveryPeriodStartDateElement = serviceResourceElement2.Element(XName.Get("RecoveryPeriodStartDate", "http://schemas.microsoft.com/windowsazure"));
+                        if (recoveryPeriodStartDateElement != null && recoveryPeriodStartDateElement.IsEmpty == false && string.IsNullOrEmpty(recoveryPeriodStartDateElement.Value) == false)
+                        {
+                            DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                         }
                     }
                     
@@ -649,6 +679,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.MaximumDatabaseSizeInGB = maxSizeGBInstance;
                         }
                         
+                        XElement maxSizeBytesElement = serviceResourceElement.Element(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                        if (maxSizeBytesElement != null && maxSizeBytesElement.IsEmpty == false)
+                        {
+                            long maxSizeBytesInstance = long.Parse(maxSizeBytesElement.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.MaximumDatabaseSizeInBytes = maxSizeBytesInstance;
+                        }
+                        
                         XElement collationNameElement = serviceResourceElement.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                         if (collationNameElement != null && collationNameElement.IsEmpty == false)
                         {
@@ -724,6 +761,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             string serviceObjectiveIdInstance = serviceObjectiveIdElement.Value;
                             serviceResourceInstance.ServiceObjectiveId = serviceObjectiveIdInstance;
+                        }
+                        
+                        XElement assignedServiceObjectiveIdElement = serviceResourceElement.Element(XName.Get("AssignedServiceObjectiveId", "http://schemas.microsoft.com/windowsazure"));
+                        if (assignedServiceObjectiveIdElement != null && assignedServiceObjectiveIdElement.IsEmpty == false)
+                        {
+                            string assignedServiceObjectiveIdInstance = assignedServiceObjectiveIdElement.Value;
+                            serviceResourceInstance.AssignedServiceObjectiveId = assignedServiceObjectiveIdInstance;
+                        }
+                        
+                        XElement recoveryPeriodStartDateElement = serviceResourceElement.Element(XName.Get("RecoveryPeriodStartDate", "http://schemas.microsoft.com/windowsazure"));
+                        if (recoveryPeriodStartDateElement != null && recoveryPeriodStartDateElement.IsEmpty == false && string.IsNullOrEmpty(recoveryPeriodStartDateElement.Value) == false)
+                        {
+                            DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                         }
                     }
                     
@@ -1179,6 +1230,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 serviceResourceInstance.MaximumDatabaseSizeInGB = maxSizeGBInstance;
                             }
                             
+                            XElement maxSizeBytesElement = serviceResourcesElement.Element(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                            if (maxSizeBytesElement != null && maxSizeBytesElement.IsEmpty == false)
+                            {
+                                long maxSizeBytesInstance = long.Parse(maxSizeBytesElement.Value, CultureInfo.InvariantCulture);
+                                serviceResourceInstance.MaximumDatabaseSizeInBytes = maxSizeBytesInstance;
+                            }
+                            
                             XElement collationNameElement = serviceResourcesElement.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                             if (collationNameElement != null && collationNameElement.IsEmpty == false)
                             {
@@ -1254,6 +1312,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 string serviceObjectiveIdInstance = serviceObjectiveIdElement.Value;
                                 serviceResourceInstance.ServiceObjectiveId = serviceObjectiveIdInstance;
+                            }
+                            
+                            XElement assignedServiceObjectiveIdElement = serviceResourcesElement.Element(XName.Get("AssignedServiceObjectiveId", "http://schemas.microsoft.com/windowsazure"));
+                            if (assignedServiceObjectiveIdElement != null && assignedServiceObjectiveIdElement.IsEmpty == false)
+                            {
+                                string assignedServiceObjectiveIdInstance = assignedServiceObjectiveIdElement.Value;
+                                serviceResourceInstance.AssignedServiceObjectiveId = assignedServiceObjectiveIdInstance;
+                            }
+                            
+                            XElement recoveryPeriodStartDateElement = serviceResourcesElement.Element(XName.Get("RecoveryPeriodStartDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (recoveryPeriodStartDateElement != null && recoveryPeriodStartDateElement.IsEmpty == false && string.IsNullOrEmpty(recoveryPeriodStartDateElement.Value) == false)
+                            {
+                                DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
+                                serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                             }
                         }
                     }
@@ -1393,13 +1465,23 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 editionElement.Value = parameters.Edition;
                 serviceResourceElement.Add(editionElement);
                 
-                XElement maxSizeGBElement = new XElement(XName.Get("MaxSizeGB", "http://schemas.microsoft.com/windowsazure"));
-                maxSizeGBElement.Value = parameters.MaximumDatabaseSizeInGB.ToString();
-                serviceResourceElement.Add(maxSizeGBElement);
+                if (parameters.MaximumDatabaseSizeInGB != null)
+                {
+                    XElement maxSizeGBElement = new XElement(XName.Get("MaxSizeGB", "http://schemas.microsoft.com/windowsazure"));
+                    maxSizeGBElement.Value = parameters.MaximumDatabaseSizeInGB.ToString();
+                    serviceResourceElement.Add(maxSizeGBElement);
+                }
                 
                 XElement collationNameElement = new XElement(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                 collationNameElement.Value = parameters.CollationName;
                 serviceResourceElement.Add(collationNameElement);
+                
+                if (parameters.MaximumDatabaseSizeInBytes != null)
+                {
+                    XElement maxSizeBytesElement = new XElement(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                    maxSizeBytesElement.Value = parameters.MaximumDatabaseSizeInBytes.ToString();
+                    serviceResourceElement.Add(maxSizeBytesElement);
+                }
                 
                 if (parameters.ServiceObjectiveId != null)
                 {
@@ -1494,6 +1576,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.MaximumDatabaseSizeInGB = maxSizeGBInstance;
                         }
                         
+                        XElement maxSizeBytesElement2 = serviceResourceElement2.Element(XName.Get("MaxSizeBytes", "http://schemas.microsoft.com/windowsazure"));
+                        if (maxSizeBytesElement2 != null && maxSizeBytesElement2.IsEmpty == false)
+                        {
+                            long maxSizeBytesInstance = long.Parse(maxSizeBytesElement2.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.MaximumDatabaseSizeInBytes = maxSizeBytesInstance;
+                        }
+                        
                         XElement collationNameElement2 = serviceResourceElement2.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
                         if (collationNameElement2 != null && collationNameElement2.IsEmpty == false)
                         {
@@ -1569,6 +1658,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             string serviceObjectiveIdInstance = serviceObjectiveIdElement2.Value;
                             serviceResourceInstance.ServiceObjectiveId = serviceObjectiveIdInstance;
+                        }
+                        
+                        XElement assignedServiceObjectiveIdElement = serviceResourceElement2.Element(XName.Get("AssignedServiceObjectiveId", "http://schemas.microsoft.com/windowsazure"));
+                        if (assignedServiceObjectiveIdElement != null && assignedServiceObjectiveIdElement.IsEmpty == false)
+                        {
+                            string assignedServiceObjectiveIdInstance = assignedServiceObjectiveIdElement.Value;
+                            serviceResourceInstance.AssignedServiceObjectiveId = assignedServiceObjectiveIdInstance;
+                        }
+                        
+                        XElement recoveryPeriodStartDateElement = serviceResourceElement2.Element(XName.Get("RecoveryPeriodStartDate", "http://schemas.microsoft.com/windowsazure"));
+                        if (recoveryPeriodStartDateElement != null && recoveryPeriodStartDateElement.IsEmpty == false && string.IsNullOrEmpty(recoveryPeriodStartDateElement.Value) == false)
+                        {
+                            DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
+                            serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                         }
                     }
                     

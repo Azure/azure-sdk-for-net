@@ -25,59 +25,58 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Server operation.
+    /// A quota for the specified server in your Windows Azure subscription.
     /// </summary>
-    public partial class ServerCreateParameters
+    public partial class Quota
     {
-        private string _administratorPassword;
+        private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the administrator password.
+        /// Optional. Gets or sets the name of a quota for the server.
         /// </summary>
-        public string AdministratorPassword
+        public string Name
         {
-            get { return this._administratorPassword; }
-            set { this._administratorPassword = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private string _administratorUserName;
+        private string _state;
         
         /// <summary>
-        /// Required. Gets or sets the administrator username.
+        /// Optional. Gets or sets the state of the quota.
         /// </summary>
-        public string AdministratorUserName
+        public string State
         {
-            get { return this._administratorUserName; }
-            set { this._administratorUserName = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
-        private string _location;
+        private string _type;
         
         /// <summary>
-        /// Required. Gets or sets the region in which this server will be
-        /// created.
+        /// Optional. Gets or sets the type of quota.
         /// </summary>
-        public string Location
+        public string Type
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
-        private string _version;
+        private string _value;
         
         /// <summary>
-        /// Optional. Gets or sets the version of server to create.
+        /// Optional. Gets or sets the value of the quota.
         /// </summary>
-        public string Version
+        public string Value
         {
-            get { return this._version; }
-            set { this._version = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerCreateParameters class.
+        /// Initializes a new instance of the Quota class.
         /// </summary>
-        public ServerCreateParameters()
+        public Quota()
         {
         }
     }
