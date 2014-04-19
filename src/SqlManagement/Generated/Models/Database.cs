@@ -29,6 +29,18 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
     /// </summary>
     public partial class Database
     {
+        private string _assignedServiceObjectiveId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the assigned service objective for
+        /// this database.
+        /// </summary>
+        public string AssignedServiceObjectiveId
+        {
+            get { return this._assignedServiceObjectiveId; }
+            set { this._assignedServiceObjectiveId = value; }
+        }
+        
         private string _collationName;
         
         /// <summary>
@@ -97,6 +109,17 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._isSystemObject = value; }
         }
         
+        private long _maximumDatabaseSizeInBytes;
+        
+        /// <summary>
+        /// Optional. Gets or sets the maximum size of this database, in bytes.
+        /// </summary>
+        public long MaximumDatabaseSizeInBytes
+        {
+            get { return this._maximumDatabaseSizeInBytes; }
+            set { this._maximumDatabaseSizeInBytes = value; }
+        }
+        
         private int _maximumDatabaseSizeInGB;
         
         /// <summary>
@@ -118,6 +141,18 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         {
             get { return this._name; }
             set { this._name = value; }
+        }
+        
+        private System.DateTime? _recoveryPeriodStartDate;
+        
+        /// <summary>
+        /// Optional. Gets the starting date of the restorable period for this
+        /// database.
+        /// </summary>
+        public System.DateTime? RecoveryPeriodStartDate
+        {
+            get { return this._recoveryPeriodStartDate; }
+            set { this._recoveryPeriodStartDate = value; }
         }
         
         private string _serviceObjectiveAssignmentErrorCode;

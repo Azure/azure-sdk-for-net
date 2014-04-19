@@ -77,6 +77,17 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._name = value; }
         }
         
+        private string _version;
+        
+        /// <summary>
+        /// Optional. Gets or sets the version of the server.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Server class.
         /// </summary>
