@@ -138,7 +138,7 @@ peopleTable.Create();
 
 # Microsoft Azure Management Libraries
 
-Automate, configure and command your Azure deployments, infrastructure and accounts with the Azure Management Libraries.
+Automate, configure and command your deployments, infrastructure and accounts with the Microsoft Azure Management Libraries.
 
 > *Preview:* At this time some of the Microsoft Azure Management Libraries are still in the preview state as the teams gather feedback and prepare for the initial release. Please enjoy using the libraries and source in any capacity, but understand that there may be breaking changes with the 1.0 release.
 
