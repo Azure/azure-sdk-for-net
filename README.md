@@ -221,7 +221,7 @@ using (StorageManagementClient client =
 }
 ```
 
-The following code will create a new (empty) Cloud Service in the Azure subscription. 
+The following code will create a new (empty) Cloud Service in the subscription. 
 
 ```csharp
 var cloudServiceName = "MyCloudService";
