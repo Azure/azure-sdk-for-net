@@ -9,9 +9,15 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Monitoring</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Monitoring</AssemblyName>
+    <AssemblyName>Microsoft.WindowsAzure.Management.MonitoringV2</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Microsoft.WindowsAzure.Management.MonitoringV2.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Microsoft.WindowsAzure.Management.MonitoringV2.xml</DocumentationFile>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
