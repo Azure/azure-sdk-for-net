@@ -65,12 +65,12 @@ As of 10/2013, SDK 2.2 supports targeting only .NET Framework 4.0 and newer.
  
 ## Requirements
 
-- Microsoft Azure Subscription: To call Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Sign up for a free trial or use your MSDN subscriber benefits.
-- Hosting: To host your .NET code in Azure, you additionally need to download the full Azure SDK for .NET - which includes packaging,
-    emulation, and deployment tools, or use Azure Web Sites to deploy ASP.NET web applications.
+- Microsoft Azure Subscription: To call Microsoft Azure services, you need to first [create an account](https://account.windowsazure.com/Home/Index). Sign up for a free trial or use your MSDN subscriber benefits.
+- Hosting: To host your .NET code in Azure, you additionally need to download the full Microsoft Azure SDK for .NET - which includes packaging,
+    emulation, and deployment tools, or use Microsoft Azure Web Sites to deploy ASP.NET web applications.
 
 ## Need Help?
-Be sure to check out the Azure [Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use StackOverflow.
+Be sure to check out the [Microsoft Azure Developer Forums on MSDN](http://go.microsoft.com/fwlink/?LinkId=234489) if you have trouble with the provided code or use StackOverflow.
 
 ## Collaborate & Contribute
 
