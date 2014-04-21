@@ -4,7 +4,7 @@ The Microsoft Azure SDK for .NET allows you to build applications
 that take advantage of scalable cloud computing resources.
 
 This repository contains the open source subset of the .NET SDK. For documentation of the 
-complete SDK, please see the [Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
+complete SDK, please see the [Microsoft Azure .NET Developer Center](http://www.windowsazure.com/en-us/develop/net/).
 
 # Features
 
