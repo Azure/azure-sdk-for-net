@@ -165,7 +165,7 @@ To get all of the management libraries setup in your project:
 
 ### Code Samples
 
-This code would result with a list of the regions in Azure. The location object provided in the result provides properties to define which assets are supported by each region. 
+This code would result with a list of the regions. The location object provided in the result provides properties to define which assets are supported by each region. 
 
 ```csharp
 using (ManagementClient client = CloudContext.Clients.CreateManagementClient(Credentials))
