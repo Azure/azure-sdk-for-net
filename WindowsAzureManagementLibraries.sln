@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "src\WebSiteManagement\WebSiteManagement.csproj", "{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}"
@@ -64,10 +66,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "src\R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring2", "src\Monitoring2\Monitoring2.csproj", "{55558FC1-8E63-4D16-934B-7979AB40567E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\WebSiteManagement2\WebSiteManagement2.csproj", "{4304DC36-C19B-4D45-832E-7376B5FA122D}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = WindowsAzureLibraries.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -195,6 +196,14 @@ Global
 		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4304DC36-C19B-4D45-832E-7376B5FA122D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -215,5 +224,9 @@ Global
 		{A1A9A2BF-500F-40B8-ACA2-5849887A65D7} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{55558FC1-8E63-4D16-934B-7979AB40567E} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{4304DC36-C19B-4D45-832E-7376B5FA122D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
 	EndGlobalSection
 EndGlobal
