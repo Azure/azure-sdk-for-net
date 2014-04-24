@@ -2689,11 +2689,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeUriString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeUriString(parameters.StartTime.Value.ToString("s"));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString("s"));
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
