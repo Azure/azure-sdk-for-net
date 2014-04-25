@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Information about an error that occured during the operation.
+        /// Information about an error that occurred during the operation.
         /// </summary>
         public partial class Error
         {

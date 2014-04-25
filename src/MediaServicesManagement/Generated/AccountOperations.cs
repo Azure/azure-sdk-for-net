@@ -158,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -347,7 +347,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -468,7 +468,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -646,7 +646,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -708,7 +708,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
+                    if (serviceResourcesSequenceElement != null)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -716,42 +716,42 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                             result.Accounts.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null && typeElement.IsEmpty == false)
+                            if (typeElement != null)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null && stateElement.IsEmpty == false)
+                            if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
+                            if (selfLinkElement != null)
                             {
                                 Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
                                 serviceResourceInstance.Uri = selfLinkInstance;
                             }
                             
                             XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
+                            if (parentLinkElement != null)
                             {
                                 Uri parentLinkInstance = TypeConversion.TryParseUri(parentLinkElement.Value);
                                 serviceResourceInstance.ParentUri = parentLinkInstance;
                             }
                             
                             XElement accountIdElement = serviceResourcesElement.Element(XName.Get("AccountId", "http://schemas.microsoft.com/windowsazure"));
-                            if (accountIdElement != null && accountIdElement.IsEmpty == false)
+                            if (accountIdElement != null)
                             {
                                 string accountIdInstance = accountIdElement.Value;
                                 serviceResourceInstance.AccountId = accountIdInstance;
@@ -830,7 +830,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/mediaservices/Accounts/" + accountName.Trim() + "/AccountKeys/" + keyType + "/Regenerate";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/mediaservices/Accounts/" + accountName.Trim() + "/AccountKeys/" + keyType + "/Regenerate";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {

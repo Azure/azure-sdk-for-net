@@ -224,12 +224,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._remoteDebuggingEnabled = value; }
         }
         
-        private RemoteDebuggingVersion _remoteDebuggingVersion;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.RemoteDebuggingVersion? _remoteDebuggingVersion;
         
         /// <summary>
         /// Optional. The remote debugging version.
         /// </summary>
-        public RemoteDebuggingVersion RemoteDebuggingVersion
+        public Microsoft.WindowsAzure.Management.WebSites.Models.RemoteDebuggingVersion? RemoteDebuggingVersion
         {
             get { return this._remoteDebuggingVersion; }
             set { this._remoteDebuggingVersion = value; }

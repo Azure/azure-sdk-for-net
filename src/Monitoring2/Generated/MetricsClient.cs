@@ -1205,7 +1205,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -1602,7 +1602,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1808,7 +1808,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricsettings?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
             url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2139,7 +2139,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
             url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(parameters.TimeGrain));

@@ -106,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/" + networkName.Trim() + "?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/" + networkName.Trim() + "?";
             url = url + "op=checkavailability";
             url = url + "&address=" + Uri.EscapeUriString(ipAddress);
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -170,17 +170,17 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement addressAvailabilityResponseElement = responseDoc.Element(XName.Get("AddressAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (addressAvailabilityResponseElement != null && addressAvailabilityResponseElement.IsEmpty == false)
+                    if (addressAvailabilityResponseElement != null)
                     {
                         XElement isAvailableElement = addressAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null && isAvailableElement.IsEmpty == false)
+                        if (isAvailableElement != null)
                         {
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
                         }
                         
                         XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
-                        if (availableAddressesSequenceElement != null && availableAddressesSequenceElement.IsEmpty == false)
+                        if (availableAddressesSequenceElement != null)
                         {
                             foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
                             {

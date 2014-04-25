@@ -235,7 +235,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -297,17 +297,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null && operationElement.IsEmpty == false)
+                    if (operationElement != null)
                     {
                         XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdTimeElement != null && createdTimeElement.IsEmpty == false)
+                        if (createdTimeElement != null)
                         {
                             DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
                             result.CreatedTime = createdTimeInstance;
                         }
                         
                         XElement errorsSequenceElement = operationElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorsSequenceElement != null && errorsSequenceElement.IsEmpty == false)
+                        if (errorsSequenceElement != null)
                         {
                             bool isNil = false;
                             XAttribute nilAttribute = errorsSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -323,7 +323,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     result.Errors.Add(errorInstance);
                                     
                                     XElement codeElement = errorsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                                    if (codeElement != null && codeElement.IsEmpty == false)
+                                    if (codeElement != null)
                                     {
                                         bool isNil2 = false;
                                         XAttribute nilAttribute2 = codeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement messageElement = errorsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageElement != null && messageElement.IsEmpty == false)
+                                    if (messageElement != null)
                                     {
                                         bool isNil3 = false;
                                         XAttribute nilAttribute3 = messageElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -355,7 +355,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement extendedCodeElement = errorsElement.Element(XName.Get("ExtendedCode", "http://schemas.microsoft.com/windowsazure"));
-                                    if (extendedCodeElement != null && extendedCodeElement.IsEmpty == false)
+                                    if (extendedCodeElement != null)
                                     {
                                         bool isNil4 = false;
                                         XAttribute nilAttribute4 = extendedCodeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -371,7 +371,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement messageTemplateElement = errorsElement.Element(XName.Get("MessageTemplate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageTemplateElement != null && messageTemplateElement.IsEmpty == false)
+                                    if (messageTemplateElement != null)
                                     {
                                         bool isNil5 = false;
                                         XAttribute nilAttribute5 = messageTemplateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -387,7 +387,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement parametersSequenceElement = errorsElement.Element(XName.Get("Parameters", "http://schemas.microsoft.com/windowsazure"));
-                                    if (parametersSequenceElement != null && parametersSequenceElement.IsEmpty == false)
+                                    if (parametersSequenceElement != null)
                                     {
                                         bool isNil6 = false;
                                         XAttribute nilAttribute6 = parametersSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -405,7 +405,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
-                                    if (innerErrorsElement != null && innerErrorsElement.IsEmpty == false)
+                                    if (innerErrorsElement != null)
                                     {
                                         bool isNil7 = false;
                                         XAttribute nilAttribute7 = innerErrorsElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -424,14 +424,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (expirationTimeElement != null && expirationTimeElement.IsEmpty == false)
+                        if (expirationTimeElement != null)
                         {
                             DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
                             result.ExpirationTime = expirationTimeInstance;
                         }
                         
                         XElement geoMasterOperationIdElement = operationElement.Element(XName.Get("GeoMasterOperationId", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoMasterOperationIdElement != null && geoMasterOperationIdElement.IsEmpty == false)
+                        if (geoMasterOperationIdElement != null)
                         {
                             bool isNil8 = false;
                             XAttribute nilAttribute8 = geoMasterOperationIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -447,7 +447,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement idElement = operationElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             bool isNil9 = false;
                             XAttribute nilAttribute9 = idElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -463,14 +463,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (modifiedTimeElement != null && modifiedTimeElement.IsEmpty == false)
+                        if (modifiedTimeElement != null)
                         {
                             DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
                             result.ModifiedTime = modifiedTimeInstance;
                         }
                         
                         XElement nameElement = operationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             bool isNil10 = false;
                             XAttribute nilAttribute10 = nameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -486,7 +486,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
@@ -548,7 +548,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=register";
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -661,7 +661,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=unregister";
             // Trim '/' character from the end of baseUrl and beginning of url.

@@ -310,41 +310,5 @@ namespace Microsoft.Azure.Management.Resources
                 }
             }
         }
-        
-        /// <summary>
-        /// Parse enum values for type ResourceValidationMode.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static ResourceValidationMode ParseResourceValidationMode(string value)
-        {
-            if ("nameValidation".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ResourceValidationMode.NameValidation;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type ResourceValidationMode to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string ResourceValidationModeToString(ResourceValidationMode value)
-        {
-            if (value == ResourceValidationMode.NameValidation)
-            {
-                return "nameValidation";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
     }
 }

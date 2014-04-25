@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// <summary>
     /// Specifies the operation to perform on the connection. Can be set to
     /// Connect, Disconnect, or Test to connect to a local network, disconnect
-    /// from a local network, or test the gateway’s connection to a local
+    /// from a local network, or test the gateway's connection to a local
     /// network site.
     /// </summary>
     public enum GatewayConnectionUpdateOperation
