@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     public partial interface IQueueOperations
     {
         /// <summary>
-        /// Creates a new queue. Once created, this queue’s resource manifest
+        /// Creates a new queue. Once created, this queue's resource manifest
         /// is immutable. This operation is idempotent. Repeating the create
         /// call, after a queue with same name has been created successfully,
         /// will result in a 409 Conflict error message.  (see

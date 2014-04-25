@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -233,10 +233,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -311,7 +311,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -373,10 +373,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -479,7 +479,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -581,10 +581,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -658,7 +658,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/bgppeerings/" + accessType + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -720,62 +720,62 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement bgpPeeringElement = responseDoc.Element(XName.Get("BgpPeering", "http://schemas.microsoft.com/windowsazure"));
-                    if (bgpPeeringElement != null && bgpPeeringElement.IsEmpty == false)
+                    if (bgpPeeringElement != null)
                     {
                         AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                         result.BgpPeering = bgpPeeringInstance;
                         
                         XElement azureAsnElement = bgpPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (azureAsnElement != null && azureAsnElement.IsEmpty == false)
+                        if (azureAsnElement != null)
                         {
                             uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.AzureAsn = azureAsnInstance;
                         }
                         
                         XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (peerAsnElement != null && peerAsnElement.IsEmpty == false)
+                        if (peerAsnElement != null)
                         {
                             uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.PeerAsn = peerAsnInstance;
                         }
                         
                         XElement primaryAzurePortElement = bgpPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
+                        if (primaryAzurePortElement != null)
                         {
                             string primaryAzurePortInstance = primaryAzurePortElement.Value;
                             bgpPeeringInstance.PrimaryAzurePort = primaryAzurePortInstance;
                         }
                         
                         XElement primaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryPeerSubnetElement != null && primaryPeerSubnetElement.IsEmpty == false)
+                        if (primaryPeerSubnetElement != null)
                         {
                             string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
                             bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
                         }
                         
                         XElement secondaryAzurePortElement = bgpPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryAzurePortElement != null && secondaryAzurePortElement.IsEmpty == false)
+                        if (secondaryAzurePortElement != null)
                         {
                             string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
                             bgpPeeringInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                         }
                         
                         XElement secondaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryPeerSubnetElement != null && secondaryPeerSubnetElement.IsEmpty == false)
+                        if (secondaryPeerSubnetElement != null)
                         {
                             string secondaryPeerSubnetInstance = secondaryPeerSubnetElement.Value;
                             bgpPeeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
                         }
                         
                         XElement stateElement = bgpPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null && stateElement.IsEmpty == false)
+                        if (stateElement != null)
                         {
                             BGPPeeringState stateInstance = ((BGPPeeringState)Enum.Parse(typeof(BGPPeeringState), stateElement.Value, true));
                             bgpPeeringInstance.State = stateInstance;
                         }
                         
                         XElement vlanIdElement = bgpPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
-                        if (vlanIdElement != null && vlanIdElement.IsEmpty == false)
+                        if (vlanIdElement != null)
                         {
                             uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.VlanId = vlanIdInstance;

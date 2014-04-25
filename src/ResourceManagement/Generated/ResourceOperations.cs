@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
             url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -307,9 +307,8 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "validating=" + Uri.EscapeUriString(ResourceManagementClient.ResourceValidationModeToString(parameters.ValidationMode));
-            url = url + "&api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -528,7 +527,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
             url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -679,7 +678,7 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + identity.ParentResourcePath.Trim() + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
             url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -862,10 +861,10 @@ namespace Microsoft.Azure.Management.Resources
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
-                url = url + "resourceGroups/" + Uri.EscapeUriString(parameters.ResourceGroupName.Trim()) + "/";
+                url = url + "resourceGroups/" + Uri.EscapeUriString(parameters.ResourceGroupName != null ? parameters.ResourceGroupName.Trim() : "") + "/";
             }
             url = url + "resources?";
             url = url + "api-version=2014-04-01-preview";
@@ -875,7 +874,7 @@ namespace Microsoft.Azure.Management.Resources
             }
             if (parameters != null && parameters.ResourceType != null)
             {
-                url = url + "&$filter=resourceType eq '" + Uri.EscapeUriString(parameters.ResourceType.Trim()) + "'";
+                url = url + "&$filter=resourceType eq '" + Uri.EscapeUriString(parameters.ResourceType != null ? parameters.ResourceType.Trim() : "") + "'";
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

@@ -113,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + targetServerName.Trim() + "/recoverdatabaseoperations";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + targetServerName.Trim() + "/recoverdatabaseoperations";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -204,34 +204,34 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null && serviceResourceElement2.IsEmpty == false)
+                    if (serviceResourceElement2 != null)
                     {
                         RecoverDatabaseOperation serviceResourceInstance = new RecoverDatabaseOperation();
                         result.Operation = serviceResourceInstance;
                         
                         XElement requestIDElement = serviceResourceElement2.Element(XName.Get("RequestID", "http://schemas.microsoft.com/windowsazure"));
-                        if (requestIDElement != null && requestIDElement.IsEmpty == false)
+                        if (requestIDElement != null)
                         {
                             string requestIDInstance = requestIDElement.Value;
                             serviceResourceInstance.Id = requestIDInstance;
                         }
                         
                         XElement sourceServerNameElement2 = serviceResourceElement2.Element(XName.Get("SourceServerName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceServerNameElement2 != null && sourceServerNameElement2.IsEmpty == false)
+                        if (sourceServerNameElement2 != null)
                         {
                             string sourceServerNameInstance = sourceServerNameElement2.Value;
                             serviceResourceInstance.SourceServerName = sourceServerNameInstance;
                         }
                         
                         XElement sourceDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceDatabaseNameElement2 != null && sourceDatabaseNameElement2.IsEmpty == false)
+                        if (sourceDatabaseNameElement2 != null)
                         {
                             string sourceDatabaseNameInstance = sourceDatabaseNameElement2.Value;
                             serviceResourceInstance.SourceDatabaseName = sourceDatabaseNameInstance;
                         }
                         
                         XElement targetDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("TargetDatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                        if (targetDatabaseNameElement2 != null && targetDatabaseNameElement2.IsEmpty == false)
+                        if (targetDatabaseNameElement2 != null)
                         {
                             string targetDatabaseNameInstance = targetDatabaseNameElement2.Value;
                             serviceResourceInstance.TargetDatabaseName = targetDatabaseNameInstance;

@@ -1504,7 +1504,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1838,7 +1838,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1963,7 +1963,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2398,11 +2398,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings?";
             url = url + "api-version=2014-04";
             if (targetResourceUri != null)
             {
-                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeUriString(targetResourceUri.Trim());
+                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeUriString(targetResourceUri != null ? targetResourceUri.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2863,7 +2863,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

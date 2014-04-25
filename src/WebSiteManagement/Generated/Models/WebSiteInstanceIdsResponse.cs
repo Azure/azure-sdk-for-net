@@ -20,56 +20,51 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.Models
+namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Management Certificate operation.
+    /// The web site instance ids response.
     /// </summary>
-    public partial class ManagementCertificateCreateParameters
+    public partial class WebSiteInstanceIdsResponse : OperationResponse, IEnumerable<string>
     {
-        private byte[] _data;
+        private IList<string> _instanceIds;
         
         /// <summary>
-        /// Optional. The certificate's raw data in base-64-encoded cer format.
+        /// Optional. The identifiers of the currently running instances of the
+        /// web site.
         /// </summary>
-        public byte[] Data
+        public IList<string> InstanceIds
         {
-            get { return this._data; }
-            set { this._data = value; }
-        }
-        
-        private byte[] _publicKey;
-        
-        /// <summary>
-        /// Optional. A base-64-representation of the management certificate
-        /// public key.
-        /// </summary>
-        public byte[] PublicKey
-        {
-            get { return this._publicKey; }
-            set { this._publicKey = value; }
-        }
-        
-        private string _thumbprint;
-        
-        /// <summary>
-        /// Optional. The thumbprint that uniquely identifies the management
-        /// certificate.
-        /// </summary>
-        public string Thumbprint
-        {
-            get { return this._thumbprint; }
-            set { this._thumbprint = value; }
+            get { return this._instanceIds; }
+            set { this._instanceIds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ManagementCertificateCreateParameters class.
+        /// Initializes a new instance of the WebSiteInstanceIdsResponse class.
         /// </summary>
-        public ManagementCertificateCreateParameters()
+        public WebSiteInstanceIdsResponse()
         {
+            this._instanceIds = new List<string>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of InstanceIds.
+        /// </summary>
+        public IEnumerator<string> GetEnumerator()
+        {
+            return this.InstanceIds.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of InstanceIds.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

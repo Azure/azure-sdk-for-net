@@ -23,7 +23,7 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0.2,2.0)" />
     </dependencies>
   </metadata>
   <files>
