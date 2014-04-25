@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">

@@ -80,7 +80,6 @@
     <Content Include="hydra.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
