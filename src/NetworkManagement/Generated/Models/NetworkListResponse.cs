@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// <summary>
             /// Optional. The gateway that contains a list of Local Network
             /// Sites which enable the Virtual Network Site to communicate
-            /// with a customer’s on-premise networks.
+            /// with a customer's on-premise networks.
             /// </summary>
             public NetworkListResponse.Gateway Gateway
             {

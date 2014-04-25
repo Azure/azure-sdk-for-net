@@ -1315,11 +1315,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string url = "/api/jobs?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1584,11 +1584,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string url = "/api/jobs/continuous?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1861,11 +1861,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string url = "/api/jobs/triggered/" + jobName.Trim() + "/history?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2060,11 +2060,11 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             string url = "/api/jobs/triggered?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Trim());
+                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy.Trim());
+                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

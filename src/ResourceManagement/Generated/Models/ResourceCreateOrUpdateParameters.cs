@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
@@ -41,17 +40,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             get { return this._resource; }
             set { this._resource = value; }
-        }
-        
-        private ResourceValidationMode _validationMode;
-        
-        /// <summary>
-        /// Required. Gets or sets validation mode.
-        /// </summary>
-        public ResourceValidationMode ValidationMode
-        {
-            get { return this._validationMode; }
-            set { this._validationMode = value; }
         }
         
         /// <summary>
