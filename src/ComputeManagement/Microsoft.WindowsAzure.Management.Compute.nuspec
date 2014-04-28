@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Compute</id>
@@ -28,11 +28,9 @@
   </metadata>
   <files>
     <file src="ComputeManagement\**\*.cs" target="src" />
-    
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Compute.xml" target="lib\portable-net45+sl50+wp80+win" />
-
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Compute.xml" target="lib\net40" />
