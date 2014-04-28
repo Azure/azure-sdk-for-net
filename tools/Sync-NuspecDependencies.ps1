@@ -4,7 +4,7 @@ Param(
 [string]$BasePath
 )
 
-if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = ".\..\src" }
+if ($BasePath -eq '' -or $BasePath -eq $null) { $BasePath = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)\..\src" }
 
 $ErrorActionPreference = "Stop"
 
@@ -15,7 +15,7 @@ function SyncNuspecFile([string]$FolderPath)
 
 	# Check files exist
 	if(!(Test-Path -Path $FolderPath\*.nuspec) -or !(Test-Path -Path $FolderPath\packages.config)) { 
-		echo "Packages.config or *.nuspec files were not found. Aborting the script." 
+		echo "Packages.config or *.nuspec files were not found. Skipping..." 
 		return
 	}
 	
