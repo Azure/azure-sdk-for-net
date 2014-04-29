@@ -29,11 +29,9 @@
   </metadata>
   <files>
     <file src="ServiceBusManagement\**\*.cs" target="src" />
-
     <file src="..\binaries\Microsoft.WindowsAzure.Management.ServiceBus.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.ServiceBus.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.ServiceBus.xml" target="lib\portable-net45+sl50+wp80+win" />
-
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.ServiceBus.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.ServiceBus.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.ServiceBus.xml" target="lib\net40" />
