@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/certificates";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/certificates";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -268,7 +268,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/certificates/" + thumbprint.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/certificates/" + thumbprint.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -393,7 +393,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/certificates/" + thumbprint.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/certificates/" + thumbprint.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -455,31 +455,31 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionCertificateElement = responseDoc.Element(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionCertificateElement != null && subscriptionCertificateElement.IsEmpty == false)
+                    if (subscriptionCertificateElement != null)
                     {
                         XElement subscriptionCertificatePublicKeyElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificatePublicKey", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionCertificatePublicKeyElement != null && subscriptionCertificatePublicKeyElement.IsEmpty == false)
+                        if (subscriptionCertificatePublicKeyElement != null)
                         {
                             byte[] subscriptionCertificatePublicKeyInstance = Convert.FromBase64String(subscriptionCertificatePublicKeyElement.Value);
                             result.PublicKey = subscriptionCertificatePublicKeyInstance;
                         }
                         
                         XElement subscriptionCertificateThumbprintElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionCertificateThumbprintElement != null && subscriptionCertificateThumbprintElement.IsEmpty == false)
+                        if (subscriptionCertificateThumbprintElement != null)
                         {
                             string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
                             result.Thumbprint = subscriptionCertificateThumbprintInstance;
                         }
                         
                         XElement subscriptionCertificateDataElement = subscriptionCertificateElement.Element(XName.Get("SubscriptionCertificateData", "http://schemas.microsoft.com/windowsazure"));
-                        if (subscriptionCertificateDataElement != null && subscriptionCertificateDataElement.IsEmpty == false)
+                        if (subscriptionCertificateDataElement != null)
                         {
                             byte[] subscriptionCertificateDataInstance = Convert.FromBase64String(subscriptionCertificateDataElement.Value);
                             result.Data = subscriptionCertificateDataInstance;
                         }
                         
                         XElement createdElement = subscriptionCertificateElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdElement != null && createdElement.IsEmpty == false)
+                        if (createdElement != null)
                         {
                             DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
                             result.Created = createdInstance;
@@ -547,7 +547,7 @@ namespace Microsoft.WindowsAzure.Management
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/certificates";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/certificates";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -609,7 +609,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement subscriptionCertificatesSequenceElement = responseDoc.Element(XName.Get("SubscriptionCertificates", "http://schemas.microsoft.com/windowsazure"));
-                    if (subscriptionCertificatesSequenceElement != null && subscriptionCertificatesSequenceElement.IsEmpty == false)
+                    if (subscriptionCertificatesSequenceElement != null)
                     {
                         foreach (XElement subscriptionCertificatesElement in subscriptionCertificatesSequenceElement.Elements(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -617,28 +617,28 @@ namespace Microsoft.WindowsAzure.Management
                             result.SubscriptionCertificates.Add(subscriptionCertificateInstance);
                             
                             XElement subscriptionCertificatePublicKeyElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificatePublicKey", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificatePublicKeyElement != null && subscriptionCertificatePublicKeyElement.IsEmpty == false)
+                            if (subscriptionCertificatePublicKeyElement != null)
                             {
                                 byte[] subscriptionCertificatePublicKeyInstance = Convert.FromBase64String(subscriptionCertificatePublicKeyElement.Value);
                                 subscriptionCertificateInstance.PublicKey = subscriptionCertificatePublicKeyInstance;
                             }
                             
                             XElement subscriptionCertificateThumbprintElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificateThumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificateThumbprintElement != null && subscriptionCertificateThumbprintElement.IsEmpty == false)
+                            if (subscriptionCertificateThumbprintElement != null)
                             {
                                 string subscriptionCertificateThumbprintInstance = subscriptionCertificateThumbprintElement.Value;
                                 subscriptionCertificateInstance.Thumbprint = subscriptionCertificateThumbprintInstance;
                             }
                             
                             XElement subscriptionCertificateDataElement = subscriptionCertificatesElement.Element(XName.Get("SubscriptionCertificateData", "http://schemas.microsoft.com/windowsazure"));
-                            if (subscriptionCertificateDataElement != null && subscriptionCertificateDataElement.IsEmpty == false)
+                            if (subscriptionCertificateDataElement != null)
                             {
                                 byte[] subscriptionCertificateDataInstance = Convert.FromBase64String(subscriptionCertificateDataElement.Value);
                                 subscriptionCertificateInstance.Data = subscriptionCertificateDataInstance;
                             }
                             
                             XElement createdElement = subscriptionCertificatesElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
-                            if (createdElement != null && createdElement.IsEmpty == false)
+                            if (createdElement != null)
                             {
                                 DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
                                 subscriptionCertificateInstance.Created = createdInstance;

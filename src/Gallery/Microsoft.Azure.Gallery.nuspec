@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Gallery</id>
@@ -24,16 +24,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0.2,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="Gallery\**\*.cs" target="src" />
-
     <file src="..\binaries\Microsoft.Azure.Gallery.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.Azure.Gallery.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.Azure.Gallery.xml" target="lib\portable-net45+sl50+wp80+win" />
-
     <file src="..\binaries\net40\Microsoft.Azure.Gallery.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Gallery.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Gallery.xml" target="lib\net40" />
