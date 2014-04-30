@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -371,7 +371,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim() + "/definitions/1";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions/1";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -433,19 +433,19 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement definitionElement = responseDoc.Element(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure"));
-                    if (definitionElement != null && definitionElement.IsEmpty == false)
+                    if (definitionElement != null)
                     {
                         Definition definitionInstance = new Definition();
                         result.Definition = definitionInstance;
                         
                         XElement dnsOptionsElement = definitionElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
-                        if (dnsOptionsElement != null && dnsOptionsElement.IsEmpty == false)
+                        if (dnsOptionsElement != null)
                         {
                             DefinitionDnsOptions dnsOptionsInstance = new DefinitionDnsOptions();
                             definitionInstance.DnsOptions = dnsOptionsInstance;
                             
                             XElement timeToLiveInSecondsElement = dnsOptionsElement.Element(XName.Get("TimeToLiveInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                            if (timeToLiveInSecondsElement != null && timeToLiveInSecondsElement.IsEmpty == false)
+                            if (timeToLiveInSecondsElement != null)
                             {
                                 int timeToLiveInSecondsInstance = int.Parse(timeToLiveInSecondsElement.Value, CultureInfo.InvariantCulture);
                                 dnsOptionsInstance.TimeToLiveInSeconds = timeToLiveInSecondsInstance;
@@ -453,21 +453,21 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         }
                         
                         XElement statusElement = definitionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
                             definitionInstance.Status = statusInstance;
                         }
                         
                         XElement versionElement = definitionElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                        if (versionElement != null && versionElement.IsEmpty == false)
+                        if (versionElement != null)
                         {
                             int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
                             definitionInstance.Version = versionInstance;
                         }
                         
                         XElement monitorsSequenceElement = definitionElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
-                        if (monitorsSequenceElement != null && monitorsSequenceElement.IsEmpty == false)
+                        if (monitorsSequenceElement != null)
                         {
                             foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -475,62 +475,62 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 definitionInstance.Monitors.Add(monitorInstance);
                                 
                                 XElement intervalInSecondsElement = monitorsElement.Element(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                if (intervalInSecondsElement != null && intervalInSecondsElement.IsEmpty == false)
+                                if (intervalInSecondsElement != null)
                                 {
                                     int intervalInSecondsInstance = int.Parse(intervalInSecondsElement.Value, CultureInfo.InvariantCulture);
                                     monitorInstance.IntervalInSeconds = intervalInSecondsInstance;
                                 }
                                 
                                 XElement timeoutInSecondsElement = monitorsElement.Element(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                if (timeoutInSecondsElement != null && timeoutInSecondsElement.IsEmpty == false)
+                                if (timeoutInSecondsElement != null)
                                 {
                                     int timeoutInSecondsInstance = int.Parse(timeoutInSecondsElement.Value, CultureInfo.InvariantCulture);
                                     monitorInstance.TimeoutInSeconds = timeoutInSecondsInstance;
                                 }
                                 
                                 XElement toleratedNumberOfFailuresElement = monitorsElement.Element(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
-                                if (toleratedNumberOfFailuresElement != null && toleratedNumberOfFailuresElement.IsEmpty == false)
+                                if (toleratedNumberOfFailuresElement != null)
                                 {
                                     int toleratedNumberOfFailuresInstance = int.Parse(toleratedNumberOfFailuresElement.Value, CultureInfo.InvariantCulture);
                                     monitorInstance.ToleratedNumberOfFailures = toleratedNumberOfFailuresInstance;
                                 }
                                 
                                 XElement protocolElement = monitorsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                if (protocolElement != null && protocolElement.IsEmpty == false)
+                                if (protocolElement != null)
                                 {
                                     DefinitionMonitorProtocol protocolInstance = TrafficManagerManagementClient.ParseDefinitionMonitorProtocol(protocolElement.Value);
                                     monitorInstance.Protocol = protocolInstance;
                                 }
                                 
                                 XElement portElement = monitorsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                if (portElement != null && portElement.IsEmpty == false)
+                                if (portElement != null)
                                 {
                                     int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
                                     monitorInstance.Port = portInstance;
                                 }
                                 
                                 XElement httpOptionsElement = monitorsElement.Element(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
-                                if (httpOptionsElement != null && httpOptionsElement.IsEmpty == false)
+                                if (httpOptionsElement != null)
                                 {
                                     DefinitionMonitorHTTPOptions httpOptionsInstance = new DefinitionMonitorHTTPOptions();
                                     monitorInstance.HttpOptions = httpOptionsInstance;
                                     
                                     XElement verbElement = httpOptionsElement.Element(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
-                                    if (verbElement != null && verbElement.IsEmpty == false)
+                                    if (verbElement != null)
                                     {
                                         string verbInstance = verbElement.Value;
                                         httpOptionsInstance.Verb = verbInstance;
                                     }
                                     
                                     XElement relativePathElement = httpOptionsElement.Element(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
-                                    if (relativePathElement != null && relativePathElement.IsEmpty == false)
+                                    if (relativePathElement != null)
                                     {
                                         string relativePathInstance = relativePathElement.Value;
                                         httpOptionsInstance.RelativePath = relativePathInstance;
                                     }
                                     
                                     XElement expectedStatusCodeElement = httpOptionsElement.Element(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expectedStatusCodeElement != null && expectedStatusCodeElement.IsEmpty == false)
+                                    if (expectedStatusCodeElement != null)
                                     {
                                         int expectedStatusCodeInstance = int.Parse(expectedStatusCodeElement.Value, CultureInfo.InvariantCulture);
                                         httpOptionsInstance.ExpectedStatusCode = expectedStatusCodeInstance;
@@ -540,20 +540,20 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         }
                         
                         XElement policyElement = definitionElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
-                        if (policyElement != null && policyElement.IsEmpty == false)
+                        if (policyElement != null)
                         {
                             DefinitionPolicyResponse policyInstance = new DefinitionPolicyResponse();
                             definitionInstance.Policy = policyInstance;
                             
                             XElement loadBalancingMethodElement = policyElement.Element(XName.Get("LoadBalancingMethod", "http://schemas.microsoft.com/windowsazure"));
-                            if (loadBalancingMethodElement != null && loadBalancingMethodElement.IsEmpty == false)
+                            if (loadBalancingMethodElement != null)
                             {
                                 LoadBalancingMethod loadBalancingMethodInstance = ((LoadBalancingMethod)Enum.Parse(typeof(LoadBalancingMethod), loadBalancingMethodElement.Value, true));
                                 policyInstance.LoadBalancingMethod = loadBalancingMethodInstance;
                             }
                             
                             XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                            if (endpointsSequenceElement != null && endpointsSequenceElement.IsEmpty == false)
+                            if (endpointsSequenceElement != null)
                             {
                                 foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -561,42 +561,42 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                     policyInstance.Endpoints.Add(endpointInstance);
                                     
                                     XElement domainNameElement = endpointsElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (domainNameElement != null && domainNameElement.IsEmpty == false)
+                                    if (domainNameElement != null)
                                     {
                                         string domainNameInstance = domainNameElement.Value;
                                         endpointInstance.DomainName = domainNameInstance;
                                     }
                                     
                                     XElement statusElement2 = endpointsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                    if (statusElement2 != null && statusElement2.IsEmpty == false)
+                                    if (statusElement2 != null)
                                     {
                                         EndpointStatus statusInstance2 = ((EndpointStatus)Enum.Parse(typeof(EndpointStatus), statusElement2.Value, true));
                                         endpointInstance.Status = statusInstance2;
                                     }
                                     
                                     XElement typeElement = endpointsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    if (typeElement != null && typeElement.IsEmpty == false)
+                                    if (typeElement != null)
                                     {
                                         EndpointType typeInstance = ((EndpointType)Enum.Parse(typeof(EndpointType), typeElement.Value, true));
                                         endpointInstance.Type = typeInstance;
                                     }
                                     
                                     XElement locationElement = endpointsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                    if (locationElement != null && locationElement.IsEmpty == false)
+                                    if (locationElement != null)
                                     {
                                         string locationInstance = locationElement.Value;
                                         endpointInstance.Location = locationInstance;
                                     }
                                     
                                     XElement monitorStatusElement = endpointsElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                                    if (monitorStatusElement != null && monitorStatusElement.IsEmpty == false)
+                                    if (monitorStatusElement != null)
                                     {
                                         DefinitionEndpointMonitorStatus monitorStatusInstance = ((DefinitionEndpointMonitorStatus)Enum.Parse(typeof(DefinitionEndpointMonitorStatus), monitorStatusElement.Value, true));
                                         endpointInstance.MonitorStatus = monitorStatusInstance;
                                     }
                                     
                                     XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                    if (weightElement != null && weightElement.IsEmpty == false)
+                                    if (weightElement != null)
                                     {
                                         int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                         endpointInstance.Weight = weightInstance;
@@ -605,7 +605,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             }
                             
                             XElement monitorStatusElement2 = policyElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                            if (monitorStatusElement2 != null && monitorStatusElement2.IsEmpty == false)
+                            if (monitorStatusElement2 != null)
                             {
                                 DefinitionPolicyMonitorStatus monitorStatusInstance2 = ((DefinitionPolicyMonitorStatus)Enum.Parse(typeof(DefinitionPolicyMonitorStatus), monitorStatusElement2.Value, true));
                                 policyInstance.MonitorStatus = monitorStatusInstance2;
@@ -677,7 +677,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -739,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement definitionsSequenceElement = responseDoc.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
-                    if (definitionsSequenceElement != null && definitionsSequenceElement.IsEmpty == false)
+                    if (definitionsSequenceElement != null)
                     {
                         foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -747,13 +747,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             result.Definitions.Add(definitionInstance);
                             
                             XElement dnsOptionsElement = definitionsElement.Element(XName.Get("DnsOptions", "http://schemas.microsoft.com/windowsazure"));
-                            if (dnsOptionsElement != null && dnsOptionsElement.IsEmpty == false)
+                            if (dnsOptionsElement != null)
                             {
                                 DefinitionDnsOptions dnsOptionsInstance = new DefinitionDnsOptions();
                                 definitionInstance.DnsOptions = dnsOptionsInstance;
                                 
                                 XElement timeToLiveInSecondsElement = dnsOptionsElement.Element(XName.Get("TimeToLiveInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                if (timeToLiveInSecondsElement != null && timeToLiveInSecondsElement.IsEmpty == false)
+                                if (timeToLiveInSecondsElement != null)
                                 {
                                     int timeToLiveInSecondsInstance = int.Parse(timeToLiveInSecondsElement.Value, CultureInfo.InvariantCulture);
                                     dnsOptionsInstance.TimeToLiveInSeconds = timeToLiveInSecondsInstance;
@@ -761,21 +761,21 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             }
                             
                             XElement statusElement = definitionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null && statusElement.IsEmpty == false)
+                            if (statusElement != null)
                             {
                                 ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
                                 definitionInstance.Status = statusInstance;
                             }
                             
                             XElement versionElement = definitionsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                            if (versionElement != null && versionElement.IsEmpty == false)
+                            if (versionElement != null)
                             {
                                 int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
                                 definitionInstance.Version = versionInstance;
                             }
                             
                             XElement monitorsSequenceElement = definitionsElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
-                            if (monitorsSequenceElement != null && monitorsSequenceElement.IsEmpty == false)
+                            if (monitorsSequenceElement != null)
                             {
                                 foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -783,62 +783,62 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                     definitionInstance.Monitors.Add(monitorInstance);
                                     
                                     XElement intervalInSecondsElement = monitorsElement.Element(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                    if (intervalInSecondsElement != null && intervalInSecondsElement.IsEmpty == false)
+                                    if (intervalInSecondsElement != null)
                                     {
                                         int intervalInSecondsInstance = int.Parse(intervalInSecondsElement.Value, CultureInfo.InvariantCulture);
                                         monitorInstance.IntervalInSeconds = intervalInSecondsInstance;
                                     }
                                     
                                     XElement timeoutInSecondsElement = monitorsElement.Element(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                                    if (timeoutInSecondsElement != null && timeoutInSecondsElement.IsEmpty == false)
+                                    if (timeoutInSecondsElement != null)
                                     {
                                         int timeoutInSecondsInstance = int.Parse(timeoutInSecondsElement.Value, CultureInfo.InvariantCulture);
                                         monitorInstance.TimeoutInSeconds = timeoutInSecondsInstance;
                                     }
                                     
                                     XElement toleratedNumberOfFailuresElement = monitorsElement.Element(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
-                                    if (toleratedNumberOfFailuresElement != null && toleratedNumberOfFailuresElement.IsEmpty == false)
+                                    if (toleratedNumberOfFailuresElement != null)
                                     {
                                         int toleratedNumberOfFailuresInstance = int.Parse(toleratedNumberOfFailuresElement.Value, CultureInfo.InvariantCulture);
                                         monitorInstance.ToleratedNumberOfFailures = toleratedNumberOfFailuresInstance;
                                     }
                                     
                                     XElement protocolElement = monitorsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                    if (protocolElement != null && protocolElement.IsEmpty == false)
+                                    if (protocolElement != null)
                                     {
                                         DefinitionMonitorProtocol protocolInstance = TrafficManagerManagementClient.ParseDefinitionMonitorProtocol(protocolElement.Value);
                                         monitorInstance.Protocol = protocolInstance;
                                     }
                                     
                                     XElement portElement = monitorsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                                    if (portElement != null && portElement.IsEmpty == false)
+                                    if (portElement != null)
                                     {
                                         int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
                                         monitorInstance.Port = portInstance;
                                     }
                                     
                                     XElement httpOptionsElement = monitorsElement.Element(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
-                                    if (httpOptionsElement != null && httpOptionsElement.IsEmpty == false)
+                                    if (httpOptionsElement != null)
                                     {
                                         DefinitionMonitorHTTPOptions httpOptionsInstance = new DefinitionMonitorHTTPOptions();
                                         monitorInstance.HttpOptions = httpOptionsInstance;
                                         
                                         XElement verbElement = httpOptionsElement.Element(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
-                                        if (verbElement != null && verbElement.IsEmpty == false)
+                                        if (verbElement != null)
                                         {
                                             string verbInstance = verbElement.Value;
                                             httpOptionsInstance.Verb = verbInstance;
                                         }
                                         
                                         XElement relativePathElement = httpOptionsElement.Element(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
-                                        if (relativePathElement != null && relativePathElement.IsEmpty == false)
+                                        if (relativePathElement != null)
                                         {
                                             string relativePathInstance = relativePathElement.Value;
                                             httpOptionsInstance.RelativePath = relativePathInstance;
                                         }
                                         
                                         XElement expectedStatusCodeElement = httpOptionsElement.Element(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                                        if (expectedStatusCodeElement != null && expectedStatusCodeElement.IsEmpty == false)
+                                        if (expectedStatusCodeElement != null)
                                         {
                                             int expectedStatusCodeInstance = int.Parse(expectedStatusCodeElement.Value, CultureInfo.InvariantCulture);
                                             httpOptionsInstance.ExpectedStatusCode = expectedStatusCodeInstance;
@@ -848,20 +848,20 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             }
                             
                             XElement policyElement = definitionsElement.Element(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
-                            if (policyElement != null && policyElement.IsEmpty == false)
+                            if (policyElement != null)
                             {
                                 DefinitionPolicyResponse policyInstance = new DefinitionPolicyResponse();
                                 definitionInstance.Policy = policyInstance;
                                 
                                 XElement loadBalancingMethodElement = policyElement.Element(XName.Get("LoadBalancingMethod", "http://schemas.microsoft.com/windowsazure"));
-                                if (loadBalancingMethodElement != null && loadBalancingMethodElement.IsEmpty == false)
+                                if (loadBalancingMethodElement != null)
                                 {
                                     LoadBalancingMethod loadBalancingMethodInstance = ((LoadBalancingMethod)Enum.Parse(typeof(LoadBalancingMethod), loadBalancingMethodElement.Value, true));
                                     policyInstance.LoadBalancingMethod = loadBalancingMethodInstance;
                                 }
                                 
                                 XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                                if (endpointsSequenceElement != null && endpointsSequenceElement.IsEmpty == false)
+                                if (endpointsSequenceElement != null)
                                 {
                                     foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -869,42 +869,42 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                         policyInstance.Endpoints.Add(endpointInstance);
                                         
                                         XElement domainNameElement = endpointsElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                                        if (domainNameElement != null && domainNameElement.IsEmpty == false)
+                                        if (domainNameElement != null)
                                         {
                                             string domainNameInstance = domainNameElement.Value;
                                             endpointInstance.DomainName = domainNameInstance;
                                         }
                                         
                                         XElement statusElement2 = endpointsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                        if (statusElement2 != null && statusElement2.IsEmpty == false)
+                                        if (statusElement2 != null)
                                         {
                                             EndpointStatus statusInstance2 = ((EndpointStatus)Enum.Parse(typeof(EndpointStatus), statusElement2.Value, true));
                                             endpointInstance.Status = statusInstance2;
                                         }
                                         
                                         XElement typeElement = endpointsElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                        if (typeElement != null && typeElement.IsEmpty == false)
+                                        if (typeElement != null)
                                         {
                                             EndpointType typeInstance = ((EndpointType)Enum.Parse(typeof(EndpointType), typeElement.Value, true));
                                             endpointInstance.Type = typeInstance;
                                         }
                                         
                                         XElement locationElement = endpointsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                        if (locationElement != null && locationElement.IsEmpty == false)
+                                        if (locationElement != null)
                                         {
                                             string locationInstance = locationElement.Value;
                                             endpointInstance.Location = locationInstance;
                                         }
                                         
                                         XElement monitorStatusElement = endpointsElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                                        if (monitorStatusElement != null && monitorStatusElement.IsEmpty == false)
+                                        if (monitorStatusElement != null)
                                         {
                                             DefinitionEndpointMonitorStatus monitorStatusInstance = ((DefinitionEndpointMonitorStatus)Enum.Parse(typeof(DefinitionEndpointMonitorStatus), monitorStatusElement.Value, true));
                                             endpointInstance.MonitorStatus = monitorStatusInstance;
                                         }
                                         
                                         XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                        if (weightElement != null && weightElement.IsEmpty == false)
+                                        if (weightElement != null)
                                         {
                                             int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.Weight = weightInstance;
@@ -913,7 +913,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 }
                                 
                                 XElement monitorStatusElement2 = policyElement.Element(XName.Get("MonitorStatus", "http://schemas.microsoft.com/windowsazure"));
-                                if (monitorStatusElement2 != null && monitorStatusElement2.IsEmpty == false)
+                                if (monitorStatusElement2 != null)
                                 {
                                     DefinitionPolicyMonitorStatus monitorStatusInstance2 = ((DefinitionPolicyMonitorStatus)Enum.Parse(typeof(DefinitionPolicyMonitorStatus), monitorStatusElement2.Value, true));
                                     policyInstance.MonitorStatus = monitorStatusInstance2;

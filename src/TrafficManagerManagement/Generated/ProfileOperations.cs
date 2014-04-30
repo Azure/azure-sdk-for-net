@@ -102,7 +102,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/operations/isavailable/" + dnsName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/operations/isavailable/" + dnsName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -164,10 +164,10 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement availabilityResponseElement = responseDoc.Element(XName.Get("AvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (availabilityResponseElement != null && availabilityResponseElement.IsEmpty == false)
+                    if (availabilityResponseElement != null)
                     {
                         XElement resultElement = availabilityResponseElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                        if (resultElement != null && resultElement.IsEmpty == false)
+                        if (resultElement != null)
                         {
                             bool resultInstance = bool.Parse(resultElement.Value);
                             result.Result = resultInstance;
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -398,7 +398,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -519,7 +519,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -581,40 +581,40 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement profileElement = responseDoc.Element(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure"));
-                    if (profileElement != null && profileElement.IsEmpty == false)
+                    if (profileElement != null)
                     {
                         Profile profileInstance = new Profile();
                         result.Profile = profileInstance;
                         
                         XElement domainNameElement = profileElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                        if (domainNameElement != null && domainNameElement.IsEmpty == false)
+                        if (domainNameElement != null)
                         {
                             string domainNameInstance = domainNameElement.Value;
                             profileInstance.DomainName = domainNameInstance;
                         }
                         
                         XElement nameElement = profileElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             profileInstance.Name = nameInstance;
                         }
                         
                         XElement statusElement = profileElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
                             profileInstance.Status = statusInstance;
                         }
                         
                         XElement statusDetailsElement = profileElement.Element(XName.Get("StatusDetails", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusDetailsElement != null && statusDetailsElement.IsEmpty == false)
+                        if (statusDetailsElement != null)
                         {
                             ProfileStatusDetails statusDetailsInstance = new ProfileStatusDetails();
                             profileInstance.StatusDetails = statusDetailsInstance;
                             
                             XElement enabledVersionElement = statusDetailsElement.Element(XName.Get("EnabledVersion", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledVersionElement != null && enabledVersionElement.IsEmpty == false)
+                            if (enabledVersionElement != null)
                             {
                                 int enabledVersionInstance = int.Parse(enabledVersionElement.Value, CultureInfo.InvariantCulture);
                                 statusDetailsInstance.EnabledDefinitionVersion = enabledVersionInstance;
@@ -622,7 +622,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         }
                         
                         XElement definitionsSequenceElement = profileElement.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
-                        if (definitionsSequenceElement != null && definitionsSequenceElement.IsEmpty == false)
+                        if (definitionsSequenceElement != null)
                         {
                             foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -630,14 +630,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 profileInstance.Definitions.Add(definitionInstance);
                                 
                                 XElement statusElement2 = definitionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                if (statusElement2 != null && statusElement2.IsEmpty == false)
+                                if (statusElement2 != null)
                                 {
                                     ProfileDefinitionStatus statusInstance2 = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement2.Value, true));
                                     definitionInstance.Status = statusInstance2;
                                 }
                                 
                                 XElement versionElement = definitionsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                                if (versionElement != null && versionElement.IsEmpty == false)
+                                if (versionElement != null)
                                 {
                                     int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
                                     definitionInstance.Version = versionInstance;
@@ -702,7 +702,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -764,7 +764,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement profilesSequenceElement = responseDoc.Element(XName.Get("Profiles", "http://schemas.microsoft.com/windowsazure"));
-                    if (profilesSequenceElement != null && profilesSequenceElement.IsEmpty == false)
+                    if (profilesSequenceElement != null)
                     {
                         foreach (XElement profilesElement in profilesSequenceElement.Elements(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -772,34 +772,34 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             result.Profiles.Add(profileInstance);
                             
                             XElement domainNameElement = profilesElement.Element(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                            if (domainNameElement != null && domainNameElement.IsEmpty == false)
+                            if (domainNameElement != null)
                             {
                                 string domainNameInstance = domainNameElement.Value;
                                 profileInstance.DomainName = domainNameInstance;
                             }
                             
                             XElement nameElement = profilesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 profileInstance.Name = nameInstance;
                             }
                             
                             XElement statusElement = profilesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null && statusElement.IsEmpty == false)
+                            if (statusElement != null)
                             {
                                 ProfileDefinitionStatus statusInstance = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement.Value, true));
                                 profileInstance.Status = statusInstance;
                             }
                             
                             XElement statusDetailsElement = profilesElement.Element(XName.Get("StatusDetails", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusDetailsElement != null && statusDetailsElement.IsEmpty == false)
+                            if (statusDetailsElement != null)
                             {
                                 ProfileStatusDetails statusDetailsInstance = new ProfileStatusDetails();
                                 profileInstance.StatusDetails = statusDetailsInstance;
                                 
                                 XElement enabledVersionElement = statusDetailsElement.Element(XName.Get("EnabledVersion", "http://schemas.microsoft.com/windowsazure"));
-                                if (enabledVersionElement != null && enabledVersionElement.IsEmpty == false)
+                                if (enabledVersionElement != null)
                                 {
                                     int enabledVersionInstance = int.Parse(enabledVersionElement.Value, CultureInfo.InvariantCulture);
                                     statusDetailsInstance.EnabledDefinitionVersion = enabledVersionInstance;
@@ -807,7 +807,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             }
                             
                             XElement definitionsSequenceElement = profilesElement.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
-                            if (definitionsSequenceElement != null && definitionsSequenceElement.IsEmpty == false)
+                            if (definitionsSequenceElement != null)
                             {
                                 foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -815,14 +815,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                     profileInstance.Definitions.Add(definitionInstance);
                                     
                                     XElement statusElement2 = definitionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                    if (statusElement2 != null && statusElement2.IsEmpty == false)
+                                    if (statusElement2 != null)
                                     {
                                         ProfileDefinitionStatus statusInstance2 = ((ProfileDefinitionStatus)Enum.Parse(typeof(ProfileDefinitionStatus), statusElement2.Value, true));
                                         definitionInstance.Status = statusInstance2;
                                     }
                                     
                                     XElement versionElement = definitionsElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
-                                    if (versionElement != null && versionElement.IsEmpty == false)
+                                    if (versionElement != null)
                                     {
                                         int versionInstance = int.Parse(versionElement.Value, CultureInfo.InvariantCulture);
                                         definitionInstance.Version = versionInstance;
@@ -906,7 +906,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/WATM/profiles/" + profileName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
