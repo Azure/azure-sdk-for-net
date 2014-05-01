@@ -58,7 +58,7 @@ namespace Microsoft.WindowsAzure.Common
         /// <summary>
         /// Gets the HttpClient used for making HTTP requests.
         /// </summary>
-        public HttpClient HttpClient { get; internal set; }
+        public HttpClient HttpClient { get; set; }
         
         /// <summary>
         /// Gets a reference to our HTTP handler (which is the start of our
@@ -94,6 +94,15 @@ namespace Microsoft.WindowsAzure.Common
             // Create our root handler
             HttpMessageHandler handler = _transportHandlerProvider.CreateHttpTransportHandler();
             InitializeHttpClient(handler);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ServiceClient class.
+        /// </summary>
+        /// <param name="httpClient">The http client.</param>
+        public ServiceClient(HttpClient httpClient)
+        {
+            HttpClient = httpClient;
         }
 
         /// <summary>
