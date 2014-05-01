@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -213,34 +213,34 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null && serviceResourceElement2.IsEmpty == false)
+                    if (serviceResourceElement2 != null)
                     {
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null && nameElement2.IsEmpty == false)
+                        if (nameElement2 != null)
                         {
                             string nameInstance = nameElement2.Value;
                             serviceResourceInstance.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null && typeElement.IsEmpty == false)
+                        if (typeElement != null)
                         {
                             string typeInstance = typeElement.Value;
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
                         XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null && startIPAddressElement2.IsEmpty == false)
+                        if (startIPAddressElement2 != null)
                         {
                             string startIPAddressInstance = startIPAddressElement2.Value;
                             serviceResourceInstance.StartIPAddress = startIPAddressInstance;
                         }
                         
                         XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null && endIPAddressElement2.IsEmpty == false)
+                        if (endIPAddressElement2 != null)
                         {
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             serviceResourceInstance.EndIPAddress = endIPAddressInstance;
@@ -322,7 +322,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -452,7 +452,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -514,34 +514,34 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement != null && serviceResourceElement.IsEmpty == false)
+                    if (serviceResourceElement != null)
                     {
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
                         XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             serviceResourceInstance.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null && typeElement.IsEmpty == false)
+                        if (typeElement != null)
                         {
                             string typeInstance = typeElement.Value;
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
                         XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement != null && startIPAddressElement.IsEmpty == false)
+                        if (startIPAddressElement != null)
                         {
                             string startIPAddressInstance = startIPAddressElement.Value;
                             serviceResourceInstance.StartIPAddress = startIPAddressInstance;
                         }
                         
                         XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement != null && endIPAddressElement.IsEmpty == false)
+                        if (endIPAddressElement != null)
                         {
                             string endIPAddressInstance = endIPAddressElement.Value;
                             serviceResourceInstance.EndIPAddress = endIPAddressInstance;
@@ -614,7 +614,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -676,7 +676,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
+                    if (serviceResourcesSequenceElement != null)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -684,28 +684,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.FirewallRules.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null && typeElement.IsEmpty == false)
+                            if (typeElement != null)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (startIPAddressElement != null && startIPAddressElement.IsEmpty == false)
+                            if (startIPAddressElement != null)
                             {
                                 string startIPAddressInstance = startIPAddressElement.Value;
                                 serviceResourceInstance.StartIPAddress = startIPAddressInstance;
                             }
                             
                             XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (endIPAddressElement != null && endIPAddressElement.IsEmpty == false)
+                            if (endIPAddressElement != null)
                             {
                                 string endIPAddressInstance = endIPAddressElement.Value;
                                 serviceResourceInstance.EndIPAddress = endIPAddressInstance;
@@ -807,7 +807,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/firewallrules/" + ruleName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -892,34 +892,34 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement2 = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement2 != null && serviceResourceElement2.IsEmpty == false)
+                    if (serviceResourceElement2 != null)
                     {
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null && nameElement2.IsEmpty == false)
+                        if (nameElement2 != null)
                         {
                             string nameInstance = nameElement2.Value;
                             serviceResourceInstance.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null && typeElement.IsEmpty == false)
+                        if (typeElement != null)
                         {
                             string typeInstance = typeElement.Value;
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
                         XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null && startIPAddressElement2.IsEmpty == false)
+                        if (startIPAddressElement2 != null)
                         {
                             string startIPAddressInstance = startIPAddressElement2.Value;
                             serviceResourceInstance.StartIPAddress = startIPAddressInstance;
                         }
                         
                         XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null && endIPAddressElement2.IsEmpty == false)
+                        if (endIPAddressElement2 != null)
                         {
                             string endIPAddressInstance = endIPAddressElement2.Value;
                             serviceResourceInstance.EndIPAddress = endIPAddressInstance;

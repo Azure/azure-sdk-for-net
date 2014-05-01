@@ -22,17 +22,30 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
 {
     /// <summary>
-    /// Specifies validation mode for resources.
+    /// The detail status of the profile
     /// </summary>
-    public enum ResourceValidationMode
+    public partial class ProfileStatusDetails
     {
+        private int _enabledDefinitionVersion;
+        
         /// <summary>
-        /// Validate whether the resource name is available to be used and that
-        /// the resource name can be used in valid URIs.
+        /// Optional. Specifies the version of the policy definition. This
+        /// value is always 1.
         /// </summary>
-        NameValidation = 0,
+        public int EnabledDefinitionVersion
+        {
+            get { return this._enabledDefinitionVersion; }
+            set { this._enabledDefinitionVersion = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ProfileStatusDetails class.
+        /// </summary>
+        public ProfileStatusDetails()
+        {
+        }
     }
 }

@@ -103,15 +103,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The Begin Creating Role operation adds a virtual machine to an
         /// existing deployment. You can refer to the OSDisk in the Add Role
-        /// operation in the following ways: Platform/User Image – Set the
+        /// operation in the following ways: Platform/User Image - Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
         /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned; UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk -
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account - Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx
@@ -448,15 +448,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The Create Role operation adds a virtual machine to an existing
         /// deployment. You can refer to the OSDisk in the Add Role operation
-        /// in the following ways: Platform/User Image – Set the
+        /// in the following ways: Platform/User Image - Set the
         /// SourceImageName to a platform or user image. You can optionally
         /// specify the DiskName and MediaLink values as part the operation to
         /// control the name and location of target disk. When DiskName and
         /// MediaLink are specified in this mode, they must not already exist
-        /// in the system, otherwise a conflict fault is returned; UserDisk –
+        /// in the system, otherwise a conflict fault is returned; UserDisk -
         /// Set DiskName to a user supplied image in image repository.
         /// SourceImageName must be set to NULL. All other properties are
-        /// ignored; or Blob in a Storage Account – Set MediaLink to a blob
+        /// ignored; or Blob in a Storage Account - Set MediaLink to a blob
         /// containing the image. SourceImageName and DiskName are set to
         /// NULL.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157186.aspx

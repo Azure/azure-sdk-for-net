@@ -36,7 +36,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     public partial interface IWebSiteOperations
     {
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
@@ -44,8 +44,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// <param name='sourceSlotName'>
+        /// The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// The name of the second web site slot to swap with (target).
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -58,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can create a web site by using a POST request that includes the
@@ -246,6 +249,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(string webSpaceName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// You can retrieve the list of active instances by ids for a web site
+        /// by issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The web site instance ids response.
+        /// </returns>
+        Task<WebSiteInstanceIdsResponse> GetInstanceIdsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can retrieve the publish settings information for a web site by
         /// issuing an HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
@@ -345,7 +368,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         Task<OperationResponse> RestartAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='webSpaceName'>
         /// The name of the web space.
@@ -353,8 +376,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// <param name='webSiteName'>
         /// The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// The name of the web site slot to swap with the production slot.
+        /// <param name='sourceSlotName'>
+        /// The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// The name of the second web site slot to swap with (target).
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -367,7 +393,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        Task<WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        Task<WebSiteOperationStatusResponse> SwapSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a Git repository that you can

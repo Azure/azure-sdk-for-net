@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// <summary>
         /// Service Manager knows about the resource but the state is still
         /// Unknown which might either be a result of failed communication
-        /// with the RP or just that the Service Manager hasn’t got around to
+        /// with the RP or just that the Service Manager hasn't got around to
         /// process the resource.
         /// </summary>
         Unknown = 0,

@@ -122,11 +122,11 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricvalues/query?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricvalues/query?";
             url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
             if (metricNamespace != null)
             {
-                url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
+                url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace != null ? metricNamespace.Trim() : "");
             }
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
             url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(timeGrain));

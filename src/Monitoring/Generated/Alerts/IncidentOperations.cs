@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/alertincidents/" + incidentId.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertincidents/" + incidentId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/alertincidents?$filter=IsActive eq true";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertincidents?$filter=IsActive eq true";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -427,7 +427,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/alertrules/" + ruleId.Trim() + "/alertincidents?";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + ruleId.Trim() + "/alertincidents?";
             url = url + "$filter=IsActive eq " + Uri.EscapeUriString(isActive.ToString().ToLower());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

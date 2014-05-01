@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations/" + operationGuid.Trim();
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations/" + operationGuid.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -170,118 +170,118 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourceElement = responseDoc.Element(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourceElement != null && serviceResourceElement.IsEmpty == false)
+                    if (serviceResourceElement != null)
                     {
                         DatabaseOperation serviceResourceInstance = new DatabaseOperation();
                         result.DatabaseOperation = serviceResourceInstance;
                         
                         XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             serviceResourceInstance.Name = nameInstance;
                         }
                         
                         XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null && typeElement.IsEmpty == false)
+                        if (typeElement != null)
                         {
                             string typeInstance = typeElement.Value;
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
                         XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null && stateElement.IsEmpty == false)
+                        if (stateElement != null)
                         {
                             string stateInstance = stateElement.Value;
                             serviceResourceInstance.State = stateInstance;
                         }
                         
                         XElement selfLinkElement = serviceResourceElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
+                        if (selfLinkElement != null)
                         {
                             string selfLinkInstance = selfLinkElement.Value;
                             serviceResourceInstance.SelfLink = selfLinkInstance;
                         }
                         
                         XElement parentLinkElement = serviceResourceElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
+                        if (parentLinkElement != null)
                         {
                             string parentLinkInstance = parentLinkElement.Value;
                             serviceResourceInstance.ParentLink = parentLinkInstance;
                         }
                         
                         XElement idElement = serviceResourceElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             serviceResourceInstance.Id = idInstance;
                         }
                         
                         XElement stateIdElement = serviceResourceElement.Element(XName.Get("StateId", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateIdElement != null && stateIdElement.IsEmpty == false)
+                        if (stateIdElement != null)
                         {
                             int stateIdInstance = int.Parse(stateIdElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.StateId = stateIdInstance;
                         }
                         
                         XElement sessionActivityIdElement = serviceResourceElement.Element(XName.Get("SessionActivityId", "http://schemas.microsoft.com/windowsazure"));
-                        if (sessionActivityIdElement != null && sessionActivityIdElement.IsEmpty == false)
+                        if (sessionActivityIdElement != null)
                         {
                             string sessionActivityIdInstance = sessionActivityIdElement.Value;
                             serviceResourceInstance.SessionActivityId = sessionActivityIdInstance;
                         }
                         
                         XElement databaseNameElement = serviceResourceElement.Element(XName.Get("DatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                        if (databaseNameElement != null && databaseNameElement.IsEmpty == false)
+                        if (databaseNameElement != null)
                         {
                             string databaseNameInstance = databaseNameElement.Value;
                             serviceResourceInstance.DatabaseName = databaseNameInstance;
                         }
                         
                         XElement percentCompleteElement = serviceResourceElement.Element(XName.Get("PercentComplete", "http://schemas.microsoft.com/windowsazure"));
-                        if (percentCompleteElement != null && percentCompleteElement.IsEmpty == false)
+                        if (percentCompleteElement != null)
                         {
                             int percentCompleteInstance = int.Parse(percentCompleteElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.PercentComplete = percentCompleteInstance;
                         }
                         
                         XElement errorCodeElement = serviceResourceElement.Element(XName.Get("ErrorCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorCodeElement != null && errorCodeElement.IsEmpty == false)
+                        if (errorCodeElement != null)
                         {
                             int errorCodeInstance = int.Parse(errorCodeElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.ErrorCode = errorCodeInstance;
                         }
                         
                         XElement errorElement = serviceResourceElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null && errorElement.IsEmpty == false)
+                        if (errorElement != null)
                         {
                             string errorInstance = errorElement.Value;
                             serviceResourceInstance.Error = errorInstance;
                         }
                         
                         XElement errorSeverityElement = serviceResourceElement.Element(XName.Get("ErrorSeverity", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorSeverityElement != null && errorSeverityElement.IsEmpty == false)
+                        if (errorSeverityElement != null)
                         {
                             int errorSeverityInstance = int.Parse(errorSeverityElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.ErrorSeverity = errorSeverityInstance;
                         }
                         
                         XElement errorStateElement = serviceResourceElement.Element(XName.Get("ErrorState", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorStateElement != null && errorStateElement.IsEmpty == false)
+                        if (errorStateElement != null)
                         {
                             int errorStateInstance = int.Parse(errorStateElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.ErrorState = errorStateInstance;
                         }
                         
                         XElement startTimeElement = serviceResourceElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (startTimeElement != null && startTimeElement.IsEmpty == false)
+                        if (startTimeElement != null)
                         {
                             DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.StartTime = startTimeInstance;
                         }
                         
                         XElement lastModifyTimeElement = serviceResourceElement.Element(XName.Get("LastModifyTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (lastModifyTimeElement != null && lastModifyTimeElement.IsEmpty == false)
+                        if (lastModifyTimeElement != null)
                         {
                             DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
@@ -360,7 +360,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations?";
             url = url + "databaseName=" + Uri.EscapeUriString(databaseName.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -423,7 +423,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
+                    if (serviceResourcesSequenceElement != null)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -431,112 +431,112 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.DatabaseOperations.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null && typeElement.IsEmpty == false)
+                            if (typeElement != null)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null && stateElement.IsEmpty == false)
+                            if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
+                            if (selfLinkElement != null)
                             {
                                 string selfLinkInstance = selfLinkElement.Value;
                                 serviceResourceInstance.SelfLink = selfLinkInstance;
                             }
                             
                             XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
+                            if (parentLinkElement != null)
                             {
                                 string parentLinkInstance = parentLinkElement.Value;
                                 serviceResourceInstance.ParentLink = parentLinkInstance;
                             }
                             
                             XElement idElement = serviceResourcesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null && idElement.IsEmpty == false)
+                            if (idElement != null)
                             {
                                 string idInstance = idElement.Value;
                                 serviceResourceInstance.Id = idInstance;
                             }
                             
                             XElement stateIdElement = serviceResourcesElement.Element(XName.Get("StateId", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateIdElement != null && stateIdElement.IsEmpty == false)
+                            if (stateIdElement != null)
                             {
                                 int stateIdInstance = int.Parse(stateIdElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.StateId = stateIdInstance;
                             }
                             
                             XElement sessionActivityIdElement = serviceResourcesElement.Element(XName.Get("SessionActivityId", "http://schemas.microsoft.com/windowsazure"));
-                            if (sessionActivityIdElement != null && sessionActivityIdElement.IsEmpty == false)
+                            if (sessionActivityIdElement != null)
                             {
                                 string sessionActivityIdInstance = sessionActivityIdElement.Value;
                                 serviceResourceInstance.SessionActivityId = sessionActivityIdInstance;
                             }
                             
                             XElement databaseNameElement = serviceResourcesElement.Element(XName.Get("DatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                            if (databaseNameElement != null && databaseNameElement.IsEmpty == false)
+                            if (databaseNameElement != null)
                             {
                                 string databaseNameInstance = databaseNameElement.Value;
                                 serviceResourceInstance.DatabaseName = databaseNameInstance;
                             }
                             
                             XElement percentCompleteElement = serviceResourcesElement.Element(XName.Get("PercentComplete", "http://schemas.microsoft.com/windowsazure"));
-                            if (percentCompleteElement != null && percentCompleteElement.IsEmpty == false)
+                            if (percentCompleteElement != null)
                             {
                                 int percentCompleteInstance = int.Parse(percentCompleteElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.PercentComplete = percentCompleteInstance;
                             }
                             
                             XElement errorCodeElement = serviceResourcesElement.Element(XName.Get("ErrorCode", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorCodeElement != null && errorCodeElement.IsEmpty == false)
+                            if (errorCodeElement != null)
                             {
                                 int errorCodeInstance = int.Parse(errorCodeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorCode = errorCodeInstance;
                             }
                             
                             XElement errorElement = serviceResourcesElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorElement != null && errorElement.IsEmpty == false)
+                            if (errorElement != null)
                             {
                                 string errorInstance = errorElement.Value;
                                 serviceResourceInstance.Error = errorInstance;
                             }
                             
                             XElement errorSeverityElement = serviceResourcesElement.Element(XName.Get("ErrorSeverity", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorSeverityElement != null && errorSeverityElement.IsEmpty == false)
+                            if (errorSeverityElement != null)
                             {
                                 int errorSeverityInstance = int.Parse(errorSeverityElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorSeverity = errorSeverityInstance;
                             }
                             
                             XElement errorStateElement = serviceResourcesElement.Element(XName.Get("ErrorState", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorStateElement != null && errorStateElement.IsEmpty == false)
+                            if (errorStateElement != null)
                             {
                                 int errorStateInstance = int.Parse(errorStateElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorState = errorStateInstance;
                             }
                             
                             XElement startTimeElement = serviceResourcesElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null && startTimeElement.IsEmpty == false)
+                            if (startTimeElement != null)
                             {
                                 DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement lastModifyTimeElement = serviceResourcesElement.Element(XName.Get("LastModifyTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastModifyTimeElement != null && lastModifyTimeElement.IsEmpty == false)
+                            if (lastModifyTimeElement != null)
                             {
                                 DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
@@ -607,7 +607,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations?contentview=generic";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/databaseoperations?contentview=generic";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -669,7 +669,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
-                    if (serviceResourcesSequenceElement != null && serviceResourcesSequenceElement.IsEmpty == false)
+                    if (serviceResourcesSequenceElement != null)
                     {
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -677,112 +677,112 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             result.DatabaseOperations.Add(serviceResourceInstance);
                             
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 serviceResourceInstance.Name = nameInstance;
                             }
                             
                             XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null && typeElement.IsEmpty == false)
+                            if (typeElement != null)
                             {
                                 string typeInstance = typeElement.Value;
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
                             XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null && stateElement.IsEmpty == false)
+                            if (stateElement != null)
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null && selfLinkElement.IsEmpty == false)
+                            if (selfLinkElement != null)
                             {
                                 string selfLinkInstance = selfLinkElement.Value;
                                 serviceResourceInstance.SelfLink = selfLinkInstance;
                             }
                             
                             XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null && parentLinkElement.IsEmpty == false)
+                            if (parentLinkElement != null)
                             {
                                 string parentLinkInstance = parentLinkElement.Value;
                                 serviceResourceInstance.ParentLink = parentLinkInstance;
                             }
                             
                             XElement idElement = serviceResourcesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                            if (idElement != null && idElement.IsEmpty == false)
+                            if (idElement != null)
                             {
                                 string idInstance = idElement.Value;
                                 serviceResourceInstance.Id = idInstance;
                             }
                             
                             XElement stateIdElement = serviceResourcesElement.Element(XName.Get("StateId", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateIdElement != null && stateIdElement.IsEmpty == false)
+                            if (stateIdElement != null)
                             {
                                 int stateIdInstance = int.Parse(stateIdElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.StateId = stateIdInstance;
                             }
                             
                             XElement sessionActivityIdElement = serviceResourcesElement.Element(XName.Get("SessionActivityId", "http://schemas.microsoft.com/windowsazure"));
-                            if (sessionActivityIdElement != null && sessionActivityIdElement.IsEmpty == false)
+                            if (sessionActivityIdElement != null)
                             {
                                 string sessionActivityIdInstance = sessionActivityIdElement.Value;
                                 serviceResourceInstance.SessionActivityId = sessionActivityIdInstance;
                             }
                             
                             XElement databaseNameElement = serviceResourcesElement.Element(XName.Get("DatabaseName", "http://schemas.microsoft.com/windowsazure"));
-                            if (databaseNameElement != null && databaseNameElement.IsEmpty == false)
+                            if (databaseNameElement != null)
                             {
                                 string databaseNameInstance = databaseNameElement.Value;
                                 serviceResourceInstance.DatabaseName = databaseNameInstance;
                             }
                             
                             XElement percentCompleteElement = serviceResourcesElement.Element(XName.Get("PercentComplete", "http://schemas.microsoft.com/windowsazure"));
-                            if (percentCompleteElement != null && percentCompleteElement.IsEmpty == false)
+                            if (percentCompleteElement != null)
                             {
                                 int percentCompleteInstance = int.Parse(percentCompleteElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.PercentComplete = percentCompleteInstance;
                             }
                             
                             XElement errorCodeElement = serviceResourcesElement.Element(XName.Get("ErrorCode", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorCodeElement != null && errorCodeElement.IsEmpty == false)
+                            if (errorCodeElement != null)
                             {
                                 int errorCodeInstance = int.Parse(errorCodeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorCode = errorCodeInstance;
                             }
                             
                             XElement errorElement = serviceResourcesElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorElement != null && errorElement.IsEmpty == false)
+                            if (errorElement != null)
                             {
                                 string errorInstance = errorElement.Value;
                                 serviceResourceInstance.Error = errorInstance;
                             }
                             
                             XElement errorSeverityElement = serviceResourcesElement.Element(XName.Get("ErrorSeverity", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorSeverityElement != null && errorSeverityElement.IsEmpty == false)
+                            if (errorSeverityElement != null)
                             {
                                 int errorSeverityInstance = int.Parse(errorSeverityElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorSeverity = errorSeverityInstance;
                             }
                             
                             XElement errorStateElement = serviceResourcesElement.Element(XName.Get("ErrorState", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorStateElement != null && errorStateElement.IsEmpty == false)
+                            if (errorStateElement != null)
                             {
                                 int errorStateInstance = int.Parse(errorStateElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.ErrorState = errorStateInstance;
                             }
                             
                             XElement startTimeElement = serviceResourcesElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (startTimeElement != null && startTimeElement.IsEmpty == false)
+                            if (startTimeElement != null)
                             {
                                 DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.StartTime = startTimeInstance;
                             }
                             
                             XElement lastModifyTimeElement = serviceResourcesElement.Element(XName.Get("LastModifyTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastModifyTimeElement != null && lastModifyTimeElement.IsEmpty == false)
+                            if (lastModifyTimeElement != null)
                             {
                                 DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
