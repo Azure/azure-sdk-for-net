@@ -64,7 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="GenerateCode.props" />
+    <None Include="GenerateCode.props">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Microsoft.WindowsAzure.Management.nuget.proj" />
     <None Include="Microsoft.WindowsAzure.Management.nuspec" />
     <None Include="packages.config" />
