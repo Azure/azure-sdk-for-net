@@ -124,3 +124,5 @@ packages
 
 # Generated readme.txt files #
 src/*/readme.txt
+
+build.out
