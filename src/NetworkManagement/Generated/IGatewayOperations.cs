@@ -149,6 +149,33 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Set Virtual Network Gateway Shared Key operation sets the
+        /// shared key on the virtual network gateway for the specified
+        /// virtual network connection to the specified local network in
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Virtual Network Gateway Set Shared
+        /// Key request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard storage response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginSetSharedKeyAsync(string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// To connect to, disconnect from, or test your connection to a local
         /// network site, access the connection resource representing the
         /// local network and specify Connect, Disconnect or Test to perform
@@ -436,5 +463,39 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Set Virtual Network Gateway Shared Key operation sets the
+        /// shared key on the virtual network gateway for the specified
+        /// virtual network connection to the specified local network in
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154114.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='localNetworkName'>
+        /// The name of the local network.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters to the Virtual Network Gateway Set Shared Key
+        /// request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> SetSharedKeyAsync(string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -101,6 +101,12 @@
     <ItemGroup>
       <NuspecFilesToUpdate Include="%(SdkNuGetPackage.Folder)%(SdkNuGetPackage.Identity).nuspec" />
     </ItemGroup>
+	
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
+      <NuSpecSyncScript>$(MSBuildProjectDirectory)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	  
+    </PropertyGroup>
+	
     <Error Text="NuGet specification %(NuspecFilesToUpdate.Identity) not found."
            Condition="!Exists(%(NuspecFilesToUpdate.Identity))" />
 
@@ -111,6 +117,9 @@
                           Find="__%(NuSpecReplacementTokens.Identity)__"
                           Replace="%(NuSpecReplacementTokens.Value)"
                           LogReplacement="false" />
+
+    <!-- Update all explicit references to dependent versions. -->
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; }&quot;" />
 
     <!-- Second, use the new files as destructive replacement targets. -->
     <ItemGroup>
