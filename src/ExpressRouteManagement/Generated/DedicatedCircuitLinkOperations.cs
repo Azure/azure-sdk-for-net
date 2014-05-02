@@ -683,7 +683,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLink.BeginNewAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLinks.BeginNewAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -702,7 +702,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLink.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLinks.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
@@ -764,7 +764,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLink.BeginRemoveAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLinks.BeginRemoveAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;

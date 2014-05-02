@@ -22,6 +22,7 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
@@ -30,74 +31,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class CrossConnectionGetResponse : OperationResponse
     {
-        private int _bandwidth;
+        private AzureCrossConnection _crossConnection;
         
         /// <summary>
-        /// Optional. Specifies the bandwidth that is assigned to the circuit.
+        /// Optional. Details for the requested Cross Connection.
         /// </summary>
-        public int Bandwidth
+        public AzureCrossConnection CrossConnection
         {
-            get { return this._bandwidth; }
-            set { this._bandwidth = value; }
-        }
-        
-        private string _primaryAzurePort;
-        
-        /// <summary>
-        /// Optional. Specifies the name of the primary port. Only available
-        /// when the provisioning state is Provisioning or Provisioned.
-        /// </summary>
-        public string PrimaryAzurePort
-        {
-            get { return this._primaryAzurePort; }
-            set { this._primaryAzurePort = value; }
-        }
-        
-        private string _provisioningState;
-        
-        /// <summary>
-        /// Optional. Provisioning state of the cross connection. Can be
-        /// Provisioned, NotProvisioned, Provisioning or Deprovisioning.
-        /// </summary>
-        public string ProvisioningState
-        {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
-        }
-        
-        private string _secondaryAzurePort;
-        
-        /// <summary>
-        /// Optional. Specifies the name of the secondary port. Only available
-        /// when the provisioning state is Provisioning or Provisioned.
-        /// </summary>
-        public string SecondaryAzurePort
-        {
-            get { return this._secondaryAzurePort; }
-            set { this._secondaryAzurePort = value; }
-        }
-        
-        private int _sTag;
-        
-        /// <summary>
-        /// Optional. Specifies the identifier of circuit traffic.
-        /// </summary>
-        public int STag
-        {
-            get { return this._sTag; }
-            set { this._sTag = value; }
-        }
-        
-        private string _status;
-        
-        /// <summary>
-        /// Optional. The current status of the circuit. Possible values are:
-        /// Disabled, Disabling, Enabling, Enabled.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._crossConnection; }
+            set { this._crossConnection = value; }
         }
         
         /// <summary>

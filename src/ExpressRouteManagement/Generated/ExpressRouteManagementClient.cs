@@ -67,39 +67,39 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get { return this._credentials; }
         }
         
-        private IBgpPeeringOperations _bgpPeering;
+        private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
         
-        public virtual IBgpPeeringOperations BgpPeering
+        public virtual IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
-            get { return this._bgpPeering; }
+            get { return this._borderGatewayProtocolPeerings; }
         }
         
-        private ICrossConnectionOperations _crossConnection;
+        private ICrossConnectionOperations _crossConnections;
         
-        public virtual ICrossConnectionOperations CrossConnection
+        public virtual ICrossConnectionOperations CrossConnections
         {
-            get { return this._crossConnection; }
+            get { return this._crossConnections; }
         }
         
-        private IDedicatedCircuitLinkOperations _dedicatedCircuitLink;
+        private IDedicatedCircuitLinkOperations _dedicatedCircuitLinks;
         
-        public virtual IDedicatedCircuitLinkOperations DedicatedCircuitLink
+        public virtual IDedicatedCircuitLinkOperations DedicatedCircuitLinks
         {
-            get { return this._dedicatedCircuitLink; }
+            get { return this._dedicatedCircuitLinks; }
         }
         
-        private IDedicatedCircuitOperations _dedicatedCircuit;
+        private IDedicatedCircuitOperations _dedicatedCircuits;
         
-        public virtual IDedicatedCircuitOperations DedicatedCircuit
+        public virtual IDedicatedCircuitOperations DedicatedCircuits
         {
-            get { return this._dedicatedCircuit; }
+            get { return this._dedicatedCircuits; }
         }
         
-        private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProvider;
+        private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProviders;
         
-        public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProvider
+        public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
         {
-            get { return this._dedicatedCircuitServiceProvider; }
+            get { return this._dedicatedCircuitServiceProviders; }
         }
         
         /// <summary>
@@ -109,11 +109,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient()
             : base()
         {
-            this._bgpPeering = new BgpPeeringOperations(this);
-            this._crossConnection = new CrossConnectionOperations(this);
-            this._dedicatedCircuitLink = new DedicatedCircuitLinkOperations(this);
-            this._dedicatedCircuit = new DedicatedCircuitOperations(this);
-            this._dedicatedCircuitServiceProvider = new DedicatedCircuitServiceProviderOperations(this);
+            this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
+            this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
+            this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
