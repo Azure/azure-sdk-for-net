@@ -22,17 +22,23 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Specifies validation mode for resources.
+    /// The job stream type.
     /// </summary>
-    public enum ResourceValidationMode
+    public static partial class JobStreamType
     {
-        /// <summary>
-        /// Validate whether the resource name is available to be used and that
-        /// the resource name can be used in valid URIs.
-        /// </summary>
-        NameValidation = 0,
+        public const string Progress = "Progress";
+        
+        public const string Output = "Output";
+        
+        public const string Warning = "Warning";
+        
+        public const string Error = "Error";
+        
+        public const string Debug = "Debug";
+        
+        public const string Verbose = "Verbose";
     }
 }

@@ -73,6 +73,17 @@ namespace Microsoft.WindowsAzure.Management.Sql
             get { return this._dac; }
         }
         
+        private IDatabaseCopyOperations _databaseCopies;
+        
+        /// <summary>
+        /// The SQL Database Management API includes operations for managing
+        /// SQL Server database copies for a subscription.
+        /// </summary>
+        public virtual IDatabaseCopyOperations DatabaseCopies
+        {
+            get { return this._databaseCopies; }
+        }
+        
         private IDatabaseOperationOperations _databaseOperations;
         
         /// <summary>
@@ -112,6 +123,61 @@ namespace Microsoft.WindowsAzure.Management.Sql
             get { return this._firewallRules; }
         }
         
+        private IQuotaOperations _quotas;
+        
+        /// <summary>
+        /// The SQL Database Management API includes operations for getting SQL
+        /// Database server quotas.
+        /// </summary>
+        public virtual IQuotaOperations Quotas
+        {
+            get { return this._quotas; }
+        }
+        
+        private IRecoverableDatabaseOperations _recoverableDatabases;
+        
+        /// <summary>
+        /// Contains operations for getting Azure SQL Databases that can be
+        /// recovered.
+        /// </summary>
+        public virtual IRecoverableDatabaseOperations RecoverableDatabases
+        {
+            get { return this._recoverableDatabases; }
+        }
+        
+        private IRecoverDatabaseOperations _recoverDatabaseOperations;
+        
+        /// <summary>
+        /// Contains the operation to create recovery requests for Azure SQL
+        /// Databases.
+        /// </summary>
+        public virtual IRecoverDatabaseOperations RecoverDatabaseOperations
+        {
+            get { return this._recoverDatabaseOperations; }
+        }
+        
+        private IRestorableDroppedDatabaseOperations _restorableDroppedDatabases;
+        
+        /// <summary>
+        /// Contains operations for getting dropped Azure SQL Databases that
+        /// can be restored.
+        /// </summary>
+        public virtual IRestorableDroppedDatabaseOperations RestorableDroppedDatabases
+        {
+            get { return this._restorableDroppedDatabases; }
+        }
+        
+        private IRestoreDatabaseOperations _restoreDatabaseOperations;
+        
+        /// <summary>
+        /// Contains the operation to create restore requests for Azure SQL
+        /// Databases.
+        /// </summary>
+        public virtual IRestoreDatabaseOperations RestoreDatabaseOperations
+        {
+            get { return this._restoreDatabaseOperations; }
+        }
+        
         private IServerOperations _servers;
         
         /// <summary>
@@ -143,9 +209,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
             : base()
         {
             this._dac = new DacOperations(this);
+            this._databaseCopies = new DatabaseCopyOperations(this);
             this._databaseOperations = new DatabaseOperationOperations(this);
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._quotas = new QuotaOperations(this);
+            this._recoverableDatabases = new RecoverableDatabaseOperations(this);
+            this._recoverDatabaseOperations = new RecoverDatabaseOperations(this);
+            this._restorableDroppedDatabases = new RestorableDroppedDatabaseOperations(this);
+            this._restoreDatabaseOperations = new RestoreDatabaseOperations(this);
             this._servers = new ServerOperations(this);
             this._serviceObjectives = new ServiceObjectiveOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

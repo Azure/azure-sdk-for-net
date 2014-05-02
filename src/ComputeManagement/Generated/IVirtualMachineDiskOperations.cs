@@ -70,14 +70,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <summary>
         /// The Create Data Disk operation adds a data disk to a virtual
         /// machine. There are three ways to create the data disk using the
-        /// Add Data Disk operation. Option 1 – Attach an empty data disk to
+        /// Add Data Disk operation. Option 1 - Attach an empty data disk to
         /// the role by specifying the disk label and location of the disk
         /// image. Do not include the DiskName and SourceMediaLink elements in
         /// the request body. Include the MediaLink element and reference a
         /// blob that is in the same geographical region as the role. You can
         /// also omit the MediaLink element. In this usage, Azure will create
         /// the data disk in the storage account configured as default for the
-        /// role. Option 2 – Attach an existing data disk that is in the image
+        /// role. Option 2 - Attach an existing data disk that is in the image
         /// repository. Do not include the DiskName and SourceMediaLink
         /// elements in the request body. Specify the data disk to use by
         /// including the DiskName element. Note: If included the in the

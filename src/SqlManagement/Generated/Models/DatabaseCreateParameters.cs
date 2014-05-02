@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Required. Gets or sets the edition for the new database.
+        /// Optional. Gets or sets the edition for the new database.
         /// </summary>
         public string Edition
         {
@@ -51,13 +51,24 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._edition = value; }
         }
         
-        private int _maximumDatabaseSizeInGB;
+        private long? _maximumDatabaseSizeInBytes;
         
         /// <summary>
-        /// Required. Gets or sets the maximum size of this database, in
+        /// Optional. Gets or sets the maximum size of this database, in bytes.
+        /// </summary>
+        public long? MaximumDatabaseSizeInBytes
+        {
+            get { return this._maximumDatabaseSizeInBytes; }
+            set { this._maximumDatabaseSizeInBytes = value; }
+        }
+        
+        private int? _maximumDatabaseSizeInGB;
+        
+        /// <summary>
+        /// Optional. Gets or sets the maximum size of this database, in
         /// Gigabytes.
         /// </summary>
-        public int MaximumDatabaseSizeInGB
+        public int? MaximumDatabaseSizeInGB
         {
             get { return this._maximumDatabaseSizeInGB; }
             set { this._maximumDatabaseSizeInGB = value; }

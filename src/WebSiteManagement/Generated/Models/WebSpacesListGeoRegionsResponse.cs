@@ -95,12 +95,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private int _sortOrder;
+            private int? _sortOrder;
             
             /// <summary>
             /// Optional. Sort order for the geo region.
             /// </summary>
-            public int SortOrder
+            public int? SortOrder
             {
                 get { return this._sortOrder; }
                 set { this._sortOrder = value; }

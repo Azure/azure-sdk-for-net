@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure
     public static partial class WebSiteOperationsExtensions
     {
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -52,9 +52,12 @@ namespace Microsoft.WindowsAzure
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// Required. The name of the web site slot to swap with the production
-        /// slot.
+        /// <param name='sourceSlotName'>
+        /// Required. The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// Required. The name of the second web site slot to swap with
+        /// (target).
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -64,17 +67,17 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName);
+                return ((IWebSiteOperations)s).BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -86,9 +89,12 @@ namespace Microsoft.WindowsAzure
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// Required. The name of the web site slot to swap with the production
-        /// slot.
+        /// <param name='sourceSlotName'>
+        /// Required. The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// Required. The name of the second web site slot to swap with
+        /// (target).
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -98,9 +104,9 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
-            return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
+            return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -570,6 +576,58 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// You can retrieve the list of active instances by ids for a web site
+        /// by issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The web site instance ids response.
+        /// </returns>
+        public static WebSiteInstanceIdsResponse GetInstanceIds(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetInstanceIdsAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can retrieve the list of active instances by ids for a web site
+        /// by issuing an HTTP GET request.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// The web site instance ids response.
+        /// </returns>
+        public static Task<WebSiteInstanceIdsResponse> GetInstanceIdsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetInstanceIdsAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can retrieve the publish settings information for a web site by
         /// issuing an HTTP GET request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166996.aspx
@@ -828,7 +886,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -840,9 +898,12 @@ namespace Microsoft.WindowsAzure
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// Required. The name of the web site slot to swap with the production
-        /// slot.
+        /// <param name='sourceSlotName'>
+        /// Required. The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// Required. The name of the second web site slot to swap with
+        /// (target).
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -852,17 +913,17 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static WebSiteOperationStatusResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static WebSiteOperationStatusResponse SwapSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).SwapSlotsAsync(webSpaceName, webSiteName, slotName);
+                return ((IWebSiteOperations)s).SwapSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// You can swap a web site from one slot to the production slot.
+        /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -874,9 +935,12 @@ namespace Microsoft.WindowsAzure
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
-        /// <param name='slotName'>
-        /// Required. The name of the web site slot to swap with the production
-        /// slot.
+        /// <param name='sourceSlotName'>
+        /// Required. The name of the first web site slot to swap (source).
+        /// </param>
+        /// <param name='targetSlotName'>
+        /// Required. The name of the second web site slot to swap with
+        /// (target).
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified long-running
@@ -886,9 +950,9 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static Task<WebSiteOperationStatusResponse> SwapSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string slotName)
+        public static Task<WebSiteOperationStatusResponse> SwapSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
-            return operations.SwapSlotsAsync(webSpaceName, webSiteName, slotName, CancellationToken.None);
+            return operations.SwapSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
         }
         
         /// <summary>

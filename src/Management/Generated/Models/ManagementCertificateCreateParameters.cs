@@ -32,7 +32,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         private byte[] _data;
         
         /// <summary>
-        /// Optional. The certificate’s raw data in base-64-encoded cer format.
+        /// Optional. The certificate's raw data in base-64-encoded cer format.
         /// </summary>
         public byte[] Data
         {
