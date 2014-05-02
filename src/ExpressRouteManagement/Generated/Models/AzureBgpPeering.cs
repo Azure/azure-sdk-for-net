@@ -101,13 +101,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._secondaryPeerSubnet = value; }
         }
         
-        private BGPPeeringState _state;
+        private BgpPeeringState _state;
         
         /// <summary>
         /// Optional. The current state of the BGP session. Possible values are
         /// Disabled, Enabled.
         /// </summary>
-        public BGPPeeringState State
+        public BgpPeeringState State
         {
             get { return this._state; }
             set { this._state = value; }

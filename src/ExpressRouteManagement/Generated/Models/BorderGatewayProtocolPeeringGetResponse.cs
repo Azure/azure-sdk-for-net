@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The Get Bgp Peering Operation Response.
     /// </summary>
-    public partial class BgpPeeringGetResponse : OperationResponse
+    public partial class BorderGatewayProtocolPeeringGetResponse : OperationResponse
     {
         private AzureBgpPeering _bgpPeering;
         
@@ -43,9 +43,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the BgpPeeringGetResponse class.
+        /// Initializes a new instance of the
+        /// BorderGatewayProtocolPeeringGetResponse class.
         /// </summary>
-        public BgpPeeringGetResponse()
+        public BorderGatewayProtocolPeeringGetResponse()
         {
         }
     }
