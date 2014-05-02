@@ -97,6 +97,8 @@
     <None Include="GenerateCode.props">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Microsoft.Azure.Management.Automation.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.Automation.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
