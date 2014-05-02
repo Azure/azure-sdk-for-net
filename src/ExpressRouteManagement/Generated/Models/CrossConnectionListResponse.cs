@@ -30,14 +30,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The List Cross Connection operation response.
     /// </summary>
-    public partial class CrossConnectionListResponse : OperationResponse, IEnumerable<CrossConnectionListResponse.CrossConnection>
+    public partial class CrossConnectionListResponse : OperationResponse, IEnumerable<AzureCrossConnection>
     {
-        private IList<CrossConnectionListResponse.CrossConnection> _crossConnections;
+        private IList<AzureCrossConnection> _crossConnections;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public IList<CrossConnectionListResponse.CrossConnection> CrossConnections
+        public IList<AzureCrossConnection> CrossConnections
         {
             get { return this._crossConnections; }
             set { this._crossConnections = value; }
@@ -48,13 +48,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public CrossConnectionListResponse()
         {
-            this._crossConnections = new List<CrossConnectionListResponse.CrossConnection>();
+            this._crossConnections = new List<AzureCrossConnection>();
         }
         
         /// <summary>
         /// Gets the sequence of CrossConnections.
         /// </summary>
-        public IEnumerator<CrossConnectionListResponse.CrossConnection> GetEnumerator()
+        public IEnumerator<AzureCrossConnection> GetEnumerator()
         {
             return this.CrossConnections.GetEnumerator();
         }
@@ -65,89 +65,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return this.GetEnumerator();
-        }
-        
-        public partial class CrossConnection
-        {
-            private int _bandwidth;
-            
-            /// <summary>
-            /// Optional. Specifies the bandwidth that is assigned to the
-            /// circuit.
-            /// </summary>
-            public int Bandwidth
-            {
-                get { return this._bandwidth; }
-                set { this._bandwidth = value; }
-            }
-            
-            private string _primaryAzurePort;
-            
-            /// <summary>
-            /// Optional. Specifies the name of the primary port. Only
-            /// available when the provisioning state is Provisioning or
-            /// Provisioned.
-            /// </summary>
-            public string PrimaryAzurePort
-            {
-                get { return this._primaryAzurePort; }
-                set { this._primaryAzurePort = value; }
-            }
-            
-            private string _provisioningState;
-            
-            /// <summary>
-            /// Optional. Provisioning state of the cross connection. Can be
-            /// Provisioned, NotProvisioned, Provisioning or Deprovisioning.
-            /// </summary>
-            public string ProvisioningState
-            {
-                get { return this._provisioningState; }
-                set { this._provisioningState = value; }
-            }
-            
-            private string _secondaryAzurePort;
-            
-            /// <summary>
-            /// Optional. Specifies the name of the secondary port. Only
-            /// available when the provisioning state is Provisioning or
-            /// Provisioned.
-            /// </summary>
-            public string SecondaryAzurePort
-            {
-                get { return this._secondaryAzurePort; }
-                set { this._secondaryAzurePort = value; }
-            }
-            
-            private int _sTag;
-            
-            /// <summary>
-            /// Optional. Specifies the identifier of circuit traffic.
-            /// </summary>
-            public int STag
-            {
-                get { return this._sTag; }
-                set { this._sTag = value; }
-            }
-            
-            private string _status;
-            
-            /// <summary>
-            /// Optional. The current status of the circuit. Possible values
-            /// are: Disabled, Disabling, Enabling, Enabled.
-            /// </summary>
-            public string Status
-            {
-                get { return this._status; }
-                set { this._status = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the CrossConnection class.
-            /// </summary>
-            public CrossConnection()
-            {
-            }
         }
     }
 }

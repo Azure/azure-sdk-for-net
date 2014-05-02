@@ -57,27 +57,27 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get; 
         }
         
-        IBgpPeeringOperations BgpPeering
+        IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
             get; 
         }
         
-        ICrossConnectionOperations CrossConnection
+        ICrossConnectionOperations CrossConnections
         {
             get; 
         }
         
-        IDedicatedCircuitLinkOperations DedicatedCircuitLink
+        IDedicatedCircuitLinkOperations DedicatedCircuitLinks
         {
             get; 
         }
         
-        IDedicatedCircuitOperations DedicatedCircuit
+        IDedicatedCircuitOperations DedicatedCircuits
         {
             get; 
         }
         
-        IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProvider
+        IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
         {
             get; 
         }
