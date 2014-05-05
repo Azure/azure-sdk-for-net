@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// Update Bgp Peering Operation Parameters.
     /// </summary>
-    public partial class BgpPeeringUpdateParameters
+    public partial class BorderGatewayProtocolPeeringUpdateParameters
     {
         private uint _peerAsn;
         
@@ -91,9 +91,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the BgpPeeringUpdateParameters class.
+        /// Initializes a new instance of the
+        /// BorderGatewayProtocolPeeringUpdateParameters class.
         /// </summary>
-        public BgpPeeringUpdateParameters()
+        public BorderGatewayProtocolPeeringUpdateParameters()
         {
         }
     }
