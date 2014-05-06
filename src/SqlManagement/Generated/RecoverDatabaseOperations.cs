@@ -236,6 +236,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             string targetDatabaseNameInstance = targetDatabaseNameElement2.Value;
                             serviceResourceInstance.TargetDatabaseName = targetDatabaseNameInstance;
                         }
+                        
+                        XElement nameElement = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;

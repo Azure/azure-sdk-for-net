@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private RestoreDatabaseOperation _operation;
         
         /// <summary>
-        /// Optional. Gets the operation that has been returned from a Create
-        /// Restore Database Operation request.
+        /// Optional. Gets or sets the operation that has been returned from a
+        /// Create Restore Database Operation request.
         /// </summary>
         public RestoreDatabaseOperation Operation
         {

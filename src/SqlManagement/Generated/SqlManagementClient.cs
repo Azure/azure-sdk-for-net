@@ -29,11 +29,8 @@ using Microsoft.WindowsAzure.Management.Sql;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public partial class SqlManagementClient : ServiceClient<SqlManagementClient>, ISqlManagementClient
     {
@@ -50,13 +47,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// When you create an Azure subscription, it is uniquely identified by
+        /// a subscription ID. The subscription ID forms part of the URI for
+        /// every call that you make to the Service Management API.  The Azure
+        /// Service ManagementAPIs use mutual authentication of management
+        /// certificates over SSL to ensure that a request made to the service
+        /// is secure.  No anonymous requests are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -66,8 +62,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IDacOperations _dac;
         
         /// <summary>
-        /// Includes operations for importing and exporting SQL Databases into
-        /// and out of Windows Azure blob storage.
+        /// Includes operations for importing and exporting Azure SQL Databases
+        /// into and out of Azure blob storage.
         /// </summary>
         public virtual IDacOperations Dac
         {
@@ -77,8 +73,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IDatabaseCopyOperations _databaseCopies;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for managing
-        /// SQL Server database copies for a subscription.
+        /// Represents the SQL Database Management API includes operations for
+        /// managing SQL Server database copies for a subscription.
         /// </summary>
         public virtual IDatabaseCopyOperations DatabaseCopies
         {
@@ -88,8 +84,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IDatabaseOperationOperations _databaseOperations;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for get/stop
-        /// SQL Databases' operations for a subscription.
+        /// The Azure SQL Database Management API includes operations for
+        /// getting database operations. Specifically, this API allows you to
+        /// get a specific operation, or to list all the operations that
+        /// happened on a specific database or on all databases in the Azure
+        /// SQL Database Server.
         /// </summary>
         public virtual IDatabaseOperationOperations DatabaseOperations
         {
@@ -99,8 +98,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IDatabaseOperations _databases;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for managing
-        /// SQL Databases for a subscription.
+        /// Represents all the operations for operating on Azure SQL Databases.
+        /// Contains operations to: Create, Retrieve, Update, and Delete
+        /// databases, and also includes the ability to get the event logs for
+        /// a database.
         /// </summary>
         public virtual IDatabaseOperations Databases
         {
@@ -110,14 +111,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IFirewallRuleOperations _firewallRules;
         
         /// <summary>
-        /// The Windows Azure SQL Database Management API includes operations
-        /// for managing the server-level firewall rules for SQL Database
-        /// servers.You cannot manage the database-level firewall rules using
-        /// the Windows Azure SQL Database Management API; they can only be
-        /// managed by running the  Transact-SQL statements against the master
-        /// or individual user databases.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715276.aspx
-        /// for more information)
+        /// The Azure SQL Database Management API includes operations for
+        /// managing the server-level Firewall Rules for Azure SQL Database
+        /// Servers. You cannot manage the database-level firewall rules using
+        /// the Azure SQL Database Management API; they can only be managed by
+        /// running the Transact-SQL statements against the master or
+        /// individual user databases.
         /// </summary>
         public virtual IFirewallRuleOperations FirewallRules
         {
@@ -127,8 +126,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IQuotaOperations _quotas;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for getting SQL
-        /// Database server quotas.
+        /// The Azure SQL Database Management API includes operations for
+        /// getting Azure SQL Database Server quotas. Specifically, using the
+        /// APIs you can get a specific quota or list all of the quotas for
+        /// the Azure SQL Database Server.
         /// </summary>
         public virtual IQuotaOperations Quotas
         {
@@ -182,10 +183,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IServerOperations _servers;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for managing
-        /// SQL Database servers for a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715271.aspx
-        /// for more information)
+        /// Contains methods to allow various operations on Azure SQL Database
+        /// Servers.
         /// </summary>
         public virtual IServerOperations Servers
         {
@@ -195,8 +194,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         private IServiceObjectiveOperations _serviceObjectives;
         
         /// <summary>
-        /// The SQL Database Management API includes operations for getting
-        /// Service Objective for a subscription.
+        /// This class provides methods to get a specific service objective by
+        /// using its ID or to List all of the service objectives on a server.
         /// </summary>
         public virtual IServiceObjectiveOperations ServiceObjectives
         {
@@ -228,13 +227,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Azure Service ManagementAPIs use mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure.  No anonymous requests are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Required. The URI used as the base for all SQL requests.
@@ -260,13 +258,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Azure Service ManagementAPIs use mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure.  No anonymous requests are allowed.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -309,13 +306,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Azure Service ManagementAPIs use mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure.  No anonymous requests are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Required. The URI used as the base for all SQL requests.
@@ -344,13 +340,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Azure Service ManagementAPIs use mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure.  No anonymous requests are allowed.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client

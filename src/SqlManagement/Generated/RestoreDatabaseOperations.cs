@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// </summary>
         /// <param name='sourceServerName'>
         /// Required. The name of the Azure SQL Database Server where the
-        /// source database is or was hosted.
+        /// source database is, or was, hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Restore Database

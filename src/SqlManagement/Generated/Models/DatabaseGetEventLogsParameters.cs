@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the get database event logs operation.
+    /// Represents the parameters supplied to the Get Database Event Logs
+    /// operation.
     /// </summary>
     public partial class DatabaseGetEventLogsParameters
     {
         private string _eventTypes;
         
         /// <summary>
-        /// Required. Gets or sets the event types.
+        /// Required. Gets or sets the event types to retrieve.
         /// </summary>
         public string EventTypes
         {
@@ -54,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _startDate;
         
         /// <summary>
-        /// Required. Gets or sets the start date.
+        /// Required. Gets or sets the start date for the event log.
         /// </summary>
         public DateTime StartDate
         {

@@ -28,14 +28,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the Quota List operation.
+    /// Represents the response structure for the Quota List operation.
     /// </summary>
     public partial class QuotaListResponse : OperationResponse, IEnumerable<Quota>
     {
         private IList<Quota> _quotas;
         
         /// <summary>
-        /// Optional. Gets or sets the Quotas for the server.
+        /// Optional. Gets or sets the collection of all the Quotas for the
+        /// server.
         /// </summary>
         public IList<Quota> Quotas
         {

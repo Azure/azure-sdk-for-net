@@ -38,14 +38,12 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The Windows Azure SQL Database Management API includes operations for
-    /// managing the server-level firewall rules for SQL Database servers.You
-    /// cannot manage the database-level firewall rules using the Windows
-    /// Azure SQL Database Management API; they can only be managed by running
-    /// the  Transact-SQL statements against the master or individual user
-    /// databases.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715276.aspx for
-    /// more information)
+    /// The Azure SQL Database Management API includes operations for managing
+    /// the server-level Firewall Rules for Azure SQL Database Servers. You
+    /// cannot manage the database-level firewall rules using the Azure SQL
+    /// Database Management API; they can only be managed by running the
+    /// Transact-SQL statements against the master or individual user
+    /// databases.
     /// </summary>
     internal partial class FirewallRuleOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations
     {
@@ -72,23 +70,21 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Adds a new server-level firewall rule for a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Adds a new server-level Firewall Rule for an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server to which this
+        /// rule will be applied.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Create Firewall Rule operation.
+        /// Required. The parameters for the Create Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule create response.
+        /// Contains the response to a Create Firewall Rule operation.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken)
         {
@@ -218,6 +214,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
+                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (startIPAddressElement2 != null)
+                        {
+                            string startIPAddressInstance = startIPAddressElement2.Value;
+                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                        }
+                        
+                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (endIPAddressElement2 != null)
+                        {
+                            string endIPAddressInstance = endIPAddressElement2.Value;
+                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                        }
+                        
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement2 != null)
                         {
@@ -232,18 +242,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
-                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement2.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
-                        }
-                        
-                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement2.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
                         }
                     }
                     
@@ -277,17 +280,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes a server-level firewall rule from a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715277.aspx
-        /// for more information)
+        /// Deletes a server-level Firewall Rule from an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the server that will be have new firewall
-        /// rule applied to it.
+        /// Required. The name of the Azure SQL Database Server that will have
+        /// the Firewall Fule removed from it.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the new firewall rule.
+        /// Required. The name of the Firewall Fule to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -408,23 +409,21 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns the Firewall rule for an Azure SQL Database Server with a
+        /// matching name.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server to query for
+        /// the Firewall Rule.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the rule for which the call is being made.
+        /// Required. The name of the rule to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to Get Firewall Rule.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken)
         {
@@ -519,6 +518,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
+                        XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (startIPAddressElement != null)
+                        {
+                            string startIPAddressInstance = startIPAddressElement.Value;
+                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                        }
+                        
+                        XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (endIPAddressElement != null)
+                        {
+                            string endIPAddressInstance = endIPAddressElement.Value;
+                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                        }
+                        
                         XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
@@ -533,18 +546,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
-                        XElement startIPAddressElement = serviceResourceElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement != null)
+                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
-                        }
-                        
-                        XElement endIPAddressElement = serviceResourceElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
                         }
                     }
                     
@@ -578,20 +584,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns a list of server-level Firewall Rules for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// list the Firewall Rules.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to List Firewall Rules.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
@@ -683,6 +687,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             FirewallRule serviceResourceInstance = new FirewallRule();
                             result.FirewallRules.Add(serviceResourceInstance);
                             
+                            XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (startIPAddressElement != null)
+                            {
+                                string startIPAddressInstance = startIPAddressElement.Value;
+                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                            }
+                            
+                            XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                            if (endIPAddressElement != null)
+                            {
+                                string endIPAddressInstance = endIPAddressElement.Value;
+                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            }
+                            
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
@@ -697,18 +715,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 serviceResourceInstance.Type = typeInstance;
                             }
                             
-                            XElement startIPAddressElement = serviceResourcesElement.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (startIPAddressElement != null)
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
                             {
-                                string startIPAddressInstance = startIPAddressElement.Value;
-                                serviceResourceInstance.StartIPAddress = startIPAddressInstance;
-                            }
-                            
-                            XElement endIPAddressElement = serviceResourcesElement.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                            if (endIPAddressElement != null)
-                            {
-                                string endIPAddressInstance = endIPAddressElement.Value;
-                                serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
                             }
                         }
                     }
@@ -743,26 +754,24 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Updates an existing server-level firewall rule for a SQL Database
-        /// server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Updates an existing server-level Firewall Rule for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server that has the
+        /// Firewall Rule to be updated.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the firewall rule to be updated.
+        /// Required. The name of the Firewall Rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Update Firewall Rule operation.
+        /// Required. The parameters for the Update Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule update response.
+        /// Represents the firewall rule update response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -897,6 +906,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         FirewallRule serviceResourceInstance = new FirewallRule();
                         result.FirewallRule = serviceResourceInstance;
                         
+                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (startIPAddressElement2 != null)
+                        {
+                            string startIPAddressInstance = startIPAddressElement2.Value;
+                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
+                        }
+                        
+                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                        if (endIPAddressElement2 != null)
+                        {
+                            string endIPAddressInstance = endIPAddressElement2.Value;
+                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                        }
+                        
                         XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement2 != null)
                         {
@@ -911,18 +934,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.Type = typeInstance;
                         }
                         
-                        XElement startIPAddressElement2 = serviceResourceElement2.Element(XName.Get("StartIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (startIPAddressElement2 != null)
+                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
                         {
-                            string startIPAddressInstance = startIPAddressElement2.Value;
-                            serviceResourceInstance.StartIPAddress = startIPAddressInstance;
-                        }
-                        
-                        XElement endIPAddressElement2 = serviceResourceElement2.Element(XName.Get("EndIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        if (endIPAddressElement2 != null)
-                        {
-                            string endIPAddressInstance = endIPAddressElement2.Value;
-                            serviceResourceInstance.EndIPAddress = endIPAddressInstance;
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
                         }
                     }
                     

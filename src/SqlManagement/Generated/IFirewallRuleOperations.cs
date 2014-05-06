@@ -29,50 +29,44 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The Windows Azure SQL Database Management API includes operations for
-    /// managing the server-level firewall rules for SQL Database servers.You
-    /// cannot manage the database-level firewall rules using the Windows
-    /// Azure SQL Database Management API; they can only be managed by running
-    /// the  Transact-SQL statements against the master or individual user
-    /// databases.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715276.aspx for
-    /// more information)
+    /// The Azure SQL Database Management API includes operations for managing
+    /// the server-level Firewall Rules for Azure SQL Database Servers. You
+    /// cannot manage the database-level firewall rules using the Azure SQL
+    /// Database Management API; they can only be managed by running the
+    /// Transact-SQL statements against the master or individual user
+    /// databases.
     /// </summary>
     public partial interface IFirewallRuleOperations
     {
         /// <summary>
-        /// Adds a new server-level firewall rule for a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Adds a new server-level Firewall Rule for an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL database server to which this rule will be
-        /// applied.
+        /// The name of the Azure SQL Database Server to which this rule will
+        /// be applied.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Create Firewall Rule operation.
+        /// The parameters for the Create Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule create response.
+        /// Contains the response to a Create Firewall Rule operation.
         /// </returns>
         Task<FirewallRuleCreateResponse> CreateAsync(string serverName, FirewallRuleCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Deletes a server-level firewall rule from a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715277.aspx
-        /// for more information)
+        /// Deletes a server-level Firewall Rule from an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server that will be have new firewall rule applied
-        /// to it.
+        /// The name of the Azure SQL Database Server that will have the
+        /// Firewall Fule removed from it.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the new firewall rule.
+        /// The name of the Firewall Fule to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -84,65 +78,59 @@ namespace Microsoft.WindowsAzure.Management.Sql
         Task<OperationResponse> DeleteAsync(string serverName, string ruleName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns the Firewall rule for an Azure SQL Database Server with a
+        /// matching name.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server for which the call is being made.
+        /// The name of the Azure SQL Database Server to query for the Firewall
+        /// Rule.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the rule for which the call is being made.
+        /// The name of the rule to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to Get Firewall Rule.
         /// </returns>
         Task<FirewallRuleGetResponse> GetAsync(string serverName, string ruleName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns a list of server-level Firewall Rules for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server for which the call is being made.
+        /// The name of the Azure SQL Database Server from which to list the
+        /// Firewall Rules.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to List Firewall Rules.
         /// </returns>
         Task<FirewallRuleListResponse> ListAsync(string serverName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Updates an existing server-level firewall rule for a SQL Database
-        /// server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Updates an existing server-level Firewall Rule for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL database server to which this rule will be
-        /// applied.
+        /// The name of the Azure SQL Database Server that has the Firewall
+        /// Rule to be updated.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the firewall rule to be updated.
+        /// The name of the Firewall Rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Update Firewall Rule operation.
+        /// The parameters for the Update Firewall Rule operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule update response.
+        /// Represents the firewall rule update response.
         /// </returns>
         Task<FirewallRuleUpdateResponse> UpdateAsync(string serverName, string ruleName, FirewallRuleUpdateParameters parameters, CancellationToken cancellationToken);
     }

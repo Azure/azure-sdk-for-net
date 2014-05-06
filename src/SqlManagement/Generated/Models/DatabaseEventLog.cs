@@ -21,15 +21,19 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
-    public partial class DatabaseEventLog
+    /// <summary>
+    /// Represents the event log entry for a database.
+    /// </summary>
+    public partial class DatabaseEventLog : SqlModelCommon
     {
         private string _additionalData;
         
         /// <summary>
-        /// Optional. Gets or sets the additional data of the event log.
+        /// Optional. Gets any additional data for the event log.
         /// </summary>
         public string AdditionalData
         {
@@ -40,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _databaseName;
         
         /// <summary>
-        /// Optional. Gets or sets the database name of the event log.
+        /// Optional. Gets the name of the database pertaining to this log.
         /// </summary>
         public string DatabaseName
         {
@@ -51,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _description;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the event log.
+        /// Optional. Gets the description of the event log.
         /// </summary>
         public string Description
         {
@@ -62,7 +66,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _eventCategory;
         
         /// <summary>
-        /// Optional. Gets or sets the event category of the event log.
+        /// Optional. Gets the event category of the event log.
         /// </summary>
         public string EventCategory
         {
@@ -73,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _eventSubtype;
         
         /// <summary>
-        /// Optional. Gets or sets the event sub type of the event log.
+        /// Optional. Gets the event sub type of the event log.
         /// </summary>
         public string EventSubtype
         {
@@ -84,8 +88,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _eventSubtypeDescription;
         
         /// <summary>
-        /// Optional. Gets or sets the event sub type description of the event
-        /// log.
+        /// Optional. Gets the event sub type description of the event log.
         /// </summary>
         public string EventSubtypeDescription
         {
@@ -96,7 +99,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _eventType;
         
         /// <summary>
-        /// Optional. Gets or sets the event type of the event log.
+        /// Optional. Gets the event type of the event log.
         /// </summary>
         public string EventType
         {
@@ -107,8 +110,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _intervalSizeInMinutes;
         
         /// <summary>
-        /// Optional. Gets or sets the interval size in minutes of the event
-        /// log.
+        /// Optional. Gets the interval size of the event log expressed in
+        /// minutes.
         /// </summary>
         public int IntervalSizeInMinutes
         {
@@ -116,21 +119,10 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._intervalSizeInMinutes = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the event log.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private int _numberOfEvents;
         
         /// <summary>
-        /// Optional. Gets or sets the number of events of the event log.
+        /// Optional. Gets the number of events of the event log.
         /// </summary>
         public int NumberOfEvents
         {
@@ -138,32 +130,10 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._numberOfEvents = value; }
         }
         
-        private string _parentLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the self link of the event log.
-        /// </summary>
-        public string ParentLink
-        {
-            get { return this._parentLink; }
-            set { this._parentLink = value; }
-        }
-        
-        private string _selfLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the self link of the event log.
-        /// </summary>
-        public string SelfLink
-        {
-            get { return this._selfLink; }
-            set { this._selfLink = value; }
-        }
-        
         private int _severity;
         
         /// <summary>
-        /// Optional. Gets or sets the severity of the event log.
+        /// Optional. Gets the severity of the event log.
         /// </summary>
         public int Severity
         {
@@ -174,34 +144,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _startTimeUtc;
         
         /// <summary>
-        /// Optional. Gets or sets the start time of the event log.
+        /// Optional. Gets the start time of the event log.
         /// </summary>
         public DateTime StartTimeUtc
         {
             get { return this._startTimeUtc; }
             set { this._startTimeUtc = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets the state of the event log.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of the event log.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>

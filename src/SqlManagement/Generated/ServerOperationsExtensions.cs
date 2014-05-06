@@ -30,31 +30,26 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class ServerOperationsExtensions
     {
         /// <summary>
-        /// Sets the administrative password of a SQL Database server for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715272.aspx
-        /// for more information)
+        /// Changes the administrative password of an existing Azure SQL
+        /// Database Server for a given subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The server that will have the change made to the
-        /// administrative user.
+        /// Required. The name of the Azure SQL Database Server that will have
+        /// the administrator password changed.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Manage Administrator Password
-        /// operation.
+        /// Required. The necessary parameters for modifying the adminstrator
+        /// password for a server.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -70,22 +65,20 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Sets the administrative password of a SQL Database server for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715272.aspx
-        /// for more information)
+        /// Changes the administrative password of an existing Azure SQL
+        /// Database Server for a given subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The server that will have the change made to the
-        /// administrative user.
+        /// Required. The name of the Azure SQL Database Server that will have
+        /// the administrator password changed.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Manage Administrator Password
-        /// operation.
+        /// Required. The necessary parameters for modifying the adminstrator
+        /// password for a server.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -97,19 +90,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Adds a new SQL Database server to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715274.aspx
-        /// for more information)
+        /// Provisions a new SQL Database server in a subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Server operation.
+        /// Required. The parameters needed to provision a server.
         /// </param>
         /// <returns>
-        /// The response returned from the Create Server operation.
+        /// The response returned from the Create Server operation.  This
+        /// contains all the information returned from the service when a
+        /// server is created.
         /// </returns>
         public static ServerCreateResponse Create(this IServerOperations operations, ServerCreateParameters parameters)
         {
@@ -121,19 +114,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Adds a new SQL Database server to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715274.aspx
-        /// for more information)
+        /// Provisions a new SQL Database server in a subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Server operation.
+        /// Required. The parameters needed to provision a server.
         /// </param>
         /// <returns>
-        /// The response returned from the Create Server operation.
+        /// The response returned from the Create Server operation.  This
+        /// contains all the information returned from the service when a
+        /// server is created.
         /// </returns>
         public static Task<ServerCreateResponse> CreateAsync(this IServerOperations operations, ServerCreateParameters parameters)
         {
@@ -141,16 +134,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Deletes the specified Azure SQL Database Server from a subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server to be deleted.
+        /// Required. The name of the Azure SQL Database Server to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -166,16 +157,14 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Deletes the specified Azure SQL Database Server from a subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server to be deleted.
+        /// Required. The name of the Azure SQL Database Server to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -187,17 +176,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns all SQL Database servers that are provisioned for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715269.aspx
-        /// for more information)
+        /// Returns all SQL Database Servers that are provisioned for a
+        /// subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Server List operation.  Contains a
+        /// list of all the servers in a subscription.
         /// </returns>
         public static ServerListResponse List(this IServerOperations operations)
         {
@@ -209,17 +197,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns all SQL Database servers that are provisioned for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715269.aspx
-        /// for more information)
+        /// Returns all SQL Database Servers that are provisioned for a
+        /// subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServerOperations.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Server List operation.  Contains a
+        /// list of all the servers in a subscription.
         /// </returns>
         public static Task<ServerListResponse> ListAsync(this IServerOperations operations)
         {

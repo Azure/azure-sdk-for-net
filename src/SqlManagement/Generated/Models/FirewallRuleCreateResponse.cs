@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the firewall rule create response.
+    /// Contains the response to a Create Firewall Rule operation.
     /// </summary>
     public partial class FirewallRuleCreateResponse : OperationResponse
     {
         private FirewallRule _firewallRule;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the resultant rule that was created from
+        /// calling the Create Firewall Rule operation.
         /// </summary>
         public FirewallRule FirewallRule
         {

@@ -37,8 +37,10 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for get/stop SQL
-    /// Databases' operations for a subscription.
+    /// The Azure SQL Database Management API includes operations for getting
+    /// database operations. Specifically, this API allows you to get a
+    /// specific operation, or to list all the operations that happened on a
+    /// specific database or on all databases in the Azure SQL Database Server.
     /// </summary>
     internal partial class DatabaseOperationOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations
     {
@@ -65,22 +67,22 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about one operation on a given operation Guid.
+        /// Returns information about a specific operation by using the
+        /// operation Guid.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the operation was
-        /// executed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='operationGuid'>
-        /// Required. The Guid of the SQL Server database operation to be
+        /// Required. The Guid of the Azure SQL Database operation to be
         /// obtained.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database operation for a given operation
-        /// Guid.
+        /// Represents the database operation for a given operation Guid.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationGetResponse> GetAsync(string serverName, string operationGuid, CancellationToken cancellationToken)
         {
@@ -175,41 +177,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         DatabaseOperation serviceResourceInstance = new DatabaseOperation();
                         result.DatabaseOperation = serviceResourceInstance;
                         
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
-                        }
-                        
-                        XElement selfLinkElement = serviceResourceElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (selfLinkElement != null)
-                        {
-                            string selfLinkInstance = selfLinkElement.Value;
-                            serviceResourceInstance.SelfLink = selfLinkInstance;
-                        }
-                        
-                        XElement parentLinkElement = serviceResourceElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (parentLinkElement != null)
-                        {
-                            string parentLinkInstance = parentLinkElement.Value;
-                            serviceResourceInstance.ParentLink = parentLinkInstance;
-                        }
-                        
                         XElement idElement = serviceResourceElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                         if (idElement != null)
                         {
@@ -286,6 +253,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
                         }
+                        
+                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -318,21 +306,23 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server and
+        /// Retrieves all of the operations that took place on a specific
         /// database.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server that hosts the
+        /// database.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Database to be queried.
+        /// Required. The name of the database for which the operations should
+        /// be retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationListResponse> ListByDatabaseAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
@@ -430,41 +420,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DatabaseOperation serviceResourceInstance = new DatabaseOperation();
                             result.DatabaseOperations.Add(serviceResourceInstance);
                             
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
-                            {
-                                string selfLinkInstance = selfLinkElement.Value;
-                                serviceResourceInstance.SelfLink = selfLinkInstance;
-                            }
-                            
-                            XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
-                            {
-                                string parentLinkInstance = parentLinkElement.Value;
-                                serviceResourceInstance.ParentLink = parentLinkInstance;
-                            }
-                            
                             XElement idElement = serviceResourcesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement != null)
                             {
@@ -541,6 +496,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
                             }
+                            
+                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                     }
                     
@@ -574,17 +550,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server.
+        /// Retrieves all of the operations that occured on the Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperationListResponse> ListByServerAsync(string serverName, CancellationToken cancellationToken)
         {
@@ -676,41 +653,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DatabaseOperation serviceResourceInstance = new DatabaseOperation();
                             result.DatabaseOperations.Add(serviceResourceInstance);
                             
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
-                            {
-                                string selfLinkInstance = selfLinkElement.Value;
-                                serviceResourceInstance.SelfLink = selfLinkInstance;
-                            }
-                            
-                            XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
-                            {
-                                string parentLinkInstance = parentLinkElement.Value;
-                                serviceResourceInstance.ParentLink = parentLinkInstance;
-                            }
-                            
                             XElement idElement = serviceResourcesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement != null)
                             {
@@ -786,6 +728,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 DateTime lastModifyTimeInstance = DateTime.Parse(lastModifyTimeElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.LastModifyTime = lastModifyTimeInstance;
+                            }
+                            
+                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
                             }
                         }
                     }

@@ -35,8 +35,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<RecoverableDatabase> _databases;
         
         /// <summary>
-        /// Optional. Gets the collection of databases that were hosted on the
-        /// server.
+        /// Optional. Gets or sets the collection of databases that were hosted
+        /// on the server.
         /// </summary>
         public IList<RecoverableDatabase> Databases
         {

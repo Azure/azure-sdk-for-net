@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the firewall rule update response.
+    /// Represents the firewall rule update response.
     /// </summary>
     public partial class FirewallRuleUpdateResponse : OperationResponse
     {
         private FirewallRule _firewallRule;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the updated Firewall Rule that was returned
+        /// from an Update Firewall Rule request.
         /// </summary>
         public FirewallRule FirewallRule
         {

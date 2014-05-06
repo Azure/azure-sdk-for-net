@@ -28,16 +28,17 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for getting Service
-    /// Objective for a subscription.
+    /// This class provides methods to get a specific service objective by
+    /// using its ID or to List all of the service objectives on a server.
     /// </summary>
     public partial interface IServiceObjectiveOperations
     {
         /// <summary>
-        /// Returns information about a certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective with a
+        /// specific Id.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
         /// The Id of the Service Objective to be obtained.
@@ -46,24 +47,24 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the service objective for a given server and
-        /// service objective Id.
+        /// Response containing the service objective for a given Azure SQL
+        /// Database Server with matching service objective Id.
         /// </returns>
         Task<ServiceObjectiveGetResponse> GetAsync(string serverName, string serviceObjectiveId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns information about all Service Objectives on a database
-        /// server.
+        /// Returns information about all Service Objectives on an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Response containing the list of service objective for a given
-        /// server.
+        /// server.  This is returnedfrom a call to List Service Objectives.
         /// </returns>
         Task<ServiceObjectiveListResponse> ListAsync(string serverName, CancellationToken cancellationToken);
     }

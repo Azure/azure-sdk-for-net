@@ -30,30 +30,28 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class DatabaseOperationsExtensions
     {
         /// <summary>
-        /// Creates a database in a SQL Server database server.
+        /// Creates a database in an Azure SQL Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database will be
-        /// created.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database will be created.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters for the create database operation.
         /// </param>
         /// <returns>
-        /// Response containing the database create response.
+        /// Represents the response to a create database request from the
+        /// service.
         /// </returns>
         public static DatabaseCreateResponse Create(this IDatabaseOperations operations, string serverName, DatabaseCreateParameters parameters)
         {
@@ -65,21 +63,22 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Creates a database in a SQL Server database server.
+        /// Creates a database in an Azure SQL Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database will be
-        /// created.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database will be created.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters for the create database operation.
         /// </param>
         /// <returns>
-        /// Response containing the database create response.
+        /// Represents the response to a create database request from the
+        /// service.
         /// </returns>
         public static Task<DatabaseCreateResponse> CreateAsync(this IDatabaseOperations operations, string serverName, DatabaseCreateParameters parameters)
         {
@@ -87,19 +86,18 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Drops a database from an Azure SQL Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server on which the database is found.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database to be deleted.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -115,19 +113,18 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Drops a database from an Azure SQL Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server on which the database is found.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database to be deleted.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -139,21 +136,21 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database.
+        /// Returns information about an Azure SQL Database.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Response containing the database get response.
+        /// Contains the response to a Get Database request.
         /// </returns>
         public static DatabaseGetResponse Get(this IDatabaseOperations operations, string serverName, string databaseName)
         {
@@ -165,21 +162,21 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database.
+        /// Returns information about an Azure SQL Database.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <returns>
-        /// Response containing the database get response.
+        /// Contains the response to a Get Database request.
         /// </returns>
         public static Task<DatabaseGetResponse> GetAsync(this IDatabaseOperations operations, string serverName, string databaseName)
         {
@@ -187,25 +184,24 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database event logs.
+        /// Returns information about an Azure SQL Database event logs.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the get event logs database operation.
+        /// Required. The parameters for the Get Database Event Logs operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response to a Get Database Event Logs request.
         /// </returns>
         public static DatabaseGetEventLogsResponse GetEventLogs(this IDatabaseOperations operations, string serverName, string databaseName, DatabaseGetEventLogsParameters parameters)
         {
@@ -217,25 +213,24 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database event logs.
+        /// Returns information about an Azure SQL Database event logs.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the get event logs database operation.
+        /// Required. The parameters for the Get Database Event Logs operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response to a Get Database Event Logs request.
         /// </returns>
         public static Task<DatabaseGetEventLogsResponse> GetEventLogsAsync(this IDatabaseOperations operations, string serverName, string databaseName, DatabaseGetEventLogsParameters parameters)
         {
@@ -243,17 +238,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list SQL Server databases.
+        /// Returns a collection of Azure SQL Databases.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the database.
         /// </param>
         /// <returns>
-        /// Response containing the list of databases for a given server.
+        /// Contains a collection of databases for a given Azure SQL Database
+        /// Server.
         /// </returns>
         public static DatabaseListResponse List(this IDatabaseOperations operations, string serverName)
         {
@@ -265,17 +262,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list SQL Server databases.
+        /// Returns a collection of Azure SQL Databases.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the database.
         /// </param>
         /// <returns>
-        /// Response containing the list of databases for a given server.
+        /// Contains a collection of databases for a given Azure SQL Database
+        /// Server.
         /// </returns>
         public static Task<DatabaseListResponse> ListAsync(this IDatabaseOperations operations, string serverName)
         {
@@ -283,23 +282,24 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Updates SQL Server database information.
+        /// Updates the properties of an Azure SQL Database.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database is housed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the update database operation.
+        /// Required. The parameters for the Update Database operation.
         /// </param>
         /// <returns>
-        /// Response containing the database update response.
+        /// Contains the response from a request to Update Database.
         /// </returns>
         public static DatabaseUpdateResponse Update(this IDatabaseOperations operations, string serverName, string databaseName, DatabaseUpdateParameters parameters)
         {
@@ -311,23 +311,24 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Updates SQL Server database information.
+        /// Updates the properties of an Azure SQL Database.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database is housed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the update database operation.
+        /// Required. The parameters for the Update Database operation.
         /// </param>
         /// <returns>
-        /// Response containing the database update response.
+        /// Contains the response from a request to Update Database.
         /// </returns>
         public static Task<DatabaseUpdateResponse> UpdateAsync(this IDatabaseOperations operations, string serverName, string databaseName, DatabaseUpdateParameters parameters)
         {

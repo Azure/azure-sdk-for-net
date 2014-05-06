@@ -21,13 +21,14 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
     /// A dropped Azure SQL Database that can be restored.
     /// </summary>
-    public partial class RestorableDroppedDatabase
+    public partial class RestorableDroppedDatabase : SqlModelCommon
     {
         private DateTime _creationDate;
         
@@ -82,17 +83,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         {
             get { return this._maximumDatabaseSizeInBytes; }
             set { this._maximumDatabaseSizeInBytes = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets the name of the database.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
         }
         
         private System.DateTime? _recoveryPeriodStartDate;

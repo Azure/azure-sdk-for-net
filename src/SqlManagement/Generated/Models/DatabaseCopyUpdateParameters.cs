@@ -25,15 +25,16 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update Database Copy operation.
+    /// Represents the parameters supplied to the Update Database Copy
+    /// operation.
     /// </summary>
     public partial class DatabaseCopyUpdateParameters
     {
         private bool? _isForcedTerminate;
         
         /// <summary>
-        /// Optional. Whether a Delete Database Operation will result in forced
-        /// or friendly termination.
+        /// Optional. Gets or sets whether a Delete Database Operation will
+        /// result in forced or friendly termination.
         /// </summary>
         public bool? IsForcedTerminate
         {

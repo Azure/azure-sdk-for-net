@@ -21,13 +21,14 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Recoverable Azure SQL Database.
+    /// Represents a recoverable Azure SQL Database.
     /// </summary>
-    public partial class RecoverableDatabase
+    public partial class RecoverableDatabase : SqlModelCommon
     {
         private string _edition;
         
@@ -60,17 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         {
             get { return this._lastAvailableBackupDate; }
             set { this._lastAvailableBackupDate = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets the name of the database.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
         }
         
         private string _serverName;
