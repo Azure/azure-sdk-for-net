@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static OperationResponse BeginSettingConfiguration(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<OperationResponse> BeginSettingConfigurationAsync(this INetworkOperations operations, NetworkSetConfigurationParameters parameters)

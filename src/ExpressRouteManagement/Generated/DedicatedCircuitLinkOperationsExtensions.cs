@@ -54,8 +54,8 @@ namespace Microsoft.WindowsAzure
         /// Required.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {
@@ -81,8 +81,8 @@ namespace Microsoft.WindowsAzure
         /// Required.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginNewAsync(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {
@@ -104,8 +104,8 @@ namespace Microsoft.WindowsAzure
         /// Required.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginRemove(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {
@@ -131,8 +131,8 @@ namespace Microsoft.WindowsAzure
         /// Required.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginRemoveAsync(this IDedicatedCircuitLinkOperations operations, string serviceKey, string vnetName)
         {

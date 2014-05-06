@@ -157,6 +157,83 @@ namespace Microsoft.WindowsAzure.Management.Store
         }
         
         /// <summary>
+        /// Initializes a new instance of the StoreManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private StoreManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._addOns = new AddOnOperations(this);
+            this._cloudServices = new CloudServiceOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the StoreManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all Store requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public StoreManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the StoreManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public StoreManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of
         /// thespecified operation. After calling an asynchronous operation,
         /// you can call Get Operation Status to determine whether the
@@ -249,7 +326,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

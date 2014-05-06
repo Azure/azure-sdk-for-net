@@ -156,7 +156,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -180,7 +180,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -281,6 +281,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.HostCaching == null)
+            {
+                throw new ArgumentNullException("parameters.HostCaching");
+            }
             if (parameters.MediaLinkUri == null)
             {
                 throw new ArgumentNullException("parameters.MediaLinkUri");
@@ -323,7 +327,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -337,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 requestDoc.Add(dataVirtualHardDiskElement);
                 
                 XElement hostCachingElement = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                hostCachingElement.Value = parameters.HostCaching.ToString();
+                hostCachingElement.Value = parameters.HostCaching;
                 dataVirtualHardDiskElement.Add(hostCachingElement);
                 
                 if (parameters.Label != null)
@@ -398,7 +402,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -508,7 +512,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -562,7 +566,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -882,7 +886,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -906,7 +910,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1023,7 +1027,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1047,7 +1051,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1069,7 +1073,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement hostCachingElement = dataVirtualHardDiskElement.Element(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
                         if (hostCachingElement != null)
                         {
-                            VirtualHardDiskHostCaching hostCachingInstance = ((VirtualHardDiskHostCaching)Enum.Parse(typeof(VirtualHardDiskHostCaching), hostCachingElement.Value, true));
+                            string hostCachingInstance = hostCachingElement.Value;
                             result.HostCaching = hostCachingInstance;
                         }
                         
@@ -1196,7 +1200,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1220,7 +1224,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1416,7 +1420,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1440,7 +1444,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1641,6 +1645,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.HostCaching == null)
+            {
+                throw new ArgumentNullException("parameters.HostCaching");
+            }
             if (parameters.MediaLinkUri == null)
             {
                 throw new ArgumentNullException("parameters.MediaLinkUri");
@@ -1684,7 +1692,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1698,7 +1706,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 requestDoc.Add(dataVirtualHardDiskElement);
                 
                 XElement hostCachingElement = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                hostCachingElement.Value = parameters.HostCaching.ToString();
+                hostCachingElement.Value = parameters.HostCaching;
                 dataVirtualHardDiskElement.Add(hostCachingElement);
                 
                 if (parameters.Label != null)
@@ -1752,7 +1760,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1866,7 +1874,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1930,7 +1938,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

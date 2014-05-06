@@ -51,8 +51,8 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
@@ -75,8 +75,8 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginNewAsync(this IDedicatedCircuitOperations operations, DedicatedCircuitNewParameters parameters)
         {
@@ -96,8 +96,8 @@ namespace Microsoft.WindowsAzure
         /// deleted.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginRemove(this IDedicatedCircuitOperations operations, string serviceKey)
         {
@@ -121,8 +121,8 @@ namespace Microsoft.WindowsAzure
         /// deleted.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginRemoveAsync(this IDedicatedCircuitOperations operations, string serviceKey)
         {

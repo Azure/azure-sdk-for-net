@@ -66,8 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The Begin Creating Reserved IP operation creates a
-        /// reserved IP from your the subscription.
+        /// The Begin Creating Reserved IP operation creates a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Begin Creating Reserved IP
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -156,11 +156,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                     reservedIPElement.Add(labelElement);
                 }
                 
-                if (parameters.AffinityGroup != null)
+                if (parameters.Location != null)
                 {
-                    XElement affinityGroupElement = new XElement(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    affinityGroupElement.Value = parameters.AffinityGroup;
-                    reservedIPElement.Add(affinityGroupElement);
+                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                    locationElement.Value = parameters.Location;
+                    reservedIPElement.Add(locationElement);
                 }
                 
                 if (parameters.ServiceName != null)
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -240,8 +240,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The Begin Deleting Reserved IP operation removes a
-        /// reserved IP from your the subscription.
+        /// The Begin Deleting Reserved IP operation removes a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='ipName'>
         /// Required. The name of the reserved IP.
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<OperationResponse> BeginDeletingAsync(string ipName, CancellationToken cancellationToken)
@@ -295,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -319,7 +319,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -552,8 +552,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The Get Reserved IP operation retrieves the details
-        /// for the virtual IP reserved for the subscription.
+        /// The Get Reserved IP operation retrieves the details for the virtual
+        /// IP reserved for the subscription.
         /// </summary>
         /// <param name='ipName'>
         /// Required. The name of the reserved IP to retrieve.
@@ -562,7 +562,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Preview Only. A reserved IP associated with your subscription.
+        /// A reserved IP associated with your subscription.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPGetResponse> GetAsync(string ipName, CancellationToken cancellationToken)
         {
@@ -606,7 +606,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -630,7 +630,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -677,13 +677,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                             result.Label = labelInstance;
                         }
                         
-                        XElement affinityGroupElement = reservedIPElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                        if (affinityGroupElement != null)
-                        {
-                            string affinityGroupInstance = affinityGroupElement.Value;
-                            result.AffinityGroup = affinityGroupInstance;
-                        }
-                        
                         XElement stateElement = reservedIPElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
@@ -710,6 +703,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                         {
                             string deploymentNameInstance = deploymentNameElement.Value;
                             result.DeploymentName = deploymentNameInstance;
+                        }
+                        
+                        XElement locationElement = reservedIPElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                        if (locationElement != null)
+                        {
+                            string locationInstance = locationElement.Value;
+                            result.Location = locationInstance;
                         }
                     }
                     
@@ -743,14 +743,14 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Preview Only. The List Reserved IP operation retrieves all of the
-        /// virtual IPs reserved for the subscription.
+        /// The List Reserved IP operation retrieves all of the virtual IPs
+        /// reserved for the subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Preview Only. The response structure for the Server List operation.
+        /// The response structure for the Server List operation.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPListResponse> ListAsync(CancellationToken cancellationToken)
         {
@@ -789,7 +789,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -813,7 +813,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -865,13 +865,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 reservedIPInstance.Label = labelInstance;
                             }
                             
-                            XElement affinityGroupElement = reservedIPsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null)
-                            {
-                                string affinityGroupInstance = affinityGroupElement.Value;
-                                reservedIPInstance.AffinityGroup = affinityGroupInstance;
-                            }
-                            
                             XElement stateElement = reservedIPsElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
@@ -898,6 +891,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                             {
                                 string deploymentNameInstance = deploymentNameElement.Value;
                                 reservedIPInstance.DeploymentName = deploymentNameInstance;
+                            }
+                            
+                            XElement locationElement = reservedIPsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                reservedIPInstance.Location = locationInstance;
                             }
                         }
                     }

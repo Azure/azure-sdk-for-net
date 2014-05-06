@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> CreateAsync(string networkName, ClientRootCertificateCreateParameters parameters, CancellationToken cancellationToken)
@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -241,7 +241,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GatewayOperationResponse> DeleteAsync(string networkName, string certificateThumbprint, CancellationToken cancellationToken)
@@ -291,7 +291,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -315,7 +315,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -437,7 +437,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -461,7 +461,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -564,7 +564,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-11-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -588,7 +588,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

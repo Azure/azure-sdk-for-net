@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -30,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineDataDiskUpdateParameters
     {
-        private VirtualHardDiskHostCaching _hostCaching;
+        private string _hostCaching;
         
         /// <summary>
         /// Required. Specifies the platform caching behavior of data disk blob
@@ -38,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// values are: None, ReadOnly, or ReadWrite. Warning: Setting this
         /// property impacts the consistency of the disk.
         /// </summary>
-        public VirtualHardDiskHostCaching HostCaching
+        public string HostCaching
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }

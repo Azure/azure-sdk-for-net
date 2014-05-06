@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         Task<OperationResponse> BeginSettingConfigurationAsync(NetworkSetConfigurationParameters parameters, CancellationToken cancellationToken);

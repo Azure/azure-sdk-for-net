@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure
         /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse Create(this IClientRootCertificateOperations operations, string networkName, ClientRootCertificateCreateParameters parameters)
@@ -84,7 +84,7 @@ namespace Microsoft.WindowsAzure
         /// Virtual Network Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> CreateAsync(this IClientRootCertificateOperations operations, string networkName, ClientRootCertificateCreateParameters parameters)
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse Delete(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)
@@ -138,7 +138,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The X509 certificate thumbprint.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> DeleteAsync(this IClientRootCertificateOperations operations, string networkName, string certificateThumbprint)

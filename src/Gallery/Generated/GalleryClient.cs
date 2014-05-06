@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.Azure.Gallery;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
@@ -112,6 +113,77 @@ namespace Microsoft.Azure.Gallery
         /// </param>
         public GalleryClient(SubscriptionCloudCredentials credentials)
             : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://gallery.azure.com/");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GalleryClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private GalleryClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._items = new ItemOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GalleryClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets or sets subscription credentials which uniquely
+        /// identify Windows  Azure subscription. The subscription ID forms
+        /// part of the URI for  every call that you make to the Service
+        /// Management API.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all cloud service management
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public GalleryClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GalleryClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets or sets subscription credentials which uniquely
+        /// identify Windows  Azure subscription. The subscription ID forms
+        /// part of the URI for  every call that you make to the Service
+        /// Management API.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public GalleryClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
         {
             if (credentials == null)
             {

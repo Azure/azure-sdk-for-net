@@ -96,6 +96,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
             get { return this._hostedServices; }
         }
         
+        private ILoadBalancerOperations _loadBalancers;
+        
+        /// <summary>
+        /// The Compute Management API includes operations for managing the
+        /// load balancers for your subscription.
+        /// </summary>
+        public virtual ILoadBalancerOperations LoadBalancers
+        {
+            get { return this._loadBalancers; }
+        }
+        
         private IOperatingSystemOperations _operatingSystems;
         
         /// <summary>
@@ -193,6 +204,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         {
             this._deployments = new DeploymentOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
+            this._loadBalancers = new LoadBalancerOperations(this);
             this._operatingSystems = new OperatingSystemOperations(this);
             this._serviceCertificates = new ServiceCertificateOperations(this);
             this._virtualMachineDisks = new VirtualMachineDiskOperations(this);
@@ -248,6 +260,90 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// </param>
         public ComputeManagementClient(SubscriptionCloudCredentials credentials)
             : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ComputeManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private ComputeManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._deployments = new DeploymentOperations(this);
+            this._hostedServices = new HostedServiceOperations(this);
+            this._loadBalancers = new LoadBalancerOperations(this);
+            this._operatingSystems = new OperatingSystemOperations(this);
+            this._serviceCertificates = new ServiceCertificateOperations(this);
+            this._virtualMachineDisks = new VirtualMachineDiskOperations(this);
+            this._virtualMachineExtensions = new VirtualMachineExtensionOperations(this);
+            this._virtualMachines = new VirtualMachineOperations(this);
+            this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
+            this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ComputeManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all Service Management
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ComputeManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ComputeManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create an Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API. The Azure Service Management API uses mutual authentication
+        /// of management certificates over SSL to ensure that a request made
+        /// to the service is secure. No anonymous requests are allowed.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ComputeManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
         {
             if (credentials == null)
             {
@@ -328,7 +424,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -352,7 +448,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

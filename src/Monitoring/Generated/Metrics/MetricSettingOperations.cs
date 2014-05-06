@@ -151,9 +151,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 
                 JObject valueValue = new JObject();
                 requestDoc["Value"] = valueValue;
-                valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                 if (parameters.MetricSetting.Value is AvailabilityMetricSettingValue)
                 {
+                    valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                     AvailabilityMetricSettingValue derived = ((AvailabilityMetricSettingValue)parameters.MetricSetting.Value);
                     
                     if (derived.AvailableLocations != null)
@@ -231,7 +231,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -361,7 +361,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

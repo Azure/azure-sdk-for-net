@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         Task<ServiceBusNotificationHubResponse> GetAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken);
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         Task<ServiceBusNotificationHubsResponse> ListAsync(string namespaceName, CancellationToken cancellationToken);
