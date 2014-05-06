@@ -21,13 +21,14 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
     /// Represents a recovery operation for an Azure SQL Database.
     /// </summary>
-    public partial class RecoverDatabaseOperation
+    public partial class RecoverDatabaseOperation : SqlModelCommon
     {
         private string _id;
         

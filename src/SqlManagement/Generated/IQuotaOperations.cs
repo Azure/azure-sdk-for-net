@@ -28,16 +28,19 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for getting SQL
-    /// Database server quotas.
+    /// The Azure SQL Database Management API includes operations for getting
+    /// Azure SQL Database Server quotas. Specifically, using the APIs you can
+    /// get a specific quota or list all of the quotas for the Azure SQL
+    /// Database Server.
     /// </summary>
     public partial interface IQuotaOperations
     {
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Retrieves the specified quota from the server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// The name of the Azure SQL Database Server from which to retrieve
+        /// the quota.
         /// </param>
         /// <param name='quotaName'>
         /// The name of the quota to retrieve.
@@ -46,21 +49,22 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota Get operation.
+        /// Represents the response structure for the Quota Get operation.
         /// </returns>
         Task<QuotaGetResponse> GetAsync(string serverName, string quotaName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Returns a list of quotas from the server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// The name of the Azure SQL Database Server from which to get the
+        /// quotas.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota List operation.
+        /// Represents the response structure for the Quota List operation.
         /// </returns>
         Task<QuotaListResponse> ListAsync(string serverName, CancellationToken cancellationToken);
     }

@@ -25,14 +25,16 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Database Copy operation.
+    /// Represents the parameters supplied to the Create Database Copy
+    /// operation.
     /// </summary>
     public partial class DatabaseCopyCreateParameters
     {
         private bool _isContinuous;
         
         /// <summary>
-        /// Required. Whether the copy should be continuous.
+        /// Required. Gets a value that indicates whether the copy should be
+        /// continuous.
         /// </summary>
         public bool IsContinuous
         {
@@ -43,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _partnerDatabase;
         
         /// <summary>
-        /// Required. The name of the destination database for the copy.
+        /// Required. Gets the name of the destination database for the copy.
         /// </summary>
         public string PartnerDatabase
         {
@@ -54,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _partnerServer;
         
         /// <summary>
-        /// Required. The name of the destination server for the copy.
+        /// Required. Gets the name of the destination server for the copy.
         /// </summary>
         public string PartnerServer
         {

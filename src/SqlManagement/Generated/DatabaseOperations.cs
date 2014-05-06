@@ -39,8 +39,10 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for managing SQL
-    /// Databases for a subscription.
+    /// Represents all the operations for operating on Azure SQL Databases.
+    /// Contains operations to: Create, Retrieve, Update, and Delete
+    /// databases, and also includes the ability to get the event logs for a
+    /// database.
     /// </summary>
     internal partial class DatabaseOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IDatabaseOperations
     {
@@ -67,11 +69,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Creates a database in a SQL Server database server.
+        /// Creates a database in an Azure SQL Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database will be
-        /// created.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database will be created.
         /// </param>
         /// <param name='parameters'>
         /// Required. The parameters for the create database operation.
@@ -80,7 +82,8 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database create response.
+        /// Represents the response to a create database request from the
+        /// service.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseCreateResponse> CreateAsync(string serverName, DatabaseCreateParameters parameters, CancellationToken cancellationToken)
         {
@@ -229,32 +232,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         Database serviceResourceInstance = new Database();
                         result.Database = serviceResourceInstance;
                         
-                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
-                        {
-                            string nameInstance = nameElement2.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
                         XElement idElement = serviceResourceElement2.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                         if (idElement != null)
                         {
                             int idInstance = int.Parse(idElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.Id = idInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
                         }
                         
                         XElement editionElement2 = serviceResourceElement2.Element(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
@@ -368,6 +350,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                         }
+                        
+                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement2 != null)
+                        {
+                            string nameInstance = nameElement2.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -400,15 +403,14 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Drops a database from an Azure SQL Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the server on which the database is found.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database to be deleted.
+        /// Required. The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -529,20 +531,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database.
+        /// Returns information about an Azure SQL Database.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database get response.
+        /// Contains the response to a Get Database request.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
@@ -637,32 +639,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         Database serviceResourceInstance = new Database();
                         result.Database = serviceResourceInstance;
                         
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
                         XElement idElement = serviceResourceElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                         if (idElement != null)
                         {
                             int idInstance = int.Parse(idElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.Id = idInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
                         }
                         
                         XElement editionElement = serviceResourceElement.Element(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
@@ -776,6 +757,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                         }
+                        
+                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -808,24 +810,23 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns information about a SQL Server database event logs.
+        /// Returns information about an Azure SQL Database event logs.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the database is
-        /// housed.
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the get event logs database operation.
+        /// Required. The parameters for the Get Database Event Logs operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response to a Get Database Event Logs request.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseGetEventLogsResponse> GetEventLogsAsync(string serverName, string databaseName, DatabaseGetEventLogsParameters parameters, CancellationToken cancellationToken)
         {
@@ -934,41 +935,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             DatabaseEventLog serviceResourceInstance = new DatabaseEventLog();
                             result.EventLogs.Add(serviceResourceInstance);
                             
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement selfLinkElement = serviceResourcesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (selfLinkElement != null)
-                            {
-                                string selfLinkInstance = selfLinkElement.Value;
-                                serviceResourceInstance.SelfLink = selfLinkInstance;
-                            }
-                            
-                            XElement parentLinkElement = serviceResourcesElement.Element(XName.Get("ParentLink", "http://schemas.microsoft.com/windowsazure"));
-                            if (parentLinkElement != null)
-                            {
-                                string parentLinkInstance = parentLinkElement.Value;
-                                serviceResourceInstance.ParentLink = parentLinkInstance;
-                            }
-                            
                             XElement databaseNameElement = serviceResourcesElement.Element(XName.Get("DatabaseName", "http://schemas.microsoft.com/windowsazure"));
                             if (databaseNameElement != null)
                             {
@@ -1054,6 +1020,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                     serviceResourceInstance.AdditionalData = additionalDataInstance;
                                 }
                             }
+                            
+                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                     }
                     
@@ -1087,16 +1074,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns the list SQL Server databases.
+        /// Returns a collection of Azure SQL Databases.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of databases for a given server.
+        /// Contains a collection of databases for a given Azure SQL Database
+        /// Server.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
@@ -1188,32 +1177,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             Database serviceResourceInstance = new Database();
                             result.Databases.Add(serviceResourceInstance);
                             
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
                             XElement idElement = serviceResourcesElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
                             if (idElement != null)
                             {
                                 int idInstance = int.Parse(idElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.Id = idInstance;
-                            }
-                            
-                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                            if (typeElement != null)
-                            {
-                                string typeInstance = typeElement.Value;
-                                serviceResourceInstance.Type = typeInstance;
-                            }
-                            
-                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null)
-                            {
-                                string stateInstance = stateElement.Value;
-                                serviceResourceInstance.State = stateInstance;
                             }
                             
                             XElement editionElement = serviceResourcesElement.Element(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
@@ -1327,6 +1295,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
                             }
+                            
+                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
+                            }
                         }
                     }
                     
@@ -1360,22 +1349,23 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Updates SQL Server database information.
+        /// Updates the properties of an Azure SQL Database.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server where the database is housed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the SQL Server database to be obtained.
+        /// Required. The name of the Azure SQL Database to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. The parameters for the update database operation.
+        /// Required. The parameters for the Update Database operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database update response.
+        /// Contains the response from a request to Update Database.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseUpdateResponse> UpdateAsync(string serverName, string databaseName, DatabaseUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -1391,10 +1381,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
-            }
-            if (parameters.CollationName == null)
-            {
-                throw new ArgumentNullException("parameters.CollationName");
             }
             if (parameters.Edition == null)
             {
@@ -1457,10 +1443,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     serviceResourceElement.Add(nameElement);
                 }
                 
-                XElement idElement = new XElement(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                idElement.Value = parameters.Id.ToString();
-                serviceResourceElement.Add(idElement);
-                
                 XElement editionElement = new XElement(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
                 editionElement.Value = parameters.Edition;
                 serviceResourceElement.Add(editionElement);
@@ -1471,10 +1453,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     maxSizeGBElement.Value = parameters.MaximumDatabaseSizeInGB.ToString();
                     serviceResourceElement.Add(maxSizeGBElement);
                 }
-                
-                XElement collationNameElement = new XElement(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
-                collationNameElement.Value = parameters.CollationName;
-                serviceResourceElement.Add(collationNameElement);
                 
                 if (parameters.MaximumDatabaseSizeInBytes != null)
                 {
@@ -1534,32 +1512,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         Database serviceResourceInstance = new Database();
                         result.Database = serviceResourceInstance;
                         
-                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        XElement idElement = serviceResourceElement2.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
+                        if (idElement != null)
                         {
-                            string nameInstance = nameElement2.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
-                        XElement idElement2 = serviceResourceElement2.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement2 != null)
-                        {
-                            int idInstance = int.Parse(idElement2.Value, CultureInfo.InvariantCulture);
+                            int idInstance = int.Parse(idElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.Id = idInstance;
-                        }
-                        
-                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        if (typeElement != null)
-                        {
-                            string typeInstance = typeElement.Value;
-                            serviceResourceInstance.Type = typeInstance;
-                        }
-                        
-                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
-                        {
-                            string stateInstance = stateElement.Value;
-                            serviceResourceInstance.State = stateInstance;
                         }
                         
                         XElement editionElement2 = serviceResourceElement2.Element(XName.Get("Edition", "http://schemas.microsoft.com/windowsazure"));
@@ -1583,10 +1540,10 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.MaximumDatabaseSizeInBytes = maxSizeBytesInstance;
                         }
                         
-                        XElement collationNameElement2 = serviceResourceElement2.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
-                        if (collationNameElement2 != null)
+                        XElement collationNameElement = serviceResourceElement2.Element(XName.Get("CollationName", "http://schemas.microsoft.com/windowsazure"));
+                        if (collationNameElement != null)
                         {
-                            string collationNameInstance = collationNameElement2.Value;
+                            string collationNameInstance = collationNameElement.Value;
                             serviceResourceInstance.CollationName = collationNameInstance;
                         }
                         
@@ -1672,6 +1629,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
+                        }
+                        
+                        XElement nameElement2 = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement2 != null)
+                        {
+                            string nameInstance = nameElement2.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement2.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement2.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
                         }
                     }
                     

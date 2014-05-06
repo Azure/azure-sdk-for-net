@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Service objective.
+    /// Contains all the information pertaining to a service objective.
     /// </summary>
-    public partial class ServiceObjective
+    public partial class ServiceObjective : SqlModelCommon
     {
         private string _description;
         
         /// <summary>
-        /// Optional. Gets or sets the service objective description.
+        /// Optional. Gets the description of this service objective.
         /// </summary>
         public string Description
         {
@@ -56,8 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _enabled;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether the service
-        /// objective is enabled.
+        /// Optional. Gets whether or not the service objective is enabled.
         /// </summary>
         public bool Enabled
         {
@@ -68,7 +67,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the service objective id.
+        /// Optional. Gets the unique Guid that identifies this service
+        /// objective.
         /// </summary>
         public string Id
         {
@@ -79,8 +79,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isDefault;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether the service
-        /// objective is the default objective.
+        /// Optional. Gets whether or not the service objective is the default
+        /// objective.
         /// </summary>
         public bool IsDefault
         {
@@ -91,68 +91,13 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isSystem;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether the service
-        /// objective is a system objective.
+        /// Optional. Gets whether or not the service objective is a system
+        /// objective.
         /// </summary>
         public bool IsSystem
         {
             get { return this._isSystem; }
             set { this._isSystem = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the service objective.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _parentLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the ParentLink of the service objective.
-        /// </summary>
-        public string ParentLink
-        {
-            get { return this._parentLink; }
-            set { this._parentLink = value; }
-        }
-        
-        private string _selfLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the SelfLink of the service objective.
-        /// </summary>
-        public string SelfLink
-        {
-            get { return this._selfLink; }
-            set { this._selfLink = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets the state of the service objective.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>
@@ -166,12 +111,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// <summary>
         /// Dimension setting.
         /// </summary>
-        public partial class DimensionSettingResponse
+        public partial class DimensionSettingResponse : SqlModelCommon
         {
             private string _description;
             
             /// <summary>
-            /// Optional. Gets or sets the dimension setting description.
+            /// Optional. Gets the description of the dimension setting.
             /// </summary>
             public string Description
             {
@@ -182,7 +127,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _id;
             
             /// <summary>
-            /// Optional. Gets or sets the dimension setting id.
+            /// Optional. Gets the unique Guid that identifies the dimension
+            /// setting.
             /// </summary>
             public string Id
             {
@@ -193,8 +139,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private bool _isDefault;
             
             /// <summary>
-            /// Optional. Gets or sets a value indicating whether the dimension
-            /// setting is the default setting.
+            /// Optional. Indicates whether the dimension setting is the
+            /// default setting.
             /// </summary>
             public bool IsDefault
             {
@@ -202,70 +148,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
                 set { this._isDefault = value; }
             }
             
-            private string _name;
-            
-            /// <summary>
-            /// Optional. Gets or sets the name of the dimension setting.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
             private byte _ordinal;
             
             /// <summary>
-            /// Optional. Gets or sets the dimension setting ordinal position.
+            /// Optional. Gets the dimension setting ordinal position.
             /// </summary>
             public byte Ordinal
             {
                 get { return this._ordinal; }
                 set { this._ordinal = value; }
-            }
-            
-            private string _parentLink;
-            
-            /// <summary>
-            /// Optional. Gets or sets the ParentLink of the dimension setting.
-            /// </summary>
-            public string ParentLink
-            {
-                get { return this._parentLink; }
-                set { this._parentLink = value; }
-            }
-            
-            private string _selfLink;
-            
-            /// <summary>
-            /// Optional. Gets or sets the SelfLink of the dimension setting.
-            /// </summary>
-            public string SelfLink
-            {
-                get { return this._selfLink; }
-                set { this._selfLink = value; }
-            }
-            
-            private string _state;
-            
-            /// <summary>
-            /// Optional. Gets or sets the state of the dimension setting.
-            /// </summary>
-            public string State
-            {
-                get { return this._state; }
-                set { this._state = value; }
-            }
-            
-            private string _type;
-            
-            /// <summary>
-            /// Optional. Gets or sets the type of resource.
-            /// </summary>
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
             }
             
             /// <summary>

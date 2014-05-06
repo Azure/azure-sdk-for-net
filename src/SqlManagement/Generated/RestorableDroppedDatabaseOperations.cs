@@ -184,13 +184,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.EntityId = entityIdInstance;
                         }
                         
-                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
-                        {
-                            string nameInstance = nameElement.Value;
-                            serviceResourceInstance.Name = nameInstance;
-                        }
-                        
                         XElement serverNameElement = serviceResourceElement.Element(XName.Get("ServerName", "http://schemas.microsoft.com/windowsazure"));
                         if (serverNameElement != null)
                         {
@@ -231,6 +224,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
+                        }
+                        
+                        XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            serviceResourceInstance.Name = nameInstance;
+                        }
+                        
+                        XElement typeElement = serviceResourceElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        if (typeElement != null)
+                        {
+                            string typeInstance = typeElement.Value;
+                            serviceResourceInstance.Type = typeInstance;
+                        }
+                        
+                        XElement stateElement = serviceResourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        if (stateElement != null)
+                        {
+                            string stateInstance = stateElement.Value;
+                            serviceResourceInstance.State = stateInstance;
                         }
                     }
                     
@@ -375,13 +389,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 serviceResourceInstance.EntityId = entityIdInstance;
                             }
                             
-                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null)
-                            {
-                                string nameInstance = nameElement.Value;
-                                serviceResourceInstance.Name = nameInstance;
-                            }
-                            
                             XElement serverNameElement = serviceResourcesElement.Element(XName.Get("ServerName", "http://schemas.microsoft.com/windowsazure"));
                             if (serverNameElement != null)
                             {
@@ -422,6 +429,27 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 DateTime recoveryPeriodStartDateInstance = DateTime.Parse(recoveryPeriodStartDateElement.Value, CultureInfo.InvariantCulture);
                                 serviceResourceInstance.RecoveryPeriodStartDate = recoveryPeriodStartDateInstance;
+                            }
+                            
+                            XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            if (nameElement != null)
+                            {
+                                string nameInstance = nameElement.Value;
+                                serviceResourceInstance.Name = nameInstance;
+                            }
+                            
+                            XElement typeElement = serviceResourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                            if (typeElement != null)
+                            {
+                                string typeInstance = typeElement.Value;
+                                serviceResourceInstance.Type = typeInstance;
+                            }
+                            
+                            XElement stateElement = serviceResourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                            if (stateElement != null)
+                            {
+                                string stateInstance = stateElement.Value;
+                                serviceResourceInstance.State = stateInstance;
                             }
                         }
                     }

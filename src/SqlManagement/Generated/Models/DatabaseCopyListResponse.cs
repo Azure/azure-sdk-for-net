@@ -28,14 +28,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the list of database copies for a given database.
+    /// Represents the response containing the list of database copies for a
+    /// given database.
     /// </summary>
     public partial class DatabaseCopyListResponse : OperationResponse, IEnumerable<DatabaseCopy>
     {
         private IList<DatabaseCopy> _databaseCopies;
         
         /// <summary>
-        /// Optional. The matching SQL Server database copies.
+        /// Optional. Gets or sets the matching SQL Server database copies.
         /// </summary>
         public IList<DatabaseCopy> DatabaseCopies
         {

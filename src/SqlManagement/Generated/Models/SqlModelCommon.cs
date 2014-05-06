@@ -21,32 +21,52 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Represents a quota for a server. Quotas are used to govern how many
-    /// database of different types can be created.
+    /// Common service resource properties found on resources returned by the
+    /// service.
     /// </summary>
-    public partial class Quota : SqlModelCommon
+    public partial class SqlModelCommon
     {
-        private string _value;
+        private string _name;
         
         /// <summary>
-        /// Optional. Gets the value of the quota. This will be the maximum
-        /// number of databases you can have that fall into this quota.
+        /// Optional. Gets the name of the service resource.
         /// </summary>
-        public string Value
+        public string Name
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _state;
+        
+        /// <summary>
+        /// Optional. Gets the state of the service resource.
+        /// </summary>
+        public string State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Gets the type of the service resource.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Quota class.
+        /// Initializes a new instance of the SqlModelCommon class.
         /// </summary>
-        public Quota()
+        public SqlModelCommon()
         {
         }
     }

@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the database get response.
+    /// Contains the response to a Get Database request.
     /// </summary>
     public partial class DatabaseGetResponse : OperationResponse
     {
         private Database _database;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the database that was returned from the
+        /// service in response to the get operation.
         /// </summary>
         public Database Database
         {

@@ -29,30 +29,28 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class ServiceObjectiveOperationsExtensions
     {
         /// <summary>
-        /// Returns information about a certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective with a
+        /// specific Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
         /// Required. The Id of the Service Objective to be obtained.
         /// </param>
         /// <returns>
-        /// Response containing the service objective for a given server and
-        /// service objective Id.
+        /// Response containing the service objective for a given Azure SQL
+        /// Database Server with matching service objective Id.
         /// </returns>
         public static ServiceObjectiveGetResponse Get(this IServiceObjectiveOperations operations, string serverName, string serviceObjectiveId)
         {
@@ -64,21 +62,22 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about a certain Service Objective on a given Id.
+        /// Returns information about a certain Service Objective with a
+        /// specific Id.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='serviceObjectiveId'>
         /// Required. The Id of the Service Objective to be obtained.
         /// </param>
         /// <returns>
-        /// Response containing the service objective for a given server and
-        /// service objective Id.
+        /// Response containing the service objective for a given Azure SQL
+        /// Database Server with matching service objective Id.
         /// </returns>
         public static Task<ServiceObjectiveGetResponse> GetAsync(this IServiceObjectiveOperations operations, string serverName, string serviceObjectiveId)
         {
@@ -86,19 +85,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about all Service Objectives on a database
-        /// server.
+        /// Returns information about all Service Objectives on an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of service objective for a given
-        /// server.
+        /// server.  This is returnedfrom a call to List Service Objectives.
         /// </returns>
         public static ServiceObjectiveListResponse List(this IServiceObjectiveOperations operations, string serverName)
         {
@@ -110,19 +109,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about all Service Objectives on a database
-        /// server.
+        /// Returns information about all Service Objectives on an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IServiceObjectiveOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <returns>
         /// Response containing the list of service objective for a given
-        /// server.
+        /// server.  This is returnedfrom a call to List Service Objectives.
         /// </returns>
         public static Task<ServiceObjectiveListResponse> ListAsync(this IServiceObjectiveOperations operations, string serverName)
         {

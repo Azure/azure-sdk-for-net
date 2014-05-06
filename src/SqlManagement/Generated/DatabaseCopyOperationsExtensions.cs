@@ -30,11 +30,8 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class DatabaseCopyOperationsExtensions
     {
@@ -47,17 +44,17 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the SQL Server where the source database
-        /// resides
+        /// resides.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the source database
+        /// Required. The name of the source database.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Additional parameters for the create database copy
-        /// operation
+        /// Required. The additional parameters for the create database copy
+        /// operation.
         /// </param>
         /// <returns>
-        /// Response to the create request.
+        /// Represents a response to the create request.
         /// </returns>
         public static DatabaseCopyCreateResponse Create(this IDatabaseCopyOperations operations, string serverName, string databaseName, DatabaseCopyCreateParameters parameters)
         {
@@ -77,17 +74,17 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='serverName'>
         /// Required. The name of the SQL Server where the source database
-        /// resides
+        /// resides.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the source database
+        /// Required. The name of the source database.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Additional parameters for the create database copy
-        /// operation
+        /// Required. The additional parameters for the create database copy
+        /// operation.
         /// </param>
         /// <returns>
-        /// Response to the create request.
+        /// Represents a response to the create request.
         /// </returns>
         public static Task<DatabaseCopyCreateResponse> CreateAsync(this IDatabaseCopyOperations operations, string serverName, string databaseName, DatabaseCopyCreateParameters parameters)
         {
@@ -102,13 +99,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to stop
+        /// Required. The unique identifier for the database copy to stop.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -131,13 +128,13 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to stop
+        /// Required. The unique identifier for the database copy to stop.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -156,16 +153,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to retrieve
+        /// Required. The unique identifier for the database copy to retrieve.
         /// </param>
         /// <returns>
-        /// Response to the get request.
+        /// Represents a response to the get request.
         /// </returns>
         public static DatabaseCopyGetResponse Get(this IDatabaseCopyOperations operations, string serverName, string databaseName, string databaseCopyName)
         {
@@ -184,16 +181,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to retrieve
+        /// Required. The unique identifier for the database copy to retrieve.
         /// </param>
         /// <returns>
-        /// Response to the get request.
+        /// Represents a response to the get request.
         /// </returns>
         public static Task<DatabaseCopyGetResponse> GetAsync(this IDatabaseCopyOperations operations, string serverName, string databaseName, string databaseCopyName)
         {
@@ -208,14 +205,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database to be queried
+        /// Required. The name of the database to be queried.
         /// </param>
         /// <returns>
-        /// Response containing the list of database copies for a given
-        /// database.
+        /// Represents the response containing the list of database copies for
+        /// a given database.
         /// </returns>
         public static DatabaseCopyListResponse List(this IDatabaseCopyOperations operations, string serverName, string databaseName)
         {
@@ -234,14 +231,14 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried
+        /// Required. The name of the database server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database to be queried
+        /// Required. The name of the database to be queried.
         /// </param>
         /// <returns>
-        /// Response containing the list of database copies for a given
-        /// database.
+        /// Represents the response containing the list of database copies for
+        /// a given database.
         /// </returns>
         public static Task<DatabaseCopyListResponse> ListAsync(this IDatabaseCopyOperations operations, string serverName, string databaseName)
         {
@@ -256,20 +253,20 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to update
+        /// Required. The unique identifier for the database copy to update.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Additional parameters for the update database copy
-        /// operation
+        /// Required. The additional parameters for the update database copy
+        /// operation.
         /// </param>
         /// <returns>
-        /// Response to the update request.
+        /// Represents a response to the update request.
         /// </returns>
         public static DatabaseCopyUpdateResponse Update(this IDatabaseCopyOperations operations, string serverName, string databaseName, Guid databaseCopyName, DatabaseCopyUpdateParameters parameters)
         {
@@ -288,20 +285,20 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseCopyOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the source or destination SQL Server instance
+        /// Required. The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the database
+        /// Required. The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// Required. The unique identifier for the database copy to update
+        /// Required. The unique identifier for the database copy to update.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Additional parameters for the update database copy
-        /// operation
+        /// Required. The additional parameters for the update database copy
+        /// operation.
         /// </param>
         /// <returns>
-        /// Response to the update request.
+        /// Represents a response to the update request.
         /// </returns>
         public static Task<DatabaseCopyUpdateResponse> UpdateAsync(this IDatabaseCopyOperations operations, string serverName, string databaseName, Guid databaseCopyName, DatabaseCopyUpdateParameters parameters)
         {
