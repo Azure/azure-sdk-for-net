@@ -38,8 +38,8 @@ namespace Microsoft.WindowsAzure
     public static partial class ReservedIPOperationsExtensions
     {
         /// <summary>
-        /// Preview Only. The Begin Creating Reserved IP operation creates a
-        /// reserved IP from your the subscription.
+        /// The Begin Creating Reserved IP operation creates a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -70,8 +70,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The Begin Creating Reserved IP operation creates a
-        /// reserved IP from your the subscription.
+        /// The Begin Creating Reserved IP operation creates a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -98,8 +98,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The Begin Deleting Reserved IP operation removes a
-        /// reserved IP from your the subscription.
+        /// The Begin Deleting Reserved IP operation removes a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static OperationResponse BeginDeleting(this IReservedIPOperations operations, string ipName)
@@ -122,8 +122,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The Begin Deleting Reserved IP operation removes a
-        /// reserved IP from your the subscription.
+        /// The Begin Deleting Reserved IP operation removes a reserved IP from
+        /// your the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the reserved IP.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<OperationResponse> BeginDeletingAsync(this IReservedIPOperations operations, string ipName)
@@ -258,8 +258,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The Get Reserved IP operation retrieves the details
-        /// for the virtual IP reserved for the subscription.
+        /// The Get Reserved IP operation retrieves the details for the virtual
+        /// IP reserved for the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -269,7 +269,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
-        /// Preview Only. A reserved IP associated with your subscription.
+        /// A reserved IP associated with your subscription.
         /// </returns>
         public static NetworkReservedIPGetResponse Get(this IReservedIPOperations operations, string ipName)
         {
@@ -281,8 +281,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The Get Reserved IP operation retrieves the details
-        /// for the virtual IP reserved for the subscription.
+        /// The Get Reserved IP operation retrieves the details for the virtual
+        /// IP reserved for the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -292,7 +292,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the reserved IP to retrieve.
         /// </param>
         /// <returns>
-        /// Preview Only. A reserved IP associated with your subscription.
+        /// A reserved IP associated with your subscription.
         /// </returns>
         public static Task<NetworkReservedIPGetResponse> GetAsync(this IReservedIPOperations operations, string ipName)
         {
@@ -300,15 +300,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The List Reserved IP operation retrieves all of the
-        /// virtual IPs reserved for the subscription.
+        /// The List Reserved IP operation retrieves all of the virtual IPs
+        /// reserved for the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <returns>
-        /// Preview Only. The response structure for the Server List operation.
+        /// The response structure for the Server List operation.
         /// </returns>
         public static NetworkReservedIPListResponse List(this IReservedIPOperations operations)
         {
@@ -320,15 +320,15 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Preview Only. The List Reserved IP operation retrieves all of the
-        /// virtual IPs reserved for the subscription.
+        /// The List Reserved IP operation retrieves all of the virtual IPs
+        /// reserved for the subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Network.IReservedIPOperations.
         /// </param>
         /// <returns>
-        /// Preview Only. The response structure for the Server List operation.
+        /// The response structure for the Server List operation.
         /// </returns>
         public static Task<NetworkReservedIPListResponse> ListAsync(this IReservedIPOperations operations)
         {

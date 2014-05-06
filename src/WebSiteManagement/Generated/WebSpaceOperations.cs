@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -348,7 +348,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -364,17 +364,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     result = new WebSpacesGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement webSpacesElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
-                    if (webSpacesElement != null)
+                    XElement webSpaceElement = responseDoc.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                    if (webSpaceElement != null)
                     {
-                        XElement availabilityStateElement = webSpacesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                        XElement availabilityStateElement = webSpaceElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
                         if (availabilityStateElement != null)
                         {
                             WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                             result.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement currentNumberOfWorkersElement = webSpacesElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        XElement currentNumberOfWorkersElement = webSpaceElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
                         if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
                         {
                             bool isNil = false;
@@ -390,7 +390,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                         }
                         
-                        XElement currentWorkerSizeElement = webSpacesElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        XElement currentWorkerSizeElement = webSpaceElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
                         {
                             bool isNil2 = false;
@@ -406,49 +406,49 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                         }
                         
-                        XElement geoLocationElement = webSpacesElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
+                        XElement geoLocationElement = webSpaceElement.Element(XName.Get("GeoLocation", "http://schemas.microsoft.com/windowsazure"));
                         if (geoLocationElement != null)
                         {
                             string geoLocationInstance = geoLocationElement.Value;
                             result.GeoLocation = geoLocationInstance;
                         }
                         
-                        XElement geoRegionElement = webSpacesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
+                        XElement geoRegionElement = webSpaceElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
                         if (geoRegionElement != null)
                         {
                             string geoRegionInstance = geoRegionElement.Value;
                             result.GeoRegion = geoRegionInstance;
                         }
                         
-                        XElement nameElement = webSpacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        XElement nameElement = webSpaceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
-                        XElement planElement = webSpacesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
+                        XElement planElement = webSpaceElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
                         if (planElement != null)
                         {
                             string planInstance = planElement.Value;
                             result.Plan = planInstance;
                         }
                         
-                        XElement statusElement = webSpacesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        XElement statusElement = webSpaceElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                         if (statusElement != null)
                         {
                             WebSpaceStatus statusInstance = ((WebSpaceStatus)Enum.Parse(typeof(WebSpaceStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
-                        XElement subscriptionElement = webSpacesElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
+                        XElement subscriptionElement = webSpaceElement.Element(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure"));
                         if (subscriptionElement != null)
                         {
                             string subscriptionInstance = subscriptionElement.Value;
                             result.Subscription = subscriptionInstance;
                         }
                         
-                        XElement workerSizeElement = webSpacesElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        XElement workerSizeElement = webSpaceElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
                         if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
                         {
                             WebSpaceWorkerSize workerSizeInstance = ((WebSpaceWorkerSize)Enum.Parse(typeof(WebSpaceWorkerSize), workerSizeElement.Value, true));
@@ -555,7 +555,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -679,7 +679,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -892,7 +892,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1047,7 +1047,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1194,7 +1194,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

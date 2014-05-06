@@ -261,16 +261,16 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     typeElement.Value = endpointsItem.Type.ToString();
                     endpointElement.Add(typeElement);
                     
-                    XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                    weightElement.Value = endpointsItem.Weight.ToString();
-                    endpointElement.Add(weightElement);
-                    
                     if (endpointsItem.Location != null)
                     {
                         XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
                         locationElement.Value = endpointsItem.Location;
                         endpointElement.Add(locationElement);
                     }
+                    
+                    XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
+                    weightElement.Value = endpointsItem.Weight.ToString();
+                    endpointElement.Add(weightElement);
                 }
                 policyElement.Add(endpointsSequenceElement);
                 
@@ -296,7 +296,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -416,7 +416,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -722,7 +722,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

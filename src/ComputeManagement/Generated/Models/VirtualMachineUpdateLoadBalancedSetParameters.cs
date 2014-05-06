@@ -85,6 +85,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._loadBalancedEndpointSetName = value; }
             }
             
+            private string _loadBalancerName;
+            
+            /// <summary>
+            /// Optional. Optional. Specify the name of an internal load
+            /// balancer if this endpoint shall not be exposed on the default
+            /// load balancer.
+            /// </summary>
+            public string LoadBalancerName
+            {
+                get { return this._loadBalancerName; }
+                set { this._loadBalancerName = value; }
+            }
+            
             private LoadBalancerProbe _loadBalancerProbe;
             
             /// <summary>

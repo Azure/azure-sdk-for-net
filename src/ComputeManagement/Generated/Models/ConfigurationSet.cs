@@ -162,6 +162,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._inputEndpoints = value; }
         }
         
+        private IList<ConfigurationSet.PublicIP> _publicIPs;
+        
+        /// <summary>
+        /// Optional. Optional. A set of public IPs. Currently, only one
+        /// additional public IP per role is supported in an IaaS deployment.
+        /// The IP address is in addition to the default VIP for the
+        /// deployment.
+        /// </summary>
+        public IList<ConfigurationSet.PublicIP> PublicIPs
+        {
+            get { return this._publicIPs; }
+            set { this._publicIPs = value; }
+        }
+        
         private bool? _resetPasswordOnFirstLogon;
         
         /// <summary>
@@ -290,8 +304,35 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ConfigurationSet()
         {
             this._inputEndpoints = new List<InputEndpoint>();
+            this._publicIPs = new List<ConfigurationSet.PublicIP>();
             this._storedCertificateSettings = new List<StoredCertificateSettings>();
             this._subnetNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// An additional public IP that will be created for the role. The
+        /// public IP will be an additional IP for the role. The role
+        /// continues to be addressable via the default deployment VIP.
+        /// </summary>
+        public partial class PublicIP
+        {
+            private string _name;
+            
+            /// <summary>
+            /// Optional. The name of the public IP.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the PublicIP class.
+            /// </summary>
+            public PublicIP()
+            {
+            }
         }
     }
 }

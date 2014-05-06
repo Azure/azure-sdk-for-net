@@ -73,8 +73,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, CancellationToken cancellationToken)
         {
@@ -142,7 +142,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -214,8 +214,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -314,7 +314,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -450,7 +450,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -615,7 +615,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

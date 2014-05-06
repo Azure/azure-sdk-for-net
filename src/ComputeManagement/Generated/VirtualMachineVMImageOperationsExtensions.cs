@@ -192,5 +192,57 @@ namespace Microsoft.WindowsAzure
         {
             return operations.ListAsync(CancellationToken.None);
         }
+        
+        /// <summary>
+        /// The Update VM Image operation updates a VM image that in your image
+        /// repository.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Image
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Update(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineVMImageOperations)s).UpdateAsync(imageName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Update VM Image operation updates a VM image that in your image
+        /// repository.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineVMImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Virtual Machine Image
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateAsync(this IVirtualMachineVMImageOperations operations, string imageName, VirtualMachineVMImageUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(imageName, parameters, CancellationToken.None);
+        }
     }
 }

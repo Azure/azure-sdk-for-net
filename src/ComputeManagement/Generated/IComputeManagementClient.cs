@@ -82,6 +82,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Compute Management API includes operations for managing the
+        /// load balancers for your subscription.
+        /// </summary>
+        ILoadBalancerOperations LoadBalancers
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for determining the version of the Azure Guest Operating
         /// System on which your service is running.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/ff684169.aspx

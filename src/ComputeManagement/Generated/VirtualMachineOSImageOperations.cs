@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -266,7 +266,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -515,7 +515,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -539,7 +539,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -636,7 +636,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -660,7 +660,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -898,7 +898,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -922,7 +922,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1180,7 +1180,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1218,6 +1218,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     oSImageElement.Add(imageFamilyElement);
                 }
                 
+                if (parameters.ShowInGui != null)
+                {
+                    XElement showInGuiElement = new XElement(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                    showInGuiElement.Value = parameters.ShowInGui.ToString().ToLower();
+                    oSImageElement.Add(showInGuiElement);
+                }
+                
                 if (parameters.PublishedDate != null)
                 {
                     XElement publishedDateElement = new XElement(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
@@ -1225,9 +1232,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     oSImageElement.Add(publishedDateElement);
                 }
                 
-                XElement isPremiumElement = new XElement(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
-                isPremiumElement.Value = parameters.IsPremium.ToString().ToLower();
-                oSImageElement.Add(isPremiumElement);
+                if (parameters.IsPremium != null)
+                {
+                    XElement isPremiumElement = new XElement(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                    isPremiumElement.Value = parameters.IsPremium.ToString().ToLower();
+                    oSImageElement.Add(isPremiumElement);
+                }
                 
                 if (parameters.PrivacyUri != null)
                 {
@@ -1286,7 +1296,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1396,10 +1406,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             result.IsPremium = isPremiumInstance;
                         }
                         
-                        XElement showInGuiElement = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
-                        if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
+                        XElement showInGuiElement2 = oSImageElement2.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                        if (showInGuiElement2 != null && string.IsNullOrEmpty(showInGuiElement2.Value) == false)
                         {
-                            bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                            bool showInGuiInstance = bool.Parse(showInGuiElement2.Value);
                             result.ShowInGui = showInGuiInstance;
                         }
                         
