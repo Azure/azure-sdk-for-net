@@ -25,15 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The parameters for the Create Firewall Rule operation.
+    /// Represents the parameters for the Create Firewall Rule operation.
     /// </summary>
     public partial class FirewallRuleCreateParameters
     {
         private string _endIPAddress;
         
         /// <summary>
-        /// Required. Gets or sets the ending IP address applied to this
-        /// firewall rule.
+        /// Required. Gets or sets the ending IP address for the new Firewall
+        /// Rule.
         /// </summary>
         public string EndIPAddress
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of this firewall rule.
+        /// Required. Gets or sets the name for the new Firewall Rule.
         /// </summary>
         public string Name
         {
@@ -55,8 +55,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _startIPAddress;
         
         /// <summary>
-        /// Required. Gets or sets the beginning IP address applied to this
-        /// firewall rule.
+        /// Required. Gets or sets the beginning IP address for the new
+        /// Firewall Rule.
         /// </summary>
         public string StartIPAddress
         {

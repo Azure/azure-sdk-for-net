@@ -26,14 +26,17 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the DAC Export operation.
+    /// Represents the parameters needed to initiate an Azure SQL Database
+    /// Export operation.
     /// </summary>
     public partial class DacExportParameters
     {
         private DacExportParameters.BlobCredentialsParameter _blobCredentials;
         
         /// <summary>
-        /// Optional. Gets or sets credentials for getting the DAC.
+        /// Optional. Gets or sets the credentials information needed for
+        /// setting where the DACPAC file will be exported to in Azure Blob
+        /// Storage.
         /// </summary>
         public DacExportParameters.BlobCredentialsParameter BlobCredentials
         {
@@ -44,8 +47,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacExportParameters.ConnectionInfoParameter _connectionInfo;
         
         /// <summary>
-        /// Optional. Gets or sets connection information for the SQL Server
-        /// Database.
+        /// Optional. Gets or sets the connection information needed for the
+        /// Azure SQL Database.
         /// </summary>
         public DacExportParameters.ConnectionInfoParameter ConnectionInfo
         {
@@ -61,14 +64,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Credentials for getting the DAC.
+        /// The credentials needed to connect to Azure Blob Storage to export
+        /// the DACPAC file.
         /// </summary>
         public partial class BlobCredentialsParameter
         {
             private string _storageAccessKey;
             
             /// <summary>
-            /// Required. Gets or sets the key for the Windows Azure Storage
+            /// Required. Gets or sets the access key for the Azure Storage
             /// account.
             /// </summary>
             public string StorageAccessKey
@@ -80,8 +84,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private Uri _uri;
             
             /// <summary>
-            /// Required. Gets or sets the URI of the DAC file stored in
-            /// Windows Azure Blob Storage.
+            /// Required. Gets or sets the URI of where the DACPAC file should
+            /// be stored in Azure Blob Storage.
             /// </summary>
             public Uri Uri
             {
@@ -99,14 +103,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Connection information for the SQL Server Database.
+        /// Represents the connection information for the Azure SQL Database to
+        /// export.
         /// </summary>
         public partial class ConnectionInfoParameter
         {
             private string _databaseName;
             
             /// <summary>
-            /// Required. Gets or sets the name of the database.
+            /// Required. Gets or sets the name of the database to be exported.
             /// </summary>
             public string DatabaseName
             {
@@ -117,7 +122,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _password;
             
             /// <summary>
-            /// Required. Gets or sets the password for the database user.
+            /// Required. Gets or sets the password for the database
+            /// administrator user.
             /// </summary>
             public string Password
             {
@@ -128,7 +134,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serverName;
             
             /// <summary>
-            /// Required. Gets or sets the SQL server name.
+            /// Required. Gets or sets the Azure SQL Database Server name where
+            /// the database resides.
             /// </summary>
             public string ServerName
             {
@@ -139,7 +146,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _userName;
             
             /// <summary>
-            /// Required. Gets or sets the username of the database user.
+            /// Required. Gets or sets the username of the database
+            /// administrator user.
             /// </summary>
             public string UserName
             {

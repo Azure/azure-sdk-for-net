@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the database operation for a given operation Guid.
+    /// Represents the database operation for a given operation Guid.
     /// </summary>
     public partial class DatabaseOperationGetResponse : OperationResponse
     {
         private DatabaseOperation _databaseOperation;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the database operation information returned
+        /// from a call to Get Database Operation.
         /// </summary>
         public DatabaseOperation DatabaseOperation
         {

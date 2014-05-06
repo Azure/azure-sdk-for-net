@@ -29,11 +29,8 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class RestoreDatabaseOperationsExtensions
     {
@@ -46,7 +43,7 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='sourceServerName'>
         /// Required. The name of the Azure SQL Database Server where the
-        /// source database is or was hosted.
+        /// source database is, or was, hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Restore Database
@@ -74,7 +71,7 @@ namespace Microsoft.WindowsAzure
         /// </param>
         /// <param name='sourceServerName'>
         /// Required. The name of the Azure SQL Database Server where the
-        /// source database is or was hosted.
+        /// source database is, or was, hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Restore Database

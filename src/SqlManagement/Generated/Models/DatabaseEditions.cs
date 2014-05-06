@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Specifies the edition of the SQL database.
+    /// Defines the valid editions of Azure SQL Databases.
     /// </summary>
     public static partial class DatabaseEditions
     {
@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// <summary>
         /// The Premium Edition Database is for situations requiring a high
         /// number of transactionsper second (>100).  Supports more users than
-        /// Basic, and Standard.
+        /// Basic and Standard.
         /// </summary>
         public const string Premium = "Premium";
     }

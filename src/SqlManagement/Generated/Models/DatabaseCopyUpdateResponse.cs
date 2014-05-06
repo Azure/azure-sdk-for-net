@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response to the update request.
+    /// Represents a response to the update request.
     /// </summary>
     public partial class DatabaseCopyUpdateResponse : OperationResponse
     {
         private DatabaseCopy _databaseCopy;
         
         /// <summary>
-        /// Optional. The returned database copy.
+        /// Optional. Gets or sets the returned database copy.
         /// </summary>
         public DatabaseCopy DatabaseCopy
         {

@@ -26,14 +26,17 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response for an DAC Import/Export request.
+    /// Represents the response that the service returns once an import or
+    /// export operation has been initiated.
     /// </summary>
     public partial class DacImportExportResponse : OperationResponse
     {
         private string _guid;
         
         /// <summary>
-        /// Optional. Gets or sets the operation's identifier.
+        /// Optional. Gets or sets a unique identifier for an import or export
+        /// operation.  Use this identifier for querying the status of the
+        /// import or export operation with GetStatus.
         /// </summary>
         public string Guid
         {

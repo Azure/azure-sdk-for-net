@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private RecoverableDatabase _database;
         
         /// <summary>
-        /// Optional. Gets the recoverable database that was hosted on the
-        /// server.
+        /// Optional. Gets or sets the recoverable database that was hosted on
+        /// the server.
         /// </summary>
         public RecoverableDatabase Database
         {

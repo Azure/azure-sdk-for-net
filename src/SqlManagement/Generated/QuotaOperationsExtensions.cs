@@ -29,29 +29,27 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class QuotaOperationsExtensions
     {
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Retrieves the specified quota from the server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IQuotaOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the quota.
         /// </param>
         /// <param name='quotaName'>
         /// Required. The name of the quota to retrieve.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota Get operation.
+        /// Represents the response structure for the Quota Get operation.
         /// </returns>
         public static QuotaGetResponse Get(this IQuotaOperations operations, string serverName, string quotaName)
         {
@@ -63,20 +61,21 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Retrieves the specified quota from the server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IQuotaOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the quota.
         /// </param>
         /// <param name='quotaName'>
         /// Required. The name of the quota to retrieve.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota Get operation.
+        /// Represents the response structure for the Quota Get operation.
         /// </returns>
         public static Task<QuotaGetResponse> GetAsync(this IQuotaOperations operations, string serverName, string quotaName)
         {
@@ -84,17 +83,18 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Returns a list of quotas from the server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IQuotaOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// get the quotas.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota List operation.
+        /// Represents the response structure for the Quota List operation.
         /// </returns>
         public static QuotaListResponse List(this IQuotaOperations operations, string serverName)
         {
@@ -106,17 +106,18 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Returns a list of quotas from the server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IQuotaOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// get the quotas.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota List operation.
+        /// Represents the response structure for the Quota List operation.
         /// </returns>
         public static Task<QuotaListResponse> ListAsync(this IQuotaOperations operations, string serverName)
         {

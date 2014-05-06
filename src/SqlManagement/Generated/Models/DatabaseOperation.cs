@@ -21,18 +21,20 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Database operation.
+    /// Contains all the information pertaining to a database operation that
+    /// transpired.
     /// </summary>
-    public partial class DatabaseOperation
+    public partial class DatabaseOperation : SqlModelCommon
     {
         private string _databaseName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the SQL Database on which the
+        /// Optional. Gets the name of the Azure SQL Database on which the
         /// operation is performed.
         /// </summary>
         public string DatabaseName
@@ -44,8 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _error;
         
         /// <summary>
-        /// Optional. Gets or sets the description of the error that occurred
-        /// during a failed operation.
+        /// Optional. Gets the description of the error that occurred during a
+        /// failed operation.
         /// </summary>
         public string Error
         {
@@ -56,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorCode;
         
         /// <summary>
-        /// Optional. Gets or sets the code indicating the error that occurred
-        /// during a failed operation.
+        /// Optional. Gets the code indicating the error that occurred during a
+        /// failed operation.
         /// </summary>
         public int ErrorCode
         {
@@ -68,8 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorSeverity;
         
         /// <summary>
-        /// Optional. Gets or sets the severity level of the error that
-        /// occurred during a failed operation.
+        /// Optional. Gets the severity level of the error that occurred during
+        /// a failed operation.
         /// </summary>
         public int ErrorSeverity
         {
@@ -80,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _errorState;
         
         /// <summary>
-        /// Optional. Gets or sets the error state.
+        /// Optional. Gets the error state of the operation.
         /// </summary>
         public int ErrorState
         {
@@ -91,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets unique identifier of the operation..
+        /// Optional. Gets a unique identifier for this database operation.
         /// </summary>
         public string Id
         {
@@ -102,8 +104,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _lastModifyTime;
         
         /// <summary>
-        /// Optional. Gets or sets the timestamp when the record was last
-        /// modified for a long running operation.
+        /// Optional. Gets the timestamp when the record was last modified for
+        /// a long running operation.
         /// </summary>
         public DateTime LastModifyTime
         {
@@ -111,33 +113,10 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._lastModifyTime = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the operation.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _parentLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the ParentLink of the operation.
-        /// </summary>
-        public string ParentLink
-        {
-            get { return this._parentLink; }
-            set { this._parentLink = value; }
-        }
-        
         private int _percentComplete;
         
         /// <summary>
-        /// Optional. Gets or sets the percentage of operation that has
-        /// completed.
+        /// Optional. Gets the percentage of the operation that has completed.
         /// </summary>
         public int PercentComplete
         {
@@ -145,21 +124,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._percentComplete = value; }
         }
         
-        private string _selfLink;
-        
-        /// <summary>
-        /// Optional. Gets or sets the SelfLink of the operation.
-        /// </summary>
-        public string SelfLink
-        {
-            get { return this._selfLink; }
-            set { this._selfLink = value; }
-        }
-        
         private string _sessionActivityId;
         
         /// <summary>
-        /// Optional. Gets or sets session scoped ID of the operation.
+        /// Optional. Gets the unique Guid that identifies the session that
+        /// this operation occured in. This is helpful if contacting support
+        /// for an issue.
         /// </summary>
         public string SessionActivityId
         {
@@ -170,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. Gets or sets the timestamp when the operation started.
+        /// Optional. Gets the timestamp when the operation started.
         /// </summary>
         public DateTime StartTime
         {
@@ -178,38 +148,17 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._startTime = value; }
         }
         
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets the state of the operation.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
         private int _stateId;
         
         /// <summary>
-        /// Optional. Gets or sets current state of the long running operation
-        /// in numeric format.
+        /// Optional. Gets a unique identifier for the service activity
+        /// representing the operation. This activity id can be provided to
+        /// the service support for investigating an operation.
         /// </summary>
         public int StateId
         {
             get { return this._stateId; }
             set { this._stateId = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>

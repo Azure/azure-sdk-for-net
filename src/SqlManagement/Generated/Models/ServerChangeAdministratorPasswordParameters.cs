@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Manage Administrator Password operation.
+    /// Contains all the necessary information to change the administrator
+    /// password for a server.
     /// </summary>
     public partial class ServerChangeAdministratorPasswordParameters
     {
         private string _newPassword;
         
         /// <summary>
-        /// Required. Gets or sets new password for the administrator.
+        /// Required. Gets or sets the new password for the administrator.
         /// </summary>
         public string NewPassword
         {

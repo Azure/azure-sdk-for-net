@@ -21,18 +21,19 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Firewall rule.
+    /// Represents a Firewall Rule for an Azure SQL Database Server.
     /// </summary>
-    public partial class FirewallRule
+    public partial class FirewallRule : SqlModelCommon
     {
         private string _endIPAddress;
         
         /// <summary>
-        /// Optional. Gets or sets the ending IP address applied to this rule.
+        /// Optional. Gets the ending IP address for this Firewall Rule.
         /// </summary>
         public string EndIPAddress
         {
@@ -40,38 +41,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._endIPAddress = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the Firewall Rule.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private string _startIPAddress;
         
         /// <summary>
-        /// Optional. Gets or sets the beginning IP address applied to this
-        /// rule.
+        /// Optional. Gets the starting IP address for this Firewall Rule.
         /// </summary>
         public string StartIPAddress
         {
             get { return this._startIPAddress; }
             set { this._startIPAddress = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>

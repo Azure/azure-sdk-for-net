@@ -26,14 +26,27 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response returned from the Create Server operation.
+    /// The response returned from the Create Server operation.  This contains
+    /// all the information returned from the service when a server is created.
     /// </summary>
     public partial class ServerCreateResponse : OperationResponse
     {
+        private string _fullyQualifiedDomainName;
+        
+        /// <summary>
+        /// Optional. Gets the fully qualified domain name of the server.
+        /// </summary>
+        public string FullyQualifiedDomainName
+        {
+            get { return this._fullyQualifiedDomainName; }
+            set { this._fullyQualifiedDomainName = value; }
+        }
+        
         private string _serverName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the server that was created.
+        /// Optional. Gets the name of the Azure SQL Database Server that was
+        /// provisioned.
         /// </summary>
         public string ServerName
         {
