@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Subscriptions;
@@ -101,6 +102,71 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// </param>
         public SubscriptionClient(CloudCredentials credentials)
             : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SubscriptionClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private SubscriptionClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._subscriptions = new SubscriptionOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SubscriptionClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials used to authenticate requests.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all Service Management
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SubscriptionClient(CloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SubscriptionClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials used to authenticate requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SubscriptionClient(CloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
         {
             if (credentials == null)
             {

@@ -26,8 +26,8 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// A standard express route gateway response including an HTTP status code
-    /// and request ID.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
     public partial class ExpressRouteOperationResponse : OperationResponse
     {

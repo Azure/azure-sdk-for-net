@@ -21,31 +21,43 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
+using Microsoft.WindowsAzure.Management.Compute.Models;
 
-namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The Get Bgp Peering Operation Response.
+    /// A list of internal load balancers that each provide load balancing on a
+    /// private VIP.
     /// </summary>
-    public partial class BgpPeeringGetResponse : OperationResponse
+    public partial class LoadBalancer
     {
-        private AzureBgpPeering _bgpPeering;
+        private FrontendIPConfiguration _frontendIPConfiguration;
         
         /// <summary>
-        /// Optional. Details for the requested Bgp Peering.
+        /// Optional. The configuration for the virtual IP address (VIP) this
+        /// load balancer provides.
         /// </summary>
-        public AzureBgpPeering BgpPeering
+        public FrontendIPConfiguration FrontendIPConfiguration
         {
-            get { return this._bgpPeering; }
-            set { this._bgpPeering = value; }
+            get { return this._frontendIPConfiguration; }
+            set { this._frontendIPConfiguration = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. The name of the load balancer.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the BgpPeeringGetResponse class.
+        /// Initializes a new instance of the LoadBalancer class.
         /// </summary>
-        public BgpPeeringGetResponse()
+        public LoadBalancer()
         {
         }
     }

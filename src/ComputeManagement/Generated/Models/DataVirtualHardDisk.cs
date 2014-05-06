@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -30,13 +29,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class DataVirtualHardDisk
     {
-        private Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? _hostCaching;
+        private string _hostCaching;
         
         /// <summary>
         /// Optional. Specifies the platform caching behavior of the data disk
         /// blob for read/write efficiency. The default value is ReadOnly.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Compute.Models.VirtualHardDiskHostCaching? HostCaching
+        public string HostCaching
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }

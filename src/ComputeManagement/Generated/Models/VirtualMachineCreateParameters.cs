@@ -70,6 +70,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._dataVirtualHardDisks = value; }
         }
         
+        private Uri _mediaLocation;
+        
+        /// <summary>
+        /// Optional. Location where VMImage VHDs should be copied, for
+        /// published VMImages.
+        /// </summary>
+        public Uri MediaLocation
+        {
+            get { return this._mediaLocation; }
+            set { this._mediaLocation = value; }
+        }
+        
         private OSVirtualHardDisk _oSVirtualHardDisk;
         
         /// <summary>

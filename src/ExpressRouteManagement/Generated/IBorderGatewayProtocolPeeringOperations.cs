@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    public partial interface IBgpPeeringOperations
+    public partial interface IBorderGatewayProtocolPeeringOperations
     {
         /// <summary>
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
@@ -46,10 +46,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken);
+        Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Remove Bgp Peering Route operation deletes an existing bgp
@@ -65,8 +65,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
         
@@ -87,10 +87,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Bgp Peering operation retrieves the bgp peering for the
@@ -108,7 +108,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        Task<BgpPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
+        Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
         
         /// <summary>
         /// The New Bgp Peering operation creates a new bgp peering associated
@@ -130,7 +130,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        Task<BgpPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters, CancellationToken cancellationToken);
+        Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Remove Bgp Peering operation deletes an existing bgp peering.
@@ -177,6 +177,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        Task<BgpPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

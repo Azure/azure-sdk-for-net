@@ -27,7 +27,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// <summary>
     /// The state of the BGP Peering.
     /// </summary>
-    public enum BGPPeeringState
+    public enum BgpPeeringState
     {
         Disabled = 0,
         

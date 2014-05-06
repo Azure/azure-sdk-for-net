@@ -37,14 +37,14 @@ namespace Microsoft.WindowsAzure
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class BgpPeeringOperationsExtensions
+    public static partial class BorderGatewayProtocolPeeringOperationsExtensions
     {
         /// <summary>
         /// The New Dedicated Circuit operation creates a new dedicated circuit.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -57,14 +57,14 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static ExpressRouteOperationResponse BeginNew(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
+        public static ExpressRouteOperationResponse BeginNew(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).BeginNewAsync(serviceKey, accessType, parameters);
+                return ((IBorderGatewayProtocolPeeringOperations)s).BeginNewAsync(serviceKey, accessType, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -87,10 +87,10 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<ExpressRouteOperationResponse> BeginNewAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
+        public static Task<ExpressRouteOperationResponse> BeginNewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return operations.BeginNewAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }
@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. Service Key representing the bgp peering to be deleted.
@@ -110,14 +110,14 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static ExpressRouteOperationResponse BeginRemove(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static ExpressRouteOperationResponse BeginRemove(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).BeginRemoveAsync(serviceKey, accessType);
+                return ((IBorderGatewayProtocolPeeringOperations)s).BeginRemoveAsync(serviceKey, accessType);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -128,7 +128,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. Service Key representing the bgp peering to be deleted.
@@ -137,10 +137,10 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<ExpressRouteOperationResponse> BeginRemoveAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static Task<ExpressRouteOperationResponse> BeginRemoveAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return operations.BeginRemoveAsync(serviceKey, accessType, CancellationToken.None);
         }
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -163,14 +163,14 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static ExpressRouteOperationResponse BeginUpdate(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
+        public static ExpressRouteOperationResponse BeginUpdate(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).BeginUpdateAsync(serviceKey, accessType, parameters);
+                return ((IBorderGatewayProtocolPeeringOperations)s).BeginUpdateAsync(serviceKey, accessType, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -180,7 +180,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -193,10 +193,10 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<ExpressRouteOperationResponse> BeginUpdateAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
+        public static Task<ExpressRouteOperationResponse> BeginUpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return operations.BeginUpdateAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }
@@ -207,7 +207,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The servicee key representing the dedicated circuit.
@@ -218,11 +218,11 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static BgpPeeringGetResponse Get(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static BorderGatewayProtocolPeeringGetResponse Get(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).GetAsync(serviceKey, accessType);
+                return ((IBorderGatewayProtocolPeeringOperations)s).GetAsync(serviceKey, accessType);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -233,7 +233,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The servicee key representing the dedicated circuit.
@@ -244,7 +244,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static Task<BgpPeeringGetResponse> GetAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return operations.GetAsync(serviceKey, accessType, CancellationToken.None);
         }
@@ -255,7 +255,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -270,11 +270,11 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static BgpPeeringGetResponse New(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
+        public static BorderGatewayProtocolPeeringGetResponse New(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).NewAsync(serviceKey, accessType, parameters);
+                return ((IBorderGatewayProtocolPeeringOperations)s).NewAsync(serviceKey, accessType, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -285,7 +285,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -300,7 +300,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static Task<BgpPeeringGetResponse> NewAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringNewParameters parameters)
+        public static Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
             return operations.NewAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. Service key associated with the bgp peering to be deleted.
@@ -329,11 +329,11 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static ExpressRouteOperationStatusResponse Remove(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static ExpressRouteOperationStatusResponse Remove(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).RemoveAsync(serviceKey, accessType);
+                return ((IBorderGatewayProtocolPeeringOperations)s).RemoveAsync(serviceKey, accessType);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -343,7 +343,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. Service key associated with the bgp peering to be deleted.
@@ -362,7 +362,7 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public static Task<ExpressRouteOperationStatusResponse> RemoveAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
+        public static Task<ExpressRouteOperationStatusResponse> RemoveAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
             return operations.RemoveAsync(serviceKey, accessType, CancellationToken.None);
         }
@@ -373,7 +373,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -388,11 +388,11 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static BgpPeeringGetResponse Update(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
+        public static BorderGatewayProtocolPeeringGetResponse Update(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IBgpPeeringOperations)s).UpdateAsync(serviceKey, accessType, parameters);
+                return ((IBorderGatewayProtocolPeeringOperations)s).UpdateAsync(serviceKey, accessType, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBgpPeeringOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -418,7 +418,7 @@ namespace Microsoft.WindowsAzure
         /// <returns>
         /// The Get Bgp Peering Operation Response.
         /// </returns>
-        public static Task<BgpPeeringGetResponse> UpdateAsync(this IBgpPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BgpPeeringUpdateParameters parameters)
+        public static Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
             return operations.UpdateAsync(serviceKey, accessType, parameters, CancellationToken.None);
         }

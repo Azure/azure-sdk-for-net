@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Scheduler;
@@ -131,6 +132,102 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </param>
         public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName)
             : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException("cloudServiceName");
+            }
+            if (jobCollectionName == null)
+            {
+                throw new ArgumentNullException("jobCollectionName");
+            }
+            this._credentials = credentials;
+            this._cloudServiceName = cloudServiceName;
+            this._jobCollectionName = jobCollectionName;
+            this._baseUri = new Uri("https://management.core.windows.net/");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private SchedulerClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._jobs = new JobOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// Required.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// Required.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (cloudServiceName == null)
+            {
+                throw new ArgumentNullException("cloudServiceName");
+            }
+            if (jobCollectionName == null)
+            {
+                throw new ArgumentNullException("jobCollectionName");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._cloudServiceName = cloudServiceName;
+            this._jobCollectionName = jobCollectionName;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required.
+        /// </param>
+        /// <param name='cloudServiceName'>
+        /// Required.
+        /// </param>
+        /// <param name='jobCollectionName'>
+        /// Required.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, HttpClient httpClient)
+            : this(httpClient)
         {
             if (credentials == null)
             {
