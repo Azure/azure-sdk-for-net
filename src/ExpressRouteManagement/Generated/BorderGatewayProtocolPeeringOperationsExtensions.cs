@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
@@ -87,8 +87,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginNewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
@@ -110,8 +110,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginRemove(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
@@ -137,8 +137,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginRemoveAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
@@ -163,8 +163,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginUpdate(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
@@ -193,8 +193,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Update Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginUpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {

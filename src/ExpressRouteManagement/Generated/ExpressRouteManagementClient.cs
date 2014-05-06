@@ -167,6 +167,79 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private ExpressRouteManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
+            this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
+            this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all golden gate requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. The customer subscription ID forms part of the URI for
+        /// every call that you make to the Express Route Gateway Manager.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
         /// The Get Express Route operation status gets information on the
         /// status of Express Route operations in Windows Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154112.aspx
@@ -255,7 +328,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

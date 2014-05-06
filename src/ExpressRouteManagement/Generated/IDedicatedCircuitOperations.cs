@@ -39,8 +39,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         Task<ExpressRouteOperationResponse> BeginNewAsync(DedicatedCircuitNewParameters parameters, CancellationToken cancellationToken);
         
@@ -55,8 +55,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, CancellationToken cancellationToken);
         

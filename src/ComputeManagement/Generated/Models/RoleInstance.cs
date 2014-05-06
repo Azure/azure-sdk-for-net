@@ -174,6 +174,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._powerState = value; }
         }
         
+        private IList<RoleInstance.PublicIP> _publicIPs;
+        
+        /// <summary>
+        /// Optional. Optional. A set of public IPs. Currently, only one
+        /// additional public IP per role is supported in an IaaS deployment.
+        /// The IP address is in addition to the default VIP for the
+        /// deployment.
+        /// </summary>
+        public IList<RoleInstance.PublicIP> PublicIPs
+        {
+            get { return this._publicIPs; }
+            set { this._publicIPs = value; }
+        }
+        
         private string _remoteAccessCertificateThumbprint;
         
         /// <summary>
@@ -215,7 +229,45 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public RoleInstance()
         {
             this._instanceEndpoints = new List<InstanceEndpoint>();
+            this._publicIPs = new List<RoleInstance.PublicIP>();
             this._resourceExtensionStatusList = new List<ResourceExtensionStatus>();
+        }
+        
+        /// <summary>
+        /// An additional public IP that will be created for the role. The
+        /// public IP will be an additional IP for the role. The role
+        /// continues to be addressable via the default deployment VIP.
+        /// </summary>
+        public partial class PublicIP
+        {
+            private string _address;
+            
+            /// <summary>
+            /// Optional. The address of the public IP.
+            /// </summary>
+            public string Address
+            {
+                get { return this._address; }
+                set { this._address = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Optional. The name of the public IP.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the PublicIP class.
+            /// </summary>
+            public PublicIP()
+            {
+            }
         }
     }
 }

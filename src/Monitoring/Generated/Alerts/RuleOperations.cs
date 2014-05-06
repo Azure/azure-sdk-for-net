@@ -155,18 +155,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject conditionValue = new JObject();
                         requestDoc["Condition"] = conditionValue;
-                        conditionValue["odata.type"] = parameters.Rule.Condition.GetType().FullName;
                         if (parameters.Rule.Condition is ThresholdRuleCondition)
                         {
+                            conditionValue["odata.type"] = parameters.Rule.Condition.GetType().FullName;
                             ThresholdRuleCondition derived = ((ThresholdRuleCondition)parameters.Rule.Condition);
                             
                             if (derived.DataSource != null)
                             {
                                 JObject dataSourceValue = new JObject();
                                 conditionValue["DataSource"] = dataSourceValue;
-                                dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                 if (derived.DataSource is RuleMetricDataSource)
                                 {
+                                    dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                     RuleMetricDataSource derived2 = ((RuleMetricDataSource)derived.DataSource);
                                     
                                     if (derived2.ResourceId != null)
@@ -201,9 +201,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         {
                             JObject ruleActionValue = new JObject();
                             actionsArray.Add(ruleActionValue);
-                            ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
                             if (actionsItem is RuleEmailAction)
                             {
+                                ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
                                 RuleEmailAction derived3 = ((RuleEmailAction)actionsItem);
                                 
                                 ruleActionValue["SendToServiceOwners"] = derived3.SendToServiceOwners;
@@ -247,7 +247,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -364,7 +364,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -480,7 +480,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -735,7 +735,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

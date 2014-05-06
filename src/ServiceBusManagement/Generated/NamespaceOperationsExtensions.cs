@@ -202,7 +202,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static OperationResponse Delete(this INamespaceOperations operations, string namespaceName)
@@ -229,7 +229,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<OperationResponse> DeleteAsync(this INamespaceOperations operations, string namespaceName)
@@ -252,7 +252,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The rule name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static OperationResponse DeleteAuthorizationRule(this INamespaceOperations operations, string namespaceName, string ruleName)
@@ -279,7 +279,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The rule name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<OperationResponse> DeleteAuthorizationRuleAsync(this INamespaceOperations operations, string namespaceName, string ruleName)

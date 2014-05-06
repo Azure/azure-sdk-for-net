@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The notification hub name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static ServiceBusNotificationHubResponse Get(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The notification hub name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<ServiceBusNotificationHubResponse> GetAsync(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static ServiceBusNotificationHubsResponse List(this INotificationHubOperations operations, string namespaceName)
@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<ServiceBusNotificationHubsResponse> ListAsync(this INotificationHubOperations operations, string namespaceName)

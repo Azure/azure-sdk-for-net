@@ -892,6 +892,83 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             
             this.Credentials.InitializeServiceClient(this);
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private AlertsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._incidents = new IncidentOperations(this);
+            this._rules = new RuleOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Optional base uri parameter for Azure REST.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. When you create a Windows Azure subscription, it is
+        /// uniquely identified by a subscription ID. The subscription ID
+        /// forms part of the URI for every call that you make to the Service
+        /// Management API.  The Windows Azure Service ManagementAPI use
+        /// mutual authentication of management certificates over SSL to
+        /// ensure that a request made to the service is secure.  No anonymous
+        /// requests are allowed.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
     }
     
     public static partial class IncidentOperationsExtensions
@@ -1139,7 +1216,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1313,7 +1390,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1848,18 +1925,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject conditionValue = new JObject();
                         propertiesValue["condition"] = conditionValue;
-                        conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                         if (parameters.Properties.Condition is ThresholdRuleCondition)
                         {
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                             ThresholdRuleCondition derived = ((ThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived.DataSource != null)
                             {
                                 JObject dataSourceValue = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue;
-                                dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                 if (derived.DataSource is RuleMetricDataSource)
                                 {
+                                    dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                     RuleMetricDataSource derived2 = ((RuleMetricDataSource)derived.DataSource);
                                     
                                     if (derived2.ResourceUri != null)
@@ -1887,15 +1964,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                             LocationThresholdRuleCondition derived3 = ((LocationThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived3.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                 if (derived3.DataSource is RuleMetricDataSource)
                                 {
+                                    dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                     RuleMetricDataSource derived4 = ((RuleMetricDataSource)derived3.DataSource);
                                     
                                     if (derived4.ResourceUri != null)
@@ -1925,9 +2003,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject actionValue = new JObject();
                         propertiesValue["action"] = actionValue;
-                        actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                             RuleEmailAction derived5 = ((RuleEmailAction)parameters.Properties.Action);
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
@@ -1969,7 +2047,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2094,7 +2172,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2218,7 +2296,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2566,7 +2644,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2953,18 +3031,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject conditionValue = new JObject();
                         propertiesValue["condition"] = conditionValue;
-                        conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                         if (parameters.Properties.Condition is ThresholdRuleCondition)
                         {
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                             ThresholdRuleCondition derived = ((ThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived.DataSource != null)
                             {
                                 JObject dataSourceValue = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue;
-                                dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                 if (derived.DataSource is RuleMetricDataSource)
                                 {
+                                    dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                     RuleMetricDataSource derived2 = ((RuleMetricDataSource)derived.DataSource);
                                     
                                     if (derived2.ResourceUri != null)
@@ -2992,15 +3070,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                             LocationThresholdRuleCondition derived3 = ((LocationThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived3.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                 if (derived3.DataSource is RuleMetricDataSource)
                                 {
+                                    dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                     RuleMetricDataSource derived4 = ((RuleMetricDataSource)derived3.DataSource);
                                     
                                     if (derived4.ResourceUri != null)
@@ -3030,9 +3109,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject actionValue = new JObject();
                         propertiesValue["action"] = actionValue;
-                        actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                             RuleEmailAction derived5 = ((RuleEmailAction)parameters.Properties.Action);
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
@@ -3074,7 +3153,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

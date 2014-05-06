@@ -28,12 +28,12 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// Specifies the platform caching behavior of the data disk blob for
     /// read/write efficiency.
     /// </summary>
-    public enum VirtualHardDiskHostCaching
+    public static partial class VirtualHardDiskHostCaching
     {
-        None = 0,
+        public const string None = "None";
         
-        ReadOnly = 1,
+        public const string ReadOnly = "ReadOnly";
         
-        ReadWrite = 2,
+        public const string ReadWrite = "ReadWrite";
     }
 }

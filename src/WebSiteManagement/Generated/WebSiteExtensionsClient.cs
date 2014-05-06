@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
@@ -174,6 +175,90 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials)
             : this()
+        {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException("siteName");
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._siteName = siteName;
+            this._credentials = credentials;
+            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private WebSiteExtensionsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._deployments = new DeploymentOperations(this);
+            this._diagnostics = new DiagnosticOperations(this);
+            this._repository = new RepositoryOperations(this);
+            this._settings = new SettingsOperations(this);
+            this._webJobs = new WebJobOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='siteName'>
+        /// Required. The site name.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. TBD.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. The URI used as the base for all kudu requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException("siteName");
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._siteName = siteName;
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='siteName'>
+        /// Required. The site name.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. TBD.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
         {
             if (siteName == null)
             {

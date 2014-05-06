@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Management.Monitoring.Metrics;
@@ -116,6 +117,72 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials)
             : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private MetricsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._metricDefinitions = new MetricDefinitionOperations(this);
+            this._metricSettings = new MetricSettingOperations(this);
+            this._metricValues = new MetricValueOperations(this);
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Windows Azure subscription id.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Optional base uri parameter.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public MetricsClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Windows Azure subscription id.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public MetricsClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
         {
             if (credentials == null)
             {

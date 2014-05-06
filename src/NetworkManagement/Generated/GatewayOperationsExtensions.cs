@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure
         /// Testing Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginConnectDisconnectOrTesting(this IGatewayOperations operations, string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters)
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure
         /// Testing Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginConnectDisconnectOrTestingAsync(this IGatewayOperations operations, string networkName, string localNetworkSiteName, GatewayConnectDisconnectOrTestParameters parameters)
@@ -120,7 +120,7 @@ namespace Microsoft.WindowsAzure
         /// Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginCreating(this IGatewayOperations operations, string networkName, GatewayCreateParameters parameters)
@@ -150,7 +150,7 @@ namespace Microsoft.WindowsAzure
         /// Gateway operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginCreatingAsync(this IGatewayOperations operations, string networkName, GatewayCreateParameters parameters)
@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginDeleting(this IGatewayOperations operations, string networkName)
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginDeletingAsync(this IGatewayOperations operations, string networkName)
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network in Azure.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginFailover(this IGatewayOperations operations, string networkName)
@@ -248,7 +248,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network in Azure.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginFailoverAsync(this IGatewayOperations operations, string networkName)
@@ -279,7 +279,7 @@ namespace Microsoft.WindowsAzure
         /// Reset Shared Key request.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginResetSharedKey(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
@@ -314,7 +314,7 @@ namespace Microsoft.WindowsAzure
         /// Reset Shared Key request.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginResetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
@@ -345,7 +345,7 @@ namespace Microsoft.WindowsAzure
         /// Set Shared Key request.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse BeginSetSharedKey(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters)
@@ -380,7 +380,7 @@ namespace Microsoft.WindowsAzure
         /// Set Shared Key request.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> BeginSetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters)
@@ -681,7 +681,7 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayOperationResponse GenerateVpnClientPackage(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
@@ -712,7 +712,7 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
@@ -735,7 +735,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static GatewayGetResponse Get(this IGatewayOperations operations, string networkName)
@@ -762,7 +762,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the virtual network for this gateway.
         /// </param>
         /// <returns>
-        /// A standard storage response including an HTTP status code and
+        /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
         public static Task<GatewayGetResponse> GetAsync(this IGatewayOperations operations, string networkName)

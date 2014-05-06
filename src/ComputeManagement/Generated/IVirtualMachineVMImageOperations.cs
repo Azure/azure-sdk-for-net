@@ -92,5 +92,24 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The List VM Images operation response.
         /// </returns>
         Task<VirtualMachineVMImageListResponse> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Update VM Image operation updates a VM image that in your image
+        /// repository.
+        /// </summary>
+        /// <param name='imageName'>
+        /// The name of the virtual machine image to be updated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Virtual Machine Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateAsync(string imageName, VirtualMachineVMImageUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }
