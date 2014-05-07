@@ -42,10 +42,6 @@
     <None Include="Microsoft.WindowsAzure.Management.MediaServices.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
-  <Target Name="AfterClean">
-    <Message Text="Removing generated files before build..."/>
-    <RemoveDir Directories="Generated" />
-  </Target>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.3\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
@@ -76,6 +72,10 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementMediaServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.MediaServices.Specification.1.0.5239.18979-prerelease\tools\Microsoft.WindowsAzure.Management.MediaServices.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

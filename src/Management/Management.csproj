@@ -74,10 +74,6 @@
     <Content Include="hydra.xml" />
     <Content Include="subscriptions.hydra.xml" />
   </ItemGroup>
-  <Target Name="AfterClean">
-    <Message Text="Removing generated files before build..."/>
-    <RemoveDir Directories="Generated" />
-  </Target>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.3\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
@@ -111,4 +107,8 @@
   <Target Name="CopyMicrosoftWindowsAzureSubscriptionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Subscriptions.Specification.1.0.5239.18982-prerelease\tools\Microsoft.WindowsAzure.Subscriptions.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
+  </Target>  
 </Project>
