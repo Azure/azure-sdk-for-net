@@ -173,4 +173,8 @@
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.1.0.5239.18990-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>

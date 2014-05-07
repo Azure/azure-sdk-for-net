@@ -119,4 +119,8 @@
   <Target Name="CopyMicrosoftAzureManagementResourcesSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Resources.Specification.1.0.5239.18980-prerelease\tools\Microsoft.Azure.Management.Resources.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>

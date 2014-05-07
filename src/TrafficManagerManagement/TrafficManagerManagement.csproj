@@ -97,4 +97,8 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementTrafficManagerSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.TrafficManager.Specification.1.0.5239.21811-prerelease\tools\Microsoft.WindowsAzure.Management.TrafficManager.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>

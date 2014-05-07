@@ -69,4 +69,8 @@
   <Target Name="CopyMicrosoftWindowsAzureManagementMonitoringSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Monitoring2.Specification.1.0.5239.18979-prerelease\tools\Microsoft.WindowsAzure.Management.Monitoring.Specification.dll" DestinationFolder="." />
   </Target>
+  <Target Name="AfterClean">
+    <Message Text="Removing generated files before build..."/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>
