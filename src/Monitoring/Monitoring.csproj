@@ -25,12 +25,10 @@
     <Compile Include="Generated\Alerts\IRuleOperations.cs" />
     <Compile Include="Generated\Alerts\Models\ConditionOperator.cs" />
     <Compile Include="Generated\Alerts\Models\Incident.cs" />
-    <Compile Include="Generated\Alerts\Models\IncidentCollection.cs" />
     <Compile Include="Generated\Alerts\Models\IncidentGetResponse.cs" />
     <Compile Include="Generated\Alerts\Models\IncidentListResponse.cs" />
     <Compile Include="Generated\Alerts\Models\Rule.cs" />
     <Compile Include="Generated\Alerts\Models\RuleAction.cs" />
-    <Compile Include="Generated\Alerts\Models\RuleCollection.cs" />
     <Compile Include="Generated\Alerts\Models\RuleCondition.cs" />
     <Compile Include="Generated\Alerts\Models\RuleCreateOrUpdateParameters.cs" />
     <Compile Include="Generated\Alerts\Models\RuleDataSource.cs" />
@@ -143,7 +141,7 @@
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Monitoring.Specification.1.0.5239.18979-prerelease\tools\Microsoft.WindowsAzure.Management.Monitoring.Specification.dll" DestinationFolder="." />
   </Target>
   <Target Name="AfterClean">
-    <Message Text="Removing generated files before build..."/>
+    <Message Text="Removing generated files before build..." />
     <RemoveDir Directories="Generated" />
   </Target>
 </Project>
