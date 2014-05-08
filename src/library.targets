@@ -118,4 +118,9 @@
     <Error Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestore)" />
     <Error Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestored)" />
   </Target>
+  
+  <Target Name="AfterClean">
+    <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>
