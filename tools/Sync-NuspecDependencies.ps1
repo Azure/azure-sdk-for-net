@@ -1,6 +1,8 @@
 [CmdletBinding()]
 Param(
-[Parameter(Mandatory=$False, Position=0, ValueFromPipeline=$true)]
+[Parameter(Mandatory=$False, Position=0)]
+[string]$Folder,
+[Parameter(Mandatory=$False)]
 [string]$BasePath
 )
 
@@ -99,8 +101,12 @@ function SyncNuspecFile([string]$FolderPath)
 	}
 }
 
-$subFolders = Get-ChildItem -Directory -Path $BasePath
-ForEach ($subFolder in $subFolders) {
-	SyncNuspecFile $subFolder.FullName
+if ($Folder -eq '' -or $Folder -eq $null) {
+    $subFolders = Get-ChildItem -Directory -Path $BasePath
+    ForEach ($subFolder in $subFolders) {
+	    SyncNuspecFile $subFolder.FullName
+    }
+} else {
+    SyncNuspecFile $Folder
 }
 
