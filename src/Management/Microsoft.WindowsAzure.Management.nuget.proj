@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management">
-      <PackageVersion>1.0.3</PackageVersion>
+      <PackageVersion>1.0.4</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
