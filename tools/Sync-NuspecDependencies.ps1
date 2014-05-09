@@ -31,7 +31,7 @@ function SyncNuspecFile([string]$FolderPath)
         #Updating AssemblyFileVersion
 		$packageVersion = $nuproj.Project.ItemGroup.SdkNuGetPackage.PackageVersion
         $packageVersion = ([regex]"[\d\.]+").Match($packageVersion).Value
-        $assemblyContent = $assemblyContent -replace "\[assembly\: AssemblyFileVersion\(`"[\d\.]+`"\)\]","[assembly: AssemblyFileVersion(`"$packageVersion.0`")]"
+        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$packageVersion.0`")]"
 
         #Updating AssemblyVersion
         $majorVersion = ([regex]"\d+").Match($packageVersion).Captures[0].Value
@@ -39,7 +39,7 @@ function SyncNuspecFile([string]$FolderPath)
         if ($majorVersion -eq "0") {
             $assemblyVersion = "0.9.0.0"
         }
-        $assemblyContent = $assemblyContent -replace "\[assembly\: AssemblyVersion\(`"[\d\.]+","[assembly: AssemblyVersion(`"$assemblyVersion"
+        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"
 
         Set-Content -Path $FolderPath\Properties\AssemblyInfo.cs -Value $assemblyContent
 	}
