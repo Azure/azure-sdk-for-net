@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 new SchedulerManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<SchedulerManagementClient> client)
-        {
-            base.Clone(client);
-            SchedulerManagementClient management = client as SchedulerManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override SchedulerManagementClient WithHandler(DelegatingHandler handler)
         {
             return (SchedulerManagementClient)WithHandler(new SchedulerManagementClient(), handler);

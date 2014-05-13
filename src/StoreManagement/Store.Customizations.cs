@@ -39,18 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Store
                 new StoreManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<StoreManagementClient> client)
-        {
-            base.Clone(client);
-            StoreManagementClient management = client as StoreManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient<StoreManagementClient>(management);
-            }
-        }
-
         public override StoreManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (StoreManagementClient)WithHandler(new StoreManagementClient(), handler);

@@ -947,7 +947,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
     public partial interface IMetricsClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -955,11 +963,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         IMetricDefinitionOperations MetricDefinitions
@@ -980,10 +1006,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
     
     public partial class MetricsClient : ServiceClient<MetricsClient>, IMetricsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -993,11 +1029,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IMetricDefinitionOperations _metricDefinitions;
@@ -1030,6 +1090,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._metricDefinitions = new MetricDefinitionOperations(this);
             this._metricSettings = new MetricSettingOperations(this);
             this._metricValues = new MetricValueOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1037,10 +1100,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1063,7 +1129,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1090,6 +1158,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._metricDefinitions = new MetricDefinitionOperations(this);
             this._metricSettings = new MetricSettingOperations(this);
             this._metricValues = new MetricValueOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1097,10 +1168,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1126,7 +1200,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1142,6 +1218,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another MetricsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of MetricsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<MetricsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is MetricsClient)
+            {
+                MetricsClient clonedClient = ((MetricsClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
     

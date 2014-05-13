@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 new CloudServiceManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<CloudServiceManagementClient> client)
-        {
-            base.Clone(client);
-            CloudServiceManagementClient management = client as CloudServiceManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override CloudServiceManagementClient WithHandler(DelegatingHandler handler)
         {
             return (CloudServiceManagementClient)WithHandler(new CloudServiceManagementClient(), handler);

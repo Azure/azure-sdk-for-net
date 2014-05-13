@@ -38,18 +38,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 new ServiceBusManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<ServiceBusManagementClient> client)
-        {
-            base.Clone(client);
-            ServiceBusManagementClient management = client as ServiceBusManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient<ServiceBusManagementClient>(management);
-            }
-        }
-
         public override ServiceBusManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (ServiceBusManagementClient)WithHandler(new ServiceBusManagementClient(), handler);

@@ -39,18 +39,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 new TrafficManagerManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<TrafficManagerManagementClient> client)
-        {
-            base.Clone(client);
-            TrafficManagerManagementClient management = client as TrafficManagerManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override TrafficManagerManagementClient WithHandler(DelegatingHandler handler)
         {
             return (TrafficManagerManagementClient)WithHandler(new TrafficManagerManagementClient(), handler);
