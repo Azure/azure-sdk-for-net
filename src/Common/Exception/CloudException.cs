@@ -122,8 +122,16 @@ namespace Microsoft.WindowsAzure
             exception.ErrorMessage = message;
             exception.Request = CloudHttpRequestErrorInfo.Create(request, requestContent);
             exception.Response = CloudHttpResponseErrorInfo.Create(response, responseContent);
-            exception.RequestId = response.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            exception.RoutingRequestId = response.Headers.GetValues("x-ms-routing-request-id").FirstOrDefault();
+
+            if (response.Headers.Contains("x-ms-request-id"))
+            {
+                exception.RequestId = response.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+
+            if (response.Headers.Contains("x-ms-routing-request-id"))
+            {
+                exception.RoutingRequestId = response.Headers.GetValues("x-ms-routing-request-id").FirstOrDefault();
+            }
 
             return exception;
         }
