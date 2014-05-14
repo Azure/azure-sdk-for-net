@@ -14,6 +14,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -44,6 +45,16 @@ namespace Microsoft.WindowsAzure
         /// This is included by default in the Message property.
         /// </remarks>
         public string ErrorCode { get; set; }
+
+        /// <summary>
+        /// Gets the request identifier.
+        /// </summary>
+        public string RequestId { get; set; }
+
+        /// <summary>
+        /// Gets the routing request identifier.
+        /// </summary>
+        public string RoutingRequestId { get; set; }
 
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -111,6 +122,16 @@ namespace Microsoft.WindowsAzure
             exception.ErrorMessage = message;
             exception.Request = CloudHttpRequestErrorInfo.Create(request, requestContent);
             exception.Response = CloudHttpResponseErrorInfo.Create(response, responseContent);
+
+            if (response.Headers.Contains("x-ms-request-id"))
+            {
+                exception.RequestId = response.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+
+            if (response.Headers.Contains("x-ms-routing-request-id"))
+            {
+                exception.RoutingRequestId = response.Headers.GetValues("x-ms-routing-request-id").FirstOrDefault();
+            }
 
             return exception;
         }
