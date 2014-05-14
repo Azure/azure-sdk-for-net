@@ -28,18 +28,5 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         {
             return WithHandler(new EventsClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<EventsClient> client)
-        {
-            base.Clone(client);
-
-            EventsClient metricsClient = client as EventsClient;
-            if (metricsClient != null)
-            {
-                metricsClient._credentials = Credentials;
-                metricsClient._baseUri = BaseUri;
-                metricsClient.Credentials.InitializeServiceClient(metricsClient);
-            }
-        }
     }
 }

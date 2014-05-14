@@ -28,6 +28,17 @@ namespace Microsoft.WindowsAzure.Scheduler
 {
     public partial interface ISchedulerClient : IDisposable
     {
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
+        /// </summary>
         Uri BaseUri
         {
             get; 
@@ -35,9 +46,14 @@ namespace Microsoft.WindowsAzure.Scheduler
         
         string CloudServiceName
         {
-            get; 
+            get; set; 
         }
         
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
@@ -45,7 +61,23 @@ namespace Microsoft.WindowsAzure.Scheduler
         
         string JobCollectionName
         {
-            get; 
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         IJobOperations Jobs

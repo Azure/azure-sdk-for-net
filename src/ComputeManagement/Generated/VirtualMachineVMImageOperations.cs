@@ -246,6 +246,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -253,6 +257,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)

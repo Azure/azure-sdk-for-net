@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Subscriptions
                 new SubscriptionClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<SubscriptionClient> client)
-        {
-            base.Clone(client);
-            SubscriptionClient management = client as SubscriptionClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override SubscriptionClient WithHandler(DelegatingHandler handler)
         {
             return (SubscriptionClient)WithHandler(new SubscriptionClient(), handler);

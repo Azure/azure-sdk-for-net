@@ -29,7 +29,15 @@ namespace Microsoft.WindowsAzure.Subscriptions
     public partial interface ISubscriptionClient : IDisposable
     {
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -41,7 +49,23 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// </summary>
         CloudCredentials Credentials
         {
-            get; 
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         ISubscriptionOperations Subscriptions

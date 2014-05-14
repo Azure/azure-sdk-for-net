@@ -29,7 +29,15 @@ namespace Microsoft.Azure.Gallery
     public partial interface IGalleryClient : IDisposable
     {
         /// <summary>
-        /// The URI used as the base for all cloud service management requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -37,13 +45,29 @@ namespace Microsoft.Azure.Gallery
         }
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Windows  Azure subscription. The subscription ID forms part of the
-        /// URI for  every call that you make to the Service Management API.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>

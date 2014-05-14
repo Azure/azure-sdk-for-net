@@ -28,18 +28,5 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         {
             return WithHandler(new AlertsClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<AlertsClient> client)
-        {
-            base.Clone(client);
-
-            AlertsClient alertsClient = client as AlertsClient;
-            if (alertsClient != null)
-            {
-                alertsClient._credentials = Credentials;
-                alertsClient._baseUri = BaseUri;
-                alertsClient.Credentials.InitializeServiceClient(alertsClient);
-            }
-        }
     }
 }

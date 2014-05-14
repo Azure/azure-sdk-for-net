@@ -30,10 +30,20 @@ namespace Microsoft.Azure.Gallery
 {
     public partial class GalleryClient : ServiceClient<GalleryClient>, IGalleryClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all cloud service management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -43,13 +53,35 @@ namespace Microsoft.Azure.Gallery
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Windows  Azure subscription. The subscription ID forms part of the
-        /// URI for  every call that you make to the Service Management API.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IItemOperations _items;
@@ -69,6 +101,9 @@ namespace Microsoft.Azure.Gallery
             : base()
         {
             this._items = new ItemOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -76,13 +111,12 @@ namespace Microsoft.Azure.Gallery
         /// Initializes a new instance of the GalleryClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all cloud service management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public GalleryClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -106,10 +140,9 @@ namespace Microsoft.Azure.Gallery
         /// Initializes a new instance of the GalleryClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public GalleryClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -134,6 +167,9 @@ namespace Microsoft.Azure.Gallery
             : base(httpClient)
         {
             this._items = new ItemOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -141,13 +177,12 @@ namespace Microsoft.Azure.Gallery
         /// Initializes a new instance of the GalleryClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all cloud service management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -174,10 +209,9 @@ namespace Microsoft.Azure.Gallery
         /// Initializes a new instance of the GalleryClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -193,6 +227,31 @@ namespace Microsoft.Azure.Gallery
             this._baseUri = new Uri("https://gallery.azure.com/");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another GalleryClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of GalleryClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<GalleryClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is GalleryClient)
+            {
+                GalleryClient clonedClient = ((GalleryClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
 }

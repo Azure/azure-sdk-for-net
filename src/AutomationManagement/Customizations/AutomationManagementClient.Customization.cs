@@ -64,18 +64,6 @@ namespace Microsoft.Azure.Management.Automation
                 new AutomationManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<AutomationManagementClient> client)
-        {
-            base.Clone(client);
-            AutomationManagementClient management = client as AutomationManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override AutomationManagementClient WithHandler(DelegatingHandler handler)
         {
             return (AutomationManagementClient)WithHandler(new AutomationManagementClient(), handler);

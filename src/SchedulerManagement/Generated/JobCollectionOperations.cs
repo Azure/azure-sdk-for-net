@@ -828,6 +828,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -835,6 +839,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -926,6 +934,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -933,6 +945,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1297,6 +1313,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1304,6 +1324,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
