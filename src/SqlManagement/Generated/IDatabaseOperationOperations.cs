@@ -28,60 +28,65 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for get/stop SQL
-    /// Databases' operations for a subscription.
+    /// The Azure SQL Database Management API includes operations for getting
+    /// database operations. Specifically, this API allows you to get a
+    /// specific operation, or to list all the operations that happened on a
+    /// specific database or on all databases in the Azure SQL Database Server.
     /// </summary>
     public partial interface IDatabaseOperationOperations
     {
         /// <summary>
-        /// Returns information about one operation on a given operation Guid.
+        /// Returns information about a specific operation by using the
+        /// operation Guid.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the operation was executed.
+        /// The name of the Azure SQL Database Server where the database is
+        /// hosted.
         /// </param>
         /// <param name='operationGuid'>
-        /// The Guid of the SQL Server database operation to be obtained.
+        /// The Guid of the Azure SQL Database operation to be obtained.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database operation for a given operation
-        /// Guid.
+        /// Represents the database operation for a given operation Guid.
         /// </returns>
         Task<DatabaseOperationGetResponse> GetAsync(string serverName, string operationGuid, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns the list database operations for a given server and
+        /// Retrieves all of the operations that took place on a specific
         /// database.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// The name of the Azure SQL Database Server that hosts the database.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the Database to be queried.
+        /// The name of the database for which the operations should be
+        /// retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         Task<DatabaseOperationListResponse> ListByDatabaseAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns the list database operations for a given server.
+        /// Retrieves all of the operations that occured on the Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server to be queried.
+        /// The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         Task<DatabaseOperationListResponse> ListByServerAsync(string serverName, CancellationToken cancellationToken);
     }

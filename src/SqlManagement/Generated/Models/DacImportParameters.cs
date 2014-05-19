@@ -26,14 +26,16 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the DAC Import operation.
+    /// Represents the parameters that are needed to initiate an Azure SQL
+    /// Database import operation.
     /// </summary>
     public partial class DacImportParameters
     {
         private string _azureEdition;
         
         /// <summary>
-        /// Optional. The edition of this database.
+        /// Optional. Gets or sets the edition for the database that will be
+        /// created upon import.
         /// </summary>
         public string AzureEdition
         {
@@ -44,7 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacImportParameters.BlobCredentialsParameter _blobCredentials;
         
         /// <summary>
-        /// Optional. Gets or sets credentials for getting the DAC.
+        /// Optional. Gets or sets the credentials for retrieving the DACPAC
+        /// from Azure Blob Storage.
         /// </summary>
         public DacImportParameters.BlobCredentialsParameter BlobCredentials
         {
@@ -55,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DacImportParameters.ConnectionInfoParameter _connectionInfo;
         
         /// <summary>
-        /// Optional. Gets or sets connection information for the SQL Server
-        /// Database.
+        /// Optional. Gets or sets the connection information needed for
+        /// connecting to SQL Azure and creating a database to import into.
         /// </summary>
         public DacImportParameters.ConnectionInfoParameter ConnectionInfo
         {
@@ -67,7 +70,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _databaseSizeInGB;
         
         /// <summary>
-        /// Optional. Gets or sets the size of this database.
+        /// Optional. Gets or sets the size for the database that will be
+        /// created upon import.
         /// </summary>
         public int DatabaseSizeInGB
         {
@@ -83,15 +87,16 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Credentials for getting the DAC.
+        /// Represents the Azure Blob Storage information needed for connecting
+        /// and retrieving the DACPAC file.
         /// </summary>
         public partial class BlobCredentialsParameter
         {
             private string _storageAccessKey;
             
             /// <summary>
-            /// Required. Gets or sets the key for the Windows Azure Storage
-            /// account.
+            /// Required. Gets or sets the access key for the Azure Blob
+            /// Storage account where the DACPAC file is stored.
             /// </summary>
             public string StorageAccessKey
             {
@@ -102,8 +107,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private Uri _uri;
             
             /// <summary>
-            /// Required. Gets or sets the URI of the DAC file stored in
-            /// Windows Azure Blob Storage.
+            /// Required. Gets or sets the URI of the DACPAC file stored in
+            /// Azure Blob Storage to be imported.
             /// </summary>
             public Uri Uri
             {
@@ -121,14 +126,16 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         }
         
         /// <summary>
-        /// Connection information for the SQL Server Database.
+        /// Represents the connection information for the Azure SQL Database
+        /// into which the DACPAC file will be imported.
         /// </summary>
         public partial class ConnectionInfoParameter
         {
             private string _databaseName;
             
             /// <summary>
-            /// Required. Gets or sets the name of the database.
+            /// Required. Gets or sets the name of the database into which the
+            /// DACPAC file will be imported.
             /// </summary>
             public string DatabaseName
             {
@@ -139,7 +146,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _password;
             
             /// <summary>
-            /// Required. Gets or sets the password for the database user.
+            /// Required. Gets or sets the password for the server
+            /// administrator.
             /// </summary>
             public string Password
             {
@@ -150,7 +158,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _serverName;
             
             /// <summary>
-            /// Required. Gets or sets the SQL server name.
+            /// Required. Gets or sets the Azure SQL Database Server name where
+            /// the imported database will be created.
             /// </summary>
             public string ServerName
             {
@@ -161,7 +170,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             private string _userName;
             
             /// <summary>
-            /// Required. Gets or sets the username of the database user.
+            /// Required. Gets or sets the username of the server
+            /// administration.
             /// </summary>
             public string UserName
             {

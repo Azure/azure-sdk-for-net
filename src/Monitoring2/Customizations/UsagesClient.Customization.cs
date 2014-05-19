@@ -28,18 +28,5 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         {
             return WithHandler(new UsagesClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<UsagesClient> client)
-        {
-            base.Clone(client);
-
-            UsagesClient usageClient = client as UsagesClient;
-            if (usageClient != null)
-            {
-                usageClient._credentials = Credentials;
-                usageClient._baseUri = BaseUri;
-                usageClient.Credentials.InitializeServiceClient(usageClient);
-            }
-        }
     }
 }

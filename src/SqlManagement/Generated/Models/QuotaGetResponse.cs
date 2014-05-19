@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the Quota Get operation.
+    /// Represents the response structure for the Quota Get operation.
     /// </summary>
     public partial class QuotaGetResponse : OperationResponse
     {
         private Quota _quota;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the quota that was retrieved from the server.
         /// </summary>
         public Quota Quota
         {

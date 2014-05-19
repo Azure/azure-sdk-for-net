@@ -36,8 +36,10 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for getting SQL
-    /// Database server quotas.
+    /// The Azure SQL Database Management API includes operations for getting
+    /// Azure SQL Database Server quotas. Specifically, using the APIs you can
+    /// get a specific quota or list all of the quotas for the Azure SQL
+    /// Database Server.
     /// </summary>
     internal partial class QuotaOperations : IServiceOperations<SqlManagementClient>, Microsoft.WindowsAzure.Management.Sql.IQuotaOperations
     {
@@ -64,10 +66,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Retrieves the specified quota from the server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// retrieve the quota.
         /// </param>
         /// <param name='quotaName'>
         /// Required. The name of the quota to retrieve.
@@ -76,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota Get operation.
+        /// Represents the response structure for the Quota Get operation.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.QuotaGetResponse> GetAsync(string serverName, string quotaName, CancellationToken cancellationToken)
         {
@@ -174,6 +177,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             Quota serviceResourceInstance = new Quota();
                             result.Quota = serviceResourceInstance;
                             
+                            XElement valueElement = serviceResourceElement2.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            if (valueElement != null)
+                            {
+                                string valueInstance = valueElement.Value;
+                                serviceResourceInstance.Value = valueInstance;
+                            }
+                            
                             XElement nameElement = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
@@ -193,13 +203,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement valueElement = serviceResourceElement2.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                            if (valueElement != null)
-                            {
-                                string valueInstance = valueElement.Value;
-                                serviceResourceInstance.Value = valueInstance;
                             }
                         }
                     }
@@ -234,16 +237,17 @@ namespace Microsoft.WindowsAzure.Management.Sql
         }
         
         /// <summary>
-        /// Returns the list of quotas for the server.
+        /// Returns a list of quotas from the server.
         /// </summary>
         /// <param name='serverName'>
-        /// Required. The name of the database server to be queried.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// get the quotas.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Quota List operation.
+        /// Represents the response structure for the Quota List operation.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.QuotaListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
@@ -335,6 +339,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             Quota serviceResourceInstance = new Quota();
                             result.Quotas.Add(serviceResourceInstance);
                             
+                            XElement valueElement = serviceResourcesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            if (valueElement != null)
+                            {
+                                string valueInstance = valueElement.Value;
+                                serviceResourceInstance.Value = valueInstance;
+                            }
+                            
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
@@ -354,13 +365,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             {
                                 string stateInstance = stateElement.Value;
                                 serviceResourceInstance.State = stateInstance;
-                            }
-                            
-                            XElement valueElement = serviceResourcesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                            if (valueElement != null)
-                            {
-                                string valueInstance = valueElement.Value;
-                                serviceResourceInstance.Value = valueInstance;
                             }
                         }
                     }

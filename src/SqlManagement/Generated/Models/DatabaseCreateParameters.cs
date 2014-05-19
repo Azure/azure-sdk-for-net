@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Database operation.
+    /// Represents the parameters required to create a new database on a Azure
+    /// SQL Database Server.
     /// </summary>
     public partial class DatabaseCreateParameters
     {
@@ -43,7 +44,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Optional. Gets or sets the edition for the new database.
+        /// Optional. Gets or sets the edition for the new database.  The
+        /// DatabaseEditions enumeration contains the valid values for this
+        /// property.
         /// </summary>
         public string Edition
         {
@@ -54,7 +57,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private long? _maximumDatabaseSizeInBytes;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of this database, in bytes.
+        /// Optional. Gets or sets the maximum size of this database expressed
+        /// in bytes.  If this is used in conjunction with
+        /// MaximumDatabaseSizeInGB they must agree.
         /// </summary>
         public long? MaximumDatabaseSizeInBytes
         {
@@ -65,8 +70,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int? _maximumDatabaseSizeInGB;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of this database, in
-        /// Gigabytes.
+        /// Optional. Gets or sets the maximum size of this database expressed
+        /// in gigabytes.  If this is used in conjunction with
+        /// MaximumDatabaseSizeInBytes they must agree.
         /// </summary>
         public int? MaximumDatabaseSizeInGB
         {
@@ -88,7 +94,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveId;
         
         /// <summary>
-        /// Optional. Gets or sets the id of this service objective.
+        /// Optional. Gets or sets the service objective ID to be applied to
+        /// the database.
         /// </summary>
         public string ServiceObjectiveId
         {

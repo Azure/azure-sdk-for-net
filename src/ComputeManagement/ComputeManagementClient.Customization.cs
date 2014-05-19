@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 new ComputeManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<ComputeManagementClient> client)
-        {
-            base.Clone(client);
-            ComputeManagementClient management = client as ComputeManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override ComputeManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ComputeManagementClient)WithHandler(new ComputeManagementClient(), handler);

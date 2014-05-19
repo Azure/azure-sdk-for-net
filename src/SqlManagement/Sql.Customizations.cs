@@ -39,18 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 new SqlManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<SqlManagementClient> client)
-        {
-            base.Clone(client);
-            SqlManagementClient management = client as SqlManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient<SqlManagementClient>(management);
-            }
-        }
-
         public override SqlManagementClient WithHandler(DelegatingHandler handler)            
         {
             return (SqlManagementClient)WithHandler(new SqlManagementClient(), handler);

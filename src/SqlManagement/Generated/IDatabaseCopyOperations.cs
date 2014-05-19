@@ -29,8 +29,8 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for managing SQL
-    /// Server database copies for a subscription.
+    /// Represents the SQL Database Management API includes operations for
+    /// managing SQL Server database copies for a subscription.
     /// </summary>
     public partial interface IDatabaseCopyOperations
     {
@@ -38,19 +38,19 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Starts a SQL Server database copy.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the source database resides
+        /// The name of the SQL Server where the source database resides.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the source database
+        /// The name of the source database.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters for the create database copy operation
+        /// The additional parameters for the create database copy operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response to the create request.
+        /// Represents a response to the create request.
         /// </returns>
         Task<DatabaseCopyCreateResponse> CreateAsync(string serverName, string databaseName, DatabaseCopyCreateParameters parameters, CancellationToken cancellationToken);
         
@@ -58,13 +58,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Stops a SQL Server database copy.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the source or destination SQL Server instance
+        /// The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database
+        /// The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// The unique identifier for the database copy to stop
+        /// The unique identifier for the database copy to stop.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -79,19 +79,19 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Retrieves information about a SQL Server database copy.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the source or destination SQL Server instance
+        /// The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database
+        /// The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// The unique identifier for the database copy to retrieve
+        /// The unique identifier for the database copy to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response to the get request.
+        /// Represents a response to the get request.
         /// </returns>
         Task<DatabaseCopyGetResponse> GetAsync(string serverName, string databaseName, string databaseCopyName, CancellationToken cancellationToken);
         
@@ -99,17 +99,17 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Retrieves the list of SQL Server database copies for a database.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried
+        /// The name of the database server to be queried.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be queried
+        /// The name of the database to be queried.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of database copies for a given
-        /// database.
+        /// Represents the response containing the list of database copies for
+        /// a given database.
         /// </returns>
         Task<DatabaseCopyListResponse> ListAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
@@ -117,22 +117,22 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Updates a SQL Server database copy.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the source or destination SQL Server instance
+        /// The name of the source or destination SQL Server instance.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database
+        /// The name of the database.
         /// </param>
         /// <param name='databaseCopyName'>
-        /// The unique identifier for the database copy to update
+        /// The unique identifier for the database copy to update.
         /// </param>
         /// <param name='parameters'>
-        /// Additional parameters for the update database copy operation
+        /// The additional parameters for the update database copy operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response to the update request.
+        /// Represents a response to the update request.
         /// </returns>
         Task<DatabaseCopyUpdateResponse> UpdateAsync(string serverName, string databaseName, Guid databaseCopyName, DatabaseCopyUpdateParameters parameters, CancellationToken cancellationToken);
     }

@@ -31,8 +31,21 @@ namespace Microsoft.WindowsAzure.Scheduler
 {
     public partial class SchedulerClient : ServiceClient<SchedulerClient>, ISchedulerClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
+        /// </summary>
         public Uri BaseUri
         {
             get { return this._baseUri; }
@@ -43,10 +56,16 @@ namespace Microsoft.WindowsAzure.Scheduler
         public string CloudServiceName
         {
             get { return this._cloudServiceName; }
+            set { this._cloudServiceName = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
         
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
@@ -57,6 +76,29 @@ namespace Microsoft.WindowsAzure.Scheduler
         public string JobCollectionName
         {
             get { return this._jobCollectionName; }
+            set { this._jobCollectionName = value; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IJobOperations _jobs;
@@ -73,31 +115,33 @@ namespace Microsoft.WindowsAzure.Scheduler
             : base()
         {
             this._jobs = new JobOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        /// <param name='credentials'>
-        /// Required.
-        /// </param>
         /// <param name='cloudServiceName'>
         /// Required.
         /// </param>
         /// <param name='jobCollectionName'>
         /// Required.
         /// </param>
-        /// <param name='baseUri'>
-        /// Required.
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
-        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri)
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException("cloudServiceName");
@@ -106,13 +150,17 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 throw new ArgumentNullException("jobCollectionName");
             }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
             if (baseUri == null)
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._credentials = credentials;
             this._cloudServiceName = cloudServiceName;
             this._jobCollectionName = jobCollectionName;
+            this._credentials = credentials;
             this._baseUri = baseUri;
             
             this.Credentials.InitializeServiceClient(this);
@@ -121,22 +169,20 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        /// <param name='credentials'>
-        /// Required.
-        /// </param>
         /// <param name='cloudServiceName'>
         /// Required.
         /// </param>
         /// <param name='jobCollectionName'>
         /// Required.
         /// </param>
-        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName)
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials)
             : this()
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException("cloudServiceName");
@@ -145,9 +191,13 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 throw new ArgumentNullException("jobCollectionName");
             }
-            this._credentials = credentials;
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
             this._cloudServiceName = cloudServiceName;
             this._jobCollectionName = jobCollectionName;
+            this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net/");
             
             this.Credentials.InitializeServiceClient(this);
@@ -163,34 +213,36 @@ namespace Microsoft.WindowsAzure.Scheduler
             : base(httpClient)
         {
             this._jobs = new JobOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        /// <param name='credentials'>
-        /// Required.
-        /// </param>
         /// <param name='cloudServiceName'>
         /// Required.
         /// </param>
         /// <param name='jobCollectionName'>
         /// Required.
         /// </param>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
         /// <param name='baseUri'>
-        /// Required.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri, HttpClient httpClient)
+        public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException("cloudServiceName");
@@ -199,13 +251,17 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 throw new ArgumentNullException("jobCollectionName");
             }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
             if (baseUri == null)
             {
                 throw new ArgumentNullException("baseUri");
             }
-            this._credentials = credentials;
             this._cloudServiceName = cloudServiceName;
             this._jobCollectionName = jobCollectionName;
+            this._credentials = credentials;
             this._baseUri = baseUri;
             
             this.Credentials.InitializeServiceClient(this);
@@ -214,25 +270,23 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <summary>
         /// Initializes a new instance of the SchedulerClient class.
         /// </summary>
-        /// <param name='credentials'>
-        /// Required.
-        /// </param>
         /// <param name='cloudServiceName'>
         /// Required.
         /// </param>
         /// <param name='jobCollectionName'>
         /// Required.
         /// </param>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public SchedulerClient(SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, HttpClient httpClient)
+        public SchedulerClient(string cloudServiceName, string jobCollectionName, SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
-            if (credentials == null)
-            {
-                throw new ArgumentNullException("credentials");
-            }
             if (cloudServiceName == null)
             {
                 throw new ArgumentNullException("cloudServiceName");
@@ -241,12 +295,43 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 throw new ArgumentNullException("jobCollectionName");
             }
-            this._credentials = credentials;
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
             this._cloudServiceName = cloudServiceName;
             this._jobCollectionName = jobCollectionName;
+            this._credentials = credentials;
             this._baseUri = new Uri("https://management.core.windows.net/");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another SchedulerClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of SchedulerClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<SchedulerClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is SchedulerClient)
+            {
+                SchedulerClient clonedClient = ((SchedulerClient)client);
+                
+                clonedClient._cloudServiceName = this._cloudServiceName;
+                clonedClient._jobCollectionName = this._jobCollectionName;
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>

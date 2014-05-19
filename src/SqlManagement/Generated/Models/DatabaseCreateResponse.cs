@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the database create response.
+    /// Represents the response to a create database request from the service.
     /// </summary>
     public partial class DatabaseCreateResponse : OperationResponse
     {
         private Database _database;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the database that was created as a result of
+        /// the call to Create Database.
         /// </summary>
         public Database Database
         {

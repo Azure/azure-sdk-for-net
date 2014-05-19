@@ -28,15 +28,16 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the list of database operations for a given server
-    /// or database.
+    /// Represents the response containing the list of database operations for
+    /// a given server or database.
     /// </summary>
     public partial class DatabaseOperationListResponse : OperationResponse, IEnumerable<DatabaseOperation>
     {
         private IList<DatabaseOperation> _databaseOperations;
         
         /// <summary>
-        /// Optional. Gets or sets the list of database operations' response.
+        /// Optional. Gets or sets the collection of database operations
+        /// returned from a call to List Database Operations.
         /// </summary>
         public IList<DatabaseOperation> DatabaseOperations
         {

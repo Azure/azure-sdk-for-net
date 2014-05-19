@@ -29,32 +29,29 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class DatabaseOperationOperationsExtensions
     {
         /// <summary>
-        /// Returns information about one operation on a given operation Guid.
+        /// Returns information about a specific operation by using the
+        /// operation Guid.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the operation was
-        /// executed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='operationGuid'>
-        /// Required. The Guid of the SQL Server database operation to be
+        /// Required. The Guid of the Azure SQL Database operation to be
         /// obtained.
         /// </param>
         /// <returns>
-        /// Response containing the database operation for a given operation
-        /// Guid.
+        /// Represents the database operation for a given operation Guid.
         /// </returns>
         public static DatabaseOperationGetResponse Get(this IDatabaseOperationOperations operations, string serverName, string operationGuid)
         {
@@ -66,23 +63,23 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns information about one operation on a given operation Guid.
+        /// Returns information about a specific operation by using the
+        /// operation Guid.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server on which the operation was
-        /// executed.
+        /// Required. The name of the Azure SQL Database Server where the
+        /// database is hosted.
         /// </param>
         /// <param name='operationGuid'>
-        /// Required. The Guid of the SQL Server database operation to be
+        /// Required. The Guid of the Azure SQL Database operation to be
         /// obtained.
         /// </param>
         /// <returns>
-        /// Response containing the database operation for a given operation
-        /// Guid.
+        /// Represents the database operation for a given operation Guid.
         /// </returns>
         public static Task<DatabaseOperationGetResponse> GetAsync(this IDatabaseOperationOperations operations, string serverName, string operationGuid)
         {
@@ -90,7 +87,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server and
+        /// Retrieves all of the operations that took place on a specific
         /// database.
         /// </summary>
         /// <param name='operations'>
@@ -98,14 +95,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server that hosts the
+        /// database.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Database to be queried.
+        /// Required. The name of the database for which the operations should
+        /// be retrieved.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public static DatabaseOperationListResponse ListByDatabase(this IDatabaseOperationOperations operations, string serverName, string databaseName)
         {
@@ -117,7 +116,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server and
+        /// Retrieves all of the operations that took place on a specific
         /// database.
         /// </summary>
         /// <param name='operations'>
@@ -125,14 +124,16 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server that hosts the
+        /// database.
         /// </param>
         /// <param name='databaseName'>
-        /// Required. The name of the Database to be queried.
+        /// Required. The name of the database for which the operations should
+        /// be retrieved.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public static Task<DatabaseOperationListResponse> ListByDatabaseAsync(this IDatabaseOperationOperations operations, string serverName, string databaseName)
         {
@@ -140,18 +141,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server.
+        /// Retrieves all of the operations that occured on the Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public static DatabaseOperationListResponse ListByServer(this IDatabaseOperationOperations operations, string serverName)
         {
@@ -163,18 +165,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns the list database operations for a given server.
+        /// Retrieves all of the operations that occured on the Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IDatabaseOperationOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL Server to be queried.
+        /// Required. The name of the Azure SQL Database Server to be queried.
         /// </param>
         /// <returns>
-        /// Response containing the list of database operations for a given
-        /// server or database.
+        /// Represents the response containing the list of database operations
+        /// for a given server or database.
         /// </returns>
         public static Task<DatabaseOperationListResponse> ListByServerAsync(this IDatabaseOperationOperations operations, string serverName)
         {

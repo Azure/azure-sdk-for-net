@@ -28,16 +28,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Contains the response from a request to List Firewall Rules.
     /// </summary>
     public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRule>
     {
         private IList<FirewallRule> _firewallRules;
         
         /// <summary>
-        /// Optional. Gets or sets the firewall rules for this SQL Database
-        /// Server.
+        /// Optional. Gets the collection of firewall rules returned from the
+        /// List Firewall Rules operation.
         /// </summary>
         public IList<FirewallRule> FirewallRules
         {

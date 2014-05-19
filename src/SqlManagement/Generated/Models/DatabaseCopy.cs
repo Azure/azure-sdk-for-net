@@ -21,18 +21,19 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// SQL Server database copy.
+    /// Represents the Azure SQL Database copy.
     /// </summary>
-    public partial class DatabaseCopy
+    public partial class DatabaseCopy : SqlModelCommon
     {
         private string _destinationDatabaseName;
         
         /// <summary>
-        /// Optional. The name of the destination database.
+        /// Optional. Gets the name of the destination database.
         /// </summary>
         public string DestinationDatabaseName
         {
@@ -43,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _destinationServerName;
         
         /// <summary>
-        /// Optional. The name of the destination server.
+        /// Optional. Gets the name of the destination server.
         /// </summary>
         public string DestinationServerName
         {
@@ -54,7 +55,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isContinuous;
         
         /// <summary>
-        /// Optional. Whether the copy is continous.
+        /// Optional. Gets a value that indicates whether the copy is continous.
         /// </summary>
         public bool IsContinuous
         {
@@ -65,7 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isInterlinkConnected;
         
         /// <summary>
-        /// Optional. Whether the database copy is interlink connected.
+        /// Optional. Gets a value that indicates whether the database copy is
+        /// interlink connected.
         /// </summary>
         public bool IsInterlinkConnected
         {
@@ -76,7 +78,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isLocalDatabaseReplicationTarget;
         
         /// <summary>
-        /// Optional. Whether the local database is the replication target.
+        /// Optional. Gets a value that indicates whether the local database is
+        /// the replication target.
         /// </summary>
         public bool IsLocalDatabaseReplicationTarget
         {
@@ -87,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _localDatabaseId;
         
         /// <summary>
-        /// Optional. The ID of the local database.
+        /// Optional. Gets the ID of the local database.
         /// </summary>
         public int LocalDatabaseId
         {
@@ -98,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _modifyDate;
         
         /// <summary>
-        /// Optional. The UTC date when the database copy became
+        /// Optional. Gets the UTC date when the database copy became
         /// transactionally consistent.
         /// </summary>
         public string ModifyDate
@@ -107,32 +110,10 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._modifyDate = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Optional. A unique identifier for the database copy.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _parentLink;
-        
-        /// <summary>
-        /// Optional. A link to the location of the parent resource.
-        /// </summary>
-        public string ParentLink
-        {
-            get { return this._parentLink; }
-            set { this._parentLink = value; }
-        }
-        
         private float _percentComplete;
         
         /// <summary>
-        /// Optional. Progress towards copy completion.
+        /// Optional. Gets the progress towards copy completion.
         /// </summary>
         public float PercentComplete
         {
@@ -143,7 +124,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private byte _replicationState;
         
         /// <summary>
-        /// Optional. A value indicating the replication state for the database.
+        /// Optional. Gets a value indicating the replication state for the
+        /// database.
         /// </summary>
         public byte ReplicationState
         {
@@ -154,7 +136,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _replicationStateDescription;
         
         /// <summary>
-        /// Optional. A description of the replication state for the database.
+        /// Optional. Gets a description of the replication state for the
+        /// database.
         /// </summary>
         public string ReplicationStateDescription
         {
@@ -162,21 +145,10 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._replicationStateDescription = value; }
         }
         
-        private string _selfLink;
-        
-        /// <summary>
-        /// Optional. A link to the location of the requested resource.
-        /// </summary>
-        public string SelfLink
-        {
-            get { return this._selfLink; }
-            set { this._selfLink = value; }
-        }
-        
         private string _sourceDatabaseName;
         
         /// <summary>
-        /// Optional. The name of the source database.
+        /// Optional. Gets the name of the source database.
         /// </summary>
         public string SourceDatabaseName
         {
@@ -187,7 +159,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _sourceServerName;
         
         /// <summary>
-        /// Optional. The name of the source server.
+        /// Optional. Gets the name of the source server.
         /// </summary>
         public string SourceServerName
         {
@@ -198,34 +170,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _startDate;
         
         /// <summary>
-        /// Optional. The UTC date when the database copy was initiated.
+        /// Optional. Gets the UTC date when the database copy was initiated.
         /// </summary>
         public string StartDate
         {
             get { return this._startDate; }
             set { this._startDate = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. The state of the database copy.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. The type of the object.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>
