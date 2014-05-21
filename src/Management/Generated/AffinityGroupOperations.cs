@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -145,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -297,7 +298,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -419,7 +420,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -546,6 +547,38 @@ namespace Microsoft.WindowsAzure.Management
                                 result.Capabilities.Add(capabilitiesElement.Value);
                             }
                         }
+                        
+                        XElement createdTimeElement = affinityGroupElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                        if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
+                        {
+                            DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                            result.CreatedTime = createdTimeInstance;
+                        }
+                        
+                        XElement computeCapabilitiesElement = affinityGroupElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                        if (computeCapabilitiesElement != null)
+                        {
+                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                            result.ComputeCapabilities = computeCapabilitiesInstance;
+                            
+                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                }
+                            }
+                            
+                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (webWorkerRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                }
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -626,7 +659,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -708,6 +741,38 @@ namespace Microsoft.WindowsAzure.Management
                                 foreach (XElement capabilitiesElement in capabilitiesSequenceElement.Elements(XName.Get("Capability", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     affinityGroupInstance.Capabilities.Add(capabilitiesElement.Value);
+                                }
+                            }
+                            
+                            XElement createdTimeElement = affinityGroupsElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (createdTimeElement != null && string.IsNullOrEmpty(createdTimeElement.Value) == false)
+                            {
+                                DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
+                                affinityGroupInstance.CreatedTime = createdTimeInstance;
+                            }
+                            
+                            XElement computeCapabilitiesElement = affinityGroupsElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeCapabilitiesElement != null)
+                            {
+                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                affinityGroupInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                
+                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    }
+                                }
+                                
+                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                    }
                                 }
                             }
                         }
@@ -822,7 +887,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
