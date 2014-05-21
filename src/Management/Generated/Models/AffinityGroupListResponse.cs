@@ -87,6 +87,28 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._capabilities = value; }
             }
             
+            private ComputeCapabilities _computeCapabilities;
+            
+            /// <summary>
+            /// Optional. The compute capabilities in this affinity group.
+            /// </summary>
+            public ComputeCapabilities ComputeCapabilities
+            {
+                get { return this._computeCapabilities; }
+                set { this._computeCapabilities = value; }
+            }
+            
+            private System.DateTime? _createdTime;
+            
+            /// <summary>
+            /// Optional. The time that the affinity group was created.
+            /// </summary>
+            public System.DateTime? CreatedTime
+            {
+                get { return this._createdTime; }
+                set { this._createdTime = value; }
+            }
+            
             private string _description;
             
             /// <summary>
