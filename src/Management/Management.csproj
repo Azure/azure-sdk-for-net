@@ -73,7 +73,6 @@
   <ItemGroup>
     <Content Include="management.hydra.xml" />
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="subscriptions.hydra.xml" />
   </ItemGroup>
   <ItemGroup>
