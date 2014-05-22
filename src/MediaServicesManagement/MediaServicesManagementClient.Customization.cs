@@ -41,18 +41,6 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 new MediaServicesManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<MediaServicesManagementClient> client)
-        {
-            base.Clone(client);
-            MediaServicesManagementClient media = client as MediaServicesManagementClient;
-            if (media != null)
-            {
-                media._credentials = Credentials;
-                media._baseUri = BaseUri;
-                media.Credentials.InitializeServiceClient<MediaServicesManagementClient>(media);
-            }
-        }
-
         public override MediaServicesManagementClient WithHandler(DelegatingHandler handler)
         {
             return (MediaServicesManagementClient)WithHandler(new MediaServicesManagementClient(), handler);

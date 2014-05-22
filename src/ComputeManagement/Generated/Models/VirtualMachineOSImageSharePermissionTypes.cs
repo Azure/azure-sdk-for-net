@@ -22,26 +22,15 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Storage.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// The status of the asynchronous request.
+    /// Specifies the permission type for sharing.
     /// </summary>
-    public enum StorageOperationStatus
+    public static partial class VirtualMachineOSImageSharePermissionTypes
     {
-        /// <summary>
-        /// The asynchronous request is in progress.
-        /// </summary>
-        InProgress = 0,
+        public const string Public = "Public";
         
-        /// <summary>
-        /// The asynchronous request succeeded.
-        /// </summary>
-        Succeeded = 1,
-        
-        /// <summary>
-        /// The asynchronous request failed.
-        /// </summary>
-        Failed = 2,
+        public const string Private = "Private";
     }
 }

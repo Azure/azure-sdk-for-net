@@ -379,6 +379,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._language = value; }
             }
             
+            private string _location;
+            
+            /// <summary>
+            /// Optional. The location name of the virtual machine image.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
+            }
+            
             private System.DateTime? _modifiedTime;
             
             /// <summary>

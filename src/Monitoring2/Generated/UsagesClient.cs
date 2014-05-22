@@ -196,7 +196,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
     public partial interface IUsagesClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -204,11 +212,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         IUsageMetricsOperations UsageMetrics
@@ -219,10 +245,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
     
     public partial class UsagesClient : ServiceClient<UsagesClient>, IUsagesClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -232,11 +268,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IUsageMetricsOperations _usageMetrics;
@@ -253,6 +313,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             : base()
         {
             this._usageMetrics = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -260,10 +323,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -286,7 +352,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -311,6 +379,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             : base(httpClient)
         {
             this._usageMetrics = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -318,10 +389,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -347,7 +421,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -363,6 +439,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another UsagesClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of UsagesClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<UsagesClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is UsagesClient)
+            {
+                UsagesClient clonedClient = ((UsagesClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
     

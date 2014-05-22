@@ -164,7 +164,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -359,7 +359,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -503,6 +503,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -510,6 +514,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -610,7 +618,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -731,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -991,7 +999,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1138,7 +1146,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1405,7 +1413,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1606,7 +1614,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

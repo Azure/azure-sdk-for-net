@@ -40,6 +40,114 @@ namespace Microsoft.WindowsAzure
     public static partial class VirtualMachineOSImageOperationsExtensions
     {
         /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginSharing(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).BeginSharingAsync(imageName, permission);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginSharingAsync(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        {
+            return operations.BeginSharingAsync(imageName, permission, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginUnreplicating(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).BeginUnreplicatingAsync(imageName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginUnreplicatingAsync(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return operations.BeginUnreplicatingAsync(imageName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Create OS Image operation adds an operating system image that
         /// is stored in a storage account and is available from the image
         /// repository.  (see
@@ -192,6 +300,50 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Gets OS Image's properties and its replication details. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate.
+        /// </param>
+        /// <returns>
+        /// The Get Details OS Images operation response.
+        /// </returns>
+        public static VirtualMachineOSImageGetDetailsResponse GetDetails(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).GetDetailsAsync(imageName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets OS Image's properties and its replication details. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate.
+        /// </param>
+        /// <returns>
+        /// The Get Details OS Images operation response.
+        /// </returns>
+        public static Task<VirtualMachineOSImageGetDetailsResponse> GetDetailsAsync(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return operations.GetDetailsAsync(imageName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The List OS Images operation retrieves a list of the operating
         /// system images from the image repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157191.aspx
@@ -229,6 +381,194 @@ namespace Microsoft.WindowsAzure
         public static Task<VirtualMachineOSImageListResponse> ListAsync(this IVirtualMachineOSImageOperations operations)
         {
             return operations.ListAsync(CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Replicate an OS image to multiple target locations. This operation
+        /// is only for publishers. You have to be registered as image
+        /// publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine OS image to replicate.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Replicate Virtual Machine
+        /// Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the published name of the image.
+        /// </returns>
+        public static VirtualMachineOSImageReplicateResponse Replicate(this IVirtualMachineOSImageOperations operations, string imageName, VirtualMachineOSImageReplicateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).ReplicateAsync(imageName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Replicate an OS image to multiple target locations. This operation
+        /// is only for publishers. You have to be registered as image
+        /// publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine OS image to replicate.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Replicate Virtual Machine
+        /// Image operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the published name of the image.
+        /// </returns>
+        public static Task<VirtualMachineOSImageReplicateResponse> ReplicateAsync(this IVirtualMachineOSImageOperations operations, string imageName, VirtualMachineOSImageReplicateParameters parameters)
+        {
+            return operations.ReplicateAsync(imageName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse Share(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).ShareAsync(imageName, permission);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> ShareAsync(this IVirtualMachineOSImageOperations operations, string imageName, string permission)
+        {
+            return operations.ShareAsync(imageName, permission, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse Unreplicate(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IVirtualMachineOSImageOperations)s).UnreplicateAsync(imageName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IVirtualMachineOSImageOperations.
+        /// </param>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> UnreplicateAsync(this IVirtualMachineOSImageOperations operations, string imageName)
+        {
+            return operations.UnreplicateAsync(imageName, CancellationToken.None);
         }
         
         /// <summary>

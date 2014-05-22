@@ -27,12 +27,12 @@ namespace Microsoft.WindowsAzure
     {
         public static SchedulerClient CreateSchedulerClient(this CloudClients clients, SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName)
         {
-            return new SchedulerClient(credentials, cloudServiceName, jobCollectionName);
+            return new SchedulerClient(cloudServiceName, jobCollectionName, credentials);
         }
 
         public static SchedulerClient CreateSchedulerClient(this CloudClients clients, SubscriptionCloudCredentials credentials, string cloudServiceName, string jobCollectionName, Uri baseUri)
         {
-            return new SchedulerClient(credentials, cloudServiceName, jobCollectionName, baseUri);
+            return new SchedulerClient(cloudServiceName, jobCollectionName, credentials, baseUri);
         }
 
         public static SchedulerClient CreateSchedulerClient(this CloudClients clients)
@@ -60,22 +60,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
 
             return baseUri != null ?
-                new SchedulerClient(credentials, cloudServiceName, jobCollectionName, baseUri) :
-                new SchedulerClient(credentials, cloudServiceName, jobCollectionName);
-        }
-
-        protected override void Clone(ServiceClient<SchedulerClient> client)
-        {
-            base.Clone(client);
-            SchedulerClient management = client as SchedulerClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._cloudServiceName = CloudServiceName;
-                management._jobCollectionName = JobCollectionName;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
+                new SchedulerClient(cloudServiceName, jobCollectionName, credentials, baseUri) :
+                new SchedulerClient(cloudServiceName, jobCollectionName, credentials);
         }
 
         public override SchedulerClient WithHandler(DelegatingHandler handler)

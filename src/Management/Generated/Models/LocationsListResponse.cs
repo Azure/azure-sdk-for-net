@@ -84,6 +84,17 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._availableServices = value; }
             }
             
+            private ComputeCapabilities _computeCapabilities;
+            
+            /// <summary>
+            /// Optional. The compute capabilities in this location.
+            /// </summary>
+            public ComputeCapabilities ComputeCapabilities
+            {
+                get { return this._computeCapabilities; }
+                set { this._computeCapabilities = value; }
+            }
+            
             private string _displayName;
             
             /// <summary>

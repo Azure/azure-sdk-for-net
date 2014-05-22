@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.Scheduler
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Scheduler">
-      <PackageVersion>1.0.3</PackageVersion>
+      <PackageVersion>2.0.0</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

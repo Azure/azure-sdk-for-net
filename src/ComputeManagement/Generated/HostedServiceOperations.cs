@@ -123,6 +123,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -130,6 +134,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1147,6 +1155,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1154,6 +1166,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1248,6 +1264,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1255,6 +1275,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1477,6 +1501,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
                                     string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
                                     hostedServicePropertiesInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                }
+                            }
+                        }
+                        
+                        XElement computeCapabilitiesElement = hostedServiceElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                        if (computeCapabilitiesElement != null)
+                        {
+                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                            result.ComputeCapabilities = computeCapabilitiesInstance;
+                            
+                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                }
+                            }
+                            
+                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (webWorkerRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
                                 }
                             }
                         }
@@ -3153,6 +3202,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                         }
+                        
+                        XElement computeCapabilitiesElement = hostedServiceElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                        if (computeCapabilitiesElement != null)
+                        {
+                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                            result.ComputeCapabilities = computeCapabilitiesInstance;
+                            
+                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                }
+                            }
+                            
+                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (webWorkerRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                }
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -3547,6 +3621,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
                                         string extendedPropertiesValue = extendedPropertiesElement.Element(XName.Get("Value", "http://schemas.microsoft.com/windowsazure")).Value;
                                         hostedServicePropertiesInstance.ExtendedProperties.Add(extendedPropertiesKey, extendedPropertiesValue);
+                                    }
+                                }
+                            }
+                            
+                            XElement computeCapabilitiesElement = hostedServicesElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeCapabilitiesElement != null)
+                            {
+                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                hostedServiceInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                
+                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    }
+                                }
+                                
+                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
                                     }
                                 }
                             }
