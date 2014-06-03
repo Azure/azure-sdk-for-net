@@ -19,8 +19,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Windows Azure Monitoring Services Management Library")]
 [assembly: AssemblyDescription("Provides Windows Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Windows Azure services.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
