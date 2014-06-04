@@ -34,7 +34,7 @@ Management operations require the X509Certificate2 type that is not present in t
         <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
         <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
         <dependency id="Microsoft.WindowsAzure.Management.Network" version="__VERSION_Microsoft.WindowsAzure.Management.Network__" />
-        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="[2.0.1,]" />
+        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="2.0.1" />
         <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
         <dependency id="Microsoft.WindowsAzure.Management.MediaServices" version="__VERSION_Microsoft.WindowsAzure.Management.MediaServices__" />
       </group>
