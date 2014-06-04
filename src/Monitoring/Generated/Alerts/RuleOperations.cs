@@ -128,33 +128,32 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject ruleCreateOrUpdateParametersValue = new JObject();
+                requestDoc = ruleCreateOrUpdateParametersValue;
+                
                 if (parameters.Rule != null)
                 {
                     if (parameters.Rule.Id != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Id"] = parameters.Rule.Id;
+                        ruleCreateOrUpdateParametersValue["Id"] = parameters.Rule.Id;
                     }
                     
                     if (parameters.Rule.Name != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Name"] = parameters.Rule.Name;
+                        ruleCreateOrUpdateParametersValue["Name"] = parameters.Rule.Name;
                     }
                     
                     if (parameters.Rule.Description != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Description"] = parameters.Rule.Description;
+                        ruleCreateOrUpdateParametersValue["Description"] = parameters.Rule.Description;
                     }
                     
-                    requestDoc = new JObject();
-                    requestDoc["IsEnabled"] = parameters.Rule.IsEnabled;
+                    ruleCreateOrUpdateParametersValue["IsEnabled"] = parameters.Rule.IsEnabled;
                     
                     if (parameters.Rule.Condition != null)
                     {
                         JObject conditionValue = new JObject();
-                        requestDoc["Condition"] = conditionValue;
+                        ruleCreateOrUpdateParametersValue["Condition"] = conditionValue;
                         if (parameters.Rule.Condition is ThresholdRuleCondition)
                         {
                             conditionValue["odata.type"] = parameters.Rule.Condition.GetType().FullName;
@@ -219,10 +218,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
-                        requestDoc = actionsArray;
+                        ruleCreateOrUpdateParametersValue["Actions"] = actionsArray;
                     }
                     
-                    requestDoc["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
+                    ruleCreateOrUpdateParametersValue["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
