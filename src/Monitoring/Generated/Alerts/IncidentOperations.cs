@@ -428,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + ruleId.Trim() + "/alertincidents?";
-            url = url + "$filter=IsActive eq " + Uri.EscapeUriString(isActive.ToString().ToLower());
+            url = url + "$filter=IsActive eq " + Uri.EscapeDataString(isActive.ToString().ToLower());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
