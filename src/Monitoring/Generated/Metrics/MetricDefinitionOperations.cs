@@ -105,14 +105,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricdefinitions/query?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
+            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
             if (metricNamespace != null)
             {
-                url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace != null ? metricNamespace.Trim() : "");
+                url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace != null ? metricNamespace.Trim() : "");
             }
             if (metricNames != null && metricNames.Count > 0)
             {
-                url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+                url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

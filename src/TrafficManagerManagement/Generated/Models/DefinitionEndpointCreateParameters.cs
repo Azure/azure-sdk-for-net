@@ -82,14 +82,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
             set { this._type = value; }
         }
         
-        private int _weight;
+        private int? _weight;
         
         /// <summary>
         /// Optional. Specifies the weight of an endpoint in a weighted round
         /// robin policy. The valid range is for this value is [1, 1000]. The
         /// default is 1.
         /// </summary>
-        public int Weight
+        public int? Weight
         {
             get { return this._weight; }
             set { this._weight = value; }

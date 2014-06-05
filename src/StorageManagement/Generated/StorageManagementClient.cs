@@ -118,7 +118,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             : base()
         {
             this._storageAccounts = new StorageAccountOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2014-05-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -184,7 +184,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
             : base(httpClient)
         {
             this._storageAccounts = new StorageAccountOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2014-05-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -340,7 +340,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

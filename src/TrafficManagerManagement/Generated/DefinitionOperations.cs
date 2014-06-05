@@ -268,9 +268,12 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         endpointElement.Add(locationElement);
                     }
                     
-                    XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                    weightElement.Value = endpointsItem.Weight.ToString();
-                    endpointElement.Add(weightElement);
+                    if (endpointsItem.Weight != null)
+                    {
+                        XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
+                        weightElement.Value = endpointsItem.Weight.ToString();
+                        endpointElement.Add(weightElement);
+                    }
                 }
                 policyElement.Add(endpointsSequenceElement);
                 
