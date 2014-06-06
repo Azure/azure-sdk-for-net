@@ -673,7 +673,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/?";
             url = url + "op=checknameavailability";
-            url = url + "&resourceName=" + Uri.EscapeUriString(jobCollectionName.Trim());
+            url = url + "&resourceName=" + Uri.EscapeDataString(jobCollectionName.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
