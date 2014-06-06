@@ -72,9 +72,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hydra.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -106,8 +103,5 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementExpressRouteSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.1.0.5246.25846-prerelease\tools\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.dll" DestinationFolder="." />
-  </Target>
-  <Target Name="CopyMicrosoftWindowsAzureManagementExpressRouteSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.1.0.5235.19743-prerelease\tools\Microsoft.WindowsAzure.Management.ExpressRoute.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
