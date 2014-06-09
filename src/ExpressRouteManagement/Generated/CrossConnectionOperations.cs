@@ -654,7 +654,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             }
                             
                             XElement primaryAzurePortElement = crossConnectionsElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
+                            if (primaryAzurePortElement != null)
                             {
                                 string primaryAzurePortInstance = primaryAzurePortElement.Value;
                                 crossConnectionInstance.PrimaryAzurePort = primaryAzurePortInstance;
