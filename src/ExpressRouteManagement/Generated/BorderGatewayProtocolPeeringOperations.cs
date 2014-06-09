@@ -721,62 +721,62 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement borderGatewayProtocolPeeringElement = responseDoc.Element(XName.Get("BorderGatewayProtocolPeering", "http://schemas.microsoft.com/windowsazure"));
-                    if (borderGatewayProtocolPeeringElement != null && borderGatewayProtocolPeeringElement.IsEmpty == false)
+                    if (borderGatewayProtocolPeeringElement != null)
                     {
                         AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                         result.BgpPeering = bgpPeeringInstance;
                         
                         XElement azureAsnElement = borderGatewayProtocolPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (azureAsnElement != null && azureAsnElement.IsEmpty == false)
+                        if (azureAsnElement != null)
                         {
                             uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.AzureAsn = azureAsnInstance;
                         }
                         
                         XElement peerAsnElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
-                        if (peerAsnElement != null && peerAsnElement.IsEmpty == false)
+                        if (peerAsnElement != null)
                         {
                             uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.PeerAsn = peerAsnInstance;
                         }
                         
                         XElement primaryAzurePortElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
+                        if (primaryAzurePortElement != null)
                         {
                             string primaryAzurePortInstance = primaryAzurePortElement.Value;
                             bgpPeeringInstance.PrimaryAzurePort = primaryAzurePortInstance;
                         }
                         
                         XElement primaryPeerSubnetElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryPeerSubnetElement != null && primaryPeerSubnetElement.IsEmpty == false)
+                        if (primaryPeerSubnetElement != null)
                         {
                             string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
                             bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
                         }
                         
                         XElement secondaryAzurePortElement = borderGatewayProtocolPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryAzurePortElement != null && secondaryAzurePortElement.IsEmpty == false)
+                        if (secondaryAzurePortElement != null)
                         {
                             string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
                             bgpPeeringInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                         }
                         
                         XElement secondaryPeerSubnetElement = borderGatewayProtocolPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryPeerSubnetElement != null && secondaryPeerSubnetElement.IsEmpty == false)
+                        if (secondaryPeerSubnetElement != null)
                         {
                             string secondaryPeerSubnetInstance = secondaryPeerSubnetElement.Value;
                             bgpPeeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
                         }
                         
                         XElement stateElement = borderGatewayProtocolPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null && stateElement.IsEmpty == false)
+                        if (stateElement != null)
                         {
                             BgpPeeringState stateInstance = ((BgpPeeringState)Enum.Parse(typeof(BgpPeeringState), stateElement.Value, true));
                             bgpPeeringInstance.State = stateInstance;
                         }
                         
                         XElement vlanIdElement = borderGatewayProtocolPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
-                        if (vlanIdElement != null && vlanIdElement.IsEmpty == false)
+                        if (vlanIdElement != null)
                         {
                             uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
                             bgpPeeringInstance.VlanId = vlanIdInstance;
