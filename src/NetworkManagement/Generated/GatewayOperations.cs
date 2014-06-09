@@ -327,7 +327,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 XElement createGatewayParametersElement = new XElement(XName.Get("CreateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(createGatewayParametersElement);
                 
-                XElement gatewayTypeElement = new XElement(XName.Get("GatewayType", "http://schemas.microsoft.com/windowsazure"));
+                XElement gatewayTypeElement = new XElement(XName.Get("gatewayType", "http://schemas.microsoft.com/windowsazure"));
                 gatewayTypeElement.Value = parameters.GatewayType.ToString();
                 createGatewayParametersElement.Add(gatewayTypeElement);
                 
@@ -1871,15 +1871,15 @@ namespace Microsoft.WindowsAzure.Management.Network
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/" + networkName.Trim() + "/gateway/vpndeviceconfigurationscript?";
             if (parameters.Vendor != null)
             {
-                url = url + "vendor=" + Uri.EscapeUriString(parameters.Vendor != null ? parameters.Vendor.Trim() : "");
+                url = url + "vendor=" + Uri.EscapeDataString(parameters.Vendor != null ? parameters.Vendor.Trim() : "");
             }
             if (parameters.Platform != null)
             {
-                url = url + "&platform=" + Uri.EscapeUriString(parameters.Platform != null ? parameters.Platform.Trim() : "");
+                url = url + "&platform=" + Uri.EscapeDataString(parameters.Platform != null ? parameters.Platform.Trim() : "");
             }
             if (parameters.OSFamily != null)
             {
-                url = url + "&OSfamily=" + Uri.EscapeUriString(parameters.OSFamily != null ? parameters.OSFamily.Trim() : "");
+                url = url + "&OSfamily=" + Uri.EscapeDataString(parameters.OSFamily != null ? parameters.OSFamily.Trim() : "");
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
