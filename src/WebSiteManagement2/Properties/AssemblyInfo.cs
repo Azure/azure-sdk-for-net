@@ -15,12 +15,13 @@
 
 using System.Reflection;
 using System.Resources;
+using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Monitoring Services Management Library")]
-[assembly: AssemblyDescription("Provides Windows Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Windows Azure services.")]
+[assembly: AssemblyTitle("Windows Azure Web Sites Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Windows Azure Web Sites.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.1.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
