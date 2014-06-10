@@ -42,6 +42,7 @@
 
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.portable.props" />
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.net45.props" />
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net40' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.net40.props" />
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'windows8' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.windows8.props" />
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wp80' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.wp80.props" />
 

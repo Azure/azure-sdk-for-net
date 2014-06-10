@@ -4,7 +4,7 @@
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <WindowsAzureLibraryProfileSet>net40</WindowsAzureLibraryProfileSet>
     <ProjectGuid>{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -17,6 +17,14 @@
   <ItemGroup>
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
+    <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
+    <Compile Include="Customizations\MetricOperations.Customization.cs" />
+    <Compile Include="Customizations\Shoebox\MetricDefinitionFilterParser.cs" />
+    <Compile Include="Customizations\Shoebox\MetricFilter.cs" />
+    <Compile Include="Customizations\Shoebox\MetricFilterExpressionParser.cs" />
+    <Compile Include="Customizations\Shoebox\MetricFilterRegexParser.cs" />
+    <Compile Include="Customizations\Shoebox\ShoeboxClient.cs" />
+    <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
     <Compile Include="Generated\InsightsClient.cs" />
     <Compile Include="Generated\InsightsManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -34,8 +42,29 @@
     <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.Edm.5.6.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.OData.5.6.0\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.0\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\WindowsAzure.Storage.4.0.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
