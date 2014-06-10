@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides core REST functionality for managing Windows Azure Service Bus.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.0.0")]
+[assembly: AssemblyFileVersion("0.10.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
