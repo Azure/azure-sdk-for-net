@@ -27,16 +27,51 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Insights;
+using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
-using Microsoft.WindowsAzure.Management.Monitoring.Events;
-using Microsoft.WindowsAzure.Management.Monitoring.Events.Models;
-using Microsoft.WindowsAzure.Management.Monitoring.Models;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
+namespace Microsoft.Azure.Insights.Models
 {
+    /// <summary>
+    /// Aggregation type.
+    /// </summary>
+    public enum AggregationType
+    {
+        /// <summary>
+        /// No aggregation.
+        /// </summary>
+        None = 0,
+        
+        /// <summary>
+        /// Average aggregation.
+        /// </summary>
+        Average = 1,
+        
+        /// <summary>
+        /// Minimum aggregation.
+        /// </summary>
+        Minimum = 2,
+        
+        /// <summary>
+        /// Maximum aggregation.
+        /// </summary>
+        Maximum = 3,
+        
+        /// <summary>
+        /// Total aggregation.
+        /// </summary>
+        Total = 4,
+        
+        /// <summary>
+        /// Get the last value for the time range.
+        /// </summary>
+        Last = 5,
+    }
+    
     /// <summary>
     /// The event count summary.
     /// </summary>
@@ -862,12 +897,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
             set { this._endTime = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.Monitoring.Events.Models.EventChannels? _eventChannels;
+        private Microsoft.Azure.Insights.Models.EventChannels? _eventChannels;
         
         /// <summary>
         /// The event channels.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.Monitoring.Events.Models.EventChannels? EventChannels
+        public Microsoft.Azure.Insights.Models.EventChannels? EventChannels
         {
             get { return this._eventChannels; }
             set { this._eventChannels = value; }
@@ -912,6 +947,593 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public ListEventsParameters()
         {
+        }
+    }
+    
+    /// <summary>
+    /// The localizable string class.
+    /// </summary>
+    public partial class LocalizableString
+    {
+        private string _localizedValue;
+        
+        /// <summary>
+        /// The locale specific value.
+        /// </summary>
+        public string LocalizedValue
+        {
+            get { return this._localizedValue; }
+            set { this._localizedValue = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// The invariant value.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the LocalizableString class.
+        /// </summary>
+        public LocalizableString()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A metric value set represents a set of metric values in a time period.
+    /// </summary>
+    public partial class Metric
+    {
+        private DateTime _endTime;
+        
+        /// <summary>
+        /// The end time.
+        /// </summary>
+        public DateTime EndTime
+        {
+            get { return this._endTime; }
+            set { this._endTime = value; }
+        }
+        
+        private IList<MetricValue> _metricValues;
+        
+        /// <summary>
+        /// The collection of MetricValues..
+        /// </summary>
+        public IList<MetricValue> MetricValues
+        {
+            get { return this._metricValues; }
+            set { this._metricValues = value; }
+        }
+        
+        private LocalizableString _name;
+        
+        /// <summary>
+        /// The name.
+        /// </summary>
+        public LocalizableString Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private Dictionary<string, string> _properties;
+        
+        /// <summary>
+        /// The extendable properties.
+        /// </summary>
+        public Dictionary<string, string> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _resourceId;
+        
+        /// <summary>
+        /// the name of the resource this metric belongs to.
+        /// </summary>
+        public string ResourceId
+        {
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
+        }
+        
+        private DateTime _startTime;
+        
+        /// <summary>
+        /// The start time.
+        /// </summary>
+        public DateTime StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private TimeSpan _timeGrain;
+        
+        /// <summary>
+        /// The timegrain value..
+        /// </summary>
+        public TimeSpan TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
+        }
+        
+        private Unit _unit;
+        
+        /// <summary>
+        /// The unit type.
+        /// </summary>
+        public Unit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Metric class.
+        /// </summary>
+        public Metric()
+        {
+            this._metricValues = new List<MetricValue>();
+            this._properties = new Dictionary<string, string>();
+        }
+    }
+    
+    /// <summary>
+    /// Metric availability specifies the time grain (aggregation interval) and
+    /// the retention period for that timegrain.
+    /// </summary>
+    public partial class MetricAvailability
+    {
+        private MetricLocation _location;
+        
+        /// <summary>
+        /// The location info for this availability
+        /// </summary>
+        public MetricLocation Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private TimeSpan _retention;
+        
+        /// <summary>
+        /// The retention period for the metric at the specified timegrain.
+        /// </summary>
+        public TimeSpan Retention
+        {
+            get { return this._retention; }
+            set { this._retention = value; }
+        }
+        
+        private TimeSpan _timeGrain;
+        
+        /// <summary>
+        /// The time grain specifies the aggregation interval for the metric.
+        /// </summary>
+        public TimeSpan TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricAvailability class.
+        /// </summary>
+        public MetricAvailability()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The collection of metric value sets.
+    /// </summary>
+    public partial class MetricCollection
+    {
+        private IList<Metric> _value;
+        
+        /// <summary>
+        /// The collection.
+        /// </summary>
+        public IList<Metric> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricCollection class.
+        /// </summary>
+        public MetricCollection()
+        {
+            this._value = new List<Metric>();
+        }
+    }
+    
+    /// <summary>
+    /// Metric definition class specifies the metadata for a metric.
+    /// </summary>
+    public partial class MetricDefinition
+    {
+        private IList<MetricAvailability> _metricAvailabilities;
+        
+        /// <summary>
+        /// Collection of availability information defining what timeGrains are
+        /// available to be queried.
+        /// </summary>
+        public IList<MetricAvailability> MetricAvailabilities
+        {
+            get { return this._metricAvailabilities; }
+            set { this._metricAvailabilities = value; }
+        }
+        
+        private LocalizableString _name;
+        
+        /// <summary>
+        /// The name.
+        /// </summary>
+        public LocalizableString Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private AggregationType _primaryAggregationType;
+        
+        /// <summary>
+        /// The primary aggregation type value defining how to use the values
+        /// for display.
+        /// </summary>
+        public AggregationType PrimaryAggregationType
+        {
+            get { return this._primaryAggregationType; }
+            set { this._primaryAggregationType = value; }
+        }
+        
+        private Dictionary<string, string> _properties;
+        
+        /// <summary>
+        /// Collection of extended properties.
+        /// </summary>
+        public Dictionary<string, string> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _resourceUri;
+        
+        /// <summary>
+        /// The target resource uri.
+        /// </summary>
+        public string ResourceUri
+        {
+            get { return this._resourceUri; }
+            set { this._resourceUri = value; }
+        }
+        
+        private Unit _unit;
+        
+        /// <summary>
+        /// The unit of the metric.
+        /// </summary>
+        public Unit Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricDefinition class.
+        /// </summary>
+        public MetricDefinition()
+        {
+            this._metricAvailabilities = new List<MetricAvailability>();
+            this._properties = new Dictionary<string, string>();
+        }
+    }
+    
+    /// <summary>
+    /// Represents collection of metric definitions.
+    /// </summary>
+    public partial class MetricDefinitionCollection
+    {
+        private IList<MetricDefinition> _value;
+        
+        /// <summary>
+        /// The values for the metric definitions.
+        /// </summary>
+        public IList<MetricDefinition> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricDefinitionCollection class.
+        /// </summary>
+        public MetricDefinitionCollection()
+        {
+            this._value = new List<MetricDefinition>();
+        }
+    }
+    
+    /// <summary>
+    /// The List Metric Definitions operation response.
+    /// </summary>
+    public partial class MetricDefinitionListResponse : OperationResponse
+    {
+        private MetricDefinitionCollection _metricDefinitionCollection;
+        
+        /// <summary>
+        /// The retrieved metric definitions.
+        /// </summary>
+        public MetricDefinitionCollection MetricDefinitionCollection
+        {
+            get { return this._metricDefinitionCollection; }
+            set { this._metricDefinitionCollection = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricDefinitionListResponse
+        /// class.
+        /// </summary>
+        public MetricDefinitionListResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The List Metric values operation response.
+    /// </summary>
+    public partial class MetricListResponse : OperationResponse
+    {
+        private MetricCollection _metricCollection;
+        
+        /// <summary>
+        /// The retrieved metric value sets.
+        /// </summary>
+        public MetricCollection MetricCollection
+        {
+            get { return this._metricCollection; }
+            set { this._metricCollection = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricListResponse class.
+        /// </summary>
+        public MetricListResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Details the location of the Metrics and contains the SAS Key.
+    /// </summary>
+    public partial class MetricLocation
+    {
+        private string _partitionKey;
+        
+        /// <summary>
+        /// The partition key.
+        /// </summary>
+        public string PartitionKey
+        {
+            get { return this._partitionKey; }
+            set { this._partitionKey = value; }
+        }
+        
+        private string _tableEndpoint;
+        
+        /// <summary>
+        /// The table endpoint.
+        /// </summary>
+        public string TableEndpoint
+        {
+            get { return this._tableEndpoint; }
+            set { this._tableEndpoint = value; }
+        }
+        
+        private IList<MetricTableInfo> _tableInfo;
+        
+        /// <summary>
+        /// The table info.
+        /// </summary>
+        public IList<MetricTableInfo> TableInfo
+        {
+            get { return this._tableInfo; }
+            set { this._tableInfo = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricLocation class.
+        /// </summary>
+        public MetricLocation()
+        {
+            this._tableInfo = new List<MetricTableInfo>();
+        }
+    }
+    
+    /// <summary>
+    /// Contains the Table information for N-day Tables, each table is used for
+    /// a specific date range.
+    /// </summary>
+    public partial class MetricTableInfo
+    {
+        private DateTime _endTime;
+        
+        /// <summary>
+        /// Gets or sets the end time of the range for this table.
+        /// </summary>
+        public DateTime EndTime
+        {
+            get { return this._endTime; }
+            set { this._endTime = value; }
+        }
+        
+        private string _sasToken;
+        
+        /// <summary>
+        /// Gets or sets the SAS Key for accessing Table Storage.
+        /// </summary>
+        public string SasToken
+        {
+            get { return this._sasToken; }
+            set { this._sasToken = value; }
+        }
+        
+        private DateTime _sasTokenExpirationTime;
+        
+        /// <summary>
+        /// Gets or sets the expiration time of the SAS token (UTC).
+        /// </summary>
+        public DateTime SasTokenExpirationTime
+        {
+            get { return this._sasTokenExpirationTime; }
+            set { this._sasTokenExpirationTime = value; }
+        }
+        
+        private DateTime _startTime;
+        
+        /// <summary>
+        /// Gets or sets the start time of the range for this table.
+        /// </summary>
+        public DateTime StartTime
+        {
+            get { return this._startTime; }
+            set { this._startTime = value; }
+        }
+        
+        private string _tableName;
+        
+        /// <summary>
+        /// Gets or sets the table name.
+        /// </summary>
+        public string TableName
+        {
+            get { return this._tableName; }
+            set { this._tableName = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricTableInfo class.
+        /// </summary>
+        public MetricTableInfo()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents a metric value.
+    /// </summary>
+    public partial class MetricValue
+    {
+        private double? _average;
+        
+        /// <summary>
+        /// Specifies the average value in the time interval.
+        /// </summary>
+        public double? Average
+        {
+            get { return this._average; }
+            set { this._average = value; }
+        }
+        
+        private long? _count;
+        
+        /// <summary>
+        /// Specifies the sample count in the time interval. Can be used to
+        /// determine the number of values that contributed to the average
+        /// value.
+        /// </summary>
+        public long? Count
+        {
+            get { return this._count; }
+            set { this._count = value; }
+        }
+        
+        private double? _last;
+        
+        /// <summary>
+        /// Specifies the last sample in the time interval.
+        /// </summary>
+        public double? Last
+        {
+            get { return this._last; }
+            set { this._last = value; }
+        }
+        
+        private double? _maximum;
+        
+        /// <summary>
+        /// Specifies the maximum value in the time interval.
+        /// </summary>
+        public double? Maximum
+        {
+            get { return this._maximum; }
+            set { this._maximum = value; }
+        }
+        
+        private double? _minimum;
+        
+        /// <summary>
+        /// Specifies the minimum value in the time interval.
+        /// </summary>
+        public double? Minimum
+        {
+            get { return this._minimum; }
+            set { this._minimum = value; }
+        }
+        
+        private Dictionary<string, string> _properties;
+        
+        /// <summary>
+        /// The extendable properties.
+        /// </summary>
+        public Dictionary<string, string> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private DateTime _timestamp;
+        
+        /// <summary>
+        /// The timestamp for the metric value.
+        /// </summary>
+        public DateTime Timestamp
+        {
+            get { return this._timestamp; }
+            set { this._timestamp = value; }
+        }
+        
+        private double? _total;
+        
+        /// <summary>
+        /// Specifies the total value in the time interval.
+        /// </summary>
+        public double? Total
+        {
+            get { return this._total; }
+            set { this._total = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricValue class.
+        /// </summary>
+        public MetricValue()
+        {
+            this._properties = new Dictionary<string, string>();
         }
     }
     
@@ -971,49 +1593,193 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         {
         }
     }
-}
-
-namespace Microsoft.WindowsAzure.Management.Monitoring.Models
-{
+    
     /// <summary>
-    /// The localizable string class.
+    /// The unit.
     /// </summary>
-    public partial class LocalizableString
+    public enum Unit
     {
-        private string _localizedValue;
+        /// <summary>
+        /// Count (how many).
+        /// </summary>
+        Count = 0,
         
         /// <summary>
-        /// The locale specific value.
+        /// Unit in bytes.
         /// </summary>
-        public string LocalizedValue
+        Bytes = 1,
+        
+        /// <summary>
+        /// Unit in seconds.
+        /// </summary>
+        Seconds = 2,
+        
+        /// <summary>
+        /// How many per second.
+        /// </summary>
+        CountPerSecond = 3,
+        
+        /// <summary>
+        /// How many bytes per second.
+        /// </summary>
+        BytesPerSecond = 4,
+    }
+    
+    /// <summary>
+    /// Usage Metric data.
+    /// </summary>
+    public partial class UsageMetric
+    {
+        private double _currentValue;
+        
+        /// <summary>
+        /// The current value for the usage metric.
+        /// </summary>
+        public double CurrentValue
         {
-            get { return this._localizedValue; }
-            set { this._localizedValue = value; }
+            get { return this._currentValue; }
+            set { this._currentValue = value; }
         }
         
-        private string _value;
+        private string _displayName;
         
         /// <summary>
-        /// The invariant value.
+        /// Get the usage display name.
         /// </summary>
-        public string Value
+        public string DisplayName
+        {
+            get { return this._displayName; }
+            set { this._displayName = value; }
+        }
+        
+        private double _limit;
+        
+        /// <summary>
+        /// The quota limit the usage metric.
+        /// </summary>
+        public double Limit
+        {
+            get { return this._limit; }
+            set { this._limit = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Get the usage metric name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _nextResetTime;
+        
+        /// <summary>
+        /// When the current value gets reset.
+        /// </summary>
+        public string NextResetTime
+        {
+            get { return this._nextResetTime; }
+            set { this._nextResetTime = value; }
+        }
+        
+        private System.TimeSpan? _quotaPeriod;
+        
+        /// <summary>
+        /// When the current value gets reset.
+        /// </summary>
+        public System.TimeSpan? QuotaPeriod
+        {
+            get { return this._quotaPeriod; }
+            set { this._quotaPeriod = value; }
+        }
+        
+        private string _unit;
+        
+        /// <summary>
+        /// The unit for the usage metric.
+        /// </summary>
+        public string Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageMetric class.
+        /// </summary>
+        public UsageMetric()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents collection of usage metrics.
+    /// </summary>
+    public partial class UsageMetricCollection
+    {
+        private IList<UsageMetric> _properties;
+        
+        /// <summary>
+        /// The usage values.
+        /// </summary>
+        public IList<UsageMetric> Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private IList<UsageMetric> _value;
+        
+        /// <summary>
+        /// The usage values.
+        /// </summary>
+        public IList<UsageMetric> Value
         {
             get { return this._value; }
             set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the LocalizableString class.
+        /// Initializes a new instance of the UsageMetricCollection class.
         /// </summary>
-        public LocalizableString()
+        public UsageMetricCollection()
+        {
+            this._properties = new List<UsageMetric>();
+            this._value = new List<UsageMetric>();
+        }
+    }
+    
+    /// <summary>
+    /// The List Usage Metric operation response.
+    /// </summary>
+    public partial class UsageMetricListResponse : OperationResponse
+    {
+        private UsageMetricCollection _usageMetricCollection;
+        
+        /// <summary>
+        /// The list of usage metrics.
+        /// </summary>
+        public UsageMetricCollection UsageMetricCollection
+        {
+            get { return this._usageMetricCollection; }
+            set { this._usageMetricCollection = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsageMetricListResponse class.
+        /// </summary>
+        public UsageMetricListResponse()
         {
         }
     }
 }
 
-namespace Microsoft.WindowsAzure.Management.Monitoring.Events
+namespace Microsoft.Azure.Insights
 {
-    public partial interface IEventsClient
+    public partial interface IInsightsClient
     {
         /// <summary>
         /// Optional base uri parameter.
@@ -1024,7 +1790,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
@@ -1032,27 +1804,40 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Summary information with the event count.
+        /// Operations for event data.
         /// </summary>
-        ICountSummaryOperations CountSummary
+        IEventOperations EventOperations
         {
             get; 
         }
         
         /// <summary>
-        /// Operations for event data.
+        /// Operations for metric definitions.
         /// </summary>
-        IEventDataOperations EventData
+        IMetricDefinitionOperations MetricDefinitionOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for metric values.
+        /// </summary>
+        IMetricOperations MetricOperations
+        {
+            get; 
+        }
+        
+        IUsageMetricsOperations UsageMetricOperations
         {
             get; 
         }
     }
     
-    public static partial class EventsClientExtensions
+    public static partial class InsightsClientExtensions
     {
     }
     
-    public partial class EventsClient : ServiceClient<EventsClient>, IEventsClient
+    public partial class InsightsClient : ServiceClient<InsightsClient>, IInsightsClient
     {
         private Uri _baseUri;
         
@@ -1067,54 +1852,85 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
         }
         
-        private ICountSummaryOperations _countSummary;
-        
-        /// <summary>
-        /// Summary information with the event count.
-        /// </summary>
-        public virtual ICountSummaryOperations CountSummary
-        {
-            get { return this._countSummary; }
-        }
-        
-        private IEventDataOperations _eventData;
+        private IEventOperations _eventOperations;
         
         /// <summary>
         /// Operations for event data.
         /// </summary>
-        public virtual IEventDataOperations EventData
+        public virtual IEventOperations EventOperations
         {
-            get { return this._eventData; }
+            get { return this._eventOperations; }
+        }
+        
+        private IMetricDefinitionOperations _metricDefinitionOperations;
+        
+        /// <summary>
+        /// Operations for metric definitions.
+        /// </summary>
+        public virtual IMetricDefinitionOperations MetricDefinitionOperations
+        {
+            get { return this._metricDefinitionOperations; }
+        }
+        
+        private IMetricOperations _metricOperations;
+        
+        /// <summary>
+        /// Operations for metric values.
+        /// </summary>
+        public virtual IMetricOperations MetricOperations
+        {
+            get { return this._metricOperations; }
+        }
+        
+        private IUsageMetricsOperations _usageMetricOperations;
+        
+        public virtual IUsageMetricsOperations UsageMetricOperations
+        {
+            get { return this._usageMetricOperations; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
-        private EventsClient()
+        private InsightsClient()
             : base()
         {
-            this._countSummary = new CountSummaryOperations(this);
-            this._eventData = new EventDataOperations(this);
+            this._eventOperations = new EventOperations(this);
+            this._metricDefinitionOperations = new MetricDefinitionOperations(this);
+            this._metricOperations = new MetricOperations(this);
+            this._usageMetricOperations = new UsageMetricsOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </param>
         /// <param name='baseUri'>
         /// Optional base uri parameter.
         /// </param>
-        public EventsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -1132,12 +1948,18 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Initializes a new instance of the EventsClient class.
+        /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// When you create a Windows Azure subscription, it is uniquely
+        /// identified by a subscription ID. The subscription ID forms part of
+        /// the URI for every call that you make to the Service Management
+        /// API.  The Windows Azure Service ManagementAPI use mutual
+        /// authentication of management certificates over SSL to ensure that
+        /// a request made to the service is secure.  No anonymous requests
+        /// are allowed.
         /// </param>
-        public EventsClient(SubscriptionCloudCredentials credentials)
+        public InsightsClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)
@@ -1145,16 +1967,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    public partial interface ICountSummaryOperations
+    public partial interface IEventOperations
     {
         /// <summary>
         /// The count of events in a subscription.
@@ -1210,24 +2032,89 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The event count summary response.
         /// </returns>
         Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(GetCountSummaryForResourceProviderParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken);
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    public static partial class CountSummaryOperationsExtensions
+    public static partial class EventOperationsExtensions
     {
         /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummary(this ICountSummaryOperations operations, GetCountSummaryParameters parameters)
+        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, GetCountSummaryParameters parameters)
         {
             try
             {
@@ -1250,13 +2137,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this ICountSummaryOperations operations, GetCountSummaryParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, GetCountSummaryParameters parameters)
         {
             return operations.GetCountSummaryAsync(parameters, CancellationToken.None);
         }
@@ -1265,13 +2151,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for an event source.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForEventSource(this ICountSummaryOperations operations, GetCountSummaryForEventSourceParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForEventSource(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
         {
             try
             {
@@ -1294,13 +2179,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for an event source.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(this ICountSummaryOperations operations, GetCountSummaryForEventSourceParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
         {
             return operations.GetCountSummaryForEventSourceAsync(parameters, CancellationToken.None);
         }
@@ -1309,13 +2193,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResource(this ICountSummaryOperations operations, GetCountSummaryForResourceParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResource(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
         {
             try
             {
@@ -1338,13 +2221,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
         {
             return operations.GetCountSummaryForResourceAsync(parameters, CancellationToken.None);
         }
@@ -1353,13 +2235,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource group.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceGroup(this ICountSummaryOperations operations, GetCountSummaryForResourceGroupParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResourceGroup(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
         {
             try
             {
@@ -1382,13 +2263,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource group.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceGroupParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
         {
             return operations.GetCountSummaryForResourceGroupAsync(parameters, CancellationToken.None);
         }
@@ -1397,13 +2277,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource provider.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceProvider(this ICountSummaryOperations operations, GetCountSummaryForResourceProviderParameters parameters)
+        public static EventCountSummaryResponse GetCountSummaryForResourceProvider(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
         {
             try
             {
@@ -1426,41 +2305,291 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// The count of events in a subscription for a resource provider.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.ICountSummaryOperations.
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(this ICountSummaryOperations operations, GetCountSummaryForResourceProviderParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
         {
             return operations.GetCountSummaryForResourceProviderAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEvents(this IEventOperations operations, ListEventsParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, ListEventsParameters parameters)
+        {
+            return operations.ListEventsAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForCorrelationId(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForCorrelationIdAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForCorrelationIdAsync(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
+        {
+            return operations.ListEventsForCorrelationIdAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForEventSource(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForEventSourceAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForEventSourceAsync(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
+        {
+            return operations.ListEventsForEventSourceAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResource(this IEventOperations operations, ListEventsForResourceParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceAsync(this IEventOperations operations, ListEventsForResourceParameters parameters)
+        {
+            return operations.ListEventsForResourceAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResourceGroup(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceGroupAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceGroupAsync(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
+        {
+            return operations.ListEventsForResourceGroupAsync(parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsForResourceProvider(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
+        {
+            try
+            {
+                return operations.ListEventsForResourceProviderAsync(parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsForResourceProviderAsync(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
+        {
+            return operations.ListEventsForResourceProviderAsync(parameters, CancellationToken.None);
         }
     }
     
     /// <summary>
-    /// Summary information with the event count.
+    /// Operations for event data.
     /// </summary>
-    internal partial class CountSummaryOperations : IServiceOperations<EventsClient>, ICountSummaryOperations
+    internal partial class EventOperations : IServiceOperations<InsightsClient>, IEventOperations
     {
         /// <summary>
-        /// Initializes a new instance of the CountSummaryOperations class.
+        /// Initializes a new instance of the EventOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal CountSummaryOperations(EventsClient client)
+        internal EventOperations(InsightsClient client)
         {
             this._client = client;
         }
         
-        private EventsClient _client;
+        private InsightsClient _client;
         
         /// <summary>
-        /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.EventsClient.
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
         /// </summary>
-        public EventsClient Client
+        public InsightsClient Client
         {
             get { return this._client; }
         }
@@ -1496,10 +2625,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -1686,10 +2815,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&eventSource=" + Uri.EscapeUriString(parameters.EventSource);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + ":date";
             }
             
             // Create HTTP transport objects
@@ -1876,10 +3005,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceUri=" + Uri.EscapeUriString(parameters.ResourceUri);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2066,10 +3195,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceGroupName=" + Uri.EscapeUriString(parameters.ResourceGroupName);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2256,10 +3385,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
             url = url + "&resourceProvider=" + Uri.EscapeUriString(parameters.ResourceProvider);
-            url = url + "&startTime=" + Uri.EscapeUriString(parameters.StartTime.ToString());
+            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
             if (parameters.EndTime != null)
             {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             
             // Create HTTP transport objects
@@ -2409,376 +3538,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 }
             }
         }
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    public partial interface IEventDataOperations
-    {
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken);
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    public static partial class EventDataOperationsExtensions
-    {
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEvents(this IEventDataOperations operations, ListEventsParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsAsync(this IEventDataOperations operations, ListEventsParameters parameters)
-        {
-            return operations.ListEventsAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForCorrelationId(this IEventDataOperations operations, ListEventsForCorrelationIdParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForCorrelationIdAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForCorrelationIdAsync(this IEventDataOperations operations, ListEventsForCorrelationIdParameters parameters)
-        {
-            return operations.ListEventsForCorrelationIdAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForEventSource(this IEventDataOperations operations, ListEventsForEventSourceParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForEventSourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForEventSourceAsync(this IEventDataOperations operations, ListEventsForEventSourceParameters parameters)
-        {
-            return operations.ListEventsForEventSourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResource(this IEventDataOperations operations, ListEventsForResourceParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceAsync(this IEventDataOperations operations, ListEventsForResourceParameters parameters)
-        {
-            return operations.ListEventsForResourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceGroup(this IEventDataOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceGroupAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceGroupAsync(this IEventDataOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            return operations.ListEventsForResourceGroupAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceProvider(this IEventDataOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceProviderAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.IEventDataOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceProviderAsync(this IEventDataOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            return operations.ListEventsForResourceProviderAsync(parameters, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
-    internal partial class EventDataOperations : IServiceOperations<EventsClient>, IEventDataOperations
-    {
-        /// <summary>
-        /// Initializes a new instance of the EventDataOperations class.
-        /// </summary>
-        /// <param name='client'>
-        /// Reference to the service client.
-        /// </param>
-        internal EventDataOperations(EventsClient client)
-        {
-            this._client = client;
-        }
-        
-        private EventsClient _client;
-        
-        /// <summary>
-        /// Gets a reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Events.EventsClient.
-        /// </summary>
-        public EventsClient Client
-        {
-            get { return this._client; }
-        }
         
         /// <summary>
         /// The List Event Values operation lists the events.
@@ -2811,10 +3570,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -3263,10 +4022,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -3711,10 +4470,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -4163,10 +4922,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -4615,10 +5374,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -5067,10 +5826,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
             url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
@@ -5451,6 +6210,1065 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         {
                             string nextLinkInstance = (string)nextLinkValue;
                             eventDataCollectionInstance.NextLink = nextLinkInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Operations for metric definitions.
+    /// </summary>
+    public partial interface IMetricDefinitionOperations
+    {
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Operations for metric definitions.
+    /// </summary>
+    public static partial class MetricDefinitionOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static MetricDefinitionListResponse GetMetricDefinitions(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
+        {
+            try
+            {
+                return operations.GetMetricDefinitionsAsync(resourceUri, filterString).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
+        {
+            return operations.GetMetricDefinitionsAsync(resourceUri, filterString, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Operations for metric definitions.
+    /// </summary>
+    internal partial class MetricDefinitionOperations : IServiceOperations<InsightsClient>, IMetricDefinitionOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the MetricDefinitionOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal MetricDefinitionOperations(InsightsClient client)
+        {
+            this._client = client;
+        }
+        
+        private InsightsClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
+        /// </summary>
+        public InsightsClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public async Task<MetricDefinitionListResponse> GetMetricDefinitionsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (filterString == null)
+            {
+                throw new ArgumentNullException("filterString");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("filterString", filterString);
+                Tracing.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/metricDefinitions?";
+            url = url + "api-version=2014-04-01";
+            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricDefinitionListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new MetricDefinitionListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null)
+                    {
+                        MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
+                        result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
+                        
+                        JArray valueArray = (JArray)responseDoc["Value"];
+                        if (valueArray != null)
+                        {
+                            foreach (JToken valueValue in valueArray)
+                            {
+                                MetricDefinition metricDefinitionInstance = new MetricDefinition();
+                                metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
+                                
+                                JToken nameValue = valueValue["Name"];
+                                if (nameValue != null)
+                                {
+                                    LocalizableString nameInstance = new LocalizableString();
+                                    metricDefinitionInstance.Name = nameInstance;
+                                    
+                                    JToken valueValue2 = nameValue["value"];
+                                    if (valueValue2 != null)
+                                    {
+                                        string valueInstance = (string)valueValue2;
+                                        nameInstance.Value = valueInstance;
+                                    }
+                                    
+                                    JToken localizedValueValue = nameValue["localizedValue"];
+                                    if (localizedValueValue != null)
+                                    {
+                                        string localizedValueInstance = (string)localizedValueValue;
+                                        nameInstance.LocalizedValue = localizedValueInstance;
+                                    }
+                                }
+                                
+                                JToken unitValue = valueValue["Unit"];
+                                if (unitValue != null)
+                                {
+                                    // how
+                                    Unit unitInstance = (Unit)Enum.Parse(typeof(Unit), (string)unitValue, false);
+                                    metricDefinitionInstance.Unit = unitInstance;
+                                }
+                                
+                                JToken primaryAggregationTypeValue = valueValue["PrimaryAggregationType"];
+                                if (primaryAggregationTypeValue != null)
+                                {
+                                    // how
+                                    AggregationType primaryAggregationTypeInstance = (AggregationType)Enum.Parse(typeof(AggregationType), (string)primaryAggregationTypeValue, false);
+                                    metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
+                                }
+                                
+                                JToken resourceUriValue = valueValue["ResourceUri"];
+                                if (resourceUriValue != null)
+                                {
+                                    string resourceUriInstance = (string)resourceUriValue;
+                                    metricDefinitionInstance.ResourceUri = resourceUriInstance;
+                                }
+                                
+                                JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
+                                if (metricAvailabilitiesArray != null)
+                                {
+                                    foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
+                                    {
+                                        MetricAvailability metricAvailabilityInstance = new MetricAvailability();
+                                        metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
+                                        
+                                        JToken timeGrainValue = metricAvailabilitiesValue["TimeGrain"];
+                                        if (timeGrainValue != null)
+                                        {
+                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                            metricAvailabilityInstance.TimeGrain = timeGrainInstance;
+                                        }
+                                        
+                                        JToken retentionValue = metricAvailabilitiesValue["Retention"];
+                                        if (retentionValue != null)
+                                        {
+                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
+                                            metricAvailabilityInstance.Retention = retentionInstance;
+                                        }
+                                    }
+                                }
+                                
+                                JToken propertiesSequenceElement = valueValue["Properties"];
+                                if (propertiesSequenceElement != null)
+                                {
+                                    foreach (JProperty property in propertiesSequenceElement)
+                                    {
+                                        string propertiesKey = (string)property.Name;
+                                        string propertiesValue = (string)property.Value;
+                                        metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Operations for metric values.
+    /// </summary>
+    public partial interface IMetricOperations
+    {
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
+
+        Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions);
+    }
+    
+    /// <summary>
+    /// Operations for metric values.
+    /// </summary>
+    public static partial class MetricOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static MetricListResponse GetMetrics(this IMetricOperations operations, string resourceUri, string filterString)
+        {
+            try
+            {
+                return operations.GetMetricsAsync(resourceUri, filterString).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static Task<MetricListResponse> GetMetricsAsync(this IMetricOperations operations, string resourceUri, string filterString)
+        {
+            return operations.GetMetricsAsync(resourceUri, filterString, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Operations for metric values.
+    /// </summary>
+    internal partial class MetricOperations : IServiceOperations<InsightsClient>, IMetricOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the MetricOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal MetricOperations(InsightsClient client)
+        {
+            this._client = client;
+        }
+        
+        private InsightsClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
+        /// </summary>
+        public InsightsClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='resourceUri'>
+        /// The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// An OData $filter expression that supports querying by the name of
+        /// the metric definition.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public async Task<MetricListResponse> GetMetricsInternalAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("filterString", filterString);
+                Tracing.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/metrics?";
+            url = url + "api-version=2014-04-01";
+            if (filterString != null)
+            {
+                url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            }
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MetricListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new MetricListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null)
+                    {
+                        MetricCollection metricCollectionInstance = new MetricCollection();
+                        result.MetricCollection = metricCollectionInstance;
+                        
+                        JArray valueArray = (JArray)responseDoc["Value"];
+                        if (valueArray != null)
+                        {
+                            foreach (JToken valueValue in valueArray)
+                            {
+                                Metric metricInstance = new Metric();
+                                metricCollectionInstance.Value.Add(metricInstance);
+                                
+                                JToken nameValue = valueValue["Name"];
+                                if (nameValue != null)
+                                {
+                                    LocalizableString nameInstance = new LocalizableString();
+                                    metricInstance.Name = nameInstance;
+                                    
+                                    JToken valueValue2 = nameValue["value"];
+                                    if (valueValue2 != null)
+                                    {
+                                        string valueInstance = (string)valueValue2;
+                                        nameInstance.Value = valueInstance;
+                                    }
+                                    
+                                    JToken localizedValueValue = nameValue["localizedValue"];
+                                    if (localizedValueValue != null)
+                                    {
+                                        string localizedValueInstance = (string)localizedValueValue;
+                                        nameInstance.LocalizedValue = localizedValueInstance;
+                                    }
+                                }
+                                
+                                JToken unitValue = valueValue["Unit"];
+                                if (unitValue != null)
+                                {
+                                    // how
+                                    Unit unitInstance = (Unit)Enum.Parse(typeof(Unit), (string)unitValue, false);
+                                    metricInstance.Unit = unitInstance;
+                                }
+                                
+                                JToken timeGrainValue = valueValue["TimeGrain"];
+                                if (timeGrainValue != null)
+                                {
+                                    // how
+                                    TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
+                                    metricInstance.TimeGrain = timeGrainInstance;
+                                }
+                                
+                                JToken startTimeValue = valueValue["StartTime"];
+                                if (startTimeValue != null)
+                                {
+                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    metricInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken endTimeValue = valueValue["EndTime"];
+                                if (endTimeValue != null)
+                                {
+                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    metricInstance.EndTime = endTimeInstance;
+                                }
+                                
+                                JArray metricValuesArray = (JArray)valueValue["MetricValues"];
+                                if (metricValuesArray != null)
+                                {
+                                    foreach (JToken metricValuesValue in metricValuesArray)
+                                    {
+                                        MetricValue metricValueInstance = new MetricValue();
+                                        metricInstance.MetricValues.Add(metricValueInstance);
+                                        
+                                        JToken timestampValue = metricValuesValue["Timestamp"];
+                                        if (timestampValue != null)
+                                        {
+                                            DateTime timestampInstance = (DateTime)timestampValue;
+                                            metricValueInstance.Timestamp = timestampInstance;
+                                        }
+                                        
+                                        JToken averageValue = metricValuesValue["Average"];
+                                        if (averageValue != null)
+                                        {
+                                            double averageInstance = (double)averageValue;
+                                            metricValueInstance.Average = averageInstance;
+                                        }
+                                        
+                                        JToken minimumValue = metricValuesValue["Minimum"];
+                                        if (minimumValue != null)
+                                        {
+                                            double minimumInstance = (double)minimumValue;
+                                            metricValueInstance.Minimum = minimumInstance;
+                                        }
+                                        
+                                        JToken maximumValue = metricValuesValue["Maximum"];
+                                        if (maximumValue != null)
+                                        {
+                                            double maximumInstance = (double)maximumValue;
+                                            metricValueInstance.Maximum = maximumInstance;
+                                        }
+                                        
+                                        JToken totalValue = metricValuesValue["Total"];
+                                        if (totalValue != null)
+                                        {
+                                            double totalInstance = (double)totalValue;
+                                            metricValueInstance.Total = totalInstance;
+                                        }
+                                        
+                                        JToken countValue = metricValuesValue["Count"];
+                                        if (countValue != null)
+                                        {
+                                            long countInstance = (long)countValue;
+                                            metricValueInstance.Count = countInstance;
+                                        }
+                                        
+                                        JToken lastValue = metricValuesValue["Last"];
+                                        if (lastValue != null)
+                                        {
+                                            double lastInstance = (double)lastValue;
+                                            metricValueInstance.Last = lastInstance;
+                                        }
+                                        
+                                        JToken propertiesSequenceElement = metricValuesValue["Properties"];
+                                        if (propertiesSequenceElement != null)
+                                        {
+                                            foreach (JProperty property in propertiesSequenceElement)
+                                            {
+                                                string propertiesKey = (string)property.Name;
+                                                string propertiesValue = (string)property.Value;
+                                                metricValueInstance.Properties.Add(propertiesKey, propertiesValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken resourceIdValue = valueValue["ResourceId"];
+                                if (resourceIdValue != null)
+                                {
+                                    string resourceIdInstance = (string)resourceIdValue;
+                                    metricInstance.ResourceId = resourceIdInstance;
+                                }
+                                
+                                JToken propertiesSequenceElement2 = valueValue["Properties"];
+                                if (propertiesSequenceElement2 != null)
+                                {
+                                    foreach (JProperty property2 in propertiesSequenceElement2)
+                                    {
+                                        string propertiesKey2 = (string)property2.Name;
+                                        string propertiesValue2 = (string)property2.Value;
+                                        metricInstance.Properties.Add(propertiesKey2, propertiesValue2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    public partial interface IUsageMetricsOperations
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
+    }
+    
+    public static partial class UsageMetricsOperationsExtensions
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            try
+            {
+                return operations.ListAsync(resourceUri, metricNames).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
+        }
+    }
+    
+    internal partial class UsageMetricsOperations : IServiceOperations<InsightsClient>, IUsageMetricsOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the UsageMetricsOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal UsageMetricsOperations(InsightsClient client)
+        {
+            this._client = client;
+        }
+        
+        private InsightsClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the Microsoft.Azure.Insights.InsightsClient.
+        /// </summary>
+        public InsightsClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("metricNames", metricNames);
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/usages?";
+            url = url + "api-version=2014-04-01";
+            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    UsageMetricListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new UsageMetricListResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null)
+                    {
+                        UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
+                        result.UsageMetricCollection = usageMetricCollectionInstance;
+                        
+                        JArray valueArray = (JArray)responseDoc["value"];
+                        if (valueArray != null)
+                        {
+                            foreach (JToken valueValue in valueArray)
+                            {
+                                UsageMetric usageMetricInstance = new UsageMetric();
+                                usageMetricCollectionInstance.Value.Add(usageMetricInstance);
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null)
+                                {
+                                    string nameInstance = (string)nameValue;
+                                    usageMetricInstance.Name = nameInstance;
+                                }
+                                
+                                JToken displayNameValue = valueValue["displayName"];
+                                if (displayNameValue != null)
+                                {
+                                    string displayNameInstance = (string)displayNameValue;
+                                    usageMetricInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                JToken currentValueValue = valueValue["currentValue"];
+                                if (currentValueValue != null)
+                                {
+                                    double currentValueInstance = (double)currentValueValue;
+                                    usageMetricInstance.CurrentValue = currentValueInstance;
+                                }
+                                
+                                JToken limitValue = valueValue["limit"];
+                                if (limitValue != null)
+                                {
+                                    double limitInstance = (double)limitValue;
+                                    usageMetricInstance.Limit = limitInstance;
+                                }
+                                
+                                JToken unitValue = valueValue["unit"];
+                                if (unitValue != null)
+                                {
+                                    string unitInstance = (string)unitValue;
+                                    usageMetricInstance.Unit = unitInstance;
+                                }
+                                
+                                JToken nextResetTimeValue = valueValue["nextResetTime"];
+                                if (nextResetTimeValue != null)
+                                {
+                                    string nextResetTimeInstance = (string)nextResetTimeValue;
+                                    usageMetricInstance.NextResetTime = nextResetTimeInstance;
+                                }
+                                
+                                JToken quotaPeriodValue = valueValue["quotaPeriod"];
+                                if (quotaPeriodValue != null)
+                                {
+                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan((string)quotaPeriodValue);
+                                    usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
+                                }
+                            }
+                        }
+                        
+                        JArray propertiesArray = (JArray)responseDoc["properties"];
+                        if (propertiesArray != null)
+                        {
+                            foreach (JToken propertiesValue in propertiesArray)
+                            {
+                                UsageMetric usageMetricInstance2 = new UsageMetric();
+                                usageMetricCollectionInstance.Properties.Add(usageMetricInstance2);
+                                
+                                JToken nameValue2 = propertiesValue["name"];
+                                if (nameValue2 != null)
+                                {
+                                    string nameInstance2 = (string)nameValue2;
+                                    usageMetricInstance2.Name = nameInstance2;
+                                }
+                                
+                                JToken displayNameValue2 = propertiesValue["displayName"];
+                                if (displayNameValue2 != null)
+                                {
+                                    string displayNameInstance2 = (string)displayNameValue2;
+                                    usageMetricInstance2.DisplayName = displayNameInstance2;
+                                }
+                                
+                                JToken currentValueValue2 = propertiesValue["currentValue"];
+                                if (currentValueValue2 != null)
+                                {
+                                    double currentValueInstance2 = (double)currentValueValue2;
+                                    usageMetricInstance2.CurrentValue = currentValueInstance2;
+                                }
+                                
+                                JToken limitValue2 = propertiesValue["limit"];
+                                if (limitValue2 != null)
+                                {
+                                    double limitInstance2 = (double)limitValue2;
+                                    usageMetricInstance2.Limit = limitInstance2;
+                                }
+                                
+                                JToken unitValue2 = propertiesValue["unit"];
+                                if (unitValue2 != null)
+                                {
+                                    string unitInstance2 = (string)unitValue2;
+                                    usageMetricInstance2.Unit = unitInstance2;
+                                }
+                                
+                                JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
+                                if (nextResetTimeValue2 != null)
+                                {
+                                    string nextResetTimeInstance2 = (string)nextResetTimeValue2;
+                                    usageMetricInstance2.NextResetTime = nextResetTimeInstance2;
+                                }
+                                
+                                JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
+                                if (quotaPeriodValue2 != null)
+                                {
+                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan((string)quotaPeriodValue2);
+                                    usageMetricInstance2.QuotaPeriod = quotaPeriodInstance2;
+                                }
+                            }
                         }
                     }
                     

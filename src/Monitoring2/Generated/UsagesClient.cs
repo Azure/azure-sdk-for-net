@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private double _currentValue;
         
         /// <summary>
-        /// Optional. The current value for the usage metric.
+        /// The current value for the usage metric.
         /// </summary>
         public double CurrentValue
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Get the usage display name.
+        /// Get the usage display name.
         /// </summary>
         public string DisplayName
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private double _limit;
         
         /// <summary>
-        /// Optional. The quota limit the usage metric.
+        /// The quota limit the usage metric.
         /// </summary>
         public double Limit
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Get the usage metric name.
+        /// Get the usage metric name.
         /// </summary>
         public string Name
         {
@@ -84,12 +84,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
             set { this._name = value; }
         }
         
-        private System.DateTime? _nextResetTime;
+        private string _nextResetTime;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// When the current value gets reset.
         /// </summary>
-        public System.DateTime? NextResetTime
+        public string NextResetTime
         {
             get { return this._nextResetTime; }
             set { this._nextResetTime = value; }
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private System.TimeSpan? _quotaPeriod;
         
         /// <summary>
-        /// Optional. When the current value gets reset.
+        /// When the current value gets reset.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _unit;
         
         /// <summary>
-        /// Optional. The unit for the usage metric.
+        /// The unit for the usage metric.
         /// </summary>
         public string Unit
         {
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private IList<UsageMetric> _properties;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// The usage values.
         /// </summary>
         public IList<UsageMetric> Properties
         {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private IList<UsageMetric> _value;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// The usage values.
         /// </summary>
         public IList<UsageMetric> Value
         {
@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private UsageMetricCollection _usageMetricCollection;
         
         /// <summary>
-        /// Optional. The list of usage metrics.
+        /// The list of usage metrics.
         /// </summary>
         public UsageMetricCollection UsageMetricCollection
         {
@@ -189,11 +189,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
 {
-    public static partial class UsagesClientExtensions
-    {
-    }
-    
-    public partial interface IUsagesClient : IDisposable
+    public partial interface IUsagesClient
     {
         /// <summary>
         /// Optional base uri parameter.
@@ -215,6 +211,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         {
             get; 
         }
+    }
+    
+    public static partial class UsagesClientExtensions
+    {
     }
     
     public partial class UsagesClient : ServiceClient<UsagesClient>, IUsagesClient
@@ -260,10 +260,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Windows Azure subscription id.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Optional base uri parameter.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -286,7 +286,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Windows Azure subscription id.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -302,55 +302,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         }
     }
     
-    public static partial class UsageMetricsOperationsExtensions
-    {
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required.
-        /// </param>
-        /// <param name='metricNames'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, metricNames);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required.
-        /// </param>
-        /// <param name='metricNames'>
-        /// Required.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
-        }
-    }
-    
     public partial interface IUsageMetricsOperations
     {
         /// <summary>
@@ -363,6 +314,53 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// The List Usage Metric operation response.
         /// </returns>
         Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
+    }
+    
+    public static partial class UsageMetricsOperationsExtensions
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            try
+            {
+                return operations.ListAsync(resourceUri, metricNames).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
+        }
     }
     
     internal partial class UsageMetricsOperations : IServiceOperations<UsagesClient>, IUsageMetricsOperations
@@ -392,12 +390,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
-        /// <param name='resourceUri'>
-        /// Required.
-        /// </param>
-        /// <param name='metricNames'>
-        /// Required.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -429,20 +421,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + resourceUri.Trim() + "/usages?";
-            url = url + "api-version=2014-01";
+            string url = this.Client.BaseUri + "/" + resourceUri + "/usages?";
+            url = url + "api-version=2014-04-01";
             url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -454,7 +435,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -492,130 +473,126 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new UsageMetricListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
+                    JToken responseDoc = JToken.Parse(responseContent);
                     
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    if (responseDoc != null)
                     {
                         UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
                         result.UsageMetricCollection = usageMetricCollectionInstance;
                         
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        JArray valueArray = (JArray)responseDoc["value"];
+                        if (valueArray != null)
                         {
-                            foreach (JToken valueValue in ((JArray)valueArray))
+                            foreach (JToken valueValue in valueArray)
                             {
                                 UsageMetric usageMetricInstance = new UsageMetric();
                                 usageMetricCollectionInstance.Value.Add(usageMetricInstance);
                                 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                if (nameValue != null)
                                 {
-                                    string nameInstance = ((string)nameValue);
+                                    string nameInstance = (string)nameValue;
                                     usageMetricInstance.Name = nameInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["displayName"];
-                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                if (displayNameValue != null)
                                 {
-                                    string displayNameInstance = ((string)displayNameValue);
+                                    string displayNameInstance = (string)displayNameValue;
                                     usageMetricInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken currentValueValue = valueValue["currentValue"];
-                                if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
+                                if (currentValueValue != null)
                                 {
-                                    double currentValueInstance = ((double)currentValueValue);
+                                    double currentValueInstance = (double)currentValueValue;
                                     usageMetricInstance.CurrentValue = currentValueInstance;
                                 }
                                 
                                 JToken limitValue = valueValue["limit"];
-                                if (limitValue != null && limitValue.Type != JTokenType.Null)
+                                if (limitValue != null)
                                 {
-                                    double limitInstance = ((double)limitValue);
+                                    double limitInstance = (double)limitValue;
                                     usageMetricInstance.Limit = limitInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["unit"];
-                                if (unitValue != null && unitValue.Type != JTokenType.Null)
+                                if (unitValue != null)
                                 {
-                                    string unitInstance = ((string)unitValue);
+                                    string unitInstance = (string)unitValue;
                                     usageMetricInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken nextResetTimeValue = valueValue["nextResetTime"];
-                                if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
+                                if (nextResetTimeValue != null)
                                 {
-                                    DateTime nextResetTimeInstance = ((DateTime)nextResetTimeValue);
+                                    string nextResetTimeInstance = (string)nextResetTimeValue;
                                     usageMetricInstance.NextResetTime = nextResetTimeInstance;
                                 }
                                 
                                 JToken quotaPeriodValue = valueValue["quotaPeriod"];
-                                if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
+                                if (quotaPeriodValue != null)
                                 {
-                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue));
+                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan((string)quotaPeriodValue);
                                     usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
                                 }
                             }
                         }
                         
-                        JToken propertiesArray = responseDoc["properties"];
-                        if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
+                        JArray propertiesArray = (JArray)responseDoc["properties"];
+                        if (propertiesArray != null)
                         {
-                            foreach (JToken propertiesValue in ((JArray)propertiesArray))
+                            foreach (JToken propertiesValue in propertiesArray)
                             {
                                 UsageMetric usageMetricInstance2 = new UsageMetric();
                                 usageMetricCollectionInstance.Properties.Add(usageMetricInstance2);
                                 
                                 JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                if (nameValue2 != null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
+                                    string nameInstance2 = (string)nameValue2;
                                     usageMetricInstance2.Name = nameInstance2;
                                 }
                                 
                                 JToken displayNameValue2 = propertiesValue["displayName"];
-                                if (displayNameValue2 != null && displayNameValue2.Type != JTokenType.Null)
+                                if (displayNameValue2 != null)
                                 {
-                                    string displayNameInstance2 = ((string)displayNameValue2);
+                                    string displayNameInstance2 = (string)displayNameValue2;
                                     usageMetricInstance2.DisplayName = displayNameInstance2;
                                 }
                                 
                                 JToken currentValueValue2 = propertiesValue["currentValue"];
-                                if (currentValueValue2 != null && currentValueValue2.Type != JTokenType.Null)
+                                if (currentValueValue2 != null)
                                 {
-                                    double currentValueInstance2 = ((double)currentValueValue2);
+                                    double currentValueInstance2 = (double)currentValueValue2;
                                     usageMetricInstance2.CurrentValue = currentValueInstance2;
                                 }
                                 
                                 JToken limitValue2 = propertiesValue["limit"];
-                                if (limitValue2 != null && limitValue2.Type != JTokenType.Null)
+                                if (limitValue2 != null)
                                 {
-                                    double limitInstance2 = ((double)limitValue2);
+                                    double limitInstance2 = (double)limitValue2;
                                     usageMetricInstance2.Limit = limitInstance2;
                                 }
                                 
                                 JToken unitValue2 = propertiesValue["unit"];
-                                if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
+                                if (unitValue2 != null)
                                 {
-                                    string unitInstance2 = ((string)unitValue2);
+                                    string unitInstance2 = (string)unitValue2;
                                     usageMetricInstance2.Unit = unitInstance2;
                                 }
                                 
                                 JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
-                                if (nextResetTimeValue2 != null && nextResetTimeValue2.Type != JTokenType.Null)
+                                if (nextResetTimeValue2 != null)
                                 {
-                                    DateTime nextResetTimeInstance2 = ((DateTime)nextResetTimeValue2);
+                                    string nextResetTimeInstance2 = (string)nextResetTimeValue2;
                                     usageMetricInstance2.NextResetTime = nextResetTimeInstance2;
                                 }
                                 
                                 JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
-                                if (quotaPeriodValue2 != null && quotaPeriodValue2.Type != JTokenType.Null)
+                                if (quotaPeriodValue2 != null)
                                 {
-                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue2));
+                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan((string)quotaPeriodValue2);
                                     usageMetricInstance2.QuotaPeriod = quotaPeriodInstance2;
                                 }
                             }

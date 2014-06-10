@@ -50,9 +50,13 @@
     <!-- .NET 4.5-only projects -->
     <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net45</WindowsAzureLibraryPrimaryConfiguration>
     <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net45' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net45</WindowsAzureLibrarySecondaryConfiguration>
-	
-	<!-- Windows Store App-only projects -->
-	<WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'windows8' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">windows8</WindowsAzureLibraryPrimaryConfiguration>
+
+    <!-- .NET 4.0-only projects -->
+    <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net40' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">net40</WindowsAzureLibraryPrimaryConfiguration>
+    <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'net40' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">net40</WindowsAzureLibrarySecondaryConfiguration>
+
+    <!-- Windows Store App-only projects -->
+	  <WindowsAzureLibraryPrimaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'windows8' And '$(WindowsAzureLibraryPrimaryConfiguration)' == '' ">windows8</WindowsAzureLibraryPrimaryConfiguration>
     <WindowsAzureLibrarySecondaryConfiguration Condition=" '$(WindowsAzureLibraryProfileSet)' == 'windows8' And  '$(WindowsAzureLibrarySecondaryConfiguration)' == '' ">windows8</WindowsAzureLibrarySecondaryConfiguration>
 	
 	<!-- Windows Phone-only projects -->
