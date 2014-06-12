@@ -112,6 +112,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
             get { return this._deployments; }
         }
         
+        private IExtensionImageOperations _extensionImages;
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// service and virtual machine extension images in your publisher
+        /// subscription.
+        /// </summary>
+        public virtual IExtensionImageOperations ExtensionImages
+        {
+            get { return this._extensionImages; }
+        }
+        
         private IHostedServiceOperations _hostedServices;
         
         /// <summary>
@@ -232,6 +244,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base()
         {
             this._deployments = new DeploymentOperations(this);
+            this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._operatingSystems = new OperatingSystemOperations(this);
@@ -307,6 +320,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base(httpClient)
         {
             this._deployments = new DeploymentOperations(this);
+            this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._operatingSystems = new OperatingSystemOperations(this);
