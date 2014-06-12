@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/share?";
-            url = url + "permission=" + Uri.EscapeUriString(permission.Trim());
+            url = url + "permission=" + Uri.EscapeDataString(permission.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
