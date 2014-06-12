@@ -394,6 +394,30 @@ namespace Microsoft.Azure.Management.Insights.Models
         }
     }
     
+    /// <summary>
+    /// shared basic configuration elements.
+    /// </summary>
+    public partial class BasicConfiguration
+    {
+        private TimeSpan _scheduledTransferPeriod;
+        
+        /// <summary>
+        /// scheduled transfer period.
+        /// </summary>
+        public TimeSpan ScheduledTransferPeriod
+        {
+            get { return this._scheduledTransferPeriod; }
+            set { this._scheduledTransferPeriod = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the BasicConfiguration class.
+        /// </summary>
+        public BasicConfiguration()
+        {
+        }
+    }
+    
     public enum ComparisonOperationType
     {
         /// <summary>
@@ -436,6 +460,557 @@ namespace Microsoft.Azure.Management.Insights.Models
         LessThan = 2,
         
         LessThanOrEqual = 3,
+    }
+    
+    /// <summary>
+    /// crash dump collection configuration.
+    /// </summary>
+    public partial class CrashDumps
+    {
+        private string _containerName;
+        
+        /// <summary>
+        /// target container.
+        /// </summary>
+        public string ContainerName
+        {
+            get { return this._containerName; }
+            set { this._containerName = value; }
+        }
+        
+        private int? _directoryQuotaPercentage;
+        
+        /// <summary>
+        /// directory quota.
+        /// </summary>
+        public int? DirectoryQuotaPercentage
+        {
+            get { return this._directoryQuotaPercentage; }
+            set { this._directoryQuotaPercentage = value; }
+        }
+        
+        private Microsoft.Azure.Management.Insights.Models.CrashDumpType? _dumpType;
+        
+        /// <summary>
+        /// mini or full dump.
+        /// </summary>
+        public Microsoft.Azure.Management.Insights.Models.CrashDumpType? DumpType
+        {
+            get { return this._dumpType; }
+            set { this._dumpType = value; }
+        }
+        
+        private IList<string> _processes;
+        
+        /// <summary>
+        /// processes to collect.
+        /// </summary>
+        public IList<string> Processes
+        {
+            get { return this._processes; }
+            set { this._processes = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CrashDumps class.
+        /// </summary>
+        public CrashDumps()
+        {
+            this._processes = new List<string>();
+        }
+    }
+    
+    public enum CrashDumpType
+    {
+        /// <summary>
+        /// Request a mini dump.
+        /// </summary>
+        Mini = 0,
+        
+        /// <summary>
+        /// Request a full dump.
+        /// </summary>
+        Full = 1,
+    }
+    
+    /// <summary>
+    /// infrastructure log collection configuration.
+    /// </summary>
+    public partial class DiagnosticInfrastructureLogs : BasicConfiguration
+    {
+        private Microsoft.Azure.Management.Insights.Models.LogLevel? _scheduledTransferLogLevelFilter;
+        
+        /// <summary>
+        /// scheduled transfer log level filter.
+        /// </summary>
+        public Microsoft.Azure.Management.Insights.Models.LogLevel? ScheduledTransferLogLevelFilter
+        {
+            get { return this._scheduledTransferLogLevelFilter; }
+            set { this._scheduledTransferLogLevelFilter = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DiagnosticInfrastructureLogs
+        /// class.
+        /// </summary>
+        public DiagnosticInfrastructureLogs()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// basic diagnostics configuration.
+    /// </summary>
+    public partial class DiagnosticMonitorConfiguration
+    {
+        private CrashDumps _crashDumps;
+        
+        /// <summary>
+        /// crash dump configuration.
+        /// </summary>
+        public CrashDumps CrashDumps
+        {
+            get { return this._crashDumps; }
+            set { this._crashDumps = value; }
+        }
+        
+        private DiagnosticInfrastructureLogs _diagnosticInfrastructureLogs;
+        
+        /// <summary>
+        /// diagnostic infrastructure logs configuration.
+        /// </summary>
+        public DiagnosticInfrastructureLogs DiagnosticInfrastructureLogs
+        {
+            get { return this._diagnosticInfrastructureLogs; }
+            set { this._diagnosticInfrastructureLogs = value; }
+        }
+        
+        private Directories _directories;
+        
+        /// <summary>
+        /// directory configuration.
+        /// </summary>
+        public Directories Directories
+        {
+            get { return this._directories; }
+            set { this._directories = value; }
+        }
+        
+        private EtwProviders _etwProviders;
+        
+        /// <summary>
+        /// etw provider configuration.
+        /// </summary>
+        public EtwProviders EtwProviders
+        {
+            get { return this._etwProviders; }
+            set { this._etwProviders = value; }
+        }
+        
+        private int? _overallQuotaInMB;
+        
+        /// <summary>
+        /// overal quota in mb.
+        /// </summary>
+        public int? OverallQuotaInMB
+        {
+            get { return this._overallQuotaInMB; }
+            set { this._overallQuotaInMB = value; }
+        }
+        
+        private PerformanceCounters _performanceCounters;
+        
+        /// <summary>
+        /// performance counter configuration.
+        /// </summary>
+        public PerformanceCounters PerformanceCounters
+        {
+            get { return this._performanceCounters; }
+            set { this._performanceCounters = value; }
+        }
+        
+        private WindowsEventLog _windowsEventLog;
+        
+        /// <summary>
+        /// windows event log configuration.
+        /// </summary>
+        public WindowsEventLog WindowsEventLog
+        {
+            get { return this._windowsEventLog; }
+            set { this._windowsEventLog = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DiagnosticMonitorConfiguration
+        /// class.
+        /// </summary>
+        public DiagnosticMonitorConfiguration()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents the diagnosticSettings.
+    /// </summary>
+    public partial class DiagnosticSettings
+    {
+        private string _description;
+        
+        /// <summary>
+        /// The setting description.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// The setting name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private PublicConfiguration _publicConfiguration;
+        
+        /// <summary>
+        /// The public diagnostic configuration.
+        /// </summary>
+        public PublicConfiguration PublicConfiguration
+        {
+            get { return this._publicConfiguration; }
+            set { this._publicConfiguration = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DiagnosticSettings class.
+        /// </summary>
+        public DiagnosticSettings()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents an absolute directory path.
+    /// </summary>
+    public partial class Directories : BasicConfiguration
+    {
+        private IList<DirectoryConfiguration> _dataSources;
+        
+        /// <summary>
+        /// the list of data sources.
+        /// </summary>
+        public IList<DirectoryConfiguration> DataSources
+        {
+            get { return this._dataSources; }
+            set { this._dataSources = value; }
+        }
+        
+        private string _failedRequestLogs;
+        
+        /// <summary>
+        /// container to receive the failed request logs.
+        /// </summary>
+        public string FailedRequestLogs
+        {
+            get { return this._failedRequestLogs; }
+            set { this._failedRequestLogs = value; }
+        }
+        
+        private string _iISLogs;
+        
+        /// <summary>
+        /// container to receive the iis logs.
+        /// </summary>
+        public string IISLogs
+        {
+            get { return this._iISLogs; }
+            set { this._iISLogs = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Directories class.
+        /// </summary>
+        public Directories()
+        {
+            this._dataSources = new List<DirectoryConfiguration>();
+        }
+    }
+    
+    /// <summary>
+    /// Represents an absolute directory path.
+    /// </summary>
+    public partial class DirectoryAbsolute : DirectoryPath
+    {
+        private bool _expandEnvironment;
+        
+        /// <summary>
+        /// expand any environment variables.
+        /// </summary>
+        public bool ExpandEnvironment
+        {
+            get { return this._expandEnvironment; }
+            set { this._expandEnvironment = value; }
+        }
+        
+        private string _path;
+        
+        /// <summary>
+        /// the absolute path to the directory.
+        /// </summary>
+        public string Path
+        {
+            get { return this._path; }
+            set { this._path = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DirectoryAbsolute class.
+        /// </summary>
+        public DirectoryAbsolute()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents a directory configuration, maps a directory path to a
+    /// storage container.
+    /// </summary>
+    public partial class DirectoryConfiguration
+    {
+        private string _containerName;
+        
+        /// <summary>
+        /// container to use.
+        /// </summary>
+        public string ContainerName
+        {
+            get { return this._containerName; }
+            set { this._containerName = value; }
+        }
+        
+        private DirectoryPath _path;
+        
+        /// <summary>
+        /// path to directory.
+        /// </summary>
+        public DirectoryPath Path
+        {
+            get { return this._path; }
+            set { this._path = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DirectoryConfiguration class.
+        /// </summary>
+        public DirectoryConfiguration()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents a local relative directory path.
+    /// </summary>
+    public partial class DirectoryLocal : DirectoryPath
+    {
+        private string _name;
+        
+        /// <summary>
+        /// name of path.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private string _relativePath;
+        
+        /// <summary>
+        /// relative directory path.
+        /// </summary>
+        public string RelativePath
+        {
+            get { return this._relativePath; }
+            set { this._relativePath = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DirectoryLocal class.
+        /// </summary>
+        public DirectoryLocal()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A directory path definition.
+    /// </summary>
+    public abstract partial class DirectoryPath
+    {
+        /// <summary>
+        /// Initializes a new instance of the DirectoryPath class.
+        /// </summary>
+        public DirectoryPath()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// represents the configuration for collecting etw events.
+    /// </summary>
+    public partial class EtwEventConfiguration
+    {
+        private string _destination;
+        
+        /// <summary>
+        /// destination to write event.
+        /// </summary>
+        public string Destination
+        {
+            get { return this._destination; }
+            set { this._destination = value; }
+        }
+        
+        private int _eventId;
+        
+        /// <summary>
+        /// etw event id.
+        /// </summary>
+        public int EventId
+        {
+            get { return this._eventId; }
+            set { this._eventId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EtwEventConfiguration class.
+        /// </summary>
+        public EtwEventConfiguration()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// represents the configuration for an etw provider.
+    /// </summary>
+    public partial class EtwProvider
+    {
+        private string _defaultDestination;
+        
+        /// <summary>
+        /// default destination to write events.
+        /// </summary>
+        public string DefaultDestination
+        {
+            get { return this._defaultDestination; }
+            set { this._defaultDestination = value; }
+        }
+        
+        private IList<EtwEventConfiguration> _events;
+        
+        /// <summary>
+        /// list of events to collect.
+        /// </summary>
+        public IList<EtwEventConfiguration> Events
+        {
+            get { return this._events; }
+            set { this._events = value; }
+        }
+        
+        private string _provider;
+        
+        /// <summary>
+        /// provider identifier.
+        /// </summary>
+        public string Provider
+        {
+            get { return this._provider; }
+            set { this._provider = value; }
+        }
+        
+        private ulong? _scheduledTransferKeywordFilter;
+        
+        /// <summary>
+        /// etw keyword filter to use.
+        /// </summary>
+        public ulong? ScheduledTransferKeywordFilter
+        {
+            get { return this._scheduledTransferKeywordFilter; }
+            set { this._scheduledTransferKeywordFilter = value; }
+        }
+        
+        private Microsoft.Azure.Management.Insights.Models.LogLevel? _scheduledTransferLogLevelFilter;
+        
+        /// <summary>
+        /// log level to collect.
+        /// </summary>
+        public Microsoft.Azure.Management.Insights.Models.LogLevel? ScheduledTransferLogLevelFilter
+        {
+            get { return this._scheduledTransferLogLevelFilter; }
+            set { this._scheduledTransferLogLevelFilter = value; }
+        }
+        
+        private TimeSpan _scheduledTransferPeriod;
+        
+        /// <summary>
+        /// scheduled transfer period.
+        /// </summary>
+        public TimeSpan ScheduledTransferPeriod
+        {
+            get { return this._scheduledTransferPeriod; }
+            set { this._scheduledTransferPeriod = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EtwProvider class.
+        /// </summary>
+        public EtwProvider()
+        {
+            this._events = new List<EtwEventConfiguration>();
+        }
+    }
+    
+    /// <summary>
+    /// represents the configuration for etw providers by category.
+    /// </summary>
+    public partial class EtwProviders
+    {
+        private IList<EtwProvider> _eventSourceProviders;
+        
+        /// <summary>
+        /// list of event source providers.
+        /// </summary>
+        public IList<EtwProvider> EventSourceProviders
+        {
+            get { return this._eventSourceProviders; }
+            set { this._eventSourceProviders = value; }
+        }
+        
+        private IList<EtwProvider> _manifestProviders;
+        
+        /// <summary>
+        /// list of manifest providers.
+        /// </summary>
+        public IList<EtwProvider> ManifestProviders
+        {
+            get { return this._manifestProviders; }
+            set { this._manifestProviders = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the EtwProviders class.
+        /// </summary>
+        public EtwProviders()
+        {
+            this._eventSourceProviders = new List<EtwProvider>();
+            this._manifestProviders = new List<EtwProvider>();
+        }
     }
     
     /// <summary>
@@ -573,6 +1148,41 @@ namespace Microsoft.Azure.Management.Insights.Models
     }
     
     /// <summary>
+    /// represents the display name in a specific locale.
+    /// </summary>
+    public partial class LocalizedString
+    {
+        private string _locale;
+        
+        /// <summary>
+        /// locale of this value.
+        /// </summary>
+        public string Locale
+        {
+            get { return this._locale; }
+            set { this._locale = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// localized display value.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the LocalizedString class.
+        /// </summary>
+        public LocalizedString()
+        {
+        }
+    }
+    
+    /// <summary>
     /// A location threshold rule condition.
     /// </summary>
     public partial class LocationThresholdRuleCondition : RuleCondition
@@ -616,6 +1226,122 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// class.
         /// </summary>
         public LocationThresholdRuleCondition()
+        {
+        }
+    }
+    
+    public enum LogLevel
+    {
+        /// <summary>
+        /// Log level is undefined.
+        /// </summary>
+        Undefined = 0,
+        
+        /// <summary>
+        /// Log verbose events.
+        /// </summary>
+        Verbose = 1,
+        
+        /// <summary>
+        /// Log information events.
+        /// </summary>
+        Information = 2,
+        
+        /// <summary>
+        /// Log warning events.
+        /// </summary>
+        Warning = 3,
+        
+        /// <summary>
+        /// Log error events.
+        /// </summary>
+        Error = 4,
+        
+        /// <summary>
+        /// Log critical events.
+        /// </summary>
+        Critical = 5,
+    }
+    
+    /// <summary>
+    /// A management event aggregation condition.
+    /// </summary>
+    public partial class ManagementEventAggregationCondition
+    {
+        private ConditionOperator _operator;
+        
+        /// <summary>
+        /// Condition operator.
+        /// </summary>
+        public ConditionOperator Operator
+        {
+            get { return this._operator; }
+            set { this._operator = value; }
+        }
+        
+        private double _threshold;
+        
+        /// <summary>
+        /// Condition threshold.
+        /// </summary>
+        public double Threshold
+        {
+            get { return this._threshold; }
+            set { this._threshold = value; }
+        }
+        
+        private TimeSpan _windowSize;
+        
+        /// <summary>
+        /// The time period over which the alert rule is evaluated.
+        /// </summary>
+        public TimeSpan WindowSize
+        {
+            get { return this._windowSize; }
+            set { this._windowSize = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ManagementEventAggregationCondition class.
+        /// </summary>
+        public ManagementEventAggregationCondition()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A management event rule condition.
+    /// </summary>
+    public partial class ManagementEventRuleCondition : RuleCondition
+    {
+        private ManagementEventAggregationCondition _aggregation;
+        
+        /// <summary>
+        /// Aggregation condition.
+        /// </summary>
+        public ManagementEventAggregationCondition Aggregation
+        {
+            get { return this._aggregation; }
+            set { this._aggregation = value; }
+        }
+        
+        private RuleDataSource _dataSource;
+        
+        /// <summary>
+        /// Condition data source.
+        /// </summary>
+        public RuleDataSource DataSource
+        {
+            get { return this._dataSource; }
+            set { this._dataSource = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ManagementEventRuleCondition
+        /// class.
+        /// </summary>
+        public ManagementEventRuleCondition()
         {
         }
     }
@@ -751,6 +1477,202 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Initializes a new instance of the MetricTrigger class.
         /// </summary>
         public MetricTrigger()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Parameters supplied to the Create or Update monitoring configuration.
+    /// </summary>
+    public partial class MonitoringConfigurationCreateOrUpdateParameters
+    {
+        private DiagnosticSettings _properties;
+        
+        /// <summary>
+        /// The public configuration settings.
+        /// </summary>
+        public DiagnosticSettings Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// MonitoringConfigurationCreateOrUpdateParameters class.
+        /// </summary>
+        public MonitoringConfigurationCreateOrUpdateParameters()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A standard service response including an HTTP status code and request
+    /// ID.
+    /// </summary>
+    public partial class MonitoringConfigurationGetResponse : OperationResponse
+    {
+        private PublicConfiguration _publicConfiguration;
+        
+        /// <summary>
+        /// the configuration.
+        /// </summary>
+        public PublicConfiguration PublicConfiguration
+        {
+            get { return this._publicConfiguration; }
+            set { this._publicConfiguration = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// MonitoringConfigurationGetResponse class.
+        /// </summary>
+        public MonitoringConfigurationGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// represents the configuration for collecting performance counters.
+    /// </summary>
+    public partial class PerformanceCounterConfiguration
+    {
+        private IList<LocalizedString> _annotations;
+        
+        /// <summary>
+        /// localized display values.
+        /// </summary>
+        public IList<LocalizedString> Annotations
+        {
+            get { return this._annotations; }
+            set { this._annotations = value; }
+        }
+        
+        private string _counterSpecifier;
+        
+        /// <summary>
+        /// performance counter specifier.
+        /// </summary>
+        public string CounterSpecifier
+        {
+            get { return this._counterSpecifier; }
+            set { this._counterSpecifier = value; }
+        }
+        
+        private TimeSpan _sampleRate;
+        
+        /// <summary>
+        /// how often to sample the performance counter.
+        /// </summary>
+        public TimeSpan SampleRate
+        {
+            get { return this._sampleRate; }
+            set { this._sampleRate = value; }
+        }
+        
+        private string _unit;
+        
+        /// <summary>
+        /// units represented by performance counter.
+        /// </summary>
+        public string Unit
+        {
+            get { return this._unit; }
+            set { this._unit = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the PerformanceCounterConfiguration
+        /// class.
+        /// </summary>
+        public PerformanceCounterConfiguration()
+        {
+            this._annotations = new List<LocalizedString>();
+        }
+    }
+    
+    /// <summary>
+    /// represents a collection or performance counters and their shared
+    /// configuration.
+    /// </summary>
+    public partial class PerformanceCounters : BasicConfiguration
+    {
+        private IList<PerformanceCounterConfiguration> _counters;
+        
+        /// <summary>
+        /// list of performance counters.
+        /// </summary>
+        public IList<PerformanceCounterConfiguration> Counters
+        {
+            get { return this._counters; }
+            set { this._counters = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the PerformanceCounters class.
+        /// </summary>
+        public PerformanceCounters()
+        {
+            this._counters = new List<PerformanceCounterConfiguration>();
+        }
+    }
+    
+    /// <summary>
+    /// Public configuration.
+    /// </summary>
+    public abstract partial class PublicConfiguration
+    {
+        /// <summary>
+        /// Initializes a new instance of the PublicConfiguration class.
+        /// </summary>
+        public PublicConfiguration()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents the public monitoring configuration.
+    /// </summary>
+    public partial class PublicMonitoringConfiguration : PublicConfiguration
+    {
+        private DiagnosticMonitorConfiguration _diagnosticMonitorConfiguration;
+        
+        /// <summary>
+        /// The diagnostic and monitoring configuration settings.
+        /// </summary>
+        public DiagnosticMonitorConfiguration DiagnosticMonitorConfiguration
+        {
+            get { return this._diagnosticMonitorConfiguration; }
+            set { this._diagnosticMonitorConfiguration = value; }
+        }
+        
+        private DirectoryAbsolute _localResourceDirectory;
+        
+        /// <summary>
+        /// The local resource directory settings.
+        /// </summary>
+        public DirectoryAbsolute LocalResourceDirectory
+        {
+            get { return this._localResourceDirectory; }
+            set { this._localResourceDirectory = value; }
+        }
+        
+        private string _storageAccount;
+        
+        /// <summary>
+        /// The name of the storage account.
+        /// </summary>
+        public string StorageAccount
+        {
+            get { return this._storageAccount; }
+            set { this._storageAccount = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the PublicMonitoringConfiguration
+        /// class.
+        /// </summary>
+        public PublicMonitoringConfiguration()
         {
         }
     }
@@ -1165,6 +2087,155 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Initializes a new instance of the RuleListResponse class.
         /// </summary>
         public RuleListResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The claims for a rule management event data source.
+    /// </summary>
+    public partial class RuleManagementEventClaimsDataSource
+    {
+        private string _emailAddress;
+        
+        /// <summary>
+        /// The email address.
+        /// </summary>
+        public string EmailAddress
+        {
+            get { return this._emailAddress; }
+            set { this._emailAddress = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RuleManagementEventClaimsDataSource class.
+        /// </summary>
+        public RuleManagementEventClaimsDataSource()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A rule management event data source.
+    /// </summary>
+    public partial class RuleManagementEventDataSource : RuleDataSource
+    {
+        private RuleManagementEventClaimsDataSource _claims;
+        
+        /// <summary>
+        /// The claims.
+        /// </summary>
+        public RuleManagementEventClaimsDataSource Claims
+        {
+            get { return this._claims; }
+            set { this._claims = value; }
+        }
+        
+        private string _eventName;
+        
+        /// <summary>
+        /// The event name.
+        /// </summary>
+        public string EventName
+        {
+            get { return this._eventName; }
+            set { this._eventName = value; }
+        }
+        
+        private string _eventSource;
+        
+        /// <summary>
+        /// The event source.
+        /// </summary>
+        public string EventSource
+        {
+            get { return this._eventSource; }
+            set { this._eventSource = value; }
+        }
+        
+        private string _level;
+        
+        /// <summary>
+        /// The level.
+        /// </summary>
+        public string Level
+        {
+            get { return this._level; }
+            set { this._level = value; }
+        }
+        
+        private string _operationName;
+        
+        /// <summary>
+        /// The operation name.
+        /// </summary>
+        public string OperationName
+        {
+            get { return this._operationName; }
+            set { this._operationName = value; }
+        }
+        
+        private string _resourceGroupName;
+        
+        /// <summary>
+        /// The resource group name.
+        /// </summary>
+        public string ResourceGroupName
+        {
+            get { return this._resourceGroupName; }
+            set { this._resourceGroupName = value; }
+        }
+        
+        private string _resourceProviderName;
+        
+        /// <summary>
+        /// The resource provider name.
+        /// </summary>
+        public string ResourceProviderName
+        {
+            get { return this._resourceProviderName; }
+            set { this._resourceProviderName = value; }
+        }
+        
+        private string _resourceUri;
+        
+        /// <summary>
+        /// The resource uri.
+        /// </summary>
+        public string ResourceUri
+        {
+            get { return this._resourceUri; }
+            set { this._resourceUri = value; }
+        }
+        
+        private string _status;
+        
+        /// <summary>
+        /// The status.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
+        }
+        
+        private string _subStatus;
+        
+        /// <summary>
+        /// The substatus.
+        /// </summary>
+        public string SubStatus
+        {
+            get { return this._subStatus; }
+            set { this._subStatus = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleManagementEventDataSource
+        /// class.
+        /// </summary>
+        public RuleManagementEventDataSource()
         {
         }
     }
@@ -1628,6 +2699,31 @@ namespace Microsoft.Azure.Management.Insights.Models
         {
         }
     }
+    
+    /// <summary>
+    /// represents a windows event log collection configuration.
+    /// </summary>
+    public partial class WindowsEventLog : BasicConfiguration
+    {
+        private IList<string> _dataSources;
+        
+        /// <summary>
+        /// list of data sources to collect.
+        /// </summary>
+        public IList<string> DataSources
+        {
+            get { return this._dataSources; }
+            set { this._dataSources = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WindowsEventLog class.
+        /// </summary>
+        public WindowsEventLog()
+        {
+            this._dataSources = new List<string>();
+        }
+    }
 }
 
 namespace Microsoft.Azure.Management.Insights
@@ -1668,6 +2764,14 @@ namespace Microsoft.Azure.Management.Insights
         /// Operations for managing the autoscale.
         /// </summary>
         IAutoscaleOperations AutoscaleOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing monitoring configuration.
+        /// </summary>
+        IMonitoringConfigurationOperations MonitoringConfigurationOperations
         {
             get; 
         }
@@ -1725,6 +2829,16 @@ namespace Microsoft.Azure.Management.Insights
             get { return this._autoscaleOperations; }
         }
         
+        private IMonitoringConfigurationOperations _monitoringConfigurationOperations;
+        
+        /// <summary>
+        /// Operations for managing monitoring configuration.
+        /// </summary>
+        public virtual IMonitoringConfigurationOperations MonitoringConfigurationOperations
+        {
+            get { return this._monitoringConfigurationOperations; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InsightsManagementClient class.
         /// </summary>
@@ -1733,6 +2847,7 @@ namespace Microsoft.Azure.Management.Insights
         {
             this._alertOperations = new AlertOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
+            this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -2438,6 +3553,66 @@ namespace Microsoft.Azure.Management.Insights
                                         dataSourceValue["metricName"] = derived2.MetricName;
                                     }
                                 }
+                                if (derived.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived3 = (RuleManagementEventDataSource)derived.DataSource;
+                                    
+                                    if (derived3.EventName != null)
+                                    {
+                                        dataSourceValue["eventName"] = derived3.EventName;
+                                    }
+                                    
+                                    if (derived3.EventSource != null)
+                                    {
+                                        dataSourceValue["eventSource"] = derived3.EventSource;
+                                    }
+                                    
+                                    if (derived3.Level != null)
+                                    {
+                                        dataSourceValue["level"] = derived3.Level;
+                                    }
+                                    
+                                    if (derived3.OperationName != null)
+                                    {
+                                        dataSourceValue["operationName"] = derived3.OperationName;
+                                    }
+                                    
+                                    if (derived3.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue["resourceGroupName"] = derived3.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived3.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue["resourceProviderName"] = derived3.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived3.ResourceUri != null)
+                                    {
+                                        dataSourceValue["resourceUri"] = derived3.ResourceUri;
+                                    }
+                                    
+                                    if (derived3.Status != null)
+                                    {
+                                        dataSourceValue["status"] = derived3.Status;
+                                    }
+                                    
+                                    if (derived3.SubStatus != null)
+                                    {
+                                        dataSourceValue["subStatus"] = derived3.SubStatus;
+                                    }
+                                    
+                                    if (derived3.Claims != null)
+                                    {
+                                        JObject claimsValue = new JObject();
+                                        dataSourceValue["claims"] = claimsValue;
+                                        
+                                        if (derived3.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue["emailAddress"] = derived3.Claims.EmailAddress;
+                                        }
+                                    }
+                                }
                             }
                             
                             conditionValue["operator"] = derived.Operator.ToString();
@@ -2448,37 +3623,199 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
-                            LocationThresholdRuleCondition derived3 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
+                            LocationThresholdRuleCondition derived4 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
                             
-                            if (derived3.DataSource != null)
+                            if (derived4.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
-                                if (derived3.DataSource is RuleMetricDataSource)
+                                dataSourceValue2["odata.type"] = derived4.DataSource.GetType().FullName;
+                                if (derived4.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived4 = (RuleMetricDataSource)derived3.DataSource;
+                                    RuleMetricDataSource derived5 = (RuleMetricDataSource)derived4.DataSource;
                                     
-                                    if (derived4.ResourceUri != null)
+                                    if (derived5.ResourceUri != null)
                                     {
-                                        dataSourceValue2["resourceUri"] = derived4.ResourceUri;
+                                        dataSourceValue2["resourceUri"] = derived5.ResourceUri;
                                     }
                                     
-                                    if (derived4.MetricNamespace != null)
+                                    if (derived5.MetricNamespace != null)
                                     {
-                                        dataSourceValue2["metricNamespace"] = derived4.MetricNamespace;
+                                        dataSourceValue2["metricNamespace"] = derived5.MetricNamespace;
                                     }
                                     
-                                    if (derived4.MetricName != null)
+                                    if (derived5.MetricName != null)
                                     {
-                                        dataSourceValue2["metricName"] = derived4.MetricName;
+                                        dataSourceValue2["metricName"] = derived5.MetricName;
+                                    }
+                                }
+                                if (derived4.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived6 = (RuleManagementEventDataSource)derived4.DataSource;
+                                    
+                                    if (derived6.EventName != null)
+                                    {
+                                        dataSourceValue2["eventName"] = derived6.EventName;
+                                    }
+                                    
+                                    if (derived6.EventSource != null)
+                                    {
+                                        dataSourceValue2["eventSource"] = derived6.EventSource;
+                                    }
+                                    
+                                    if (derived6.Level != null)
+                                    {
+                                        dataSourceValue2["level"] = derived6.Level;
+                                    }
+                                    
+                                    if (derived6.OperationName != null)
+                                    {
+                                        dataSourceValue2["operationName"] = derived6.OperationName;
+                                    }
+                                    
+                                    if (derived6.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue2["resourceGroupName"] = derived6.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived6.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue2["resourceProviderName"] = derived6.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived6.ResourceUri != null)
+                                    {
+                                        dataSourceValue2["resourceUri"] = derived6.ResourceUri;
+                                    }
+                                    
+                                    if (derived6.Status != null)
+                                    {
+                                        dataSourceValue2["status"] = derived6.Status;
+                                    }
+                                    
+                                    if (derived6.SubStatus != null)
+                                    {
+                                        dataSourceValue2["subStatus"] = derived6.SubStatus;
+                                    }
+                                    
+                                    if (derived6.Claims != null)
+                                    {
+                                        JObject claimsValue2 = new JObject();
+                                        dataSourceValue2["claims"] = claimsValue2;
+                                        
+                                        if (derived6.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue2["emailAddress"] = derived6.Claims.EmailAddress;
+                                        }
                                     }
                                 }
                             }
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived3.WindowSize);
+                            conditionValue["windowSize"] = TypeConversion.To8601String(derived4.WindowSize);
                             
-                            conditionValue["failedLocationCount"] = derived3.FailedLocationCount;
+                            conditionValue["failedLocationCount"] = derived4.FailedLocationCount;
+                        }
+                        if (parameters.Properties.Condition is ManagementEventRuleCondition)
+                        {
+                            ManagementEventRuleCondition derived7 = (ManagementEventRuleCondition)parameters.Properties.Condition;
+                            
+                            if (derived7.DataSource != null)
+                            {
+                                JObject dataSourceValue3 = new JObject();
+                                conditionValue["dataSource"] = dataSourceValue3;
+                                dataSourceValue3["odata.type"] = derived7.DataSource.GetType().FullName;
+                                if (derived7.DataSource is RuleMetricDataSource)
+                                {
+                                    RuleMetricDataSource derived8 = (RuleMetricDataSource)derived7.DataSource;
+                                    
+                                    if (derived8.ResourceUri != null)
+                                    {
+                                        dataSourceValue3["resourceUri"] = derived8.ResourceUri;
+                                    }
+                                    
+                                    if (derived8.MetricNamespace != null)
+                                    {
+                                        dataSourceValue3["metricNamespace"] = derived8.MetricNamespace;
+                                    }
+                                    
+                                    if (derived8.MetricName != null)
+                                    {
+                                        dataSourceValue3["metricName"] = derived8.MetricName;
+                                    }
+                                }
+                                if (derived7.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived9 = (RuleManagementEventDataSource)derived7.DataSource;
+                                    
+                                    if (derived9.EventName != null)
+                                    {
+                                        dataSourceValue3["eventName"] = derived9.EventName;
+                                    }
+                                    
+                                    if (derived9.EventSource != null)
+                                    {
+                                        dataSourceValue3["eventSource"] = derived9.EventSource;
+                                    }
+                                    
+                                    if (derived9.Level != null)
+                                    {
+                                        dataSourceValue3["level"] = derived9.Level;
+                                    }
+                                    
+                                    if (derived9.OperationName != null)
+                                    {
+                                        dataSourceValue3["operationName"] = derived9.OperationName;
+                                    }
+                                    
+                                    if (derived9.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue3["resourceGroupName"] = derived9.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived9.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue3["resourceProviderName"] = derived9.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived9.ResourceUri != null)
+                                    {
+                                        dataSourceValue3["resourceUri"] = derived9.ResourceUri;
+                                    }
+                                    
+                                    if (derived9.Status != null)
+                                    {
+                                        dataSourceValue3["status"] = derived9.Status;
+                                    }
+                                    
+                                    if (derived9.SubStatus != null)
+                                    {
+                                        dataSourceValue3["subStatus"] = derived9.SubStatus;
+                                    }
+                                    
+                                    if (derived9.Claims != null)
+                                    {
+                                        JObject claimsValue3 = new JObject();
+                                        dataSourceValue3["claims"] = claimsValue3;
+                                        
+                                        if (derived9.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue3["emailAddress"] = derived9.Claims.EmailAddress;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if (derived7.Aggregation != null)
+                            {
+                                JObject aggregationValue = new JObject();
+                                conditionValue["aggregation"] = aggregationValue;
+                                
+                                aggregationValue["operator"] = derived7.Aggregation.Operator.ToString();
+                                
+                                aggregationValue["threshold"] = derived7.Aggregation.Threshold;
+                                
+                                aggregationValue["windowSize"] = TypeConversion.To8601String(derived7.Aggregation.WindowSize);
+                            }
                         }
                     }
                     
@@ -2489,14 +3826,14 @@ namespace Microsoft.Azure.Management.Insights
                         actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
-                            RuleEmailAction derived5 = (RuleEmailAction)parameters.Properties.Action;
+                            RuleEmailAction derived10 = (RuleEmailAction)parameters.Properties.Action;
                             
-                            actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
+                            actionValue["sendToServiceOwners"] = derived10.SendToServiceOwners;
                             
-                            if (derived5.CustomEmails != null)
+                            if (derived10.CustomEmails != null)
                             {
                                 JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived5.CustomEmails)
+                                foreach (string customEmailsItem in derived10.CustomEmails)
                                 {
                                     customEmailsArray.Add(customEmailsItem);
                                 }
@@ -3039,6 +4376,88 @@ namespace Microsoft.Azure.Management.Insights
                                             }
                                             thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
                                         }
+                                        if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                        {
+                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
+                                            
+                                            JToken eventNameValue = dataSourceValue["eventName"];
+                                            if (eventNameValue != null)
+                                            {
+                                                string eventNameInstance = (string)eventNameValue;
+                                                ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
+                                            }
+                                            
+                                            JToken eventSourceValue = dataSourceValue["eventSource"];
+                                            if (eventSourceValue != null)
+                                            {
+                                                string eventSourceInstance = (string)eventSourceValue;
+                                                ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
+                                            }
+                                            
+                                            JToken levelValue = dataSourceValue["level"];
+                                            if (levelValue != null)
+                                            {
+                                                string levelInstance = (string)levelValue;
+                                                ruleManagementEventDataSourceInstance.Level = levelInstance;
+                                            }
+                                            
+                                            JToken operationNameValue = dataSourceValue["operationName"];
+                                            if (operationNameValue != null)
+                                            {
+                                                string operationNameInstance = (string)operationNameValue;
+                                                ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
+                                            }
+                                            
+                                            JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
+                                            if (resourceGroupNameValue != null)
+                                            {
+                                                string resourceGroupNameInstance = (string)resourceGroupNameValue;
+                                                ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
+                                            }
+                                            
+                                            JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
+                                            if (resourceProviderNameValue != null)
+                                            {
+                                                string resourceProviderNameInstance = (string)resourceProviderNameValue;
+                                                ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
+                                            }
+                                            
+                                            JToken resourceUriValue2 = dataSourceValue["resourceUri"];
+                                            if (resourceUriValue2 != null)
+                                            {
+                                                string resourceUriInstance2 = (string)resourceUriValue2;
+                                                ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
+                                            }
+                                            
+                                            JToken statusValue = dataSourceValue["status"];
+                                            if (statusValue != null)
+                                            {
+                                                string statusInstance = (string)statusValue;
+                                                ruleManagementEventDataSourceInstance.Status = statusInstance;
+                                            }
+                                            
+                                            JToken subStatusValue = dataSourceValue["subStatus"];
+                                            if (subStatusValue != null)
+                                            {
+                                                string subStatusInstance = (string)subStatusValue;
+                                                ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
+                                            }
+                                            
+                                            JToken claimsValue = dataSourceValue["claims"];
+                                            if (claimsValue != null)
+                                            {
+                                                RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
+                                                ruleManagementEventDataSourceInstance.Claims = claimsInstance;
+                                                
+                                                JToken emailAddressValue = claimsValue["emailAddress"];
+                                                if (emailAddressValue != null)
+                                                {
+                                                    string emailAddressInstance = (string)emailAddressValue;
+                                                    claimsInstance.EmailAddress = emailAddressInstance;
+                                                }
+                                            }
+                                            thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
+                                        }
                                     }
                                     
                                     JToken operatorValue = conditionValue["operator"];
@@ -3076,11 +4495,11 @@ namespace Microsoft.Azure.Management.Insights
                                         {
                                             RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
                                             
-                                            JToken resourceUriValue2 = dataSourceValue2["resourceUri"];
-                                            if (resourceUriValue2 != null)
+                                            JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
+                                            if (resourceUriValue3 != null)
                                             {
-                                                string resourceUriInstance2 = (string)resourceUriValue2;
-                                                ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance2;
+                                                string resourceUriInstance3 = (string)resourceUriValue3;
+                                                ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
                                             }
                                             
                                             JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
@@ -3097,6 +4516,88 @@ namespace Microsoft.Azure.Management.Insights
                                                 ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
                                             }
                                             locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
+                                        }
+                                        if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                        {
+                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
+                                            
+                                            JToken eventNameValue2 = dataSourceValue2["eventName"];
+                                            if (eventNameValue2 != null)
+                                            {
+                                                string eventNameInstance2 = (string)eventNameValue2;
+                                                ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
+                                            }
+                                            
+                                            JToken eventSourceValue2 = dataSourceValue2["eventSource"];
+                                            if (eventSourceValue2 != null)
+                                            {
+                                                string eventSourceInstance2 = (string)eventSourceValue2;
+                                                ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
+                                            }
+                                            
+                                            JToken levelValue2 = dataSourceValue2["level"];
+                                            if (levelValue2 != null)
+                                            {
+                                                string levelInstance2 = (string)levelValue2;
+                                                ruleManagementEventDataSourceInstance2.Level = levelInstance2;
+                                            }
+                                            
+                                            JToken operationNameValue2 = dataSourceValue2["operationName"];
+                                            if (operationNameValue2 != null)
+                                            {
+                                                string operationNameInstance2 = (string)operationNameValue2;
+                                                ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
+                                            }
+                                            
+                                            JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
+                                            if (resourceGroupNameValue2 != null)
+                                            {
+                                                string resourceGroupNameInstance2 = (string)resourceGroupNameValue2;
+                                                ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
+                                            }
+                                            
+                                            JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
+                                            if (resourceProviderNameValue2 != null)
+                                            {
+                                                string resourceProviderNameInstance2 = (string)resourceProviderNameValue2;
+                                                ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
+                                            }
+                                            
+                                            JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
+                                            if (resourceUriValue4 != null)
+                                            {
+                                                string resourceUriInstance4 = (string)resourceUriValue4;
+                                                ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
+                                            }
+                                            
+                                            JToken statusValue2 = dataSourceValue2["status"];
+                                            if (statusValue2 != null)
+                                            {
+                                                string statusInstance2 = (string)statusValue2;
+                                                ruleManagementEventDataSourceInstance2.Status = statusInstance2;
+                                            }
+                                            
+                                            JToken subStatusValue2 = dataSourceValue2["subStatus"];
+                                            if (subStatusValue2 != null)
+                                            {
+                                                string subStatusInstance2 = (string)subStatusValue2;
+                                                ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
+                                            }
+                                            
+                                            JToken claimsValue2 = dataSourceValue2["claims"];
+                                            if (claimsValue2 != null)
+                                            {
+                                                RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
+                                                ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
+                                                
+                                                JToken emailAddressValue2 = claimsValue2["emailAddress"];
+                                                if (emailAddressValue2 != null)
+                                                {
+                                                    string emailAddressInstance2 = (string)emailAddressValue2;
+                                                    claimsInstance2.EmailAddress = emailAddressInstance2;
+                                                }
+                                            }
+                                            locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
                                         }
                                     }
                                     
@@ -3115,13 +4616,161 @@ namespace Microsoft.Azure.Management.Insights
                                     }
                                     propertiesInstance.Condition = locationThresholdRuleConditionInstance;
                                 }
+                                if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
+                                {
+                                    ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
+                                    
+                                    JToken dataSourceValue3 = conditionValue["dataSource"];
+                                    if (dataSourceValue3 != null)
+                                    {
+                                        string typeName4 = (string)dataSourceValue3["odata.type"];
+                                        if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                        {
+                                            RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
+                                            
+                                            JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
+                                            if (resourceUriValue5 != null)
+                                            {
+                                                string resourceUriInstance5 = (string)resourceUriValue5;
+                                                ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
+                                            }
+                                            
+                                            JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
+                                            if (metricNamespaceValue3 != null)
+                                            {
+                                                string metricNamespaceInstance3 = (string)metricNamespaceValue3;
+                                                ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
+                                            }
+                                            
+                                            JToken metricNameValue3 = dataSourceValue3["metricName"];
+                                            if (metricNameValue3 != null)
+                                            {
+                                                string metricNameInstance3 = (string)metricNameValue3;
+                                                ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
+                                            }
+                                            managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
+                                        }
+                                        if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                        {
+                                            RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
+                                            
+                                            JToken eventNameValue3 = dataSourceValue3["eventName"];
+                                            if (eventNameValue3 != null)
+                                            {
+                                                string eventNameInstance3 = (string)eventNameValue3;
+                                                ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
+                                            }
+                                            
+                                            JToken eventSourceValue3 = dataSourceValue3["eventSource"];
+                                            if (eventSourceValue3 != null)
+                                            {
+                                                string eventSourceInstance3 = (string)eventSourceValue3;
+                                                ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
+                                            }
+                                            
+                                            JToken levelValue3 = dataSourceValue3["level"];
+                                            if (levelValue3 != null)
+                                            {
+                                                string levelInstance3 = (string)levelValue3;
+                                                ruleManagementEventDataSourceInstance3.Level = levelInstance3;
+                                            }
+                                            
+                                            JToken operationNameValue3 = dataSourceValue3["operationName"];
+                                            if (operationNameValue3 != null)
+                                            {
+                                                string operationNameInstance3 = (string)operationNameValue3;
+                                                ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
+                                            }
+                                            
+                                            JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
+                                            if (resourceGroupNameValue3 != null)
+                                            {
+                                                string resourceGroupNameInstance3 = (string)resourceGroupNameValue3;
+                                                ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
+                                            }
+                                            
+                                            JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
+                                            if (resourceProviderNameValue3 != null)
+                                            {
+                                                string resourceProviderNameInstance3 = (string)resourceProviderNameValue3;
+                                                ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
+                                            }
+                                            
+                                            JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
+                                            if (resourceUriValue6 != null)
+                                            {
+                                                string resourceUriInstance6 = (string)resourceUriValue6;
+                                                ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
+                                            }
+                                            
+                                            JToken statusValue3 = dataSourceValue3["status"];
+                                            if (statusValue3 != null)
+                                            {
+                                                string statusInstance3 = (string)statusValue3;
+                                                ruleManagementEventDataSourceInstance3.Status = statusInstance3;
+                                            }
+                                            
+                                            JToken subStatusValue3 = dataSourceValue3["subStatus"];
+                                            if (subStatusValue3 != null)
+                                            {
+                                                string subStatusInstance3 = (string)subStatusValue3;
+                                                ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
+                                            }
+                                            
+                                            JToken claimsValue3 = dataSourceValue3["claims"];
+                                            if (claimsValue3 != null)
+                                            {
+                                                RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
+                                                ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
+                                                
+                                                JToken emailAddressValue3 = claimsValue3["emailAddress"];
+                                                if (emailAddressValue3 != null)
+                                                {
+                                                    string emailAddressInstance3 = (string)emailAddressValue3;
+                                                    claimsInstance3.EmailAddress = emailAddressInstance3;
+                                                }
+                                            }
+                                            managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken aggregationValue = conditionValue["aggregation"];
+                                    if (aggregationValue != null)
+                                    {
+                                        ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
+                                        managementEventRuleConditionInstance.Aggregation = aggregationInstance;
+                                        
+                                        JToken operatorValue2 = aggregationValue["operator"];
+                                        if (operatorValue2 != null)
+                                        {
+                                            // how
+                                            ConditionOperator operatorInstance2 = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue2, false);
+                                            aggregationInstance.Operator = operatorInstance2;
+                                        }
+                                        
+                                        JToken thresholdValue2 = aggregationValue["threshold"];
+                                        if (thresholdValue2 != null)
+                                        {
+                                            double thresholdInstance2 = (double)thresholdValue2;
+                                            aggregationInstance.Threshold = thresholdInstance2;
+                                        }
+                                        
+                                        JToken windowSizeValue3 = aggregationValue["windowSize"];
+                                        if (windowSizeValue3 != null)
+                                        {
+                                            TimeSpan windowSizeInstance3 = TypeConversion.From8601TimeSpan((string)windowSizeValue3);
+                                            aggregationInstance.WindowSize = windowSizeInstance3;
+                                        }
+                                    }
+                                    propertiesInstance.Condition = managementEventRuleConditionInstance;
+                                }
                             }
                             
                             JToken actionValue = propertiesValue["action"];
                             if (actionValue != null)
                             {
-                                string typeName4 = (string)actionValue["odata.type"];
-                                if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                string typeName5 = (string)actionValue["odata.type"];
+                                if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
                                 {
                                     RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                     
@@ -3550,6 +5199,88 @@ namespace Microsoft.Azure.Management.Insights
                                                     }
                                                     thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
                                                 }
+                                                if (typeName2 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                {
+                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance = new RuleManagementEventDataSource();
+                                                    
+                                                    JToken eventNameValue = dataSourceValue["eventName"];
+                                                    if (eventNameValue != null)
+                                                    {
+                                                        string eventNameInstance = (string)eventNameValue;
+                                                        ruleManagementEventDataSourceInstance.EventName = eventNameInstance;
+                                                    }
+                                                    
+                                                    JToken eventSourceValue = dataSourceValue["eventSource"];
+                                                    if (eventSourceValue != null)
+                                                    {
+                                                        string eventSourceInstance = (string)eventSourceValue;
+                                                        ruleManagementEventDataSourceInstance.EventSource = eventSourceInstance;
+                                                    }
+                                                    
+                                                    JToken levelValue = dataSourceValue["level"];
+                                                    if (levelValue != null)
+                                                    {
+                                                        string levelInstance = (string)levelValue;
+                                                        ruleManagementEventDataSourceInstance.Level = levelInstance;
+                                                    }
+                                                    
+                                                    JToken operationNameValue = dataSourceValue["operationName"];
+                                                    if (operationNameValue != null)
+                                                    {
+                                                        string operationNameInstance = (string)operationNameValue;
+                                                        ruleManagementEventDataSourceInstance.OperationName = operationNameInstance;
+                                                    }
+                                                    
+                                                    JToken resourceGroupNameValue = dataSourceValue["resourceGroupName"];
+                                                    if (resourceGroupNameValue != null)
+                                                    {
+                                                        string resourceGroupNameInstance = (string)resourceGroupNameValue;
+                                                        ruleManagementEventDataSourceInstance.ResourceGroupName = resourceGroupNameInstance;
+                                                    }
+                                                    
+                                                    JToken resourceProviderNameValue = dataSourceValue["resourceProviderName"];
+                                                    if (resourceProviderNameValue != null)
+                                                    {
+                                                        string resourceProviderNameInstance = (string)resourceProviderNameValue;
+                                                        ruleManagementEventDataSourceInstance.ResourceProviderName = resourceProviderNameInstance;
+                                                    }
+                                                    
+                                                    JToken resourceUriValue2 = dataSourceValue["resourceUri"];
+                                                    if (resourceUriValue2 != null)
+                                                    {
+                                                        string resourceUriInstance2 = (string)resourceUriValue2;
+                                                        ruleManagementEventDataSourceInstance.ResourceUri = resourceUriInstance2;
+                                                    }
+                                                    
+                                                    JToken statusValue = dataSourceValue["status"];
+                                                    if (statusValue != null)
+                                                    {
+                                                        string statusInstance = (string)statusValue;
+                                                        ruleManagementEventDataSourceInstance.Status = statusInstance;
+                                                    }
+                                                    
+                                                    JToken subStatusValue = dataSourceValue["subStatus"];
+                                                    if (subStatusValue != null)
+                                                    {
+                                                        string subStatusInstance = (string)subStatusValue;
+                                                        ruleManagementEventDataSourceInstance.SubStatus = subStatusInstance;
+                                                    }
+                                                    
+                                                    JToken claimsValue = dataSourceValue["claims"];
+                                                    if (claimsValue != null)
+                                                    {
+                                                        RuleManagementEventClaimsDataSource claimsInstance = new RuleManagementEventClaimsDataSource();
+                                                        ruleManagementEventDataSourceInstance.Claims = claimsInstance;
+                                                        
+                                                        JToken emailAddressValue = claimsValue["emailAddress"];
+                                                        if (emailAddressValue != null)
+                                                        {
+                                                            string emailAddressInstance = (string)emailAddressValue;
+                                                            claimsInstance.EmailAddress = emailAddressInstance;
+                                                        }
+                                                    }
+                                                    thresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance;
+                                                }
                                             }
                                             
                                             JToken operatorValue = conditionValue["operator"];
@@ -3587,11 +5318,11 @@ namespace Microsoft.Azure.Management.Insights
                                                 {
                                                     RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
                                                     
-                                                    JToken resourceUriValue2 = dataSourceValue2["resourceUri"];
-                                                    if (resourceUriValue2 != null)
+                                                    JToken resourceUriValue3 = dataSourceValue2["resourceUri"];
+                                                    if (resourceUriValue3 != null)
                                                     {
-                                                        string resourceUriInstance2 = (string)resourceUriValue2;
-                                                        ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance2;
+                                                        string resourceUriInstance3 = (string)resourceUriValue3;
+                                                        ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance3;
                                                     }
                                                     
                                                     JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
@@ -3608,6 +5339,88 @@ namespace Microsoft.Azure.Management.Insights
                                                         ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
                                                     }
                                                     locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
+                                                }
+                                                if (typeName3 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                {
+                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance2 = new RuleManagementEventDataSource();
+                                                    
+                                                    JToken eventNameValue2 = dataSourceValue2["eventName"];
+                                                    if (eventNameValue2 != null)
+                                                    {
+                                                        string eventNameInstance2 = (string)eventNameValue2;
+                                                        ruleManagementEventDataSourceInstance2.EventName = eventNameInstance2;
+                                                    }
+                                                    
+                                                    JToken eventSourceValue2 = dataSourceValue2["eventSource"];
+                                                    if (eventSourceValue2 != null)
+                                                    {
+                                                        string eventSourceInstance2 = (string)eventSourceValue2;
+                                                        ruleManagementEventDataSourceInstance2.EventSource = eventSourceInstance2;
+                                                    }
+                                                    
+                                                    JToken levelValue2 = dataSourceValue2["level"];
+                                                    if (levelValue2 != null)
+                                                    {
+                                                        string levelInstance2 = (string)levelValue2;
+                                                        ruleManagementEventDataSourceInstance2.Level = levelInstance2;
+                                                    }
+                                                    
+                                                    JToken operationNameValue2 = dataSourceValue2["operationName"];
+                                                    if (operationNameValue2 != null)
+                                                    {
+                                                        string operationNameInstance2 = (string)operationNameValue2;
+                                                        ruleManagementEventDataSourceInstance2.OperationName = operationNameInstance2;
+                                                    }
+                                                    
+                                                    JToken resourceGroupNameValue2 = dataSourceValue2["resourceGroupName"];
+                                                    if (resourceGroupNameValue2 != null)
+                                                    {
+                                                        string resourceGroupNameInstance2 = (string)resourceGroupNameValue2;
+                                                        ruleManagementEventDataSourceInstance2.ResourceGroupName = resourceGroupNameInstance2;
+                                                    }
+                                                    
+                                                    JToken resourceProviderNameValue2 = dataSourceValue2["resourceProviderName"];
+                                                    if (resourceProviderNameValue2 != null)
+                                                    {
+                                                        string resourceProviderNameInstance2 = (string)resourceProviderNameValue2;
+                                                        ruleManagementEventDataSourceInstance2.ResourceProviderName = resourceProviderNameInstance2;
+                                                    }
+                                                    
+                                                    JToken resourceUriValue4 = dataSourceValue2["resourceUri"];
+                                                    if (resourceUriValue4 != null)
+                                                    {
+                                                        string resourceUriInstance4 = (string)resourceUriValue4;
+                                                        ruleManagementEventDataSourceInstance2.ResourceUri = resourceUriInstance4;
+                                                    }
+                                                    
+                                                    JToken statusValue2 = dataSourceValue2["status"];
+                                                    if (statusValue2 != null)
+                                                    {
+                                                        string statusInstance2 = (string)statusValue2;
+                                                        ruleManagementEventDataSourceInstance2.Status = statusInstance2;
+                                                    }
+                                                    
+                                                    JToken subStatusValue2 = dataSourceValue2["subStatus"];
+                                                    if (subStatusValue2 != null)
+                                                    {
+                                                        string subStatusInstance2 = (string)subStatusValue2;
+                                                        ruleManagementEventDataSourceInstance2.SubStatus = subStatusInstance2;
+                                                    }
+                                                    
+                                                    JToken claimsValue2 = dataSourceValue2["claims"];
+                                                    if (claimsValue2 != null)
+                                                    {
+                                                        RuleManagementEventClaimsDataSource claimsInstance2 = new RuleManagementEventClaimsDataSource();
+                                                        ruleManagementEventDataSourceInstance2.Claims = claimsInstance2;
+                                                        
+                                                        JToken emailAddressValue2 = claimsValue2["emailAddress"];
+                                                        if (emailAddressValue2 != null)
+                                                        {
+                                                            string emailAddressInstance2 = (string)emailAddressValue2;
+                                                            claimsInstance2.EmailAddress = emailAddressInstance2;
+                                                        }
+                                                    }
+                                                    locationThresholdRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance2;
                                                 }
                                             }
                                             
@@ -3626,13 +5439,161 @@ namespace Microsoft.Azure.Management.Insights
                                             }
                                             propertiesInstance.Condition = locationThresholdRuleConditionInstance;
                                         }
+                                        if (typeName == "Microsoft.Azure.Management.Insights.Models.ManagementEventRuleCondition")
+                                        {
+                                            ManagementEventRuleCondition managementEventRuleConditionInstance = new ManagementEventRuleCondition();
+                                            
+                                            JToken dataSourceValue3 = conditionValue["dataSource"];
+                                            if (dataSourceValue3 != null)
+                                            {
+                                                string typeName4 = (string)dataSourceValue3["odata.type"];
+                                                if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource")
+                                                {
+                                                    RuleMetricDataSource ruleMetricDataSourceInstance3 = new RuleMetricDataSource();
+                                                    
+                                                    JToken resourceUriValue5 = dataSourceValue3["resourceUri"];
+                                                    if (resourceUriValue5 != null)
+                                                    {
+                                                        string resourceUriInstance5 = (string)resourceUriValue5;
+                                                        ruleMetricDataSourceInstance3.ResourceUri = resourceUriInstance5;
+                                                    }
+                                                    
+                                                    JToken metricNamespaceValue3 = dataSourceValue3["metricNamespace"];
+                                                    if (metricNamespaceValue3 != null)
+                                                    {
+                                                        string metricNamespaceInstance3 = (string)metricNamespaceValue3;
+                                                        ruleMetricDataSourceInstance3.MetricNamespace = metricNamespaceInstance3;
+                                                    }
+                                                    
+                                                    JToken metricNameValue3 = dataSourceValue3["metricName"];
+                                                    if (metricNameValue3 != null)
+                                                    {
+                                                        string metricNameInstance3 = (string)metricNameValue3;
+                                                        ruleMetricDataSourceInstance3.MetricName = metricNameInstance3;
+                                                    }
+                                                    managementEventRuleConditionInstance.DataSource = ruleMetricDataSourceInstance3;
+                                                }
+                                                if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleManagementEventDataSource")
+                                                {
+                                                    RuleManagementEventDataSource ruleManagementEventDataSourceInstance3 = new RuleManagementEventDataSource();
+                                                    
+                                                    JToken eventNameValue3 = dataSourceValue3["eventName"];
+                                                    if (eventNameValue3 != null)
+                                                    {
+                                                        string eventNameInstance3 = (string)eventNameValue3;
+                                                        ruleManagementEventDataSourceInstance3.EventName = eventNameInstance3;
+                                                    }
+                                                    
+                                                    JToken eventSourceValue3 = dataSourceValue3["eventSource"];
+                                                    if (eventSourceValue3 != null)
+                                                    {
+                                                        string eventSourceInstance3 = (string)eventSourceValue3;
+                                                        ruleManagementEventDataSourceInstance3.EventSource = eventSourceInstance3;
+                                                    }
+                                                    
+                                                    JToken levelValue3 = dataSourceValue3["level"];
+                                                    if (levelValue3 != null)
+                                                    {
+                                                        string levelInstance3 = (string)levelValue3;
+                                                        ruleManagementEventDataSourceInstance3.Level = levelInstance3;
+                                                    }
+                                                    
+                                                    JToken operationNameValue3 = dataSourceValue3["operationName"];
+                                                    if (operationNameValue3 != null)
+                                                    {
+                                                        string operationNameInstance3 = (string)operationNameValue3;
+                                                        ruleManagementEventDataSourceInstance3.OperationName = operationNameInstance3;
+                                                    }
+                                                    
+                                                    JToken resourceGroupNameValue3 = dataSourceValue3["resourceGroupName"];
+                                                    if (resourceGroupNameValue3 != null)
+                                                    {
+                                                        string resourceGroupNameInstance3 = (string)resourceGroupNameValue3;
+                                                        ruleManagementEventDataSourceInstance3.ResourceGroupName = resourceGroupNameInstance3;
+                                                    }
+                                                    
+                                                    JToken resourceProviderNameValue3 = dataSourceValue3["resourceProviderName"];
+                                                    if (resourceProviderNameValue3 != null)
+                                                    {
+                                                        string resourceProviderNameInstance3 = (string)resourceProviderNameValue3;
+                                                        ruleManagementEventDataSourceInstance3.ResourceProviderName = resourceProviderNameInstance3;
+                                                    }
+                                                    
+                                                    JToken resourceUriValue6 = dataSourceValue3["resourceUri"];
+                                                    if (resourceUriValue6 != null)
+                                                    {
+                                                        string resourceUriInstance6 = (string)resourceUriValue6;
+                                                        ruleManagementEventDataSourceInstance3.ResourceUri = resourceUriInstance6;
+                                                    }
+                                                    
+                                                    JToken statusValue3 = dataSourceValue3["status"];
+                                                    if (statusValue3 != null)
+                                                    {
+                                                        string statusInstance3 = (string)statusValue3;
+                                                        ruleManagementEventDataSourceInstance3.Status = statusInstance3;
+                                                    }
+                                                    
+                                                    JToken subStatusValue3 = dataSourceValue3["subStatus"];
+                                                    if (subStatusValue3 != null)
+                                                    {
+                                                        string subStatusInstance3 = (string)subStatusValue3;
+                                                        ruleManagementEventDataSourceInstance3.SubStatus = subStatusInstance3;
+                                                    }
+                                                    
+                                                    JToken claimsValue3 = dataSourceValue3["claims"];
+                                                    if (claimsValue3 != null)
+                                                    {
+                                                        RuleManagementEventClaimsDataSource claimsInstance3 = new RuleManagementEventClaimsDataSource();
+                                                        ruleManagementEventDataSourceInstance3.Claims = claimsInstance3;
+                                                        
+                                                        JToken emailAddressValue3 = claimsValue3["emailAddress"];
+                                                        if (emailAddressValue3 != null)
+                                                        {
+                                                            string emailAddressInstance3 = (string)emailAddressValue3;
+                                                            claimsInstance3.EmailAddress = emailAddressInstance3;
+                                                        }
+                                                    }
+                                                    managementEventRuleConditionInstance.DataSource = ruleManagementEventDataSourceInstance3;
+                                                }
+                                            }
+                                            
+                                            JToken aggregationValue = conditionValue["aggregation"];
+                                            if (aggregationValue != null)
+                                            {
+                                                ManagementEventAggregationCondition aggregationInstance = new ManagementEventAggregationCondition();
+                                                managementEventRuleConditionInstance.Aggregation = aggregationInstance;
+                                                
+                                                JToken operatorValue2 = aggregationValue["operator"];
+                                                if (operatorValue2 != null)
+                                                {
+                                                    // how
+                                                    ConditionOperator operatorInstance2 = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue2, false);
+                                                    aggregationInstance.Operator = operatorInstance2;
+                                                }
+                                                
+                                                JToken thresholdValue2 = aggregationValue["threshold"];
+                                                if (thresholdValue2 != null)
+                                                {
+                                                    double thresholdInstance2 = (double)thresholdValue2;
+                                                    aggregationInstance.Threshold = thresholdInstance2;
+                                                }
+                                                
+                                                JToken windowSizeValue3 = aggregationValue["windowSize"];
+                                                if (windowSizeValue3 != null)
+                                                {
+                                                    TimeSpan windowSizeInstance3 = TypeConversion.From8601TimeSpan((string)windowSizeValue3);
+                                                    aggregationInstance.WindowSize = windowSizeInstance3;
+                                                }
+                                            }
+                                            propertiesInstance.Condition = managementEventRuleConditionInstance;
+                                        }
                                     }
                                     
                                     JToken actionValue = propertiesValue["action"];
                                     if (actionValue != null)
                                     {
-                                        string typeName4 = (string)actionValue["odata.type"];
-                                        if (typeName4 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
+                                        string typeName5 = (string)actionValue["odata.type"];
+                                        if (typeName5 == "Microsoft.Azure.Management.Insights.Models.RuleEmailAction")
                                         {
                                             RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                             
@@ -3825,6 +5786,66 @@ namespace Microsoft.Azure.Management.Insights
                                         dataSourceValue["metricName"] = derived2.MetricName;
                                     }
                                 }
+                                if (derived.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived3 = (RuleManagementEventDataSource)derived.DataSource;
+                                    
+                                    if (derived3.EventName != null)
+                                    {
+                                        dataSourceValue["eventName"] = derived3.EventName;
+                                    }
+                                    
+                                    if (derived3.EventSource != null)
+                                    {
+                                        dataSourceValue["eventSource"] = derived3.EventSource;
+                                    }
+                                    
+                                    if (derived3.Level != null)
+                                    {
+                                        dataSourceValue["level"] = derived3.Level;
+                                    }
+                                    
+                                    if (derived3.OperationName != null)
+                                    {
+                                        dataSourceValue["operationName"] = derived3.OperationName;
+                                    }
+                                    
+                                    if (derived3.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue["resourceGroupName"] = derived3.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived3.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue["resourceProviderName"] = derived3.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived3.ResourceUri != null)
+                                    {
+                                        dataSourceValue["resourceUri"] = derived3.ResourceUri;
+                                    }
+                                    
+                                    if (derived3.Status != null)
+                                    {
+                                        dataSourceValue["status"] = derived3.Status;
+                                    }
+                                    
+                                    if (derived3.SubStatus != null)
+                                    {
+                                        dataSourceValue["subStatus"] = derived3.SubStatus;
+                                    }
+                                    
+                                    if (derived3.Claims != null)
+                                    {
+                                        JObject claimsValue = new JObject();
+                                        dataSourceValue["claims"] = claimsValue;
+                                        
+                                        if (derived3.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue["emailAddress"] = derived3.Claims.EmailAddress;
+                                        }
+                                    }
+                                }
                             }
                             
                             conditionValue["operator"] = derived.Operator.ToString();
@@ -3835,37 +5856,199 @@ namespace Microsoft.Azure.Management.Insights
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
-                            LocationThresholdRuleCondition derived3 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
+                            LocationThresholdRuleCondition derived4 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
                             
-                            if (derived3.DataSource != null)
+                            if (derived4.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
-                                if (derived3.DataSource is RuleMetricDataSource)
+                                dataSourceValue2["odata.type"] = derived4.DataSource.GetType().FullName;
+                                if (derived4.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived4 = (RuleMetricDataSource)derived3.DataSource;
+                                    RuleMetricDataSource derived5 = (RuleMetricDataSource)derived4.DataSource;
                                     
-                                    if (derived4.ResourceUri != null)
+                                    if (derived5.ResourceUri != null)
                                     {
-                                        dataSourceValue2["resourceUri"] = derived4.ResourceUri;
+                                        dataSourceValue2["resourceUri"] = derived5.ResourceUri;
                                     }
                                     
-                                    if (derived4.MetricNamespace != null)
+                                    if (derived5.MetricNamespace != null)
                                     {
-                                        dataSourceValue2["metricNamespace"] = derived4.MetricNamespace;
+                                        dataSourceValue2["metricNamespace"] = derived5.MetricNamespace;
                                     }
                                     
-                                    if (derived4.MetricName != null)
+                                    if (derived5.MetricName != null)
                                     {
-                                        dataSourceValue2["metricName"] = derived4.MetricName;
+                                        dataSourceValue2["metricName"] = derived5.MetricName;
+                                    }
+                                }
+                                if (derived4.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived6 = (RuleManagementEventDataSource)derived4.DataSource;
+                                    
+                                    if (derived6.EventName != null)
+                                    {
+                                        dataSourceValue2["eventName"] = derived6.EventName;
+                                    }
+                                    
+                                    if (derived6.EventSource != null)
+                                    {
+                                        dataSourceValue2["eventSource"] = derived6.EventSource;
+                                    }
+                                    
+                                    if (derived6.Level != null)
+                                    {
+                                        dataSourceValue2["level"] = derived6.Level;
+                                    }
+                                    
+                                    if (derived6.OperationName != null)
+                                    {
+                                        dataSourceValue2["operationName"] = derived6.OperationName;
+                                    }
+                                    
+                                    if (derived6.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue2["resourceGroupName"] = derived6.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived6.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue2["resourceProviderName"] = derived6.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived6.ResourceUri != null)
+                                    {
+                                        dataSourceValue2["resourceUri"] = derived6.ResourceUri;
+                                    }
+                                    
+                                    if (derived6.Status != null)
+                                    {
+                                        dataSourceValue2["status"] = derived6.Status;
+                                    }
+                                    
+                                    if (derived6.SubStatus != null)
+                                    {
+                                        dataSourceValue2["subStatus"] = derived6.SubStatus;
+                                    }
+                                    
+                                    if (derived6.Claims != null)
+                                    {
+                                        JObject claimsValue2 = new JObject();
+                                        dataSourceValue2["claims"] = claimsValue2;
+                                        
+                                        if (derived6.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue2["emailAddress"] = derived6.Claims.EmailAddress;
+                                        }
                                     }
                                 }
                             }
                             
-                            conditionValue["windowSize"] = TypeConversion.To8601String(derived3.WindowSize);
+                            conditionValue["windowSize"] = TypeConversion.To8601String(derived4.WindowSize);
                             
-                            conditionValue["failedLocationCount"] = derived3.FailedLocationCount;
+                            conditionValue["failedLocationCount"] = derived4.FailedLocationCount;
+                        }
+                        if (parameters.Properties.Condition is ManagementEventRuleCondition)
+                        {
+                            ManagementEventRuleCondition derived7 = (ManagementEventRuleCondition)parameters.Properties.Condition;
+                            
+                            if (derived7.DataSource != null)
+                            {
+                                JObject dataSourceValue3 = new JObject();
+                                conditionValue["dataSource"] = dataSourceValue3;
+                                dataSourceValue3["odata.type"] = derived7.DataSource.GetType().FullName;
+                                if (derived7.DataSource is RuleMetricDataSource)
+                                {
+                                    RuleMetricDataSource derived8 = (RuleMetricDataSource)derived7.DataSource;
+                                    
+                                    if (derived8.ResourceUri != null)
+                                    {
+                                        dataSourceValue3["resourceUri"] = derived8.ResourceUri;
+                                    }
+                                    
+                                    if (derived8.MetricNamespace != null)
+                                    {
+                                        dataSourceValue3["metricNamespace"] = derived8.MetricNamespace;
+                                    }
+                                    
+                                    if (derived8.MetricName != null)
+                                    {
+                                        dataSourceValue3["metricName"] = derived8.MetricName;
+                                    }
+                                }
+                                if (derived7.DataSource is RuleManagementEventDataSource)
+                                {
+                                    RuleManagementEventDataSource derived9 = (RuleManagementEventDataSource)derived7.DataSource;
+                                    
+                                    if (derived9.EventName != null)
+                                    {
+                                        dataSourceValue3["eventName"] = derived9.EventName;
+                                    }
+                                    
+                                    if (derived9.EventSource != null)
+                                    {
+                                        dataSourceValue3["eventSource"] = derived9.EventSource;
+                                    }
+                                    
+                                    if (derived9.Level != null)
+                                    {
+                                        dataSourceValue3["level"] = derived9.Level;
+                                    }
+                                    
+                                    if (derived9.OperationName != null)
+                                    {
+                                        dataSourceValue3["operationName"] = derived9.OperationName;
+                                    }
+                                    
+                                    if (derived9.ResourceGroupName != null)
+                                    {
+                                        dataSourceValue3["resourceGroupName"] = derived9.ResourceGroupName;
+                                    }
+                                    
+                                    if (derived9.ResourceProviderName != null)
+                                    {
+                                        dataSourceValue3["resourceProviderName"] = derived9.ResourceProviderName;
+                                    }
+                                    
+                                    if (derived9.ResourceUri != null)
+                                    {
+                                        dataSourceValue3["resourceUri"] = derived9.ResourceUri;
+                                    }
+                                    
+                                    if (derived9.Status != null)
+                                    {
+                                        dataSourceValue3["status"] = derived9.Status;
+                                    }
+                                    
+                                    if (derived9.SubStatus != null)
+                                    {
+                                        dataSourceValue3["subStatus"] = derived9.SubStatus;
+                                    }
+                                    
+                                    if (derived9.Claims != null)
+                                    {
+                                        JObject claimsValue3 = new JObject();
+                                        dataSourceValue3["claims"] = claimsValue3;
+                                        
+                                        if (derived9.Claims.EmailAddress != null)
+                                        {
+                                            claimsValue3["emailAddress"] = derived9.Claims.EmailAddress;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            if (derived7.Aggregation != null)
+                            {
+                                JObject aggregationValue = new JObject();
+                                conditionValue["aggregation"] = aggregationValue;
+                                
+                                aggregationValue["operator"] = derived7.Aggregation.Operator.ToString();
+                                
+                                aggregationValue["threshold"] = derived7.Aggregation.Threshold;
+                                
+                                aggregationValue["windowSize"] = TypeConversion.To8601String(derived7.Aggregation.WindowSize);
+                            }
                         }
                     }
                     
@@ -3876,14 +6059,14 @@ namespace Microsoft.Azure.Management.Insights
                         actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
-                            RuleEmailAction derived5 = (RuleEmailAction)parameters.Properties.Action;
+                            RuleEmailAction derived10 = (RuleEmailAction)parameters.Properties.Action;
                             
-                            actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
+                            actionValue["sendToServiceOwners"] = derived10.SendToServiceOwners;
                             
-                            if (derived5.CustomEmails != null)
+                            if (derived10.CustomEmails != null)
                             {
                                 JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived5.CustomEmails)
+                                foreach (string customEmailsItem in derived10.CustomEmails)
                                 {
                                     customEmailsArray.Add(customEmailsItem);
                                 }
@@ -5930,6 +8113,1732 @@ namespace Microsoft.Azure.Management.Insights
                     if (parameters.Properties.TargetResourceUri != null)
                     {
                         propertiesValue["targetResourceUri"] = parameters.Properties.TargetResourceUri;
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    /// <summary>
+    /// Operations for managing monitoring configuration.
+    /// </summary>
+    public partial interface IMonitoringConfigurationOperations
+    {
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(string resourceUri, CancellationToken cancellationToken);
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Operations for managing monitoring configuration.
+    /// </summary>
+    public static partial class MonitoringConfigurationOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse CreateOrUpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        {
+            try
+            {
+                return operations.CreateOrUpdateConfigurationAsync(resourceUri, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> CreateOrUpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateConfigurationAsync(resourceUri, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static MonitoringConfigurationGetResponse GetConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri)
+        {
+            try
+            {
+                return operations.GetConfigurationAsync(resourceUri).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri)
+        {
+            return operations.GetConfigurationAsync(resourceUri, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        {
+            try
+            {
+                return operations.UpdateConfigurationAsync(resourceUri, parameters).Result;
+            }
+            catch (AggregateException ex)
+            {
+                if (ex.InnerExceptions.Count > 1)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw ex.InnerException;
+                }
+            }
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
+        {
+            return operations.UpdateConfigurationAsync(resourceUri, parameters, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Operations for managing monitoring configuration.
+    /// </summary>
+    internal partial class MonitoringConfigurationOperations : IServiceOperations<InsightsManagementClient>, IMonitoringConfigurationOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the MonitoringConfigurationOperations
+        /// class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal MonitoringConfigurationOperations(InsightsManagementClient client)
+        {
+            this._client = client;
+        }
+        
+        private InsightsManagementClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.Azure.Management.Insights.InsightsManagementClient.
+        /// </summary>
+        public InsightsManagementClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateOrUpdateConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/diagnosticSettings/agent?";
+            url = url + "api-version=2014-04-01";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject monitoringConfigurationCreateOrUpdateParametersValue = new JObject();
+                requestDoc = monitoringConfigurationCreateOrUpdateParametersValue;
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    monitoringConfigurationCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.Name != null)
+                    {
+                        propertiesValue["name"] = parameters.Properties.Name;
+                    }
+                    
+                    if (parameters.Properties.Description != null)
+                    {
+                        propertiesValue["description"] = parameters.Properties.Description;
+                    }
+                    
+                    if (parameters.Properties.PublicConfiguration != null)
+                    {
+                        JObject publicConfigurationValue = new JObject();
+                        propertiesValue["publicConfiguration"] = publicConfigurationValue;
+                        publicConfigurationValue["odata.type"] = parameters.Properties.PublicConfiguration.GetType().FullName;
+                        if (parameters.Properties.PublicConfiguration is PublicMonitoringConfiguration)
+                        {
+                            PublicMonitoringConfiguration derived = (PublicMonitoringConfiguration)parameters.Properties.PublicConfiguration;
+                            
+                            if (derived.DiagnosticMonitorConfiguration != null)
+                            {
+                                JObject diagnosticMonitorConfigurationValue = new JObject();
+                                publicConfigurationValue["diagnosticMonitorConfiguration"] = diagnosticMonitorConfigurationValue;
+                                
+                                if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
+                                {
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
+                                {
+                                    JObject diagnosticInfrastructureLogsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["diagnosticInfrastructureLogs"] = diagnosticInfrastructureLogsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
+                                    {
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                    }
+                                    
+                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.Directories != null)
+                                {
+                                    JObject directoriesValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["directories"] = directoriesValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.DataSources != null)
+                                    {
+                                        JArray dataSourcesArray = new JArray();
+                                        foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
+                                        {
+                                            JObject directoryConfigurationValue = new JObject();
+                                            dataSourcesArray.Add(directoryConfigurationValue);
+                                            
+                                            if (dataSourcesItem.ContainerName != null)
+                                            {
+                                                directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
+                                            }
+                                            
+                                            if (dataSourcesItem.Path != null)
+                                            {
+                                                JObject pathValue = new JObject();
+                                                directoryConfigurationValue["path"] = pathValue;
+                                                pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                if (dataSourcesItem.Path is DirectoryAbsolute)
+                                                {
+                                                    DirectoryAbsolute derived2 = (DirectoryAbsolute)dataSourcesItem.Path;
+                                                    
+                                                    pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
+                                                    
+                                                    if (derived2.Path != null)
+                                                    {
+                                                        pathValue["path"] = derived2.Path;
+                                                    }
+                                                }
+                                                if (dataSourcesItem.Path is DirectoryLocal)
+                                                {
+                                                    DirectoryLocal derived3 = (DirectoryLocal)dataSourcesItem.Path;
+                                                    
+                                                    if (derived3.RelativePath != null)
+                                                    {
+                                                        pathValue["relativePath"] = derived3.RelativePath;
+                                                    }
+                                                    
+                                                    if (derived3.Name != null)
+                                                    {
+                                                        pathValue["name"] = derived3.Name;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        directoriesValue["dataSources"] = dataSourcesArray;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.IISLogs != null)
+                                    {
+                                        directoriesValue["iisLogs"] = derived.DiagnosticMonitorConfiguration.Directories.IISLogs;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs != null)
+                                    {
+                                        directoriesValue["failedRequestLogs"] = derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs;
+                                    }
+                                    
+                                    directoriesValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.PerformanceCounters != null)
+                                {
+                                    JObject performanceCountersValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["performanceCounters"] = performanceCountersValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters != null)
+                                    {
+                                        JArray countersArray = new JArray();
+                                        foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
+                                        {
+                                            JObject performanceCounterConfigurationValue = new JObject();
+                                            countersArray.Add(performanceCounterConfigurationValue);
+                                            
+                                            if (countersItem.Annotations != null)
+                                            {
+                                                JArray annotationsArray = new JArray();
+                                                foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                {
+                                                    JObject localizedStringValue = new JObject();
+                                                    annotationsArray.Add(localizedStringValue);
+                                                    
+                                                    if (annotationsItem.Value != null)
+                                                    {
+                                                        localizedStringValue["value"] = annotationsItem.Value;
+                                                    }
+                                                    
+                                                    if (annotationsItem.Locale != null)
+                                                    {
+                                                        localizedStringValue["locale"] = annotationsItem.Locale;
+                                                    }
+                                                }
+                                                performanceCounterConfigurationValue["annotations"] = annotationsArray;
+                                            }
+                                            
+                                            if (countersItem.CounterSpecifier != null)
+                                            {
+                                                performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
+                                            }
+                                            
+                                            performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                            
+                                            if (countersItem.Unit != null)
+                                            {
+                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit;
+                                            }
+                                        }
+                                        performanceCountersValue["counters"] = countersArray;
+                                    }
+                                    
+                                    performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.WindowsEventLog != null)
+                                {
+                                    JObject windowsEventLogValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["windowsEventLog"] = windowsEventLogValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources != null)
+                                    {
+                                        JArray dataSourcesArray2 = new JArray();
+                                        foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                        {
+                                            dataSourcesArray2.Add(dataSourcesItem2);
+                                        }
+                                        windowsEventLogValue["dataSources"] = dataSourcesArray2;
+                                    }
+                                    
+                                    windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.EtwProviders != null)
+                                {
+                                    JObject etwProvidersValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["etwProviders"] = etwProvidersValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders != null)
+                                    {
+                                        JArray eventSourceProvidersArray = new JArray();
+                                        foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
+                                        {
+                                            JObject etwProviderValue = new JObject();
+                                            eventSourceProvidersArray.Add(etwProviderValue);
+                                            
+                                            etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                            
+                                            if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            {
+                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.Provider != null)
+                                            {
+                                                etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
+                                            {
+                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.Events != null)
+                                            {
+                                                JArray eventsArray = new JArray();
+                                                foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                {
+                                                    JObject etwEventConfigurationValue = new JObject();
+                                                    eventsArray.Add(etwEventConfigurationValue);
+                                                    
+                                                    etwEventConfigurationValue["eventId"] = eventsItem.EventId;
+                                                    
+                                                    if (eventsItem.Destination != null)
+                                                    {
+                                                        etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                    }
+                                                }
+                                                etwProviderValue["events"] = eventsArray;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.DefaultDestination != null)
+                                            {
+                                                etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
+                                            }
+                                        }
+                                        etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders != null)
+                                    {
+                                        JArray manifestProvidersArray = new JArray();
+                                        foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
+                                        {
+                                            JObject etwProviderValue2 = new JObject();
+                                            manifestProvidersArray.Add(etwProviderValue2);
+                                            
+                                            etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                            
+                                            if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            {
+                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                            }
+                                            
+                                            if (manifestProvidersItem.Provider != null)
+                                            {
+                                                etwProviderValue2["provider"] = manifestProvidersItem.Provider;
+                                            }
+                                            
+                                            if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
+                                            {
+                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
+                                            }
+                                            
+                                            if (manifestProvidersItem.Events != null)
+                                            {
+                                                JArray eventsArray2 = new JArray();
+                                                foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                {
+                                                    JObject etwEventConfigurationValue2 = new JObject();
+                                                    eventsArray2.Add(etwEventConfigurationValue2);
+                                                    
+                                                    etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
+                                                    
+                                                    if (eventsItem2.Destination != null)
+                                                    {
+                                                        etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                    }
+                                                }
+                                                etwProviderValue2["events"] = eventsArray2;
+                                            }
+                                            
+                                            if (manifestProvidersItem.DefaultDestination != null)
+                                            {
+                                                etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
+                                            }
+                                        }
+                                        etwProvidersValue["manifestProviders"] = manifestProvidersArray;
+                                    }
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.CrashDumps != null)
+                                {
+                                    JObject crashDumpsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["crashDumps"] = crashDumpsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
+                                    {
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
+                                    {
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)
+                                    {
+                                        crashDumpsValue["containerName"] = derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes != null)
+                                    {
+                                        JArray processesArray = new JArray();
+                                        foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                        {
+                                            processesArray.Add(processesItem);
+                                        }
+                                        crashDumpsValue["processes"] = processesArray;
+                                    }
+                                }
+                            }
+                            
+                            if (derived.LocalResourceDirectory != null)
+                            {
+                                JObject localResourceDirectoryValue = new JObject();
+                                publicConfigurationValue["localResourceDirectory"] = localResourceDirectoryValue;
+                                
+                                localResourceDirectoryValue["expandEnvironment"] = derived.LocalResourceDirectory.ExpandEnvironment;
+                                
+                                if (derived.LocalResourceDirectory.Path != null)
+                                {
+                                    localResourceDirectoryValue["path"] = derived.LocalResourceDirectory.Path;
+                                }
+                            }
+                            
+                            if (derived.StorageAccount != null)
+                            {
+                                publicConfigurationValue["storageAccount"] = derived.StorageAccount;
+                            }
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(string resourceUri, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                Tracing.Enter(invocationId, this, "GetConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/diagnosticSettings/agent?";
+            url = url + "api-version=2014-04-01";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MonitoringConfigurationGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new MonitoringConfigurationGetResponse();
+                    JToken responseDoc = JToken.Parse(responseContent);
+                    
+                    if (responseDoc != null)
+                    {
+                        JToken publicConfigurationValue = responseDoc["publicConfiguration"];
+                        if (publicConfigurationValue != null)
+                        {
+                            string typeName = (string)publicConfigurationValue["odata.type"];
+                            if (typeName == "Microsoft.Azure.Management.Insights.Models.PublicMonitoringConfiguration")
+                            {
+                                PublicMonitoringConfiguration publicMonitoringConfigurationInstance = new PublicMonitoringConfiguration();
+                                
+                                JToken diagnosticMonitorConfigurationValue = publicConfigurationValue["diagnosticMonitorConfiguration"];
+                                if (diagnosticMonitorConfigurationValue != null)
+                                {
+                                    DiagnosticMonitorConfiguration diagnosticMonitorConfigurationInstance = new DiagnosticMonitorConfiguration();
+                                    publicMonitoringConfigurationInstance.DiagnosticMonitorConfiguration = diagnosticMonitorConfigurationInstance;
+                                    
+                                    JToken overallQuotaInMBValue = diagnosticMonitorConfigurationValue["overallQuotaInMB"];
+                                    if (overallQuotaInMBValue != null)
+                                    {
+                                        int overallQuotaInMBInstance = (int)overallQuotaInMBValue;
+                                        diagnosticMonitorConfigurationInstance.OverallQuotaInMB = overallQuotaInMBInstance;
+                                    }
+                                    
+                                    JToken diagnosticInfrastructureLogsValue = diagnosticMonitorConfigurationValue["diagnosticInfrastructureLogs"];
+                                    if (diagnosticInfrastructureLogsValue != null)
+                                    {
+                                        DiagnosticInfrastructureLogs diagnosticInfrastructureLogsInstance = new DiagnosticInfrastructureLogs();
+                                        diagnosticMonitorConfigurationInstance.DiagnosticInfrastructureLogs = diagnosticInfrastructureLogsInstance;
+                                        
+                                        JToken scheduledTransferLogLevelFilterValue = diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"];
+                                        if (scheduledTransferLogLevelFilterValue != null)
+                                        {
+                                            // how
+                                            LogLevel scheduledTransferLogLevelFilterInstance = (LogLevel)Enum.Parse(typeof(LogLevel), (string)scheduledTransferLogLevelFilterValue, false);
+                                            diagnosticInfrastructureLogsInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance;
+                                        }
+                                        
+                                        JToken scheduledTransferPeriodValue = diagnosticInfrastructureLogsValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue != null)
+                                        {
+                                            TimeSpan scheduledTransferPeriodInstance = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue);
+                                            diagnosticInfrastructureLogsInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
+                                        }
+                                    }
+                                    
+                                    JToken directoriesValue = diagnosticMonitorConfigurationValue["directories"];
+                                    if (directoriesValue != null)
+                                    {
+                                        Directories directoriesInstance = new Directories();
+                                        diagnosticMonitorConfigurationInstance.Directories = directoriesInstance;
+                                        
+                                        JArray dataSourcesArray = (JArray)directoriesValue["dataSources"];
+                                        if (dataSourcesArray != null)
+                                        {
+                                            foreach (JToken dataSourcesValue in dataSourcesArray)
+                                            {
+                                                DirectoryConfiguration directoryConfigurationInstance = new DirectoryConfiguration();
+                                                directoriesInstance.DataSources.Add(directoryConfigurationInstance);
+                                                
+                                                JToken containerNameValue = dataSourcesValue["containerName"];
+                                                if (containerNameValue != null)
+                                                {
+                                                    string containerNameInstance = (string)containerNameValue;
+                                                    directoryConfigurationInstance.ContainerName = containerNameInstance;
+                                                }
+                                                
+                                                JToken pathValue = dataSourcesValue["path"];
+                                                if (pathValue != null)
+                                                {
+                                                    string typeName2 = (string)pathValue["odata.type"];
+                                                    if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryAbsolute")
+                                                    {
+                                                        DirectoryAbsolute directoryAbsoluteInstance = new DirectoryAbsolute();
+                                                        
+                                                        JToken expandEnvironmentValue = pathValue["expandEnvironment"];
+                                                        if (expandEnvironmentValue != null)
+                                                        {
+                                                            bool expandEnvironmentInstance = (bool)expandEnvironmentValue;
+                                                            directoryAbsoluteInstance.ExpandEnvironment = expandEnvironmentInstance;
+                                                        }
+                                                        
+                                                        JToken pathValue2 = pathValue["path"];
+                                                        if (pathValue2 != null)
+                                                        {
+                                                            string pathInstance = (string)pathValue2;
+                                                            directoryAbsoluteInstance.Path = pathInstance;
+                                                        }
+                                                        directoryConfigurationInstance.Path = directoryAbsoluteInstance;
+                                                    }
+                                                    if (typeName2 == "Microsoft.Azure.Management.Insights.Models.DirectoryLocal")
+                                                    {
+                                                        DirectoryLocal directoryLocalInstance = new DirectoryLocal();
+                                                        
+                                                        JToken relativePathValue = pathValue["relativePath"];
+                                                        if (relativePathValue != null)
+                                                        {
+                                                            string relativePathInstance = (string)relativePathValue;
+                                                            directoryLocalInstance.RelativePath = relativePathInstance;
+                                                        }
+                                                        
+                                                        JToken nameValue = pathValue["name"];
+                                                        if (nameValue != null)
+                                                        {
+                                                            string nameInstance = (string)nameValue;
+                                                            directoryLocalInstance.Name = nameInstance;
+                                                        }
+                                                        directoryConfigurationInstance.Path = directoryLocalInstance;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken iisLogsValue = directoriesValue["iisLogs"];
+                                        if (iisLogsValue != null)
+                                        {
+                                            string iisLogsInstance = (string)iisLogsValue;
+                                            directoriesInstance.IISLogs = iisLogsInstance;
+                                        }
+                                        
+                                        JToken failedRequestLogsValue = directoriesValue["failedRequestLogs"];
+                                        if (failedRequestLogsValue != null)
+                                        {
+                                            string failedRequestLogsInstance = (string)failedRequestLogsValue;
+                                            directoriesInstance.FailedRequestLogs = failedRequestLogsInstance;
+                                        }
+                                        
+                                        JToken scheduledTransferPeriodValue2 = directoriesValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue2 != null)
+                                        {
+                                            TimeSpan scheduledTransferPeriodInstance2 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue2);
+                                            directoriesInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
+                                        }
+                                    }
+                                    
+                                    JToken performanceCountersValue = diagnosticMonitorConfigurationValue["performanceCounters"];
+                                    if (performanceCountersValue != null)
+                                    {
+                                        PerformanceCounters performanceCountersInstance = new PerformanceCounters();
+                                        diagnosticMonitorConfigurationInstance.PerformanceCounters = performanceCountersInstance;
+                                        
+                                        JArray countersArray = (JArray)performanceCountersValue["counters"];
+                                        if (countersArray != null)
+                                        {
+                                            foreach (JToken countersValue in countersArray)
+                                            {
+                                                PerformanceCounterConfiguration performanceCounterConfigurationInstance = new PerformanceCounterConfiguration();
+                                                performanceCountersInstance.Counters.Add(performanceCounterConfigurationInstance);
+                                                
+                                                JArray annotationsArray = (JArray)countersValue["annotations"];
+                                                if (annotationsArray != null)
+                                                {
+                                                    foreach (JToken annotationsValue in annotationsArray)
+                                                    {
+                                                        LocalizedString localizedStringInstance = new LocalizedString();
+                                                        performanceCounterConfigurationInstance.Annotations.Add(localizedStringInstance);
+                                                        
+                                                        JToken valueValue = annotationsValue["value"];
+                                                        if (valueValue != null)
+                                                        {
+                                                            string valueInstance = (string)valueValue;
+                                                            localizedStringInstance.Value = valueInstance;
+                                                        }
+                                                        
+                                                        JToken localeValue = annotationsValue["locale"];
+                                                        if (localeValue != null)
+                                                        {
+                                                            string localeInstance = (string)localeValue;
+                                                            localizedStringInstance.Locale = localeInstance;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken counterSpecifierValue = countersValue["counterSpecifier"];
+                                                if (counterSpecifierValue != null)
+                                                {
+                                                    string counterSpecifierInstance = (string)counterSpecifierValue;
+                                                    performanceCounterConfigurationInstance.CounterSpecifier = counterSpecifierInstance;
+                                                }
+                                                
+                                                JToken sampleRateValue = countersValue["sampleRate"];
+                                                if (sampleRateValue != null)
+                                                {
+                                                    TimeSpan sampleRateInstance = TypeConversion.From8601TimeSpan((string)sampleRateValue);
+                                                    performanceCounterConfigurationInstance.SampleRate = sampleRateInstance;
+                                                }
+                                                
+                                                JToken unitValue = countersValue["unit"];
+                                                if (unitValue != null)
+                                                {
+                                                    string unitInstance = (string)unitValue;
+                                                    performanceCounterConfigurationInstance.Unit = unitInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JToken scheduledTransferPeriodValue3 = performanceCountersValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue3 != null)
+                                        {
+                                            TimeSpan scheduledTransferPeriodInstance3 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue3);
+                                            performanceCountersInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance3;
+                                        }
+                                    }
+                                    
+                                    JToken windowsEventLogValue = diagnosticMonitorConfigurationValue["windowsEventLog"];
+                                    if (windowsEventLogValue != null)
+                                    {
+                                        WindowsEventLog windowsEventLogInstance = new WindowsEventLog();
+                                        diagnosticMonitorConfigurationInstance.WindowsEventLog = windowsEventLogInstance;
+                                        
+                                        JArray dataSourcesArray2 = (JArray)windowsEventLogValue["dataSources"];
+                                        if (dataSourcesArray2 != null)
+                                        {
+                                            foreach (JToken dataSourcesValue2 in dataSourcesArray2)
+                                            {
+                                                windowsEventLogInstance.DataSources.Add((string)dataSourcesValue2);
+                                            }
+                                        }
+                                        
+                                        JToken scheduledTransferPeriodValue4 = windowsEventLogValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue4 != null)
+                                        {
+                                            TimeSpan scheduledTransferPeriodInstance4 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue4);
+                                            windowsEventLogInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance4;
+                                        }
+                                    }
+                                    
+                                    JToken etwProvidersValue = diagnosticMonitorConfigurationValue["etwProviders"];
+                                    if (etwProvidersValue != null)
+                                    {
+                                        EtwProviders etwProvidersInstance = new EtwProviders();
+                                        diagnosticMonitorConfigurationInstance.EtwProviders = etwProvidersInstance;
+                                        
+                                        JArray eventSourceProvidersArray = (JArray)etwProvidersValue["eventSourceProviders"];
+                                        if (eventSourceProvidersArray != null)
+                                        {
+                                            foreach (JToken eventSourceProvidersValue in eventSourceProvidersArray)
+                                            {
+                                                EtwProvider etwProviderInstance = new EtwProvider();
+                                                etwProvidersInstance.EventSourceProviders.Add(etwProviderInstance);
+                                                
+                                                JToken scheduledTransferPeriodValue5 = eventSourceProvidersValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue5 != null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance5 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue5);
+                                                    etwProviderInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance5;
+                                                }
+                                                
+                                                JToken scheduledTransferLogLevelFilterValue2 = eventSourceProvidersValue["scheduledTransferLogLevelFilter"];
+                                                if (scheduledTransferLogLevelFilterValue2 != null)
+                                                {
+                                                    // how
+                                                    LogLevel scheduledTransferLogLevelFilterInstance2 = (LogLevel)Enum.Parse(typeof(LogLevel), (string)scheduledTransferLogLevelFilterValue2, false);
+                                                    etwProviderInstance.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance2;
+                                                }
+                                                
+                                                JToken providerValue = eventSourceProvidersValue["provider"];
+                                                if (providerValue != null)
+                                                {
+                                                    string providerInstance = (string)providerValue;
+                                                    etwProviderInstance.Provider = providerInstance;
+                                                }
+                                                
+                                                JToken scheduledTransferKeywordFilterValue = eventSourceProvidersValue["scheduledTransferKeywordFilter"];
+                                                if (scheduledTransferKeywordFilterValue != null)
+                                                {
+                                                    ulong scheduledTransferKeywordFilterInstance = (ulong)scheduledTransferKeywordFilterValue;
+                                                    etwProviderInstance.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance;
+                                                }
+                                                
+                                                JArray eventsArray = (JArray)eventSourceProvidersValue["events"];
+                                                if (eventsArray != null)
+                                                {
+                                                    foreach (JToken eventsValue in eventsArray)
+                                                    {
+                                                        EtwEventConfiguration etwEventConfigurationInstance = new EtwEventConfiguration();
+                                                        etwProviderInstance.Events.Add(etwEventConfigurationInstance);
+                                                        
+                                                        JToken eventIdValue = eventsValue["eventId"];
+                                                        if (eventIdValue != null)
+                                                        {
+                                                            int eventIdInstance = (int)eventIdValue;
+                                                            etwEventConfigurationInstance.EventId = eventIdInstance;
+                                                        }
+                                                        
+                                                        JToken destinationValue = eventsValue["destination"];
+                                                        if (destinationValue != null)
+                                                        {
+                                                            string destinationInstance = (string)destinationValue;
+                                                            etwEventConfigurationInstance.Destination = destinationInstance;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken defaultDestinationValue = eventSourceProvidersValue["defaultDestination"];
+                                                if (defaultDestinationValue != null)
+                                                {
+                                                    string defaultDestinationInstance = (string)defaultDestinationValue;
+                                                    etwProviderInstance.DefaultDestination = defaultDestinationInstance;
+                                                }
+                                            }
+                                        }
+                                        
+                                        JArray manifestProvidersArray = (JArray)etwProvidersValue["manifestProviders"];
+                                        if (manifestProvidersArray != null)
+                                        {
+                                            foreach (JToken manifestProvidersValue in manifestProvidersArray)
+                                            {
+                                                EtwProvider etwProviderInstance2 = new EtwProvider();
+                                                etwProvidersInstance.ManifestProviders.Add(etwProviderInstance2);
+                                                
+                                                JToken scheduledTransferPeriodValue6 = manifestProvidersValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue6 != null)
+                                                {
+                                                    TimeSpan scheduledTransferPeriodInstance6 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue6);
+                                                    etwProviderInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance6;
+                                                }
+                                                
+                                                JToken scheduledTransferLogLevelFilterValue3 = manifestProvidersValue["scheduledTransferLogLevelFilter"];
+                                                if (scheduledTransferLogLevelFilterValue3 != null)
+                                                {
+                                                    // how
+                                                    LogLevel scheduledTransferLogLevelFilterInstance3 = (LogLevel)Enum.Parse(typeof(LogLevel), (string)scheduledTransferLogLevelFilterValue3, false);
+                                                    etwProviderInstance2.ScheduledTransferLogLevelFilter = scheduledTransferLogLevelFilterInstance3;
+                                                }
+                                                
+                                                JToken providerValue2 = manifestProvidersValue["provider"];
+                                                if (providerValue2 != null)
+                                                {
+                                                    string providerInstance2 = (string)providerValue2;
+                                                    etwProviderInstance2.Provider = providerInstance2;
+                                                }
+                                                
+                                                JToken scheduledTransferKeywordFilterValue2 = manifestProvidersValue["scheduledTransferKeywordFilter"];
+                                                if (scheduledTransferKeywordFilterValue2 != null)
+                                                {
+                                                    ulong scheduledTransferKeywordFilterInstance2 = (ulong)scheduledTransferKeywordFilterValue2;
+                                                    etwProviderInstance2.ScheduledTransferKeywordFilter = scheduledTransferKeywordFilterInstance2;
+                                                }
+                                                
+                                                JArray eventsArray2 = (JArray)manifestProvidersValue["events"];
+                                                if (eventsArray2 != null)
+                                                {
+                                                    foreach (JToken eventsValue2 in eventsArray2)
+                                                    {
+                                                        EtwEventConfiguration etwEventConfigurationInstance2 = new EtwEventConfiguration();
+                                                        etwProviderInstance2.Events.Add(etwEventConfigurationInstance2);
+                                                        
+                                                        JToken eventIdValue2 = eventsValue2["eventId"];
+                                                        if (eventIdValue2 != null)
+                                                        {
+                                                            int eventIdInstance2 = (int)eventIdValue2;
+                                                            etwEventConfigurationInstance2.EventId = eventIdInstance2;
+                                                        }
+                                                        
+                                                        JToken destinationValue2 = eventsValue2["destination"];
+                                                        if (destinationValue2 != null)
+                                                        {
+                                                            string destinationInstance2 = (string)destinationValue2;
+                                                            etwEventConfigurationInstance2.Destination = destinationInstance2;
+                                                        }
+                                                    }
+                                                }
+                                                
+                                                JToken defaultDestinationValue2 = manifestProvidersValue["defaultDestination"];
+                                                if (defaultDestinationValue2 != null)
+                                                {
+                                                    string defaultDestinationInstance2 = (string)defaultDestinationValue2;
+                                                    etwProviderInstance2.DefaultDestination = defaultDestinationInstance2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
+                                    JToken crashDumpsValue = diagnosticMonitorConfigurationValue["crashDumps"];
+                                    if (crashDumpsValue != null)
+                                    {
+                                        CrashDumps crashDumpsInstance = new CrashDumps();
+                                        diagnosticMonitorConfigurationInstance.CrashDumps = crashDumpsInstance;
+                                        
+                                        JToken directoryQuotaPercentageValue = crashDumpsValue["directoryQuotaPercentage"];
+                                        if (directoryQuotaPercentageValue != null)
+                                        {
+                                            int directoryQuotaPercentageInstance = (int)directoryQuotaPercentageValue;
+                                            crashDumpsInstance.DirectoryQuotaPercentage = directoryQuotaPercentageInstance;
+                                        }
+                                        
+                                        JToken dumpTypeValue = crashDumpsValue["dumpType"];
+                                        if (dumpTypeValue != null)
+                                        {
+                                            // how
+                                            CrashDumpType dumpTypeInstance = (CrashDumpType)Enum.Parse(typeof(CrashDumpType), (string)dumpTypeValue, false);
+                                            crashDumpsInstance.DumpType = dumpTypeInstance;
+                                        }
+                                        
+                                        JToken containerNameValue2 = crashDumpsValue["containerName"];
+                                        if (containerNameValue2 != null)
+                                        {
+                                            string containerNameInstance2 = (string)containerNameValue2;
+                                            crashDumpsInstance.ContainerName = containerNameInstance2;
+                                        }
+                                        
+                                        JArray processesArray = (JArray)crashDumpsValue["processes"];
+                                        if (processesArray != null)
+                                        {
+                                            foreach (JToken processesValue in processesArray)
+                                            {
+                                                crashDumpsInstance.Processes.Add((string)processesValue);
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                JToken localResourceDirectoryValue = publicConfigurationValue["localResourceDirectory"];
+                                if (localResourceDirectoryValue != null)
+                                {
+                                    DirectoryAbsolute localResourceDirectoryInstance = new DirectoryAbsolute();
+                                    publicMonitoringConfigurationInstance.LocalResourceDirectory = localResourceDirectoryInstance;
+                                    
+                                    JToken expandEnvironmentValue2 = localResourceDirectoryValue["expandEnvironment"];
+                                    if (expandEnvironmentValue2 != null)
+                                    {
+                                        bool expandEnvironmentInstance2 = (bool)expandEnvironmentValue2;
+                                        localResourceDirectoryInstance.ExpandEnvironment = expandEnvironmentInstance2;
+                                    }
+                                    
+                                    JToken pathValue3 = localResourceDirectoryValue["path"];
+                                    if (pathValue3 != null)
+                                    {
+                                        string pathInstance2 = (string)pathValue3;
+                                        localResourceDirectoryInstance.Path = pathInstance2;
+                                    }
+                                }
+                                
+                                JToken storageAccountValue = publicConfigurationValue["storageAccount"];
+                                if (storageAccountValue != null)
+                                {
+                                    string storageAccountInstance = (string)storageAccountValue;
+                                    publicMonitoringConfigurationInstance.StorageAccount = storageAccountInstance;
+                                }
+                                result.PublicConfiguration = publicMonitoringConfigurationInstance;
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = this.Client.BaseUri + "/" + resourceUri + "/diagnosticSettings/agent?";
+            url = url + "api-version=2014-04-01";
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject monitoringConfigurationCreateOrUpdateParametersValue = new JObject();
+                requestDoc = monitoringConfigurationCreateOrUpdateParametersValue;
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    monitoringConfigurationCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.Name != null)
+                    {
+                        propertiesValue["name"] = parameters.Properties.Name;
+                    }
+                    
+                    if (parameters.Properties.Description != null)
+                    {
+                        propertiesValue["description"] = parameters.Properties.Description;
+                    }
+                    
+                    if (parameters.Properties.PublicConfiguration != null)
+                    {
+                        JObject publicConfigurationValue = new JObject();
+                        propertiesValue["publicConfiguration"] = publicConfigurationValue;
+                        publicConfigurationValue["odata.type"] = parameters.Properties.PublicConfiguration.GetType().FullName;
+                        if (parameters.Properties.PublicConfiguration is PublicMonitoringConfiguration)
+                        {
+                            PublicMonitoringConfiguration derived = (PublicMonitoringConfiguration)parameters.Properties.PublicConfiguration;
+                            
+                            if (derived.DiagnosticMonitorConfiguration != null)
+                            {
+                                JObject diagnosticMonitorConfigurationValue = new JObject();
+                                publicConfigurationValue["diagnosticMonitorConfiguration"] = diagnosticMonitorConfigurationValue;
+                                
+                                if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
+                                {
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
+                                {
+                                    JObject diagnosticInfrastructureLogsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["diagnosticInfrastructureLogs"] = diagnosticInfrastructureLogsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
+                                    {
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                    }
+                                    
+                                    diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.Directories != null)
+                                {
+                                    JObject directoriesValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["directories"] = directoriesValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.DataSources != null)
+                                    {
+                                        JArray dataSourcesArray = new JArray();
+                                        foreach (DirectoryConfiguration dataSourcesItem in derived.DiagnosticMonitorConfiguration.Directories.DataSources)
+                                        {
+                                            JObject directoryConfigurationValue = new JObject();
+                                            dataSourcesArray.Add(directoryConfigurationValue);
+                                            
+                                            if (dataSourcesItem.ContainerName != null)
+                                            {
+                                                directoryConfigurationValue["containerName"] = dataSourcesItem.ContainerName;
+                                            }
+                                            
+                                            if (dataSourcesItem.Path != null)
+                                            {
+                                                JObject pathValue = new JObject();
+                                                directoryConfigurationValue["path"] = pathValue;
+                                                pathValue["odata.type"] = dataSourcesItem.Path.GetType().FullName;
+                                                if (dataSourcesItem.Path is DirectoryAbsolute)
+                                                {
+                                                    DirectoryAbsolute derived2 = (DirectoryAbsolute)dataSourcesItem.Path;
+                                                    
+                                                    pathValue["expandEnvironment"] = derived2.ExpandEnvironment;
+                                                    
+                                                    if (derived2.Path != null)
+                                                    {
+                                                        pathValue["path"] = derived2.Path;
+                                                    }
+                                                }
+                                                if (dataSourcesItem.Path is DirectoryLocal)
+                                                {
+                                                    DirectoryLocal derived3 = (DirectoryLocal)dataSourcesItem.Path;
+                                                    
+                                                    if (derived3.RelativePath != null)
+                                                    {
+                                                        pathValue["relativePath"] = derived3.RelativePath;
+                                                    }
+                                                    
+                                                    if (derived3.Name != null)
+                                                    {
+                                                        pathValue["name"] = derived3.Name;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        directoriesValue["dataSources"] = dataSourcesArray;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.IISLogs != null)
+                                    {
+                                        directoriesValue["iisLogs"] = derived.DiagnosticMonitorConfiguration.Directories.IISLogs;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs != null)
+                                    {
+                                        directoriesValue["failedRequestLogs"] = derived.DiagnosticMonitorConfiguration.Directories.FailedRequestLogs;
+                                    }
+                                    
+                                    directoriesValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.Directories.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.PerformanceCounters != null)
+                                {
+                                    JObject performanceCountersValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["performanceCounters"] = performanceCountersValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters != null)
+                                    {
+                                        JArray countersArray = new JArray();
+                                        foreach (PerformanceCounterConfiguration countersItem in derived.DiagnosticMonitorConfiguration.PerformanceCounters.Counters)
+                                        {
+                                            JObject performanceCounterConfigurationValue = new JObject();
+                                            countersArray.Add(performanceCounterConfigurationValue);
+                                            
+                                            if (countersItem.Annotations != null)
+                                            {
+                                                JArray annotationsArray = new JArray();
+                                                foreach (LocalizedString annotationsItem in countersItem.Annotations)
+                                                {
+                                                    JObject localizedStringValue = new JObject();
+                                                    annotationsArray.Add(localizedStringValue);
+                                                    
+                                                    if (annotationsItem.Value != null)
+                                                    {
+                                                        localizedStringValue["value"] = annotationsItem.Value;
+                                                    }
+                                                    
+                                                    if (annotationsItem.Locale != null)
+                                                    {
+                                                        localizedStringValue["locale"] = annotationsItem.Locale;
+                                                    }
+                                                }
+                                                performanceCounterConfigurationValue["annotations"] = annotationsArray;
+                                            }
+                                            
+                                            if (countersItem.CounterSpecifier != null)
+                                            {
+                                                performanceCounterConfigurationValue["counterSpecifier"] = countersItem.CounterSpecifier;
+                                            }
+                                            
+                                            performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
+                                            
+                                            if (countersItem.Unit != null)
+                                            {
+                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit;
+                                            }
+                                        }
+                                        performanceCountersValue["counters"] = countersArray;
+                                    }
+                                    
+                                    performanceCountersValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.PerformanceCounters.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.WindowsEventLog != null)
+                                {
+                                    JObject windowsEventLogValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["windowsEventLog"] = windowsEventLogValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources != null)
+                                    {
+                                        JArray dataSourcesArray2 = new JArray();
+                                        foreach (string dataSourcesItem2 in derived.DiagnosticMonitorConfiguration.WindowsEventLog.DataSources)
+                                        {
+                                            dataSourcesArray2.Add(dataSourcesItem2);
+                                        }
+                                        windowsEventLogValue["dataSources"] = dataSourcesArray2;
+                                    }
+                                    
+                                    windowsEventLogValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.WindowsEventLog.ScheduledTransferPeriod);
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.EtwProviders != null)
+                                {
+                                    JObject etwProvidersValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["etwProviders"] = etwProvidersValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders != null)
+                                    {
+                                        JArray eventSourceProvidersArray = new JArray();
+                                        foreach (EtwProvider eventSourceProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.EventSourceProviders)
+                                        {
+                                            JObject etwProviderValue = new JObject();
+                                            eventSourceProvidersArray.Add(etwProviderValue);
+                                            
+                                            etwProviderValue["scheduledTransferPeriod"] = TypeConversion.To8601String(eventSourceProvidersItem.ScheduledTransferPeriod);
+                                            
+                                            if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            {
+                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.Provider != null)
+                                            {
+                                                etwProviderValue["provider"] = eventSourceProvidersItem.Provider;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
+                                            {
+                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.Events != null)
+                                            {
+                                                JArray eventsArray = new JArray();
+                                                foreach (EtwEventConfiguration eventsItem in eventSourceProvidersItem.Events)
+                                                {
+                                                    JObject etwEventConfigurationValue = new JObject();
+                                                    eventsArray.Add(etwEventConfigurationValue);
+                                                    
+                                                    etwEventConfigurationValue["eventId"] = eventsItem.EventId;
+                                                    
+                                                    if (eventsItem.Destination != null)
+                                                    {
+                                                        etwEventConfigurationValue["destination"] = eventsItem.Destination;
+                                                    }
+                                                }
+                                                etwProviderValue["events"] = eventsArray;
+                                            }
+                                            
+                                            if (eventSourceProvidersItem.DefaultDestination != null)
+                                            {
+                                                etwProviderValue["defaultDestination"] = eventSourceProvidersItem.DefaultDestination;
+                                            }
+                                        }
+                                        etwProvidersValue["eventSourceProviders"] = eventSourceProvidersArray;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders != null)
+                                    {
+                                        JArray manifestProvidersArray = new JArray();
+                                        foreach (EtwProvider manifestProvidersItem in derived.DiagnosticMonitorConfiguration.EtwProviders.ManifestProviders)
+                                        {
+                                            JObject etwProviderValue2 = new JObject();
+                                            manifestProvidersArray.Add(etwProviderValue2);
+                                            
+                                            etwProviderValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(manifestProvidersItem.ScheduledTransferPeriod);
+                                            
+                                            if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
+                                            {
+                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                            }
+                                            
+                                            if (manifestProvidersItem.Provider != null)
+                                            {
+                                                etwProviderValue2["provider"] = manifestProvidersItem.Provider;
+                                            }
+                                            
+                                            if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
+                                            {
+                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
+                                            }
+                                            
+                                            if (manifestProvidersItem.Events != null)
+                                            {
+                                                JArray eventsArray2 = new JArray();
+                                                foreach (EtwEventConfiguration eventsItem2 in manifestProvidersItem.Events)
+                                                {
+                                                    JObject etwEventConfigurationValue2 = new JObject();
+                                                    eventsArray2.Add(etwEventConfigurationValue2);
+                                                    
+                                                    etwEventConfigurationValue2["eventId"] = eventsItem2.EventId;
+                                                    
+                                                    if (eventsItem2.Destination != null)
+                                                    {
+                                                        etwEventConfigurationValue2["destination"] = eventsItem2.Destination;
+                                                    }
+                                                }
+                                                etwProviderValue2["events"] = eventsArray2;
+                                            }
+                                            
+                                            if (manifestProvidersItem.DefaultDestination != null)
+                                            {
+                                                etwProviderValue2["defaultDestination"] = manifestProvidersItem.DefaultDestination;
+                                            }
+                                        }
+                                        etwProvidersValue["manifestProviders"] = manifestProvidersArray;
+                                    }
+                                }
+                                
+                                if (derived.DiagnosticMonitorConfiguration.CrashDumps != null)
+                                {
+                                    JObject crashDumpsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["crashDumps"] = crashDumpsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
+                                    {
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
+                                    {
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)
+                                    {
+                                        crashDumpsValue["containerName"] = derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.CrashDumps.Processes != null)
+                                    {
+                                        JArray processesArray = new JArray();
+                                        foreach (string processesItem in derived.DiagnosticMonitorConfiguration.CrashDumps.Processes)
+                                        {
+                                            processesArray.Add(processesItem);
+                                        }
+                                        crashDumpsValue["processes"] = processesArray;
+                                    }
+                                }
+                            }
+                            
+                            if (derived.LocalResourceDirectory != null)
+                            {
+                                JObject localResourceDirectoryValue = new JObject();
+                                publicConfigurationValue["localResourceDirectory"] = localResourceDirectoryValue;
+                                
+                                localResourceDirectoryValue["expandEnvironment"] = derived.LocalResourceDirectory.ExpandEnvironment;
+                                
+                                if (derived.LocalResourceDirectory.Path != null)
+                                {
+                                    localResourceDirectoryValue["path"] = derived.LocalResourceDirectory.Path;
+                                }
+                            }
+                            
+                            if (derived.StorageAccount != null)
+                            {
+                                publicConfigurationValue["storageAccount"] = derived.StorageAccount;
+                            }
+                        }
                     }
                 }
                 
