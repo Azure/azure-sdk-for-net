@@ -25,6 +25,7 @@
     <Compile Include="Customizations\Shoebox\MetricFilterRegexParser.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxClient.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
+    <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Generated\InsightsClient.cs" />
     <Compile Include="Generated\InsightsManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

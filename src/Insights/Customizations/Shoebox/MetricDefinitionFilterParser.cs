@@ -1,4 +1,8 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -11,7 +15,7 @@ namespace Microsoft.Azure.Insights
     public static class MetricDefinitionFilterParser
     {
         private static Regex splitRegex = new Regex("\\sor\\s", RegexOptions.Compiled);
-        private static Regex clauseRegex = new Regex("^\\s*[Nn]ame\\s+eq\\s+'(?<value>[^']+)'\\s*$", RegexOptions.Compiled);
+        private static Regex clauseRegex = new Regex("^\\s*name\\.value\\s+eq\\s+'(?<value>[^']+)'\\s*$", RegexOptions.Compiled);
 
         /// <summary>
         /// Parses the filter string
@@ -29,7 +33,7 @@ namespace Microsoft.Azure.Insights
 
                 if (!match.Success)
                 {
-                    throw new FormatException("Only conditions of the form 'Name eq <value>' are allowed");
+                    throw new FormatException("Only conditions of the form 'name.value eq <value>' are allowed");
                 }
 
                 names.Add(match.Groups["value"].Captures[0].Value);

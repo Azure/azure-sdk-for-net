@@ -14,23 +14,25 @@ namespace Microsoft.Azure.Insights
         {
             // Parse the filter and retrieve cached definitions
             IEnumerable<string> names = MetricDefinitionFilterParser.Parse(filterString);
-            IEnumerable<MetricDefinition> definitions = this.Client.Cache.Retrieve(resourceUri);
+            IEnumerable<MetricDefinition> definitions = this.Client.Cache[resourceUri];
 
             // Find the names in the filter that don't appear on any of the cached definitions
-            IEnumerable<string> missing = names.Where((n => !definitions.Any(d => string.Equals(d.Name.Value, n, StringComparison.OrdinalIgnoreCase))));
+            IEnumerable<string> missing = definitions == null
+                ? names
+                : names.Where((n => !definitions.Any(d => string.Equals(d.Name.Value, n, StringComparison.OrdinalIgnoreCase))));
 
             // Request any missing definitions and update cache (if any)
             if (missing.Any())
             {
                 definitions =
-                    definitions.Union(
+                    (definitions ?? new MetricDefinition[0]).Union(
                         (await
                             this.GetMetricDefinitionsInternalAsync(resourceUri,
                                 ShoeboxHelper.GenerateMetricDefinitionFilterString(missing), cancellationToken))
                             .MetricDefinitionCollection.Value);
 
                 // Store the new set of definitions
-                this.Client.Cache.Store(resourceUri, definitions);
+                this.Client.Cache[resourceUri] = definitions;
             }
 
             // Filter out the metrics that were cached but not requested and wrap

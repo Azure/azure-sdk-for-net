@@ -1,4 +1,8 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -7,7 +11,7 @@ namespace Microsoft.Azure.Insights
 {
     /// <summary>
     /// Simple filter parser class to implement very basic $filter
-    /// Supported syntax: (optional names clause) and (timegrain clause) and (starttime clause) and (endtime clause)
+    /// Supported syntax: (optional names clause) and (timeGrain clause) and (startTime clause) and (endTime clause)
     /// Clauses can be in any order
     /// Names clause must be surrounded by parentheses if it contains multiple names
     /// No parentheses are allowed outside the names clause
@@ -19,7 +23,7 @@ namespace Microsoft.Azure.Insights
         private static Regex nameGroupRegex = new Regex("^\\s*\\((?<clauses>[^)]*?)\\)\\s*$", RegexOptions.Compiled);
         private static Regex nameClauseRegex = new Regex("^\\s*[Nn]ame\\s+eq\\s+'(?<value>[^']*?)'\\s*$", RegexOptions.Compiled);
         private static Regex clauseRegex = new Regex(
-                "^\\s*(?<name>([Tt]ime[Gg]rain|[Ss]tart[Tt]ime|[Ee]nd[Tt]ime|[Nn]ame\\.[Vv]alue))\\s+eq\\s+(?<value>('[^']*?')|\\S+|(duration'[^']*?'))\\s*$",
+                "^\\s*(?<name>(timeGrain|startTime|endTime|name\\.value))\\s+eq\\s+(?<value>('[^']*?')|\\S+|(duration'[^']*?'))\\s*$",
                 RegexOptions.ExplicitCapture | RegexOptions.Compiled);
 
         /// <summary>
@@ -53,7 +57,7 @@ namespace Microsoft.Azure.Insights
                         if (!match.Success)
                         {
                             throw new FormatException(
-                                "Only conditions of the form 'Name eq <value>' are allowed inside parentheses");
+                                "Only conditions of the form 'name.value eq <value>' are allowed inside parentheses");
                         }
 
                         names.Add(match.Groups["value"].Captures[0].Value);
@@ -65,7 +69,7 @@ namespace Microsoft.Azure.Insights
                 else if (clause.Trim().StartsWith("("))
                 {
                     throw new FormatException("Parentheses Error: only one set of parentheses is allowed; " +
-                                              "If present, only (and all) constraints on 'Name' must appear inside. " +
+                                              "If present, only (and all) constraints on 'name' must appear inside. " +
                                               "No 'and' (and all 'or') operators may appear within parentheses.");
                 }
                 else
@@ -77,7 +81,7 @@ namespace Microsoft.Azure.Insights
                         match.Groups["value"].Captures.Count <= 0)
                     {
                         throw new FormatException(
-                            "only conditions of the form '<name> eq <value>' are allowed, where <name> = 'timegrain', 'starttime', 'endtime', or 'name'");
+                            "only conditions of the form '<name> eq <value>' are allowed, where <name> = 'timeGrain', 'startTime', 'endTime', or 'name'");
                     }
 
                     // Collect name and value
@@ -85,9 +89,9 @@ namespace Microsoft.Azure.Insights
                     string value = match.Groups["value"].Captures[0].Value;
 
                     // Case sensitivity is handled in the regex
-                    switch (name.ToLowerInvariant())
+                    switch (name)
                     {
-                        case "timegrain":
+                        case "timeGrain":
                             // verify the OData duration value indicator
                             string prefix = "duration'";
                             if (value.StartsWith("duration'") && value.EndsWith("'") && value.Length > prefix.Length)
@@ -96,12 +100,12 @@ namespace Microsoft.Azure.Insights
                                 filter.TimeGrain =
                                     XmlConvert.ToTimeSpan(value.Substring(9, value.Length - prefix.Length - 1));
                             }
-                            else throw new FormatException("Invalid duration value for timegrain");
+                            else throw new FormatException("Invalid duration value for timeGrain");
                             break;
-                        case "starttime":
+                        case "startTime":
                             filter.StartTime = DateTime.Parse(value);
                             break;
-                        case "endtime":
+                        case "endTime":
                             filter.EndTime = DateTime.Parse(value);
                             break;
                         case "name": // single name (without) parentheses is allowed, but only one
@@ -118,11 +122,11 @@ namespace Microsoft.Azure.Insights
                                     throw new FormatException("Invalid string value for name");
                                 }
                             }
-                            else throw new FormatException("Multiple 'Name' conditions must be within parentheses");
+                            else throw new FormatException("Multiple 'name' conditions must be within parentheses");
                             break;
                         default:
                             throw new FormatException(
-                                "Condition name must be one of: 'timegrain', 'starttime', 'endtime', or 'name'");
+                                "Condition name must be one of: 'timeGrain', 'startTime', 'endTime', or 'name'");
                     }
                 }
             }

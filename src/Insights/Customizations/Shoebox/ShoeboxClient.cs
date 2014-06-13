@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Insights
         {
             return
                 location.TableInfo.Where(info => info.StartTime < filter.EndTime && info.EndTime > filter.StartTime)
-                    .Select(info => new CloudTable(new Uri(location.TableEndpoint), new StorageCredentials(info.SasToken)));
+                    .Select(info => new CloudTableClient(new Uri(location.TableEndpoint), new StorageCredentials(info.SasToken)).GetTableReference(info.TableName));
         }
 
         // Creates a TableQuery for each named metric and return a dictionary mapping each name to its query
@@ -172,13 +172,19 @@ namespace Microsoft.Azure.Insights
         private static Dictionary<string, TableQuery> GenerateMetricNameQueries(IEnumerable<string> names, string partitionKey, DateTime startTime, DateTime endTime)
         {
             return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeStorageKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
-                GenerateMetricQuery(partitionKey, kvp.Key + (DateTime.MaxValue.Ticks - startTime.Ticks), kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks)));
+                GenerateMetricQuery(
+                partitionKey,
+                kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks).ToString("D19"),
+                kvp.Key + (DateTime.MaxValue.Ticks - startTime.Ticks).ToString("D19")));
         }
 
         // Creates a TableQuery for getting metrics by timestamp
         private static TableQuery GenerateMetricTimestampQuery(string partitionKey, DateTime startTime, DateTime endTime)
         {
-            return GenerateMetricQuery(partitionKey, DateTime.MaxValue.Ticks - startTime.Ticks + "__", DateTime.MaxValue.Ticks - endTime.Ticks + 1 + "__");
+            return GenerateMetricQuery(
+                partitionKey,
+                (DateTime.MaxValue.Ticks - endTime.Ticks + 1).ToString("D19") + "__",
+                (DateTime.MaxValue.Ticks - startTime.Ticks).ToString("D19") + "__");
         }
 
         // Creates a TableQuery object which filters entities to a particular partition key and the given row key range
@@ -222,8 +228,11 @@ namespace Microsoft.Azure.Insights
                     case "Count":
                         metricValue.Count = entity[key].Int64Value;
                         break;
+                    case "Last":
+                        metricValue.Last = entity[key].DoubleValue;
+                        break;
                     default:
-                        otherProperties.Add(key, entity[key].StringValue);
+                        otherProperties.Add(key, entity[key].ToString());
                         break;
                 }
             }

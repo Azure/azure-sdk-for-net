@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -67,21 +65,25 @@ namespace Microsoft.Azure.Insights
                         Names = g.Select(d => d.Name.Value)
                     });
 
+            MetricCollection metrics= new MetricCollection()
+            {
+                Value =
+                    (await
+                        Task.Factory.ContinueWhenAll(
+                            groups.Select(g => g.Key.Location == null
+                                    ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), CancellationToken.None)
+                                    : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location)).ToArray(),
+                            tasks =>
+                                tasks.Aggregate<Task<MetricListResponse>, IEnumerable<Metric>>(new List<Metric>(),
+                                    (list, r) => list.Union(r.Result.MetricCollection.Value)))).ToList()
+            };
+
+            CompleteShoeboxMetrics(metrics, definitions, resourceUri);
+            
             return new MetricListResponse()
             {
                 StatusCode = HttpStatusCode.OK,
-                MetricCollection = new MetricCollection()
-                {
-                    Value =
-                        (await
-                            Task.Factory.ContinueWhenAll(
-                                groups.Select(g => g.Key.Location == null
-                                        ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), CancellationToken.None)
-                                        : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location)).ToArray(),
-                                tasks =>
-                                    tasks.Aggregate<Task<MetricListResponse>, IEnumerable<Metric>>(new List<Metric>(),
-                                        (list, r) => list.Union(r.Result.MetricCollection.Value)))).ToList()
-                }
+                MetricCollection = metrics
             };
         }
 
