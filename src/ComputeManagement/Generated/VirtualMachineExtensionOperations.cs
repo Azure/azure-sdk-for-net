@@ -257,6 +257,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;
                             }
+                            
+                            XElement isInternalExtensionElement = resourceExtensionsElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                resourceExtensionInstance.IsInternalExtension = isInternalExtensionInstance;
+                            }
+                            
+                            XElement disallowMajorVersionUpgradeElement = resourceExtensionsElement.Element(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
+                            if (disallowMajorVersionUpgradeElement != null && string.IsNullOrEmpty(disallowMajorVersionUpgradeElement.Value) == false)
+                            {
+                                bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
+                                resourceExtensionInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
+                            }
                         }
                     }
                     
@@ -495,6 +509,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 resourceExtensionInstance.IsJsonExtension = isJsonExtensionInstance;
+                            }
+                            
+                            XElement isInternalExtensionElement = resourceExtensionsElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                resourceExtensionInstance.IsInternalExtension = isInternalExtensionInstance;
+                            }
+                            
+                            XElement disallowMajorVersionUpgradeElement = resourceExtensionsElement.Element(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
+                            if (disallowMajorVersionUpgradeElement != null && string.IsNullOrEmpty(disallowMajorVersionUpgradeElement.Value) == false)
+                            {
+                                bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
+                                resourceExtensionInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
                             }
                         }
                     }
