@@ -137,6 +137,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._hostingResources = value; }
             }
             
+            private bool? _isInternalExtension;
+            
+            /// <summary>
+            /// Optional. Boolean property indicating whether the extension is
+            /// internal or public.
+            /// </summary>
+            public bool? IsInternalExtension
+            {
+                get { return this._isInternalExtension; }
+                set { this._isInternalExtension = value; }
+            }
+            
             private bool? _isJsonExtension;
             
             /// <summary>

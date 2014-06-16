@@ -3795,18 +3795,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Type = typeInstance;
                             }
                             
-                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                extensionImageInstance.Label = labelInstance;
-                            }
-                            
                             XElement versionElement = extensionImagesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
                             if (versionElement != null)
                             {
                                 string versionInstance = versionElement.Value;
                                 extensionImageInstance.Version = versionInstance;
+                            }
+                            
+                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                extensionImageInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -3816,18 +3816,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Description = descriptionInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
-                            {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
                                 string hostingResourcesInstance = hostingResourcesElement.Value;
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
+                            }
+                            
+                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (thumbprintAlgorithmElement != null)
+                            {
+                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -3891,6 +3891,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
+                            }
+                            
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
                             }
                         }
                     }
@@ -4240,18 +4247,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Type = typeInstance;
                             }
                             
-                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                extensionImageInstance.Label = labelInstance;
-                            }
-                            
                             XElement versionElement = extensionImagesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
                             if (versionElement != null)
                             {
                                 string versionInstance = versionElement.Value;
                                 extensionImageInstance.Version = versionInstance;
+                            }
+                            
+                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                extensionImageInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -4261,18 +4268,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Description = descriptionInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
-                            {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
                                 string hostingResourcesInstance = hostingResourcesElement.Value;
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
+                            }
+                            
+                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (thumbprintAlgorithmElement != null)
+                            {
+                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -4336,6 +4343,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
+                            }
+                            
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
                             }
                         }
                     }

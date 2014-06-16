@@ -394,7 +394,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SampleConfig != null)
                 {
                     XElement sampleConfigElement = new XElement(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
-                    sampleConfigElement.Value = TypeConversion.ToBase64String(parameters.SampleConfig);
+                    sampleConfigElement.Value = parameters.SampleConfig;
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
@@ -970,7 +970,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 if (parameters.SampleConfig != null)
                 {
                     XElement sampleConfigElement = new XElement(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
-                    sampleConfigElement.Value = TypeConversion.ToBase64String(parameters.SampleConfig);
+                    sampleConfigElement.Value = parameters.SampleConfig;
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
