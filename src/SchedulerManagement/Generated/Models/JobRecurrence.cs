@@ -93,5 +93,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobRecurrence()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobRecurrence class with required
+        /// arguments.
+        /// </summary>
+        public JobRecurrence(JobRecurrenceFrequency frequency)
+            : this()
+        {
+            this.Frequency = frequency;
+        }
     }
 }

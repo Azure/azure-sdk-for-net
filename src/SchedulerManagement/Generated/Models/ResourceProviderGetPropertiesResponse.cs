@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public ResourceProviderGetPropertiesResponse()
         {
-            this._properties = new Dictionary<string, string>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
 }
