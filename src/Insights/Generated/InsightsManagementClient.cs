@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -605,6 +606,17 @@ namespace Microsoft.Azure.Management.Insights.Models
         {
             get { return this._etwProviders; }
             set { this._etwProviders = value; }
+        }
+        
+        private Metrics _metrics;
+        
+        /// <summary>
+        /// metric collection configuration.
+        /// </summary>
+        public Metrics Metrics
+        {
+            get { return this._metrics; }
+            set { this._metrics = value; }
         }
         
         private int? _overallQuotaInMB;
@@ -1346,6 +1358,66 @@ namespace Microsoft.Azure.Management.Insights.Models
         }
     }
     
+    /// <summary>
+    /// Represents an metric aggregation.
+    /// </summary>
+    public partial class MetricAggregation
+    {
+        private TimeSpan _scheduledTransferPeriod;
+        
+        /// <summary>
+        /// aggregation window
+        /// </summary>
+        public TimeSpan ScheduledTransferPeriod
+        {
+            get { return this._scheduledTransferPeriod; }
+            set { this._scheduledTransferPeriod = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricAggregation class.
+        /// </summary>
+        public MetricAggregation()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Represents a metric collection configuration.
+    /// </summary>
+    public partial class Metrics
+    {
+        private IList<MetricAggregation> _metricAggregations;
+        
+        /// <summary>
+        /// the list of aggregations to generate.
+        /// </summary>
+        public IList<MetricAggregation> MetricAggregations
+        {
+            get { return this._metricAggregations; }
+            set { this._metricAggregations = value; }
+        }
+        
+        private string _resourceId;
+        
+        /// <summary>
+        /// resource identifier.
+        /// </summary>
+        public string ResourceId
+        {
+            get { return this._resourceId; }
+            set { this._resourceId = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Metrics class.
+        /// </summary>
+        public Metrics()
+        {
+            this._metricAggregations = new List<MetricAggregation>();
+        }
+    }
+    
     public enum MetricStatisticType
     {
         /// <summary>
@@ -1570,12 +1642,12 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._sampleRate = value; }
         }
         
-        private string _unit;
+        private Units _unit;
         
         /// <summary>
         /// units represented by performance counter.
         /// </summary>
-        public string Unit
+        public Units Unit
         {
             get { return this._unit; }
             set { this._unit = value; }
@@ -2698,6 +2770,39 @@ namespace Microsoft.Azure.Management.Insights.Models
         public TimeWindow()
         {
         }
+    }
+    
+    public enum Units
+    {
+        /// <summary>
+        /// represents a count.
+        /// </summary>
+        Count = 0,
+        
+        /// <summary>
+        /// represents bytes.
+        /// </summary>
+        Bytes = 1,
+        
+        /// <summary>
+        /// represents seconds.
+        /// </summary>
+        Seconds = 2,
+        
+        /// <summary>
+        /// represents a percentage.
+        /// </summary>
+        Percent = 3,
+        
+        /// <summary>
+        /// represents a count per second.
+        /// </summary>
+        CountPerSecond = 4,
+        
+        /// <summary>
+        /// represents a bytes per second.
+        /// </summary>
+        BytesPerSecond = 5,
     }
     
     /// <summary>
@@ -8521,6 +8626,30 @@ namespace Microsoft.Azure.Management.Insights
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
                                 }
                                 
+                                if (derived.DiagnosticMonitorConfiguration.Metrics != null)
+                                {
+                                    JObject metricsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["metrics"] = metricsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Metrics.ResourceId != null)
+                                    {
+                                        metricsValue["resourceId"] = derived.DiagnosticMonitorConfiguration.Metrics.ResourceId;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations != null)
+                                    {
+                                        JArray aggregationsArray = new JArray();
+                                        foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                        {
+                                            JObject metricsValue2 = new JObject();
+                                            aggregationsArray.Add(metricsValue2);
+                                            
+                                            metricsValue2["scheduledTransferPeriod"] = aggregationsItem.ScheduledTransferPeriod.ToString();
+                                        }
+                                        metricsValue["aggregations"] = aggregationsArray;
+                                    }
+                                }
+                                
                                 if (derived.DiagnosticMonitorConfiguration.Directories != null)
                                 {
                                     JObject directoriesValue = new JObject();
@@ -8628,10 +8757,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
                                             
-                                            if (countersItem.Unit != null)
-                                            {
-                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit;
-                                            }
+                                            performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                         }
                                         performanceCountersValue["counters"] = countersArray;
                                     }
@@ -9007,6 +9133,38 @@ namespace Microsoft.Azure.Management.Insights
                                         }
                                     }
                                     
+                                    JToken metricsValue = diagnosticMonitorConfigurationValue["metrics"];
+                                    if (metricsValue != null)
+                                    {
+                                        Metrics metricsInstance = new Metrics();
+                                        diagnosticMonitorConfigurationInstance.Metrics = metricsInstance;
+                                        
+                                        JToken resourceIdValue = metricsValue["resourceId"];
+                                        if (resourceIdValue != null)
+                                        {
+                                            string resourceIdInstance = (string)resourceIdValue;
+                                            metricsInstance.ResourceId = resourceIdInstance;
+                                        }
+                                        
+                                        JArray aggregationsArray = (JArray)metricsValue["aggregations"];
+                                        if (aggregationsArray != null)
+                                        {
+                                            foreach (JToken aggregationsValue in aggregationsArray)
+                                            {
+                                                MetricAggregation metricsInstance2 = new MetricAggregation();
+                                                metricsInstance.MetricAggregations.Add(metricsInstance2);
+                                                
+                                                JToken scheduledTransferPeriodValue2 = aggregationsValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue2 != null)
+                                                {
+                                                    // how
+                                                    TimeSpan scheduledTransferPeriodInstance2 = TimeSpan.Parse((string)scheduledTransferPeriodValue2, CultureInfo.InvariantCulture);
+                                                    metricsInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    
                                     JToken directoriesValue = diagnosticMonitorConfigurationValue["directories"];
                                     if (directoriesValue != null)
                                     {
@@ -9088,11 +9246,11 @@ namespace Microsoft.Azure.Management.Insights
                                             directoriesInstance.FailedRequestLogs = failedRequestLogsInstance;
                                         }
                                         
-                                        JToken scheduledTransferPeriodValue2 = directoriesValue["scheduledTransferPeriod"];
-                                        if (scheduledTransferPeriodValue2 != null)
+                                        JToken scheduledTransferPeriodValue3 = directoriesValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue3 != null)
                                         {
-                                            TimeSpan scheduledTransferPeriodInstance2 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue2);
-                                            directoriesInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
+                                            TimeSpan scheduledTransferPeriodInstance3 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue3);
+                                            directoriesInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance3;
                                         }
                                     }
                                     
@@ -9151,17 +9309,18 @@ namespace Microsoft.Azure.Management.Insights
                                                 JToken unitValue = countersValue["unit"];
                                                 if (unitValue != null)
                                                 {
-                                                    string unitInstance = (string)unitValue;
+                                                    // how
+                                                    Units unitInstance = (Units)Enum.Parse(typeof(Units), (string)unitValue, false);
                                                     performanceCounterConfigurationInstance.Unit = unitInstance;
                                                 }
                                             }
                                         }
                                         
-                                        JToken scheduledTransferPeriodValue3 = performanceCountersValue["scheduledTransferPeriod"];
-                                        if (scheduledTransferPeriodValue3 != null)
+                                        JToken scheduledTransferPeriodValue4 = performanceCountersValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue4 != null)
                                         {
-                                            TimeSpan scheduledTransferPeriodInstance3 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue3);
-                                            performanceCountersInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance3;
+                                            TimeSpan scheduledTransferPeriodInstance4 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue4);
+                                            performanceCountersInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance4;
                                         }
                                     }
                                     
@@ -9180,11 +9339,11 @@ namespace Microsoft.Azure.Management.Insights
                                             }
                                         }
                                         
-                                        JToken scheduledTransferPeriodValue4 = windowsEventLogValue["scheduledTransferPeriod"];
-                                        if (scheduledTransferPeriodValue4 != null)
+                                        JToken scheduledTransferPeriodValue5 = windowsEventLogValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue5 != null)
                                         {
-                                            TimeSpan scheduledTransferPeriodInstance4 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue4);
-                                            windowsEventLogInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance4;
+                                            TimeSpan scheduledTransferPeriodInstance5 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue5);
+                                            windowsEventLogInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance5;
                                         }
                                     }
                                     
@@ -9202,11 +9361,11 @@ namespace Microsoft.Azure.Management.Insights
                                                 EtwProvider etwProviderInstance = new EtwProvider();
                                                 etwProvidersInstance.EventSourceProviders.Add(etwProviderInstance);
                                                 
-                                                JToken scheduledTransferPeriodValue5 = eventSourceProvidersValue["scheduledTransferPeriod"];
-                                                if (scheduledTransferPeriodValue5 != null)
+                                                JToken scheduledTransferPeriodValue6 = eventSourceProvidersValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue6 != null)
                                                 {
-                                                    TimeSpan scheduledTransferPeriodInstance5 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue5);
-                                                    etwProviderInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance5;
+                                                    TimeSpan scheduledTransferPeriodInstance6 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue6);
+                                                    etwProviderInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance6;
                                                 }
                                                 
                                                 JToken scheduledTransferLogLevelFilterValue2 = eventSourceProvidersValue["scheduledTransferLogLevelFilter"];
@@ -9272,11 +9431,11 @@ namespace Microsoft.Azure.Management.Insights
                                                 EtwProvider etwProviderInstance2 = new EtwProvider();
                                                 etwProvidersInstance.ManifestProviders.Add(etwProviderInstance2);
                                                 
-                                                JToken scheduledTransferPeriodValue6 = manifestProvidersValue["scheduledTransferPeriod"];
-                                                if (scheduledTransferPeriodValue6 != null)
+                                                JToken scheduledTransferPeriodValue7 = manifestProvidersValue["scheduledTransferPeriod"];
+                                                if (scheduledTransferPeriodValue7 != null)
                                                 {
-                                                    TimeSpan scheduledTransferPeriodInstance6 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue6);
-                                                    etwProviderInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance6;
+                                                    TimeSpan scheduledTransferPeriodInstance7 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue7);
+                                                    etwProviderInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance7;
                                                 }
                                                 
                                                 JToken scheduledTransferLogLevelFilterValue3 = manifestProvidersValue["scheduledTransferLogLevelFilter"];
@@ -9545,6 +9704,30 @@ namespace Microsoft.Azure.Management.Insights
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
                                 }
                                 
+                                if (derived.DiagnosticMonitorConfiguration.Metrics != null)
+                                {
+                                    JObject metricsValue = new JObject();
+                                    diagnosticMonitorConfigurationValue["metrics"] = metricsValue;
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Metrics.ResourceId != null)
+                                    {
+                                        metricsValue["resourceId"] = derived.DiagnosticMonitorConfiguration.Metrics.ResourceId;
+                                    }
+                                    
+                                    if (derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations != null)
+                                    {
+                                        JArray aggregationsArray = new JArray();
+                                        foreach (MetricAggregation aggregationsItem in derived.DiagnosticMonitorConfiguration.Metrics.MetricAggregations)
+                                        {
+                                            JObject metricsValue2 = new JObject();
+                                            aggregationsArray.Add(metricsValue2);
+                                            
+                                            metricsValue2["scheduledTransferPeriod"] = aggregationsItem.ScheduledTransferPeriod.ToString();
+                                        }
+                                        metricsValue["aggregations"] = aggregationsArray;
+                                    }
+                                }
+                                
                                 if (derived.DiagnosticMonitorConfiguration.Directories != null)
                                 {
                                     JObject directoriesValue = new JObject();
@@ -9652,10 +9835,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             performanceCounterConfigurationValue["sampleRate"] = TypeConversion.To8601String(countersItem.SampleRate);
                                             
-                                            if (countersItem.Unit != null)
-                                            {
-                                                performanceCounterConfigurationValue["unit"] = countersItem.Unit;
-                                            }
+                                            performanceCounterConfigurationValue["unit"] = countersItem.Unit.ToString();
                                         }
                                         performanceCountersValue["counters"] = countersArray;
                                     }
