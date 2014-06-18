@@ -1305,9 +1305,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement deploymentDeleteRoleInstanceParametersElement = new XElement(XName.Get("DeploymentDeleteRoleInstanceParameters", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(deploymentDeleteRoleInstanceParametersElement);
-                
                 if (parameters.Name != null)
                 {
                     XElement roleInstancesSequenceElement = new XElement(XName.Get("RoleInstances", "http://schemas.microsoft.com/windowsazure"));
@@ -1317,7 +1314,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         roleInstancesItemElement.Value = roleInstancesItem;
                         roleInstancesSequenceElement.Add(roleInstancesItemElement);
                     }
-                    deploymentDeleteRoleInstanceParametersElement.Add(roleInstancesSequenceElement);
+                    requestDoc.Add(roleInstancesSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -1466,9 +1463,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement deploymentDeleteRoleInstanceParametersElement = new XElement(XName.Get("DeploymentDeleteRoleInstanceParameters", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(deploymentDeleteRoleInstanceParametersElement);
-                
                 if (parameters.Name != null)
                 {
                     XElement roleInstancesSequenceElement = new XElement(XName.Get("RoleInstances", "http://schemas.microsoft.com/windowsazure"));
@@ -1478,7 +1472,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         roleInstancesItemElement.Value = roleInstancesItem;
                         roleInstancesSequenceElement.Add(roleInstancesItemElement);
                     }
-                    deploymentDeleteRoleInstanceParametersElement.Add(roleInstancesSequenceElement);
+                    requestDoc.Add(roleInstancesSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();
