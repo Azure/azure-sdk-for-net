@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -76,6 +76,7 @@
     <Compile Include="Generated\ResourceManagementClientExtensions.cs" />
     <Compile Include="Generated\ResourceOperations.cs" />
     <Compile Include="Generated\ResourceOperationsExtensions.cs" />
+    <Compile Include="Models\ResourceIdentity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceManagementClient.Customization.cs" />
   </ItemGroup>

@@ -21,43 +21,33 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Scheduler.Models;
+using Microsoft.Azure.Management.WebSites.Models;
 
-namespace Microsoft.WindowsAzure.Scheduler.Models
+namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// Parameters supplied to the List Jobs with filter operation.
+    /// Create or update Server Farm parameters.
     /// </summary>
-    public partial class JobListWithFilterParameters : JobListParameters
+    public partial class WebSiteCreateOrUpdateParameters
     {
-        private JobState _state;
+        private WebSiteBase _webSite;
         
         /// <summary>
-        /// Required. Filter the job history to have it only return job
-        /// execution attempts having a particular State, enabled, disabled,
-        /// faulted, or completed.
+        /// Required. Gets or sets information about a website being created of
+        /// updated.
         /// </summary>
-        public JobState State
+        public WebSiteBase WebSite
         {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._webSite; }
+            set { this._webSite = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the JobListWithFilterParameters class.
+        /// Initializes a new instance of the WebSiteCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public JobListWithFilterParameters()
+        public WebSiteCreateOrUpdateParameters()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JobListWithFilterParameters class
-        /// with required arguments.
-        /// </summary>
-        public JobListWithFilterParameters(JobState state)
-            : this()
-        {
-            this.State = state;
         }
     }
 }

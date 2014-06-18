@@ -57,16 +57,13 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Management API. The
-        /// Management APIs use JWT bearer tokens over SSL to ensure that a
-        /// request made to the service is secure. No anonymous requests are
-        /// allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
-        TokenCloudCredentials Credentials
+        SubscriptionCloudCredentials Credentials
         {
-            get; set; 
+            get; 
         }
         
         /// <summary>

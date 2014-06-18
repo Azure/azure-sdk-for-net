@@ -26,48 +26,25 @@ using Microsoft.Azure.Management.WebSites.Models;
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// Resource parameters supplied to the Create Web Site operation.
+    /// Describes a website.
     /// </summary>
-    public partial class WebSiteCreateResourceParameters
+    public partial class WebSiteBase : ResourceBase
     {
-        private string _location;
+        private WebSiteBaseProperties _properties;
         
         /// <summary>
-        /// Required. The resource data center location.
+        /// Optional. Represents the properties of the website.
         /// </summary>
-        public string Location
+        public WebSiteBaseProperties Properties
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Required. The resource name.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private WebSiteCreateParameters _webSiteProperties;
-        
-        /// <summary>
-        /// Required. The Web Site properties.
-        /// </summary>
-        public WebSiteCreateParameters WebSiteProperties
-        {
-            get { return this._webSiteProperties; }
-            set { this._webSiteProperties = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebSiteCreateResourceParameters
-        /// class.
+        /// Initializes a new instance of the WebSiteBase class.
         /// </summary>
-        public WebSiteCreateResourceParameters()
+        public WebSiteBase()
         {
         }
     }

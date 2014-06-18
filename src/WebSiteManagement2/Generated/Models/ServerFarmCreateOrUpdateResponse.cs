@@ -21,20 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.WebSites.Models;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// The IP based SSL state.
+    /// The Create Server Farm operation response.
     /// </summary>
-    public enum IPBasedSslState
+    public partial class ServerFarmCreateOrUpdateResponse : OperationResponse
     {
-        NotConfigured = 0,
+        private ServerFarm _serverFarm;
         
-        InProgress = 1,
+        /// <summary>
+        /// Optional. Gets or sets the server farm.
+        /// </summary>
+        public ServerFarm ServerFarm
+        {
+            get { return this._serverFarm; }
+            set { this._serverFarm = value; }
+        }
         
-        Configured = 2,
-        
-        ConfigurationReverted = 3,
+        /// <summary>
+        /// Initializes a new instance of the ServerFarmCreateOrUpdateResponse
+        /// class.
+        /// </summary>
+        public ServerFarmCreateOrUpdateResponse()
+        {
+        }
     }
 }

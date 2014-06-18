@@ -56,5 +56,16 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         public JobCollectionMaxRecurrence()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobCollectionMaxRecurrence class
+        /// with required arguments.
+        /// </summary>
+        public JobCollectionMaxRecurrence(JobCollectionRecurrenceFrequency frequency, int interval)
+            : this()
+        {
+            this.Frequency = frequency;
+            this.Interval = interval;
+        }
     }
 }

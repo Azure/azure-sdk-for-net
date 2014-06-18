@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        public async Task<ServerFarmCreateResponse> CreateAsync(string resourceGroupName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ServerFarmCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, ServerFarmCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -103,9 +103,13 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Name == null)
+            if (parameters.ServerFarm == null)
             {
-                throw new ArgumentNullException("parameters.Name");
+                throw new ArgumentNullException("parameters.ServerFarm");
+            }
+            if (parameters.ServerFarm.Location == null)
+            {
+                throw new ArgumentNullException("parameters.ServerFarm.Location");
             }
             
             // Tracing
@@ -117,12 +121,12 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + parameters.Name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + parameters.ServerFarm.Name.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -153,30 +157,64 @@ namespace Microsoft.Azure.Management.WebSites
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject serverFarmValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["ServerFarm"] = serverFarmValue;
+                JObject serverFarmCreateOrUpdateParametersValue = new JObject();
+                requestDoc = serverFarmCreateOrUpdateParametersValue;
                 
-                serverFarmValue["Name"] = parameters.Name;
-                
-                if (parameters.CurrentNumberOfWorkers != null)
+                if (parameters.ServerFarm.Properties != null)
                 {
-                    serverFarmValue["CurrentNumberOfWorkers"] = parameters.CurrentNumberOfWorkers;
+                    JObject propertiesValue = new JObject();
+                    serverFarmCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.ServerFarm.Properties.CurrentNumberOfWorkers != null)
+                    {
+                        propertiesValue["currentNumberOfWorkers"] = parameters.ServerFarm.Properties.CurrentNumberOfWorkers;
+                    }
+                    
+                    if (parameters.ServerFarm.Properties.CurrentWorkerSize != null)
+                    {
+                        propertiesValue["currentWorkerSize"] = parameters.ServerFarm.Properties.CurrentWorkerSize.ToString();
+                    }
+                    
+                    propertiesValue["numberOfWorkers"] = parameters.ServerFarm.Properties.NumberOfWorkers;
+                    
+                    if (parameters.ServerFarm.Properties.Sku != null)
+                    {
+                        propertiesValue["sku"] = parameters.ServerFarm.Properties.Sku;
+                    }
+                    
+                    propertiesValue["workerSize"] = parameters.ServerFarm.Properties.WorkerSize.ToString();
+                    
+                    propertiesValue["status"] = parameters.ServerFarm.Properties.Status.ToString();
+                    
+                    if (parameters.ServerFarm.Properties.ProvisioningState != null)
+                    {
+                        propertiesValue["provisioningState"] = parameters.ServerFarm.Properties.ProvisioningState;
+                    }
                 }
                 
-                if (parameters.CurrentWorkerSize != null)
+                if (parameters.ServerFarm.Id != null)
                 {
-                    serverFarmValue["CurrentWorkerSize"] = parameters.CurrentWorkerSize.ToString();
+                    serverFarmCreateOrUpdateParametersValue["id"] = parameters.ServerFarm.Id;
                 }
                 
-                serverFarmValue["NumberOfWorkers"] = parameters.NumberOfWorkers;
-                
-                serverFarmValue["WorkerSize"] = parameters.WorkerSize.ToString();
-                
-                if (parameters.Status != null)
+                if (parameters.ServerFarm.Name != null)
                 {
-                    serverFarmValue["Status"] = parameters.Status.ToString();
+                    serverFarmCreateOrUpdateParametersValue["name"] = parameters.ServerFarm.Name;
                 }
+                
+                serverFarmCreateOrUpdateParametersValue["location"] = parameters.ServerFarm.Location;
+                
+                JObject tagsDictionary = new JObject();
+                if (parameters.ServerFarm.Tags != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in parameters.ServerFarm.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                }
+                serverFarmCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -209,62 +247,111 @@ namespace Microsoft.Azure.Management.WebSites
                     }
                     
                     // Create Result
-                    ServerFarmCreateResponse result = null;
+                    ServerFarmCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new ServerFarmCreateResponse();
+                    result = new ServerFarmCreateOrUpdateResponse();
                     JToken responseDoc = null;
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
                         responseDoc = JToken.Parse(responseContent);
                     }
                     
-                    JToken serverFarmValue2 = responseDoc["ServerFarm"];
-                    if (serverFarmValue2 != null && serverFarmValue2.Type != JTokenType.Null)
+                    JToken serverFarmValue = responseDoc["ServerFarm"];
+                    if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
                     {
-                        ServerFarmCreateResponse serverFarmInstance = new ServerFarmCreateResponse();
+                        ServerFarmCreateOrUpdateResponse serverFarmInstance = new ServerFarmCreateOrUpdateResponse();
                         
-                        JToken currentNumberOfWorkersValue = serverFarmValue2["CurrentNumberOfWorkers"];
-                        if (currentNumberOfWorkersValue != null && currentNumberOfWorkersValue.Type != JTokenType.Null)
+                        ServerFarm serverFarmInstance2 = new ServerFarm();
+                        result.ServerFarm = serverFarmInstance2;
+                        
+                        JToken propertiesValue2 = serverFarmValue["properties"];
+                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
-                            int currentNumberOfWorkersInstance = ((int)currentNumberOfWorkersValue);
-                            serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                            ServerFarmProperties propertiesInstance = new ServerFarmProperties();
+                            serverFarmInstance2.Properties = propertiesInstance;
+                            
+                            JToken currentNumberOfWorkersValue = propertiesValue2["currentNumberOfWorkers"];
+                            if (currentNumberOfWorkersValue != null && currentNumberOfWorkersValue.Type != JTokenType.Null)
+                            {
+                                int currentNumberOfWorkersInstance = ((int)currentNumberOfWorkersValue);
+                                propertiesInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                            }
+                            
+                            JToken currentWorkerSizeValue = propertiesValue2["currentWorkerSize"];
+                            if (currentWorkerSizeValue != null && currentWorkerSizeValue.Type != JTokenType.Null)
+                            {
+                                ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)currentWorkerSizeValue), true));
+                                propertiesInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                            }
+                            
+                            JToken numberOfWorkersValue = propertiesValue2["numberOfWorkers"];
+                            if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                            {
+                                int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                            }
+                            
+                            JToken skuValue = propertiesValue2["sku"];
+                            if (skuValue != null && skuValue.Type != JTokenType.Null)
+                            {
+                                string skuInstance = ((string)skuValue);
+                                propertiesInstance.Sku = skuInstance;
+                            }
+                            
+                            JToken workerSizeValue = propertiesValue2["workerSize"];
+                            if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                            {
+                                ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)workerSizeValue), true));
+                                propertiesInstance.WorkerSize = workerSizeInstance;
+                            }
+                            
+                            JToken statusValue = propertiesValue2["status"];
+                            if (statusValue != null && statusValue.Type != JTokenType.Null)
+                            {
+                                ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), ((string)statusValue), true));
+                                propertiesInstance.Status = statusInstance;
+                            }
+                            
+                            JToken provisioningStateValue = propertiesValue2["provisioningState"];
+                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                propertiesInstance.ProvisioningState = provisioningStateInstance;
+                            }
                         }
                         
-                        JToken currentWorkerSizeValue = serverFarmValue2["CurrentWorkerSize"];
-                        if (currentWorkerSizeValue != null && currentWorkerSizeValue.Type != JTokenType.Null)
+                        JToken idValue = serverFarmValue["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)currentWorkerSizeValue), true));
-                            serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
+                            string idInstance = ((string)idValue);
+                            serverFarmInstance2.Id = idInstance;
                         }
                         
-                        JToken nameValue = serverFarmValue2["Name"];
+                        JToken nameValue = serverFarmValue["name"];
                         if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
                             string nameInstance = ((string)nameValue);
-                            serverFarmInstance.Name = nameInstance;
+                            serverFarmInstance2.Name = nameInstance;
                         }
                         
-                        JToken numberOfWorkersValue = serverFarmValue2["NumberOfWorkers"];
-                        if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                        JToken locationValue = serverFarmValue["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
                         {
-                            int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                            serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
+                            string locationInstance = ((string)locationValue);
+                            serverFarmInstance2.Location = locationInstance;
                         }
                         
-                        JToken workerSizeValue = serverFarmValue2["WorkerSize"];
-                        if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
+                        JToken tagsSequenceElement = ((JToken)serverFarmValue["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)workerSizeValue), true));
-                            serverFarmInstance.WorkerSize = workerSizeInstance;
-                        }
-                        
-                        JToken statusValue = serverFarmValue2["Status"];
-                        if (statusValue != null && statusValue.Type != JTokenType.Null)
-                        {
-                            ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), ((string)statusValue), true));
-                            serverFarmInstance.Status = statusInstance;
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey2 = ((string)property.Name);
+                                string tagsValue2 = ((string)property.Value);
+                                serverFarmInstance2.Tags.Add(tagsKey2, tagsValue2);
+                            }
                         }
                     }
                     
@@ -303,7 +390,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='name'>
+        /// <param name='serverFarmName'>
         /// Required. The name of the server farm.
         /// </param>
         /// <param name='cancellationToken'>
@@ -313,16 +400,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        public async Task<OperationResponse> DeleteAsync(string resourceGroupName, string serverFarmName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
             {
                 throw new ArgumentNullException("resourceGroupName");
             }
-            if (name == null)
+            if (serverFarmName == null)
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException("serverFarmName");
             }
             
             // Tracing
@@ -333,13 +420,13 @@ namespace Microsoft.Azure.Management.WebSites
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
+                tracingParameters.Add("serverFarmName", serverFarmName);
                 Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
             }
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + serverFarmName.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -548,68 +635,71 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
+                            ServerFarmProperties propertiesInstance = new ServerFarmProperties();
+                            serverFarmInstance.Properties = propertiesInstance;
+                            
                             JToken currentNumberOfWorkersValue = propertiesValue["currentNumberOfWorkers"];
                             if (currentNumberOfWorkersValue != null && currentNumberOfWorkersValue.Type != JTokenType.Null)
                             {
                                 int currentNumberOfWorkersInstance = ((int)currentNumberOfWorkersValue);
-                                serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                propertiesInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                             }
                             
                             JToken currentWorkerSizeValue = propertiesValue["currentWorkerSize"];
                             if (currentWorkerSizeValue != null && currentWorkerSizeValue.Type != JTokenType.Null)
                             {
                                 ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)currentWorkerSizeValue), true));
-                                serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
-                            }
-                            
-                            JToken nameValue = propertiesValue["name"];
-                            if (nameValue != null && nameValue.Type != JTokenType.Null)
-                            {
-                                string nameInstance = ((string)nameValue);
-                                serverFarmInstance.Name = nameInstance;
+                                propertiesInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                             }
                             
                             JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
                             if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
                             {
                                 int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                                serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
                             }
                             
                             JToken skuValue = propertiesValue["sku"];
                             if (skuValue != null && skuValue.Type != JTokenType.Null)
                             {
                                 string skuInstance = ((string)skuValue);
-                                serverFarmInstance.Sku = skuInstance;
+                                propertiesInstance.Sku = skuInstance;
                             }
                             
                             JToken workerSizeValue = propertiesValue["workerSize"];
                             if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
                             {
                                 ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)workerSizeValue), true));
-                                serverFarmInstance.WorkerSize = workerSizeInstance;
+                                propertiesInstance.WorkerSize = workerSizeInstance;
                             }
                             
                             JToken statusValue = propertiesValue["status"];
                             if (statusValue != null && statusValue.Type != JTokenType.Null)
                             {
                                 ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), ((string)statusValue), true));
-                                serverFarmInstance.Status = statusInstance;
+                                propertiesInstance.Status = statusInstance;
+                            }
+                            
+                            JToken provisioningStateValue = propertiesValue["provisioningState"];
+                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                propertiesInstance.ProvisioningState = provisioningStateInstance;
                             }
                         }
                         
-                        JToken nameValue2 = responseDoc["name"];
-                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string nameInstance2 = ((string)nameValue2);
-                            serverFarmInstance.Name = nameInstance2;
+                            string idInstance = ((string)idValue);
+                            serverFarmInstance.Id = idInstance;
                         }
                         
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string typeInstance = ((string)typeValue);
-                            serverFarmInstance.Type = typeInstance;
+                            string nameInstance = ((string)nameValue);
+                            serverFarmInstance.Name = nameInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -775,81 +865,84 @@ namespace Microsoft.Azure.Management.WebSites
                         {
                             foreach (JToken serverFarmsValue in ((JArray)serverFarmsArray))
                             {
-                                ServerFarm serverFarmJsonFormatInstance = new ServerFarm();
-                                result.ServerFarms.Add(serverFarmJsonFormatInstance);
+                                ServerFarm serverFarmInstance = new ServerFarm();
+                                result.ServerFarms.Add(serverFarmInstance);
                                 
                                 JToken propertiesValue = serverFarmsValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
+                                    ServerFarmProperties propertiesInstance = new ServerFarmProperties();
+                                    serverFarmInstance.Properties = propertiesInstance;
+                                    
                                     JToken currentNumberOfWorkersValue = propertiesValue["currentNumberOfWorkers"];
                                     if (currentNumberOfWorkersValue != null && currentNumberOfWorkersValue.Type != JTokenType.Null)
                                     {
                                         int currentNumberOfWorkersInstance = ((int)currentNumberOfWorkersValue);
-                                        serverFarmJsonFormatInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
+                                        propertiesInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
                                     }
                                     
                                     JToken currentWorkerSizeValue = propertiesValue["currentWorkerSize"];
                                     if (currentWorkerSizeValue != null && currentWorkerSizeValue.Type != JTokenType.Null)
                                     {
                                         ServerFarmWorkerSize currentWorkerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)currentWorkerSizeValue), true));
-                                        serverFarmJsonFormatInstance.CurrentWorkerSize = currentWorkerSizeInstance;
-                                    }
-                                    
-                                    JToken nameValue = propertiesValue["name"];
-                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance = ((string)nameValue);
-                                        serverFarmJsonFormatInstance.Name = nameInstance;
+                                        propertiesInstance.CurrentWorkerSize = currentWorkerSizeInstance;
                                     }
                                     
                                     JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
                                     if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
                                     {
                                         int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                                        serverFarmJsonFormatInstance.NumberOfWorkers = numberOfWorkersInstance;
+                                        propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
                                     }
                                     
                                     JToken skuValue = propertiesValue["sku"];
                                     if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
                                         string skuInstance = ((string)skuValue);
-                                        serverFarmJsonFormatInstance.Sku = skuInstance;
+                                        propertiesInstance.Sku = skuInstance;
                                     }
                                     
                                     JToken workerSizeValue = propertiesValue["workerSize"];
                                     if (workerSizeValue != null && workerSizeValue.Type != JTokenType.Null)
                                     {
                                         ServerFarmWorkerSize workerSizeInstance = ((ServerFarmWorkerSize)Enum.Parse(typeof(ServerFarmWorkerSize), ((string)workerSizeValue), true));
-                                        serverFarmJsonFormatInstance.WorkerSize = workerSizeInstance;
+                                        propertiesInstance.WorkerSize = workerSizeInstance;
                                     }
                                     
                                     JToken statusValue = propertiesValue["status"];
                                     if (statusValue != null && statusValue.Type != JTokenType.Null)
                                     {
                                         ServerFarmStatus statusInstance = ((ServerFarmStatus)Enum.Parse(typeof(ServerFarmStatus), ((string)statusValue), true));
-                                        serverFarmJsonFormatInstance.Status = statusInstance;
+                                        propertiesInstance.Status = statusInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
                                     }
                                 }
                                 
-                                JToken nameValue2 = serverFarmsValue["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                JToken idValue = serverFarmsValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    serverFarmJsonFormatInstance.Name = nameInstance2;
+                                    string idInstance = ((string)idValue);
+                                    serverFarmInstance.Id = idInstance;
                                 }
                                 
-                                JToken typeValue = serverFarmsValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                JToken nameValue = serverFarmsValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    serverFarmJsonFormatInstance.Type = typeInstance;
+                                    string nameInstance = ((string)nameValue);
+                                    serverFarmInstance.Name = nameInstance;
                                 }
                                 
                                 JToken locationValue = serverFarmsValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
-                                    serverFarmJsonFormatInstance.Location = locationInstance;
+                                    serverFarmInstance.Location = locationInstance;
                                 }
                                 
                                 JToken tagsSequenceElement = ((JToken)serverFarmsValue["tags"]);
@@ -859,7 +952,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         string tagsKey = ((string)property.Name);
                                         string tagsValue = ((string)property.Value);
-                                        serverFarmJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        serverFarmInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
                             }
