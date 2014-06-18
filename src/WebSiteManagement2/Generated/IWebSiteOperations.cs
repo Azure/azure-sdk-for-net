@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, WebSiteCreateResourceParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, WebSiteCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// A web site repository is essentially a GIT repository that you can

@@ -28,87 +28,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// Describes a server farm.
     /// </summary>
-    public partial class ServerFarm : Resource
+    public partial class ServerFarm : ResourceBase
     {
-        private int _currentNumberOfWorkers;
+        private ServerFarmProperties _properties;
         
         /// <summary>
-        /// Optional. The current number of Virtual Machines (VMs) in the
-        /// server farm.
+        /// Optional. Represents the properties of the server farm.
         /// </summary>
-        public int CurrentNumberOfWorkers
+        public ServerFarmProperties Properties
         {
-            get { return this._currentNumberOfWorkers; }
-            set { this._currentNumberOfWorkers = value; }
-        }
-        
-        private ServerFarmWorkerSize _currentWorkerSize;
-        
-        /// <summary>
-        /// Optional. The current worker size. Possible values are Small,
-        /// Medium, or Large.
-        /// </summary>
-        public ServerFarmWorkerSize CurrentWorkerSize
-        {
-            get { return this._currentWorkerSize; }
-            set { this._currentWorkerSize = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the server farm.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private int _numberOfWorkers;
-        
-        /// <summary>
-        /// Optional. The instance count, which is the number of virtual
-        /// machines dedicated to the farm. Supported values are 1-10.
-        /// </summary>
-        public int NumberOfWorkers
-        {
-            get { return this._numberOfWorkers; }
-            set { this._numberOfWorkers = value; }
-        }
-        
-        private string _sku;
-        
-        /// <summary>
-        /// Optional. The server farm SKU.
-        /// </summary>
-        public string Sku
-        {
-            get { return this._sku; }
-            set { this._sku = value; }
-        }
-        
-        private ServerFarmStatus _status;
-        
-        /// <summary>
-        /// Optional. The server farm status.
-        /// </summary>
-        public ServerFarmStatus Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private ServerFarmWorkerSize _workerSize;
-        
-        /// <summary>
-        /// Optional. The instance size. Possible values are Small, Medium, or
-        /// Large.
-        /// </summary>
-        public ServerFarmWorkerSize WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>

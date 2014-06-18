@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// Parameters supplied to the Create Web Site operation.
     /// </summary>
-    public partial class WebSiteCreateParameters
+    public partial class WebSiteBaseProperties
     {
         private Microsoft.Azure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
         
@@ -59,18 +59,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._hostNames = value; }
         }
         
-        private string _name;
-        
-        /// <summary>
-        /// Required. The name of the website. This should match the hostname
-        /// in the default domain.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
         private string _serverFarm;
         
         /// <summary>
@@ -97,21 +85,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._siteMode = value; }
         }
         
-        private WebSiteCreateParameters.WebSpaceDetails _webSpace;
+        private WebSiteBaseProperties.WebSpaceDetails _webSpace;
         
         /// <summary>
         /// Optional. Information about the web space to create.
         /// </summary>
-        public WebSiteCreateParameters.WebSpaceDetails WebSpace
+        public WebSiteBaseProperties.WebSpaceDetails WebSpace
         {
             get { return this._webSpace; }
             set { this._webSpace = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebSiteCreateParameters class.
+        /// Initializes a new instance of the WebSiteBaseProperties class.
         /// </summary>
-        public WebSiteCreateParameters()
+        public WebSiteBaseProperties()
         {
             this._hostNames = new List<string>();
         }
