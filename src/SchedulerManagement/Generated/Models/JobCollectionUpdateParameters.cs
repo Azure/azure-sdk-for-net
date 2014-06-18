@@ -84,5 +84,19 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         public JobCollectionUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobCollectionUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public JobCollectionUpdateParameters(string eTag)
+            : this()
+        {
+            if (eTag == null)
+            {
+                throw new ArgumentNullException("eTag");
+            }
+            this.ETag = eTag;
+        }
     }
 }

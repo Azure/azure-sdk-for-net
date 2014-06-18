@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobListResponse()
         {
-            this._jobs = new List<Job>();
+            this.Jobs = new List<Job>();
         }
         
         /// <summary>

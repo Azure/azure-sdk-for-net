@@ -49,5 +49,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobListWithFilterParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobListWithFilterParameters class
+        /// with required arguments.
+        /// </summary>
+        public JobListWithFilterParameters(JobState state)
+            : this()
+        {
+            this.State = state;
+        }
     }
 }
