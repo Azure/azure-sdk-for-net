@@ -66,11 +66,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        public static ServerFarmCreateResponse Create(this IServerFarmOperations operations, string resourceGroupName, ServerFarmCreateParameters parameters)
+        public static ServerFarmCreateOrUpdateResponse CreateOrUpdate(this IServerFarmOperations operations, string resourceGroupName, ServerFarmCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IServerFarmOperations)s).CreateAsync(resourceGroupName, parameters);
+                return ((IServerFarmOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        public static Task<ServerFarmCreateResponse> CreateAsync(this IServerFarmOperations operations, string resourceGroupName, ServerFarmCreateParameters parameters)
+        public static Task<ServerFarmCreateOrUpdateResponse> CreateOrUpdateAsync(this IServerFarmOperations operations, string resourceGroupName, ServerFarmCreateOrUpdateParameters parameters)
         {
-            return operations.CreateAsync(resourceGroupName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -116,18 +116,18 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='name'>
+        /// <param name='serverFarmName'>
         /// Required. The name of the server farm.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IServerFarmOperations operations, string resourceGroupName, string name)
+        public static OperationResponse Delete(this IServerFarmOperations operations, string resourceGroupName, string serverFarmName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IServerFarmOperations)s).DeleteAsync(resourceGroupName, name);
+                return ((IServerFarmOperations)s).DeleteAsync(resourceGroupName, serverFarmName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -142,16 +142,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
-        /// <param name='name'>
+        /// <param name='serverFarmName'>
         /// Required. The name of the server farm.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IServerFarmOperations operations, string resourceGroupName, string name)
+        public static Task<OperationResponse> DeleteAsync(this IServerFarmOperations operations, string resourceGroupName, string serverFarmName)
         {
-            return operations.DeleteAsync(resourceGroupName, name, CancellationToken.None);
+            return operations.DeleteAsync(resourceGroupName, serverFarmName, CancellationToken.None);
         }
         
         /// <summary>

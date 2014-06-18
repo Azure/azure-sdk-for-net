@@ -25,12 +25,23 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    public partial class Resource
+    public partial class ResourceBase
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets the ID of the resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _location;
         
         /// <summary>
-        /// Optional. The site location.
+        /// Required. Gets or sets the location of the resource.
         /// </summary>
         public string Location
         {
@@ -41,7 +52,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The site name.
+        /// Optional. The name of the server farm.
         /// </summary>
         public string Name
         {
@@ -52,7 +63,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. The tags.
+        /// Optional. Gets or sets the tags attached to the resource.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -60,21 +71,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._tags = value; }
         }
         
-        private string _type;
-        
         /// <summary>
-        /// Optional. The resource type.
+        /// Initializes a new instance of the ResourceBase class.
         /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the Resource class.
-        /// </summary>
-        public Resource()
+        public ResourceBase()
         {
             this._tags = new Dictionary<string, string>();
         }

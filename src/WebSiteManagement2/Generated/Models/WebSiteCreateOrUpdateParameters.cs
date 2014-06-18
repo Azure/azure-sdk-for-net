@@ -26,25 +26,27 @@ using Microsoft.Azure.Management.WebSites.Models;
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// Describes a website.
+    /// Create or update Server Farm parameters.
     /// </summary>
-    public partial class WebSite : ResourceBase
+    public partial class WebSiteCreateOrUpdateParameters
     {
-        private WebSiteProperties _properties;
+        private WebSiteBase _webSite;
         
         /// <summary>
-        /// Optional. Represents the properties of the website.
+        /// Required. Gets or sets information about a website being created of
+        /// updated.
         /// </summary>
-        public WebSiteProperties Properties
+        public WebSiteBase WebSite
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._webSite; }
+            set { this._webSite = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebSite class.
+        /// Initializes a new instance of the WebSiteCreateOrUpdateParameters
+        /// class.
         /// </summary>
-        public WebSite()
+        public WebSiteCreateOrUpdateParameters()
         {
         }
     }

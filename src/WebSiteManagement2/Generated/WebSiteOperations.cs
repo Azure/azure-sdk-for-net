@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public async Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, WebSiteCreateResourceParameters parameters, CancellationToken cancellationToken)
+        public async Task<WebSiteCreateResponse> CreateOrUpdateAsync(string resourceGroupName, WebSiteCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -95,39 +95,34 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
+            if (parameters.WebSite == null)
             {
-                throw new ArgumentNullException("parameters.Location");
+                throw new ArgumentNullException("parameters.WebSite");
             }
-            if (parameters.Name == null)
+            if (parameters.WebSite.Location == null)
             {
-                throw new ArgumentNullException("parameters.Name");
+                throw new ArgumentNullException("parameters.WebSite.Location");
             }
-            if (parameters.WebSiteProperties == null)
+            if (parameters.WebSite.Properties != null)
             {
-                throw new ArgumentNullException("parameters.WebSiteProperties");
-            }
-            if (parameters.WebSiteProperties.HostNames == null)
-            {
-                throw new ArgumentNullException("parameters.WebSiteProperties.HostNames");
-            }
-            if (parameters.WebSiteProperties.Name == null)
-            {
-                throw new ArgumentNullException("parameters.WebSiteProperties.Name");
-            }
-            if (parameters.WebSiteProperties.WebSpace != null)
-            {
-                if (parameters.WebSiteProperties.WebSpace.GeoRegion == null)
+                if (parameters.WebSite.Properties.HostNames == null)
                 {
-                    throw new ArgumentNullException("parameters.WebSiteProperties.WebSpace.GeoRegion");
+                    throw new ArgumentNullException("parameters.WebSite.Properties.HostNames");
                 }
-                if (parameters.WebSiteProperties.WebSpace.Name == null)
+                if (parameters.WebSite.Properties.WebSpace != null)
                 {
-                    throw new ArgumentNullException("parameters.WebSiteProperties.WebSpace.Name");
-                }
-                if (parameters.WebSiteProperties.WebSpace.Plan == null)
-                {
-                    throw new ArgumentNullException("parameters.WebSiteProperties.WebSpace.Plan");
+                    if (parameters.WebSite.Properties.WebSpace.GeoRegion == null)
+                    {
+                        throw new ArgumentNullException("parameters.WebSite.Properties.WebSpace.GeoRegion");
+                    }
+                    if (parameters.WebSite.Properties.WebSpace.Name == null)
+                    {
+                        throw new ArgumentNullException("parameters.WebSite.Properties.WebSpace.Name");
+                    }
+                    if (parameters.WebSite.Properties.WebSpace.Plan == null)
+                    {
+                        throw new ArgumentNullException("parameters.WebSite.Properties.WebSpace.Plan");
+                    }
                 }
             }
             
@@ -145,7 +140,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + parameters.Name.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + parameters.WebSite.Name.Trim() + "?";
             url = url + "api-version=2014-04-01";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -176,54 +171,75 @@ namespace Microsoft.Azure.Management.WebSites
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject webSiteCreateResourceParametersValue = new JObject();
-                requestDoc = webSiteCreateResourceParametersValue;
+                JObject webSiteCreateOrUpdateParametersValue = new JObject();
+                requestDoc = webSiteCreateOrUpdateParametersValue;
                 
-                webSiteCreateResourceParametersValue["Name"] = parameters.Name;
-                
-                webSiteCreateResourceParametersValue["Location"] = parameters.Location;
-                
-                JObject propertiesValue = new JObject();
-                webSiteCreateResourceParametersValue["Properties"] = propertiesValue;
-                
-                if (parameters.WebSiteProperties.HostNames != null)
+                if (parameters.WebSite.Properties != null)
                 {
-                    JArray hostNamesArray = new JArray();
-                    foreach (string hostNamesItem in parameters.WebSiteProperties.HostNames)
+                    JObject propertiesValue = new JObject();
+                    webSiteCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.WebSite.Properties.HostNames != null)
                     {
-                        hostNamesArray.Add(hostNamesItem);
+                        JArray hostNamesArray = new JArray();
+                        foreach (string hostNamesItem in parameters.WebSite.Properties.HostNames)
+                        {
+                            hostNamesArray.Add(hostNamesItem);
+                        }
+                        propertiesValue["HostNames"] = hostNamesArray;
                     }
-                    propertiesValue["HostNames"] = hostNamesArray;
-                }
-                
-                propertiesValue["Name"] = parameters.WebSiteProperties.Name;
-                
-                if (parameters.WebSiteProperties.ComputeMode != null)
-                {
-                    propertiesValue["ComputeMode"] = parameters.WebSiteProperties.ComputeMode.ToString();
-                }
-                
-                if (parameters.WebSiteProperties.ServerFarm != null)
-                {
-                    propertiesValue["ServerFarm"] = parameters.WebSiteProperties.ServerFarm;
-                }
-                
-                if (parameters.WebSiteProperties.SiteMode != null)
-                {
-                    propertiesValue["SiteMode"] = parameters.WebSiteProperties.SiteMode.ToString();
-                }
-                
-                if (parameters.WebSiteProperties.WebSpace != null)
-                {
-                    JObject webSpaceToCreateValue = new JObject();
-                    propertiesValue["WebSpaceToCreate"] = webSpaceToCreateValue;
                     
-                    webSpaceToCreateValue["GeoRegion"] = parameters.WebSiteProperties.WebSpace.GeoRegion;
+                    if (parameters.WebSite.Properties.ComputeMode != null)
+                    {
+                        propertiesValue["ComputeMode"] = parameters.WebSite.Properties.ComputeMode.ToString();
+                    }
                     
-                    webSpaceToCreateValue["Name"] = parameters.WebSiteProperties.WebSpace.Name;
+                    if (parameters.WebSite.Properties.ServerFarm != null)
+                    {
+                        propertiesValue["ServerFarm"] = parameters.WebSite.Properties.ServerFarm;
+                    }
                     
-                    webSpaceToCreateValue["Plan"] = parameters.WebSiteProperties.WebSpace.Plan;
+                    if (parameters.WebSite.Properties.SiteMode != null)
+                    {
+                        propertiesValue["SiteMode"] = parameters.WebSite.Properties.SiteMode.ToString();
+                    }
+                    
+                    if (parameters.WebSite.Properties.WebSpace != null)
+                    {
+                        JObject webSpaceToCreateValue = new JObject();
+                        propertiesValue["WebSpaceToCreate"] = webSpaceToCreateValue;
+                        
+                        webSpaceToCreateValue["GeoRegion"] = parameters.WebSite.Properties.WebSpace.GeoRegion;
+                        
+                        webSpaceToCreateValue["Name"] = parameters.WebSite.Properties.WebSpace.Name;
+                        
+                        webSpaceToCreateValue["Plan"] = parameters.WebSite.Properties.WebSpace.Plan;
+                    }
                 }
+                
+                if (parameters.WebSite.Id != null)
+                {
+                    webSiteCreateOrUpdateParametersValue["id"] = parameters.WebSite.Id;
+                }
+                
+                if (parameters.WebSite.Name != null)
+                {
+                    webSiteCreateOrUpdateParametersValue["name"] = parameters.WebSite.Name;
+                }
+                
+                webSiteCreateOrUpdateParametersValue["location"] = parameters.WebSite.Location;
+                
+                JObject tagsDictionary = new JObject();
+                if (parameters.WebSite.Tags != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in parameters.WebSite.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                }
+                webSiteCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -269,396 +285,6 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken propertiesValue2 = responseDoc["properties"];
-                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
-                        {
-                            WebSite propertiesInstance = new WebSite();
-                            result.WebSite = propertiesInstance;
-                            
-                            JToken propertiesValue3 = propertiesValue2["properties"];
-                            if (propertiesValue3 != null && propertiesValue3.Type != JTokenType.Null)
-                            {
-                                JToken adminEnabledValue = propertiesValue3["adminEnabled"];
-                                if (adminEnabledValue != null && adminEnabledValue.Type != JTokenType.Null)
-                                {
-                                    bool adminEnabledInstance = ((bool)adminEnabledValue);
-                                    propertiesInstance.AdminEnabled = adminEnabledInstance;
-                                }
-                                
-                                JToken availabilityStateValue = propertiesValue3["availabilityState"];
-                                if (availabilityStateValue != null && availabilityStateValue.Type != JTokenType.Null)
-                                {
-                                    WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), ((string)availabilityStateValue), true));
-                                    propertiesInstance.AvailabilityState = availabilityStateInstance;
-                                }
-                                
-                                JToken computeModeValue = propertiesValue3["computeMode"];
-                                if (computeModeValue != null && computeModeValue.Type != JTokenType.Null)
-                                {
-                                    WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), ((string)computeModeValue), true));
-                                    propertiesInstance.ComputeMode = computeModeInstance;
-                                }
-                                
-                                JToken enabledValue = propertiesValue3["enabled"];
-                                if (enabledValue != null && enabledValue.Type != JTokenType.Null)
-                                {
-                                    bool enabledInstance = ((bool)enabledValue);
-                                    propertiesInstance.Enabled = enabledInstance;
-                                }
-                                
-                                JToken enabledHostNamesArray = propertiesValue3["enabledHostNames"];
-                                if (enabledHostNamesArray != null && enabledHostNamesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
-                                    {
-                                        propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
-                                    }
-                                }
-                                
-                                JToken hostNameSslStatesArray = propertiesValue3["hostNameSslStates"];
-                                if (hostNameSslStatesArray != null && hostNameSslStatesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
-                                    {
-                                        WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                        propertiesInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
-                                        
-                                        JToken nameValue = hostNameSslStatesValue["name"];
-                                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                        {
-                                            string nameInstance = ((string)nameValue);
-                                            webSiteHostNameSslStateInstance.Name = nameInstance;
-                                        }
-                                        
-                                        JToken sslStateValue = hostNameSslStatesValue["sslState"];
-                                        if (sslStateValue != null && sslStateValue.Type != JTokenType.Null)
-                                        {
-                                            WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), ((string)sslStateValue), true));
-                                            webSiteHostNameSslStateInstance.SslState = sslStateInstance;
-                                        }
-                                        
-                                        JToken thumbprintValue = hostNameSslStatesValue["thumbprint"];
-                                        if (thumbprintValue != null && thumbprintValue.Type != JTokenType.Null)
-                                        {
-                                            string thumbprintInstance = ((string)thumbprintValue);
-                                            webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
-                                        }
-                                        
-                                        JToken virtualIPValue = hostNameSslStatesValue["virtualIP"];
-                                        if (virtualIPValue != null && virtualIPValue.Type != JTokenType.Null)
-                                        {
-                                            string virtualIPInstance = ((string)virtualIPValue);
-                                            webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
-                                        }
-                                        
-                                        JToken ipBasedSslResultValue = hostNameSslStatesValue["ipBasedSslResult"];
-                                        if (ipBasedSslResultValue != null && ipBasedSslResultValue.Type != JTokenType.Null)
-                                        {
-                                            string ipBasedSslResultInstance = ((string)ipBasedSslResultValue);
-                                            webSiteHostNameSslStateInstance.IpBasedSslResult = ipBasedSslResultInstance;
-                                        }
-                                        
-                                        JToken toUpdateValue = hostNameSslStatesValue["toUpdate"];
-                                        if (toUpdateValue != null && toUpdateValue.Type != JTokenType.Null)
-                                        {
-                                            bool toUpdateInstance = ((bool)toUpdateValue);
-                                            webSiteHostNameSslStateInstance.ToUpdate = toUpdateInstance;
-                                        }
-                                        
-                                        JToken toUpdateIpBasedSslValue = hostNameSslStatesValue["toUpdateIpBasedSsl"];
-                                        if (toUpdateIpBasedSslValue != null && toUpdateIpBasedSslValue.Type != JTokenType.Null)
-                                        {
-                                            bool toUpdateIpBasedSslInstance = ((bool)toUpdateIpBasedSslValue);
-                                            webSiteHostNameSslStateInstance.ToUpdateIpBasedSsl = toUpdateIpBasedSslInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken hostNamesArray2 = propertiesValue3["hostNames"];
-                                if (hostNamesArray2 != null && hostNamesArray2.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken hostNamesValue in ((JArray)hostNamesArray2))
-                                    {
-                                        propertiesInstance.HostNames.Add(((string)hostNamesValue));
-                                    }
-                                }
-                                
-                                JToken lastModifiedTimeUtcValue = propertiesValue3["lastModifiedTimeUtc"];
-                                if (lastModifiedTimeUtcValue != null && lastModifiedTimeUtcValue.Type != JTokenType.Null)
-                                {
-                                    DateTime lastModifiedTimeUtcInstance = ((DateTime)lastModifiedTimeUtcValue);
-                                    propertiesInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
-                                }
-                                
-                                JToken nameValue2 = propertiesValue3["name"];
-                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                {
-                                    string nameInstance2 = ((string)nameValue2);
-                                    propertiesInstance.Name = nameInstance2;
-                                }
-                                
-                                JToken ownerValue = propertiesValue3["owner"];
-                                if (ownerValue != null && ownerValue.Type != JTokenType.Null)
-                                {
-                                    string ownerInstance = ((string)ownerValue);
-                                    propertiesInstance.Owner = ownerInstance;
-                                }
-                                
-                                JToken repositorySiteNameValue = propertiesValue3["repositorySiteName"];
-                                if (repositorySiteNameValue != null && repositorySiteNameValue.Type != JTokenType.Null)
-                                {
-                                    string repositorySiteNameInstance = ((string)repositorySiteNameValue);
-                                    propertiesInstance.RepositorySiteName = repositorySiteNameInstance;
-                                }
-                                
-                                JToken runtimeAvailabilityStateValue = propertiesValue3["runtimeAvailabilityState"];
-                                if (runtimeAvailabilityStateValue != null && runtimeAvailabilityStateValue.Type != JTokenType.Null)
-                                {
-                                    WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), ((string)runtimeAvailabilityStateValue), true));
-                                    propertiesInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
-                                }
-                                
-                                JToken trafficManagerHostNamesArray = propertiesValue3["trafficManagerHostNames"];
-                                if (trafficManagerHostNamesArray != null && trafficManagerHostNamesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
-                                    {
-                                        propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
-                                    }
-                                }
-                                
-                                JToken sslCertificatesArray = propertiesValue3["sslCertificates"];
-                                if (sslCertificatesArray != null && sslCertificatesArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken sslCertificatesValue in ((JArray)sslCertificatesArray))
-                                    {
-                                        WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                        propertiesInstance.SslCertificates.Add(certificateInstance);
-                                        
-                                        JToken expirationDateValue = sslCertificatesValue["expirationDate"];
-                                        if (expirationDateValue != null && expirationDateValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime expirationDateInstance = ((DateTime)expirationDateValue);
-                                            certificateInstance.ExpirationDate = expirationDateInstance;
-                                        }
-                                        
-                                        JToken friendlyNameValue = sslCertificatesValue["friendlyName"];
-                                        if (friendlyNameValue != null && friendlyNameValue.Type != JTokenType.Null)
-                                        {
-                                            string friendlyNameInstance = ((string)friendlyNameValue);
-                                            certificateInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                        
-                                        JToken hostNamesArray3 = sslCertificatesValue["hostNames"];
-                                        if (hostNamesArray3 != null && hostNamesArray3.Type != JTokenType.Null)
-                                        {
-                                            foreach (JToken hostNamesValue2 in ((JArray)hostNamesArray3))
-                                            {
-                                                certificateInstance.HostNames.Add(((string)hostNamesValue2));
-                                            }
-                                        }
-                                        
-                                        JToken issueDateValue = sslCertificatesValue["issueDate"];
-                                        if (issueDateValue != null && issueDateValue.Type != JTokenType.Null)
-                                        {
-                                            DateTime issueDateInstance = ((DateTime)issueDateValue);
-                                            certificateInstance.IssueDate = issueDateInstance;
-                                        }
-                                        
-                                        JToken issuerValue = sslCertificatesValue["issuer"];
-                                        if (issuerValue != null && issuerValue.Type != JTokenType.Null)
-                                        {
-                                            string issuerInstance = ((string)issuerValue);
-                                            certificateInstance.Issuer = issuerInstance;
-                                        }
-                                        
-                                        JToken passwordValue = sslCertificatesValue["password"];
-                                        if (passwordValue != null && passwordValue.Type != JTokenType.Null)
-                                        {
-                                            string passwordInstance = ((string)passwordValue);
-                                            certificateInstance.Password = passwordInstance;
-                                        }
-                                        
-                                        JToken pfxBlobValue = sslCertificatesValue["pfxBlob"];
-                                        if (pfxBlobValue != null && pfxBlobValue.Type != JTokenType.Null)
-                                        {
-                                            byte[] pfxBlobInstance = Encoding.UTF8.GetBytes(((string)pfxBlobValue));
-                                            certificateInstance.PfxBlob = pfxBlobInstance;
-                                        }
-                                        
-                                        JToken selfLinkValue = sslCertificatesValue["selfLink"];
-                                        if (selfLinkValue != null && selfLinkValue.Type != JTokenType.Null)
-                                        {
-                                            Uri selfLinkInstance = TypeConversion.TryParseUri(((string)selfLinkValue));
-                                            certificateInstance.SelfLinkUri = selfLinkInstance;
-                                        }
-                                        
-                                        JToken siteNameValue = sslCertificatesValue["siteName"];
-                                        if (siteNameValue != null && siteNameValue.Type != JTokenType.Null)
-                                        {
-                                            string siteNameInstance = ((string)siteNameValue);
-                                            certificateInstance.SiteName = siteNameInstance;
-                                        }
-                                        
-                                        JToken subjectNameValue = sslCertificatesValue["subjectName"];
-                                        if (subjectNameValue != null && subjectNameValue.Type != JTokenType.Null)
-                                        {
-                                            string subjectNameInstance = ((string)subjectNameValue);
-                                            certificateInstance.SubjectName = subjectNameInstance;
-                                        }
-                                        
-                                        JToken thumbprintValue2 = sslCertificatesValue["thumbprint"];
-                                        if (thumbprintValue2 != null && thumbprintValue2.Type != JTokenType.Null)
-                                        {
-                                            string thumbprintInstance2 = ((string)thumbprintValue2);
-                                            certificateInstance.Thumbprint = thumbprintInstance2;
-                                        }
-                                        
-                                        JToken toDeleteValue = sslCertificatesValue["toDelete"];
-                                        if (toDeleteValue != null && toDeleteValue.Type != JTokenType.Null)
-                                        {
-                                            bool toDeleteInstance = ((bool)toDeleteValue);
-                                            certificateInstance.ToDelete = toDeleteInstance;
-                                        }
-                                        
-                                        JToken validValue = sslCertificatesValue["valid"];
-                                        if (validValue != null && validValue.Type != JTokenType.Null)
-                                        {
-                                            bool validInstance = ((bool)validValue);
-                                            certificateInstance.IsValid = validInstance;
-                                        }
-                                        
-                                        JToken cerBlobValue = sslCertificatesValue["cerBlob"];
-                                        if (cerBlobValue != null && cerBlobValue.Type != JTokenType.Null)
-                                        {
-                                            byte[] cerBlobInstance = Encoding.UTF8.GetBytes(((string)cerBlobValue));
-                                            certificateInstance.CerBlob = cerBlobInstance;
-                                        }
-                                        
-                                        JToken publicKeyHashValue = sslCertificatesValue["publicKeyHash"];
-                                        if (publicKeyHashValue != null && publicKeyHashValue.Type != JTokenType.Null)
-                                        {
-                                            string publicKeyHashInstance = ((string)publicKeyHashValue);
-                                            certificateInstance.PublicKeyHash = publicKeyHashInstance;
-                                        }
-                                    }
-                                }
-                                
-                                JToken selfLinkValue2 = propertiesValue3["selfLink"];
-                                if (selfLinkValue2 != null && selfLinkValue2.Type != JTokenType.Null)
-                                {
-                                    Uri selfLinkInstance2 = TypeConversion.TryParseUri(((string)selfLinkValue2));
-                                    propertiesInstance.Uri = selfLinkInstance2;
-                                }
-                                
-                                JToken serverFarmValue = propertiesValue3["serverFarm"];
-                                if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
-                                {
-                                    string serverFarmInstance = ((string)serverFarmValue);
-                                    propertiesInstance.ServerFarm = serverFarmInstance;
-                                }
-                                
-                                JToken siteModeValue = propertiesValue3["siteMode"];
-                                if (siteModeValue != null && siteModeValue.Type != JTokenType.Null)
-                                {
-                                    WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), ((string)siteModeValue), true));
-                                    propertiesInstance.SiteMode = siteModeInstance;
-                                }
-                                
-                                JToken sitePropertiesValue = propertiesValue3["siteProperties"];
-                                if (sitePropertiesValue != null && sitePropertiesValue.Type != JTokenType.Null)
-                                {
-                                    WebSite.SiteProperties sitePropertiesInstance = new WebSite.SiteProperties();
-                                    propertiesInstance.Properties = sitePropertiesInstance;
-                                    
-                                    JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
-                                    if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property in appSettingsSequenceElement)
-                                        {
-                                            string appSettingsKey = ((string)property.Name);
-                                            string appSettingsValue = ((string)property.Value);
-                                            sitePropertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
-                                        }
-                                    }
-                                    
-                                    JToken metadataSequenceElement = ((JToken)sitePropertiesValue["metadata"]);
-                                    if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property2 in metadataSequenceElement)
-                                        {
-                                            string metadataKey = ((string)property2.Name);
-                                            string metadataValue = ((string)property2.Value);
-                                            sitePropertiesInstance.Metadata.Add(metadataKey, metadataValue);
-                                        }
-                                    }
-                                    
-                                    JToken propertiesSequenceElement = ((JToken)sitePropertiesValue["properties"]);
-                                    if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
-                                    {
-                                        foreach (JProperty property3 in propertiesSequenceElement)
-                                        {
-                                            string propertiesKey = ((string)property3.Name);
-                                            string propertiesValue4 = ((string)property3.Value);
-                                            sitePropertiesInstance.Properties.Add(propertiesKey, propertiesValue4);
-                                        }
-                                    }
-                                }
-                                
-                                JToken stateValue = propertiesValue3["state"];
-                                if (stateValue != null && stateValue.Type != JTokenType.Null)
-                                {
-                                    WebSiteState stateInstance = ((WebSiteState)Enum.Parse(typeof(WebSiteState), ((string)stateValue), true));
-                                    propertiesInstance.State = stateInstance;
-                                }
-                                
-                                JToken usageStateValue = propertiesValue3["usageState"];
-                                if (usageStateValue != null && usageStateValue.Type != JTokenType.Null)
-                                {
-                                    WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), ((string)usageStateValue), true));
-                                    propertiesInstance.UsageState = usageStateInstance;
-                                }
-                                
-                                JToken webSpaceValue = propertiesValue3["webSpace"];
-                                if (webSpaceValue != null && webSpaceValue.Type != JTokenType.Null)
-                                {
-                                    string webSpaceInstance = ((string)webSpaceValue);
-                                    propertiesInstance.WebSpace = webSpaceInstance;
-                                }
-                            }
-                            
-                            JToken nameValue3 = propertiesValue2["name"];
-                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
-                            {
-                                string nameInstance3 = ((string)nameValue3);
-                                propertiesInstance.Name = nameInstance3;
-                            }
-                            
-                            JToken typeValue = propertiesValue2["type"];
-                            if (typeValue != null && typeValue.Type != JTokenType.Null)
-                            {
-                                string typeInstance = ((string)typeValue);
-                                propertiesInstance.Type = typeInstance;
-                            }
-                            
-                            JToken locationValue = propertiesValue2["location"];
-                            if (locationValue != null && locationValue.Type != JTokenType.Null)
-                            {
-                                string locationInstance = ((string)locationValue);
-                                propertiesInstance.Location = locationInstance;
-                            }
-                            
-                            JToken tagsSequenceElement = ((JToken)propertiesValue2["tags"]);
-                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                            {
-                                foreach (JProperty property4 in tagsSequenceElement)
-                                {
-                                    string tagsKey = ((string)property4.Name);
-                                    string tagsValue = ((string)property4.Value);
-                                    propertiesInstance.Tags.Add(tagsKey, tagsValue);
-                                }
-                            }
-                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -876,9 +502,9 @@ namespace Microsoft.Azure.Management.WebSites
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim() + "?";
             url = url + "api-version=2014-04-01";
-            url = url + "&deleteEmptyServerFarm=" + Uri.EscapeUriString(parameters.DeleteEmptyServerFarm.ToString().ToLower());
-            url = url + "&deleteMetrics=" + Uri.EscapeUriString(parameters.DeleteMetrics.ToString().ToLower());
-            url = url + "&deleteAllSlots=" + Uri.EscapeUriString(parameters.DeleteAllSlots.ToString().ToLower());
+            url = url + "&deleteEmptyServerFarm=" + Uri.EscapeDataString(parameters.DeleteEmptyServerFarm.ToString().ToLower());
+            url = url + "&deleteMetrics=" + Uri.EscapeDataString(parameters.DeleteMetrics.ToString().ToLower());
+            url = url + "&deleteAllSlots=" + Uri.EscapeDataString(parameters.DeleteAllSlots.ToString().ToLower());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1301,7 +927,7 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "api-version=2014-04-01";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
-                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
+                url = url + "&propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude));
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1374,32 +1000,35 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
+                            WebSiteProperties propertiesInstance = new WebSiteProperties();
+                            webSiteInstance.Properties = propertiesInstance;
+                            
                             JToken adminEnabledValue = propertiesValue["adminEnabled"];
                             if (adminEnabledValue != null && adminEnabledValue.Type != JTokenType.Null)
                             {
                                 bool adminEnabledInstance = ((bool)adminEnabledValue);
-                                webSiteInstance.AdminEnabled = adminEnabledInstance;
+                                propertiesInstance.AdminEnabled = adminEnabledInstance;
                             }
                             
                             JToken availabilityStateValue = propertiesValue["availabilityState"];
                             if (availabilityStateValue != null && availabilityStateValue.Type != JTokenType.Null)
                             {
                                 WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), ((string)availabilityStateValue), true));
-                                webSiteInstance.AvailabilityState = availabilityStateInstance;
+                                propertiesInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
                             JToken computeModeValue = propertiesValue["computeMode"];
                             if (computeModeValue != null && computeModeValue.Type != JTokenType.Null)
                             {
                                 WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), ((string)computeModeValue), true));
-                                webSiteInstance.ComputeMode = computeModeInstance;
+                                propertiesInstance.ComputeMode = computeModeInstance;
                             }
                             
                             JToken enabledValue = propertiesValue["enabled"];
                             if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                             {
                                 bool enabledInstance = ((bool)enabledValue);
-                                webSiteInstance.Enabled = enabledInstance;
+                                propertiesInstance.Enabled = enabledInstance;
                             }
                             
                             JToken enabledHostNamesArray = propertiesValue["enabledHostNames"];
@@ -1407,7 +1036,7 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
                                 {
-                                    webSiteInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
+                                    propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
                                 }
                             }
                             
@@ -1416,8 +1045,8 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
                                 {
-                                    WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                    webSiteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                    WebSiteProperties.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSiteProperties.WebSiteHostNameSslState();
+                                    propertiesInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
                                     
                                     JToken nameValue = hostNameSslStatesValue["name"];
                                     if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -1475,7 +1104,7 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 foreach (JToken hostNamesValue in ((JArray)hostNamesArray))
                                 {
-                                    webSiteInstance.HostNames.Add(((string)hostNamesValue));
+                                    propertiesInstance.HostNames.Add(((string)hostNamesValue));
                                 }
                             }
                             
@@ -1483,35 +1112,28 @@ namespace Microsoft.Azure.Management.WebSites
                             if (lastModifiedTimeUtcValue != null && lastModifiedTimeUtcValue.Type != JTokenType.Null)
                             {
                                 DateTime lastModifiedTimeUtcInstance = ((DateTime)lastModifiedTimeUtcValue);
-                                webSiteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
-                            }
-                            
-                            JToken nameValue2 = propertiesValue["name"];
-                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                            {
-                                string nameInstance2 = ((string)nameValue2);
-                                webSiteInstance.Name = nameInstance2;
+                                propertiesInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                             }
                             
                             JToken ownerValue = propertiesValue["owner"];
                             if (ownerValue != null && ownerValue.Type != JTokenType.Null)
                             {
                                 string ownerInstance = ((string)ownerValue);
-                                webSiteInstance.Owner = ownerInstance;
+                                propertiesInstance.Owner = ownerInstance;
                             }
                             
                             JToken repositorySiteNameValue = propertiesValue["repositorySiteName"];
                             if (repositorySiteNameValue != null && repositorySiteNameValue.Type != JTokenType.Null)
                             {
                                 string repositorySiteNameInstance = ((string)repositorySiteNameValue);
-                                webSiteInstance.RepositorySiteName = repositorySiteNameInstance;
+                                propertiesInstance.RepositorySiteName = repositorySiteNameInstance;
                             }
                             
                             JToken runtimeAvailabilityStateValue = propertiesValue["runtimeAvailabilityState"];
                             if (runtimeAvailabilityStateValue != null && runtimeAvailabilityStateValue.Type != JTokenType.Null)
                             {
                                 WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), ((string)runtimeAvailabilityStateValue), true));
-                                webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
+                                propertiesInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                             }
                             
                             JToken trafficManagerHostNamesArray = propertiesValue["trafficManagerHostNames"];
@@ -1519,7 +1141,7 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
                                 {
-                                    webSiteInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
+                                    propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
                                 }
                             }
                             
@@ -1528,8 +1150,8 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 foreach (JToken sslCertificatesValue in ((JArray)sslCertificatesArray))
                                 {
-                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                    webSiteInstance.SslCertificates.Add(certificateInstance);
+                                    WebSiteProperties.WebSiteSslCertificate certificateInstance = new WebSiteProperties.WebSiteSslCertificate();
+                                    propertiesInstance.SslCertificates.Add(certificateInstance);
                                     
                                     JToken expirationDateValue = sslCertificatesValue["expirationDate"];
                                     if (expirationDateValue != null && expirationDateValue.Type != JTokenType.Null)
@@ -1578,7 +1200,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken pfxBlobValue = sslCertificatesValue["pfxBlob"];
                                     if (pfxBlobValue != null && pfxBlobValue.Type != JTokenType.Null)
                                     {
-                                        byte[] pfxBlobInstance = Encoding.UTF8.GetBytes(((string)pfxBlobValue));
+                                        byte[] pfxBlobInstance = Convert.FromBase64String(((string)pfxBlobValue));
                                         certificateInstance.PfxBlob = pfxBlobInstance;
                                     }
                                     
@@ -1644,28 +1266,28 @@ namespace Microsoft.Azure.Management.WebSites
                             if (selfLinkValue2 != null && selfLinkValue2.Type != JTokenType.Null)
                             {
                                 Uri selfLinkInstance2 = TypeConversion.TryParseUri(((string)selfLinkValue2));
-                                webSiteInstance.Uri = selfLinkInstance2;
+                                propertiesInstance.Uri = selfLinkInstance2;
                             }
                             
                             JToken serverFarmValue = propertiesValue["serverFarm"];
                             if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
                             {
                                 string serverFarmInstance = ((string)serverFarmValue);
-                                webSiteInstance.ServerFarm = serverFarmInstance;
+                                propertiesInstance.ServerFarm = serverFarmInstance;
                             }
                             
                             JToken siteModeValue = propertiesValue["siteMode"];
                             if (siteModeValue != null && siteModeValue.Type != JTokenType.Null)
                             {
                                 WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), ((string)siteModeValue), true));
-                                webSiteInstance.SiteMode = siteModeInstance;
+                                propertiesInstance.SiteMode = siteModeInstance;
                             }
                             
                             JToken sitePropertiesValue = propertiesValue["siteProperties"];
                             if (sitePropertiesValue != null && sitePropertiesValue.Type != JTokenType.Null)
                             {
-                                WebSite.SiteProperties sitePropertiesInstance = new WebSite.SiteProperties();
-                                webSiteInstance.Properties = sitePropertiesInstance;
+                                WebSiteProperties.SiteProperties sitePropertiesInstance = new WebSiteProperties.SiteProperties();
+                                propertiesInstance.Properties = sitePropertiesInstance;
                                 
                                 JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
                                 if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
@@ -1705,36 +1327,43 @@ namespace Microsoft.Azure.Management.WebSites
                             if (stateValue != null && stateValue.Type != JTokenType.Null)
                             {
                                 WebSiteState stateInstance = ((WebSiteState)Enum.Parse(typeof(WebSiteState), ((string)stateValue), true));
-                                webSiteInstance.State = stateInstance;
+                                propertiesInstance.State = stateInstance;
                             }
                             
                             JToken usageStateValue = propertiesValue["usageState"];
                             if (usageStateValue != null && usageStateValue.Type != JTokenType.Null)
                             {
                                 WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), ((string)usageStateValue), true));
-                                webSiteInstance.UsageState = usageStateInstance;
+                                propertiesInstance.UsageState = usageStateInstance;
                             }
                             
                             JToken webSpaceValue = propertiesValue["webSpace"];
                             if (webSpaceValue != null && webSpaceValue.Type != JTokenType.Null)
                             {
                                 string webSpaceInstance = ((string)webSpaceValue);
-                                webSiteInstance.WebSpace = webSpaceInstance;
+                                propertiesInstance.WebSpace = webSpaceInstance;
+                            }
+                            
+                            JToken provisioningStateValue = propertiesValue["provisioningState"];
+                            if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                            {
+                                string provisioningStateInstance = ((string)provisioningStateValue);
+                                propertiesInstance.ProvisioningState = provisioningStateInstance;
                             }
                         }
                         
-                        JToken nameValue3 = responseDoc["name"];
-                        if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string nameInstance3 = ((string)nameValue3);
-                            webSiteInstance.Name = nameInstance3;
+                            string idInstance = ((string)idValue);
+                            webSiteInstance.Id = idInstance;
                         }
                         
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        JToken nameValue2 = responseDoc["name"];
+                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                         {
-                            string typeInstance = ((string)typeValue);
-                            webSiteInstance.Type = typeInstance;
+                            string nameInstance2 = ((string)nameValue2);
+                            webSiteInstance.Name = nameInstance2;
                         }
                         
                         JToken locationValue = responseDoc["location"];
@@ -1838,7 +1467,7 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "api-version=2014-04-01";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
-                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
+                url = url + "&propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude));
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2206,15 +1835,15 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "api-version=2014-04-01";
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
-                url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
+                url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeUriString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeDataString(parameters.StartTime.Value.ToString());
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3127,7 +2756,7 @@ namespace Microsoft.Azure.Management.WebSites
             url = url + "api-version=2014-04-01";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
-                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
+                url = url + "&propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude));
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -3199,38 +2828,41 @@ namespace Microsoft.Azure.Management.WebSites
                         {
                             foreach (JToken webSitesValue in ((JArray)webSitesArray))
                             {
-                                WebSite webSiteJsonFormatInstance = new WebSite();
-                                result.WebSites.Add(webSiteJsonFormatInstance);
+                                WebSite webSiteInstance = new WebSite();
+                                result.WebSites.Add(webSiteInstance);
                                 
                                 JToken propertiesValue = webSitesValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
+                                    WebSiteProperties propertiesInstance = new WebSiteProperties();
+                                    webSiteInstance.Properties = propertiesInstance;
+                                    
                                     JToken adminEnabledValue = propertiesValue["adminEnabled"];
                                     if (adminEnabledValue != null && adminEnabledValue.Type != JTokenType.Null)
                                     {
                                         bool adminEnabledInstance = ((bool)adminEnabledValue);
-                                        webSiteJsonFormatInstance.AdminEnabled = adminEnabledInstance;
+                                        propertiesInstance.AdminEnabled = adminEnabledInstance;
                                     }
                                     
                                     JToken availabilityStateValue = propertiesValue["availabilityState"];
                                     if (availabilityStateValue != null && availabilityStateValue.Type != JTokenType.Null)
                                     {
                                         WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), ((string)availabilityStateValue), true));
-                                        webSiteJsonFormatInstance.AvailabilityState = availabilityStateInstance;
+                                        propertiesInstance.AvailabilityState = availabilityStateInstance;
                                     }
                                     
                                     JToken computeModeValue = propertiesValue["computeMode"];
                                     if (computeModeValue != null && computeModeValue.Type != JTokenType.Null)
                                     {
                                         WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), ((string)computeModeValue), true));
-                                        webSiteJsonFormatInstance.ComputeMode = computeModeInstance;
+                                        propertiesInstance.ComputeMode = computeModeInstance;
                                     }
                                     
                                     JToken enabledValue = propertiesValue["enabled"];
                                     if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                     {
                                         bool enabledInstance = ((bool)enabledValue);
-                                        webSiteJsonFormatInstance.Enabled = enabledInstance;
+                                        propertiesInstance.Enabled = enabledInstance;
                                     }
                                     
                                     JToken enabledHostNamesArray = propertiesValue["enabledHostNames"];
@@ -3238,7 +2870,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
                                         {
-                                            webSiteJsonFormatInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
+                                            propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
                                         }
                                     }
                                     
@@ -3247,8 +2879,8 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
                                         {
-                                            WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                            webSiteJsonFormatInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                            WebSiteProperties.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSiteProperties.WebSiteHostNameSslState();
+                                            propertiesInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
                                             
                                             JToken nameValue = hostNameSslStatesValue["name"];
                                             if (nameValue != null && nameValue.Type != JTokenType.Null)
@@ -3306,7 +2938,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         foreach (JToken hostNamesValue in ((JArray)hostNamesArray))
                                         {
-                                            webSiteJsonFormatInstance.HostNames.Add(((string)hostNamesValue));
+                                            propertiesInstance.HostNames.Add(((string)hostNamesValue));
                                         }
                                     }
                                     
@@ -3314,35 +2946,28 @@ namespace Microsoft.Azure.Management.WebSites
                                     if (lastModifiedTimeUtcValue != null && lastModifiedTimeUtcValue.Type != JTokenType.Null)
                                     {
                                         DateTime lastModifiedTimeUtcInstance = ((DateTime)lastModifiedTimeUtcValue);
-                                        webSiteJsonFormatInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
-                                    }
-                                    
-                                    JToken nameValue2 = propertiesValue["name"];
-                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
-                                    {
-                                        string nameInstance2 = ((string)nameValue2);
-                                        webSiteJsonFormatInstance.Name = nameInstance2;
+                                        propertiesInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                                     }
                                     
                                     JToken ownerValue = propertiesValue["owner"];
                                     if (ownerValue != null && ownerValue.Type != JTokenType.Null)
                                     {
                                         string ownerInstance = ((string)ownerValue);
-                                        webSiteJsonFormatInstance.Owner = ownerInstance;
+                                        propertiesInstance.Owner = ownerInstance;
                                     }
                                     
                                     JToken repositorySiteNameValue = propertiesValue["repositorySiteName"];
                                     if (repositorySiteNameValue != null && repositorySiteNameValue.Type != JTokenType.Null)
                                     {
                                         string repositorySiteNameInstance = ((string)repositorySiteNameValue);
-                                        webSiteJsonFormatInstance.RepositorySiteName = repositorySiteNameInstance;
+                                        propertiesInstance.RepositorySiteName = repositorySiteNameInstance;
                                     }
                                     
                                     JToken runtimeAvailabilityStateValue = propertiesValue["runtimeAvailabilityState"];
                                     if (runtimeAvailabilityStateValue != null && runtimeAvailabilityStateValue.Type != JTokenType.Null)
                                     {
                                         WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), ((string)runtimeAvailabilityStateValue), true));
-                                        webSiteJsonFormatInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
+                                        propertiesInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                                     }
                                     
                                     JToken trafficManagerHostNamesArray = propertiesValue["trafficManagerHostNames"];
@@ -3350,7 +2975,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
                                         {
-                                            webSiteJsonFormatInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
+                                            propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
                                         }
                                     }
                                     
@@ -3359,8 +2984,8 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         foreach (JToken sslCertificatesValue in ((JArray)sslCertificatesArray))
                                         {
-                                            WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                            webSiteJsonFormatInstance.SslCertificates.Add(certificateInstance);
+                                            WebSiteProperties.WebSiteSslCertificate certificateInstance = new WebSiteProperties.WebSiteSslCertificate();
+                                            propertiesInstance.SslCertificates.Add(certificateInstance);
                                             
                                             JToken expirationDateValue = sslCertificatesValue["expirationDate"];
                                             if (expirationDateValue != null && expirationDateValue.Type != JTokenType.Null)
@@ -3409,7 +3034,7 @@ namespace Microsoft.Azure.Management.WebSites
                                             JToken pfxBlobValue = sslCertificatesValue["pfxBlob"];
                                             if (pfxBlobValue != null && pfxBlobValue.Type != JTokenType.Null)
                                             {
-                                                byte[] pfxBlobInstance = Encoding.UTF8.GetBytes(((string)pfxBlobValue));
+                                                byte[] pfxBlobInstance = Convert.FromBase64String(((string)pfxBlobValue));
                                                 certificateInstance.PfxBlob = pfxBlobInstance;
                                             }
                                             
@@ -3475,28 +3100,28 @@ namespace Microsoft.Azure.Management.WebSites
                                     if (selfLinkValue2 != null && selfLinkValue2.Type != JTokenType.Null)
                                     {
                                         Uri selfLinkInstance2 = TypeConversion.TryParseUri(((string)selfLinkValue2));
-                                        webSiteJsonFormatInstance.Uri = selfLinkInstance2;
+                                        propertiesInstance.Uri = selfLinkInstance2;
                                     }
                                     
                                     JToken serverFarmValue = propertiesValue["serverFarm"];
                                     if (serverFarmValue != null && serverFarmValue.Type != JTokenType.Null)
                                     {
                                         string serverFarmInstance = ((string)serverFarmValue);
-                                        webSiteJsonFormatInstance.ServerFarm = serverFarmInstance;
+                                        propertiesInstance.ServerFarm = serverFarmInstance;
                                     }
                                     
                                     JToken siteModeValue = propertiesValue["siteMode"];
                                     if (siteModeValue != null && siteModeValue.Type != JTokenType.Null)
                                     {
                                         WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), ((string)siteModeValue), true));
-                                        webSiteJsonFormatInstance.SiteMode = siteModeInstance;
+                                        propertiesInstance.SiteMode = siteModeInstance;
                                     }
                                     
                                     JToken sitePropertiesValue = propertiesValue["siteProperties"];
                                     if (sitePropertiesValue != null && sitePropertiesValue.Type != JTokenType.Null)
                                     {
-                                        WebSite.SiteProperties sitePropertiesInstance = new WebSite.SiteProperties();
-                                        webSiteJsonFormatInstance.Properties = sitePropertiesInstance;
+                                        WebSiteProperties.SiteProperties sitePropertiesInstance = new WebSiteProperties.SiteProperties();
+                                        propertiesInstance.Properties = sitePropertiesInstance;
                                         
                                         JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
                                         if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
@@ -3536,43 +3161,50 @@ namespace Microsoft.Azure.Management.WebSites
                                     if (stateValue != null && stateValue.Type != JTokenType.Null)
                                     {
                                         WebSiteState stateInstance = ((WebSiteState)Enum.Parse(typeof(WebSiteState), ((string)stateValue), true));
-                                        webSiteJsonFormatInstance.State = stateInstance;
+                                        propertiesInstance.State = stateInstance;
                                     }
                                     
                                     JToken usageStateValue = propertiesValue["usageState"];
                                     if (usageStateValue != null && usageStateValue.Type != JTokenType.Null)
                                     {
                                         WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), ((string)usageStateValue), true));
-                                        webSiteJsonFormatInstance.UsageState = usageStateInstance;
+                                        propertiesInstance.UsageState = usageStateInstance;
                                     }
                                     
                                     JToken webSpaceValue = propertiesValue["webSpace"];
                                     if (webSpaceValue != null && webSpaceValue.Type != JTokenType.Null)
                                     {
                                         string webSpaceInstance = ((string)webSpaceValue);
-                                        webSiteJsonFormatInstance.WebSpace = webSpaceInstance;
+                                        propertiesInstance.WebSpace = webSpaceInstance;
+                                    }
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
                                     }
                                 }
                                 
-                                JToken nameValue3 = webSitesValue["name"];
-                                if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
+                                JToken idValue = webSitesValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance3 = ((string)nameValue3);
-                                    webSiteJsonFormatInstance.Name = nameInstance3;
+                                    string idInstance = ((string)idValue);
+                                    webSiteInstance.Id = idInstance;
                                 }
                                 
-                                JToken typeValue = webSitesValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                JToken nameValue2 = webSitesValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
-                                    webSiteJsonFormatInstance.Type = typeInstance;
+                                    string nameInstance2 = ((string)nameValue2);
+                                    webSiteInstance.Name = nameInstance2;
                                 }
                                 
                                 JToken locationValue = webSitesValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
-                                    webSiteJsonFormatInstance.Location = locationInstance;
+                                    webSiteInstance.Location = locationInstance;
                                 }
                                 
                                 JToken tagsSequenceElement = ((JToken)webSitesValue["tags"]);
@@ -3582,7 +3214,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     {
                                         string tagsKey = ((string)property4.Name);
                                         string tagsValue = ((string)property4.Value);
-                                        webSiteJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                        webSiteInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
                             }
