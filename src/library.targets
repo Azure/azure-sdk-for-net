@@ -129,7 +129,7 @@
     <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
   </Target>  
   
-  <Target Name="AfterClean">
+  <Target Name="AfterClean" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
     <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
     <RemoveDir Directories="Generated" />
   </Target>
