@@ -19,8 +19,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Windows Azure Express Route Management Library")]
 [assembly: AssemblyDescription("Provides express route management capabilities to developers. Create, delete, list, retrieve dedicated circuits, bgp peerings, dedicated circuit links, and more.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.2.1.0")]
+[assembly: AssemblyVersion("0.9.1.0")]
+[assembly: AssemblyFileVersion("0.9.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
