@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Insights
     {
         private const int StorageKeyLimit = 432;
         private const int StorageKeyTrimPadding = 17;
-        private const string DateTimeFormatString = "yyyy'-'MM'-'ddTHH':'mm':'ss'.'FFFFFFFzzz";
 
         /// <summary>
         /// Encoding function for use with Shoebox table Partition and Row Keys
@@ -58,8 +57,8 @@ namespace Microsoft.Azure.Insights
                 "{0}timeGrain eq {1} and startTime eq {2} and endTime eq {3}",
                 filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and",
                 filter.TimeGrain.To8601String(),
-                filter.StartTime.ToString(DateTimeFormatString),
-                filter.EndTime.ToString(DateTimeFormatString));
+                filter.StartTime.ToString("O"),
+                filter.EndTime.ToString("O"));
         }
 
         private static string EscapeStorageKey(string value)

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Insights
         private static Regex splitOnAndRegex = new Regex("\\sand\\s", RegexOptions.Compiled);
         private static Regex splitOnORegex = new Regex("\\sor\\s", RegexOptions.Compiled);
         private static Regex nameGroupRegex = new Regex("^\\s*\\((?<clauses>[^)]*?)\\)\\s*$", RegexOptions.Compiled);
-        private static Regex nameClauseRegex = new Regex("^\\s*[Nn]ame\\s+eq\\s+'(?<value>[^']*?)'\\s*$", RegexOptions.Compiled);
+        private static Regex nameClauseRegex = new Regex("^\\s*name\\.value\\s+eq\\s+'(?<value>[^']*?)'\\s*$", RegexOptions.Compiled);
         private static Regex clauseRegex = new Regex(
                 "^\\s*(?<name>(timeGrain|startTime|endTime|name\\.value))\\s+eq\\s+(?<value>('[^']*?')|\\S+|(duration'[^']*?'))\\s*$",
                 RegexOptions.ExplicitCapture | RegexOptions.Compiled);
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Insights
                 else if (clause.Trim().StartsWith("("))
                 {
                     throw new FormatException("Parentheses Error: only one set of parentheses is allowed; " +
-                                              "If present, only (and all) constraints on 'name' must appear inside. " +
+                                              "If present, only (and all) constraints on 'name.value' must appear inside. " +
                                               "No 'and' (and all 'or') operators may appear within parentheses.");
                 }
                 else
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Insights
                         match.Groups["value"].Captures.Count <= 0)
                     {
                         throw new FormatException(
-                            "only conditions of the form '<name> eq <value>' are allowed, where <name> = 'timeGrain', 'startTime', 'endTime', or 'name'");
+                            "only conditions of the form '<name> eq <value>' are allowed, where <name> = 'timeGrain', 'startTime', 'endTime', or 'name.value'");
                     }
 
                     // Collect name and value
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Insights
                         case "endTime":
                             filter.EndTime = DateTime.Parse(value);
                             break;
-                        case "name": // single name (without) parentheses is allowed, but only one
+                        case "name.value": // single name (without) parentheses is allowed, but only one
                             if (filter.Names == null)
                             {
                                 // verify quotes
@@ -119,14 +119,14 @@ namespace Microsoft.Azure.Insights
                                 }
                                 else
                                 {
-                                    throw new FormatException("Invalid string value for name");
+                                    throw new FormatException("Invalid string value for name.value");
                                 }
                             }
                             else throw new FormatException("Multiple 'name' conditions must be within parentheses");
                             break;
                         default:
                             throw new FormatException(
-                                "Condition name must be one of: 'timeGrain', 'startTime', 'endTime', or 'name'");
+                                "Condition name must be one of: 'timeGrain', 'startTime', 'endTime', or 'name.value'");
                     }
                 }
             }

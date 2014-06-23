@@ -38,21 +38,13 @@ namespace Microsoft.Azure.Insights
             // Names not allowed in filter since the names are in the definitions
             if (filter.Names != null && filter.Names.Any())
             {
-                // TODO: Error Codes?
-                return new MetricListResponse()
-                {
-                    StatusCode = HttpStatusCode.BadRequest
-                };
+                throw new ArgumentException("Cannot specify names when MetricDefinitions are included", "filterString");
             }
 
             // Ensure every definition has at least one availability matching the filter timegrain
             if (!definitions.All(d => d.MetricAvailabilities.Any(a => a.TimeGrain == filter.TimeGrain)))
             {
-                // TODO: Error Codes?
-                return new MetricListResponse()
-                {
-                    StatusCode = HttpStatusCode.BadRequest
-                };
+                throw new ArgumentException("Definition contains no availability for the timeGrain requested", "definitions");
             }
 
             Dictionary<MetricAvailability, MetricFilter> groups =
@@ -101,9 +93,14 @@ namespace Microsoft.Azure.Insights
         private static string RemoveNamesFromFilterString(string filterString)
         {
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
-            filter.Names = null;
+            MetricFilter nameless = new MetricFilter()
+            {
+                TimeGrain = filter.TimeGrain,
+                StartTime = filter.StartTime,
+                EndTime = filter.EndTime
+            };
 
-            return ShoeboxHelper.GenerateMetricFilterString(filter);
+            return ShoeboxHelper.GenerateMetricFilterString(nameless);
         }
 
         private class AvailabilityComparer : IEqualityComparer<MetricAvailability>

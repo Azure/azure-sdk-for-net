@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Insights
             }
 
             // used for creating the most basic filters the expected usage will only have one non-null parameter
-            // The most basic form aslo cannot have a complex names constraint so the constructor only accepts a singe string (or null) here as well
+            // The most basic form also cannot have a complex names constraint so the constructor only accepts a singe string (or null) here as well
             internal MetricFilterExpression(string timeGrain, string startTime, string endTime, string name)
             {
                 this.SubExpressions = new List<SubExpression>()
@@ -751,9 +751,9 @@ namespace Microsoft.Azure.Insights
             switch (value)
             {
                 case "name.value": return FilterParameter.Name;
-                case "timegrain": return FilterParameter.TimeGrain;
-                case "starttime": return FilterParameter.StartTime;
-                case "endtime": return FilterParameter.EndTime;
+                case "timeGrain": return FilterParameter.TimeGrain;
+                case "startTime": return FilterParameter.StartTime;
+                case "endTime": return FilterParameter.EndTime;
                 default: throw new FormatException("Invalid Identifier: " + value);
             }
         }

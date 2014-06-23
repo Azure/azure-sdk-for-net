@@ -12,9 +12,31 @@ namespace Microsoft.Azure.Insights
     {
         public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
+            IEnumerable<MetricDefinition> definitions;
+
+            // If no filter string, must request all metric definiitons since we don't know if we have them all
+            if (string.IsNullOrWhiteSpace(filterString))
+            {
+                // request all definitions
+                definitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, null, CancellationToken.None)).MetricDefinitionCollection.Value;
+
+                // cache definitions
+                this.Client.Cache[resourceUri] = definitions;
+
+                // wrap and return definitions
+                return new MetricDefinitionListResponse()
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    MetricDefinitionCollection = new MetricDefinitionCollection()
+                    {
+                        Value = definitions.ToList()
+                    }
+                };
+            }
+
             // Parse the filter and retrieve cached definitions
             IEnumerable<string> names = MetricDefinitionFilterParser.Parse(filterString);
-            IEnumerable<MetricDefinition> definitions = this.Client.Cache[resourceUri];
+            definitions = this.Client.Cache[resourceUri];
 
             // Find the names in the filter that don't appear on any of the cached definitions
             IEnumerable<string> missing = definitions == null
