@@ -140,6 +140,36 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._resources; }
         }
         
+        private ISubscriptionOperations _subscriptions;
+        
+        /// <summary>
+        /// Operations for managing subscriptions.
+        /// </summary>
+        public virtual ISubscriptionOperations Subscriptions
+        {
+            get { return this._subscriptions; }
+        }
+        
+        private ITagOperations _tags;
+        
+        /// <summary>
+        /// Operations for managing tags.
+        /// </summary>
+        public virtual ITagOperations Tags
+        {
+            get { return this._tags; }
+        }
+        
+        private ITenantOperations _tenants;
+        
+        /// <summary>
+        /// Operations for managing tenants.
+        /// </summary>
+        public virtual ITenantOperations Tenants
+        {
+            get { return this._tenants; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
@@ -151,6 +181,9 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._tags = new TagOperations(this);
+            this._tenants = new TenantOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -221,6 +254,9 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._subscriptions = new SubscriptionOperations(this);
+            this._tags = new TagOperations(this);
+            this._tenants = new TenantOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

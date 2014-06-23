@@ -114,6 +114,30 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
+        /// Operations for managing subscriptions.
+        /// </summary>
+        ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing tags.
+        /// </summary>
+        ITagOperations Tags
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing tenants.
+        /// </summary>
+        ITenantOperations Tenants
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call Get Operation Status to determine whether the operation

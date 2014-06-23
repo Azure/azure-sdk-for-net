@@ -21,54 +21,63 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Information from validate template deployment response.
+    /// Subscription detailed information.
     /// </summary>
-    public partial class DeploymentValidateResponse : OperationResponse
+    public partial class GetSubscriptionResult : OperationResponse
     {
-        private ResourceManagementErrorWithDetails _error;
+        private string _displayName;
         
         /// <summary>
-        /// Optional. Gets or sets validation error.
+        /// Optional. Gets or sets display name
         /// </summary>
-        public ResourceManagementErrorWithDetails Error
+        public string DisplayName
         {
-            get { return this._error; }
-            set { this._error = value; }
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
-        private bool _isValid;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the value indicating whether the template is
-        /// valid or not.
+        /// Optional. Gets or sets Id
         /// </summary>
-        public bool IsValid
+        public string Id
         {
-            get { return this._isValid; }
-            set { this._isValid = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private DeploymentProperties _properties;
+        private string _state;
         
         /// <summary>
-        /// Optional. Gets or sets the template deployment properties.
+        /// Optional. Gets or sets State
         /// </summary>
-        public DeploymentProperties Properties
+        public string State
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _subscriptionId;
+        
+        /// <summary>
+        /// Optional. Gets or sets subscriptionId
+        /// </summary>
+        public string SubscriptionId
+        {
+            get { return this._subscriptionId; }
+            set { this._subscriptionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentValidateResponse class.
+        /// Initializes a new instance of the GetSubscriptionResult class.
         /// </summary>
-        public DeploymentValidateResponse()
+        public GetSubscriptionResult()
         {
         }
     }

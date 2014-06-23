@@ -21,32 +21,40 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Create or update resource parameters.
+    /// Tenant Id information
     /// </summary>
-    public partial class ResourceCreateOrUpdateParameters
+    public partial class TenantIdDescription
     {
-        private BasicResource _resource;
+        private string _id;
         
         /// <summary>
-        /// Required. Gets or sets information about a resource being created
-        /// of updated.
+        /// Optional. Gets or sets Id
         /// </summary>
-        public BasicResource Resource
+        public string Id
         {
-            get { return this._resource; }
-            set { this._resource = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _tenantId;
+        
+        /// <summary>
+        /// Optional. Gets or sets tenantId
+        /// </summary>
+        public string TenantId
+        {
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
-        public ResourceCreateOrUpdateParameters()
+        public TenantIdDescription()
         {
         }
     }

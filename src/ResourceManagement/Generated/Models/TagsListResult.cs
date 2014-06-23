@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.WindowsAzure;
@@ -27,49 +28,38 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Information from validate template deployment response.
+    /// List of subscription tags.
     /// </summary>
-    public partial class DeploymentValidateResponse : OperationResponse
+    public partial class TagsListResult : OperationResponse
     {
-        private ResourceManagementErrorWithDetails _error;
+        private string _nextLink;
         
         /// <summary>
-        /// Optional. Gets or sets validation error.
+        /// Required. Gets or sets the URL to get the next set of results.
         /// </summary>
-        public ResourceManagementErrorWithDetails Error
+        public string NextLink
         {
-            get { return this._error; }
-            set { this._error = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
-        private bool _isValid;
+        private IList<TagDetails> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets the value indicating whether the template is
-        /// valid or not.
+        /// Optional. Gets or sets the list of tags.
         /// </summary>
-        public bool IsValid
+        public IList<TagDetails> Tags
         {
-            get { return this._isValid; }
-            set { this._isValid = value; }
-        }
-        
-        private DeploymentProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the template deployment properties.
-        /// </summary>
-        public DeploymentProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._tags; }
+            set { this._tags = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentValidateResponse class.
+        /// Initializes a new instance of the TagsListResult class.
         /// </summary>
-        public DeploymentValidateResponse()
+        public TagsListResult()
         {
+            this._tags = new List<TagDetails>();
         }
     }
 }

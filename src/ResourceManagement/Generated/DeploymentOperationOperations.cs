@@ -350,7 +350,7 @@ namespace Microsoft.Azure.Management.Resources
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/operations?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
             url = url + "&api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.

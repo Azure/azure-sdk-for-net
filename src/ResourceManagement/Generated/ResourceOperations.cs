@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        public async Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, ResourceCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        public async Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, BasicResource parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -283,13 +283,9 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Resource == null)
+            if (parameters.Location == null)
             {
-                throw new ArgumentNullException("parameters.Resource");
-            }
-            if (parameters.Resource.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Resource.Location");
+                throw new ArgumentNullException("parameters.Location");
             }
             
             // Tracing
@@ -308,7 +304,7 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -338,17 +334,31 @@ namespace Microsoft.Azure.Management.Resources
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                requestDoc = new JObject();
-                requestDoc["location"] = parameters.Resource.Location;
+                JObject basicResourceValue = new JObject();
+                requestDoc = basicResourceValue;
                 
-                if (parameters.Resource.Properties != null)
+                basicResourceValue["location"] = parameters.Location;
+                
+                if (parameters.Properties != null)
                 {
-                    requestDoc["properties"] = JObject.Parse(parameters.Resource.Properties);
+                    basicResourceValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
-                if (parameters.Resource.ProvisioningState != null)
+                JObject tagsDictionary = new JObject();
+                if (parameters.Tags != null)
                 {
-                    requestDoc["provisioningState"] = parameters.Resource.ProvisioningState;
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                }
+                basicResourceValue["tags"] = tagsDictionary;
+                
+                if (parameters.ProvisioningState != null)
+                {
+                    basicResourceValue["provisioningState"] = parameters.ProvisioningState;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -421,6 +431,17 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                             resourceInstance.Properties = propertiesInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey2 = ((string)property.Name);
+                                string tagsValue2 = ((string)property.Value);
+                                resourceInstance.Tags.Add(tagsKey2, tagsValue2);
+                            }
                         }
                         
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];
@@ -528,7 +549,7 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -679,7 +700,7 @@ namespace Microsoft.Azure.Management.Resources
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "?";
-            url = url + "api-version=" + Uri.EscapeUriString(identity.ResourceProviderApiVersion.Trim());
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -794,11 +815,204 @@ namespace Microsoft.Azure.Management.Resources
                             resourceInstance.Properties = propertiesInstance;
                         }
                         
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
+                                resourceInstance.Tags.Add(tagsKey, tagsValue);
+                            }
+                        }
+                        
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];
                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                         {
                             string provisioningStateInstance2 = ((string)provisioningStateValue2);
                             resourceInstance.ProvisioningState = provisioningStateInstance2;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a resource permissions.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group. The name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='identity'>
+        /// Required. Resource identity.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Resource group permissions information.
+        /// </returns>
+        public async Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (identity == null)
+            {
+                throw new ArgumentNullException("identity");
+            }
+            if (identity.ResourceName == null)
+            {
+                throw new ArgumentNullException("identity.ResourceName");
+            }
+            if (identity.ResourceProviderApiVersion == null)
+            {
+                throw new ArgumentNullException("identity.ResourceProviderApiVersion");
+            }
+            if (identity.ResourceProviderNamespace == null)
+            {
+                throw new ArgumentNullException("identity.ResourceProviderNamespace");
+            }
+            if (identity.ResourceType == null)
+            {
+                throw new ArgumentNullException("identity.ResourceType");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("identity", identity);
+                Tracing.Enter(invocationId, this, "GetPermissionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/" + identity.ResourceProviderNamespace.Trim() + "/" + (identity.ParentResourcePath != null ? identity.ParentResourcePath.Trim() : "") + "/" + identity.ResourceType.Trim() + "/" + identity.ResourceName.Trim() + "/permissions?";
+            url = url + "api-version=" + Uri.EscapeDataString(identity.ResourceProviderApiVersion.Trim());
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    PermissionGetResult result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new PermissionGetResult();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken valueValue in ((JArray)valueArray))
+                            {
+                                PermittedActionDefinition permittedActionDefinitionInstance = new PermittedActionDefinition();
+                                result.PermittedActions.Add(permittedActionDefinitionInstance);
+                                
+                                JToken actionsArray = valueValue["actions"];
+                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                    {
+                                        permittedActionDefinitionInstance.Actions.Add(((string)actionsValue));
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -864,17 +1078,17 @@ namespace Microsoft.Azure.Management.Resources
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/";
             if (parameters != null && parameters.ResourceGroupName != null)
             {
-                url = url + "resourceGroups/" + Uri.EscapeUriString(parameters.ResourceGroupName != null ? parameters.ResourceGroupName.Trim() : "") + "/";
+                url = url + "resourceGroups/" + Uri.EscapeDataString(parameters.ResourceGroupName != null ? parameters.ResourceGroupName.Trim() : "") + "/";
             }
             url = url + "resources?";
             url = url + "api-version=2014-04-01-preview";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
             if (parameters != null && parameters.ResourceType != null)
             {
-                url = url + "&$filter=resourceType eq '" + Uri.EscapeUriString(parameters.ResourceType != null ? parameters.ResourceType.Trim() : "") + "'";
+                url = url + "&$filter=resourceType eq '" + Uri.EscapeDataString(parameters.ResourceType != null ? parameters.ResourceType.Trim() : "") + "'";
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -993,6 +1207,17 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                                     resourceJsonFormatInstance.Properties = propertiesInstance;
+                                }
+                                
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in tagsSequenceElement)
+                                    {
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
+                                        resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue2 = valueValue["provisioningState"];
@@ -1182,6 +1407,17 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                                     resourceJsonFormatInstance.Properties = propertiesInstance;
+                                }
+                                
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in tagsSequenceElement)
+                                    {
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
+                                        resourceJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue2 = valueValue["provisioningState"];
