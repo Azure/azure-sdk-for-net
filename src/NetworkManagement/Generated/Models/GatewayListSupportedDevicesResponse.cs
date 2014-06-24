@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListSupportedDevicesResponse()
         {
-            this._vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
+            this.Vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
         }
         
         public partial class OSFamily
@@ -116,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Platform()
             {
-                this._oSFamilies = new List<GatewayListSupportedDevicesResponse.OSFamily>();
+                this.OSFamilies = new List<GatewayListSupportedDevicesResponse.OSFamily>();
             }
         }
         
@@ -152,7 +152,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Vendor()
             {
-                this._platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
+                this.Platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
             }
         }
     }
