@@ -16,6 +16,8 @@
   <Import Project="..\library.props" />
   <ItemGroup>
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
+    <Compile Include="Customizations\InsightsClient.GetEventCountSummaryParameters.Customization.cs" />
+    <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
