@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Insights
         {
 
             return string.Format(CultureInfo.InvariantCulture,
-                "{0}timeGrain eq {1} and startTime eq {2} and endTime eq {3}",
-                filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and",
+                "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
+                filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and ",
                 filter.TimeGrain.To8601String(),
                 filter.StartTime.ToString("O"),
                 filter.EndTime.ToString("O"));

@@ -563,143 +563,6 @@ namespace Microsoft.Azure.Insights.Models
     }
     
     /// <summary>
-    /// Parameters supplied to the get count summary for event source operation.
-    /// </summary>
-    public partial class GetCountSummaryForEventSourceParameters : GetCountSummaryParameters
-    {
-        private string _eventSource;
-        
-        /// <summary>
-        /// The event source.
-        /// </summary>
-        public string EventSource
-        {
-            get { return this._eventSource; }
-            set { this._eventSource = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// GetCountSummaryForEventSourceParameters class.
-        /// </summary>
-        public GetCountSummaryForEventSourceParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the get count summary for a resource group
-    /// operation.
-    /// </summary>
-    public partial class GetCountSummaryForResourceGroupParameters : GetCountSummaryParameters
-    {
-        private string _resourceGroupName;
-        
-        /// <summary>
-        /// The resource group name.
-        /// </summary>
-        public string ResourceGroupName
-        {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// GetCountSummaryForResourceGroupParameters class.
-        /// </summary>
-        public GetCountSummaryForResourceGroupParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the get count summary for a resource operation.
-    /// </summary>
-    public partial class GetCountSummaryForResourceParameters : GetCountSummaryParameters
-    {
-        private string _resourceUri;
-        
-        /// <summary>
-        /// The id of the resource.
-        /// </summary>
-        public string ResourceUri
-        {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// GetCountSummaryForResourceParameters class.
-        /// </summary>
-        public GetCountSummaryForResourceParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the get count summary for a resource provider
-    /// operation.
-    /// </summary>
-    public partial class GetCountSummaryForResourceProviderParameters : GetCountSummaryParameters
-    {
-        private string _resourceProvider;
-        
-        /// <summary>
-        /// The resource provider.
-        /// </summary>
-        public string ResourceProvider
-        {
-            get { return this._resourceProvider; }
-            set { this._resourceProvider = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// GetCountSummaryForResourceProviderParameters class.
-        /// </summary>
-        public GetCountSummaryForResourceProviderParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the get count summary operation.
-    /// </summary>
-    public partial class GetCountSummaryParameters
-    {
-        private System.DateTime? _endTime;
-        
-        /// <summary>
-        /// The end time of the events.
-        /// </summary>
-        public System.DateTime? EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// The start time of the events.
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the GetCountSummaryParameters class.
-        /// </summary>
-        public GetCountSummaryParameters()
-        {
-        }
-    }
-    
-    /// <summary>
     /// The HttpInfo class.
     /// </summary>
     public partial class HttpRequestInfo
@@ -752,200 +615,6 @@ namespace Microsoft.Azure.Insights.Models
         /// Initializes a new instance of the HttpRequestInfo class.
         /// </summary>
         public HttpRequestInfo()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsForCorrelationIdParameters : ListEventsParameters
-    {
-        private string _correlationId;
-        
-        /// <summary>
-        /// The event correlation id.
-        /// </summary>
-        public string CorrelationId
-        {
-            get { return this._correlationId; }
-            set { this._correlationId = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ListEventsForCorrelationIdParameters class.
-        /// </summary>
-        public ListEventsForCorrelationIdParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsForEventSourceParameters : ListEventsParameters
-    {
-        private string _eventSource;
-        
-        /// <summary>
-        /// The event source.
-        /// </summary>
-        public string EventSource
-        {
-            get { return this._eventSource; }
-            set { this._eventSource = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ListEventsForEventSourceParameters class.
-        /// </summary>
-        public ListEventsForEventSourceParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsForResourceGroupParameters : ListEventsParameters
-    {
-        private string _resourceGroupName;
-        
-        /// <summary>
-        /// The resource group name.
-        /// </summary>
-        public string ResourceGroupName
-        {
-            get { return this._resourceGroupName; }
-            set { this._resourceGroupName = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ListEventsForResourceGroupParameters class.
-        /// </summary>
-        public ListEventsForResourceGroupParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsForResourceParameters : ListEventsParameters
-    {
-        private string _resourceUri;
-        
-        /// <summary>
-        /// The id of the resource.
-        /// </summary>
-        public string ResourceUri
-        {
-            get { return this._resourceUri; }
-            set { this._resourceUri = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ListEventsForResourceParameters
-        /// class.
-        /// </summary>
-        public ListEventsForResourceParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsForResourceProviderParameters : ListEventsParameters
-    {
-        private string _resourceProvider;
-        
-        /// <summary>
-        /// The resource provider.
-        /// </summary>
-        public string ResourceProvider
-        {
-            get { return this._resourceProvider; }
-            set { this._resourceProvider = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// ListEventsForResourceProviderParameters class.
-        /// </summary>
-        public ListEventsForResourceProviderParameters()
-        {
-        }
-    }
-    
-    /// <summary>
-    /// Parameters supplied to the List events operation.
-    /// </summary>
-    public partial class ListEventsParameters
-    {
-        private System.DateTime? _endTime;
-        
-        /// <summary>
-        /// The end time of the events.
-        /// </summary>
-        public System.DateTime? EndTime
-        {
-            get { return this._endTime; }
-            set { this._endTime = value; }
-        }
-        
-        private Microsoft.Azure.Insights.Models.EventChannels? _eventChannels;
-        
-        /// <summary>
-        /// The event channels.
-        /// </summary>
-        public Microsoft.Azure.Insights.Models.EventChannels? EventChannels
-        {
-            get { return this._eventChannels; }
-            set { this._eventChannels = value; }
-        }
-        
-        private string _nextLink;
-        
-        /// <summary>
-        /// The next link token.
-        /// </summary>
-        public string NextLink
-        {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private string _select;
-        
-        /// <summary>
-        /// The list of property names to be returned. You can save bandwith by
-        /// selecting only the properties you need.
-        /// </summary>
-        public string Select
-        {
-            get { return this._select; }
-            set { this._select = value; }
-        }
-        
-        private DateTime _startTime;
-        
-        /// <summary>
-        /// The start time of the events.
-        /// </summary>
-        public DateTime StartTime
-        {
-            get { return this._startTime; }
-            set { this._startTime = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ListEventsParameters class.
-        /// </summary>
-        public ListEventsParameters()
         {
         }
     }
@@ -1623,6 +1292,11 @@ namespace Microsoft.Azure.Insights.Models
         /// How many bytes per second.
         /// </summary>
         BytesPerSecond = 4,
+        
+        /// <summary>
+        /// Percentage.
+        /// </summary>
+        Percent = 5,
     }
     
     /// <summary>
@@ -1981,123 +1655,48 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// The count of events in a subscription.
         /// </summary>
+        /// <param name='filterString'>
+        /// The filter string.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryAsync(GetCountSummaryParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The count of events in a subscription for an event source.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(GetCountSummaryForEventSourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(GetCountSummaryForResourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource group.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(GetCountSummaryForResourceGroupParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource provider.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(GetCountSummaryForResourceProviderParameters parameters, CancellationToken cancellationToken);
+        Task<EventCountSummaryResponse> GetCountSummaryAsync(string filterString, CancellationToken cancellationToken);
         
         /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken);
+        Task<EventDataListResponse> ListEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The List Event Values operation lists the events.
+        /// The List Event Next operation lists the next set of events.
         /// </summary>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken);
+        Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken);
     }
     
     /// <summary>
@@ -2111,14 +1710,17 @@ namespace Microsoft.Azure.Insights
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
+        /// <param name='filterString'>
+        /// The filter string.
+        /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, GetCountSummaryParameters parameters)
+        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, string filterString)
         {
             try
             {
-                return operations.GetCountSummaryAsync(parameters).Result;
+                return operations.GetCountSummaryAsync(filterString).Result;
             }
             catch (AggregateException ex)
             {
@@ -2139,180 +1741,15 @@ namespace Microsoft.Azure.Insights
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, GetCountSummaryParameters parameters)
-        {
-            return operations.GetCountSummaryAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for an event source.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// <param name='filterString'>
+        /// The filter string.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForEventSource(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
+        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, string filterString)
         {
-            try
-            {
-                return operations.GetCountSummaryForEventSourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for an event source.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(this IEventOperations operations, GetCountSummaryForEventSourceParameters parameters)
-        {
-            return operations.GetCountSummaryForEventSourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResource(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
-        {
-            try
-            {
-                return operations.GetCountSummaryForResourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(this IEventOperations operations, GetCountSummaryForResourceParameters parameters)
-        {
-            return operations.GetCountSummaryForResourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource group.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceGroup(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
-        {
-            try
-            {
-                return operations.GetCountSummaryForResourceGroupAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource group.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(this IEventOperations operations, GetCountSummaryForResourceGroupParameters parameters)
-        {
-            return operations.GetCountSummaryForResourceGroupAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource provider.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static EventCountSummaryResponse GetCountSummaryForResourceProvider(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
-        {
-            try
-            {
-                return operations.GetCountSummaryForResourceProviderAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource provider.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(this IEventOperations operations, GetCountSummaryForResourceProviderParameters parameters)
-        {
-            return operations.GetCountSummaryForResourceProviderAsync(parameters, CancellationToken.None);
+            return operations.GetCountSummaryAsync(filterString, CancellationToken.None);
         }
         
         /// <summary>
@@ -2321,14 +1758,21 @@ namespace Microsoft.Azure.Insights
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
+        /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        public static EventDataListResponse ListEvents(this IEventOperations operations, ListEventsParameters parameters)
+        public static EventDataListResponse ListEvents(this IEventOperations operations, string filterString, string selectedProperties)
         {
             try
             {
-                return operations.ListEventsAsync(parameters).Result;
+                return operations.ListEventsAsync(filterString, selectedProperties).Result;
             }
             catch (AggregateException ex)
             {
@@ -2349,28 +1793,38 @@ namespace Microsoft.Azure.Insights
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, ListEventsParameters parameters)
-        {
-            return operations.ListEventsAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        public static EventDataListResponse ListEventsForCorrelationId(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
+        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return operations.ListEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsNext(this IEventOperations operations, string nextLink)
         {
             try
             {
-                return operations.ListEventsForCorrelationIdAsync(parameters).Result;
+                return operations.ListEventsNextAsync(nextLink).Result;
             }
             catch (AggregateException ex)
             {
@@ -2386,185 +1840,20 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
-        /// The List Event Values operation lists the events.
+        /// The List Event Next operation lists the next set of events.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the Microsoft.Azure.Insights.IEventOperations.
         /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForCorrelationIdAsync(this IEventOperations operations, ListEventsForCorrelationIdParameters parameters)
-        {
-            return operations.ListEventsForCorrelationIdAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// <param name='nextLink'>
+        /// The next link
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        public static EventDataListResponse ListEventsForEventSource(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
+        public static Task<EventDataListResponse> ListEventsNextAsync(this IEventOperations operations, string nextLink)
         {
-            try
-            {
-                return operations.ListEventsForEventSourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForEventSourceAsync(this IEventOperations operations, ListEventsForEventSourceParameters parameters)
-        {
-            return operations.ListEventsForEventSourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResource(this IEventOperations operations, ListEventsForResourceParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceAsync(this IEventOperations operations, ListEventsForResourceParameters parameters)
-        {
-            return operations.ListEventsForResourceAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceGroup(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceGroupAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceGroupAsync(this IEventOperations operations, ListEventsForResourceGroupParameters parameters)
-        {
-            return operations.ListEventsForResourceGroupAsync(parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsForResourceProvider(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            try
-            {
-                return operations.ListEventsForResourceProviderAsync(parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsForResourceProviderAsync(this IEventOperations operations, ListEventsForResourceProviderParameters parameters)
-        {
-            return operations.ListEventsForResourceProviderAsync(parameters, CancellationToken.None);
+            return operations.ListEventsNextAsync(nextLink, CancellationToken.None);
         }
     }
     
@@ -2597,18 +1886,21 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// The count of events in a subscription.
         /// </summary>
+        /// <param name='filterString'>
+        /// The filter string.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The event count summary response.
         /// </returns>
-        public async Task<EventCountSummaryResponse> GetCountSummaryAsync(GetCountSummaryParameters parameters, CancellationToken cancellationToken)
+        public async Task<EventCountSummaryResponse> GetCountSummaryAsync(string filterString, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters == null)
+            if (filterString == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException("filterString");
             }
             
             // Tracing
@@ -2618,778 +1910,14 @@ namespace Microsoft.Azure.Insights
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("filterString", filterString);
                 Tracing.Enter(invocationId, this, "GetCountSummaryAsync", tracingParameters);
             }
             
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            if (parameters.EndTime != null)
-            {
-                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventCountSummaryResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventCountSummaryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JToken eventPropertyNameValue = responseDoc["eventPropertyName"];
-                        if (eventPropertyNameValue != null)
-                        {
-                            string eventPropertyNameInstance = (string)eventPropertyNameValue;
-                            result.EventPropertyName = eventPropertyNameInstance;
-                        }
-                        
-                        JToken eventPropertyValueValue = responseDoc["eventPropertyValue"];
-                        if (eventPropertyValueValue != null)
-                        {
-                            string eventPropertyValueInstance = (string)eventPropertyValueValue;
-                            result.EventPropertyValue = eventPropertyValueInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null)
-                        {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
-                            result.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken endTimeValue = responseDoc["endTime"];
-                        if (endTimeValue != null)
-                        {
-                            string endTimeInstance = (string)endTimeValue;
-                            result.EndTime = endTimeInstance;
-                        }
-                        
-                        JToken timeGrainValue = responseDoc["TimeGrain"];
-                        if (timeGrainValue != null)
-                        {
-                            // how
-                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
-                            result.TimeGrain = timeGrainInstance;
-                        }
-                        
-                        JArray summaryItemsArray = (JArray)responseDoc["summaryItems"];
-                        if (summaryItemsArray != null)
-                        {
-                            foreach (JToken summaryItemsValue in summaryItemsArray)
-                            {
-                                CountSummaryItem countSummaryItemInstance = new CountSummaryItem();
-                                result.SummaryItems.Add(countSummaryItemInstance);
-                                
-                                JToken eventTimeValue = summaryItemsValue["eventTime"];
-                                if (eventTimeValue != null)
-                                {
-                                    DateTime eventTimeInstance = (DateTime)eventTimeValue;
-                                    countSummaryItemInstance.EventTime = eventTimeInstance;
-                                }
-                                
-                                JToken totalEventsCountValue = summaryItemsValue["totalEventsCount"];
-                                if (totalEventsCountValue != null)
-                                {
-                                    int totalEventsCountInstance = (int)totalEventsCountValue;
-                                    countSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
-                                }
-                                
-                                JToken failedEventsCountValue = summaryItemsValue["failedEventsCount"];
-                                if (failedEventsCountValue != null)
-                                {
-                                    int failedEventsCountInstance = (int)failedEventsCountValue;
-                                    countSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for an event source.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public async Task<EventCountSummaryResponse> GetCountSummaryForEventSourceAsync(GetCountSummaryForEventSourceParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.EventSource == null)
-            {
-                throw new ArgumentNullException("parameters.EventSource");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetCountSummaryForEventSourceAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&eventSource=" + Uri.EscapeUriString(parameters.EventSource);
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            if (parameters.EndTime != null)
-            {
-                url = url + "&endTime=" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + ":date";
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventCountSummaryResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventCountSummaryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JToken eventPropertyNameValue = responseDoc["eventPropertyName"];
-                        if (eventPropertyNameValue != null)
-                        {
-                            string eventPropertyNameInstance = (string)eventPropertyNameValue;
-                            result.EventPropertyName = eventPropertyNameInstance;
-                        }
-                        
-                        JToken eventPropertyValueValue = responseDoc["eventPropertyValue"];
-                        if (eventPropertyValueValue != null)
-                        {
-                            string eventPropertyValueInstance = (string)eventPropertyValueValue;
-                            result.EventPropertyValue = eventPropertyValueInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null)
-                        {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
-                            result.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken endTimeValue = responseDoc["endTime"];
-                        if (endTimeValue != null)
-                        {
-                            string endTimeInstance = (string)endTimeValue;
-                            result.EndTime = endTimeInstance;
-                        }
-                        
-                        JToken timeGrainValue = responseDoc["TimeGrain"];
-                        if (timeGrainValue != null)
-                        {
-                            // how
-                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
-                            result.TimeGrain = timeGrainInstance;
-                        }
-                        
-                        JArray summaryItemsArray = (JArray)responseDoc["summaryItems"];
-                        if (summaryItemsArray != null)
-                        {
-                            foreach (JToken summaryItemsValue in summaryItemsArray)
-                            {
-                                CountSummaryItem countSummaryItemInstance = new CountSummaryItem();
-                                result.SummaryItems.Add(countSummaryItemInstance);
-                                
-                                JToken eventTimeValue = summaryItemsValue["eventTime"];
-                                if (eventTimeValue != null)
-                                {
-                                    DateTime eventTimeInstance = (DateTime)eventTimeValue;
-                                    countSummaryItemInstance.EventTime = eventTimeInstance;
-                                }
-                                
-                                JToken totalEventsCountValue = summaryItemsValue["totalEventsCount"];
-                                if (totalEventsCountValue != null)
-                                {
-                                    int totalEventsCountInstance = (int)totalEventsCountValue;
-                                    countSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
-                                }
-                                
-                                JToken failedEventsCountValue = summaryItemsValue["failedEventsCount"];
-                                if (failedEventsCountValue != null)
-                                {
-                                    int failedEventsCountInstance = (int)failedEventsCountValue;
-                                    countSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public async Task<EventCountSummaryResponse> GetCountSummaryForResourceAsync(GetCountSummaryForResourceParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceUri == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceUri");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetCountSummaryForResourceAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&resourceUri=" + Uri.EscapeUriString(parameters.ResourceUri);
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            if (parameters.EndTime != null)
-            {
-                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventCountSummaryResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventCountSummaryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JToken eventPropertyNameValue = responseDoc["eventPropertyName"];
-                        if (eventPropertyNameValue != null)
-                        {
-                            string eventPropertyNameInstance = (string)eventPropertyNameValue;
-                            result.EventPropertyName = eventPropertyNameInstance;
-                        }
-                        
-                        JToken eventPropertyValueValue = responseDoc["eventPropertyValue"];
-                        if (eventPropertyValueValue != null)
-                        {
-                            string eventPropertyValueInstance = (string)eventPropertyValueValue;
-                            result.EventPropertyValue = eventPropertyValueInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null)
-                        {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
-                            result.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken endTimeValue = responseDoc["endTime"];
-                        if (endTimeValue != null)
-                        {
-                            string endTimeInstance = (string)endTimeValue;
-                            result.EndTime = endTimeInstance;
-                        }
-                        
-                        JToken timeGrainValue = responseDoc["TimeGrain"];
-                        if (timeGrainValue != null)
-                        {
-                            // how
-                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
-                            result.TimeGrain = timeGrainInstance;
-                        }
-                        
-                        JArray summaryItemsArray = (JArray)responseDoc["summaryItems"];
-                        if (summaryItemsArray != null)
-                        {
-                            foreach (JToken summaryItemsValue in summaryItemsArray)
-                            {
-                                CountSummaryItem countSummaryItemInstance = new CountSummaryItem();
-                                result.SummaryItems.Add(countSummaryItemInstance);
-                                
-                                JToken eventTimeValue = summaryItemsValue["eventTime"];
-                                if (eventTimeValue != null)
-                                {
-                                    DateTime eventTimeInstance = (DateTime)eventTimeValue;
-                                    countSummaryItemInstance.EventTime = eventTimeInstance;
-                                }
-                                
-                                JToken totalEventsCountValue = summaryItemsValue["totalEventsCount"];
-                                if (totalEventsCountValue != null)
-                                {
-                                    int totalEventsCountInstance = (int)totalEventsCountValue;
-                                    countSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
-                                }
-                                
-                                JToken failedEventsCountValue = summaryItemsValue["failedEventsCount"];
-                                if (failedEventsCountValue != null)
-                                {
-                                    int failedEventsCountInstance = (int)failedEventsCountValue;
-                                    countSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource group.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public async Task<EventCountSummaryResponse> GetCountSummaryForResourceGroupAsync(GetCountSummaryForResourceGroupParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceGroupName == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceGroupName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetCountSummaryForResourceGroupAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&resourceGroupName=" + Uri.EscapeUriString(parameters.ResourceGroupName);
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            if (parameters.EndTime != null)
-            {
-                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventCountSummaryResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventCountSummaryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        JToken eventPropertyNameValue = responseDoc["eventPropertyName"];
-                        if (eventPropertyNameValue != null)
-                        {
-                            string eventPropertyNameInstance = (string)eventPropertyNameValue;
-                            result.EventPropertyName = eventPropertyNameInstance;
-                        }
-                        
-                        JToken eventPropertyValueValue = responseDoc["eventPropertyValue"];
-                        if (eventPropertyValueValue != null)
-                        {
-                            string eventPropertyValueInstance = (string)eventPropertyValueValue;
-                            result.EventPropertyValue = eventPropertyValueInstance;
-                        }
-                        
-                        JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null)
-                        {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
-                            result.StartTime = startTimeInstance;
-                        }
-                        
-                        JToken endTimeValue = responseDoc["endTime"];
-                        if (endTimeValue != null)
-                        {
-                            string endTimeInstance = (string)endTimeValue;
-                            result.EndTime = endTimeInstance;
-                        }
-                        
-                        JToken timeGrainValue = responseDoc["TimeGrain"];
-                        if (timeGrainValue != null)
-                        {
-                            // how
-                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
-                            result.TimeGrain = timeGrainInstance;
-                        }
-                        
-                        JArray summaryItemsArray = (JArray)responseDoc["summaryItems"];
-                        if (summaryItemsArray != null)
-                        {
-                            foreach (JToken summaryItemsValue in summaryItemsArray)
-                            {
-                                CountSummaryItem countSummaryItemInstance = new CountSummaryItem();
-                                result.SummaryItems.Add(countSummaryItemInstance);
-                                
-                                JToken eventTimeValue = summaryItemsValue["eventTime"];
-                                if (eventTimeValue != null)
-                                {
-                                    DateTime eventTimeInstance = (DateTime)eventTimeValue;
-                                    countSummaryItemInstance.EventTime = eventTimeInstance;
-                                }
-                                
-                                JToken totalEventsCountValue = summaryItemsValue["totalEventsCount"];
-                                if (totalEventsCountValue != null)
-                                {
-                                    int totalEventsCountInstance = (int)totalEventsCountValue;
-                                    countSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
-                                }
-                                
-                                JToken failedEventsCountValue = summaryItemsValue["failedEventsCount"];
-                                if (failedEventsCountValue != null)
-                                {
-                                    int failedEventsCountInstance = (int)failedEventsCountValue;
-                                    countSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
-                                }
-                            }
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The count of events in a subscription for a resource provider.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public async Task<EventCountSummaryResponse> GetCountSummaryForResourceProviderAsync(GetCountSummaryForResourceProviderParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceProvider == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceProvider");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "GetCountSummaryForResourceProviderAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&resourceProvider=" + Uri.EscapeUriString(parameters.ResourceProvider);
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            if (parameters.EndTime != null)
-            {
-                url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
-            }
+            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3542,18 +2070,25 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        public async Task<EventDataListResponse> ListEventsAsync(ListEventsParameters parameters, CancellationToken cancellationToken)
+        public async Task<EventDataListResponse> ListEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters == null)
+            if (filterString == null)
             {
-                throw new ArgumentNullException("parameters");
+                throw new ArgumentNullException("filterString");
             }
             
             // Tracing
@@ -3563,29 +2098,18 @@ namespace Microsoft.Azure.Insights
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("filterString", filterString);
+                tracingParameters.Add("selectedProperties", selectedProperties);
                 Tracing.Enter(invocationId, this, "ListEventsAsync", tracingParameters);
             }
             
             // Construct URL
             string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
+            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            if (selectedProperties != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            if (parameters.Select != null)
-            {
-                url = url + "&$select=" + Uri.EscapeUriString(parameters.Select);
+                url = url + "&$select=" + Uri.EscapeUriString(selectedProperties);
             }
             
             // Create HTTP transport objects
@@ -3987,24 +2511,23 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
-        /// The List Event Values operation lists the events.
+        /// The List Event Next operation lists the next set of events.
         /// </summary>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Events operation response.
         /// </returns>
-        public async Task<EventDataListResponse> ListEventsForCorrelationIdAsync(ListEventsForCorrelationIdParameters parameters, CancellationToken cancellationToken)
+        public async Task<EventDataListResponse> ListEventsNextAsync(string nextLink, CancellationToken cancellationToken)
         {
             // Validate
-            if (parameters == null)
+            if (nextLink == null)
             {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.CorrelationId == null)
-            {
-                throw new ArgumentNullException("parameters.CorrelationId");
+                throw new ArgumentNullException("nextLink");
             }
             
             // Tracing
@@ -4014,1835 +2537,12 @@ namespace Microsoft.Azure.Insights
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListEventsForCorrelationIdAsync", tracingParameters);
+                tracingParameters.Add("nextLink", nextLink);
+                Tracing.Enter(invocationId, this, "ListEventsNextAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
-            {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventDataListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        EventDataCollection eventDataCollectionInstance = new EventDataCollection();
-                        result.EventDataCollection = eventDataCollectionInstance;
-                        
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
-                        {
-                            foreach (JToken valueValue in valueArray)
-                            {
-                                EventData eventDataInstance = new EventData();
-                                eventDataCollectionInstance.Value.Add(eventDataInstance);
-                                
-                                JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
-                                {
-                                    SenderAuthorization authorizationInstance = new SenderAuthorization();
-                                    eventDataInstance.Authorization = authorizationInstance;
-                                    
-                                    JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
-                                    {
-                                        string actionInstance = (string)actionValue;
-                                        authorizationInstance.Action = actionInstance;
-                                    }
-                                    
-                                    JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
-                                    {
-                                        string conditionInstance = (string)conditionValue;
-                                        authorizationInstance.Condition = conditionInstance;
-                                    }
-                                    
-                                    JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
-                                    {
-                                        string roleInstance = (string)roleValue;
-                                        authorizationInstance.Role = roleInstance;
-                                    }
-                                    
-                                    JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
-                                    {
-                                        string scopeInstance = (string)scopeValue;
-                                        authorizationInstance.Scope = scopeInstance;
-                                    }
-                                }
-                                
-                                JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
-                                {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
-                                    eventDataInstance.EventChannels = channelsInstance;
-                                }
-                                
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
-                                {
-                                    foreach (JProperty property in claimsSequenceElement)
-                                    {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
-                                        eventDataInstance.Claims.Add(claimsKey, claimsValue);
-                                    }
-                                }
-                                
-                                JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
-                                {
-                                    string descriptionInstance = (string)descriptionValue;
-                                    eventDataInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
-                                {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
-                                    eventDataInstance.EventDataId = eventDataIdInstance;
-                                }
-                                
-                                JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
-                                {
-                                    string correlationIdInstance = (string)correlationIdValue;
-                                    eventDataInstance.CorrelationId = correlationIdInstance;
-                                }
-                                
-                                JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
-                                {
-                                    LocalizableString eventNameInstance = new LocalizableString();
-                                    eventDataInstance.EventName = eventNameInstance;
-                                    
-                                    JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
-                                    {
-                                        string valueInstance = (string)valueValue2;
-                                        eventNameInstance.Value = valueInstance;
-                                    }
-                                    
-                                    JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
-                                    {
-                                        string localizedValueInstance = (string)localizedValueValue;
-                                        eventNameInstance.LocalizedValue = localizedValueInstance;
-                                    }
-                                }
-                                
-                                JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
-                                {
-                                    LocalizableString eventSourceInstance = new LocalizableString();
-                                    eventDataInstance.EventSource = eventSourceInstance;
-                                    
-                                    JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
-                                    {
-                                        string valueInstance2 = (string)valueValue3;
-                                        eventSourceInstance.Value = valueInstance2;
-                                    }
-                                    
-                                    JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
-                                    {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
-                                        eventSourceInstance.LocalizedValue = localizedValueInstance2;
-                                    }
-                                }
-                                
-                                JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
-                                {
-                                    HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
-                                    eventDataInstance.HttpRequest = httpRequestInstance;
-                                    
-                                    JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
-                                    {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
-                                        httpRequestInstance.ClientRequestId = clientRequestIdInstance;
-                                    }
-                                    
-                                    JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
-                                    {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
-                                        httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
-                                    }
-                                    
-                                    JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
-                                    {
-                                        string methodInstance = (string)methodValue;
-                                        httpRequestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
-                                    {
-                                        string uriInstance = (string)uriValue;
-                                        httpRequestInstance.Uri = uriInstance;
-                                    }
-                                }
-                                
-                                JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
-                                {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
-                                    eventDataInstance.Level = levelInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
-                                {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
-                                    eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
-                                {
-                                    LocalizableString resourceProviderNameInstance = new LocalizableString();
-                                    eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
-                                    
-                                    JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
-                                    {
-                                        string valueInstance3 = (string)valueValue4;
-                                        resourceProviderNameInstance.Value = valueInstance3;
-                                    }
-                                    
-                                    JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
-                                    {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
-                                        resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
-                                    }
-                                }
-                                
-                                JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
-                                {
-                                    string resourceUriInstance = (string)resourceUriValue;
-                                    eventDataInstance.ResourceUri = resourceUriInstance;
-                                }
-                                
-                                JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
-                                {
-                                    string operationIdInstance = (string)operationIdValue;
-                                    eventDataInstance.OperationId = operationIdInstance;
-                                }
-                                
-                                JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
-                                {
-                                    LocalizableString operationNameInstance = new LocalizableString();
-                                    eventDataInstance.OperationName = operationNameInstance;
-                                    
-                                    JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
-                                    {
-                                        string valueInstance4 = (string)valueValue5;
-                                        operationNameInstance.Value = valueInstance4;
-                                    }
-                                    
-                                    JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
-                                    {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
-                                        operationNameInstance.LocalizedValue = localizedValueInstance4;
-                                    }
-                                }
-                                
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
-                                {
-                                    foreach (JProperty property2 in propertiesSequenceElement)
-                                    {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
-                                        eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
-                                    }
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
-                                {
-                                    LocalizableString statusInstance = new LocalizableString();
-                                    eventDataInstance.Status = statusInstance;
-                                    
-                                    JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
-                                    {
-                                        string valueInstance5 = (string)valueValue6;
-                                        statusInstance.Value = valueInstance5;
-                                    }
-                                    
-                                    JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
-                                    {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
-                                        statusInstance.LocalizedValue = localizedValueInstance5;
-                                    }
-                                }
-                                
-                                JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
-                                {
-                                    LocalizableString subStatusInstance = new LocalizableString();
-                                    eventDataInstance.SubStatus = subStatusInstance;
-                                    
-                                    JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
-                                    {
-                                        string valueInstance6 = (string)valueValue7;
-                                        subStatusInstance.Value = valueInstance6;
-                                    }
-                                    
-                                    JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
-                                    {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
-                                        subStatusInstance.LocalizedValue = localizedValueInstance6;
-                                    }
-                                }
-                                
-                                JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
-                                {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
-                                    eventDataInstance.EventTimestamp = eventTimestampInstance;
-                                }
-                                
-                                JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
-                                {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
-                                    eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
-                                }
-                                
-                                JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
-                                {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
-                                    eventDataInstance.SubscriptionId = subscriptionIdInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
-                        {
-                            string nextLinkInstance = (string)nextLinkValue;
-                            eventDataCollectionInstance.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public async Task<EventDataListResponse> ListEventsForEventSourceAsync(ListEventsForEventSourceParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.EventSource == null)
-            {
-                throw new ArgumentNullException("parameters.EventSource");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListEventsForEventSourceAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
-            {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            if (parameters.Select != null)
-            {
-                url = url + "&$select=" + Uri.EscapeUriString(parameters.Select);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventDataListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        EventDataCollection eventDataCollectionInstance = new EventDataCollection();
-                        result.EventDataCollection = eventDataCollectionInstance;
-                        
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
-                        {
-                            foreach (JToken valueValue in valueArray)
-                            {
-                                EventData eventDataInstance = new EventData();
-                                eventDataCollectionInstance.Value.Add(eventDataInstance);
-                                
-                                JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
-                                {
-                                    SenderAuthorization authorizationInstance = new SenderAuthorization();
-                                    eventDataInstance.Authorization = authorizationInstance;
-                                    
-                                    JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
-                                    {
-                                        string actionInstance = (string)actionValue;
-                                        authorizationInstance.Action = actionInstance;
-                                    }
-                                    
-                                    JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
-                                    {
-                                        string conditionInstance = (string)conditionValue;
-                                        authorizationInstance.Condition = conditionInstance;
-                                    }
-                                    
-                                    JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
-                                    {
-                                        string roleInstance = (string)roleValue;
-                                        authorizationInstance.Role = roleInstance;
-                                    }
-                                    
-                                    JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
-                                    {
-                                        string scopeInstance = (string)scopeValue;
-                                        authorizationInstance.Scope = scopeInstance;
-                                    }
-                                }
-                                
-                                JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
-                                {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
-                                    eventDataInstance.EventChannels = channelsInstance;
-                                }
-                                
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
-                                {
-                                    foreach (JProperty property in claimsSequenceElement)
-                                    {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
-                                        eventDataInstance.Claims.Add(claimsKey, claimsValue);
-                                    }
-                                }
-                                
-                                JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
-                                {
-                                    string descriptionInstance = (string)descriptionValue;
-                                    eventDataInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
-                                {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
-                                    eventDataInstance.EventDataId = eventDataIdInstance;
-                                }
-                                
-                                JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
-                                {
-                                    string correlationIdInstance = (string)correlationIdValue;
-                                    eventDataInstance.CorrelationId = correlationIdInstance;
-                                }
-                                
-                                JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
-                                {
-                                    LocalizableString eventNameInstance = new LocalizableString();
-                                    eventDataInstance.EventName = eventNameInstance;
-                                    
-                                    JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
-                                    {
-                                        string valueInstance = (string)valueValue2;
-                                        eventNameInstance.Value = valueInstance;
-                                    }
-                                    
-                                    JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
-                                    {
-                                        string localizedValueInstance = (string)localizedValueValue;
-                                        eventNameInstance.LocalizedValue = localizedValueInstance;
-                                    }
-                                }
-                                
-                                JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
-                                {
-                                    LocalizableString eventSourceInstance = new LocalizableString();
-                                    eventDataInstance.EventSource = eventSourceInstance;
-                                    
-                                    JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
-                                    {
-                                        string valueInstance2 = (string)valueValue3;
-                                        eventSourceInstance.Value = valueInstance2;
-                                    }
-                                    
-                                    JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
-                                    {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
-                                        eventSourceInstance.LocalizedValue = localizedValueInstance2;
-                                    }
-                                }
-                                
-                                JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
-                                {
-                                    HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
-                                    eventDataInstance.HttpRequest = httpRequestInstance;
-                                    
-                                    JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
-                                    {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
-                                        httpRequestInstance.ClientRequestId = clientRequestIdInstance;
-                                    }
-                                    
-                                    JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
-                                    {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
-                                        httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
-                                    }
-                                    
-                                    JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
-                                    {
-                                        string methodInstance = (string)methodValue;
-                                        httpRequestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
-                                    {
-                                        string uriInstance = (string)uriValue;
-                                        httpRequestInstance.Uri = uriInstance;
-                                    }
-                                }
-                                
-                                JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
-                                {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
-                                    eventDataInstance.Level = levelInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
-                                {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
-                                    eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
-                                {
-                                    LocalizableString resourceProviderNameInstance = new LocalizableString();
-                                    eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
-                                    
-                                    JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
-                                    {
-                                        string valueInstance3 = (string)valueValue4;
-                                        resourceProviderNameInstance.Value = valueInstance3;
-                                    }
-                                    
-                                    JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
-                                    {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
-                                        resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
-                                    }
-                                }
-                                
-                                JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
-                                {
-                                    string resourceUriInstance = (string)resourceUriValue;
-                                    eventDataInstance.ResourceUri = resourceUriInstance;
-                                }
-                                
-                                JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
-                                {
-                                    string operationIdInstance = (string)operationIdValue;
-                                    eventDataInstance.OperationId = operationIdInstance;
-                                }
-                                
-                                JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
-                                {
-                                    LocalizableString operationNameInstance = new LocalizableString();
-                                    eventDataInstance.OperationName = operationNameInstance;
-                                    
-                                    JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
-                                    {
-                                        string valueInstance4 = (string)valueValue5;
-                                        operationNameInstance.Value = valueInstance4;
-                                    }
-                                    
-                                    JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
-                                    {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
-                                        operationNameInstance.LocalizedValue = localizedValueInstance4;
-                                    }
-                                }
-                                
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
-                                {
-                                    foreach (JProperty property2 in propertiesSequenceElement)
-                                    {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
-                                        eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
-                                    }
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
-                                {
-                                    LocalizableString statusInstance = new LocalizableString();
-                                    eventDataInstance.Status = statusInstance;
-                                    
-                                    JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
-                                    {
-                                        string valueInstance5 = (string)valueValue6;
-                                        statusInstance.Value = valueInstance5;
-                                    }
-                                    
-                                    JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
-                                    {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
-                                        statusInstance.LocalizedValue = localizedValueInstance5;
-                                    }
-                                }
-                                
-                                JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
-                                {
-                                    LocalizableString subStatusInstance = new LocalizableString();
-                                    eventDataInstance.SubStatus = subStatusInstance;
-                                    
-                                    JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
-                                    {
-                                        string valueInstance6 = (string)valueValue7;
-                                        subStatusInstance.Value = valueInstance6;
-                                    }
-                                    
-                                    JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
-                                    {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
-                                        subStatusInstance.LocalizedValue = localizedValueInstance6;
-                                    }
-                                }
-                                
-                                JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
-                                {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
-                                    eventDataInstance.EventTimestamp = eventTimestampInstance;
-                                }
-                                
-                                JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
-                                {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
-                                    eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
-                                }
-                                
-                                JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
-                                {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
-                                    eventDataInstance.SubscriptionId = subscriptionIdInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
-                        {
-                            string nextLinkInstance = (string)nextLinkValue;
-                            eventDataCollectionInstance.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public async Task<EventDataListResponse> ListEventsForResourceAsync(ListEventsForResourceParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceUri == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceUri");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListEventsForResourceAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
-            {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            if (parameters.Select != null)
-            {
-                url = url + "&$select=" + Uri.EscapeUriString(parameters.Select);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventDataListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        EventDataCollection eventDataCollectionInstance = new EventDataCollection();
-                        result.EventDataCollection = eventDataCollectionInstance;
-                        
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
-                        {
-                            foreach (JToken valueValue in valueArray)
-                            {
-                                EventData eventDataInstance = new EventData();
-                                eventDataCollectionInstance.Value.Add(eventDataInstance);
-                                
-                                JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
-                                {
-                                    SenderAuthorization authorizationInstance = new SenderAuthorization();
-                                    eventDataInstance.Authorization = authorizationInstance;
-                                    
-                                    JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
-                                    {
-                                        string actionInstance = (string)actionValue;
-                                        authorizationInstance.Action = actionInstance;
-                                    }
-                                    
-                                    JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
-                                    {
-                                        string conditionInstance = (string)conditionValue;
-                                        authorizationInstance.Condition = conditionInstance;
-                                    }
-                                    
-                                    JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
-                                    {
-                                        string roleInstance = (string)roleValue;
-                                        authorizationInstance.Role = roleInstance;
-                                    }
-                                    
-                                    JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
-                                    {
-                                        string scopeInstance = (string)scopeValue;
-                                        authorizationInstance.Scope = scopeInstance;
-                                    }
-                                }
-                                
-                                JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
-                                {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
-                                    eventDataInstance.EventChannels = channelsInstance;
-                                }
-                                
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
-                                {
-                                    foreach (JProperty property in claimsSequenceElement)
-                                    {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
-                                        eventDataInstance.Claims.Add(claimsKey, claimsValue);
-                                    }
-                                }
-                                
-                                JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
-                                {
-                                    string descriptionInstance = (string)descriptionValue;
-                                    eventDataInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
-                                {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
-                                    eventDataInstance.EventDataId = eventDataIdInstance;
-                                }
-                                
-                                JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
-                                {
-                                    string correlationIdInstance = (string)correlationIdValue;
-                                    eventDataInstance.CorrelationId = correlationIdInstance;
-                                }
-                                
-                                JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
-                                {
-                                    LocalizableString eventNameInstance = new LocalizableString();
-                                    eventDataInstance.EventName = eventNameInstance;
-                                    
-                                    JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
-                                    {
-                                        string valueInstance = (string)valueValue2;
-                                        eventNameInstance.Value = valueInstance;
-                                    }
-                                    
-                                    JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
-                                    {
-                                        string localizedValueInstance = (string)localizedValueValue;
-                                        eventNameInstance.LocalizedValue = localizedValueInstance;
-                                    }
-                                }
-                                
-                                JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
-                                {
-                                    LocalizableString eventSourceInstance = new LocalizableString();
-                                    eventDataInstance.EventSource = eventSourceInstance;
-                                    
-                                    JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
-                                    {
-                                        string valueInstance2 = (string)valueValue3;
-                                        eventSourceInstance.Value = valueInstance2;
-                                    }
-                                    
-                                    JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
-                                    {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
-                                        eventSourceInstance.LocalizedValue = localizedValueInstance2;
-                                    }
-                                }
-                                
-                                JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
-                                {
-                                    HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
-                                    eventDataInstance.HttpRequest = httpRequestInstance;
-                                    
-                                    JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
-                                    {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
-                                        httpRequestInstance.ClientRequestId = clientRequestIdInstance;
-                                    }
-                                    
-                                    JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
-                                    {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
-                                        httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
-                                    }
-                                    
-                                    JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
-                                    {
-                                        string methodInstance = (string)methodValue;
-                                        httpRequestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
-                                    {
-                                        string uriInstance = (string)uriValue;
-                                        httpRequestInstance.Uri = uriInstance;
-                                    }
-                                }
-                                
-                                JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
-                                {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
-                                    eventDataInstance.Level = levelInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
-                                {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
-                                    eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
-                                {
-                                    LocalizableString resourceProviderNameInstance = new LocalizableString();
-                                    eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
-                                    
-                                    JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
-                                    {
-                                        string valueInstance3 = (string)valueValue4;
-                                        resourceProviderNameInstance.Value = valueInstance3;
-                                    }
-                                    
-                                    JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
-                                    {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
-                                        resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
-                                    }
-                                }
-                                
-                                JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
-                                {
-                                    string resourceUriInstance = (string)resourceUriValue;
-                                    eventDataInstance.ResourceUri = resourceUriInstance;
-                                }
-                                
-                                JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
-                                {
-                                    string operationIdInstance = (string)operationIdValue;
-                                    eventDataInstance.OperationId = operationIdInstance;
-                                }
-                                
-                                JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
-                                {
-                                    LocalizableString operationNameInstance = new LocalizableString();
-                                    eventDataInstance.OperationName = operationNameInstance;
-                                    
-                                    JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
-                                    {
-                                        string valueInstance4 = (string)valueValue5;
-                                        operationNameInstance.Value = valueInstance4;
-                                    }
-                                    
-                                    JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
-                                    {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
-                                        operationNameInstance.LocalizedValue = localizedValueInstance4;
-                                    }
-                                }
-                                
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
-                                {
-                                    foreach (JProperty property2 in propertiesSequenceElement)
-                                    {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
-                                        eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
-                                    }
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
-                                {
-                                    LocalizableString statusInstance = new LocalizableString();
-                                    eventDataInstance.Status = statusInstance;
-                                    
-                                    JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
-                                    {
-                                        string valueInstance5 = (string)valueValue6;
-                                        statusInstance.Value = valueInstance5;
-                                    }
-                                    
-                                    JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
-                                    {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
-                                        statusInstance.LocalizedValue = localizedValueInstance5;
-                                    }
-                                }
-                                
-                                JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
-                                {
-                                    LocalizableString subStatusInstance = new LocalizableString();
-                                    eventDataInstance.SubStatus = subStatusInstance;
-                                    
-                                    JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
-                                    {
-                                        string valueInstance6 = (string)valueValue7;
-                                        subStatusInstance.Value = valueInstance6;
-                                    }
-                                    
-                                    JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
-                                    {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
-                                        subStatusInstance.LocalizedValue = localizedValueInstance6;
-                                    }
-                                }
-                                
-                                JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
-                                {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
-                                    eventDataInstance.EventTimestamp = eventTimestampInstance;
-                                }
-                                
-                                JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
-                                {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
-                                    eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
-                                }
-                                
-                                JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
-                                {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
-                                    eventDataInstance.SubscriptionId = subscriptionIdInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
-                        {
-                            string nextLinkInstance = (string)nextLinkValue;
-                            eventDataCollectionInstance.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public async Task<EventDataListResponse> ListEventsForResourceGroupAsync(ListEventsForResourceGroupParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceGroupName == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceGroupName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListEventsForResourceGroupAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
-            {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            if (parameters.Select != null)
-            {
-                url = url + "&$select=" + Uri.EscapeUriString(parameters.Select);
-            }
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.Add("Accept", "application/json");
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    EventDataListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
-                    {
-                        EventDataCollection eventDataCollectionInstance = new EventDataCollection();
-                        result.EventDataCollection = eventDataCollectionInstance;
-                        
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
-                        {
-                            foreach (JToken valueValue in valueArray)
-                            {
-                                EventData eventDataInstance = new EventData();
-                                eventDataCollectionInstance.Value.Add(eventDataInstance);
-                                
-                                JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
-                                {
-                                    SenderAuthorization authorizationInstance = new SenderAuthorization();
-                                    eventDataInstance.Authorization = authorizationInstance;
-                                    
-                                    JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
-                                    {
-                                        string actionInstance = (string)actionValue;
-                                        authorizationInstance.Action = actionInstance;
-                                    }
-                                    
-                                    JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
-                                    {
-                                        string conditionInstance = (string)conditionValue;
-                                        authorizationInstance.Condition = conditionInstance;
-                                    }
-                                    
-                                    JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
-                                    {
-                                        string roleInstance = (string)roleValue;
-                                        authorizationInstance.Role = roleInstance;
-                                    }
-                                    
-                                    JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
-                                    {
-                                        string scopeInstance = (string)scopeValue;
-                                        authorizationInstance.Scope = scopeInstance;
-                                    }
-                                }
-                                
-                                JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
-                                {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
-                                    eventDataInstance.EventChannels = channelsInstance;
-                                }
-                                
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
-                                {
-                                    foreach (JProperty property in claimsSequenceElement)
-                                    {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
-                                        eventDataInstance.Claims.Add(claimsKey, claimsValue);
-                                    }
-                                }
-                                
-                                JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
-                                {
-                                    string descriptionInstance = (string)descriptionValue;
-                                    eventDataInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
-                                {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
-                                    eventDataInstance.EventDataId = eventDataIdInstance;
-                                }
-                                
-                                JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
-                                {
-                                    string correlationIdInstance = (string)correlationIdValue;
-                                    eventDataInstance.CorrelationId = correlationIdInstance;
-                                }
-                                
-                                JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
-                                {
-                                    LocalizableString eventNameInstance = new LocalizableString();
-                                    eventDataInstance.EventName = eventNameInstance;
-                                    
-                                    JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
-                                    {
-                                        string valueInstance = (string)valueValue2;
-                                        eventNameInstance.Value = valueInstance;
-                                    }
-                                    
-                                    JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
-                                    {
-                                        string localizedValueInstance = (string)localizedValueValue;
-                                        eventNameInstance.LocalizedValue = localizedValueInstance;
-                                    }
-                                }
-                                
-                                JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
-                                {
-                                    LocalizableString eventSourceInstance = new LocalizableString();
-                                    eventDataInstance.EventSource = eventSourceInstance;
-                                    
-                                    JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
-                                    {
-                                        string valueInstance2 = (string)valueValue3;
-                                        eventSourceInstance.Value = valueInstance2;
-                                    }
-                                    
-                                    JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
-                                    {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
-                                        eventSourceInstance.LocalizedValue = localizedValueInstance2;
-                                    }
-                                }
-                                
-                                JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
-                                {
-                                    HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
-                                    eventDataInstance.HttpRequest = httpRequestInstance;
-                                    
-                                    JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
-                                    {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
-                                        httpRequestInstance.ClientRequestId = clientRequestIdInstance;
-                                    }
-                                    
-                                    JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
-                                    {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
-                                        httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
-                                    }
-                                    
-                                    JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
-                                    {
-                                        string methodInstance = (string)methodValue;
-                                        httpRequestInstance.Method = methodInstance;
-                                    }
-                                    
-                                    JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
-                                    {
-                                        string uriInstance = (string)uriValue;
-                                        httpRequestInstance.Uri = uriInstance;
-                                    }
-                                }
-                                
-                                JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
-                                {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
-                                    eventDataInstance.Level = levelInstance;
-                                }
-                                
-                                JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
-                                {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
-                                    eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
-                                }
-                                
-                                JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
-                                {
-                                    LocalizableString resourceProviderNameInstance = new LocalizableString();
-                                    eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
-                                    
-                                    JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
-                                    {
-                                        string valueInstance3 = (string)valueValue4;
-                                        resourceProviderNameInstance.Value = valueInstance3;
-                                    }
-                                    
-                                    JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
-                                    {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
-                                        resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
-                                    }
-                                }
-                                
-                                JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
-                                {
-                                    string resourceUriInstance = (string)resourceUriValue;
-                                    eventDataInstance.ResourceUri = resourceUriInstance;
-                                }
-                                
-                                JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
-                                {
-                                    string operationIdInstance = (string)operationIdValue;
-                                    eventDataInstance.OperationId = operationIdInstance;
-                                }
-                                
-                                JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
-                                {
-                                    LocalizableString operationNameInstance = new LocalizableString();
-                                    eventDataInstance.OperationName = operationNameInstance;
-                                    
-                                    JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
-                                    {
-                                        string valueInstance4 = (string)valueValue5;
-                                        operationNameInstance.Value = valueInstance4;
-                                    }
-                                    
-                                    JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
-                                    {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
-                                        operationNameInstance.LocalizedValue = localizedValueInstance4;
-                                    }
-                                }
-                                
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
-                                {
-                                    foreach (JProperty property2 in propertiesSequenceElement)
-                                    {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
-                                        eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
-                                    }
-                                }
-                                
-                                JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
-                                {
-                                    LocalizableString statusInstance = new LocalizableString();
-                                    eventDataInstance.Status = statusInstance;
-                                    
-                                    JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
-                                    {
-                                        string valueInstance5 = (string)valueValue6;
-                                        statusInstance.Value = valueInstance5;
-                                    }
-                                    
-                                    JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
-                                    {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
-                                        statusInstance.LocalizedValue = localizedValueInstance5;
-                                    }
-                                }
-                                
-                                JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
-                                {
-                                    LocalizableString subStatusInstance = new LocalizableString();
-                                    eventDataInstance.SubStatus = subStatusInstance;
-                                    
-                                    JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
-                                    {
-                                        string valueInstance6 = (string)valueValue7;
-                                        subStatusInstance.Value = valueInstance6;
-                                    }
-                                    
-                                    JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
-                                    {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
-                                        subStatusInstance.LocalizedValue = localizedValueInstance6;
-                                    }
-                                }
-                                
-                                JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
-                                {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
-                                    eventDataInstance.EventTimestamp = eventTimestampInstance;
-                                }
-                                
-                                JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
-                                {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
-                                    eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
-                                }
-                                
-                                JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
-                                {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
-                                    eventDataInstance.SubscriptionId = subscriptionIdInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
-                        {
-                            string nextLinkInstance = (string)nextLinkValue;
-                            eventDataCollectionInstance.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public async Task<EventDataListResponse> ListEventsForResourceProviderAsync(ListEventsForResourceProviderParameters parameters, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.ResourceProvider == null)
-            {
-                throw new ArgumentNullException("parameters.ResourceProvider");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "ListEventsForResourceProviderAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime())) + "' and ";
-            if (parameters.EndTime != null)
-            {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime())) + "' and ";
-            }
-            if (parameters.EventChannels != null)
-            {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
-            }
-            if (parameters.NextLink != null)
-            {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink);
-            }
-            if (parameters.Select != null)
-            {
-                url = url + "&$select=" + Uri.EscapeUriString(parameters.Select);
-            }
+            string url = nextLink;
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6461,7 +3161,7 @@ namespace Microsoft.Azure.Insights
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JArray valueArray = (JArray)responseDoc["value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
@@ -6469,7 +3169,7 @@ namespace Microsoft.Azure.Insights
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
                                 
-                                JToken nameValue = valueValue["Name"];
+                                JToken nameValue = valueValue["name"];
                                 if (nameValue != null)
                                 {
                                     LocalizableString nameInstance = new LocalizableString();
@@ -6490,7 +3190,7 @@ namespace Microsoft.Azure.Insights
                                     }
                                 }
                                 
-                                JToken unitValue = valueValue["Unit"];
+                                JToken unitValue = valueValue["unit"];
                                 if (unitValue != null)
                                 {
                                     // how
@@ -6498,7 +3198,7 @@ namespace Microsoft.Azure.Insights
                                     metricDefinitionInstance.Unit = unitInstance;
                                 }
                                 
-                                JToken primaryAggregationTypeValue = valueValue["PrimaryAggregationType"];
+                                JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
                                 if (primaryAggregationTypeValue != null)
                                 {
                                     // how
@@ -6506,14 +3206,14 @@ namespace Microsoft.Azure.Insights
                                     metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
                                 }
                                 
-                                JToken resourceUriValue = valueValue["ResourceUri"];
+                                JToken resourceUriValue = valueValue["resourceUri"];
                                 if (resourceUriValue != null)
                                 {
                                     string resourceUriInstance = (string)resourceUriValue;
                                     metricDefinitionInstance.ResourceUri = resourceUriInstance;
                                 }
                                 
-                                JArray metricAvailabilitiesArray = (JArray)valueValue["MetricAvailabilities"];
+                                JArray metricAvailabilitiesArray = (JArray)valueValue["metricAvailabilities"];
                                 if (metricAvailabilitiesArray != null)
                                 {
                                     foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
@@ -6521,23 +3221,89 @@ namespace Microsoft.Azure.Insights
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
                                         
-                                        JToken timeGrainValue = metricAvailabilitiesValue["TimeGrain"];
+                                        JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
                                         if (timeGrainValue != null)
                                         {
                                             TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                             metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                         }
                                         
-                                        JToken retentionValue = metricAvailabilitiesValue["Retention"];
+                                        JToken retentionValue = metricAvailabilitiesValue["retention"];
                                         if (retentionValue != null)
                                         {
                                             TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
                                             metricAvailabilityInstance.Retention = retentionInstance;
                                         }
+                                        
+                                        JToken locationValue = metricAvailabilitiesValue["location"];
+                                        if (locationValue != null)
+                                        {
+                                            MetricLocation locationInstance = new MetricLocation();
+                                            metricAvailabilityInstance.Location = locationInstance;
+                                            
+                                            JToken tableEndpointValue = locationValue["tableEndpoint"];
+                                            if (tableEndpointValue != null)
+                                            {
+                                                string tableEndpointInstance = (string)tableEndpointValue;
+                                                locationInstance.TableEndpoint = tableEndpointInstance;
+                                            }
+                                            
+                                            JArray tableInfoArray = (JArray)locationValue["tableInfo"];
+                                            if (tableInfoArray != null)
+                                            {
+                                                foreach (JToken tableInfoValue in tableInfoArray)
+                                                {
+                                                    MetricTableInfo metricTableInfoInstance = new MetricTableInfo();
+                                                    locationInstance.TableInfo.Add(metricTableInfoInstance);
+                                                    
+                                                    JToken tableNameValue = tableInfoValue["tableName"];
+                                                    if (tableNameValue != null)
+                                                    {
+                                                        string tableNameInstance = (string)tableNameValue;
+                                                        metricTableInfoInstance.TableName = tableNameInstance;
+                                                    }
+                                                    
+                                                    JToken startTimeValue = tableInfoValue["startTime"];
+                                                    if (startTimeValue != null)
+                                                    {
+                                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                                        metricTableInfoInstance.StartTime = startTimeInstance;
+                                                    }
+                                                    
+                                                    JToken endTimeValue = tableInfoValue["endTime"];
+                                                    if (endTimeValue != null)
+                                                    {
+                                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                                        metricTableInfoInstance.EndTime = endTimeInstance;
+                                                    }
+                                                    
+                                                    JToken sasTokenValue = tableInfoValue["sasToken"];
+                                                    if (sasTokenValue != null)
+                                                    {
+                                                        string sasTokenInstance = (string)sasTokenValue;
+                                                        metricTableInfoInstance.SasToken = sasTokenInstance;
+                                                    }
+                                                    
+                                                    JToken sasTokenExpirationTimeValue = tableInfoValue["sasTokenExpirationTime"];
+                                                    if (sasTokenExpirationTimeValue != null)
+                                                    {
+                                                        DateTime sasTokenExpirationTimeInstance = (DateTime)sasTokenExpirationTimeValue;
+                                                        metricTableInfoInstance.SasTokenExpirationTime = sasTokenExpirationTimeInstance;
+                                                    }
+                                                }
+                                            }
+                                            
+                                            JToken partitionKeyValue = locationValue["partitionKey"];
+                                            if (partitionKeyValue != null)
+                                            {
+                                                string partitionKeyInstance = (string)partitionKeyValue;
+                                                locationInstance.PartitionKey = partitionKeyInstance;
+                                            }
+                                        }
                                     }
                                 }
                                 
-                                JToken propertiesSequenceElement = valueValue["Properties"];
+                                JToken propertiesSequenceElement = valueValue["properties"];
                                 if (propertiesSequenceElement != null)
                                 {
                                     foreach (JProperty property in propertiesSequenceElement)
@@ -6798,7 +3564,7 @@ namespace Microsoft.Azure.Insights
                         MetricCollection metricCollectionInstance = new MetricCollection();
                         result.MetricCollection = metricCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["Value"];
+                        JArray valueArray = (JArray)responseDoc["value"];
                         if (valueArray != null)
                         {
                             foreach (JToken valueValue in valueArray)
@@ -6806,7 +3572,7 @@ namespace Microsoft.Azure.Insights
                                 Metric metricInstance = new Metric();
                                 metricCollectionInstance.Value.Add(metricInstance);
                                 
-                                JToken nameValue = valueValue["Name"];
+                                JToken nameValue = valueValue["name"];
                                 if (nameValue != null)
                                 {
                                     LocalizableString nameInstance = new LocalizableString();
@@ -6827,7 +3593,7 @@ namespace Microsoft.Azure.Insights
                                     }
                                 }
                                 
-                                JToken unitValue = valueValue["Unit"];
+                                JToken unitValue = valueValue["unit"];
                                 if (unitValue != null)
                                 {
                                     // how
@@ -6835,29 +3601,28 @@ namespace Microsoft.Azure.Insights
                                     metricInstance.Unit = unitInstance;
                                 }
                                 
-                                JToken timeGrainValue = valueValue["TimeGrain"];
+                                JToken timeGrainValue = valueValue["timeGrain"];
                                 if (timeGrainValue != null)
                                 {
-                                    // how
-                                    TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
+                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
                                     metricInstance.TimeGrain = timeGrainInstance;
                                 }
                                 
-                                JToken startTimeValue = valueValue["StartTime"];
+                                JToken startTimeValue = valueValue["startTime"];
                                 if (startTimeValue != null)
                                 {
                                     DateTime startTimeInstance = (DateTime)startTimeValue;
                                     metricInstance.StartTime = startTimeInstance;
                                 }
                                 
-                                JToken endTimeValue = valueValue["EndTime"];
+                                JToken endTimeValue = valueValue["endTime"];
                                 if (endTimeValue != null)
                                 {
                                     DateTime endTimeInstance = (DateTime)endTimeValue;
                                     metricInstance.EndTime = endTimeInstance;
                                 }
                                 
-                                JArray metricValuesArray = (JArray)valueValue["MetricValues"];
+                                JArray metricValuesArray = (JArray)valueValue["metricValues"];
                                 if (metricValuesArray != null)
                                 {
                                     foreach (JToken metricValuesValue in metricValuesArray)
@@ -6865,56 +3630,56 @@ namespace Microsoft.Azure.Insights
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricInstance.MetricValues.Add(metricValueInstance);
                                         
-                                        JToken timestampValue = metricValuesValue["Timestamp"];
+                                        JToken timestampValue = metricValuesValue["timestamp"];
                                         if (timestampValue != null)
                                         {
                                             DateTime timestampInstance = (DateTime)timestampValue;
                                             metricValueInstance.Timestamp = timestampInstance;
                                         }
                                         
-                                        JToken averageValue = metricValuesValue["Average"];
+                                        JToken averageValue = metricValuesValue["average"];
                                         if (averageValue != null)
                                         {
                                             double averageInstance = (double)averageValue;
                                             metricValueInstance.Average = averageInstance;
                                         }
                                         
-                                        JToken minimumValue = metricValuesValue["Minimum"];
+                                        JToken minimumValue = metricValuesValue["minimum"];
                                         if (minimumValue != null)
                                         {
                                             double minimumInstance = (double)minimumValue;
                                             metricValueInstance.Minimum = minimumInstance;
                                         }
                                         
-                                        JToken maximumValue = metricValuesValue["Maximum"];
+                                        JToken maximumValue = metricValuesValue["maximum"];
                                         if (maximumValue != null)
                                         {
                                             double maximumInstance = (double)maximumValue;
                                             metricValueInstance.Maximum = maximumInstance;
                                         }
                                         
-                                        JToken totalValue = metricValuesValue["Total"];
+                                        JToken totalValue = metricValuesValue["total"];
                                         if (totalValue != null)
                                         {
                                             double totalInstance = (double)totalValue;
                                             metricValueInstance.Total = totalInstance;
                                         }
                                         
-                                        JToken countValue = metricValuesValue["Count"];
+                                        JToken countValue = metricValuesValue["count"];
                                         if (countValue != null)
                                         {
                                             long countInstance = (long)countValue;
                                             metricValueInstance.Count = countInstance;
                                         }
                                         
-                                        JToken lastValue = metricValuesValue["Last"];
+                                        JToken lastValue = metricValuesValue["last"];
                                         if (lastValue != null)
                                         {
                                             double lastInstance = (double)lastValue;
                                             metricValueInstance.Last = lastInstance;
                                         }
                                         
-                                        JToken propertiesSequenceElement = metricValuesValue["Properties"];
+                                        JToken propertiesSequenceElement = metricValuesValue["properties"];
                                         if (propertiesSequenceElement != null)
                                         {
                                             foreach (JProperty property in propertiesSequenceElement)
@@ -6927,14 +3692,14 @@ namespace Microsoft.Azure.Insights
                                     }
                                 }
                                 
-                                JToken resourceIdValue = valueValue["ResourceId"];
+                                JToken resourceIdValue = valueValue["resourceId"];
                                 if (resourceIdValue != null)
                                 {
                                     string resourceIdInstance = (string)resourceIdValue;
                                     metricInstance.ResourceId = resourceIdInstance;
                                 }
                                 
-                                JToken propertiesSequenceElement2 = valueValue["Properties"];
+                                JToken propertiesSequenceElement2 = valueValue["properties"];
                                 if (propertiesSequenceElement2 != null)
                                 {
                                     foreach (JProperty property2 in propertiesSequenceElement2)
