@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Insights
             if (string.IsNullOrWhiteSpace(filterString))
             {
                 // request all definitions
-                definitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, null, CancellationToken.None)).MetricDefinitionCollection.Value;
+                definitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, string.Empty, CancellationToken.None)).MetricDefinitionCollection.Value;
 
                 // cache definitions
                 this.Client.Cache[resourceUri] = definitions;
