@@ -17,7 +17,7 @@ using System;
 using Microsoft.SqlServer.Server;
 using Microsoft.WindowsAzure.Common.OData;
 
-namespace Insights.Tests.Customizations
+namespace Microsoft.Azure.Insights
 {
     /// <summary>
     /// The parameters to get the events for a subscription

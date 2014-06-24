@@ -17,7 +17,7 @@ using System;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure.Common.OData;
 
-namespace Insights.Tests.Customizations
+namespace Microsoft.Azure.Insights
 {
     /// <summary>
     /// The parameters to get the events for a subscription
@@ -27,14 +27,8 @@ namespace Insights.Tests.Customizations
         /// <summary>
         /// Gets or sets the start time
         /// </summary>
-        [FilterParameter("eventTimeStamp", "O")]
-        public DateTime StartTime { get; set; }
-
-        /// <summary>
-        /// Gets or sets the end time
-        /// </summary>
-        [FilterParameter("eventTimeStamp", "O")]
-        public DateTime? EndTime { get; set; }
+        [FilterParameter("eventTimestamp", "O")]
+        public DateTime EventTimestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the event channel
