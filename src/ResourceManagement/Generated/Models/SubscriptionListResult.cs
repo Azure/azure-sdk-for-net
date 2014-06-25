@@ -22,45 +22,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Subscription Ids information.
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class SubscriptionListResult : OperationResponse
     {
-        private string _nextLink;
+        private IList<SubscriptionIdDescription> _subscriptionIds;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets Subscription Ids.
         /// </summary>
-        public string NextLink
+        public IList<SubscriptionIdDescription> SubscriptionIds
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<DeploymentOperation> _operations;
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of deployments.
-        /// </summary>
-        public IList<DeploymentOperation> Operations
-        {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._subscriptionIds; }
+            set { this._subscriptionIds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the SubscriptionListResult class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public SubscriptionListResult()
         {
-            this.Operations = new List<DeploymentOperation>();
+            this.SubscriptionIds = new List<SubscriptionIdDescription>();
         }
     }
 }

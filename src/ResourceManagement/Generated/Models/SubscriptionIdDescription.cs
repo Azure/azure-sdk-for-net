@@ -20,47 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Subscription Id information
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class SubscriptionIdDescription
     {
-        private string _nextLink;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets Id
         /// </summary>
-        public string NextLink
+        public string Id
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IList<DeploymentOperation> _operations;
+        private string _subscriptionId;
         
         /// <summary>
-        /// Optional. Gets or sets the list of deployments.
+        /// Optional. Gets or sets subscriptionId
         /// </summary>
-        public IList<DeploymentOperation> Operations
+        public string SubscriptionId
         {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._subscriptionId; }
+            set { this._subscriptionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the SubscriptionIdDescription class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public SubscriptionIdDescription()
         {
-            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

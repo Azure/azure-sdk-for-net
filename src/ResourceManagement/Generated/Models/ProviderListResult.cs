@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ProviderListResult()
         {
-            this._providers = new List<Provider>();
+            this.Providers = new List<Provider>();
         }
     }
 }

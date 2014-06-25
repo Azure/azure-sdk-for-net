@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.Resources.Models
@@ -62,11 +63,37 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._provisioningState = value; }
         }
         
+        private IDictionary<string, string> _tags;
+        
+        /// <summary>
+        /// Optional. Gets or sets the tags attached to the resource.
+        /// </summary>
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the BasicResource class.
         /// </summary>
         public BasicResource()
         {
+            this.Tags = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the BasicResource class with required
+        /// arguments.
+        /// </summary>
+        public BasicResource(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

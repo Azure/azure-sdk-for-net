@@ -114,6 +114,21 @@ namespace Microsoft.Azure.Management.Resources
         Task<ResourceGroupGetResult> GetAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets a resource group permissions.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to get the permissions for.The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Resource group permissions information.
+        /// </returns>
+        Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Gets a collection of resource groups.
         /// </summary>
         /// <param name='parameters'>

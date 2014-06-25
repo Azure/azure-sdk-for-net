@@ -29,40 +29,87 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources
 {
     /// <summary>
-    /// Operations for managing providers.
+    /// Operations for managing tags.
     /// </summary>
-    public partial interface IProviderOperations
+    public partial interface ITagOperations
     {
         /// <summary>
-        /// Gets a resource provider.
+        /// Create a subscription resource tag.
         /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
+        /// <param name='tagName'>
+        /// The name of the tag.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Resource provider information.
+        /// Tag information.
         /// </returns>
-        Task<ProviderGetResult> GetAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<TagCreateResult> CreateAsync(string tagName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets a list of resource providers.
+        /// Create a subscription resource tag value.
         /// </summary>
-        /// <param name='parameters'>
-        /// Query parameters. If null is passed returns all deployments.
+        /// <param name='tagName'>
+        /// The name of the tag.
+        /// </param>
+        /// <param name='tagValue'>
+        /// The value of the tag.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// List of resource providers.
+        /// Tag information.
         /// </returns>
-        Task<ProviderListResult> ListAsync(ProviderListParameters parameters, CancellationToken cancellationToken);
+        Task<TagCreateValueResult> CreateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get a list of deployments.
+        /// Delete a subscription resource tag.
+        /// </summary>
+        /// <param name='tagName'>
+        /// The name of the tag.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string tagName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Delete a subscription resource tag value.
+        /// </summary>
+        /// <param name='tagName'>
+        /// The name of the tag.
+        /// </param>
+        /// <param name='tagValue'>
+        /// The value of the tag.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get a list of subscription resource tags.
+        /// </summary>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of subscription tags.
+        /// </returns>
+        Task<TagsListResult> ListAsync(CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Get a list of tags under a subscription.
         /// </summary>
         /// <param name='nextLink'>
         /// NextLink from the previous successful call to List operation.
@@ -71,38 +118,8 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// List of resource providers.
+        /// List of subscription tags.
         /// </returns>
-        Task<ProviderListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Registers provider to be used with a subscription.
-        /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Unregisters provider from a subscription.
-        /// </summary>
-        /// <param name='resourceProviderNamespace'>
-        /// Namespace of the resource provider.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<OperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        Task<TagsListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
     }
 }

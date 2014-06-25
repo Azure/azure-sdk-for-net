@@ -28,39 +28,27 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Resource group permissions information.
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class PermissionGetResult : OperationResponse
     {
-        private string _nextLink;
+        private IList<PermittedActionDefinition> _permittedActions;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets permitted actions.
         /// </summary>
-        public string NextLink
+        public IList<PermittedActionDefinition> PermittedActions
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<DeploymentOperation> _operations;
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of deployments.
-        /// </summary>
-        public IList<DeploymentOperation> Operations
-        {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._permittedActions; }
+            set { this._permittedActions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public PermissionGetResult()
         {
-            this.Operations = new List<DeploymentOperation>();
+            this.PermittedActions = new List<PermittedActionDefinition>();
         }
     }
 }
