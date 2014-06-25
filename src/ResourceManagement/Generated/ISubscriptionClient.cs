@@ -21,55 +21,67 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions
 {
-    /// <summary>
-    /// Information from validate template deployment response.
-    /// </summary>
-    public partial class DeploymentValidateResponse : OperationResponse
+    public partial interface ISubscriptionClient : IDisposable
     {
-        private ResourceManagementErrorWithDetails _error;
-        
         /// <summary>
-        /// Optional. Gets or sets validation error.
+        /// Gets the API version.
         /// </summary>
-        public ResourceManagementErrorWithDetails Error
+        string ApiVersion
         {
-            get { return this._error; }
-            set { this._error = value; }
-        }
-        
-        private bool _isValid;
-        
-        /// <summary>
-        /// Optional. Gets or sets the value indicating whether the template is
-        /// valid or not.
-        /// </summary>
-        public bool IsValid
-        {
-            get { return this._isValid; }
-            set { this._isValid = value; }
-        }
-        
-        private DeploymentProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the template deployment properties.
-        /// </summary>
-        public DeploymentProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get; 
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentValidateResponse class.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        public DeploymentValidateResponse()
+        Uri BaseUri
         {
+            get; 
+        }
+        
+        /// <summary>
+        /// Credentials used to authenticate requests.
+        /// </summary>
+        CloudCredentials Credentials
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for managing subscriptions.
+        /// </summary>
+        ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing tenants.
+        /// </summary>
+        ITenantOperations Tenants
+        {
+            get; 
         }
     }
 }

@@ -21,32 +21,26 @@
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.Subscriptions.Models;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions
 {
     /// <summary>
-    /// Provider registration states.
+    /// Operations for managing tenants.
     /// </summary>
-    public static partial class ProviderRegistrationState
+    public partial interface ITenantOperations
     {
         /// <summary>
-        /// Provider registration state is not registered.
+        /// Gets a list of the tenantIds.
         /// </summary>
-        public const string NotRegistered = "NotRegistered";
-        
-        /// <summary>
-        /// Provider registration state is unregistering.
-        /// </summary>
-        public const string Unregistering = "Unregistering";
-        
-        /// <summary>
-        /// Provider registration state is registering.
-        /// </summary>
-        public const string Registering = "Registering";
-        
-        /// <summary>
-        /// Provider registration state is registered.
-        /// </summary>
-        public const string Registered = "Registered";
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Tenant Ids information.
+        /// </returns>
+        Task<TenantListResult> ListAsync(CancellationToken cancellationToken);
     }
 }

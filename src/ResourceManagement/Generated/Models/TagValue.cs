@@ -20,60 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of resource groups.
+    /// Tag information.
     /// </summary>
-    public partial class ResourceListResult : OperationResponse
+    public partial class TagValue
     {
-        private string _nextLink;
+        private TagCount _count;
         
         /// <summary>
-        /// Required. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets the tag value count.
         /// </summary>
-        public string NextLink
+        public TagCount Count
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._count; }
+            set { this._count = value; }
         }
         
-        private IList<Resource> _resources;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the list of resource groups.
+        /// Optional. Gets or sets the tag ID.
         /// </summary>
-        public IList<Resource> Resources
+        public string Id
         {
-            get { return this._resources; }
-            set { this._resources = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _value;
+        
+        /// <summary>
+        /// Optional. Gets or sets the tag value.
+        /// </summary>
+        public string Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class.
+        /// Initializes a new instance of the TagValue class.
         /// </summary>
-        public ResourceListResult()
+        public TagValue()
         {
-            this.Resources = new List<Resource>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ResourceListResult class with
-        /// required arguments.
-        /// </summary>
-        public ResourceListResult(string nextLink)
-            : this()
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            this.NextLink = nextLink;
         }
     }
 }

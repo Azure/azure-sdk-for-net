@@ -20,47 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Tag count.
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class TagCount
     {
-        private string _nextLink;
+        private string _type;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Type of count.
         /// </summary>
-        public string NextLink
+        public string Type
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
-        private IList<DeploymentOperation> _operations;
+        private string _value;
         
         /// <summary>
-        /// Optional. Gets or sets the list of deployments.
+        /// Optional. Value of count.
         /// </summary>
-        public IList<DeploymentOperation> Operations
+        public string Value
         {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the TagCount class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public TagCount()
         {
-            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

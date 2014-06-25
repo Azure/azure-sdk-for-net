@@ -20,47 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Tenant Id information
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class TenantIdDescription
     {
-        private string _nextLink;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets Id
         /// </summary>
-        public string NextLink
+        public string Id
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IList<DeploymentOperation> _operations;
+        private string _tenantId;
         
         /// <summary>
-        /// Optional. Gets or sets the list of deployments.
+        /// Optional. Gets or sets tenantId
         /// </summary>
-        public IList<DeploymentOperation> Operations
+        public string TenantId
         {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._tenantId; }
+            set { this._tenantId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public TenantIdDescription()
         {
-            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

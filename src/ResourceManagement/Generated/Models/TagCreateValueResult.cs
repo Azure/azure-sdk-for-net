@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.WindowsAzure;
@@ -28,39 +27,26 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of deployment operations.
+    /// Tag information.
     /// </summary>
-    public partial class DeploymentOperationsListResult : OperationResponse
+    public partial class TagCreateValueResult : OperationResponse
     {
-        private string _nextLink;
+        private TagValue _value;
         
         /// <summary>
-        /// Optional. Gets or sets the URL to get the next set of results.
+        /// Optional. Gets or sets the tag value.
         /// </summary>
-        public string NextLink
+        public TagValue Value
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<DeploymentOperation> _operations;
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of deployments.
-        /// </summary>
-        public IList<DeploymentOperation> Operations
-        {
-            get { return this._operations; }
-            set { this._operations = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperationsListResult
-        /// class.
+        /// Initializes a new instance of the TagCreateValueResult class.
         /// </summary>
-        public DeploymentOperationsListResult()
+        public TagCreateValueResult()
         {
-            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

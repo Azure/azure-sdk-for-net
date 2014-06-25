@@ -28,9 +28,9 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// List of resource groups.
+    /// List of subscription tags.
     /// </summary>
-    public partial class ResourceListResult : OperationResponse
+    public partial class TagsListResult : OperationResponse
     {
         private string _nextLink;
         
@@ -43,30 +43,30 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._nextLink = value; }
         }
         
-        private IList<Resource> _resources;
+        private IList<TagDetails> _tags;
         
         /// <summary>
-        /// Optional. Gets or sets the list of resource groups.
+        /// Optional. Gets or sets the list of tags.
         /// </summary>
-        public IList<Resource> Resources
+        public IList<TagDetails> Tags
         {
-            get { return this._resources; }
-            set { this._resources = value; }
+            get { return this._tags; }
+            set { this._tags = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class.
+        /// Initializes a new instance of the TagsListResult class.
         /// </summary>
-        public ResourceListResult()
+        public TagsListResult()
         {
-            this.Resources = new List<Resource>();
+            this.Tags = new List<TagDetails>();
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceListResult class with
+        /// Initializes a new instance of the TagsListResult class with
         /// required arguments.
         /// </summary>
-        public ResourceListResult(string nextLink)
+        public TagsListResult(string nextLink)
             : this()
         {
             if (nextLink == null)

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Resource information.
         /// </returns>
-        Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, ResourceCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<ResourceCreateOrUpdateResult> CreateOrUpdateAsync(string resourceGroupName, ResourceIdentity identity, BasicResource parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete resource and all of its resources.
@@ -104,6 +104,23 @@ namespace Microsoft.Azure.Management.Resources
         /// Resource information.
         /// </returns>
         Task<ResourceGetResult> GetAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a resource permissions.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='identity'>
+        /// Resource identity.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Resource group permissions information.
+        /// </returns>
+        Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get all of the resources under a subscription.

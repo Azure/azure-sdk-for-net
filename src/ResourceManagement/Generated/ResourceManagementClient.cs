@@ -140,6 +140,16 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._resources; }
         }
         
+        private ITagOperations _tags;
+        
+        /// <summary>
+        /// Operations for managing tags.
+        /// </summary>
+        public virtual ITagOperations Tags
+        {
+            get { return this._tags; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
@@ -151,6 +161,7 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._tags = new TagOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -221,6 +232,7 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._tags = new TagOperations(this);
             this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

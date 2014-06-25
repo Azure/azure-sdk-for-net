@@ -45,7 +45,26 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceManagementErrorWithDetails()
         {
-            this._details = new List<ResourceManagementError>();
+            this.Details = new List<ResourceManagementError>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ResourceManagementErrorWithDetails class with required arguments.
+        /// </summary>
+        public ResourceManagementErrorWithDetails(string code, string message)
+            : this()
+        {
+            if (code == null)
+            {
+                throw new ArgumentNullException("code");
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            this.Code = code;
+            this.Message = message;
         }
     }
 }
