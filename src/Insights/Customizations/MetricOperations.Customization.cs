@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Insights
         // Alternate method for getting metrics by passing in the definitions
         public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
         {
-            // TODO: Verify expected behavior (no metric definitions found for that resource)
+            // If no definitions provided, return empty collection
             if (definitions == null || !definitions.Any())
             {
                 return new MetricListResponse();
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Insights
                         Names = g.Select(d => d.Name.Value)
                     });
 
-            MetricCollection metrics= new MetricCollection()
+            MetricCollection metrics = new MetricCollection()
             {
                 Value =
                     (await

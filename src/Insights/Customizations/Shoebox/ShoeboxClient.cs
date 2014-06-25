@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Insights
             // if names are specified, filter the results to those metrics only
             if (filter.Names != null)
             {
-                groups = groups.Where(g => filter.Names.Select(ShoeboxHelper.TrimAndEscapeStorageKey).Contains(g.Key));
+                groups = groups.Where(g => filter.Names.Select(ShoeboxHelper.TrimAndEscapeKey).Contains(g.Key));
             }
 
             // Construct MetricCollection (list of metrics) by taking each group and converting the entities in that group to MetricValue objects
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Insights
             return
                 names.FirstOrDefault(
                     n =>
-                        string.Equals(ShoeboxHelper.TrimAndEscapeStorageKey(n), encodedName, StringComparison.OrdinalIgnoreCase)) ??
-                ShoeboxHelper.UnEscapeStorageKey(encodedName);
+                        string.Equals(ShoeboxHelper.TrimAndEscapeKey(n), encodedName, StringComparison.OrdinalIgnoreCase)) ??
+                ShoeboxHelper.UnEscapeKey(encodedName);
         }
 
         // Gets the named metric by calling the provided query on each table that overlaps the given time range
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Insights
         // Note: The overall start and end times are used in each query since this reduces processing and the query will still work the same on each Nday table
         private static Dictionary<string, TableQuery> GenerateMetricNameQueries(IEnumerable<string> names, string partitionKey, DateTime startTime, DateTime endTime)
         {
-            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeStorageKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
+            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
                 GenerateMetricQuery(
                 partitionKey,
                 kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks).ToString("D19"),
