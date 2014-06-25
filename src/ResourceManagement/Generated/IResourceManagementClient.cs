@@ -114,25 +114,9 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Operations for managing subscriptions.
-        /// </summary>
-        ISubscriptionOperations Subscriptions
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Operations for managing tags.
         /// </summary>
         ITagOperations Tags
-        {
-            get; 
-        }
-        
-        /// <summary>
-        /// Operations for managing tenants.
-        /// </summary>
-        ITenantOperations Tenants
         {
             get; 
         }

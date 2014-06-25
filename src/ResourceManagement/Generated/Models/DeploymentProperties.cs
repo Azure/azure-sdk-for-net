@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
-            this._providers = new List<Provider>();
+            this.Providers = new List<Provider>();
         }
     }
 }

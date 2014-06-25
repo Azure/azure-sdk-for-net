@@ -82,7 +82,21 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public BasicResourceGroup()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the BasicResourceGroup class with
+        /// required arguments.
+        /// </summary>
+        public BasicResourceGroup(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

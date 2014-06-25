@@ -65,5 +65,24 @@ namespace Microsoft.Azure.Management.Resources.Models
         public ResourceManagementError()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceManagementError class
+        /// with required arguments.
+        /// </summary>
+        public ResourceManagementError(string code, string message)
+            : this()
+        {
+            if (code == null)
+            {
+                throw new ArgumentNullException("code");
+            }
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+            this.Code = code;
+            this.Message = message;
+        }
     }
 }

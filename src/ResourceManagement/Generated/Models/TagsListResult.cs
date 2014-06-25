@@ -59,7 +59,21 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public TagsListResult()
         {
-            this._tags = new List<TagDetails>();
+            this.Tags = new List<TagDetails>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the TagsListResult class with
+        /// required arguments.
+        /// </summary>
+        public TagsListResult(string nextLink)
+            : this()
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            this.NextLink = nextLink;
         }
     }
 }

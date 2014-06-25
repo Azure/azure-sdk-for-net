@@ -22,10 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
     /// Subscription Ids information.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public SubscriptionListResult()
         {
-            this._subscriptionIds = new List<SubscriptionIdDescription>();
+            this.SubscriptionIds = new List<SubscriptionIdDescription>();
         }
     }
 }

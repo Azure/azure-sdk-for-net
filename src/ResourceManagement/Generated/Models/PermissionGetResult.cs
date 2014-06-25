@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public PermissionGetResult()
         {
-            this._permittedActions = new List<PermittedActionDefinition>();
+            this.PermittedActions = new List<PermittedActionDefinition>();
         }
     }
 }

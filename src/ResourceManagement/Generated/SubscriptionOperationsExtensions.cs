@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Subscriptions.Models;
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Subscriptions
 {
     public static partial class SubscriptionOperationsExtensions
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
         /// Required. Id of the subscription.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <param name='subscriptionId'>
         /// Required. Id of the subscription.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// Subscription Ids information.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Resources
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ISubscriptionOperations.
+        /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <returns>
         /// Subscription Ids information.

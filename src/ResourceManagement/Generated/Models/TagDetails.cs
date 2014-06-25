@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public TagDetails()
         {
-            this._values = new List<TagValue>();
+            this.Values = new List<TagValue>();
         }
     }
 }

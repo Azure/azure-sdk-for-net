@@ -69,5 +69,19 @@ namespace Microsoft.Azure.Management.Resources.Models
         public Resource()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the Resource class with required
+        /// arguments.
+        /// </summary>
+        public Resource(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }

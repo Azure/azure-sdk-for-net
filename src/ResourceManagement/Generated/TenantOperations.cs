@@ -26,19 +26,19 @@ using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Subscriptions.Models;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Subscriptions
 {
     /// <summary>
     /// Operations for managing tenants.
     /// </summary>
-    internal partial class TenantOperations : IServiceOperations<ResourceManagementClient>, ITenantOperations
+    internal partial class TenantOperations : IServiceOperations<SubscriptionClient>, ITenantOperations
     {
         /// <summary>
         /// Initializes a new instance of the TenantOperations class.
@@ -46,18 +46,18 @@ namespace Microsoft.Azure.Management.Resources
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal TenantOperations(ResourceManagementClient client)
+        internal TenantOperations(SubscriptionClient client)
         {
             this._client = client;
         }
         
-        private ResourceManagementClient _client;
+        private SubscriptionClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.Resources.ResourceManagementClient.
+        /// Microsoft.Azure.Subscriptions.SubscriptionClient.
         /// </summary>
-        public ResourceManagementClient Client
+        public SubscriptionClient Client
         {
             get { return this._client; }
         }
@@ -86,9 +86,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/tenants?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -99,6 +99,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

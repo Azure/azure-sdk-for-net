@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Subscriptions;
+using Microsoft.Azure.Subscriptions.Models;
 
-namespace Microsoft.Azure.Management.Resources
+namespace Microsoft.Azure.Subscriptions
 {
     public static partial class TenantOperationsExtensions
     {
@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets a list of the tenantIds.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ITenantOperations.
+        /// Reference to the Microsoft.Azure.Subscriptions.ITenantOperations.
         /// </param>
         /// <returns>
         /// Tenant Ids information.
@@ -53,8 +52,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Gets a list of the tenantIds.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Resources.ITenantOperations.
+        /// Reference to the Microsoft.Azure.Subscriptions.ITenantOperations.
         /// </param>
         /// <returns>
         /// Tenant Ids information.

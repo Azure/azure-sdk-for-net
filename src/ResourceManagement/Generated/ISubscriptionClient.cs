@@ -21,64 +21,67 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Subscriptions;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Subscriptions.Models
+namespace Microsoft.Azure.Subscriptions
 {
-    /// <summary>
-    /// Subscription detailed information.
-    /// </summary>
-    public partial class GetSubscriptionResult : OperationResponse
+    public partial interface ISubscriptionClient : IDisposable
     {
-        private string _displayName;
-        
         /// <summary>
-        /// Optional. Gets or sets display name
+        /// Gets the API version.
         /// </summary>
-        public string DisplayName
+        string ApiVersion
         {
-            get { return this._displayName; }
-            set { this._displayName = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets Id
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets State
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _subscriptionId;
-        
-        /// <summary>
-        /// Optional. Gets or sets subscriptionId
-        /// </summary>
-        public string SubscriptionId
-        {
-            get { return this._subscriptionId; }
-            set { this._subscriptionId = value; }
+            get; 
         }
         
         /// <summary>
-        /// Initializes a new instance of the GetSubscriptionResult class.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
-        public GetSubscriptionResult()
+        Uri BaseUri
         {
+            get; 
+        }
+        
+        /// <summary>
+        /// Credentials used to authenticate requests.
+        /// </summary>
+        CloudCredentials Credentials
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for managing subscriptions.
+        /// </summary>
+        ISubscriptionOperations Subscriptions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing tenants.
+        /// </summary>
+        ITenantOperations Tenants
+        {
+            get; 
         }
     }
 }

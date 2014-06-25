@@ -20,33 +20,11 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.Azure.Subscriptions
 {
-    /// <summary>
-    /// Resource group permission actions information
-    /// </summary>
-    public partial class PermittedActionDefinition
+    public static partial class SubscriptionClientExtensions
     {
-        private IList<string> _actions;
-        
-        /// <summary>
-        /// Optional. Gets or sets available actions
-        /// </summary>
-        public IList<string> Actions
-        {
-            get { return this._actions; }
-            set { this._actions = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the PermittedActionDefinition class.
-        /// </summary>
-        public PermittedActionDefinition()
-        {
-            this.Actions = new List<string>();
-        }
     }
 }
