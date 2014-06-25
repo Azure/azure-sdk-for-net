@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public Provider()
         {
-            this._resourceTypes = new List<ProviderResourceType>();
+            this.ResourceTypes = new List<ProviderResourceType>();
         }
     }
 }

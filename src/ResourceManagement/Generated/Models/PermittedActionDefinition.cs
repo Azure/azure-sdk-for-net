@@ -20,21 +20,33 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.WebSites.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// The IP based SSL state.
+    /// Resource group permission actions information
     /// </summary>
-    public enum IPBasedSslState
+    public partial class PermittedActionDefinition
     {
-        NotConfigured = 0,
+        private IList<string> _actions;
         
-        InProgress = 1,
+        /// <summary>
+        /// Optional. Gets or sets available actions
+        /// </summary>
+        public IList<string> Actions
+        {
+            get { return this._actions; }
+            set { this._actions = value; }
+        }
         
-        Configured = 2,
-        
-        ConfigurationReverted = 3,
+        /// <summary>
+        /// Initializes a new instance of the PermittedActionDefinition class.
+        /// </summary>
+        public PermittedActionDefinition()
+        {
+            this.Actions = new List<string>();
+        }
     }
 }

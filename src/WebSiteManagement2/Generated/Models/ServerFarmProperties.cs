@@ -22,48 +22,36 @@
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Create Server Farm operation response.
+    /// Represents the properties of a Server Farm.
     /// </summary>
-    public partial class ServerFarmCreateResponse : OperationResponse
+    public partial class ServerFarmProperties
     {
-        private int _currentNumberOfWorkers;
+        private int? _currentNumberOfWorkers;
         
         /// <summary>
         /// Optional. The current number of Virtual Machines (VMs) in the
         /// server farm.
         /// </summary>
-        public int CurrentNumberOfWorkers
+        public int? CurrentNumberOfWorkers
         {
             get { return this._currentNumberOfWorkers; }
             set { this._currentNumberOfWorkers = value; }
         }
         
-        private ServerFarmWorkerSize _currentWorkerSize;
+        private Microsoft.Azure.Management.WebSites.Models.ServerFarmWorkerSize? _currentWorkerSize;
         
         /// <summary>
         /// Optional. The current worker size. Possible values are Small,
         /// Medium, or Large.
         /// </summary>
-        public ServerFarmWorkerSize CurrentWorkerSize
+        public Microsoft.Azure.Management.WebSites.Models.ServerFarmWorkerSize? CurrentWorkerSize
         {
             get { return this._currentWorkerSize; }
             set { this._currentWorkerSize = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. The name of the server farm.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
         }
         
         private int _numberOfWorkers;
@@ -76,6 +64,28 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._numberOfWorkers; }
             set { this._numberOfWorkers = value; }
+        }
+        
+        private string _provisioningState;
+        
+        /// <summary>
+        /// Optional. Gets or sets resource provisioning state.
+        /// </summary>
+        public string ProvisioningState
+        {
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
+        }
+        
+        private string _sku;
+        
+        /// <summary>
+        /// Optional. The server farm SKU.
+        /// </summary>
+        public string Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         private ServerFarmStatus _status;
@@ -102,9 +112,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the ServerFarmCreateResponse class.
+        /// Initializes a new instance of the ServerFarmProperties class.
         /// </summary>
-        public ServerFarmCreateResponse()
+        public ServerFarmProperties()
         {
         }
     }

@@ -20,34 +20,35 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Create or update resource parameters.
+    /// Resource group permissions information.
     /// </summary>
-    public partial class ResourceCreateOrUpdateParameters
+    public partial class PermissionGetResult : OperationResponse
     {
-        private BasicResource _resource;
+        private IList<PermittedActionDefinition> _permittedActions;
         
         /// <summary>
-        /// Required. Gets or sets information about a resource being created
-        /// of updated.
+        /// Optional. Gets or sets permitted actions.
         /// </summary>
-        public BasicResource Resource
+        public IList<PermittedActionDefinition> PermittedActions
         {
-            get { return this._resource; }
-            set { this._resource = value; }
+            get { return this._permittedActions; }
+            set { this._permittedActions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the PermissionGetResult class.
         /// </summary>
-        public ResourceCreateOrUpdateParameters()
+        public PermissionGetResult()
         {
+            this.PermittedActions = new List<PermittedActionDefinition>();
         }
     }
 }
