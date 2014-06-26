@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public WebJobListResponse()
         {
-            this._jobs = new List<WebJob>();
+            this.Jobs = new List<WebJob>();
         }
         
         /// <summary>

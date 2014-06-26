@@ -54,6 +54,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
@@ -69,6 +70,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
         }
         
         private IServerFarmOperations _serverFarms;
@@ -251,6 +253,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// Clones properties from current instance to another
+        /// WebSiteManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of WebSiteManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<WebSiteManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is WebSiteManagementClient)
+            {
+                WebSiteManagementClient clonedClient = ((WebSiteManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling a long-running operation, you
         /// can call Get Operation Status to determine whether the operation
@@ -311,8 +335,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -323,6 +347,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -479,6 +504,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                 errorInstance.Parameters.Add(parametersElement.Value);
                                             }
                                         }
+                                        else
+                                        {
+                                            errorInstance.Parameters = null;
+                                        }
                                     }
                                     
                                     XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
@@ -497,6 +526,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         }
                                     }
                                 }
+                            }
+                            else
+                            {
+                                result.Errors = null;
                             }
                         }
                         
@@ -624,10 +657,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=register";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -638,6 +671,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -737,10 +771,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=unregister";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -751,6 +785,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

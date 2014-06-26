@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public WebJobRunListResponse()
         {
-            this._jobRuns = new List<WebJobRun>();
+            this.JobRuns = new List<WebJobRun>();
         }
         
         /// <summary>
