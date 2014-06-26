@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -8666,7 +8665,7 @@ namespace Microsoft.Azure.Management.Insights
                                             JObject metricsValue2 = new JObject();
                                             aggregationsArray.Add(metricsValue2);
                                             
-                                            metricsValue2["scheduledTransferPeriod"] = aggregationsItem.ScheduledTransferPeriod.ToString();
+                                            metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
                                         }
                                         metricsValue["aggregations"] = aggregationsArray;
                                     }
@@ -9213,8 +9212,7 @@ namespace Microsoft.Azure.Management.Insights
                                                     JToken scheduledTransferPeriodValue2 = aggregationsValue["scheduledTransferPeriod"];
                                                     if (scheduledTransferPeriodValue2 != null)
                                                     {
-                                                        // how
-                                                        TimeSpan scheduledTransferPeriodInstance2 = TimeSpan.Parse((string)scheduledTransferPeriodValue2, CultureInfo.InvariantCulture);
+                                                        TimeSpan scheduledTransferPeriodInstance2 = TypeConversion.From8601TimeSpan((string)scheduledTransferPeriodValue2);
                                                         metricsInstance2.ScheduledTransferPeriod = scheduledTransferPeriodInstance2;
                                                     }
                                                 }
@@ -9779,7 +9777,7 @@ namespace Microsoft.Azure.Management.Insights
                                             JObject metricsValue2 = new JObject();
                                             aggregationsArray.Add(metricsValue2);
                                             
-                                            metricsValue2["scheduledTransferPeriod"] = aggregationsItem.ScheduledTransferPeriod.ToString();
+                                            metricsValue2["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
                                         }
                                         metricsValue["aggregations"] = aggregationsArray;
                                     }

@@ -201,6 +201,7 @@ namespace Microsoft.Azure.Insights
         }
 
         // Converts a TableEntity to a MetricValue object
+        // TODO: this needs to be made more robust to handle types properly and do conversions as needed
         private static MetricValue ResolveMetricEntity(DynamicTableEntity entity)
         {
             Dictionary<string, string> otherProperties = new Dictionary<string, string>();
@@ -226,13 +227,18 @@ namespace Microsoft.Azure.Insights
                         metricValue.Total = entity[key].DoubleValue;
                         break;
                     case "Count":
-                        metricValue.Count = entity[key].Int64Value;
+                        metricValue.Count = entity[key].Int32Value;
                         break;
                     case "Last":
                         metricValue.Last = entity[key].DoubleValue;
                         break;
                     default:
-                        otherProperties.Add(key, entity[key].ToString());
+                        // if it is a string then store it in the properties
+                        if (entity[key].PropertyType == EdmType.String)
+                        {
+                            otherProperties.Add(key, entity[key].StringValue);
+                        }
+
                         break;
                 }
             }
