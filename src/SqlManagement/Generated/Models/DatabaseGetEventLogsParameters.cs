@@ -70,5 +70,21 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public DatabaseGetEventLogsParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseGetEventLogsParameters
+        /// class with required arguments.
+        /// </summary>
+        public DatabaseGetEventLogsParameters(DateTime startDate, int intervalSizeInMinutes, string eventTypes)
+            : this()
+        {
+            if (eventTypes == null)
+            {
+                throw new ArgumentNullException("eventTypes");
+            }
+            this.StartDate = startDate;
+            this.IntervalSizeInMinutes = intervalSizeInMinutes;
+            this.EventTypes = eventTypes;
+        }
     }
 }

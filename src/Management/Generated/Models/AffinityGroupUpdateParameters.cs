@@ -60,5 +60,19 @@ namespace Microsoft.WindowsAzure.Management.Models
         public AffinityGroupUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the AffinityGroupUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public AffinityGroupUpdateParameters(string label)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Label = label;
+        }
     }
 }

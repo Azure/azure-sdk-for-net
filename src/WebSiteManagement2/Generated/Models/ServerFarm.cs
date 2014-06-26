@@ -47,5 +47,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public ServerFarm()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServerFarm class with required
+        /// arguments.
+        /// </summary>
+        public ServerFarm(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }

@@ -49,5 +49,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public ServerFarmCreateOrUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ServerFarmCreateOrUpdateParameters class with required arguments.
+        /// </summary>
+        public ServerFarmCreateOrUpdateParameters(ServerFarm serverFarm)
+            : this()
+        {
+            if (serverFarm == null)
+            {
+                throw new ArgumentNullException("serverFarm");
+            }
+            this.ServerFarm = serverFarm;
+        }
     }
 }

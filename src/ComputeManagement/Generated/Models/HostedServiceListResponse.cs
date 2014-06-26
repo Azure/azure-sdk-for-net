@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListResponse()
         {
-            this._hostedServices = new List<HostedServiceListResponse.HostedService>();
+            this.HostedServices = new List<HostedServiceListResponse.HostedService>();
         }
         
         /// <summary>

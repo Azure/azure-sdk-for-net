@@ -66,8 +66,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionEndpointConfiguration()
         {
-            this._inputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
-            this._internalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
+            this.InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
+            this.InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
         }
         
         /// <summary>
@@ -187,6 +187,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public InternalEndpoint()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the InternalEndpoint class with
+            /// required arguments.
+            /// </summary>
+            public InternalEndpoint(string name, string protocol, int port)
+                : this()
+            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException("name");
+                }
+                if (protocol == null)
+                {
+                    throw new ArgumentNullException("protocol");
+                }
+                this.Name = name;
+                this.Protocol = protocol;
+                this.Port = port;
             }
         }
     }

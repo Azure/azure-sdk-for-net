@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public CloudServiceListResponse()
         {
-            this._cloudServices = new List<CloudService>();
+            this.CloudServices = new List<CloudService>();
         }
         
         /// <summary>

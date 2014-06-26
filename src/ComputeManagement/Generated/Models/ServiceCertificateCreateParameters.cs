@@ -72,5 +72,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ServiceCertificateCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ServiceCertificateCreateParameters class with required arguments.
+        /// </summary>
+        public ServiceCertificateCreateParameters(byte[] data, CertificateFormat certificateFormat)
+            : this()
+        {
+            if (data == null)
+            {
+                throw new ArgumentNullException("data");
+            }
+            this.Data = data;
+            this.CertificateFormat = certificateFormat;
+        }
     }
 }

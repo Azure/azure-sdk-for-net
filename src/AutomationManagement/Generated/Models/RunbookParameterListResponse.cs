@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookParameterListResponse()
         {
-            this._runbookParameters = new List<RunbookParameter>();
+            this.RunbookParameters = new List<RunbookParameter>();
         }
         
         /// <summary>

@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsResponse()
         {
-            this._usageMetrics = new List<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric>();
+            this.UsageMetrics = new List<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric>();
         }
         
         /// <summary>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public HistoricalUsageMetricData()
             {
-                this._values = new List<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample>();
+                this.Values = new List<WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample>();
             }
         }
         

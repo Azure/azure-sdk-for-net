@@ -47,5 +47,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public WebSiteBase()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteBase class with required
+        /// arguments.
+        /// </summary>
+        public WebSiteBase(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }

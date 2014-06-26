@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineShutdownRolesParameters()
         {
-            this._roles = new List<string>();
+            this.Roles = new List<string>();
         }
     }
 }

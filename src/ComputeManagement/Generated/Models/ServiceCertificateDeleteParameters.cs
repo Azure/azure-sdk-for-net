@@ -69,5 +69,29 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ServiceCertificateDeleteParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ServiceCertificateDeleteParameters class with required arguments.
+        /// </summary>
+        public ServiceCertificateDeleteParameters(string serviceName, string thumbprintAlgorithm, string thumbprint)
+            : this()
+        {
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (thumbprintAlgorithm == null)
+            {
+                throw new ArgumentNullException("thumbprintAlgorithm");
+            }
+            if (thumbprint == null)
+            {
+                throw new ArgumentNullException("thumbprint");
+            }
+            this.ServiceName = serviceName;
+            this.ThumbprintAlgorithm = thumbprintAlgorithm;
+            this.Thumbprint = thumbprint;
+        }
     }
 }

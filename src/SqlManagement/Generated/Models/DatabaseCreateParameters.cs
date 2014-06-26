@@ -109,5 +109,19 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public DatabaseCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public DatabaseCreateParameters(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
+        }
     }
 }

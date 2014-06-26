@@ -294,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopic()
         {
-            this._authorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
         }
     }
 }

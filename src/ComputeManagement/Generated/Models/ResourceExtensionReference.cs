@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionReference()
         {
-            this._resourceExtensionParameterValues = new List<ResourceExtensionParameterValue>();
+            this.ResourceExtensionParameterValues = new List<ResourceExtensionParameterValue>();
         }
     }
 }

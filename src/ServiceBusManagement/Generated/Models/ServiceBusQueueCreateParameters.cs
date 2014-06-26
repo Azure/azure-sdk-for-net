@@ -343,7 +343,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusQueueCreateParameters()
         {
-            this._authorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServiceBusQueueCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public ServiceBusQueueCreateParameters(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
         }
     }
 }

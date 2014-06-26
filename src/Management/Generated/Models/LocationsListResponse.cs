@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public LocationsListResponse()
         {
-            this._locations = new List<LocationsListResponse.Location>();
+            this.Locations = new List<LocationsListResponse.Location>();
         }
         
         /// <summary>
@@ -123,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public Location()
             {
-                this._availableServices = new List<string>();
+                this.AvailableServices = new List<string>();
             }
         }
     }

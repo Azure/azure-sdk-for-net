@@ -165,9 +165,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineCreateParameters()
         {
-            this._configurationSets = new List<ConfigurationSet>();
-            this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
-            this._resourceExtensionReferences = new List<ResourceExtensionReference>();
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualMachineCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public VirtualMachineCreateParameters(string roleName)
+            : this()
+        {
+            if (roleName == null)
+            {
+                throw new ArgumentNullException("roleName");
+            }
+            this.RoleName = roleName;
         }
     }
 }

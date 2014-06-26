@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobContext()
         {
-            this._jobParameters = new List<JobParameter>();
+            this.JobParameters = new List<JobParameter>();
         }
     }
 }

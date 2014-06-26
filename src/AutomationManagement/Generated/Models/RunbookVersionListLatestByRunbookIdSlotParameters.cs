@@ -60,5 +60,21 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookVersionListLatestByRunbookIdSlotParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookVersionListLatestByRunbookIdSlotParameters class with
+        /// required arguments.
+        /// </summary>
+        public RunbookVersionListLatestByRunbookIdSlotParameters(string runbookId, bool isDraft)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            this.RunbookId = runbookId;
+            this.IsDraft = isDraft;
+        }
     }
 }

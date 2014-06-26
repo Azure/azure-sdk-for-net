@@ -73,5 +73,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DomainJoinCredentials()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DomainJoinCredentials class with
+        /// required arguments.
+        /// </summary>
+        public DomainJoinCredentials(string userName, string password)
+            : this()
+        {
+            if (userName == null)
+            {
+                throw new ArgumentNullException("userName");
+            }
+            if (password == null)
+            {
+                throw new ArgumentNullException("password");
+            }
+            this.UserName = userName;
+            this.Password = password;
+        }
     }
 }

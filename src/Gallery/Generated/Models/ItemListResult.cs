@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Gallery.Models
         /// </summary>
         public ItemListResult()
         {
-            this._items = new List<GalleryItem>();
+            this.Items = new List<GalleryItem>();
         }
     }
 }

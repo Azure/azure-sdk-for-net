@@ -49,5 +49,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public WebSiteCreateOrUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public WebSiteCreateOrUpdateParameters(WebSiteBase webSite)
+            : this()
+        {
+            if (webSite == null)
+            {
+                throw new ArgumentNullException("webSite");
+            }
+            this.WebSite = webSite;
+        }
     }
 }

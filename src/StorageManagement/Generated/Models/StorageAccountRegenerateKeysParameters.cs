@@ -59,5 +59,21 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         public StorageAccountRegenerateKeysParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// StorageAccountRegenerateKeysParameters class with required
+        /// arguments.
+        /// </summary>
+        public StorageAccountRegenerateKeysParameters(string name, StorageKeyType keyType)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
+            this.KeyType = keyType;
+        }
     }
 }

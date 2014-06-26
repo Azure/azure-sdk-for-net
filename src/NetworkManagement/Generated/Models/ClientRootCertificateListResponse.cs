@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public ClientRootCertificateListResponse()
         {
-            this._clientRootCertificates = new List<ClientRootCertificateListResponse.ClientRootCertificate>();
+            this.ClientRootCertificates = new List<ClientRootCertificateListResponse.ClientRootCertificate>();
         }
         
         /// <summary>

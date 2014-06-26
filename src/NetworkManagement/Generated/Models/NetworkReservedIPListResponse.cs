@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkReservedIPListResponse()
         {
-            this._reservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
+            this.ReservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
         }
         
         /// <summary>

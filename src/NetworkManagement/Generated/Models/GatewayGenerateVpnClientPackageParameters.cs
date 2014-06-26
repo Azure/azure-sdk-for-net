@@ -48,5 +48,16 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public GatewayGenerateVpnClientPackageParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// GatewayGenerateVpnClientPackageParameters class with required
+        /// arguments.
+        /// </summary>
+        public GatewayGenerateVpnClientPackageParameters(GatewayProcessorArchitecture processorArchitecture)
+            : this()
+        {
+            this.ProcessorArchitecture = processorArchitecture;
+        }
     }
 }

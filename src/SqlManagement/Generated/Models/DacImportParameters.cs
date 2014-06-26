@@ -123,6 +123,25 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             public BlobCredentialsParameter()
             {
             }
+            
+            /// <summary>
+            /// Initializes a new instance of the BlobCredentialsParameter
+            /// class with required arguments.
+            /// </summary>
+            public BlobCredentialsParameter(Uri uri, string storageAccessKey)
+                : this()
+            {
+                if (uri == null)
+                {
+                    throw new ArgumentNullException("uri");
+                }
+                if (storageAccessKey == null)
+                {
+                    throw new ArgumentNullException("storageAccessKey");
+                }
+                this.Uri = uri;
+                this.StorageAccessKey = storageAccessKey;
+            }
         }
         
         /// <summary>

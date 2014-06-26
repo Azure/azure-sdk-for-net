@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseCopyListResponse()
         {
-            this._databaseCopies = new List<DatabaseCopy>();
+            this.DatabaseCopies = new List<DatabaseCopy>();
         }
         
         /// <summary>

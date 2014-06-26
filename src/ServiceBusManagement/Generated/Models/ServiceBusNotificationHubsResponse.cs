@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNotificationHubsResponse()
         {
-            this._notificationHubs = new List<ServiceBusNotificationHub>();
+            this.NotificationHubs = new List<ServiceBusNotificationHub>();
         }
         
         /// <summary>

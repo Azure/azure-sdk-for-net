@@ -101,7 +101,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteBaseProperties()
         {
-            this._hostNames = new List<string>();
+            this.HostNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteBaseProperties class with
+        /// required arguments.
+        /// </summary>
+        public WebSiteBaseProperties(List<string> hostNames)
+            : this()
+        {
+            if (hostNames == null)
+            {
+                throw new ArgumentNullException("hostNames");
+            }
+            this.HostNames = hostNames;
         }
         
         /// <summary>
@@ -148,6 +162,30 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public WebSpaceDetails()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the WebSpaceDetails class with
+            /// required arguments.
+            /// </summary>
+            public WebSpaceDetails(string geoRegion, string name, string plan)
+                : this()
+            {
+                if (geoRegion == null)
+                {
+                    throw new ArgumentNullException("geoRegion");
+                }
+                if (name == null)
+                {
+                    throw new ArgumentNullException("name");
+                }
+                if (plan == null)
+                {
+                    throw new ArgumentNullException("plan");
+                }
+                this.GeoRegion = geoRegion;
+                this.Name = name;
+                this.Plan = plan;
             }
         }
     }
