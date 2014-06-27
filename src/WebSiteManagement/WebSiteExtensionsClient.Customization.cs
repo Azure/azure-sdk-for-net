@@ -72,18 +72,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             throw new ArgumentNullException();
         }
 
-        protected override void Clone(ServiceClient<WebSiteExtensionsClient> client)
-        {
-            base.Clone(client);
-            WebSiteExtensionsClient management = client as WebSiteExtensionsClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override WebSiteExtensionsClient WithHandler(DelegatingHandler handler)
         {
             return (WebSiteExtensionsClient)WithHandler(new WebSiteExtensionsClient(), handler);

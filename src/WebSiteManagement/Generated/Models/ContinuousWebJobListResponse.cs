@@ -28,39 +28,40 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The list of deployments operation response.
+    /// The list of continuous WebJobs operation response.
     /// </summary>
-    public partial class DeploymentListLogsResponse : OperationResponse, IEnumerable<DeploymentLog>
+    public partial class ContinuousWebJobListResponse : OperationResponse, IEnumerable<ContinuousWebJob>
     {
-        private IList<DeploymentLog> _logs;
+        private IList<ContinuousWebJob> _continuousWebJobs;
         
         /// <summary>
-        /// Optional. The list of logs.
+        /// Optional. The list of continuous WebJobs.
         /// </summary>
-        public IList<DeploymentLog> Logs
+        public IList<ContinuousWebJob> ContinuousWebJobs
         {
-            get { return this._logs; }
-            set { this._logs = value; }
+            get { return this._continuousWebJobs; }
+            set { this._continuousWebJobs = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentListLogsResponse class.
+        /// Initializes a new instance of the ContinuousWebJobListResponse
+        /// class.
         /// </summary>
-        public DeploymentListLogsResponse()
+        public ContinuousWebJobListResponse()
         {
-            this.Logs = new List<DeploymentLog>();
+            this.ContinuousWebJobs = new List<ContinuousWebJob>();
         }
         
         /// <summary>
-        /// Gets the sequence of Logs.
+        /// Gets the sequence of ContinuousWebJobs.
         /// </summary>
-        public IEnumerator<DeploymentLog> GetEnumerator()
+        public IEnumerator<ContinuousWebJob> GetEnumerator()
         {
-            return this.Logs.GetEnumerator();
+            return this.ContinuousWebJobs.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of Logs.
+        /// Gets the sequence of ContinuousWebJobs.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

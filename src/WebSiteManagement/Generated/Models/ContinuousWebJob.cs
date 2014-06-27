@@ -21,31 +21,53 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Get Web Job Run operation response.
+    /// Continuous WebJob.
     /// </summary>
-    public partial class WebJobGetRunResponse : OperationResponse
+    public partial class ContinuousWebJob : WebJobBase
     {
-        private WebJobRun _jobRun;
+        private string _detailedStatus;
         
         /// <summary>
-        /// Optional. The web job run.
+        /// Optional. Detailed status provides the status of the job in each
+        /// instance.
         /// </summary>
-        public WebJobRun JobRun
+        public string DetailedStatus
         {
-            get { return this._jobRun; }
-            set { this._jobRun = value; }
+            get { return this._detailedStatus; }
+            set { this._detailedStatus = value; }
+        }
+        
+        private Uri _logUrl;
+        
+        /// <summary>
+        /// Optional. The url to the job's log file.
+        /// </summary>
+        public Uri LogUrl
+        {
+            get { return this._logUrl; }
+            set { this._logUrl = value; }
+        }
+        
+        private string _status;
+        
+        /// <summary>
+        /// Optional. The job status.
+        /// </summary>
+        public string Status
+        {
+            get { return this._status; }
+            set { this._status = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetRunResponse class.
+        /// Initializes a new instance of the ContinuousWebJob class.
         /// </summary>
-        public WebJobGetRunResponse()
+        public ContinuousWebJob()
         {
         }
     }

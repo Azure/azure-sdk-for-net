@@ -26,7 +26,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The settings update operation response.
+    /// The settings update parameters.
     /// </summary>
     public partial class SettingsUpdateParameters
     {
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public SettingsUpdateParameters()
         {
-            this._settings = new Dictionary<string, string>();
+            this.Settings = new Dictionary<string, string>();
         }
     }
 }

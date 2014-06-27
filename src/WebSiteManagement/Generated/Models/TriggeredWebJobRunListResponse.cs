@@ -28,39 +28,40 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The list of jobs operation response.
+    /// The triggered WebJob run list operation response.
     /// </summary>
-    public partial class WebJobListResponse : OperationResponse, IEnumerable<WebJob>
+    public partial class TriggeredWebJobRunListResponse : OperationResponse, IEnumerable<TriggeredWebJobRun>
     {
-        private IList<WebJob> _jobs;
+        private IList<TriggeredWebJobRun> _triggeredWebJobRuns;
         
         /// <summary>
-        /// Optional. The list of jobs.
+        /// Optional. The list of job runs.
         /// </summary>
-        public IList<WebJob> Jobs
+        public IList<TriggeredWebJobRun> TriggeredWebJobRuns
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._triggeredWebJobRuns; }
+            set { this._triggeredWebJobRuns = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobListResponse class.
+        /// Initializes a new instance of the TriggeredWebJobRunListResponse
+        /// class.
         /// </summary>
-        public WebJobListResponse()
+        public TriggeredWebJobRunListResponse()
         {
-            this._jobs = new List<WebJob>();
+            this.TriggeredWebJobRuns = new List<TriggeredWebJobRun>();
         }
         
         /// <summary>
-        /// Gets the sequence of Jobs.
+        /// Gets the sequence of TriggeredWebJobRuns.
         /// </summary>
-        public IEnumerator<WebJob> GetEnumerator()
+        public IEnumerator<TriggeredWebJobRun> GetEnumerator()
         {
-            return this.Jobs.GetEnumerator();
+            return this.TriggeredWebJobRuns.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of Jobs.
+        /// Gets the sequence of TriggeredWebJobRuns.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {

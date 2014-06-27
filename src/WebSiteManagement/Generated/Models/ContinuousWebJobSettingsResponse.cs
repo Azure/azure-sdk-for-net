@@ -20,51 +20,46 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Web Job run list operation response.
+    /// The continuous WebJob settings operation response.
     /// </summary>
-    public partial class WebJobRunListResponse : OperationResponse, IEnumerable<WebJobRun>
+    public partial class ContinuousWebJobSettingsResponse : OperationResponse
     {
-        private IList<WebJobRun> _jobRuns;
+        private bool? _isSingleton;
         
         /// <summary>
-        /// Optional. The list of job runs.
+        /// Optional. If a continuous job is set as singleton it'll run only on
+        /// a single instance opposed to running on all instances.
         /// </summary>
-        public IList<WebJobRun> JobRuns
+        public bool? IsSingleton
         {
-            get { return this._jobRuns; }
-            set { this._jobRuns = value; }
+            get { return this._isSingleton; }
+            set { this._isSingleton = value; }
+        }
+        
+        private int? _shutdownGraceTimeInSeconds;
+        
+        /// <summary>
+        /// Optional. Specify the time in seconds to wait for the WebJob to
+        /// gracefully shutdown.
+        /// </summary>
+        public int? ShutdownGraceTimeInSeconds
+        {
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobRunListResponse class.
+        /// Initializes a new instance of the ContinuousWebJobSettingsResponse
+        /// class.
         /// </summary>
-        public WebJobRunListResponse()
+        public ContinuousWebJobSettingsResponse()
         {
-            this._jobRuns = new List<WebJobRun>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of JobRuns.
-        /// </summary>
-        public IEnumerator<WebJobRun> GetEnumerator()
-        {
-            return this.JobRuns.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of JobRuns.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

@@ -21,40 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Web Job run listing parameters.
+    /// The get triggered WebJob Run operation response.
     /// </summary>
-    public partial class WebJobRunListParameters
+    public partial class TriggeredWebJobGetRunResponse : OperationResponse
     {
-        private string _orderBy;
+        private TriggeredWebJobRun _triggeredJobRun;
         
         /// <summary>
-        /// Optional. The order by query parameter.
+        /// Optional. The triggered WebJob run.
         /// </summary>
-        public string OrderBy
+        public TriggeredWebJobRun TriggeredJobRun
         {
-            get { return this._orderBy; }
-            set { this._orderBy = value; }
-        }
-        
-        private string _top;
-        
-        /// <summary>
-        /// Optional. The top query parameter.
-        /// </summary>
-        public string Top
-        {
-            get { return this._top; }
-            set { this._top = value; }
+            get { return this._triggeredJobRun; }
+            set { this._triggeredJobRun = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobRunListParameters class.
+        /// Initializes a new instance of the TriggeredWebJobGetRunResponse
+        /// class.
         /// </summary>
-        public WebJobRunListParameters()
+        public TriggeredWebJobGetRunResponse()
         {
         }
     }

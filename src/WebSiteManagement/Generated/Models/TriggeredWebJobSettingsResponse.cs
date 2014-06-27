@@ -22,30 +22,31 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The get Web Job Operation Response.
+    /// The triggered WebJob settings operation response.
     /// </summary>
-    public partial class WebJobGetResponse : OperationResponse
+    public partial class TriggeredWebJobSettingsResponse : OperationResponse
     {
-        private WebJob _webJob;
+        private int? _shutdownGraceTimeInSeconds;
         
         /// <summary>
-        /// Optional. The web job.
+        /// Optional. The time in seconds to wait for the WebJob to gracefully
+        /// shutdown.
         /// </summary>
-        public WebJob WebJob
+        public int? ShutdownGraceTimeInSeconds
         {
-            get { return this._webJob; }
-            set { this._webJob = value; }
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetResponse class.
+        /// Initializes a new instance of the TriggeredWebJobSettingsResponse
+        /// class.
         /// </summary>
-        public WebJobGetResponse()
+        public TriggeredWebJobSettingsResponse()
         {
         }
     }

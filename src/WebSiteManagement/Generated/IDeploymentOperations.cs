@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions
@@ -104,8 +105,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        Task<DeploymentUpdateResponse> RedeployAsync(string deploymentId, CancellationToken cancellationToken);
+        Task<OperationResponse> RedeployAsync(string deploymentId, CancellationToken cancellationToken);
     }
 }

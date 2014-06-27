@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
@@ -217,9 +218,10 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment identifier.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static DeploymentUpdateResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
+        public static OperationResponse Redeploy(this IDeploymentOperations operations, string deploymentId)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -239,9 +241,10 @@ namespace Microsoft.WindowsAzure
         /// Required. The deployment identifier.
         /// </param>
         /// <returns>
-        /// The deployment information operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public static Task<DeploymentUpdateResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
+        public static Task<OperationResponse> RedeployAsync(this IDeploymentOperations operations, string deploymentId)
         {
             return operations.RedeployAsync(deploymentId, CancellationToken.None);
         }

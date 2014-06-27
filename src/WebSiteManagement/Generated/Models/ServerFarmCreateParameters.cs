@@ -96,5 +96,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         public ServerFarmCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServerFarmCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public ServerFarmCreateParameters(int numberOfWorkers, ServerFarmWorkerSize workerSize)
+            : this()
+        {
+            this.NumberOfWorkers = numberOfWorkers;
+            this.WorkerSize = workerSize;
+        }
     }
 }

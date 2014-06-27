@@ -63,18 +63,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 new WebSiteManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<WebSiteManagementClient> client)
-        {
-            base.Clone(client);
-            WebSiteManagementClient management = client as WebSiteManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override WebSiteManagementClient WithHandler(DelegatingHandler handler)
         {
             return (WebSiteManagementClient)WithHandler(new WebSiteManagementClient(), handler);

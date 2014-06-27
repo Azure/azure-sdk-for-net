@@ -289,10 +289,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSite()
         {
-            this._enabledHostNames = new List<string>();
-            this._hostNames = new List<string>();
-            this._hostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
-            this._sslCertificates = new List<WebSite.WebSiteSslCertificate>();
+            this.EnabledHostNames = new List<string>();
+            this.HostNames = new List<string>();
+            this.HostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
+            this.SslCertificates = new List<WebSite.WebSiteSslCertificate>();
         }
         
         /// <summary>
@@ -398,9 +398,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSiteProperties()
             {
-                this._appSettings = new Dictionary<string, string>();
-                this._metadata = new Dictionary<string, string>();
-                this._properties = new Dictionary<string, string>();
+                this.AppSettings = new Dictionary<string, string>();
+                this.Metadata = new Dictionary<string, string>();
+                this.Properties = new Dictionary<string, string>();
             }
         }
         
@@ -567,7 +567,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSiteSslCertificate()
             {
-                this._hostNames = new List<string>();
+                this.HostNames = new List<string>();
             }
         }
     }

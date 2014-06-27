@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetPublishProfileResponse()
         {
-            this._publishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
+            this.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
         }
         
         /// <summary>
@@ -288,7 +288,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public PublishProfile()
             {
-                this._databases = new List<WebSiteGetPublishProfileResponse.Database>();
+                this.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
             }
         }
     }

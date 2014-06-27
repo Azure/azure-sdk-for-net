@@ -69,5 +69,25 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         public WebSpacesCreatePublishingUserParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// WebSpacesCreatePublishingUserParameters class with required
+        /// arguments.
+        /// </summary>
+        public WebSpacesCreatePublishingUserParameters(string publishingPassword, string publishingUserName)
+            : this()
+        {
+            if (publishingPassword == null)
+            {
+                throw new ArgumentNullException("publishingPassword");
+            }
+            if (publishingUserName == null)
+            {
+                throw new ArgumentNullException("publishingUserName");
+            }
+            this.PublishingPassword = publishingPassword;
+            this.PublishingUserName = publishingUserName;
+        }
     }
 }

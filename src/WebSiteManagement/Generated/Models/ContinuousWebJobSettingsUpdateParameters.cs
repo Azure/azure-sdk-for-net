@@ -20,51 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The list of deployments operation response.
+    /// The continuous WebJob settings update parameters.
     /// </summary>
-    public partial class DeploymentListLogsResponse : OperationResponse, IEnumerable<DeploymentLog>
+    public partial class ContinuousWebJobSettingsUpdateParameters
     {
-        private IList<DeploymentLog> _logs;
+        private bool? _isSingleton;
         
         /// <summary>
-        /// Optional. The list of logs.
+        /// Optional. If a continuous job is set as singleton it'll run only on
+        /// a single instance opposed to running on all instances.
         /// </summary>
-        public IList<DeploymentLog> Logs
+        public bool? IsSingleton
         {
-            get { return this._logs; }
-            set { this._logs = value; }
+            get { return this._isSingleton; }
+            set { this._isSingleton = value; }
+        }
+        
+        private int? _shutdownGraceTimeInSeconds;
+        
+        /// <summary>
+        /// Optional. Specify the time in seconds to wait for the WebJob to
+        /// gracefully shutdown.
+        /// </summary>
+        public int? ShutdownGraceTimeInSeconds
+        {
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentListLogsResponse class.
+        /// Initializes a new instance of the
+        /// ContinuousWebJobSettingsUpdateParameters class.
         /// </summary>
-        public DeploymentListLogsResponse()
+        public ContinuousWebJobSettingsUpdateParameters()
         {
-            this.Logs = new List<DeploymentLog>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Logs.
-        /// </summary>
-        public IEnumerator<DeploymentLog> GetEnumerator()
-        {
-            return this.Logs.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Logs.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
