@@ -48,5 +48,19 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public NetworkGetConfigurationResponse()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkGetConfigurationResponse
+        /// class with required arguments.
+        /// </summary>
+        public NetworkGetConfigurationResponse(string configuration)
+            : this()
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException("configuration");
+            }
+            this.Configuration = configuration;
+        }
     }
 }
