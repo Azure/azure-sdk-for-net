@@ -20,63 +20,65 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.WebSites.Models
+namespace Microsoft.Azure.Subscriptions.Models
 {
-    public partial class Resource
+    /// <summary>
+    /// Subscription detailed information.
+    /// </summary>
+    public partial class GetSubscriptionResult : OperationResponse
     {
-        private string _location;
+        private string _displayName;
         
         /// <summary>
-        /// Optional. The site location.
+        /// Optional. Gets or sets display name
         /// </summary>
-        public string Location
+        public string DisplayName
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
-        private string _name;
+        private string _id;
         
         /// <summary>
-        /// Optional. The site name.
+        /// Optional. Gets or sets Id
         /// </summary>
-        public string Name
+        public string Id
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._id; }
+            set { this._id = value; }
         }
         
-        private IDictionary<string, string> _tags;
+        private string _state;
         
         /// <summary>
-        /// Optional. The tags.
+        /// Optional. Gets or sets State
         /// </summary>
-        public IDictionary<string, string> Tags
+        public string State
         {
-            get { return this._tags; }
-            set { this._tags = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
-        private string _type;
+        private string _subscriptionId;
         
         /// <summary>
-        /// Optional. The resource type.
+        /// Optional. Gets or sets subscriptionId
         /// </summary>
-        public string Type
+        public string SubscriptionId
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._subscriptionId; }
+            set { this._subscriptionId = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the GetSubscriptionResult class.
         /// </summary>
-        public Resource()
+        public GetSubscriptionResult()
         {
-            this._tags = new Dictionary<string, string>();
         }
     }
 }

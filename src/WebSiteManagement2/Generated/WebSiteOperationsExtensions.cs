@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public static WebSiteCreateResponse CreateOrUpdate(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateResourceParameters parameters)
+        public static WebSiteCreateResponse CreateOrUpdate(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public static Task<WebSiteCreateResponse> CreateOrUpdateAsync(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateResourceParameters parameters)
+        public static Task<WebSiteCreateResponse> CreateOrUpdateAsync(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }

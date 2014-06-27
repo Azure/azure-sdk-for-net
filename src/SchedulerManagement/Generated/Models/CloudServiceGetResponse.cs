@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public CloudServiceGetResponse()
         {
-            this._resources = new List<CloudServiceGetResponse.Resource>();
+            this.Resources = new List<CloudServiceGetResponse.Resource>();
         }
         
         /// <summary>
@@ -186,7 +186,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             /// </summary>
             public Resource()
             {
-                this._outputItems = new Dictionary<string, string>();
+                this.OutputItems = new Dictionary<string, string>();
             }
         }
     }

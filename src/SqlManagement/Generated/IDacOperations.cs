@@ -87,6 +87,28 @@ namespace Microsoft.WindowsAzure.Management.Sql
         Task<DacGetStatusResponse> GetStatusAsync(string serverName, string fullyQualifiedServerName, string username, string password, string requestId, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Gets the status of the import or export operation in the specified
+        /// server with the corresponding request ID.  The request ID is
+        /// provided in the responses of the import or export operation.
+        /// </summary>
+        /// <param name='serverName'>
+        /// The name of the server in which the import or export operation is
+        /// taking place.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters needed to get the status of an import or export
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents a list of import or export status values returned from
+        /// GetStatus.
+        /// </returns>
+        Task<DacGetStatusResponse> GetStatusPostAsync(string serverName, DacGetStatusParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Initiates an Import of a DACPAC file from Azure Blob Storage into a
         /// Azure SQL Database.
         /// </summary>

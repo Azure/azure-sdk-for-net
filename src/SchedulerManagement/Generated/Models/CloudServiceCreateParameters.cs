@@ -78,5 +78,29 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         public CloudServiceCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the CloudServiceCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public CloudServiceCreateParameters(string label, string description, string geoRegion)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            if (description == null)
+            {
+                throw new ArgumentNullException("description");
+            }
+            if (geoRegion == null)
+            {
+                throw new ArgumentNullException("geoRegion");
+            }
+            this.Label = label;
+            this.Description = description;
+            this.GeoRegion = geoRegion;
+        }
     }
 }

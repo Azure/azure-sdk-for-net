@@ -59,7 +59,21 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceGroupListResult()
         {
-            this._resourceGroups = new List<ResourceGroup>();
+            this.ResourceGroups = new List<ResourceGroup>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceGroupListResult class
+        /// with required arguments.
+        /// </summary>
+        public ResourceGroupListResult(string nextLink)
+            : this()
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            this.NextLink = nextLink;
         }
     }
 }

@@ -91,5 +91,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobAction()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobAction class with required
+        /// arguments.
+        /// </summary>
+        public JobAction(JobActionType type)
+            : this()
+        {
+            this.Type = type;
+        }
     }
 }

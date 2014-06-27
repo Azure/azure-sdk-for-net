@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._isValid = value; }
         }
         
+        private DeploymentProperties _properties;
+        
+        /// <summary>
+        /// Optional. Gets or sets the template deployment properties.
+        /// </summary>
+        public DeploymentProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the DeploymentValidateResponse class.
         /// </summary>

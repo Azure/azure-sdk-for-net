@@ -58,5 +58,19 @@ namespace Microsoft.Azure.Management.Resources.Models
         public Deployment()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the Deployment class with required
+        /// arguments.
+        /// </summary>
+        public Deployment(string deploymentName)
+            : this()
+        {
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            this.DeploymentName = deploymentName;
+        }
     }
 }

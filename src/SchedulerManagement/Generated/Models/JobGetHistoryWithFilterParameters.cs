@@ -50,5 +50,17 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobGetHistoryWithFilterParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobGetHistoryWithFilterParameters
+        /// class with required arguments.
+        /// </summary>
+        public JobGetHistoryWithFilterParameters(JobHistoryStatus status, int skip, int top)
+            : this()
+        {
+            this.Status = status;
+            this.Skip = skip;
+            this.Top = top;
+        }
     }
 }

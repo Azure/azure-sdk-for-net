@@ -7892,10 +7892,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/package?";
-            url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.AbsoluteUri) + " +";
+            url = url + "containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +";
             if (parameters.OverwriteExisting != null)
             {
-                url = url + "&overwriteExisting=" + Uri.EscapeUriString(parameters.OverwriteExisting.Value.ToString().ToLower());
+                url = url + "&overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -8041,10 +8041,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deploymentslots/" + deploymentSlot + "/package?";
-            url = url + "containerUri=" + Uri.EscapeUriString(parameters.ContainerUri.AbsoluteUri) + " +";
+            url = url + "containerUri=" + Uri.EscapeDataString(parameters.ContainerUri.AbsoluteUri) + " +";
             if (parameters.OverwriteExisting != null)
             {
-                url = url + "&overwriteExisting=" + Uri.EscapeUriString(parameters.OverwriteExisting.Value.ToString().ToLower());
+                url = url + "&overwriteExisting=" + Uri.EscapeDataString(parameters.OverwriteExisting.Value.ToString().ToLower());
             }
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

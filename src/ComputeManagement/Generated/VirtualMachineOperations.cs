@@ -4934,13 +4934,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             inputEndpointElement.Add(enableDirectServerReturnElement);
                         }
                         
-                        if (loadBalancedEndpointsItem.LoadBalancerName != null)
-                        {
-                            XElement loadBalancerNameElement = new XElement(XName.Get("LoadBalancerName", "http://schemas.microsoft.com/windowsazure"));
-                            loadBalancerNameElement.Value = loadBalancedEndpointsItem.LoadBalancerName;
-                            inputEndpointElement.Add(loadBalancerNameElement);
-                        }
-                        
                         XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                         inputEndpointElement.Add(endpointAclElement);
                         
@@ -4981,6 +4974,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             endpointAclElement.Add(rulesSequenceElement);
+                        }
+                        
+                        if (loadBalancedEndpointsItem.LoadBalancerName != null)
+                        {
+                            XElement loadBalancerNameElement = new XElement(XName.Get("LoadBalancerName", "http://schemas.microsoft.com/windowsazure"));
+                            loadBalancerNameElement.Value = loadBalancedEndpointsItem.LoadBalancerName;
+                            inputEndpointElement.Add(loadBalancerNameElement);
                         }
                     }
                 }

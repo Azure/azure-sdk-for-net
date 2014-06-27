@@ -58,5 +58,19 @@ namespace Microsoft.Azure.Management.Resources.Models
         public TemplateLink()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the TemplateLink class with required
+        /// arguments.
+        /// </summary>
+        public TemplateLink(Uri uri)
+            : this()
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException("uri");
+            }
+            this.Uri = uri;
+        }
     }
 }

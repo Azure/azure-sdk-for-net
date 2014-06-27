@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <returns>
         /// The Create Server Farm operation response.
         /// </returns>
-        Task<ServerFarmCreateResponse> CreateAsync(string resourceGroupName, ServerFarmCreateParameters parameters, CancellationToken cancellationToken);
+        Task<ServerFarmCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, ServerFarmCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// TBD.
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
-        /// <param name='name'>
+        /// <param name='serverFarmName'>
         /// The name of the server farm.
         /// </param>
         /// <param name='cancellationToken'>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
+        Task<OperationResponse> DeleteAsync(string resourceGroupName, string serverFarmName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can create a server farm by issuing an HTTP POST request. Only

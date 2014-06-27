@@ -69,20 +69,16 @@ namespace Microsoft.Azure.Management.WebSites
             get { return this._baseUri; }
         }
         
-        private TokenCloudCredentials _credentials;
+        private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Management API. The
-        /// Management APIs use JWT bearer tokens over SSL to ensure that a
-        /// request made to the service is secure. No anonymous requests are
-        /// allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
-        public TokenCloudCredentials Credentials
+        public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
-            set { this._credentials = value; }
         }
         
         private int _longRunningOperationInitialTimeout;
@@ -147,18 +143,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the
-        /// Management API. The Management APIs use JWT bearer tokens over SSL
-        /// to ensure that a request made to the service is secure. No
-        /// anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
         /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
-        public WebSiteManagementClient(TokenCloudCredentials credentials, Uri baseUri)
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -179,14 +172,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the
-        /// Management API. The Management APIs use JWT bearer tokens over SSL
-        /// to ensure that a request made to the service is secure. No
-        /// anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
-        public WebSiteManagementClient(TokenCloudCredentials credentials)
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)
@@ -220,12 +210,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the
-        /// Management API. The Management APIs use JWT bearer tokens over SSL
-        /// to ensure that a request made to the service is secure. No
-        /// anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
         /// Required. Gets the URI used as the base for all cloud service
@@ -234,7 +221,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public WebSiteManagementClient(TokenCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (credentials == null)
@@ -255,17 +242,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the
-        /// Management API. The Management APIs use JWT bearer tokens over SSL
-        /// to ensure that a request made to the service is secure. No
-        /// anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public WebSiteManagementClient(TokenCloudCredentials credentials, HttpClient httpClient)
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (credentials == null)
