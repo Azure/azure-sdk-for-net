@@ -170,9 +170,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateParameters()
         {
-            this._hostNames = new List<string>();
-            this._hostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
-            this._sslCertificates = new List<WebSiteUpdateParameters.WebSiteSslCertificate>();
+            this.HostNames = new List<string>();
+            this.HostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
+            this.SslCertificates = new List<WebSiteUpdateParameters.WebSiteSslCertificate>();
         }
         
         /// <summary>

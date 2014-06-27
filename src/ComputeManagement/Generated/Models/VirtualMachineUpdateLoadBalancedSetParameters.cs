@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateLoadBalancedSetParameters()
         {
-            this._loadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
+            this.LoadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
         }
         
         /// <summary>
@@ -199,7 +199,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public InputEndpoint()
             {
-                this._rules = new List<AccessControlListRule>();
+                this.Rules = new List<AccessControlListRule>();
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the InputEndpoint class with
+            /// required arguments.
+            /// </summary>
+            public InputEndpoint(string loadBalancedEndpointSetName)
+                : this()
+            {
+                if (loadBalancedEndpointSetName == null)
+                {
+                    throw new ArgumentNullException("loadBalancedEndpointSetName");
+                }
+                this.LoadBalancedEndpointSetName = loadBalancedEndpointSetName;
             }
         }
     }

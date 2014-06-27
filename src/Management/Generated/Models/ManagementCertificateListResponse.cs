@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ManagementCertificateListResponse()
         {
-            this._subscriptionCertificates = new List<ManagementCertificateListResponse.SubscriptionCertificate>();
+            this.SubscriptionCertificates = new List<ManagementCertificateListResponse.SubscriptionCertificate>();
         }
         
         /// <summary>

@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteInstanceIdsResponse()
         {
-            this._instanceIds = new List<string>();
+            this.InstanceIds = new List<string>();
         }
         
         /// <summary>

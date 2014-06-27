@@ -148,9 +148,28 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateParameters()
         {
-            this._configurationSets = new List<ConfigurationSet>();
-            this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
-            this._resourceExtensionReferences = new List<ResourceExtensionReference>();
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the VirtualMachineUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public VirtualMachineUpdateParameters(string roleName, OSVirtualHardDisk oSVirtualHardDisk)
+            : this()
+        {
+            if (roleName == null)
+            {
+                throw new ArgumentNullException("roleName");
+            }
+            if (oSVirtualHardDisk == null)
+            {
+                throw new ArgumentNullException("oSVirtualHardDisk");
+            }
+            this.RoleName = roleName;
+            this.OSVirtualHardDisk = oSVirtualHardDisk;
         }
     }
 }

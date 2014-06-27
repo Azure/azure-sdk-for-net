@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusQueuesResponse()
         {
-            this._queues = new List<ServiceBusQueue>();
+            this.Queues = new List<ServiceBusQueue>();
         }
         
         /// <summary>

@@ -71,5 +71,25 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public DatabaseCopyCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseCopyCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public DatabaseCopyCreateParameters(string partnerServer, string partnerDatabase, bool isContinuous)
+            : this()
+        {
+            if (partnerServer == null)
+            {
+                throw new ArgumentNullException("partnerServer");
+            }
+            if (partnerDatabase == null)
+            {
+                throw new ArgumentNullException("partnerDatabase");
+            }
+            this.PartnerServer = partnerServer;
+            this.PartnerDatabase = partnerDatabase;
+            this.IsContinuous = isContinuous;
+        }
     }
 }

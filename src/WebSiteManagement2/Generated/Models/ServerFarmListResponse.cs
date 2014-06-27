@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public ServerFarmListResponse()
         {
-            this._serverFarms = new List<ServerFarm>();
+            this.ServerFarms = new List<ServerFarm>();
         }
         
         /// <summary>

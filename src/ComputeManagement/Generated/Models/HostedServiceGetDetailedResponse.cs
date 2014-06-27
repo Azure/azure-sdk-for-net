@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceGetDetailedResponse()
         {
-            this._deployments = new List<HostedServiceGetDetailedResponse.Deployment>();
+            this.Deployments = new List<HostedServiceGetDetailedResponse.Deployment>();
         }
         
         /// <summary>
@@ -318,10 +318,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public Deployment()
             {
-                this._extendedProperties = new Dictionary<string, string>();
-                this._roleInstances = new List<RoleInstance>();
-                this._roles = new List<Role>();
-                this._virtualIPAddresses = new List<VirtualIPAddress>();
+                this.ExtendedProperties = new Dictionary<string, string>();
+                this.RoleInstances = new List<RoleInstance>();
+                this.Roles = new List<Role>();
+                this.VirtualIPAddresses = new List<VirtualIPAddress>();
             }
         }
     }

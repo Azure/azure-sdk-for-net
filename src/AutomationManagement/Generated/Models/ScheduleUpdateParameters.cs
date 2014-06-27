@@ -47,5 +47,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         public ScheduleUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ScheduleUpdateParameters class
+        /// with required arguments.
+        /// </summary>
+        public ScheduleUpdateParameters(Schedule schedule)
+            : this()
+        {
+            if (schedule == null)
+            {
+                throw new ArgumentNullException("schedule");
+            }
+            this.Schedule = schedule;
+        }
     }
 }

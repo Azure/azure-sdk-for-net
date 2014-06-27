@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionPolicyResponse()
         {
-            this._endpoints = new List<DefinitionEndpointResponse>();
+            this.Endpoints = new List<DefinitionEndpointResponse>();
         }
         
         /// <summary>

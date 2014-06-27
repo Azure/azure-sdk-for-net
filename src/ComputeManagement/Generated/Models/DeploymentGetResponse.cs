@@ -329,11 +329,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentGetResponse()
         {
-            this._extendedProperties = new Dictionary<string, string>();
-            this._loadBalancers = new List<LoadBalancer>();
-            this._roleInstances = new List<RoleInstance>();
-            this._roles = new List<Role>();
-            this._virtualIPAddresses = new List<VirtualIPAddress>();
+            this.ExtendedProperties = new Dictionary<string, string>();
+            this.LoadBalancers = new List<LoadBalancer>();
+            this.RoleInstances = new List<RoleInstance>();
+            this.Roles = new List<Role>();
+            this.VirtualIPAddresses = new List<VirtualIPAddress>();
         }
     }
 }

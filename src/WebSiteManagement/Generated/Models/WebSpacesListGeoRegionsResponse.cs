@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListGeoRegionsResponse()
         {
-            this._geoRegions = new List<WebSpacesListGeoRegionsResponse.GeoRegion>();
+            this.GeoRegions = new List<WebSpacesListGeoRegionsResponse.GeoRegion>();
         }
         
         /// <summary>

@@ -184,5 +184,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineOSImageUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineOSImageUpdateParameters(string label)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Label = label;
+        }
     }
 }

@@ -58,7 +58,21 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookStartParameters()
         {
-            this._parameters = new List<NameValuePair>();
+            this.Parameters = new List<NameValuePair>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RunbookStartParameters class with
+        /// required arguments.
+        /// </summary>
+        public RunbookStartParameters(string runbookId)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            this.RunbookId = runbookId;
         }
     }
 }

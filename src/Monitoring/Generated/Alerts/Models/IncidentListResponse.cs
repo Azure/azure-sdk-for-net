@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this._value = new List<Incident>();
+            this.Value = new List<Incident>();
         }
         
         /// <summary>

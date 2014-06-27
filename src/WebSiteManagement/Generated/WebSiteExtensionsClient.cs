@@ -44,6 +44,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private BasicAuthenticationCloudCredentials _credentials;
@@ -54,6 +55,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public BasicAuthenticationCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
         }
         
         private string _siteName;
@@ -64,6 +66,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public string SiteName
         {
             get { return this._siteName; }
+            set { this._siteName = value; }
         }
         
         private IDeploymentOperations _deployments;
@@ -273,6 +276,29 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// WebSiteExtensionsClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of WebSiteExtensionsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<WebSiteExtensionsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is WebSiteExtensionsClient)
+            {
+                WebSiteExtensionsClient clonedClient = ((WebSiteExtensionsClient)client);
+                
+                clonedClient._siteName = this._siteName;
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>

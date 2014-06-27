@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public RecoverableDatabaseListResponse()
         {
-            this._databases = new List<RecoverableDatabase>();
+            this.Databases = new List<RecoverableDatabase>();
         }
         
         /// <summary>

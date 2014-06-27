@@ -126,7 +126,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteCreateParameters()
         {
-            this._hostNames = new List<string>();
+            this.HostNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public WebSiteCreateParameters(string name, string webSpaceName)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            this.Name = name;
+            this.WebSpaceName = webSpaceName;
         }
         
         /// <summary>
@@ -174,6 +193,30 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSpaceDetails()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the WebSpaceDetails class with
+            /// required arguments.
+            /// </summary>
+            public WebSpaceDetails(string geoRegion, string name, string plan)
+                : this()
+            {
+                if (geoRegion == null)
+                {
+                    throw new ArgumentNullException("geoRegion");
+                }
+                if (name == null)
+                {
+                    throw new ArgumentNullException("name");
+                }
+                if (plan == null)
+                {
+                    throw new ArgumentNullException("plan");
+                }
+                this.GeoRegion = geoRegion;
+                this.Name = name;
+                this.Plan = plan;
             }
         }
     }

@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public CrossConnectionListResponse()
         {
-            this._crossConnections = new List<AzureCrossConnection>();
+            this.CrossConnections = new List<AzureCrossConnection>();
         }
         
         /// <summary>

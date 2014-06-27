@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountListResponse()
         {
-            this._storageAccounts = new List<StorageAccount>();
+            this.StorageAccounts = new List<StorageAccount>();
         }
         
         /// <summary>

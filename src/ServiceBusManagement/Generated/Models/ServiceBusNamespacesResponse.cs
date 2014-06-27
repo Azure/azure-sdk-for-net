@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNamespacesResponse()
         {
-            this._namespaces = new List<ServiceBusNamespace>();
+            this.Namespaces = new List<ServiceBusNamespace>();
         }
         
         /// <summary>

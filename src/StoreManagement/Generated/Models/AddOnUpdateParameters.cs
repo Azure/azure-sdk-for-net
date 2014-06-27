@@ -68,5 +68,24 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         public AddOnUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the AddOnUpdateParameters class with
+        /// required arguments.
+        /// </summary>
+        public AddOnUpdateParameters(string type, string plan)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            if (plan == null)
+            {
+                throw new ArgumentNullException("plan");
+            }
+            this.Type = type;
+            this.Plan = plan;
+        }
     }
 }

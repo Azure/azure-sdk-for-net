@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetParameters()
         {
-            this._propertiesToInclude = new List<string>();
+            this.PropertiesToInclude = new List<string>();
         }
     }
 }

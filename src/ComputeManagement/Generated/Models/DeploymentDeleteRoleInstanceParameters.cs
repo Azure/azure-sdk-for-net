@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentDeleteRoleInstanceParameters()
         {
-            this._name = new List<string>();
+            this.Name = new List<string>();
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageGetDetailsResponse()
         {
-            this._replicationProgress = new List<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
+            this.ReplicationProgress = new List<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>
