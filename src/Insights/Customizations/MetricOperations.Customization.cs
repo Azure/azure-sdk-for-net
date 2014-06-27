@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Insights
                     MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
                     metric.ResourceId = resourceUri;
-                    metric.Name.LocalizedValue = definition == null ? metric.Name.Value : definition.Name.Value;
+                    metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) ? definition.Name.LocalizedValue : metric.Name.Value;
                 }
         }
 
