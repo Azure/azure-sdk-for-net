@@ -50,5 +50,16 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DeploymentWalkUpgradeDomainParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DeploymentWalkUpgradeDomainParameters class with required
+        /// arguments.
+        /// </summary>
+        public DeploymentWalkUpgradeDomainParameters(int upgradeDomain)
+            : this()
+        {
+            this.UpgradeDomain = upgradeDomain;
+        }
     }
 }

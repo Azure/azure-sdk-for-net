@@ -48,5 +48,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DeploymentUpdateStatusParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeploymentUpdateStatusParameters
+        /// class with required arguments.
+        /// </summary>
+        public DeploymentUpdateStatusParameters(UpdatedDeploymentStatus status)
+            : this()
+        {
+            this.Status = status;
+        }
     }
 }

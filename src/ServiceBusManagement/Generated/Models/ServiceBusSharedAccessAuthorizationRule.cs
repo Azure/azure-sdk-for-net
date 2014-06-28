@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusSharedAccessAuthorizationRule()
         {
-            this._rights = new List<AccessRight>();
+            this.Rights = new List<AccessRight>();
         }
     }
 }

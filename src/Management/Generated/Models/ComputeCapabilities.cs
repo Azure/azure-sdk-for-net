@@ -57,8 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ComputeCapabilities()
         {
-            this._virtualMachinesRoleSizes = new List<string>();
-            this._webWorkerRoleSizes = new List<string>();
+            this.VirtualMachinesRoleSizes = new List<string>();
+            this.WebWorkerRoleSizes = new List<string>();
         }
     }
 }

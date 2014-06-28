@@ -134,5 +134,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineDataDiskCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineDataDiskCreateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineDataDiskCreateParameters(string hostCaching, Uri mediaLinkUri)
+            : this()
+        {
+            if (hostCaching == null)
+            {
+                throw new ArgumentNullException("hostCaching");
+            }
+            if (mediaLinkUri == null)
+            {
+                throw new ArgumentNullException("mediaLinkUri");
+            }
+            this.HostCaching = hostCaching;
+            this.MediaLinkUri = mediaLinkUri;
+        }
     }
 }

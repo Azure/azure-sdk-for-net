@@ -365,8 +365,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageGetDetailsResponse()
         {
-            this._dataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
-            this._replicationProgress = new List<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
+            this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+            this.ReplicationProgress = new List<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>

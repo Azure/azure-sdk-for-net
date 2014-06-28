@@ -76,7 +76,21 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public ResourceBase()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceBase class with required
+        /// arguments.
+        /// </summary>
+        public ResourceBase(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
         }
     }
 }

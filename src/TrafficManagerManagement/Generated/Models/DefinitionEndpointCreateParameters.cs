@@ -102,5 +102,20 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         public DefinitionEndpointCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DefinitionEndpointCreateParameters class with required arguments.
+        /// </summary>
+        public DefinitionEndpointCreateParameters(string domainName, EndpointStatus status)
+            : this()
+        {
+            if (domainName == null)
+            {
+                throw new ArgumentNullException("domainName");
+            }
+            this.DomainName = domainName;
+            this.Status = status;
+        }
     }
 }

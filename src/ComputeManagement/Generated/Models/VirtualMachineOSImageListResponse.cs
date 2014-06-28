@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageListResponse()
         {
-            this._images = new List<VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
+            this.Images = new List<VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
         }
         
         /// <summary>

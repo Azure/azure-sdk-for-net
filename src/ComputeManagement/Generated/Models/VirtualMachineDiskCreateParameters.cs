@@ -85,5 +85,29 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineDiskCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineDiskCreateParameters class with required arguments.
+        /// </summary>
+        public VirtualMachineDiskCreateParameters(string label, Uri mediaLinkUri, string name)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            if (mediaLinkUri == null)
+            {
+                throw new ArgumentNullException("mediaLinkUri");
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Label = label;
+            this.MediaLinkUri = mediaLinkUri;
+            this.Name = name;
+        }
     }
 }

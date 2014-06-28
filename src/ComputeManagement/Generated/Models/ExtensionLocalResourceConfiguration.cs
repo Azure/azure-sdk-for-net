@@ -59,5 +59,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ExtensionLocalResourceConfiguration()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ExtensionLocalResourceConfiguration class with required arguments.
+        /// </summary>
+        public ExtensionLocalResourceConfiguration(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
+        }
     }
 }

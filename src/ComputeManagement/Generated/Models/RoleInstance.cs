@@ -228,9 +228,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public RoleInstance()
         {
-            this._instanceEndpoints = new List<InstanceEndpoint>();
-            this._publicIPs = new List<RoleInstance.PublicIP>();
-            this._resourceExtensionStatusList = new List<ResourceExtensionStatus>();
+            this.InstanceEndpoints = new List<InstanceEndpoint>();
+            this.PublicIPs = new List<RoleInstance.PublicIP>();
+            this.ResourceExtensionStatusList = new List<ResourceExtensionStatus>();
         }
         
         /// <summary>

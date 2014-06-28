@@ -337,7 +337,31 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionImageRegisterParameters()
         {
-            this._localResources = new List<ExtensionLocalResourceConfiguration>();
+            this.LocalResources = new List<ExtensionLocalResourceConfiguration>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExtensionImageRegisterParameters
+        /// class with required arguments.
+        /// </summary>
+        public ExtensionImageRegisterParameters(string providerNameSpace, string type, string version)
+            : this()
+        {
+            if (providerNameSpace == null)
+            {
+                throw new ArgumentNullException("providerNameSpace");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException("version");
+            }
+            this.ProviderNameSpace = providerNameSpace;
+            this.Type = type;
+            this.Version = version;
         }
     }
 }

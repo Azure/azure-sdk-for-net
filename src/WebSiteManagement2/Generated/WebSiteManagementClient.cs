@@ -320,9 +320,9 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -333,6 +333,7 @@ namespace Microsoft.Azure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -450,9 +451,9 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -463,6 +464,7 @@ namespace Microsoft.Azure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -593,9 +595,9 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -606,6 +608,7 @@ namespace Microsoft.Azure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -704,9 +707,9 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Web/register?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -717,6 +720,7 @@ namespace Microsoft.Azure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -815,9 +819,9 @@ namespace Microsoft.Azure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Web/unregister?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -828,6 +832,7 @@ namespace Microsoft.Azure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

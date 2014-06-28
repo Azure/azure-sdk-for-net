@@ -136,7 +136,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceCreateParameters()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the HostedServiceCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public HostedServiceCreateParameters(string serviceName, string label)
+            : this()
+        {
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.ServiceName = serviceName;
+            this.Label = label;
         }
     }
 }

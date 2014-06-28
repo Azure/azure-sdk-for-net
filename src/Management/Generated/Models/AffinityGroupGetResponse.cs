@@ -141,9 +141,9 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupGetResponse()
         {
-            this._capabilities = new List<string>();
-            this._hostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
-            this._storageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
+            this.Capabilities = new List<string>();
+            this.HostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
+            this.StorageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
         }
         
         /// <summary>

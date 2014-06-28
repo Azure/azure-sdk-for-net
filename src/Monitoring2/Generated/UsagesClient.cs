@@ -157,8 +157,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         /// </summary>
         public UsageMetricCollection()
         {
-            this._properties = new List<UsageMetric>();
-            this._value = new List<UsageMetric>();
+            this.Properties = new List<UsageMetric>();
+            this.Value = new List<UsageMetric>();
         }
     }
     
@@ -594,10 +594,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + resourceUri.Trim() + "/usages?";
             url = url + "api-version=2014-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -608,6 +608,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

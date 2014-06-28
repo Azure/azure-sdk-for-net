@@ -71,5 +71,20 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public RecoverDatabaseOperationCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RecoverDatabaseOperationCreateParameters class with required
+        /// arguments.
+        /// </summary>
+        public RecoverDatabaseOperationCreateParameters(string sourceDatabaseName)
+            : this()
+        {
+            if (sourceDatabaseName == null)
+            {
+                throw new ArgumentNullException("sourceDatabaseName");
+            }
+            this.SourceDatabaseName = sourceDatabaseName;
+        }
     }
 }

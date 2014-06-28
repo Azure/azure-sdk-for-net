@@ -51,5 +51,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public ResourceGroupCreateOrUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ResourceGroupCreateOrUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public ResourceGroupCreateOrUpdateParameters(string location)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Location = location;
+        }
     }
 }

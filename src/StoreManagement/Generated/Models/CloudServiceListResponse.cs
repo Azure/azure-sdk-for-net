@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         /// </summary>
         public CloudServiceListResponse()
         {
-            this._cloudServices = new List<CloudServiceListResponse.CloudService>();
+            this.CloudServices = new List<CloudServiceListResponse.CloudService>();
         }
         
         /// <summary>
@@ -135,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             /// </summary>
             public CloudService()
             {
-                this._resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
+                this.Resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
             }
             
             /// <summary>
@@ -262,8 +262,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 /// </summary>
                 public AddOnResource()
                 {
-                    this._outputItems = new Dictionary<string, string>();
-                    this._usageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
+                    this.OutputItems = new Dictionary<string, string>();
+                    this.UsageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
                 }
                 
                 /// <summary>

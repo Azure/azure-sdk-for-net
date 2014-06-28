@@ -96,5 +96,29 @@ namespace Microsoft.WindowsAzure.Management.Models
         public AffinityGroupCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the AffinityGroupCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public AffinityGroupCreateParameters(string name, string label, string location)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.Name = name;
+            this.Label = label;
+            this.Location = location;
+        }
     }
 }

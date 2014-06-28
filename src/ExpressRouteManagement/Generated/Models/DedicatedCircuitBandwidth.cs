@@ -54,5 +54,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         public DedicatedCircuitBandwidth()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DedicatedCircuitBandwidth class
+        /// with required arguments.
+        /// </summary>
+        public DedicatedCircuitBandwidth(uint bandwidth, string label)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Bandwidth = bandwidth;
+            this.Label = label;
+        }
     }
 }

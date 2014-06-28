@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public AzureDedicatedCircuitServiceProvider()
         {
-            this._dedicatedCircuitBandwidths = new List<DedicatedCircuitBandwidth>();
+            this.DedicatedCircuitBandwidths = new List<DedicatedCircuitBandwidth>();
         }
     }
 }

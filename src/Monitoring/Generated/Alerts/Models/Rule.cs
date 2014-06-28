@@ -114,7 +114,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public Rule()
         {
-            this._actions = new List<RuleAction>();
+            this.Actions = new List<RuleAction>();
         }
     }
 }

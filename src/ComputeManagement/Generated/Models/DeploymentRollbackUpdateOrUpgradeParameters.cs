@@ -62,5 +62,16 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DeploymentRollbackUpdateOrUpgradeParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DeploymentRollbackUpdateOrUpgradeParameters class with required
+        /// arguments.
+        /// </summary>
+        public DeploymentRollbackUpdateOrUpgradeParameters(RollbackUpdateOrUpgradeMode mode)
+            : this()
+        {
+            this.Mode = mode;
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetUsageMetricsResponse()
         {
-            this._usageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
+            this.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
         }
         
         /// <summary>

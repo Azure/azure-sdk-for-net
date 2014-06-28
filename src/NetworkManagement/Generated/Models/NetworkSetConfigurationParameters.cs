@@ -47,5 +47,19 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public NetworkSetConfigurationParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the NetworkSetConfigurationParameters
+        /// class with required arguments.
+        /// </summary>
+        public NetworkSetConfigurationParameters(string configuration)
+            : this()
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException("configuration");
+            }
+            this.Configuration = configuration;
+        }
     }
 }

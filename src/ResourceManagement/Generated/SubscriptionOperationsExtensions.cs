@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <returns>
-        /// Subscription Ids information.
+        /// Subscription list operation response.
         /// </returns>
         public static SubscriptionListResult List(this ISubscriptionOperations operations)
         {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Microsoft.Azure.Subscriptions.ISubscriptionOperations.
         /// </param>
         /// <returns>
-        /// Subscription Ids information.
+        /// Subscription list operation response.
         /// </returns>
         public static Task<SubscriptionListResult> ListAsync(this ISubscriptionOperations operations)
         {

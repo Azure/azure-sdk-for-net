@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupListResponse()
         {
-            this._affinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
+            this.AffinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
         }
         
         /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public AffinityGroup()
             {
-                this._capabilities = new List<string>();
+                this.Capabilities = new List<string>();
             }
         }
     }

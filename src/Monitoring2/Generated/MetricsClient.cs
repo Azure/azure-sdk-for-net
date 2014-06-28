@@ -73,8 +73,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this._availableLocations = new List<NameConfig>();
-            this._endpoints = new List<EndpointConfig>();
+            this.AvailableLocations = new List<NameConfig>();
+            this.Endpoints = new List<EndpointConfig>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AvailabilityMetricSettingValue
+        /// class with required arguments.
+        /// </summary>
+        public AvailabilityMetricSettingValue(IList<EndpointConfig> endpoints)
+            : this()
+        {
+            if (endpoints == null)
+            {
+                throw new ArgumentNullException("endpoints");
+            }
+            this.Endpoints = endpoints;
         }
     }
     
@@ -169,7 +183,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricDefinitionParameters()
         {
-            this._metricNames = new List<string>();
+            this.MetricNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ListMetricDefinitionParameters
+        /// class with required arguments.
+        /// </summary>
+        public ListMetricDefinitionParameters(string resourceId, IList<string> metricNames)
+            : this()
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
+            }
+            this.ResourceId = resourceId;
+            this.MetricNames = metricNames;
         }
     }
     
@@ -238,7 +271,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricParameters()
         {
-            this._metricNames = new List<string>();
+            this.MetricNames = new List<string>();
         }
     }
     
@@ -395,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this._metricAvailabilities = new List<MetricAvailability>();
+            this.MetricAvailabilities = new List<MetricAvailability>();
         }
     }
     
@@ -420,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
-            this._value = new List<MetricDefinition>();
+            this.Value = new List<MetricDefinition>();
         }
     }
     
@@ -494,6 +527,25 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         public MetricSetting()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSetting class with required
+        /// arguments.
+        /// </summary>
+        public MetricSetting(string resourceId, MetricSettingValue value)
+            : this()
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            this.ResourceId = resourceId;
+            this.Value = value;
+        }
     }
     
     /// <summary>
@@ -517,7 +569,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingCollection()
         {
-            this._value = new List<MetricSetting>();
+            this.Value = new List<MetricSetting>();
         }
     }
     
@@ -566,6 +618,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingsPutParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSettingsPutParameters class
+        /// with required arguments.
+        /// </summary>
+        public MetricSettingsPutParameters(MetricSetting metricSetting)
+            : this()
+        {
+            if (metricSetting == null)
+            {
+                throw new ArgumentNullException("metricSetting");
+            }
+            this.MetricSetting = metricSetting;
         }
     }
     
@@ -808,7 +874,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSet()
         {
-            this._metricValues = new List<MetricValue>();
+            this.MetricValues = new List<MetricValue>();
         }
     }
     
@@ -833,7 +899,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSetCollection()
         {
-            this._value = new List<MetricValueSet>();
+            this.Value = new List<MetricValueSet>();
         }
     }
     
@@ -1371,10 +1437,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1385,6 +1451,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1768,8 +1835,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1780,6 +1847,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1974,10 +2042,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
-            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
+            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
+            url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1988,6 +2056,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2305,13 +2374,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
-            url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(parameters.TimeGrain));
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
+            url = url + "&timeGrain=" + Uri.EscapeDataString(TypeConversion.To8601String(parameters.TimeGrain));
+            url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
+            url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2322,6 +2391,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

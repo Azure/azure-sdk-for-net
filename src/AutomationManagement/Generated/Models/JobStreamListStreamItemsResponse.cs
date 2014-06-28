@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobStreamListStreamItemsResponse()
         {
-            this._jobStreamItems = new List<JobStreamItem>();
+            this.JobStreamItems = new List<JobStreamItem>();
         }
     }
 }

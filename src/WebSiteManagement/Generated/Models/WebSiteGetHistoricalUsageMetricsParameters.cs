@@ -75,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsParameters()
         {
-            this._metricNames = new List<string>();
+            this.MetricNames = new List<string>();
         }
     }
 }

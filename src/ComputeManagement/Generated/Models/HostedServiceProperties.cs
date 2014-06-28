@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceProperties()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
     }
 }

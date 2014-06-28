@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusConnectionDetail()
         {
-            this._rights = new List<AccessRight>();
+            this.Rights = new List<AccessRight>();
         }
     }
 }

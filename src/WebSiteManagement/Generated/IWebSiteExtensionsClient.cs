@@ -37,7 +37,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </summary>
         Uri BaseUri
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </summary>
         BasicAuthenticationCloudCredentials Credentials
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>
@@ -53,7 +53,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </summary>
         string SiteName
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>

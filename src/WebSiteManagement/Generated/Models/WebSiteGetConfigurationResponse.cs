@@ -298,11 +298,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetConfigurationResponse()
         {
-            this._appSettings = new Dictionary<string, string>();
-            this._connectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
-            this._defaultDocuments = new List<string>();
-            this._handlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
-            this._metadata = new Dictionary<string, string>();
+            this.AppSettings = new Dictionary<string, string>();
+            this.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
+            this.DefaultDocuments = new List<string>();
+            this.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
+            this.Metadata = new Dictionary<string, string>();
         }
         
         /// <summary>

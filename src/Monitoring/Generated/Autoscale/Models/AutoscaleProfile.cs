@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleProfile()
         {
-            this._rules = new List<ScaleRule>();
+            this.Rules = new List<ScaleRule>();
         }
     }
 }

@@ -90,5 +90,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ExtensionCertificateConfiguration()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExtensionCertificateConfiguration
+        /// class with required arguments.
+        /// </summary>
+        public ExtensionCertificateConfiguration(string storeLocation)
+            : this()
+        {
+            if (storeLocation == null)
+            {
+                throw new ArgumentNullException("storeLocation");
+            }
+            this.StoreLocation = storeLocation;
+        }
     }
 }

@@ -122,8 +122,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=publishingCredentials";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -134,6 +134,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -302,8 +303,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -314,6 +315,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -509,8 +511,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=dnssuffix";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -521,6 +523,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -633,8 +636,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -645,6 +648,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -846,8 +850,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=georegions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -858,6 +862,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1001,8 +1006,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces?properties=publishingUsers";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1013,6 +1018,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1144,12 +1150,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites?";
             if (parameters != null && parameters.PropertiesToInclude != null && parameters.PropertiesToInclude.Count > 0)
             {
-                url = url + "&propertiesToInclude=" + Uri.EscapeUriString(string.Join(",", parameters.PropertiesToInclude));
+                url = url + "&propertiesToInclude=" + Uri.EscapeDataString(string.Join(",", parameters.PropertiesToInclude));
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1160,6 +1166,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1428,6 +1435,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                     certificateInstance.HostNames.Add(hostNamesElement2.Value);
                                                 }
                                             }
+                                            else
+                                            {
+                                                certificateInstance.HostNames = null;
+                                            }
                                         }
                                         
                                         XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
@@ -1590,6 +1601,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                             }
                                         }
                                     }
+                                }
+                                else
+                                {
+                                    siteInstance.SslCertificates = null;
                                 }
                             }
                             

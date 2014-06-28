@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageListResponse()
         {
-            this._vMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
+            this.VMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
         }
         
         /// <summary>
@@ -530,7 +530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public VirtualMachineVMImage()
             {
-                this._dataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+                this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
             }
         }
     }

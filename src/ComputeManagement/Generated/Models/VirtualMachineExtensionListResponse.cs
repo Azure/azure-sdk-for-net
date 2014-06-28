@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineExtensionListResponse()
         {
-            this._resourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
+            this.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
         }
         
         /// <summary>

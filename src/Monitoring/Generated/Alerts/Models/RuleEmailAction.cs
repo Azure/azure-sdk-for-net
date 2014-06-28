@@ -59,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this._customEmails = new List<string>();
+            this.CustomEmails = new List<string>();
         }
     }
 }

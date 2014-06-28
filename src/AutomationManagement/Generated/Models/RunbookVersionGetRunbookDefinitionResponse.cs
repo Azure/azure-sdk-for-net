@@ -59,5 +59,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookVersionGetRunbookDefinitionResponse()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookVersionGetRunbookDefinitionResponse class with required
+        /// arguments.
+        /// </summary>
+        public RunbookVersionGetRunbookDefinitionResponse(byte[] runbookDefinition)
+            : this()
+        {
+            if (runbookDefinition == null)
+            {
+                throw new ArgumentNullException("runbookDefinition");
+            }
+            this.RunbookDefinition = runbookDefinition;
+        }
     }
 }

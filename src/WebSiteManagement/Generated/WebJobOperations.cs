@@ -103,9 +103,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/vfs/site/wwwroot/App_Data/jobs/continuous/" + jobName.Trim() + "?";
-            url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            url = url + "recursive=" + Uri.EscapeDataString(recursive.ToString().ToLower());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -116,6 +116,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -227,9 +228,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/vfs/site/wwwroot/App_Data/jobs/triggered/" + jobName.Trim() + "?";
-            url = url + "recursive=" + Uri.EscapeUriString(recursive.ToString().ToLower());
+            url = url + "recursive=" + Uri.EscapeDataString(recursive.ToString().ToLower());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -240,6 +241,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -345,8 +347,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/" + jobName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -357,6 +359,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -603,8 +606,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/continuous/" + jobName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -615,6 +618,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -869,8 +873,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/triggered/" + jobName.Trim() + "/history/" + jobRunId.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -881,6 +885,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1057,8 +1062,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/triggered/" + jobName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1069,6 +1074,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1311,16 +1317,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
+                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1331,6 +1337,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1580,16 +1587,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/continuous?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
+                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1600,6 +1607,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1857,16 +1865,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/triggered/" + jobName.Trim() + "/history?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
+                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1877,6 +1885,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2056,16 +2065,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/triggered?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
-                url = url + "&$orderBy=" + Uri.EscapeUriString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
+                url = url + "&$orderBy=" + Uri.EscapeDataString(parameters.OrderBy != null ? parameters.OrderBy.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2076,6 +2085,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2330,8 +2340,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/triggered/" + jobName.Trim() + "/run";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2342,6 +2352,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2453,9 +2464,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/continuous/" + jobName.Trim() + "/singleton/?";
-            url = url + "isSingleton=" + Uri.EscapeUriString(isSingleton.ToString().ToLower());
+            url = url + "isSingleton=" + Uri.EscapeDataString(isSingleton.ToString().ToLower());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2466,6 +2477,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2572,8 +2584,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/continuous/" + jobName.Trim() + "/start/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2584,6 +2596,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2690,8 +2703,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/jobs/continuous/" + jobName.Trim() + "/stop/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2702,6 +2715,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2816,8 +2830,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/zip/site/wwwroot/App_Data/jobs/continuous/" + jobName.Trim() + "/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2828,6 +2842,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2947,8 +2962,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/api/zip/site/wwwroot/App_Data/jobs/triggered/" + jobName.Trim() + "/";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2959,6 +2974,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

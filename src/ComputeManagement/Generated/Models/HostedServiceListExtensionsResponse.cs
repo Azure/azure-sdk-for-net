@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListExtensionsResponse()
         {
-            this._extensions = new List<HostedServiceListExtensionsResponse.Extension>();
+            this.Extensions = new List<HostedServiceListExtensionsResponse.Extension>();
         }
         
         /// <summary>
@@ -163,6 +163,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public Extension()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the Extension class with required
+            /// arguments.
+            /// </summary>
+            public Extension(string type)
+                : this()
+            {
+                if (type == null)
+                {
+                    throw new ArgumentNullException("type");
+                }
+                this.Type = type;
             }
         }
     }

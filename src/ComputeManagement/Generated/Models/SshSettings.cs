@@ -60,8 +60,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public SshSettings()
         {
-            this._keyPairs = new List<SshSettingKeyPair>();
-            this._publicKeys = new List<SshSettingPublicKey>();
+            this.KeyPairs = new List<SshSettingKeyPair>();
+            this.PublicKeys = new List<SshSettingPublicKey>();
         }
     }
 }
