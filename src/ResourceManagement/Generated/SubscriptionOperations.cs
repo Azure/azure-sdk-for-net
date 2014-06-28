@@ -163,32 +163,35 @@ namespace Microsoft.Azure.Subscriptions
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
+                        Subscription subscriptionInstance = new Subscription();
+                        result.Subscription = subscriptionInstance;
+                        
                         JToken idValue = responseDoc["id"];
                         if (idValue != null && idValue.Type != JTokenType.Null)
                         {
                             string idInstance = ((string)idValue);
-                            result.Id = idInstance;
+                            subscriptionInstance.Id = idInstance;
                         }
                         
                         JToken subscriptionIdValue = responseDoc["subscriptionId"];
                         if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                         {
                             string subscriptionIdInstance = ((string)subscriptionIdValue);
-                            result.SubscriptionId = subscriptionIdInstance;
+                            subscriptionInstance.SubscriptionId = subscriptionIdInstance;
                         }
                         
                         JToken displayNameValue = responseDoc["displayName"];
                         if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                         {
                             string displayNameInstance = ((string)displayNameValue);
-                            result.DisplayName = displayNameInstance;
+                            subscriptionInstance.DisplayName = displayNameInstance;
                         }
                         
                         JToken stateValue = responseDoc["state"];
                         if (stateValue != null && stateValue.Type != JTokenType.Null)
                         {
                             string stateInstance = ((string)stateValue);
-                            result.State = stateInstance;
+                            subscriptionInstance.State = stateInstance;
                         }
                     }
                     
@@ -228,7 +231,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Subscription Ids information.
+        /// Subscription list operation response.
         /// </returns>
         public async Task<SubscriptionListResult> ListAsync(CancellationToken cancellationToken)
         {
@@ -319,21 +322,35 @@ namespace Microsoft.Azure.Subscriptions
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                SubscriptionIdDescription subscriptionIdDescriptionInstance = new SubscriptionIdDescription();
-                                result.SubscriptionIds.Add(subscriptionIdDescriptionInstance);
+                                Subscription subscriptionInstance = new Subscription();
+                                result.Subscriptions.Add(subscriptionInstance);
                                 
                                 JToken idValue = valueValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = ((string)idValue);
-                                    subscriptionIdDescriptionInstance.Id = idInstance;
+                                    subscriptionInstance.Id = idInstance;
                                 }
                                 
                                 JToken subscriptionIdValue = valueValue["subscriptionId"];
                                 if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                                 {
                                     string subscriptionIdInstance = ((string)subscriptionIdValue);
-                                    subscriptionIdDescriptionInstance.SubscriptionId = subscriptionIdInstance;
+                                    subscriptionInstance.SubscriptionId = subscriptionIdInstance;
+                                }
+                                
+                                JToken displayNameValue = valueValue["displayName"];
+                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
+                                {
+                                    string displayNameInstance = ((string)displayNameValue);
+                                    subscriptionInstance.DisplayName = displayNameInstance;
+                                }
+                                
+                                JToken stateValue = valueValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    subscriptionInstance.State = stateInstance;
                                 }
                             }
                         }

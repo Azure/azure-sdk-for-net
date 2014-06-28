@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Subscriptions
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Subscription Ids information.
+        /// Subscription list operation response.
         /// </returns>
         Task<SubscriptionListResult> ListAsync(CancellationToken cancellationToken);
     }

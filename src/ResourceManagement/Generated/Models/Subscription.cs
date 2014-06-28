@@ -25,14 +25,26 @@ using System.Linq;
 namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
-    /// Subscription Id information
+    /// Subscription information.
     /// </summary>
-    public partial class SubscriptionIdDescription
+    public partial class Subscription
     {
+        private string _displayName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the subscription display name
+        /// </summary>
+        public string DisplayName
+        {
+            get { return this._displayName; }
+            set { this._displayName = value; }
+        }
+        
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets Id
+        /// Optional. Gets or sets the ID of the resource
+        /// (/subscriptions/SubscriptionId).
         /// </summary>
         public string Id
         {
@@ -40,10 +52,21 @@ namespace Microsoft.Azure.Subscriptions.Models
             set { this._id = value; }
         }
         
+        private string _state;
+        
+        /// <summary>
+        /// Optional. Gets or sets the subscription state
+        /// </summary>
+        public string State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
         private string _subscriptionId;
         
         /// <summary>
-        /// Optional. Gets or sets subscriptionId
+        /// Optional. Gets or sets the subscription Id.
         /// </summary>
         public string SubscriptionId
         {
@@ -52,9 +75,9 @@ namespace Microsoft.Azure.Subscriptions.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the SubscriptionIdDescription class.
+        /// Initializes a new instance of the Subscription class.
         /// </summary>
-        public SubscriptionIdDescription()
+        public Subscription()
         {
         }
     }

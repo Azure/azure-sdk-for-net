@@ -28,19 +28,19 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Subscriptions.Models
 {
     /// <summary>
-    /// Subscription Ids information.
+    /// Subscription list operation response.
     /// </summary>
     public partial class SubscriptionListResult : OperationResponse
     {
-        private IList<SubscriptionIdDescription> _subscriptionIds;
+        private IList<Subscription> _subscriptions;
         
         /// <summary>
-        /// Optional. Gets or sets Subscription Ids.
+        /// Optional. Gets or sets subscriptions.
         /// </summary>
-        public IList<SubscriptionIdDescription> SubscriptionIds
+        public IList<Subscription> Subscriptions
         {
-            get { return this._subscriptionIds; }
-            set { this._subscriptionIds = value; }
+            get { return this._subscriptions; }
+            set { this._subscriptions = value; }
         }
         
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public SubscriptionListResult()
         {
-            this.SubscriptionIds = new List<SubscriptionIdDescription>();
+            this.Subscriptions = new List<Subscription>();
         }
     }
 }
