@@ -48,5 +48,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         public JobListByRunbookIdParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobListByRunbookIdParameters
+        /// class with required arguments.
+        /// </summary>
+        public JobListByRunbookIdParameters(string runbookId)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            this.RunbookId = runbookId;
+        }
     }
 }

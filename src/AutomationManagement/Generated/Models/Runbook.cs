@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public Runbook()
         {
-            this._schedules = new List<Schedule>();
+            this.Schedules = new List<Schedule>();
         }
     }
 }

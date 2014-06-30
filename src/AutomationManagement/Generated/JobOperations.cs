@@ -109,11 +109,11 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs(guid'" + jobId.Trim() + "')?";
             url = url + "$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -124,6 +124,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -761,16 +762,18 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
+            bool appendFilter = true;
+            appendFilter = false;
             url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false";
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -781,6 +784,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1438,16 +1442,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
-            url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeUriString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId.Trim()) + "'";
+            url = url + " and JobContext/RunbookVersion/IsDraft eq false";
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1458,6 +1465,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2115,19 +2123,22 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false";
             if (parameters.EndTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeUriString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false and EndTime le datetime'" + Uri.EscapeUriString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
+                url = url + " and " + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2138,6 +2149,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2795,19 +2807,22 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false";
             if (parameters.StartTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeUriString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeUriString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
+                url = url + " and " + "StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2818,6 +2833,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3475,19 +3491,26 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
-            if (parameters.StartTime != null && parameters.EndTime != null)
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeDataString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false";
+            if (parameters.StartTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/RunbookID eq guid'" + Uri.EscapeUriString(parameters.RunbookId.Trim()) + "' and JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeUriString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "' and EndTime le datetime'" + Uri.EscapeUriString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
+                url = url + " and StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
+            }
+            if (parameters.EndTime != null)
+            {
+                url = url + " and " + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3498,6 +3521,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4149,19 +4173,21 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
+            bool appendFilter = true;
             if (parameters.EndTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false and EndTime le datetime'" + Uri.EscapeUriString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
+                appendFilter = false;
+                url = url + "$filter=" + "JobContext/RunbookVersion/IsDraft eq false and EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4172,6 +4198,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4823,19 +4850,21 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
+            bool appendFilter = true;
             if (parameters.StartTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeUriString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
+                appendFilter = false;
+                url = url + "$filter=" + "JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4846,6 +4875,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -5497,19 +5527,34 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs?";
-            if (parameters.StartTime != null && parameters.EndTime != null)
+            bool appendFilter = true;
+            if (parameters.StartTime != null)
             {
-                url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeUriString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "' and EndTime le datetime'" + Uri.EscapeUriString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
+                appendFilter = false;
+                url = url + "$filter=JobContext/RunbookVersion/IsDraft eq false and StartTime ge datetime'" + Uri.EscapeDataString(parameters.StartTime != null ? parameters.StartTime.Trim() : "") + "'";
+            }
+            if (parameters.EndTime != null)
+            {
+                if (appendFilter == true)
+                {
+                    appendFilter = false;
+                    url = url + "$filter=";
+                }
+                else
+                {
+                    url = url + " and ";
+                }
+                url = url + "EndTime le datetime'" + Uri.EscapeDataString(parameters.EndTime != null ? parameters.EndTime.Trim() : "") + "'";
             }
             url = url + "&$expand=JobContext/RunbookVersion/Runbook,JobContext/Schedule,JobContext/JobParameters";
             url = url + "&$select=JobID,JobContextID,AccountID,JobStatus,JobStatusDetails,StartTime,EndTime,CreationTime,LastModifiedTime,LastStatusModifiedTime,JobException,JobContext/RunbookVersion/Runbook/RunbookID,JobContext/RunbookVersion/Runbook/RunbookName,JobContext/Schedule/Name,JobContext/JobParameters";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -5520,6 +5565,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6172,9 +6218,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs(guid'" + jobId.Trim() + "')/Resume?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -6185,6 +6231,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6310,9 +6357,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs(guid'" + jobId.Trim() + "')/Stop?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -6323,6 +6370,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -6443,9 +6491,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Jobs(guid'" + jobId.Trim() + "')/Suspend?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -6456,6 +6504,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

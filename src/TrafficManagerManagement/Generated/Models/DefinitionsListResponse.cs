@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionsListResponse()
         {
-            this._definitions = new List<Definition>();
+            this.Definitions = new List<Definition>();
         }
         
         /// <summary>

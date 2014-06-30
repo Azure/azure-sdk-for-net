@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
-            this._firewallRules = new List<FirewallRule>();
+            this.FirewallRules = new List<FirewallRule>();
         }
         
         /// <summary>

@@ -70,5 +70,20 @@ namespace Microsoft.Azure.Management.Automation.Models
         public JobStreamListStreamItemsParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// JobStreamListStreamItemsParameters class with required arguments.
+        /// </summary>
+        public JobStreamListStreamItemsParameters(string jobId, DateTime startTime)
+            : this()
+        {
+            if (jobId == null)
+            {
+                throw new ArgumentNullException("jobId");
+            }
+            this.JobId = jobId;
+            this.StartTime = startTime;
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookListResponse()
         {
-            this._runbooks = new List<Runbook>();
+            this.Runbooks = new List<Runbook>();
         }
     }
 }

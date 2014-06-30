@@ -137,8 +137,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineCreateDeploymentParameters()
         {
-            this._loadBalancers = new List<LoadBalancer>();
-            this._roles = new List<Role>();
+            this.LoadBalancers = new List<LoadBalancer>();
+            this.Roles = new List<Role>();
         }
     }
 }

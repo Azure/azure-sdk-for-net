@@ -119,9 +119,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/StartOnSchedule?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -132,6 +132,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -305,9 +306,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -318,6 +319,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -447,9 +449,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/$links/Schedules(guid'" + parameters.ScheduleId.Trim() + "')?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -460,6 +462,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -579,9 +582,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')/Edit?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -592,6 +595,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -730,9 +734,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -743,6 +747,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1076,10 +1081,10 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + runbookId.Trim() + "')?";
             url = url + "$expand=Schedules";
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1090,6 +1095,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1423,10 +1429,12 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
-            url = url + "$filter=RunbookName eq '" + Uri.EscapeUriString(runbookName.Trim()) + "'";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName.Trim()) + "'";
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1437,6 +1445,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1784,11 +1793,13 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
-            url = url + "$filter=RunbookName eq '" + Uri.EscapeUriString(runbookName.Trim()) + "'";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=" + "RunbookName eq '" + Uri.EscapeDataString(runbookName.Trim()) + "'";
             url = url + "&$expand=Schedules";
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1799,6 +1810,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2151,14 +2163,16 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
-            url = url + "$filter=Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeUriString(parameters.ScheduleName.Trim()) + "')";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName.Trim()) + "')";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2169,6 +2183,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2521,15 +2536,17 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
-            url = url + "$filter=Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeUriString(parameters.ScheduleName.Trim()) + "')";
+            bool appendFilter = true;
+            appendFilter = false;
+            url = url + "$filter=" + "Schedules/any(schedule: schedule/Name eq '" + Uri.EscapeDataString(parameters.ScheduleName.Trim()) + "')";
             url = url + "&$expand=Schedules";
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2540,6 +2557,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2883,14 +2901,14 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks?";
             url = url + "$expand=Schedules";
             if (skipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(skipToken != null ? skipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(skipToken != null ? skipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2901,6 +2919,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3256,9 +3275,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/Publish?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3269,6 +3288,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3412,9 +3432,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.RunbookId.Trim() + "')/Start?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3425,6 +3445,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3600,9 +3621,9 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/Runbooks(guid'" + parameters.Runbook.Id.Trim() + "')?";
             url = url + "api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3613,6 +3634,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

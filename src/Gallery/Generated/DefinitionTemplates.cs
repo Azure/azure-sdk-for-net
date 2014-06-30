@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public DefinitionTemplates()
         {
-            this._deploymentTemplateFileUrls = new Dictionary<string, string>();
+            this.DeploymentTemplateFileUrls = new Dictionary<string, string>();
         }
     }
 }

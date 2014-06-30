@@ -47,5 +47,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RunbookUpdateParameters class
+        /// with required arguments.
+        /// </summary>
+        public RunbookUpdateParameters(Runbook runbook)
+            : this()
+        {
+            if (runbook == null)
+            {
+                throw new ArgumentNullException("runbook");
+            }
+            this.Runbook = runbook;
+        }
     }
 }

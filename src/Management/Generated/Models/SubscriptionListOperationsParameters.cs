@@ -112,5 +112,16 @@ namespace Microsoft.WindowsAzure.Management.Models
         public SubscriptionListOperationsParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// SubscriptionListOperationsParameters class with required arguments.
+        /// </summary>
+        public SubscriptionListOperationsParameters(DateTime startTime, DateTime endTime)
+            : this()
+        {
+            this.StartTime = startTime;
+            this.EndTime = endTime;
+        }
     }
 }

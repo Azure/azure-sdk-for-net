@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public RoleSizeListResponse()
         {
-            this._roleSizes = new List<RoleSizeListResponse.RoleSize>();
+            this.RoleSizes = new List<RoleSizeListResponse.RoleSize>();
         }
         
         /// <summary>

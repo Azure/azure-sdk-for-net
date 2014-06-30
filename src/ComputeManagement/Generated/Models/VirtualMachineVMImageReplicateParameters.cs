@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageReplicateParameters()
         {
-            this._targetLocations = new List<string>();
+            this.TargetLocations = new List<string>();
         }
     }
 }

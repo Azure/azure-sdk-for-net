@@ -317,6 +317,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -480,6 +481,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -609,6 +611,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -722,6 +725,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public EndpointAcl()
         {
-            this._rules = new List<AccessControlListRule>();
+            this.Rules = new List<AccessControlListRule>();
         }
     }
 }

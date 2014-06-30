@@ -47,5 +47,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         public MetricSettingsPutParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSettingsPutParameters class
+        /// with required arguments.
+        /// </summary>
+        public MetricSettingsPutParameters(MetricSetting metricSetting)
+            : this()
+        {
+            if (metricSetting == null)
+            {
+                throw new ArgumentNullException("metricSetting");
+            }
+            this.MetricSetting = metricSetting;
+        }
     }
 }

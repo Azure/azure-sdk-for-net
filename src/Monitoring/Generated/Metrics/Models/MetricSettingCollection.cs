@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingCollection()
         {
-            this._value = new List<MetricSetting>();
+            this.Value = new List<MetricSetting>();
         }
     }
 }

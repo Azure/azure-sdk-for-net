@@ -89,8 +89,8 @@ namespace Microsoft.Azure.Gallery
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/Microsoft.Gallery/galleryitems/" + (itemIdentity != null ? itemIdentity.Trim() : "");
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -101,6 +101,7 @@ namespace Microsoft.Azure.Gallery
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -342,16 +343,18 @@ namespace Microsoft.Azure.Gallery
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/Microsoft.Gallery/galleryitems?";
+            bool appendFilter = true;
             if (parameters != null && parameters.Filter != null)
             {
-                url = url + "$filter=" + Uri.EscapeUriString(parameters.Filter != null ? parameters.Filter.Trim() : "");
+                appendFilter = false;
+                url = url + "$filter=" + Uri.EscapeDataString(parameters.Filter != null ? parameters.Filter.Trim() : "");
             }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -362,6 +365,7 @@ namespace Microsoft.Azure.Gallery
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

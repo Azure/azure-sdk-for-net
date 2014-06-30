@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionConfigurationStatus()
         {
-            this._subStatusList = new List<ResourceExtensionSubStatus>();
+            this.SubStatusList = new List<ResourceExtensionSubStatus>();
         }
     }
 }

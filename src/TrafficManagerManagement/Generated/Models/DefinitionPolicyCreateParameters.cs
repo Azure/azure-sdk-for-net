@@ -64,7 +64,22 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionPolicyCreateParameters()
         {
-            this._endpoints = new List<DefinitionEndpointCreateParameters>();
+            this.Endpoints = new List<DefinitionEndpointCreateParameters>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DefinitionPolicyCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public DefinitionPolicyCreateParameters(LoadBalancingMethod loadBalancingMethod, IList<DefinitionEndpointCreateParameters> endpoints)
+            : this()
+        {
+            if (endpoints == null)
+            {
+                throw new ArgumentNullException("endpoints");
+            }
+            this.LoadBalancingMethod = loadBalancingMethod;
+            this.Endpoints = endpoints;
         }
     }
 }

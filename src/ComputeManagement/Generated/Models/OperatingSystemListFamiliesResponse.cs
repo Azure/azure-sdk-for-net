@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListFamiliesResponse()
         {
-            this._operatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
+            this.OperatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
         }
         
         /// <summary>
@@ -199,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public OperatingSystemFamily()
             {
-                this._operatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
+                this.OperatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
             }
         }
     }

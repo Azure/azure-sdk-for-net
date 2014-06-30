@@ -147,8 +147,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineGetResponse()
         {
-            this._configurationSets = new List<ConfigurationSet>();
-            this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
         }
     }
 }

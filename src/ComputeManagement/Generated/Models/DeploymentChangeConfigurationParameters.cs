@@ -113,7 +113,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentChangeConfigurationParameters()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// DeploymentChangeConfigurationParameters class with required
+        /// arguments.
+        /// </summary>
+        public DeploymentChangeConfigurationParameters(string configuration)
+            : this()
+        {
+            if (configuration == null)
+            {
+                throw new ArgumentNullException("configuration");
+            }
+            this.Configuration = configuration;
         }
     }
 }

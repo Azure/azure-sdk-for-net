@@ -57,5 +57,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DeploymentSwapParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeploymentSwapParameters class
+        /// with required arguments.
+        /// </summary>
+        public DeploymentSwapParameters(string sourceDeployment)
+            : this()
+        {
+            if (sourceDeployment == null)
+            {
+                throw new ArgumentNullException("sourceDeployment");
+            }
+            this.SourceDeployment = sourceDeployment;
+        }
     }
 }

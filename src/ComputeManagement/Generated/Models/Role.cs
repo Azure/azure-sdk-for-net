@@ -207,9 +207,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public Role()
         {
-            this._configurationSets = new List<ConfigurationSet>();
-            this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
-            this._resourceExtensionReferences = new List<ResourceExtensionReference>();
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
         }
     }
 }

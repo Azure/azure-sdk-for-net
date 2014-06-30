@@ -48,5 +48,15 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         public DefinitionDnsOptions()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DefinitionDnsOptions class with
+        /// required arguments.
+        /// </summary>
+        public DefinitionDnsOptions(int timeToLiveInSeconds)
+            : this()
+        {
+            this.TimeToLiveInSeconds = timeToLiveInSeconds;
+        }
     }
 }

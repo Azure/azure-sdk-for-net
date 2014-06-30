@@ -121,7 +121,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricvalues/query?";
             url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
             if (metricNamespace != null)
@@ -132,6 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             url = url + "&timeGrain=" + Uri.EscapeDataString(TypeConversion.To8601String(timeGrain));
             url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
             url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -142,6 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

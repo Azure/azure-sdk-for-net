@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Subscriptions.Models;
 using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Subscriptions.Models
@@ -30,48 +31,15 @@ namespace Microsoft.Azure.Subscriptions.Models
     /// </summary>
     public partial class GetSubscriptionResult : OperationResponse
     {
-        private string _displayName;
+        private Subscription _subscription;
         
         /// <summary>
-        /// Optional. Gets or sets display name
+        /// Optional. Gets or sets the resource.
         /// </summary>
-        public string DisplayName
+        public Subscription Subscription
         {
-            get { return this._displayName; }
-            set { this._displayName = value; }
-        }
-        
-        private string _id;
-        
-        /// <summary>
-        /// Optional. Gets or sets Id
-        /// </summary>
-        public string Id
-        {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets State
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _subscriptionId;
-        
-        /// <summary>
-        /// Optional. Gets or sets subscriptionId
-        /// </summary>
-        public string SubscriptionId
-        {
-            get { return this._subscriptionId; }
-            set { this._subscriptionId = value; }
+            get { return this._subscription; }
+            set { this._subscription = value; }
         }
         
         /// <summary>

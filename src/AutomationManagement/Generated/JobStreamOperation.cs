@@ -113,19 +113,19 @@ namespace Microsoft.Azure.Management.Automation
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/JobStreams/GetStreamItems?";
-            url = url + "jobId='" + Uri.EscapeUriString(parameters.JobId.Trim()) + "'";
-            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "'";
+            url = url + "jobId='" + Uri.EscapeDataString(parameters.JobId.Trim()) + "'";
+            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "'";
             if (parameters.StreamType != null)
             {
-                url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeUriString(parameters.StreamType != null ? parameters.StreamType.Trim() : "") + "'";
+                url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType != null ? parameters.StreamType.Trim() : "") + "'";
             }
             if (parameters.SkipToken != null)
             {
-                url = url + "&$skiptoken=" + Uri.EscapeUriString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
+                url = url + "&$skiptoken=" + Uri.EscapeDataString(parameters.SkipToken != null ? parameters.SkipToken.Trim() : "");
             }
             url = url + "&api-version=2014-03-13_Preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -136,6 +136,7 @@ namespace Microsoft.Azure.Management.Automation
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

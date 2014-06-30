@@ -449,6 +449,10 @@ namespace Microsoft.WindowsAzure.Scheduler
             {
                 return JobHistoryStatus.Failed;
             }
+            if ("postponed".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobHistoryStatus.Postponed;
+            }
             throw new ArgumentOutOfRangeException("value");
         }
         
@@ -470,6 +474,10 @@ namespace Microsoft.WindowsAzure.Scheduler
             if (value == JobHistoryStatus.Failed)
             {
                 return "failed";
+            }
+            if (value == JobHistoryStatus.Postponed)
+            {
+                return "postponed";
             }
             throw new ArgumentOutOfRangeException("value");
         }

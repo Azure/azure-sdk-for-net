@@ -47,5 +47,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         public ScheduleCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ScheduleCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public ScheduleCreateParameters(Schedule schedule)
+            : this()
+        {
+            if (schedule == null)
+            {
+                throw new ArgumentNullException("schedule");
+            }
+            this.Schedule = schedule;
+        }
     }
 }

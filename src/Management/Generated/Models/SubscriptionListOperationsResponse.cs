@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public SubscriptionListOperationsResponse()
         {
-            this._subscriptionOperations = new List<SubscriptionListOperationsResponse.SubscriptionOperation>();
+            this.SubscriptionOperations = new List<SubscriptionListOperationsResponse.SubscriptionOperation>();
         }
         
         /// <summary>
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public SubscriptionOperation()
             {
-                this._operationParameters = new Dictionary<string, string>();
+                this.OperationParameters = new Dictionary<string, string>();
             }
         }
     }

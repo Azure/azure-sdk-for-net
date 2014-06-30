@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobListResponse()
         {
-            this._jobs = new List<Job>();
+            this.Jobs = new List<Job>();
         }
     }
 }

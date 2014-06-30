@@ -299,11 +299,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateConfigurationParameters()
         {
-            this._appSettings = new Dictionary<string, string>();
-            this._connectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
-            this._defaultDocuments = new List<string>();
-            this._handlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
-            this._metadata = new Dictionary<string, string>();
+            this.AppSettings = new Dictionary<string, string>();
+            this.ConnectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
+            this.DefaultDocuments = new List<string>();
+            this.HandlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
+            this.Metadata = new Dictionary<string, string>();
         }
         
         /// <summary>

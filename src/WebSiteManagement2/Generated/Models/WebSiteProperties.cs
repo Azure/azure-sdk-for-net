@@ -298,11 +298,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteProperties()
         {
-            this._enabledHostNames = new List<string>();
-            this._hostNames = new List<string>();
-            this._hostNameSslStates = new List<WebSiteProperties.WebSiteHostNameSslState>();
-            this._sslCertificates = new List<WebSiteProperties.WebSiteSslCertificate>();
-            this._trafficManagerHostNames = new List<string>();
+            this.EnabledHostNames = new List<string>();
+            this.HostNames = new List<string>();
+            this.HostNameSslStates = new List<WebSiteProperties.WebSiteHostNameSslState>();
+            this.SslCertificates = new List<WebSiteProperties.WebSiteSslCertificate>();
+            this.TrafficManagerHostNames = new List<string>();
         }
         
         public partial class SiteProperties
@@ -348,9 +348,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public SiteProperties()
             {
-                this._appSettings = new Dictionary<string, string>();
-                this._metadata = new Dictionary<string, string>();
-                this._properties = new Dictionary<string, string>();
+                this.AppSettings = new Dictionary<string, string>();
+                this.Metadata = new Dictionary<string, string>();
+                this.Properties = new Dictionary<string, string>();
             }
         }
         
@@ -634,7 +634,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public WebSiteSslCertificate()
             {
-                this._hostNames = new List<string>();
+                this.HostNames = new List<string>();
             }
         }
     }

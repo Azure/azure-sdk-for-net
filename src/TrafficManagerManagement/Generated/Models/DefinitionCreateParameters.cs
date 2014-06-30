@@ -69,7 +69,31 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionCreateParameters()
         {
-            this._monitors = new List<DefinitionMonitor>();
+            this.Monitors = new List<DefinitionMonitor>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DefinitionCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public DefinitionCreateParameters(DefinitionDnsOptions dnsOptions, IList<DefinitionMonitor> monitors, DefinitionPolicyCreateParameters policy)
+            : this()
+        {
+            if (dnsOptions == null)
+            {
+                throw new ArgumentNullException("dnsOptions");
+            }
+            if (monitors == null)
+            {
+                throw new ArgumentNullException("monitors");
+            }
+            if (policy == null)
+            {
+                throw new ArgumentNullException("policy");
+            }
+            this.DnsOptions = dnsOptions;
+            this.Monitors = monitors;
+            this.Policy = policy;
         }
     }
 }
