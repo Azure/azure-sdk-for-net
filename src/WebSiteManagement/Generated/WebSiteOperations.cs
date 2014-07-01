@@ -674,23 +674,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement = siteElement2.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement != null)
                         {
-                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure")))
+                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                webSiteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
+                                webSiteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
                                 
                                 XElement nameElement3 = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement3 != null)
                                 {
                                     string nameInstance = nameElement3.Value;
-                                    webSiteHostNameSslStateInstance.Name = nameInstance;
+                                    hostNameSslStateInstance.Name = nameInstance;
                                 }
                                 
                                 XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement != null)
                                 {
                                     WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
-                                    webSiteHostNameSslStateInstance.SslState = sslStateInstance;
+                                    hostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
                                 XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
@@ -705,7 +705,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil == false)
                                     {
                                         string thumbprintInstance = thumbprintElement.Value;
-                                        webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                        hostNameSslStateInstance.Thumbprint = thumbprintInstance;
                                     }
                                 }
                                 
@@ -721,7 +721,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil2 == false)
                                     {
                                         string virtualIPInstance = virtualIPElement.Value;
-                                        webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                        hostNameSslStateInstance.VirtualIP = virtualIPInstance;
                                     }
                                 }
                             }
@@ -1845,23 +1845,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement = siteElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement != null)
                         {
-                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure")))
+                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                webSiteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
+                                webSiteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
                                 
                                 XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement != null)
                                 {
                                     string nameInstance = nameElement.Value;
-                                    webSiteHostNameSslStateInstance.Name = nameInstance;
+                                    hostNameSslStateInstance.Name = nameInstance;
                                 }
                                 
                                 XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement != null)
                                 {
                                     WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
-                                    webSiteHostNameSslStateInstance.SslState = sslStateInstance;
+                                    hostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
                                 XElement thumbprintElement = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
@@ -1876,7 +1876,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil == false)
                                     {
                                         string thumbprintInstance = thumbprintElement.Value;
-                                        webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                        hostNameSslStateInstance.Thumbprint = thumbprintInstance;
                                     }
                                 }
                                 
@@ -1892,7 +1892,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil2 == false)
                                     {
                                         string virtualIPInstance = virtualIPElement.Value;
-                                        webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                        hostNameSslStateInstance.VirtualIP = virtualIPInstance;
                                     }
                                 }
                             }
@@ -4046,6 +4046,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 cancellationToken.ThrowIfCancellationRequested();
                 WebSiteOperationStatusResponse result = await client.GetOperationStatusAsync(webSpaceName, webSiteName, response.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != WebSiteOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -4053,6 +4057,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(webSpaceName, webSiteName, response.OperationId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -4539,23 +4547,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement2 = siteElement2.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement2 != null)
                         {
-                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement2.Elements(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure")))
+                            foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement2.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSite.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
-                                webSiteInstance.HostNameSslStates.Add(webSiteHostNameSslStateInstance);
+                                WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
+                                webSiteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
                                 
                                 XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement != null)
                                 {
                                     string nameInstance = nameElement.Value;
-                                    webSiteHostNameSslStateInstance.Name = nameInstance;
+                                    hostNameSslStateInstance.Name = nameInstance;
                                 }
                                 
                                 XElement sslStateElement2 = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
                                 if (sslStateElement2 != null)
                                 {
                                     WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement2.Value, true));
-                                    webSiteHostNameSslStateInstance.SslState = sslStateInstance;
+                                    hostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
                                 XElement thumbprintElement3 = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
@@ -4570,7 +4578,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil == false)
                                     {
                                         string thumbprintInstance = thumbprintElement3.Value;
-                                        webSiteHostNameSslStateInstance.Thumbprint = thumbprintInstance;
+                                        hostNameSslStateInstance.Thumbprint = thumbprintInstance;
                                     }
                                 }
                                 
@@ -4586,7 +4594,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     if (isNil2 == false)
                                     {
                                         string virtualIPInstance = virtualIPElement.Value;
-                                        webSiteHostNameSslStateInstance.VirtualIP = virtualIPInstance;
+                                        hostNameSslStateInstance.VirtualIP = virtualIPInstance;
                                     }
                                 }
                             }

@@ -33,7 +33,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     public partial interface IWebSiteExtensionsClient : IDisposable
     {
         /// <summary>
-        /// The URI used as the base for all kudu requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -49,11 +57,35 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
         /// The site name.
         /// </summary>
         string SiteName
         {
             get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for managing continuous WebJobs.
+        /// </summary>
+        IContinuousWebJobOperations ContinuousWebJobs
+        {
+            get; 
         }
         
         /// <summary>
@@ -89,9 +121,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         }
         
         /// <summary>
-        /// Operations for managing the jobs.
+        /// Operations for managing Triggered WebJobs.
         /// </summary>
-        IWebJobOperations WebJobs
+        ITriggeredWebJobOperations TriggeredWebJobs
         {
             get; 
         }

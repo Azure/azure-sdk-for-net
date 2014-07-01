@@ -21,16 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The WebJob types.
+    /// The get continuous WebJob Operation Response.
     /// </summary>
-    public enum WebJobType
+    public partial class ContinuousWebJobGetResponse : OperationResponse
     {
-        Triggered = 0,
+        private ContinuousWebJob _continuousWebJob;
         
-        Continuous = 1,
+        /// <summary>
+        /// Optional. The continuous WebJob.
+        /// </summary>
+        public ContinuousWebJob ContinuousWebJob
+        {
+            get { return this._continuousWebJob; }
+            set { this._continuousWebJob = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ContinuousWebJobGetResponse class.
+        /// </summary>
+        public ContinuousWebJobGetResponse()
+        {
+        }
     }
 }

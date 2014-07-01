@@ -25,20 +25,17 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
-    /// <summary>
-    /// Describes a job.
-    /// </summary>
-    public partial class WebJob
+    public abstract partial class WebJobBase
     {
-        private string _detailedStatus;
+        private string _error;
         
         /// <summary>
-        /// Optional. The job details status.
+        /// Optional. The error if there was one.
         /// </summary>
-        public string DetailedStatus
+        public string Error
         {
-            get { return this._detailedStatus; }
-            set { this._detailedStatus = value; }
+            get { return this._error; }
+            set { this._error = value; }
         }
         
         private string _extraInfoUrl;
@@ -50,39 +47,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         {
             get { return this._extraInfoUrl; }
             set { this._extraInfoUrl = value; }
-        }
-        
-        private string _historyUrl;
-        
-        /// <summary>
-        /// Optional. The history url.
-        /// </summary>
-        public string HistoryUrl
-        {
-            get { return this._historyUrl; }
-            set { this._historyUrl = value; }
-        }
-        
-        private WebJobRun _latestRun;
-        
-        /// <summary>
-        /// Optional. The latest run information.
-        /// </summary>
-        public WebJobRun LatestRun
-        {
-            get { return this._latestRun; }
-            set { this._latestRun = value; }
-        }
-        
-        private string _logUrl;
-        
-        /// <summary>
-        /// Optional. The job log url.
-        /// </summary>
-        public string LogUrl
-        {
-            get { return this._logUrl; }
-            set { this._logUrl = value; }
         }
         
         private string _name;
@@ -107,17 +71,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._runCommand = value; }
         }
         
-        private string _status;
-        
-        /// <summary>
-        /// Optional. The job status.
-        /// </summary>
-        public string Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
         private WebJobType _type;
         
         /// <summary>
@@ -140,10 +93,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._url = value; }
         }
         
+        private bool _usingSdk;
+        
         /// <summary>
-        /// Initializes a new instance of the WebJob class.
+        /// Optional. True if the job is using the WebJobs SDK otherwise false.
         /// </summary>
-        public WebJob()
+        public bool UsingSdk
+        {
+            get { return this._usingSdk; }
+            set { this._usingSdk = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebJobBase class.
+        /// </summary>
+        public WebJobBase()
         {
         }
     }

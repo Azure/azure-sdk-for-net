@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// Describes a Web Job run.
+    /// Triggered WebJob run.
     /// </summary>
-    public partial class WebJobRun
+    public partial class TriggeredWebJobRun
     {
         private TimeSpan _duration;
         
@@ -51,17 +51,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._endTime = value; }
         }
         
-        private Uri _errorUrl;
-        
-        /// <summary>
-        /// Optional. The error url.
-        /// </summary>
-        public Uri ErrorUrl
-        {
-            get { return this._errorUrl; }
-            set { this._errorUrl = value; }
-        }
-        
         private string _id;
         
         /// <summary>
@@ -73,10 +62,21 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
             set { this._id = value; }
         }
         
+        private string _jobName;
+        
+        /// <summary>
+        /// Optional. The WebJob name.
+        /// </summary>
+        public string JobName
+        {
+            get { return this._jobName; }
+            set { this._jobName = value; }
+        }
+        
         private Uri _outputUrl;
         
         /// <summary>
-        /// Optional. The output url.
+        /// Optional. The url to get the WebJob run log.
         /// </summary>
         public Uri OutputUrl
         {
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         private Uri _url;
         
         /// <summary>
-        /// Optional. The url.
+        /// Optional. The url for this WebJob run.
         /// </summary>
         public Uri Url
         {
@@ -118,9 +118,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobRun class.
+        /// Initializes a new instance of the TriggeredWebJobRun class.
         /// </summary>
-        public WebJobRun()
+        public TriggeredWebJobRun()
         {
         }
     }

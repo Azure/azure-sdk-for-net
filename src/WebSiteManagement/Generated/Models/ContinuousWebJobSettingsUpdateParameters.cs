@@ -20,33 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The settings update parameters.
+    /// The continuous WebJob settings update parameters.
     /// </summary>
-    public partial class SettingsUpdateParameters
+    public partial class ContinuousWebJobSettingsUpdateParameters
     {
-        private IDictionary<string, string> _settings;
+        private bool? _isSingleton;
         
         /// <summary>
-        /// Optional. The setting values.
+        /// Optional. If a continuous job is set as singleton it'll run only on
+        /// a single instance opposed to running on all instances.
         /// </summary>
-        public IDictionary<string, string> Settings
+        public bool? IsSingleton
         {
-            get { return this._settings; }
-            set { this._settings = value; }
+            get { return this._isSingleton; }
+            set { this._isSingleton = value; }
+        }
+        
+        private int? _shutdownGraceTimeInSeconds;
+        
+        /// <summary>
+        /// Optional. Specify the time in seconds to wait for the WebJob to
+        /// gracefully shutdown.
+        /// </summary>
+        public int? ShutdownGraceTimeInSeconds
+        {
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the SettingsUpdateParameters class.
+        /// Initializes a new instance of the
+        /// ContinuousWebJobSettingsUpdateParameters class.
         /// </summary>
-        public SettingsUpdateParameters()
+        public ContinuousWebJobSettingsUpdateParameters()
         {
-            this.Settings = new Dictionary<string, string>();
         }
     }
 }
