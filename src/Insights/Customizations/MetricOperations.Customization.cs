@@ -82,12 +82,13 @@ namespace Microsoft.Azure.Insights
         private void CompleteShoeboxMetrics(MetricCollection collection, IEnumerable<MetricDefinition> definitions, string resourceUri)
         {
             foreach (Metric metric in collection.Value)
-                {
-                    MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
+            {
+                MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
-                    metric.ResourceId = resourceUri;
-                    metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) ? definition.Name.LocalizedValue : metric.Name.Value;
-                }
+                metric.ResourceId = resourceUri;
+                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) ? definition.Name.LocalizedValue : metric.Name.Value;
+                metric.Unit = definition == null ? Unit.Count : definition.Unit;
+            }
         }
 
         private static string RemoveNamesFromFilterString(string filterString)
