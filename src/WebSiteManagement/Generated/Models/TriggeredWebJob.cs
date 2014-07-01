@@ -21,31 +21,41 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The get Web Job Operation Response.
+    /// Triggered WebJob.
     /// </summary>
-    public partial class WebJobGetResponse : OperationResponse
+    public partial class TriggeredWebJob : WebJobBase
     {
-        private WebJob _webJob;
+        private string _historyUrl;
         
         /// <summary>
-        /// Optional. The web job.
+        /// Optional. The url to get the latest job runs.
         /// </summary>
-        public WebJob WebJob
+        public string HistoryUrl
         {
-            get { return this._webJob; }
-            set { this._webJob = value; }
+            get { return this._historyUrl; }
+            set { this._historyUrl = value; }
+        }
+        
+        private TriggeredWebJobRun _latestRun;
+        
+        /// <summary>
+        /// Optional. The latest run information.
+        /// </summary>
+        public TriggeredWebJobRun LatestRun
+        {
+            get { return this._latestRun; }
+            set { this._latestRun = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobGetResponse class.
+        /// Initializes a new instance of the TriggeredWebJob class.
         /// </summary>
-        public WebJobGetResponse()
+        public TriggeredWebJob()
         {
         }
     }

@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
@@ -28,43 +27,27 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The list of jobs operation response.
+    /// The get triggered WebJob Run operation response.
     /// </summary>
-    public partial class WebJobListResponse : OperationResponse, IEnumerable<WebJob>
+    public partial class TriggeredWebJobGetRunResponse : OperationResponse
     {
-        private IList<WebJob> _jobs;
+        private TriggeredWebJobRun _triggeredJobRun;
         
         /// <summary>
-        /// Optional. The list of jobs.
+        /// Optional. The triggered WebJob run.
         /// </summary>
-        public IList<WebJob> Jobs
+        public TriggeredWebJobRun TriggeredJobRun
         {
-            get { return this._jobs; }
-            set { this._jobs = value; }
+            get { return this._triggeredJobRun; }
+            set { this._triggeredJobRun = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobListResponse class.
+        /// Initializes a new instance of the TriggeredWebJobGetRunResponse
+        /// class.
         /// </summary>
-        public WebJobListResponse()
+        public TriggeredWebJobGetRunResponse()
         {
-            this.Jobs = new List<WebJob>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Jobs.
-        /// </summary>
-        public IEnumerator<WebJob> GetEnumerator()
-        {
-            return this.Jobs.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of Jobs.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
@@ -28,43 +27,26 @@ using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Web Job run list operation response.
+    /// The get triggered WebJob Operation Response.
     /// </summary>
-    public partial class WebJobRunListResponse : OperationResponse, IEnumerable<WebJobRun>
+    public partial class TriggeredWebJobGetResponse : OperationResponse
     {
-        private IList<WebJobRun> _jobRuns;
+        private TriggeredWebJob _triggeredWebJob;
         
         /// <summary>
-        /// Optional. The list of job runs.
+        /// Optional. The triggered web job.
         /// </summary>
-        public IList<WebJobRun> JobRuns
+        public TriggeredWebJob TriggeredWebJob
         {
-            get { return this._jobRuns; }
-            set { this._jobRuns = value; }
+            get { return this._triggeredWebJob; }
+            set { this._triggeredWebJob = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobRunListResponse class.
+        /// Initializes a new instance of the TriggeredWebJobGetResponse class.
         /// </summary>
-        public WebJobRunListResponse()
+        public TriggeredWebJobGetResponse()
         {
-            this.JobRuns = new List<WebJobRun>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of JobRuns.
-        /// </summary>
-        public IEnumerator<WebJobRun> GetEnumerator()
-        {
-            return this.JobRuns.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of JobRuns.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }

@@ -22,30 +22,43 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The deployment information operation response.
+    /// The continuous WebJob settings operation response.
     /// </summary>
-    public partial class DeploymentUpdateResponse : OperationResponse
+    public partial class ContinuousWebJobSettingsResponse : OperationResponse
     {
-        private Deployment _deployment;
+        private bool? _isSingleton;
         
         /// <summary>
-        /// Optional. The deployment information.
+        /// Optional. If a continuous job is set as singleton it'll run only on
+        /// a single instance opposed to running on all instances.
         /// </summary>
-        public Deployment Deployment
+        public bool? IsSingleton
         {
-            get { return this._deployment; }
-            set { this._deployment = value; }
+            get { return this._isSingleton; }
+            set { this._isSingleton = value; }
+        }
+        
+        private int? _shutdownGraceTimeInSeconds;
+        
+        /// <summary>
+        /// Optional. Specify the time in seconds to wait for the WebJob to
+        /// gracefully shutdown.
+        /// </summary>
+        public int? ShutdownGraceTimeInSeconds
+        {
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentUpdateResponse class.
+        /// Initializes a new instance of the ContinuousWebJobSettingsResponse
+        /// class.
         /// </summary>
-        public DeploymentUpdateResponse()
+        public ContinuousWebJobSettingsResponse()
         {
         }
     }

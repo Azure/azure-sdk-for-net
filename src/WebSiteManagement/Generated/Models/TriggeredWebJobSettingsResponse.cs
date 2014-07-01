@@ -21,40 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The Web Job run listing parameters.
+    /// The triggered WebJob settings operation response.
     /// </summary>
-    public partial class WebJobRunListParameters
+    public partial class TriggeredWebJobSettingsResponse : OperationResponse
     {
-        private string _orderBy;
+        private int? _shutdownGraceTimeInSeconds;
         
         /// <summary>
-        /// Optional. The order by query parameter.
+        /// Optional. The time in seconds to wait for the WebJob to gracefully
+        /// shutdown.
         /// </summary>
-        public string OrderBy
+        public int? ShutdownGraceTimeInSeconds
         {
-            get { return this._orderBy; }
-            set { this._orderBy = value; }
-        }
-        
-        private string _top;
-        
-        /// <summary>
-        /// Optional. The top query parameter.
-        /// </summary>
-        public string Top
-        {
-            get { return this._top; }
-            set { this._top = value; }
+            get { return this._shutdownGraceTimeInSeconds; }
+            set { this._shutdownGraceTimeInSeconds = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the WebJobRunListParameters class.
+        /// Initializes a new instance of the TriggeredWebJobSettingsResponse
+        /// class.
         /// </summary>
-        public WebJobRunListParameters()
+        public TriggeredWebJobSettingsResponse()
         {
         }
     }

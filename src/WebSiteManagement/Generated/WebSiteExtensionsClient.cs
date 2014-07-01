@@ -36,10 +36,20 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// </summary>
     public partial class WebSiteExtensionsClient : ServiceClient<WebSiteExtensionsClient>, IWebSiteExtensionsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all kudu requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -58,6 +68,28 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             set { this._credentials = value; }
         }
         
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
+        }
+        
         private string _siteName;
         
         /// <summary>
@@ -67,6 +99,16 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         {
             get { return this._siteName; }
             set { this._siteName = value; }
+        }
+        
+        private IContinuousWebJobOperations _continuousWebJobs;
+        
+        /// <summary>
+        /// Operations for managing continuous WebJobs.
+        /// </summary>
+        public virtual IContinuousWebJobOperations ContinuousWebJobs
+        {
+            get { return this._continuousWebJobs; }
         }
         
         private IDeploymentOperations _deployments;
@@ -109,14 +151,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._settings; }
         }
         
-        private IWebJobOperations _webJobs;
+        private ITriggeredWebJobOperations _triggeredWebJobs;
         
         /// <summary>
-        /// Operations for managing the jobs.
+        /// Operations for managing Triggered WebJobs.
         /// </summary>
-        public virtual IWebJobOperations WebJobs
+        public virtual ITriggeredWebJobOperations TriggeredWebJobs
         {
-            get { return this._webJobs; }
+            get { return this._triggeredWebJobs; }
         }
         
         /// <summary>
@@ -125,11 +167,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         private WebSiteExtensionsClient()
             : base()
         {
+            this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
             this._repository = new RepositoryOperations(this);
             this._settings = new SettingsOperations(this);
-            this._webJobs = new WebJobOperations(this);
+            this._triggeredWebJobs = new TriggeredWebJobOperations(this);
+            this._apiVersion = "2";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -143,7 +189,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all kudu requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri)
             : this()
@@ -203,11 +250,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         private WebSiteExtensionsClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
             this._repository = new RepositoryOperations(this);
             this._settings = new SettingsOperations(this);
-            this._webJobs = new WebJobOperations(this);
+            this._triggeredWebJobs = new TriggeredWebJobOperations(this);
+            this._apiVersion = "2";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -221,7 +272,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all kudu requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -296,6 +348,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 clonedClient._siteName = this._siteName;
                 clonedClient._credentials = this._credentials;
                 clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
                 
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
