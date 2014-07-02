@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </summary>
         Uri BaseUri
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>

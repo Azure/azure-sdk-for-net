@@ -64,6 +64,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
@@ -76,6 +77,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
         }
         
         private int _longRunningOperationInitialTimeout;
@@ -293,7 +295,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 clonedClient._apiVersion = this._apiVersion;
                 clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
-                
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
         }

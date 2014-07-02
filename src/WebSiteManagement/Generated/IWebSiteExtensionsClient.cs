@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// </summary>
         Uri BaseUri
         {
-            get; 
+            get; set; 
         }
         
         /// <summary>

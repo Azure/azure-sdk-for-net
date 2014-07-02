@@ -54,6 +54,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private BasicAuthenticationCloudCredentials _credentials;
