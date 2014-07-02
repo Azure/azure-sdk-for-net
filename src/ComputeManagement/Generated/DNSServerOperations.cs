@@ -38,18 +38,18 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
-    /// The Compute Management API includes operations for managing the load
-    /// balancers for your subscription.
+    /// The Compute Management API includes operations for managing the dns
+    /// servers for your subscription.
     /// </summary>
-    internal partial class LoadBalancerOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations
+    internal partial class DNSServerOperations : IServiceOperations<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations
     {
         /// <summary>
-        /// Initializes a new instance of the LoadBalancerOperations class.
+        /// Initializes a new instance of the DNSServerOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal LoadBalancerOperations(ComputeManagementClient client)
+        internal DNSServerOperations(ComputeManagementClient client)
         {
             this._client = client;
         }
@@ -66,10 +66,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -78,7 +77,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Required. The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// Required. Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -94,7 +93,122 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginCreatingAsync(string serviceName, string deploymentName, LoadBalancerCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> AddDNSServerAsync(string serviceName, string deploymentName, DNSAddParameters parameters, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "AddDNSServerAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse response = await client.DnsServer.BeginAddingDNSServerAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
+                if (response.Status == OperationStatus.Succeeded)
+                {
+                    return response;
+                }
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add DNS Server operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginAddingDNSServerAsync(string serviceName, string deploymentName, DNSAddParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -120,11 +234,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginAddingDNSServerAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/loadbalancers";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/dnsservers";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -157,41 +271,21 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement loadBalancerElement = new XElement(XName.Get("LoadBalancer", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(loadBalancerElement);
+                XElement dnsServerElement = new XElement(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(dnsServerElement);
                 
                 if (parameters.Name != null)
                 {
                     XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                     nameElement.Value = parameters.Name;
-                    loadBalancerElement.Add(nameElement);
+                    dnsServerElement.Add(nameElement);
                 }
                 
-                if (parameters.FrontendIPConfiguration != null)
+                if (parameters.Address != null)
                 {
-                    XElement frontendIpConfigurationElement = new XElement(XName.Get("FrontendIpConfiguration", "http://schemas.microsoft.com/windowsazure"));
-                    loadBalancerElement.Add(frontendIpConfigurationElement);
-                    
-                    if (parameters.FrontendIPConfiguration.Type != null)
-                    {
-                        XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        typeElement.Value = parameters.FrontendIPConfiguration.Type;
-                        frontendIpConfigurationElement.Add(typeElement);
-                    }
-                    
-                    if (parameters.FrontendIPConfiguration.SubnetName != null)
-                    {
-                        XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
-                        subnetNameElement.Value = parameters.FrontendIPConfiguration.SubnetName;
-                        frontendIpConfigurationElement.Add(subnetNameElement);
-                    }
-                    
-                    if (parameters.FrontendIPConfiguration.StaticVirtualNetworkIPAddress != null)
-                    {
-                        XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        staticVirtualNetworkIPAddressElement.Value = parameters.FrontendIPConfiguration.StaticVirtualNetworkIPAddress;
-                        frontendIpConfigurationElement.Add(staticVirtualNetworkIPAddressElement);
-                    }
+                    XElement addressElement = new XElement(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                    addressElement.Value = parameters.Address;
+                    dnsServerElement.Add(addressElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -257,7 +351,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -265,8 +359,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -282,7 +376,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -293,9 +387,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("deploymentName");
             }
-            if (loadBalancerName == null)
+            if (dnsServerName == null)
             {
-                throw new ArgumentNullException("loadBalancerName");
+                throw new ArgumentNullException("dnsServerName");
             }
             
             // Tracing
@@ -307,12 +401,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("loadBalancerName", loadBalancerName);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                tracingParameters.Add("dnsServerName", dnsServerName);
+                Tracing.Enter(invocationId, this, "BeginDeletingDNSServerAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/loadbalancers/" + loadBalancerName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/dnsservers/" + dnsServerName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -400,8 +494,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -409,11 +503,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// Required. Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -429,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginUpdatingDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceName == null)
@@ -440,9 +534,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("deploymentName");
             }
-            if (loadBalancerName == null)
+            if (dnsServerName == null)
             {
-                throw new ArgumentNullException("loadBalancerName");
+                throw new ArgumentNullException("dnsServerName");
             }
             if (parameters == null)
             {
@@ -458,13 +552,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("loadBalancerName", loadBalancerName);
+                tracingParameters.Add("dnsServerName", dnsServerName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginUpdatingAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginUpdatingDNSServerAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/loadbalancers/" + loadBalancerName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/dnsservers/" + dnsServerName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -497,41 +591,21 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement loadBalancerElement = new XElement(XName.Get("LoadBalancer", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(loadBalancerElement);
+                XElement dnsServerElement = new XElement(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(dnsServerElement);
                 
                 if (parameters.Name != null)
                 {
                     XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                     nameElement.Value = parameters.Name;
-                    loadBalancerElement.Add(nameElement);
+                    dnsServerElement.Add(nameElement);
                 }
                 
-                if (parameters.FrontendIPConfiguration != null)
+                if (parameters.Address != null)
                 {
-                    XElement frontendIpConfigurationElement = new XElement(XName.Get("FrontendIpConfiguration", "http://schemas.microsoft.com/windowsazure"));
-                    loadBalancerElement.Add(frontendIpConfigurationElement);
-                    
-                    if (parameters.FrontendIPConfiguration.Type != null)
-                    {
-                        XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                        typeElement.Value = parameters.FrontendIPConfiguration.Type;
-                        frontendIpConfigurationElement.Add(typeElement);
-                    }
-                    
-                    if (parameters.FrontendIPConfiguration.SubnetName != null)
-                    {
-                        XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
-                        subnetNameElement.Value = parameters.FrontendIPConfiguration.SubnetName;
-                        frontendIpConfigurationElement.Add(subnetNameElement);
-                    }
-                    
-                    if (parameters.FrontendIPConfiguration.StaticVirtualNetworkIPAddress != null)
-                    {
-                        XElement staticVirtualNetworkIPAddressElement = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                        staticVirtualNetworkIPAddressElement.Value = parameters.FrontendIPConfiguration.StaticVirtualNetworkIPAddress;
-                        frontendIpConfigurationElement.Add(staticVirtualNetworkIPAddressElement);
-                    }
+                    XElement addressElement = new XElement(XName.Get("Address", "http://schemas.microsoft.com/windowsazure"));
+                    addressElement.Value = parameters.Address;
+                    dnsServerElement.Add(addressElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -597,10 +671,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -608,8 +679,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -625,7 +696,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(string serviceName, string deploymentName, LoadBalancerCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -636,8 +707,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                tracingParameters.Add("dnsServerName", dnsServerName);
+                Tracing.Enter(invocationId, this, "DeleteDNSServerAsync", tracingParameters);
             }
             try
             {
@@ -647,7 +718,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.LoadBalancers.BeginCreatingAsync(serviceName, deploymentName, parameters, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse response = await client.DnsServer.BeginDeletingDNSServerAsync(serviceName, deploymentName, dnsServerName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;
@@ -713,7 +784,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -721,114 +793,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken)
-        {
-            ComputeManagementClient client = this.Client;
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("loadBalancerName", loadBalancerName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
-            }
-            try
-            {
-                if (shouldTrace)
-                {
-                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
-                }
-                
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.LoadBalancers.BeginDeletingAsync(serviceName, deploymentName, loadBalancerName, cancellationToken).ConfigureAwait(false);
-                cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                int delayInSeconds = 30;
-                if (client.LongRunningOperationInitialTimeout >= 0)
-                {
-                    delayInSeconds = client.LongRunningOperationInitialTimeout;
-                }
-                while ((result.Status != OperationStatus.InProgress) == false)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
-                    cancellationToken.ThrowIfCancellationRequested();
-                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
-                    delayInSeconds = 30;
-                    if (client.LongRunningOperationRetryTimeout >= 0)
-                    {
-                        delayInSeconds = client.LongRunningOperationRetryTimeout;
-                    }
-                }
-                
-                if (shouldTrace)
-                {
-                    Tracing.Exit(invocationId, result);
-                }
-                
-                if (result.Status != OperationStatus.Succeeded)
-                {
-                    if (result.Error != null)
-                    {
-                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
-                        ex.ErrorCode = result.Error.Code;
-                        ex.ErrorMessage = result.Error.Message;
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    else
-                    {
-                        CloudException ex = new CloudException("");
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                }
-                
-                return result;
-            }
-            finally
-            {
-                if (client != null && shouldTrace)
-                {
-                    client.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
-        /// </summary>
-        /// <param name='serviceName'>
-        /// Required. The name of the service.
-        /// </param>
-        /// <param name='deploymentName'>
-        /// Required. The name of the deployment.
-        /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// Required. Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -844,7 +813,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> UpdateDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters, CancellationToken cancellationToken)
         {
             ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -855,9 +824,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("deploymentName", deploymentName);
-                tracingParameters.Add("loadBalancerName", loadBalancerName);
+                tracingParameters.Add("dnsServerName", dnsServerName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "UpdateDNSServerAsync", tracingParameters);
             }
             try
             {
@@ -867,7 +836,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.LoadBalancers.BeginUpdatingAsync(serviceName, deploymentName, loadBalancerName, parameters, cancellationToken).ConfigureAwait(false);
+                OperationStatusResponse response = await client.DnsServer.BeginUpdatingDNSServerAsync(serviceName, deploymentName, dnsServerName, parameters, cancellationToken).ConfigureAwait(false);
                 if (response.Status == OperationStatus.Succeeded)
                 {
                     return response;

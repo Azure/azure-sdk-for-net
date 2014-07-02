@@ -70,6 +70,229 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Create Data Disk operation adds a data disk to a virtual
+        /// machine. There are three ways to create the data disk using the
+        /// Add Data Disk operation. Option 1 - Attach an empty data disk to
+        /// the role by specifying the disk label and location of the disk
+        /// image. Do not include the DiskName and SourceMediaLink elements in
+        /// the request body. Include the MediaLink element and reference a
+        /// blob that is in the same geographical region as the role. You can
+        /// also omit the MediaLink element. In this usage, Azure will create
+        /// the data disk in the storage account configured as default for the
+        /// role. Option 2 - Attach an existing data disk that is in the image
+        /// repository. Do not include the DiskName and SourceMediaLink
+        /// elements in the request body. Specify the data disk to use by
+        /// including the DiskName element. Note: If included the in the
+        /// response body, the MediaLink and LogicalDiskSizeInGB elements are
+        /// ignored. Option 3 - Specify the location of a blob in your storage
+        /// account that contain a disk image to use. Include the
+        /// SourceMediaLink element. Note: If the MediaLink element
+        /// isincluded, it is ignored.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157199.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of your service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='roleName'>
+        /// Required. The name of the role to add the data disk to.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Create Virtual Machine Data
+        /// Disk operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreatingDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleName == null)
+            {
+                throw new ArgumentNullException("roleName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.HostCaching == null)
+            {
+                throw new ArgumentNullException("parameters.HostCaching");
+            }
+            if (parameters.MediaLinkUri == null)
+            {
+                throw new ArgumentNullException("parameters.MediaLinkUri");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleName", roleName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "BeginCreatingDataDiskAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement dataVirtualHardDiskElement = new XElement(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(dataVirtualHardDiskElement);
+                
+                XElement hostCachingElement = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
+                hostCachingElement.Value = parameters.HostCaching;
+                dataVirtualHardDiskElement.Add(hostCachingElement);
+                
+                if (parameters.Label != null)
+                {
+                    XElement diskLabelElement = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
+                    diskLabelElement.Value = parameters.Label;
+                    dataVirtualHardDiskElement.Add(diskLabelElement);
+                }
+                
+                if (parameters.Name != null)
+                {
+                    XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
+                    diskNameElement.Value = parameters.Name;
+                    dataVirtualHardDiskElement.Add(diskNameElement);
+                }
+                
+                if (parameters.LogicalUnitNumber != null)
+                {
+                    XElement lunElement = new XElement(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
+                    lunElement.Value = parameters.LogicalUnitNumber.ToString();
+                    dataVirtualHardDiskElement.Add(lunElement);
+                }
+                
+                XElement logicalDiskSizeInGBElement = new XElement(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                logicalDiskSizeInGBElement.Value = parameters.LogicalDiskSizeInGB.ToString();
+                dataVirtualHardDiskElement.Add(logicalDiskSizeInGBElement);
+                
+                XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                mediaLinkElement.Value = parameters.MediaLinkUri.AbsoluteUri;
+                dataVirtualHardDiskElement.Add(mediaLinkElement);
+                
+                if (parameters.SourceMediaLinkUri != null)
+                {
+                    XElement sourceMediaLinkElement = new XElement(XName.Get("SourceMediaLink", "http://schemas.microsoft.com/windowsazure"));
+                    sourceMediaLinkElement.Value = parameters.SourceMediaLinkUri.AbsoluteUri;
+                    dataVirtualHardDiskElement.Add(sourceMediaLinkElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Begin Deleting Data Disk operation removes the specified data
         /// disk from a virtual machine.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157179.aspx
@@ -157,7 +380,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -260,38 +483,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateDataDiskAsync(string serviceName, string deploymentName, string roleName, VirtualMachineDataDiskCreateParameters parameters, CancellationToken cancellationToken)
         {
-            // Validate
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException("serviceName");
-            }
-            if (deploymentName == null)
-            {
-                throw new ArgumentNullException("deploymentName");
-            }
-            if (roleName == null)
-            {
-                throw new ArgumentNullException("roleName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (parameters.HostCaching == null)
-            {
-                throw new ArgumentNullException("parameters.HostCaching");
-            }
-            if (parameters.MediaLinkUri == null)
-            {
-                throw new ArgumentNullException("parameters.MediaLinkUri");
-            }
-            
-            // Tracing
+            ComputeManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
             string invocationId = null;
             if (shouldTrace)
@@ -304,142 +508,71 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateDataDiskAsync", tracingParameters);
             }
-            
-            // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roles/" + roleName.Trim() + "/DataDisks";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
             try
             {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
                 
-                // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
-                
-                // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                XDocument requestDoc = new XDocument();
-                
-                XElement dataVirtualHardDiskElement = new XElement(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(dataVirtualHardDiskElement);
-                
-                XElement hostCachingElement = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                hostCachingElement.Value = parameters.HostCaching;
-                dataVirtualHardDiskElement.Add(hostCachingElement);
-                
-                if (parameters.Label != null)
+                OperationResponse response = await client.VirtualMachineDisks.BeginCreatingDataDiskAsync(serviceName, deploymentName, roleName, parameters, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
                 {
-                    XElement diskLabelElement = new XElement(XName.Get("DiskLabel", "http://schemas.microsoft.com/windowsazure"));
-                    diskLabelElement.Value = parameters.Label;
-                    dataVirtualHardDiskElement.Add(diskLabelElement);
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
                 }
-                
-                if (parameters.Name != null)
+                while ((result.Status != OperationStatus.InProgress) == false)
                 {
-                    XElement diskNameElement = new XElement(XName.Get("DiskName", "http://schemas.microsoft.com/windowsazure"));
-                    diskNameElement.Value = parameters.Name;
-                    dataVirtualHardDiskElement.Add(diskNameElement);
-                }
-                
-                if (parameters.LogicalUnitNumber != null)
-                {
-                    XElement lunElement = new XElement(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                    lunElement.Value = parameters.LogicalUnitNumber.ToString();
-                    dataVirtualHardDiskElement.Add(lunElement);
-                }
-                
-                XElement logicalDiskSizeInGBElement = new XElement(XName.Get("LogicalDiskSizeInGB", "http://schemas.microsoft.com/windowsazure"));
-                logicalDiskSizeInGBElement.Value = parameters.LogicalDiskSizeInGB.ToString();
-                dataVirtualHardDiskElement.Add(logicalDiskSizeInGBElement);
-                
-                XElement mediaLinkElement = new XElement(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
-                mediaLinkElement.Value = parameters.MediaLinkUri.AbsoluteUri;
-                dataVirtualHardDiskElement.Add(mediaLinkElement);
-                
-                if (parameters.SourceMediaLinkUri != null)
-                {
-                    XElement sourceMediaLinkElement = new XElement(XName.Get("SourceMediaLink", "http://schemas.microsoft.com/windowsazure"));
-                    sourceMediaLinkElement.Value = parameters.SourceMediaLinkUri.AbsoluteUri;
-                    dataVirtualHardDiskElement.Add(sourceMediaLinkElement);
-                }
-                
-                requestContent = requestDoc.ToString();
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
                     cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
                     {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
                     }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
                         }
                         throw ex;
                     }
-                    
-                    // Create Result
-                    OperationResponse result = null;
-                    result = new OperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    else
                     {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
                     }
                 }
+                
+                return result;
             }
             finally
             {
-                if (httpRequest != null)
+                if (client != null && shouldTrace)
                 {
-                    httpRequest.Dispose();
+                    client.Dispose();
                 }
             }
         }
@@ -515,7 +648,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -898,7 +1031,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1040,7 +1173,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1214,7 +1347,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1435,7 +1568,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1708,7 +1841,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1891,7 +2024,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
