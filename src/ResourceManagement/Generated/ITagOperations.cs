@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        Task<TagCreateResult> CreateAsync(string tagName, CancellationToken cancellationToken);
+        Task<TagCreateResult> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Create a subscription resource tag value.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        Task<TagCreateValueResult> CreateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
+        Task<TagCreateValueResult> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken);
         
         /// <summary>
         /// Delete a subscription resource tag.

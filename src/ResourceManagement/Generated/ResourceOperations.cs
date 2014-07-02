@@ -407,8 +407,29 @@ namespace Microsoft.Azure.Management.Resources
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        BasicResource resourceInstance = new BasicResource();
+                        Resource resourceInstance = new Resource();
                         result.Resource = resourceInstance;
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            resourceInstance.Id = idInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            resourceInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            resourceInstance.Type = typeInstance;
+                        }
                         
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
