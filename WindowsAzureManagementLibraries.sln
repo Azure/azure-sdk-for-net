@@ -70,6 +70,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\WebSiteManagement2\WebSiteManagement2.csproj", "{F455DFDB-0869-43EE-9CD1-E040752BD033}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement2", "src\SqlManagement2\SqlManagement2.csproj", "{04B53727-16E6-4EF0-9116-04C7F1C33842}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
@@ -225,6 +227,14 @@ Global
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,5 +258,6 @@ Global
 		{F9515973-831E-4447-924C-1578DF384D0F} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{F455DFDB-0869-43EE-9CD1-E040752BD033} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{04B53727-16E6-4EF0-9116-04C7F1C33842} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 EndGlobal
