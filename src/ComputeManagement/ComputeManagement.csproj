@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -20,12 +20,15 @@
     <Compile Include="Generated\ComputeManagementClientExtensions.cs" />
     <Compile Include="Generated\DeploymentOperations.cs" />
     <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
+    <Compile Include="Generated\DNSServerOperations.cs" />
+    <Compile Include="Generated\DNSServerOperationsExtensions.cs" />
     <Compile Include="Generated\ExtensionImageOperations.cs" />
     <Compile Include="Generated\ExtensionImageOperationsExtensions.cs" />
     <Compile Include="Generated\HostedServiceOperations.cs" />
     <Compile Include="Generated\HostedServiceOperationsExtensions.cs" />
     <Compile Include="Generated\IComputeManagementClient.cs" />
     <Compile Include="Generated\IDeploymentOperations.cs" />
+    <Compile Include="Generated\IDNSServerOperations.cs" />
     <Compile Include="Generated\IExtensionImageOperations.cs" />
     <Compile Include="Generated\IHostedServiceOperations.cs" />
     <Compile Include="Generated\ILoadBalancerOperations.cs" />
@@ -61,8 +64,10 @@
     <Compile Include="Generated\Models\DeploymentUpgradeParameters.cs" />
     <Compile Include="Generated\Models\DeploymentUpgradeType.cs" />
     <Compile Include="Generated\Models\DeploymentWalkUpgradeDomainParameters.cs" />
+    <Compile Include="Generated\Models\DNSAddParameters.cs" />
     <Compile Include="Generated\Models\DnsServer.cs" />
     <Compile Include="Generated\Models\DnsSettings.cs" />
+    <Compile Include="Generated\Models\DNSUpdateParameters.cs" />
     <Compile Include="Generated\Models\DomainJoinCredentials.cs" />
     <Compile Include="Generated\Models\DomainJoinProvisioning.cs" />
     <Compile Include="Generated\Models\DomainJoinSettings.cs" />
@@ -98,6 +103,7 @@
     <Compile Include="Generated\Models\LoadBalancerCreateParameters.cs" />
     <Compile Include="Generated\Models\LoadBalancerProbe.cs" />
     <Compile Include="Generated\Models\LoadBalancerProbeTransportProtocol.cs" />
+    <Compile Include="Generated\Models\LoadBalancerUpdateParameters.cs" />
     <Compile Include="Generated\Models\OperatingSystemFamilies.cs" />
     <Compile Include="Generated\Models\OperatingSystemListFamiliesResponse.cs" />
     <Compile Include="Generated\Models\OperatingSystemListResponse.cs" />
