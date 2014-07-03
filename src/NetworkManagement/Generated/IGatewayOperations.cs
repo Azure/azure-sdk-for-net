@@ -569,8 +569,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayGetOperationStatusResponse> SetSharedKeyAsync(string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateway for the specified virtual network in Azure.  (see
+        /// The Update Diagnostics operation starts a diagnostics session for
+        /// the specified virtual network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
