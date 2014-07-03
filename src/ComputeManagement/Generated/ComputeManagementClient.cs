@@ -112,6 +112,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
             get { return this._deployments; }
         }
         
+        private IDNSServerOperations _dnsServer;
+        
+        /// <summary>
+        /// The Compute Management API includes operations for managing the dns
+        /// servers for your subscription.
+        /// </summary>
+        public virtual IDNSServerOperations DnsServer
+        {
+            get { return this._dnsServer; }
+        }
+        
         private IExtensionImageOperations _extensionImages;
         
         /// <summary>
@@ -244,6 +255,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base()
         {
             this._deployments = new DeploymentOperations(this);
+            this._dnsServer = new DNSServerOperations(this);
             this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
@@ -254,7 +266,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
             this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -320,6 +332,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base(httpClient)
         {
             this._deployments = new DeploymentOperations(this);
+            this._dnsServer = new DNSServerOperations(this);
             this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
@@ -330,7 +343,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
             this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
-            this._apiVersion = "2014-05-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -487,7 +500,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

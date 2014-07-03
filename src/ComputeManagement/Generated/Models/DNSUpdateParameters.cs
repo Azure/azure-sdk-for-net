@@ -20,35 +20,42 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the delete role instance by deployment name
-    /// operation.
+    /// Parameters supplied to the Update DNS Server operation.
     /// </summary>
-    public partial class DeploymentDeleteRoleInstanceParameters
+    public partial class DNSUpdateParameters
     {
-        private IList<string> _name;
+        private string _address;
         
         /// <summary>
-        /// Optional. The names of role instances to delete from the deployment
+        /// Optional. IP Address of the DNS server
         /// </summary>
-        public IList<string> Name
+        public string Address
+        {
+            get { return this._address; }
+            set { this._address = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Name of the DNS server.
+        /// </summary>
+        public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeploymentDeleteRoleInstanceParameters class.
+        /// Initializes a new instance of the DNSUpdateParameters class.
         /// </summary>
-        public DeploymentDeleteRoleInstanceParameters()
+        public DNSUpdateParameters()
         {
-            this.Name = new List<string>();
         }
     }
 }
