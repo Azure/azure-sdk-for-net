@@ -46,29 +46,60 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSiteManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create an Azure subscription, it is uniquely identified by
-        /// a subscription ID. The subscription ID forms part of the URI for
-        /// every call that you make to the Service Management API. The Azure
-        /// Service Management API uses mutual authentication of management
-        /// certificates over SSL to ensure that a request made to the service
-        /// is secure. No anonymous requests are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IServerFarmOperations _serverFarms;
@@ -114,6 +145,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             this._serverFarms = new ServerFarmOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -121,15 +155,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -153,12 +184,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -185,6 +213,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             this._serverFarms = new ServerFarmOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -192,15 +223,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -227,12 +255,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -248,6 +273,30 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// WebSiteManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of WebSiteManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<WebSiteManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is WebSiteManagementClient)
+            {
+                WebSiteManagementClient clonedClient = ((WebSiteManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -311,8 +360,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -323,6 +372,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -479,6 +529,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                 errorInstance.Parameters.Add(parametersElement.Value);
                                             }
                                         }
+                                        else
+                                        {
+                                            errorInstance.Parameters = null;
+                                        }
                                     }
                                     
                                     XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
@@ -497,6 +551,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         }
                                     }
                                 }
+                            }
+                            else
+                            {
+                                result.Errors = null;
                             }
                         }
                         
@@ -624,10 +682,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=register";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -638,6 +696,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -737,10 +796,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=unregister";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -751,6 +810,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

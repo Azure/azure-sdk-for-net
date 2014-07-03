@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListResponse()
         {
-            this._operatingSystems = new List<OperatingSystemListResponse.OperatingSystem>();
+            this.OperatingSystems = new List<OperatingSystemListResponse.OperatingSystem>();
         }
         
         /// <summary>

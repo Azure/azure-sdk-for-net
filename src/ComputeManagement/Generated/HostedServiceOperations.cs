@@ -123,6 +123,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -130,6 +134,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -230,8 +238,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/extensions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -242,6 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -413,8 +422,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "?comp=media";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -425,6 +434,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -545,8 +555,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/extensions/" + extensionId.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -557,6 +567,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -667,8 +678,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/operations/isavailable/" + serviceName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -679,6 +690,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -831,8 +843,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -843,6 +855,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1014,8 +1027,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1026,6 +1039,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1147,6 +1161,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1154,6 +1172,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1248,6 +1270,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1255,6 +1281,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1335,8 +1365,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1347,6 +1377,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1480,6 +1511,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                         }
+                        
+                        XElement computeCapabilitiesElement = hostedServiceElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                        if (computeCapabilitiesElement != null)
+                        {
+                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                            result.ComputeCapabilities = computeCapabilitiesInstance;
+                            
+                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                }
+                            }
+                            
+                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (webWorkerRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                }
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -1550,8 +1606,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "?embed-detail=true";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1562,6 +1618,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3153,6 +3210,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                         }
+                        
+                        XElement computeCapabilitiesElement = hostedServiceElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                        if (computeCapabilitiesElement != null)
+                        {
+                            ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                            result.ComputeCapabilities = computeCapabilitiesInstance;
+                            
+                            XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (virtualMachinesRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                }
+                            }
+                            
+                            XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                            if (webWorkerRoleSizesSequenceElement != null)
+                            {
+                                foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                }
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -3229,8 +3311,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/extensions/" + extensionId.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3241,6 +3323,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3400,8 +3483,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3412,6 +3495,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3550,6 +3634,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     }
                                 }
                             }
+                            
+                            XElement computeCapabilitiesElement = hostedServicesElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeCapabilitiesElement != null)
+                            {
+                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                hostedServiceInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                
+                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    }
+                                }
+                                
+                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -3612,8 +3721,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/extensions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3624,6 +3733,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3696,18 +3806,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Type = typeInstance;
                             }
                             
-                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                extensionImageInstance.Label = labelInstance;
-                            }
-                            
                             XElement versionElement = extensionImagesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
                             if (versionElement != null)
                             {
                                 string versionInstance = versionElement.Value;
                                 extensionImageInstance.Version = versionInstance;
+                            }
+                            
+                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                extensionImageInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -3717,18 +3827,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Description = descriptionInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
-                            {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
                                 string hostingResourcesInstance = hostingResourcesElement.Value;
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
+                            }
+                            
+                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (thumbprintAlgorithmElement != null)
+                            {
+                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -3792,6 +3902,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
+                            }
+                            
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
                             }
                         }
                     }
@@ -3861,8 +3978,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/extensions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3873,6 +3990,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4057,8 +4175,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/extensions/" + providerNamespace.Trim() + "/" + extensionType.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4069,6 +4187,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4141,18 +4260,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Type = typeInstance;
                             }
                             
-                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null)
-                            {
-                                string labelInstance = labelElement.Value;
-                                extensionImageInstance.Label = labelInstance;
-                            }
-                            
                             XElement versionElement = extensionImagesElement.Element(XName.Get("Version", "http://schemas.microsoft.com/windowsazure"));
                             if (versionElement != null)
                             {
                                 string versionInstance = versionElement.Value;
                                 extensionImageInstance.Version = versionInstance;
+                            }
+                            
+                            XElement labelElement = extensionImagesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            if (labelElement != null)
+                            {
+                                string labelInstance = labelElement.Value;
+                                extensionImageInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -4162,18 +4281,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Description = descriptionInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
-                            {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
                                 string hostingResourcesInstance = hostingResourcesElement.Value;
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
+                            }
+                            
+                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                            if (thumbprintAlgorithmElement != null)
+                            {
+                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -4237,6 +4356,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool isJsonExtensionInstance = bool.Parse(isJsonExtensionElement.Value);
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
+                            }
+                            
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
                             }
                         }
                     }
@@ -4325,8 +4451,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4337,6 +4463,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DacGetStatusResponse()
         {
-            this._statusInfoList = new List<StatusInfo>();
+            this.StatusInfoList = new List<StatusInfo>();
         }
         
         /// <summary>

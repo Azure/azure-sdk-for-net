@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public GuestAgentMessage()
         {
-            this._paramList = new List<string>();
+            this.ParamList = new List<string>();
         }
     }
 }

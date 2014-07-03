@@ -45,5 +45,20 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public ClientRootCertificateCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ClientRootCertificateCreateParameters class with required
+        /// arguments.
+        /// </summary>
+        public ClientRootCertificateCreateParameters(string certificate)
+            : this()
+        {
+            if (certificate == null)
+            {
+                throw new ArgumentNullException("certificate");
+            }
+            this.Certificate = certificate;
+        }
     }
 }

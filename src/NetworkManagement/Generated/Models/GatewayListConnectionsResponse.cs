@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListConnectionsResponse()
         {
-            this._connections = new List<GatewayListConnectionsResponse.GatewayConnection>();
+            this.Connections = new List<GatewayListConnectionsResponse.GatewayConnection>();
         }
         
         /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public GatewayConnection()
             {
-                this._allocatedIPAddresses = new List<string>();
+                this.AllocatedIPAddresses = new List<string>();
             }
         }
     }

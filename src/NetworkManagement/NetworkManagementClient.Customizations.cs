@@ -71,19 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 new NetworkManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<NetworkManagementClient> client)
-        {
-            base.Clone(client);
-            NetworkManagementClient management = client as NetworkManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
-        public override NetworkManagementClient WithHandler(DelegatingHandler handler)
+       public override NetworkManagementClient WithHandler(DelegatingHandler handler)
         {
             return (NetworkManagementClient)WithHandler(new NetworkManagementClient(), handler);
         }

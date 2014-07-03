@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccount()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
     }
 }

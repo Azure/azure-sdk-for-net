@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjectiveListResponse()
         {
-            this._serviceObjectives = new List<ServiceObjective>();
+            this.ServiceObjectives = new List<ServiceObjective>();
         }
         
         /// <summary>

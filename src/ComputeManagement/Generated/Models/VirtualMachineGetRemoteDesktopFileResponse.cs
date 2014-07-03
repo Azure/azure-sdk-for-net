@@ -49,5 +49,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineGetRemoteDesktopFileResponse()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineGetRemoteDesktopFileResponse class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineGetRemoteDesktopFileResponse(byte[] remoteDesktopFile)
+            : this()
+        {
+            if (remoteDesktopFile == null)
+            {
+                throw new ArgumentNullException("remoteDesktopFile");
+            }
+            this.RemoteDesktopFile = remoteDesktopFile;
+        }
     }
 }

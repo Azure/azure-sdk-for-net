@@ -58,5 +58,24 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookDeleteScheduleLinkParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookDeleteScheduleLinkParameters class with required arguments.
+        /// </summary>
+        public RunbookDeleteScheduleLinkParameters(string runbookId, string scheduleId)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            if (scheduleId == null)
+            {
+                throw new ArgumentNullException("scheduleId");
+            }
+            this.RunbookId = runbookId;
+            this.ScheduleId = scheduleId;
+        }
     }
 }

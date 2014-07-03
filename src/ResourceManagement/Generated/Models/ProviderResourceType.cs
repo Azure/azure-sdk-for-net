@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ProviderResourceType()
         {
-            this._locations = new List<string>();
+            this.Locations = new List<string>();
         }
     }
 }

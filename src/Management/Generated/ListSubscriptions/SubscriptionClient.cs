@@ -30,10 +30,20 @@ namespace Microsoft.WindowsAzure.Subscriptions
 {
     public partial class SubscriptionClient : ServiceClient<SubscriptionClient>, ISubscriptionClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -48,6 +58,29 @@ namespace Microsoft.WindowsAzure.Subscriptions
         public CloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private ISubscriptionOperations _subscriptions;
@@ -64,6 +97,9 @@ namespace Microsoft.WindowsAzure.Subscriptions
             : base()
         {
             this._subscriptions = new SubscriptionOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -74,7 +110,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// Required. Credentials used to authenticate requests.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SubscriptionClient(CloudCredentials credentials, Uri baseUri)
@@ -123,6 +159,9 @@ namespace Microsoft.WindowsAzure.Subscriptions
             : base(httpClient)
         {
             this._subscriptions = new SubscriptionOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -133,7 +172,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
         /// Required. Credentials used to authenticate requests.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -176,6 +215,31 @@ namespace Microsoft.WindowsAzure.Subscriptions
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// SubscriptionClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of SubscriptionClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<SubscriptionClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is SubscriptionClient)
+            {
+                SubscriptionClient clonedClient = ((SubscriptionClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
 }

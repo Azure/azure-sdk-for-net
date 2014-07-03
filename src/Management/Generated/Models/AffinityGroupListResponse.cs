@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupListResponse()
         {
-            this._affinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
+            this.AffinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
         }
         
         /// <summary>
@@ -85,6 +85,28 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._capabilities; }
                 set { this._capabilities = value; }
+            }
+            
+            private ComputeCapabilities _computeCapabilities;
+            
+            /// <summary>
+            /// Optional. The compute capabilities in this affinity group.
+            /// </summary>
+            public ComputeCapabilities ComputeCapabilities
+            {
+                get { return this._computeCapabilities; }
+                set { this._computeCapabilities = value; }
+            }
+            
+            private System.DateTime? _createdTime;
+            
+            /// <summary>
+            /// Optional. The time that the affinity group was created.
+            /// </summary>
+            public System.DateTime? CreatedTime
+            {
+                get { return this._createdTime; }
+                set { this._createdTime = value; }
             }
             
             private string _description;
@@ -138,7 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public AffinityGroup()
             {
-                this._capabilities = new List<string>();
+                this.Capabilities = new List<string>();
             }
         }
     }

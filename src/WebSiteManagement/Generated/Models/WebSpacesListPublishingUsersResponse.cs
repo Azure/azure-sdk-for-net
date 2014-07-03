@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListPublishingUsersResponse()
         {
-            this._users = new List<WebSpacesListPublishingUsersResponse.User>();
+            this.Users = new List<WebSpacesListPublishingUsersResponse.User>();
         }
         
         /// <summary>

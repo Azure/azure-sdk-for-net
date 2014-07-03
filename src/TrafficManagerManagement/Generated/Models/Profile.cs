@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public Profile()
         {
-            this._definitions = new List<DefinitionStatusAndVersion>();
+            this.Definitions = new List<DefinitionStatusAndVersion>();
         }
     }
 }

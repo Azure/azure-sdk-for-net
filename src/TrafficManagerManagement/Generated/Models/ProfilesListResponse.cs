@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public ProfilesListResponse()
         {
-            this._profiles = new List<Profile>();
+            this.Profiles = new List<Profile>();
         }
         
         /// <summary>

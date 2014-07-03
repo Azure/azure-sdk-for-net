@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountProperties()
         {
-            this._endpoints = new List<Uri>();
+            this.Endpoints = new List<Uri>();
         }
     }
 }

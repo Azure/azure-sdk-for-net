@@ -73,8 +73,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this._availableLocations = new List<NameConfig>();
-            this._endpoints = new List<EndpointConfig>();
+            this.AvailableLocations = new List<NameConfig>();
+            this.Endpoints = new List<EndpointConfig>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AvailabilityMetricSettingValue
+        /// class with required arguments.
+        /// </summary>
+        public AvailabilityMetricSettingValue(IList<EndpointConfig> endpoints)
+            : this()
+        {
+            if (endpoints == null)
+            {
+                throw new ArgumentNullException("endpoints");
+            }
+            this.Endpoints = endpoints;
         }
     }
     
@@ -169,7 +183,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricDefinitionParameters()
         {
-            this._metricNames = new List<string>();
+            this.MetricNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ListMetricDefinitionParameters
+        /// class with required arguments.
+        /// </summary>
+        public ListMetricDefinitionParameters(string resourceId, IList<string> metricNames)
+            : this()
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
+            }
+            this.ResourceId = resourceId;
+            this.MetricNames = metricNames;
         }
     }
     
@@ -238,7 +271,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricParameters()
         {
-            this._metricNames = new List<string>();
+            this.MetricNames = new List<string>();
         }
     }
     
@@ -395,7 +428,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this._metricAvailabilities = new List<MetricAvailability>();
+            this.MetricAvailabilities = new List<MetricAvailability>();
         }
     }
     
@@ -420,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
-            this._value = new List<MetricDefinition>();
+            this.Value = new List<MetricDefinition>();
         }
     }
     
@@ -494,6 +527,25 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         public MetricSetting()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSetting class with required
+        /// arguments.
+        /// </summary>
+        public MetricSetting(string resourceId, MetricSettingValue value)
+            : this()
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            this.ResourceId = resourceId;
+            this.Value = value;
+        }
     }
     
     /// <summary>
@@ -517,7 +569,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingCollection()
         {
-            this._value = new List<MetricSetting>();
+            this.Value = new List<MetricSetting>();
         }
     }
     
@@ -566,6 +618,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingsPutParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSettingsPutParameters class
+        /// with required arguments.
+        /// </summary>
+        public MetricSettingsPutParameters(MetricSetting metricSetting)
+            : this()
+        {
+            if (metricSetting == null)
+            {
+                throw new ArgumentNullException("metricSetting");
+            }
+            this.MetricSetting = metricSetting;
         }
     }
     
@@ -808,7 +874,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSet()
         {
-            this._metricValues = new List<MetricValue>();
+            this.MetricValues = new List<MetricValue>();
         }
     }
     
@@ -833,7 +899,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSetCollection()
         {
-            this._value = new List<MetricValueSet>();
+            this.Value = new List<MetricValueSet>();
         }
     }
     
@@ -947,7 +1013,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
     public partial interface IMetricsClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -955,11 +1029,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         IMetricDefinitionOperations MetricDefinitions
@@ -980,10 +1072,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
     
     public partial class MetricsClient : ServiceClient<MetricsClient>, IMetricsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -993,11 +1095,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IMetricDefinitionOperations _metricDefinitions;
@@ -1030,6 +1156,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._metricDefinitions = new MetricDefinitionOperations(this);
             this._metricSettings = new MetricSettingOperations(this);
             this._metricValues = new MetricValueOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1037,10 +1166,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1063,7 +1195,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public MetricsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1090,6 +1224,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._metricDefinitions = new MetricDefinitionOperations(this);
             this._metricSettings = new MetricSettingOperations(this);
             this._metricValues = new MetricValueOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1097,10 +1234,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1126,7 +1266,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Initializes a new instance of the MetricsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1142,6 +1284,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another MetricsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of MetricsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<MetricsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is MetricsClient)
+            {
+                MetricsClient clonedClient = ((MetricsClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
     
@@ -1270,10 +1437,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metricDefinitions/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1284,6 +1451,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1667,8 +1835,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1679,6 +1847,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1873,10 +2042,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricsettings?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
-            url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
+            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
+            url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1887,6 +2056,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2204,13 +2374,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/metrics/resource/" + parameters.ResourceId.Trim() + "?";
             url = url + "api-version=2014-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", parameters.MetricNames));
-            url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(parameters.TimeGrain));
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
+            url = url + "&timeGrain=" + Uri.EscapeDataString(TypeConversion.To8601String(parameters.TimeGrain));
+            url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
+            url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2221,6 +2391,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

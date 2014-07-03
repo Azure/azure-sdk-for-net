@@ -39,7 +39,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
     public partial interface IComputeManagementClient : IDisposable
     {
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -47,16 +55,29 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// When you create an Azure subscription, it is uniquely identified by
-        /// a subscription ID. The subscription ID forms part of the URI for
-        /// every call that you make to the Service Management API. The Azure
-        /// Service Management API uses mutual authentication of management
-        /// certificates over SSL to ensure that a request made to the service
-        /// is secure. No anonymous requests are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>
@@ -66,6 +87,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// for more information)
         /// </summary>
         IDeploymentOperations Deployments
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// service and virtual machine extension images in your publisher
+        /// subscription.
+        /// </summary>
+        IExtensionImageOperations ExtensionImages
         {
             get; 
         }

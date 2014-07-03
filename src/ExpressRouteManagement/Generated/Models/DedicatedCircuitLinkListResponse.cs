@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitLinkListResponse()
         {
-            this._dedicatedCircuitLinks = new List<AzureDedicatedCircuitLink>();
+            this.DedicatedCircuitLinks = new List<AzureDedicatedCircuitLink>();
         }
         
         /// <summary>

@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         /// </summary>
         public SubscriptionListOperationResponse()
         {
-            this._subscriptions = new List<SubscriptionListOperationResponse.Subscription>();
+            this.Subscriptions = new List<SubscriptionListOperationResponse.Subscription>();
         }
         
         /// <summary>

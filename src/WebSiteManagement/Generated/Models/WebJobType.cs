@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
     /// <summary>
-    /// The web job types.
+    /// The WebJob types.
     /// </summary>
     public enum WebJobType
     {

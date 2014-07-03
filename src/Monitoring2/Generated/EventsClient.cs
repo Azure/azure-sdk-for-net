@@ -304,8 +304,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public EventData()
         {
-            this._claims = new Dictionary<string, string>();
-            this._properties = new Dictionary<string, string>();
+            this.Claims = new Dictionary<string, string>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
     
@@ -341,7 +341,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public EventDataCollection()
         {
-            this._value = new List<EventData>();
+            this.Value = new List<EventData>();
         }
     }
     
@@ -480,6 +480,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         public ListEventsForCorrelationIdParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ListEventsForCorrelationIdParameters class with required arguments.
+        /// </summary>
+        public ListEventsForCorrelationIdParameters(string correlationId, DateTime startTime)
+            : this()
+        {
+            if (correlationId == null)
+            {
+                throw new ArgumentNullException("correlationId");
+            }
+            this.CorrelationId = correlationId;
+            this.StartTime = startTime;
+        }
     }
     
     /// <summary>
@@ -504,6 +519,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public ListEventsForEventSourceParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ListEventsForEventSourceParameters class with required arguments.
+        /// </summary>
+        public ListEventsForEventSourceParameters(string eventSource, DateTime startTime)
+            : this()
+        {
+            if (eventSource == null)
+            {
+                throw new ArgumentNullException("eventSource");
+            }
+            this.EventSource = eventSource;
+            this.StartTime = startTime;
         }
     }
     
@@ -530,6 +560,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         public ListEventsForResourceGroupParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ListEventsForResourceGroupParameters class with required arguments.
+        /// </summary>
+        public ListEventsForResourceGroupParameters(string resourceGroupName, DateTime startTime)
+            : this()
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            this.ResourceGroupName = resourceGroupName;
+            this.StartTime = startTime;
+        }
     }
     
     /// <summary>
@@ -555,6 +600,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         public ListEventsForResourceParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ListEventsForResourceParameters
+        /// class with required arguments.
+        /// </summary>
+        public ListEventsForResourceParameters(string resourceUri, DateTime startTime)
+            : this()
+        {
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            this.ResourceUri = resourceUri;
+            this.StartTime = startTime;
+        }
     }
     
     /// <summary>
@@ -579,6 +639,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public ListEventsForResourceProviderParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ListEventsForResourceProviderParameters class with required
+        /// arguments.
+        /// </summary>
+        public ListEventsForResourceProviderParameters(string resourceProvider, DateTime startTime)
+            : this()
+        {
+            if (resourceProvider == null)
+            {
+                throw new ArgumentNullException("resourceProvider");
+            }
+            this.ResourceProvider = resourceProvider;
+            this.StartTime = startTime;
         }
     }
     
@@ -636,6 +712,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public ListEventsParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ListEventsParameters class with
+        /// required arguments.
+        /// </summary>
+        public ListEventsParameters(DateTime startTime)
+            : this()
+        {
+            this.StartTime = startTime;
         }
     }
     
@@ -744,7 +830,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
     public partial interface IEventsClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -752,11 +846,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>
@@ -770,10 +882,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
     
     public partial class EventsClient : ServiceClient<EventsClient>, IEventsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -783,11 +905,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IEventDataOperations _eventData;
@@ -807,6 +953,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             : base()
         {
             this._eventData = new EventDataOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -814,10 +963,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// Initializes a new instance of the EventsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public EventsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -840,7 +992,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// Initializes a new instance of the EventsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public EventsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -865,6 +1019,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             : base(httpClient)
         {
             this._eventData = new EventDataOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -872,10 +1029,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// Initializes a new instance of the EventsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -901,7 +1061,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
         /// Initializes a new instance of the EventsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -917,6 +1079,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another EventsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of EventsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<EventsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is EventsClient)
+            {
+                EventsClient clonedClient = ((EventsClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
     
@@ -1294,22 +1481,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1320,6 +1507,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1757,23 +1945,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=correlationId eq '" + Uri.EscapeUriString(parameters.CorrelationId.Trim()) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=correlationId eq '" + Uri.EscapeDataString(parameters.CorrelationId.Trim()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1784,6 +1972,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2221,23 +2410,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=eventSource eq '" + Uri.EscapeUriString(parameters.EventSource.Trim()) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=eventSource eq '" + Uri.EscapeDataString(parameters.EventSource.Trim()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2248,6 +2437,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2685,23 +2875,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceUri eq '" + Uri.EscapeUriString(parameters.ResourceUri.Trim()) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=resourceUri eq '" + Uri.EscapeDataString(parameters.ResourceUri.Trim()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2712,6 +2902,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3149,23 +3340,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeUriString(parameters.ResourceGroupName.Trim()) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=resourceGroupName eq '" + Uri.EscapeDataString(parameters.ResourceGroupName.Trim()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3176,6 +3367,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3613,23 +3805,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04";
-            url = url + "&$filter=resourceProvider eq '" + Uri.EscapeUriString(parameters.ResourceProvider.Trim()) + "' and ";
-            url = url + "&eventTimestamp ge '" + Uri.EscapeUriString(parameters.StartTime.ToString()) + "' and ";
+            url = url + "&$filter=resourceProvider eq '" + Uri.EscapeDataString(parameters.ResourceProvider.Trim()) + "' and ";
+            url = url + "&eventTimestamp ge '" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "' and ";
             if (parameters.EndTime != null)
             {
-                url = url + "&eventTimestamp le '" + Uri.EscapeUriString(parameters.EndTime.Value.ToString()) + "' and ";
+                url = url + "&eventTimestamp le '" + Uri.EscapeDataString(parameters.EndTime.Value.ToString()) + "' and ";
             }
             if (parameters.EventChannels != null)
             {
-                url = url + "&eventChannels eq '" + Uri.EscapeUriString(parameters.EventChannels.Value.ToString()) + "'";
+                url = url + "&eventChannels eq '" + Uri.EscapeDataString(parameters.EventChannels.Value.ToString()) + "'";
             }
             if (parameters.NextLink != null)
             {
-                url = url + "&$skipToken=" + Uri.EscapeUriString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
+                url = url + "&$skipToken=" + Uri.EscapeDataString(parameters.NextLink != null ? parameters.NextLink.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3640,6 +3832,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

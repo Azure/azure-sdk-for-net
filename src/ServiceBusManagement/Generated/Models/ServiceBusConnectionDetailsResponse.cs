@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusConnectionDetailsResponse()
         {
-            this._connectionDetails = new List<ServiceBusConnectionDetail>();
+            this.ConnectionDetails = new List<ServiceBusConnectionDetail>();
         }
         
         /// <summary>

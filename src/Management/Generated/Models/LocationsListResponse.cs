@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public LocationsListResponse()
         {
-            this._locations = new List<LocationsListResponse.Location>();
+            this.Locations = new List<LocationsListResponse.Location>();
         }
         
         /// <summary>
@@ -84,6 +84,17 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._availableServices = value; }
             }
             
+            private ComputeCapabilities _computeCapabilities;
+            
+            /// <summary>
+            /// Optional. The compute capabilities in this location.
+            /// </summary>
+            public ComputeCapabilities ComputeCapabilities
+            {
+                get { return this._computeCapabilities; }
+                set { this._computeCapabilities = value; }
+            }
+            
             private string _displayName;
             
             /// <summary>
@@ -112,7 +123,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public Location()
             {
-                this._availableServices = new List<string>();
+                this.AvailableServices = new List<string>();
             }
         }
     }

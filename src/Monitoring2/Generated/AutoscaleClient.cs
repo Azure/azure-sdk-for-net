@@ -107,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleProfile()
         {
-            this._rules = new List<ScaleRule>();
+            this.Rules = new List<ScaleRule>();
         }
     }
     
@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSetting()
         {
-            this._profiles = new List<AutoscaleProfile>();
+            this.Profiles = new List<AutoscaleProfile>();
         }
     }
     
@@ -213,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingCreateOrUpdateParameters()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -283,7 +283,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingGetResponse()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -377,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingResource()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -403,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingResourceCollection()
         {
-            this._value = new List<AutoscaleSettingResource>();
+            this.Value = new List<AutoscaleSettingResource>();
         }
     }
     
@@ -707,9 +707,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this._days = new List<string>();
-            this._hours = new List<int>();
-            this._minutes = new List<int>();
+            this.Days = new List<string>();
+            this.Hours = new List<int>();
+            this.Minutes = new List<int>();
         }
     }
     
@@ -985,7 +985,15 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
     public partial interface IAutoscaleClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -993,17 +1001,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>
@@ -1017,10 +1037,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
     
     public partial class AutoscaleClient : ServiceClient<AutoscaleClient>, IAutoscaleClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -1030,17 +1060,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private ISettingOperations _settings;
@@ -1060,6 +1108,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             : base()
         {
             this._settings = new SettingOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1067,16 +1118,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public AutoscaleClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1099,13 +1147,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public AutoscaleClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1130,6 +1174,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             : base(httpClient)
         {
             this._settings = new SettingOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1137,16 +1184,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1172,13 +1216,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create a Windows Azure subscription, it is
-        /// uniquely identified by a subscription ID. The subscription ID
-        /// forms part of the URI for every call that you make to the Service
-        /// Management API.  The Windows Azure Service ManagementAPI use
-        /// mutual authentication of management certificates over SSL to
-        /// ensure that a request made to the service is secure.  No anonymous
-        /// requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -1194,6 +1234,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another AutoscaleClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of AutoscaleClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<AutoscaleClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is AutoscaleClient)
+            {
+                AutoscaleClient clonedClient = ((AutoscaleClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
     
@@ -1579,9 +1644,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1592,6 +1657,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1913,9 +1979,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1926,6 +1992,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2038,9 +2105,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2051,6 +2118,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2473,13 +2541,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings?";
             url = url + "api-version=2014-04";
             if (targetResourceUri != null)
             {
-                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeUriString(targetResourceUri != null ? targetResourceUri.Trim() : "");
+                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri != null ? targetResourceUri.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2490,6 +2558,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2938,9 +3007,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
             url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2951,6 +3020,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

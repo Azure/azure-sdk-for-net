@@ -145,8 +145,8 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -157,6 +157,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -268,9 +269,12 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         endpointElement.Add(locationElement);
                     }
                     
-                    XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                    weightElement.Value = endpointsItem.Weight.ToString();
-                    endpointElement.Add(weightElement);
+                    if (endpointsItem.Weight != null)
+                    {
+                        XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
+                        weightElement.Value = endpointsItem.Weight.ToString();
+                        endpointElement.Add(weightElement);
+                    }
                 }
                 policyElement.Add(endpointsSequenceElement);
                 
@@ -370,8 +374,8 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions/1";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -382,6 +386,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -676,8 +681,8 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WATM/profiles/" + profileName.Trim() + "/definitions";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -688,6 +693,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

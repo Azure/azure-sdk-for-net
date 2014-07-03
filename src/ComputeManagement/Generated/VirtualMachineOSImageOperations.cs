@@ -70,6 +70,264 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginSharingAsync(string imageName, string permission, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (imageName == null)
+            {
+                throw new ArgumentNullException("imageName");
+            }
+            if (permission == null)
+            {
+                throw new ArgumentNullException("permission");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                tracingParameters.Add("permission", permission);
+                Tracing.Enter(invocationId, this, "BeginSharingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/share?";
+            url = url + "permission=" + Uri.EscapeDataString(permission.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginUnreplicatingAsync(string imageName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (imageName == null)
+            {
+                throw new ArgumentNullException("imageName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                Tracing.Enter(invocationId, this, "BeginUnreplicatingAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/unreplicate";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Create OS Image operation adds an operating system image that
         /// is stored in a storage account and is available from the image
         /// repository.  (see
@@ -122,8 +380,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -134,6 +392,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -489,12 +748,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "?";
             if (deleteFromStorage == true)
             {
                 url = url + "comp=media";
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -505,6 +764,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -614,8 +874,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -626,6 +886,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -850,6 +1111,307 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// Gets OS Image's properties and its replication details. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Details OS Images operation response.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageGetDetailsResponse> GetDetailsAsync(string imageName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (imageName == null)
+            {
+                throw new ArgumentNullException("imageName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                Tracing.Enter(invocationId, this, "GetDetailsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/details";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualMachineOSImageGetDetailsResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineOSImageGetDetailsResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement oSImageDetailsElement = responseDoc.Element(XName.Get("OSImageDetails", "http://schemas.microsoft.com/windowsazure"));
+                    if (oSImageDetailsElement != null)
+                    {
+                        XElement isCorruptedElement = oSImageDetailsElement.Element(XName.Get("IsCorrupted", "http://schemas.microsoft.com/windowsazure"));
+                        if (isCorruptedElement != null && string.IsNullOrEmpty(isCorruptedElement.Value) == false)
+                        {
+                            bool isCorruptedInstance = bool.Parse(isCorruptedElement.Value);
+                            result.IsCorrupted = isCorruptedInstance;
+                        }
+                        
+                        XElement replicationProgressSequenceElement = oSImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
+                        if (replicationProgressSequenceElement != null)
+                        {
+                            foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement();
+                                result.ReplicationProgress.Add(replicationProgressElementInstance);
+                                
+                                XElement locationElement = replicationProgressElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                                if (locationElement != null)
+                                {
+                                    string locationInstance = locationElement.Value;
+                                    replicationProgressElementInstance.Location = locationInstance;
+                                }
+                                
+                                XElement progressElement = replicationProgressElement.Element(XName.Get("Progress", "http://schemas.microsoft.com/windowsazure"));
+                                if (progressElement != null)
+                                {
+                                    string progressInstance = progressElement.Value;
+                                    replicationProgressElementInstance.Progress = progressInstance;
+                                }
+                            }
+                        }
+                        
+                        XElement affinityGroupElement = oSImageDetailsElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
+                        if (affinityGroupElement != null)
+                        {
+                            string affinityGroupInstance = affinityGroupElement.Value;
+                            result.AffinityGroup = affinityGroupInstance;
+                        }
+                        
+                        XElement categoryElement = oSImageDetailsElement.Element(XName.Get("Category", "http://schemas.microsoft.com/windowsazure"));
+                        if (categoryElement != null)
+                        {
+                            string categoryInstance = categoryElement.Value;
+                            result.Category = categoryInstance;
+                        }
+                        
+                        XElement labelElement = oSImageDetailsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        if (labelElement != null)
+                        {
+                            string labelInstance = labelElement.Value;
+                            result.Label = labelInstance;
+                        }
+                        
+                        XElement locationElement2 = oSImageDetailsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                        if (locationElement2 != null)
+                        {
+                            string locationInstance2 = locationElement2.Value;
+                            result.Location = locationInstance2;
+                        }
+                        
+                        XElement logicalSizeInGBElement = oSImageDetailsElement.Element(XName.Get("LogicalSizeInGB", "http://schemas.microsoft.com/windowsazure"));
+                        if (logicalSizeInGBElement != null)
+                        {
+                            double logicalSizeInGBInstance = double.Parse(logicalSizeInGBElement.Value, CultureInfo.InvariantCulture);
+                            result.LogicalSizeInGB = logicalSizeInGBInstance;
+                        }
+                        
+                        XElement mediaLinkElement = oSImageDetailsElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                        if (mediaLinkElement != null)
+                        {
+                            Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                            result.MediaLinkUri = mediaLinkInstance;
+                        }
+                        
+                        XElement nameElement = oSImageDetailsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            result.Name = nameInstance;
+                        }
+                        
+                        XElement osElement = oSImageDetailsElement.Element(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
+                        if (osElement != null)
+                        {
+                            string osInstance = osElement.Value;
+                            result.OperatingSystemType = osInstance;
+                        }
+                        
+                        XElement eulaElement = oSImageDetailsElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
+                        if (eulaElement != null)
+                        {
+                            string eulaInstance = eulaElement.Value;
+                            result.Eula = eulaInstance;
+                        }
+                        
+                        XElement descriptionElement = oSImageDetailsElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                        if (descriptionElement != null)
+                        {
+                            string descriptionInstance = descriptionElement.Value;
+                            result.Description = descriptionInstance;
+                        }
+                        
+                        XElement imageFamilyElement = oSImageDetailsElement.Element(XName.Get("ImageFamily", "http://schemas.microsoft.com/windowsazure"));
+                        if (imageFamilyElement != null)
+                        {
+                            string imageFamilyInstance = imageFamilyElement.Value;
+                            result.ImageFamily = imageFamilyInstance;
+                        }
+                        
+                        XElement showInGuiElement = oSImageDetailsElement.Element(XName.Get("ShowInGui", "http://schemas.microsoft.com/windowsazure"));
+                        if (showInGuiElement != null && string.IsNullOrEmpty(showInGuiElement.Value) == false)
+                        {
+                            bool showInGuiInstance = bool.Parse(showInGuiElement.Value);
+                            result.ShowInGui = showInGuiInstance;
+                        }
+                        
+                        XElement publishedDateElement = oSImageDetailsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                        if (publishedDateElement != null)
+                        {
+                            DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                            result.PublishedDate = publishedDateInstance;
+                        }
+                        
+                        XElement isPremiumElement = oSImageDetailsElement.Element(XName.Get("IsPremium", "http://schemas.microsoft.com/windowsazure"));
+                        if (isPremiumElement != null && string.IsNullOrEmpty(isPremiumElement.Value) == false)
+                        {
+                            bool isPremiumInstance = bool.Parse(isPremiumElement.Value);
+                            result.IsPremium = isPremiumInstance;
+                        }
+                        
+                        XElement iconUriElement = oSImageDetailsElement.Element(XName.Get("IconUri", "http://schemas.microsoft.com/windowsazure"));
+                        if (iconUriElement != null)
+                        {
+                            Uri iconUriInstance = TypeConversion.TryParseUri(iconUriElement.Value);
+                            result.IconUri = iconUriInstance;
+                        }
+                        
+                        XElement privacyUriElement = oSImageDetailsElement.Element(XName.Get("PrivacyUri", "http://schemas.microsoft.com/windowsazure"));
+                        if (privacyUriElement != null)
+                        {
+                            Uri privacyUriInstance = TypeConversion.TryParseUri(privacyUriElement.Value);
+                            result.PrivacyUri = privacyUriInstance;
+                        }
+                        
+                        XElement recommendedVMSizeElement = oSImageDetailsElement.Element(XName.Get("RecommendedVMSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (recommendedVMSizeElement != null)
+                        {
+                            string recommendedVMSizeInstance = recommendedVMSizeElement.Value;
+                            result.RecommendedVMSize = recommendedVMSizeInstance;
+                        }
+                        
+                        XElement publisherNameElement = oSImageDetailsElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                        if (publisherNameElement != null)
+                        {
+                            string publisherNameInstance = publisherNameElement.Value;
+                            result.PublisherName = publisherNameInstance;
+                        }
+                        
+                        XElement smallIconUriElement = oSImageDetailsElement.Element(XName.Get("SmallIconUri", "http://schemas.microsoft.com/windowsazure"));
+                        if (smallIconUriElement != null)
+                        {
+                            Uri smallIconUriInstance = TypeConversion.TryParseUri(smallIconUriElement.Value);
+                            result.SmallIconUri = smallIconUriInstance;
+                        }
+                        
+                        XElement languageElement = oSImageDetailsElement.Element(XName.Get("Language", "http://schemas.microsoft.com/windowsazure"));
+                        if (languageElement != null)
+                        {
+                            string languageInstance = languageElement.Value;
+                            result.Language = languageInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The List OS Images operation retrieves a list of the operating
         /// system images from the image repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157191.aspx
@@ -876,8 +1438,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -888,6 +1450,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1111,6 +1674,388 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// Replicate an OS image to multiple target locations. This operation
+        /// is only for publishers. You have to be registered as image
+        /// publisher with Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine OS image to replicate.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Replicate Virtual Machine
+        /// Image operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the published name of the image.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageReplicateResponse> ReplicateAsync(string imageName, VirtualMachineOSImageReplicateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (imageName == null)
+            {
+                throw new ArgumentNullException("imageName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "ReplicateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim() + "/replicate";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement replicationInputElement = new XElement(XName.Get("ReplicationInput", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(replicationInputElement);
+                
+                if (parameters.TargetLocations != null)
+                {
+                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    {
+                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                        targetLocationsItemElement.Value = targetLocationsItem;
+                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                    }
+                    replicationInputElement.Add(targetLocationsSequenceElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    VirtualMachineOSImageReplicateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new VirtualMachineOSImageReplicateResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement virtualMachineOSImageReplicateResponseElement = responseDoc.Element(XName.Get("VirtualMachineOSImageReplicateResponse", ""));
+                    if (virtualMachineOSImageReplicateResponseElement != null)
+                    {
+                        XElement stringElement = virtualMachineOSImageReplicateResponseElement.Element(XName.Get("string", ""));
+                        if (stringElement != null)
+                        {
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Share an already replicated OS image. This operation is only for
+        /// publishers. You have to be registered as image publisher with
+        /// Windows Azure to be able to call this.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to share.
+        /// </param>
+        /// <param name='permission'>
+        /// Required. The sharing permission: public, msdn, or private.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> ShareAsync(string imageName, string permission, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                tracingParameters.Add("permission", permission);
+                Tracing.Enter(invocationId, this, "ShareAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.VirtualMachineOSImages.BeginSharingAsync(imageName, permission, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Unreplicate an OS image to multiple target locations. This
+        /// operation is only for publishers. You have to be registered as
+        /// image publisher with Windows Azure to be able to call this. Note:
+        /// The operation removes the published copies of the user OS Image.
+        /// It does not remove the actual user OS Image. To remove the actual
+        /// user OS Image, the publisher will have to call Delete OS Image.
+        /// </summary>
+        /// <param name='imageName'>
+        /// Required. The name of the virtual machine image to replicate. Note:
+        /// The OS Image Name should be the user OS Image, not the published
+        /// name of the OS Image.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> UnreplicateAsync(string imageName, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("imageName", imageName);
+                Tracing.Enter(invocationId, this, "UnreplicateAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.VirtualMachineOSImages.BeginUnreplicatingAsync(imageName, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Update OS Image operation updates an OS image that in your
         /// image repository.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj157198.aspx
@@ -1158,8 +2103,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/images/" + imageName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1170,6 +2115,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

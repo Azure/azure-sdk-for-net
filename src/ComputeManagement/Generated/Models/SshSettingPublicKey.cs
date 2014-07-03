@@ -62,5 +62,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public SshSettingPublicKey()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the SshSettingPublicKey class with
+        /// required arguments.
+        /// </summary>
+        public SshSettingPublicKey(string fingerprint, string path)
+            : this()
+        {
+            if (fingerprint == null)
+            {
+                throw new ArgumentNullException("fingerprint");
+            }
+            if (path == null)
+            {
+                throw new ArgumentNullException("path");
+            }
+            this.Fingerprint = fingerprint;
+            this.Path = path;
+        }
     }
 }

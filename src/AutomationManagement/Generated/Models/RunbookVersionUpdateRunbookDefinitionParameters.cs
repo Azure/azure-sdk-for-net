@@ -71,5 +71,30 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookVersionUpdateRunbookDefinitionParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookVersionUpdateRunbookDefinitionParameters class with
+        /// required arguments.
+        /// </summary>
+        public RunbookVersionUpdateRunbookDefinitionParameters(string runbookVersionId, Stream runbookStream, string eTag)
+            : this()
+        {
+            if (runbookVersionId == null)
+            {
+                throw new ArgumentNullException("runbookVersionId");
+            }
+            if (runbookStream == null)
+            {
+                throw new ArgumentNullException("runbookStream");
+            }
+            if (eTag == null)
+            {
+                throw new ArgumentNullException("eTag");
+            }
+            this.RunbookVersionId = runbookVersionId;
+            this.RunbookStream = runbookStream;
+            this.ETag = eTag;
+        }
     }
 }

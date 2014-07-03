@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobGetHistoryResponse()
         {
-            this._jobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
+            this.JobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
         }
         
         /// <summary>

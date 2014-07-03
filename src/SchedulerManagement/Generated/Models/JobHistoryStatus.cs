@@ -38,5 +38,10 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// A failed execution attempt.
         /// </summary>
         Failed = 1,
+        
+        /// <summary>
+        /// Execution has been postponed.
+        /// </summary>
+        Postponed = 2,
     }
 }

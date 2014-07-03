@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListResponse()
         {
-            this._hostedServices = new List<HostedServiceListResponse.HostedService>();
+            this.HostedServices = new List<HostedServiceListResponse.HostedService>();
         }
         
         /// <summary>
@@ -72,6 +72,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class HostedService
         {
+            private ComputeCapabilities _computeCapabilities;
+            
+            /// <summary>
+            /// Optional. The compute capabilities in this hosted service.
+            /// </summary>
+            public ComputeCapabilities ComputeCapabilities
+            {
+                get { return this._computeCapabilities; }
+                set { this._computeCapabilities = value; }
+            }
+            
             private HostedServiceProperties _properties;
             
             /// <summary>

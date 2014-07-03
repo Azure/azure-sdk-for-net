@@ -46,10 +46,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// </summary>
     public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all golden gate requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -59,12 +69,35 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
@@ -114,6 +147,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._apiVersion = "2011-10-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -122,11 +158,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all golden gate requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -150,8 +188,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -181,6 +220,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._apiVersion = "2011-10-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -189,11 +231,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all golden gate requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -220,8 +264,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -237,6 +282,31 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// ExpressRouteManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of ExpressRouteManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<ExpressRouteManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is ExpressRouteManagementClient)
+            {
+                ExpressRouteManagementClient clonedClient = ((ExpressRouteManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -282,8 +352,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/networking/operation/" + operationId.Trim();
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -294,6 +364,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

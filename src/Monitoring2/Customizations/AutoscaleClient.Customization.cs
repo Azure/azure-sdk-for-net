@@ -28,18 +28,5 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         {
             return WithHandler(new AutoscaleClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<AutoscaleClient> client)
-        {
-            base.Clone(client);
-
-            AutoscaleClient metricsClient = client as AutoscaleClient;
-            if (metricsClient != null)
-            {
-                metricsClient._credentials = Credentials;
-                metricsClient._baseUri = BaseUri;
-                metricsClient.Credentials.InitializeServiceClient(metricsClient);
-            }
-        }
     }
 }

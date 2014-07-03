@@ -93,5 +93,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobStatus()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobStatus class with required
+        /// arguments.
+        /// </summary>
+        public JobStatus(int executionCount)
+            : this()
+        {
+            this.ExecutionCount = executionCount;
+        }
     }
 }

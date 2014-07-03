@@ -85,6 +85,9 @@ namespace Microsoft.WindowsAzure.Common.Test
             genericMessage.Content = new StringContent(genericMessageString);
             genericMessageWithoutBody = new HttpRequestMessage(HttpMethod.Get, "http//test/url");
             notFoundResponse = new HttpResponseMessage(HttpStatusCode.NotFound);
+            notFoundResponse.Headers.Add("x-ms-request-id", "content1");
+            notFoundResponse.Headers.Add("x-ms-routing-request-id", "content2");
+
             notFoundResponse.Content = new StreamContent(new MemoryStream());
             serverErrorResponse = new HttpResponseMessage(HttpStatusCode.InternalServerError);
             serverErrorResponse.Content = new StringContent(jsonErrorMessageString);
@@ -102,6 +105,17 @@ namespace Microsoft.WindowsAzure.Common.Test
             var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, "");
 
             Assert.Null(notFoundResponse.Content.Headers.ContentType);
+            Assert.NotNull(ex);
+        }
+
+        [Fact]
+        public void ExceptionContainsRequestIdAndRoutingRequestId()
+        {
+            var ex = CloudException.Create(genericMessage, genericMessageString, notFoundResponse, "");
+
+            Assert.Null(notFoundResponse.Content.Headers.ContentType);
+            Assert.Equal(ex.RequestId, "content1");
+            Assert.Equal(ex.RoutingRequestId, "content2");
             Assert.NotNull(ex);
         }
 

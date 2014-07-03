@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public CloudService()
         {
-            this._resources = new List<AutomationResource>();
+            this.Resources = new List<AutomationResource>();
         }
     }
 }

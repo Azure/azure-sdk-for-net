@@ -190,7 +190,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageUpdateParameters()
         {
-            this._dataDiskConfigurations = new List<DataDiskConfigurationUpdateParameters>();
+            this.DataDiskConfigurations = new List<DataDiskConfigurationUpdateParameters>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineVMImageUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineVMImageUpdateParameters(string label)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Label = label;
         }
     }
 }

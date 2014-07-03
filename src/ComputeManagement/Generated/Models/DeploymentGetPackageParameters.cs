@@ -60,5 +60,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public DeploymentGetPackageParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DeploymentGetPackageParameters
+        /// class with required arguments.
+        /// </summary>
+        public DeploymentGetPackageParameters(Uri containerUri)
+            : this()
+        {
+            if (containerUri == null)
+            {
+                throw new ArgumentNullException("containerUri");
+            }
+            this.ContainerUri = containerUri;
+        }
     }
 }

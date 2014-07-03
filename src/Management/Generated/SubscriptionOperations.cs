@@ -92,8 +92,8 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "");
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -104,6 +104,7 @@ namespace Microsoft.WindowsAzure.Management
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -114,7 +115,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -343,22 +344,22 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/operations?";
-            url = url + "&StartTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
-            url = url + "&EndTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
+            url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.ToUniversalTime()));
+            url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.ToUniversalTime()));
             if (parameters.ObjectIdFilter != null)
             {
-                url = url + "&ObjectIdFilter=" + Uri.EscapeUriString(parameters.ObjectIdFilter != null ? parameters.ObjectIdFilter.Trim() : "");
+                url = url + "&ObjectIdFilter=" + Uri.EscapeDataString(parameters.ObjectIdFilter != null ? parameters.ObjectIdFilter.Trim() : "");
             }
             if (parameters.OperationStatus != null)
             {
-                url = url + "&OperationResultFilter=" + Uri.EscapeUriString(parameters.OperationStatus.Value.ToString());
+                url = url + "&OperationResultFilter=" + Uri.EscapeDataString(parameters.OperationStatus.Value.ToString());
             }
             if (parameters.ContinuationToken != null)
             {
-                url = url + "&ContinuationToken=" + Uri.EscapeUriString(parameters.ContinuationToken != null ? parameters.ContinuationToken.Trim() : "");
+                url = url + "&ContinuationToken=" + Uri.EscapeDataString(parameters.ContinuationToken != null ? parameters.ContinuationToken.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -369,6 +370,7 @@ namespace Microsoft.WindowsAzure.Management
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -379,7 +381,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -590,10 +592,10 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=" + Uri.EscapeUriString(resourceName.Trim());
+            url = url + "service=" + Uri.EscapeDataString(resourceName.Trim());
             url = url + "&action=register";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -604,6 +606,7 @@ namespace Microsoft.WindowsAzure.Management
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -614,7 +617,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -711,10 +714,10 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services?";
-            url = url + "service=" + Uri.EscapeUriString(resourceName.Trim());
+            url = url + "service=" + Uri.EscapeDataString(resourceName.Trim());
             url = url + "&action=unregister";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -725,6 +728,7 @@ namespace Microsoft.WindowsAzure.Management
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -735,7 +739,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
