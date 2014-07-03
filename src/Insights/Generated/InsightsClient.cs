@@ -3370,7 +3370,6 @@ namespace Microsoft.Azure.Insights
         /// The List Metric values operation response.
         /// </returns>
         Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
-        Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions);
     }
 
     /// <summary>
