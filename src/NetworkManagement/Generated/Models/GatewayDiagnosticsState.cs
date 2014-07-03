@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
+    /// <summary>
+    /// Standard states for Virtual Network Gateway Diagnostics Events.
+    /// </summary>
     public enum GatewayDiagnosticsState
     {
         Ready = 0,
