@@ -22,19 +22,40 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Standard states for Virtual Network Gateway Diagnostics Events.
+    /// Parameters supplied to the Update DNS Server operation.
     /// </summary>
-    public enum GatewayDiagnosticsState
+    public partial class DNSUpdateParameters
     {
-        Ready = 0,
+        private string _address;
         
-        Scheduled = 1,
+        /// <summary>
+        /// Optional. IP Address of the DNS server
+        /// </summary>
+        public string Address
+        {
+            get { return this._address; }
+            set { this._address = value; }
+        }
         
-        InProgress = 2,
+        private string _name;
         
-        StopInProgress = 3,
+        /// <summary>
+        /// Optional. Name of the DNS server.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DNSUpdateParameters class.
+        /// </summary>
+        public DNSUpdateParameters()
+        {
+        }
     }
 }

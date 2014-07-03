@@ -316,6 +316,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class PublicIP
         {
+            private int? _idleTimeoutInMinutes;
+            
+            /// <summary>
+            /// Optional. The idle timeout in minutes for this Public IP.
+            /// </summary>
+            public int? IdleTimeoutInMinutes
+            {
+                get { return this._idleTimeoutInMinutes; }
+                set { this._idleTimeoutInMinutes = value; }
+            }
+            
             private string _name;
             
             /// <summary>
