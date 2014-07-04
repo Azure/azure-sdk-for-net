@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Insights.Models;
@@ -48,7 +46,7 @@ namespace Microsoft.Azure.Insights
         /// <returns>The requested Metrics</returns>
         public static Task<MetricListResponse> GetMetricsAsync(this IMetricOperations operations, string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
         {
-            return operations.GetMetricsAsync(resourceUri, filterString, CancellationToken.None);
+            return operations.GetMetricsAsync(resourceUri, filterString, definitions, CancellationToken.None);
         }
     }
 }
