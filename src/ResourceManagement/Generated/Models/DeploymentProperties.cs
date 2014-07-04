@@ -42,6 +42,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._correlationId = value; }
         }
         
+        private IList<Dependency> _dependencies;
+        
+        /// <summary>
+        /// Optional. Gets the list of deployment dependencies.
+        /// </summary>
+        public IList<Dependency> Dependencies
+        {
+            get { return this._dependencies; }
+            set { this._dependencies = value; }
+        }
+        
         private string _outputs;
         
         /// <summary>
@@ -57,7 +68,8 @@ namespace Microsoft.Azure.Management.Resources.Models
         private IList<Provider> _providers;
         
         /// <summary>
-        /// Optional. The list of resource providers needed for the deployment
+        /// Optional. Gets the list of resource providers needed for the
+        /// deployment.
         /// </summary>
         public IList<Provider> Providers
         {
@@ -92,6 +104,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
+            this.Dependencies = new List<Dependency>();
             this.Providers = new List<Provider>();
         }
     }

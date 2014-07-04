@@ -21,19 +21,18 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment operation information.
+    /// Deployment dependency information.
     /// </summary>
-    public partial class DeploymentOperation
+    public partial class BasicDependency
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets full deployment operation id.
+        /// Optional. Gets or sets the ID of the dependency.
         /// </summary>
         public string Id
         {
@@ -41,32 +40,32 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._id = value; }
         }
         
-        private string _operationId;
+        private string _resourceName;
         
         /// <summary>
-        /// Optional. Gets or sets deployment operation id.
+        /// Optional. Gets or sets the dependency resource name.
         /// </summary>
-        public string OperationId
+        public string ResourceName
         {
-            get { return this._operationId; }
-            set { this._operationId = value; }
+            get { return this._resourceName; }
+            set { this._resourceName = value; }
         }
         
-        private DeploymentOperationProperties _properties;
+        private string _resourceType;
         
         /// <summary>
-        /// Optional. Gets or sets deployment properties.
+        /// Optional. Gets or sets the dependency resource type.
         /// </summary>
-        public DeploymentOperationProperties Properties
+        public string ResourceType
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperation class.
+        /// Initializes a new instance of the BasicDependency class.
         /// </summary>
-        public DeploymentOperation()
+        public BasicDependency()
         {
         }
     }

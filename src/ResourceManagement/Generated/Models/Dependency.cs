@@ -20,54 +20,34 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Deployment operation information.
+    /// Deployment dependency information.
     /// </summary>
-    public partial class DeploymentOperation
+    public partial class Dependency : BasicDependency
     {
-        private string _id;
+        private IList<BasicDependency> _dependsOn;
         
         /// <summary>
-        /// Optional. Gets or sets full deployment operation id.
+        /// Optional. Gets the list of dependencies.
         /// </summary>
-        public string Id
+        public IList<BasicDependency> DependsOn
         {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _operationId;
-        
-        /// <summary>
-        /// Optional. Gets or sets deployment operation id.
-        /// </summary>
-        public string OperationId
-        {
-            get { return this._operationId; }
-            set { this._operationId = value; }
-        }
-        
-        private DeploymentOperationProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets deployment properties.
-        /// </summary>
-        public DeploymentOperationProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._dependsOn; }
+            set { this._dependsOn = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the DeploymentOperation class.
+        /// Initializes a new instance of the Dependency class.
         /// </summary>
-        public DeploymentOperation()
+        public Dependency()
         {
+            this.DependsOn = new List<BasicDependency>();
         }
     }
 }
