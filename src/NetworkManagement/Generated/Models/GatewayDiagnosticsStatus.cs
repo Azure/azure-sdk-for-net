@@ -20,35 +20,44 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Management.Network.Models;
 
-namespace Microsoft.WindowsAzure.Management.Compute.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Parameters supplied to the delete role instance by deployment name
-    /// operation.
+    /// The status of a gateway diagnostics operation.
     /// </summary>
-    public partial class DeploymentDeleteRoleInstanceParameters
+    public partial class GatewayDiagnosticsStatus : OperationResponse
     {
-        private IList<string> _name;
+        private string _diagnosticsUrl;
         
         /// <summary>
-        /// Optional. The names of role instances to delete from the deployment
+        /// Optional. The url where the diagnostics data can be found.
         /// </summary>
-        public IList<string> Name
+        public string DiagnosticsUrl
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._diagnosticsUrl; }
+            set { this._diagnosticsUrl = value; }
+        }
+        
+        private GatewayDiagnosticsState _state;
+        
+        /// <summary>
+        /// Optional. The current state of the gateway's diagnostics session.
+        /// </summary>
+        public GatewayDiagnosticsState State
+        {
+            get { return this._state; }
+            set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeploymentDeleteRoleInstanceParameters class.
+        /// Initializes a new instance of the GatewayDiagnosticsStatus class.
         /// </summary>
-        public DeploymentDeleteRoleInstanceParameters()
+        public GatewayDiagnosticsStatus()
         {
-            this.Name = new List<string>();
         }
     }
 }

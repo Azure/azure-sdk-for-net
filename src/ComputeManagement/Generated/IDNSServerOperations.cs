@@ -29,16 +29,15 @@ using Microsoft.WindowsAzure.Management.Compute.Models;
 namespace Microsoft.WindowsAzure.Management.Compute
 {
     /// <summary>
-    /// The Compute Management API includes operations for managing the load
-    /// balancers for your subscription.
+    /// The Compute Management API includes operations for managing the dns
+    /// servers for your subscription.
     /// </summary>
-    public partial interface ILoadBalancerOperations
+    public partial interface IDNSServerOperations
     {
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='serviceName'>
         /// The name of the service.
@@ -47,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Load Balancer operation.
+        /// Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -63,73 +62,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<OperationStatusResponse> BeginCreatingAsync(string serviceName, string deploymentName, LoadBalancerCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> AddDNSServerAsync(string serviceName, string deploymentName, DNSAddParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
-        /// </summary>
-        /// <param name='serviceName'>
-        /// The name of the service.
-        /// </param>
-        /// <param name='deploymentName'>
-        /// The name of the deployment.
-        /// </param>
-        /// <param name='loadBalancerName'>
-        /// The name of the load balancer.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request and error information regarding
-        /// the failure.
-        /// </returns>
-        Task<OperationStatusResponse> BeginDeletingAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
-        /// </summary>
-        /// <param name='serviceName'>
-        /// The name of the service.
-        /// </param>
-        /// <param name='deploymentName'>
-        /// The name of the deployment.
-        /// </param>
-        /// <param name='loadBalancerName'>
-        /// The name of the loadBalancer.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balancer operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request and error information regarding
-        /// the failure.
-        /// </returns>
-        Task<OperationStatusResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='serviceName'>
         /// The name of the service.
@@ -138,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Load Balancer operation.
+        /// Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -154,10 +92,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<OperationStatusResponse> CreateAsync(string serviceName, string deploymentName, LoadBalancerCreateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginAddingDNSServerAsync(string serviceName, string deploymentName, DNSAddParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='serviceName'>
         /// The name of the service.
@@ -165,21 +103,28 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// The name of the load balancer.
+        /// <param name='dnsServerName'>
+        /// The name of the dns server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        Task<OperationResponse> DeleteAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginDeletingDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='serviceName'>
         /// The name of the service.
@@ -187,11 +132,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// <param name='deploymentName'>
         /// The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// The name of the loadBalancer.
+        /// <param name='dnsServerName'>
+        /// The name of the dns server.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Load Balancer operation.
+        /// Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -207,6 +152,66 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        Task<OperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> BeginUpdatingDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes a definition for an existing DNS server from the deployment
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='dnsServerName'>
+        /// The name of the dns server.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> DeleteDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='dnsServerName'>
+        /// The name of the dns server.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update DNS Server operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> UpdateDNSServerAsync(string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }
