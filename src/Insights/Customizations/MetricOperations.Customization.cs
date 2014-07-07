@@ -31,7 +31,11 @@ namespace Microsoft.Azure.Insights
             // If no definitions provided, return empty collection
             if (definitions == null || !definitions.Any())
             {
-                return new MetricListResponse();
+                return new MetricListResponse()
+                {
+                    RequestId = Guid.NewGuid().ToString("D"),
+                    StatusCode =  HttpStatusCode.OK
+                };
             }
 
             // Parse MetricFilter
@@ -90,6 +94,8 @@ namespace Microsoft.Azure.Insights
             // Create response (merge and wrap metrics)
             return new MetricListResponse()
             {
+                RequestId = Guid.NewGuid().ToString("D"),
+                StatusCode = HttpStatusCode.OK,
                 MetricCollection = new MetricCollection()
                 {
                     Value = metrics.Union(emptyMetrics).ToList()
