@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -22,16 +20,22 @@ namespace Microsoft.Azure.Insights
                     (await this.Client.MetricDefinitionOperations.GetMetricDefinitionsAsync(
                         resourceUri,
                         ShoeboxHelper.GenerateMetricDefinitionFilterString(MetricFilterExpressionParser.Parse(filterString).Names),
-                        cancellationToken)).MetricDefinitionCollection.Value);
+                        cancellationToken)).MetricDefinitionCollection.Value,
+                    cancellationToken);
         }
 
         // Alternate method for getting metrics by passing in the definitions
-        public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
+        public async Task<MetricListResponse> GetMetricsAsync(
+            string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions, CancellationToken cancellationToken)
         {
-            // TODO: Verify expected behavior (no metric definitions found for that resource)
+            // If no definitions provided, return empty collection
             if (definitions == null || !definitions.Any())
             {
-                return new MetricListResponse();
+                return new MetricListResponse()
+                {
+                    RequestId = Guid.NewGuid().ToString("D"),
+                    StatusCode =  HttpStatusCode.OK
+                };
             }
 
             // Parse MetricFilter
@@ -40,23 +44,16 @@ namespace Microsoft.Azure.Insights
             // Names not allowed in filter since the names are in the definitions
             if (filter.Names != null && filter.Names.Any())
             {
-                // TODO: Error Codes?
-                return new MetricListResponse()
-                {
-                    StatusCode = HttpStatusCode.BadRequest
-                };
+                throw new ArgumentException("Cannot specify names when MetricDefinitions are included", "filterString");
             }
 
             // Ensure every definition has at least one availability matching the filter timegrain
             if (!definitions.All(d => d.MetricAvailabilities.Any(a => a.TimeGrain == filter.TimeGrain)))
             {
-                // TODO: Error Codes?
-                return new MetricListResponse()
-                {
-                    StatusCode = HttpStatusCode.BadRequest
-                };
+                throw new ArgumentException("Definition contains no availability for the timeGrain requested", "definitions");
             }
 
+            // Group definitions by location so we can make one request to each location
             Dictionary<MetricAvailability, MetricFilter> groups =
                 definitions.GroupBy(d => d.MetricAvailabilities.First(a => a.TimeGrain == filter.TimeGrain),
                     new AvailabilityComparer()).ToDictionary(g => g.Key, g => new MetricFilter()
@@ -67,41 +64,68 @@ namespace Microsoft.Azure.Insights
                         Names = g.Select(d => d.Name.Value)
                     });
 
+            // Get Metrics from each location (group)
+            IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g => g.Key.Location == null
+                    ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), cancellationToken)
+                    : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location));
+
+            // Aggregate metrics from all groups
+            MetricListResponse[] results = (await Task.Factory.ContinueWhenAll(locationTasks.ToArray(), tasks => tasks.Select(t => t.Result))).ToArray();
+            IEnumerable<Metric> metrics = results.Aggregate<MetricListResponse, IEnumerable<Metric>>(
+                new List<Metric>(), (list, response) => list.Union(response.MetricCollection.Value));
+
+            // Fill in values (resourceUri, displayName, unit) from definitions
+            CompleteShoeboxMetrics(metrics, definitions, resourceUri);
+
+            // Add empty objects for metrics that had no values come back, ensuring a metric is returned for each definition
+            IEnumerable<Metric> emptyMetrics = definitions.Where(
+                d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase))).Select(d => new Metric()
+                {
+                    Name = d.Name,
+                    Unit = d.Unit,
+                    ResourceId = resourceUri,
+                    StartTime = filter.StartTime,
+                    EndTime = filter.EndTime,
+                    TimeGrain = filter.TimeGrain,
+                    MetricValues = new List<MetricValue>(),
+                    Properties = new Dictionary<string, string>()
+                });
+            
+            // Create response (merge and wrap metrics)
             return new MetricListResponse()
             {
+                RequestId = Guid.NewGuid().ToString("D"),
                 StatusCode = HttpStatusCode.OK,
                 MetricCollection = new MetricCollection()
                 {
-                    Value =
-                        (await
-                            Task.Factory.ContinueWhenAll(
-                                groups.Select(g => g.Key.Location == null
-                                        ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), CancellationToken.None)
-                                        : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location)).ToArray(),
-                                tasks =>
-                                    tasks.Aggregate<Task<MetricListResponse>, IEnumerable<Metric>>(new List<Metric>(),
-                                        (list, r) => list.Union(r.Result.MetricCollection.Value)))).ToList()
+                    Value = metrics.Union(emptyMetrics).ToList()
                 }
             };
         }
 
-        private void CompleteShoeboxMetrics(MetricCollection collection, IEnumerable<MetricDefinition> definitions, string resourceUri)
+        private static void CompleteShoeboxMetrics(IEnumerable<Metric> collection, IEnumerable<MetricDefinition> definitions, string resourceUri)
         {
-            foreach (Metric metric in collection.Value)
-                {
-                    MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
+            foreach (Metric metric in collection)
+            {
+                MetricDefinition definition = definitions.FirstOrDefault(md => string.Equals(md.Name.Value, metric.Name.Value, StringComparison.OrdinalIgnoreCase));
 
-                    metric.ResourceId = resourceUri;
-                    metric.Name.LocalizedValue = definition == null ? metric.Name.Value : definition.Name.Value;
-                }
+                metric.ResourceId = resourceUri;
+                metric.Name.LocalizedValue = (definition != null && !string.IsNullOrEmpty(definition.Name.LocalizedValue)) ? definition.Name.LocalizedValue : metric.Name.Value;
+                metric.Unit = definition == null ? Unit.Count : definition.Unit;
+            }
         }
 
         private static string RemoveNamesFromFilterString(string filterString)
         {
             MetricFilter filter = MetricFilterExpressionParser.Parse(filterString);
-            filter.Names = null;
+            MetricFilter nameless = new MetricFilter()
+            {
+                TimeGrain = filter.TimeGrain,
+                StartTime = filter.StartTime,
+                EndTime = filter.EndTime
+            };
 
-            return ShoeboxHelper.GenerateMetricFilterString(filter);
+            return ShoeboxHelper.GenerateMetricFilterString(nameless);
         }
 
         private class AvailabilityComparer : IEqualityComparer<MetricAvailability>

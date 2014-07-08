@@ -15,16 +15,21 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="Customizations\IMetricOperations.Customization.cs" />
     <Compile Include="Customizations\InsightsClient.Customization.cs" />
+    <Compile Include="Customizations\InsightsClient.GetEventCountSummaryParameters.Customization.cs" />
+    <Compile Include="Customizations\InsightsClient.ListEventsParameter.Customization.cs" />
     <Compile Include="Customizations\InsightsManagementClient.Customization.cs" />
     <Compile Include="Customizations\MetricDefinitionOperations.Customization.cs" />
     <Compile Include="Customizations\MetricOperations.Customization.cs" />
+    <Compile Include="Customizations\MetricOperationsExtensions.Customization.cs" />
     <Compile Include="Customizations\Shoebox\MetricDefinitionFilterParser.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilter.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterExpressionParser.cs" />
     <Compile Include="Customizations\Shoebox\MetricFilterRegexParser.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxClient.cs" />
     <Compile Include="Customizations\Shoebox\ShoeboxHelper.cs" />
+    <Compile Include="Customizations\Shoebox\SizeBoundedCache.cs" />
     <Compile Include="Generated\InsightsClient.cs" />
     <Compile Include="Generated\InsightsManagementClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

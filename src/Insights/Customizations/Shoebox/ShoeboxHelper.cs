@@ -9,112 +9,105 @@ namespace Microsoft.Azure.Insights
 {
     internal static class ShoeboxHelper
     {
-        private const int StorageKeyLimit = 432;
-        private const int StorageKeyTrimPadding = 17;
-        private const string DateTimeFormatString = "yyyy'-'MM'-'ddTHH':'mm':'ss'.'FFFFFFFzzz";
+        private const int KeyLimit = 432;
+        private const int KeyTrimPadding = 17;
 
         /// <summary>
         /// Encoding function for use with Shoebox table Partition and Row Keys
         /// </summary>
-        /// <param name="storageKey">The key</param>
+        /// <param name="key">The key</param>
         /// <returns>The encoded key</returns>
-        public static string TrimAndEscapeStorageKey(string storageKey)
+        public static string TrimAndEscapeKey(string key)
         {
-            return TrimStorageKey(EscapeStorageKey(storageKey), StorageKeyLimit);
+            return TrimKey(EscapeStorageKey(key), KeyLimit);
         }
 
-        public static string UnEscapeStorageKey(string storageKey)
+        public static string UnEscapeKey(string key)
         {
-            StringBuilder unescapedStorageKey = new StringBuilder();
-            for (int i = 0; i < storageKey.Length; i++)
-            {
-                if (storageKey[i] == ':')
-                {
-                    string hexString = storageKey[i + 1] == ':'
-                        ? storageKey.Substring(i + 2, 4)
-                        : storageKey.Substring(i + 1, 2);
+            StringBuilder unescapedKey = new StringBuilder();
 
-                    unescapedStorageKey.Append(char.ConvertFromUtf32(Int32.Parse(hexString, NumberStyles.AllowHexSpecifier)));
-                    i += storageKey[i + 1] == ':' ? 5 : 2;
-                }
-                else
+            try
+            {
+                for (int i = 0; i < key.Length; i++)
                 {
-                    unescapedStorageKey.Append(storageKey[i]);
+                    if (key[i] == ':')
+                    {
+                        string hexString = key.Substring(i + 1, 4);
+                        unescapedKey.Append(char.ConvertFromUtf32(Int32.Parse(hexString, NumberStyles.AllowHexSpecifier)));
+
+                        i += 4;
+                    }
+                    else
+                    {
+                        unescapedKey.Append(key[i]);
+                    }
                 }
             }
+            catch (FormatException)
+            {
+                // If unable to decode, return the original string
+                return key;
+            }
 
-            return unescapedStorageKey.ToString();
+            return unescapedKey.ToString();
         }
 
         public static string GenerateMetricDefinitionFilterString(IEnumerable<string> names)
         {
-            return names.Select(n => "Name.Value eq " + n).Aggregate((a, b) => a + " or " + b);
+            return names.Select(n => "name.value eq '" + n + "'").Aggregate((a, b) => a + " or " + b);
         }
 
         public static string GenerateMetricFilterString(MetricFilter filter)
         {
 
             return string.Format(CultureInfo.InvariantCulture,
-                "{0}TimeGrain eq {1} and StartTime eq {2} and EndTime eq {3}",
-                filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and",
+                "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
+                filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and ",
                 filter.TimeGrain.To8601String(),
-                filter.StartTime.ToString(DateTimeFormatString),
-                filter.EndTime.ToString(DateTimeFormatString));
+                filter.StartTime.ToString("O"),
+                filter.EndTime.ToString("O"));
         }
 
-        private static string EscapeStorageKey(string value)
+        private static string EscapeStorageKey(string key)
         {
-            StringBuilder escapedStorageKey = new StringBuilder(value.Length);
-            foreach (char c in value)
+            StringBuilder escapedkey = new StringBuilder(key.Length);
+            foreach (char c in key)
             {
                 if (!char.IsLetterOrDigit(c))
                 {
-                    escapedStorageKey.Append(EscapeStorageCharacter(c));
+                    escapedkey.Append(string.Format(CultureInfo.InvariantCulture, ":{0:X4}", (ushort)c));
                 }
                 else
                 {
-                    escapedStorageKey.Append(c);
+                    escapedkey.Append(c);
                 }
             }
 
-            return escapedStorageKey.ToString();
+            return escapedkey.ToString();
         }
 
-        private static string EscapeStorageCharacter(char character)
+        private static string TrimKey(string key, int limit)
         {
-            var ordinalValue = (ushort)character;
-            if (ordinalValue < 0x100)
+            if (limit < KeyTrimPadding)
             {
-                return string.Format(CultureInfo.InvariantCulture, ":{0:X2}", ordinalValue);
-            }
-            else
-            {
-                return string.Format(CultureInfo.InvariantCulture, "::{0:X4}", ordinalValue);
-            }
-        }
-
-        private static string TrimStorageKey(string storageKey, int limit)
-        {
-            if (limit < StorageKeyTrimPadding)
-            {
-                throw new ArgumentException(message: string.Format("The storage key limit should be at least {0} characters.", StorageKeyTrimPadding), paramName: "limit");
+                throw new ArgumentException(string.Format("The key limit should be at least {0} characters.", KeyTrimPadding), "limit");
             }
 
-            if (storageKey.Contains('|'))
+            if (key.Contains('|'))
             {
                 throw new ArgumentException(
-                    string.Format("The storage key '{0}' is not properly encoded. Use EscapeStorageKey for encoding.", storageKey), "storageKey");
+                    string.Format("The key '{0}' is not properly encoded. Use EscapeKey for encoding.", key), "key");
             }
 
-            if (storageKey.Length > limit)
+            if (key.Length > limit)
             {
                 // Note(ilygre): The murmur hash is used here to generate fixed size unique thumbprint of storage key.
                 // The seed value(0) or hashing algorithm should not be changed. You could lose your records.
-                ulong hash64 = MurmurHash64(Encoding.UTF8.GetBytes(storageKey));
-                return string.Concat(storageKey.Substring(0, limit - StorageKeyTrimPadding), "|", hash64.ToString("X16"));
+                ulong hash64 = MurmurHash64(Encoding.UTF8.GetBytes(key));
+                return string.Concat(key.Substring(0, limit - KeyTrimPadding), "|", hash64.ToString("X16"));
             }
 
-            return storageKey;
+            return key;
         }
 
         private static ulong MurmurHash64(byte[] data, uint seed = 0)

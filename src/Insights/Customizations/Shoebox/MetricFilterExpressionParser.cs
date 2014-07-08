@@ -1,4 +1,8 @@
-﻿using System;
+﻿//------------------------------------------------------------
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+//------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -23,7 +27,7 @@ namespace Microsoft.Azure.Insights
             }
 
             // used for creating the most basic filters the expected usage will only have one non-null parameter
-            // The most basic form aslo cannot have a complex names constraint so the constructor only accepts a singe string (or null) here as well
+            // The most basic form also cannot have a complex names constraint so the constructor only accepts a singe string (or null) here as well
             internal MetricFilterExpression(string timeGrain, string startTime, string endTime, string name)
             {
                 this.SubExpressions = new List<SubExpression>()
@@ -357,8 +361,8 @@ namespace Microsoft.Azure.Insights
                 return new MetricFilter()
                 {
                     TimeGrain = XmlConvert.ToTimeSpan(expression.TimeGrain),
-                    StartTime = DateTime.Parse(expression.StartTime),
-                    EndTime = DateTime.Parse(expression.EndTime),
+                    StartTime = DateTime.Parse(expression.StartTime, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal),
+                    EndTime = DateTime.Parse(expression.EndTime, CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal),
                     Names = expression.Names
                 };
             }
@@ -448,7 +452,7 @@ namespace Microsoft.Azure.Insights
                         // Identifier Token (keywords are handled later)
                         StringBuilder sb = new StringBuilder();
 
-                        for (sb.Append(c); ++pos < filterString.Length && (char.IsLetterOrDigit(c = filterString[pos]) || c == '_'); sb.Append(c))
+                        for (sb.Append(c); ++pos < filterString.Length && (char.IsLetterOrDigit(c = filterString[pos]) || c == '_' || c == '.'); sb.Append(c))
                         {
                         }
 
@@ -746,28 +750,11 @@ namespace Microsoft.Azure.Insights
         {
             switch (value)
             {
-                case "name.value":
-                case "name.Value":
-                case "Name.value":
-                case "Name.Value":
-                    return FilterParameter.Name;
-                case "timegrain":
-                case "timeGrain":
-                case "Timegrain":
-                case "TimeGrain":
-                    return FilterParameter.TimeGrain;
-                case "starttime":
-                case "startTime":
-                case "Starttime":
-                case "StartTime":
-                    return FilterParameter.StartTime;
-                case "endtime":
-                case "endTime":
-                case "Endtime":
-                case "EndTime":
-                    return FilterParameter.EndTime;
-                default:
-                    throw new Exception("Invalid Identifier: " + value);
+                case "name.value": return FilterParameter.Name;
+                case "timeGrain": return FilterParameter.TimeGrain;
+                case "startTime": return FilterParameter.StartTime;
+                case "endTime": return FilterParameter.EndTime;
+                default: throw new FormatException("Invalid Identifier: " + value);
             }
         }
 

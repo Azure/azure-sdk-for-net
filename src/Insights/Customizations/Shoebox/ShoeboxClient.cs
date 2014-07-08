@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Insights
             // if names are specified, filter the results to those metrics only
             if (filter.Names != null)
             {
-                groups = groups.Where(g => filter.Names.Select(ShoeboxHelper.TrimAndEscapeStorageKey).Contains(g.Key));
+                groups = groups.Where(g => filter.Names.Select(ShoeboxHelper.TrimAndEscapeKey).Contains(g.Key));
             }
 
             // Construct MetricCollection (list of metrics) by taking each group and converting the entities in that group to MetricValue objects
@@ -108,8 +108,8 @@ namespace Microsoft.Azure.Insights
             return
                 names.FirstOrDefault(
                     n =>
-                        string.Equals(ShoeboxHelper.TrimAndEscapeStorageKey(n), encodedName, StringComparison.OrdinalIgnoreCase)) ??
-                ShoeboxHelper.UnEscapeStorageKey(encodedName);
+                        string.Equals(ShoeboxHelper.TrimAndEscapeKey(n), encodedName, StringComparison.OrdinalIgnoreCase)) ??
+                ShoeboxHelper.UnEscapeKey(encodedName);
         }
 
         // Gets the named metric by calling the provided query on each table that overlaps the given time range
@@ -164,21 +164,27 @@ namespace Microsoft.Azure.Insights
         {
             return
                 location.TableInfo.Where(info => info.StartTime < filter.EndTime && info.EndTime > filter.StartTime)
-                    .Select(info => new CloudTable(new Uri(location.TableEndpoint), new StorageCredentials(info.SasToken)));
+                    .Select(info => new CloudTableClient(new Uri(location.TableEndpoint), new StorageCredentials(info.SasToken)).GetTableReference(info.TableName));
         }
 
         // Creates a TableQuery for each named metric and return a dictionary mapping each name to its query
         // Note: The overall start and end times are used in each query since this reduces processing and the query will still work the same on each Nday table
         private static Dictionary<string, TableQuery> GenerateMetricNameQueries(IEnumerable<string> names, string partitionKey, DateTime startTime, DateTime endTime)
         {
-            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeStorageKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
-                GenerateMetricQuery(partitionKey, kvp.Key + (DateTime.MaxValue.Ticks - startTime.Ticks), kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks)));
+            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
+                GenerateMetricQuery(
+                partitionKey,
+                kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks).ToString("D19"),
+                kvp.Key + (DateTime.MaxValue.Ticks - startTime.Ticks).ToString("D19")));
         }
 
         // Creates a TableQuery for getting metrics by timestamp
         private static TableQuery GenerateMetricTimestampQuery(string partitionKey, DateTime startTime, DateTime endTime)
         {
-            return GenerateMetricQuery(partitionKey, DateTime.MaxValue.Ticks - startTime.Ticks + "__", DateTime.MaxValue.Ticks - endTime.Ticks + 1 + "__");
+            return GenerateMetricQuery(
+                partitionKey,
+                (DateTime.MaxValue.Ticks - endTime.Ticks + 1).ToString("D19") + "__",
+                (DateTime.MaxValue.Ticks - startTime.Ticks).ToString("D19") + "__");
         }
 
         // Creates a TableQuery object which filters entities to a particular partition key and the given row key range
@@ -195,6 +201,7 @@ namespace Microsoft.Azure.Insights
         }
 
         // Converts a TableEntity to a MetricValue object
+        // TODO: this needs to be made more robust to handle types properly and do conversions as needed
         private static MetricValue ResolveMetricEntity(DynamicTableEntity entity)
         {
             Dictionary<string, string> otherProperties = new Dictionary<string, string>();
@@ -220,10 +227,18 @@ namespace Microsoft.Azure.Insights
                         metricValue.Total = entity[key].DoubleValue;
                         break;
                     case "Count":
-                        metricValue.Count = entity[key].Int64Value;
+                        metricValue.Count = entity[key].Int32Value;
+                        break;
+                    case "Last":
+                        metricValue.Last = entity[key].DoubleValue;
                         break;
                     default:
-                        otherProperties.Add(key, entity[key].StringValue);
+                        // if it is a string then store it in the properties
+                        if (entity[key].PropertyType == EdmType.String)
+                        {
+                            otherProperties.Add(key, entity[key].StringValue);
+                        }
+
                         break;
                 }
             }
