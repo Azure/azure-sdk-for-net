@@ -20,34 +20,34 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Deployment dependency information.
     /// </summary>
-    public partial class ResourceCreateOrUpdateResult : OperationResponse
+    public partial class Dependency : BasicDependency
     {
-        private Resource _resource;
+        private IList<BasicDependency> _dependsOn;
         
         /// <summary>
-        /// Optional. Gets or sets the resource.
+        /// Optional. Gets the list of dependencies.
         /// </summary>
-        public Resource Resource
+        public IList<BasicDependency> DependsOn
         {
-            get { return this._resource; }
-            set { this._resource = value; }
+            get { return this._dependsOn; }
+            set { this._dependsOn = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceCreateOrUpdateResult
-        /// class.
+        /// Initializes a new instance of the Dependency class.
         /// </summary>
-        public ResourceCreateOrUpdateResult()
+        public Dependency()
         {
+            this.DependsOn = new List<BasicDependency>();
         }
     }
 }

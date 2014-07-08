@@ -21,32 +21,51 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource information.
+    /// Deployment dependency information.
     /// </summary>
-    public partial class ResourceCreateOrUpdateResult : OperationResponse
+    public partial class BasicDependency
     {
-        private Resource _resource;
+        private string _id;
         
         /// <summary>
-        /// Optional. Gets or sets the resource.
+        /// Optional. Gets or sets the ID of the dependency.
         /// </summary>
-        public Resource Resource
+        public string Id
         {
-            get { return this._resource; }
-            set { this._resource = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _resourceName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the dependency resource name.
+        /// </summary>
+        public string ResourceName
+        {
+            get { return this._resourceName; }
+            set { this._resourceName = value; }
+        }
+        
+        private string _resourceType;
+        
+        /// <summary>
+        /// Optional. Gets or sets the dependency resource type.
+        /// </summary>
+        public string ResourceType
+        {
+            get { return this._resourceType; }
+            set { this._resourceType = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the ResourceCreateOrUpdateResult
-        /// class.
+        /// Initializes a new instance of the BasicDependency class.
         /// </summary>
-        public ResourceCreateOrUpdateResult()
+        public BasicDependency()
         {
         }
     }

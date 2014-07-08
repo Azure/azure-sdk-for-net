@@ -30,10 +30,21 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentOperation
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets full deployment operation id.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _operationId;
         
         /// <summary>
-        /// Optional. Operation Id
+        /// Optional. Gets or sets deployment operation id.
         /// </summary>
         public string OperationId
         {
