@@ -257,6 +257,64 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Generate VPN Client Package operation creates a VPN client
+        /// package for the specified virtual network and gateway in Azure.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Generate VPN Client Package
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginGenerateVpnClientPackage(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginGenerateVpnClientPackageAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Generate VPN Client Package operation creates a VPN client
+        /// package for the specified virtual network and gateway in Azure.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Generate VPN Client Package
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginGenerateVpnClientPackageAsync(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
+        {
+            return operations.BeginGenerateVpnClientPackageAsync(networkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Reset Virtual Network Gateway Shared Key operation resets
         /// the shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -386,6 +444,64 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayOperationResponse> BeginSetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters)
         {
             return operations.BeginSetSharedKeyAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Begin Update Diagnostics operation begins an asynchronous
+        /// operation to starta diagnostics session for the specified virtual
+        /// network gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Creating Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginUpdateDiagnostics(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginUpdateDiagnosticsAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Update Diagnostics operation begins an asynchronous
+        /// operation to starta diagnostics session for the specified virtual
+        /// network gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Creating Virtual Network
+        /// Gateway operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginUpdateDiagnosticsAsync(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        {
+            return operations.BeginUpdateDiagnosticsAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -666,7 +782,7 @@ namespace Microsoft.WindowsAzure
         /// The Generate VPN Client Package operation creates a VPN client
         /// package for the specified virtual network and gateway in Azure.
         /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -681,10 +797,17 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static GatewayOperationResponse GenerateVpnClientPackage(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
+        public static GatewayGetOperationStatusResponse GenerateVpnClientPackage(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -697,7 +820,7 @@ namespace Microsoft.WindowsAzure
         /// The Generate VPN Client Package operation creates a VPN client
         /// package for the specified virtual network and gateway in Azure.
         /// (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn205126.aspx
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -712,10 +835,17 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
         /// </returns>
-        public static Task<GatewayOperationResponse> GenerateVpnClientPackageAsync(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
+        public static Task<GatewayGetOperationStatusResponse> GenerateVpnClientPackageAsync(this IGatewayOperations operations, string networkName, GatewayGenerateVpnClientPackageParameters parameters)
         {
             return operations.GenerateVpnClientPackageAsync(networkName, parameters, CancellationToken.None);
         }
@@ -826,6 +956,54 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayGetDeviceConfigurationScriptResponse> GetDeviceConfigurationScriptAsync(this IGatewayOperations operations, string networkName, GatewayGetDeviceConfigurationScriptParameters parameters)
         {
             return operations.GetDeviceConfigurationScriptAsync(networkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Diagnostics operation gets information about the current
+        /// gateway diagnostics session for the specified virtual network in
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// The status of a gateway diagnostics operation.
+        /// </returns>
+        public static GatewayDiagnosticsStatus GetDiagnostics(this IGatewayOperations operations, string networkName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).GetDiagnosticsAsync(networkName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Diagnostics operation gets information about the current
+        /// gateway diagnostics session for the specified virtual network in
+        /// Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// The status of a gateway diagnostics operation.
+        /// </returns>
+        public static Task<GatewayDiagnosticsStatus> GetDiagnosticsAsync(this IGatewayOperations operations, string networkName)
+        {
+            return operations.GetDiagnosticsAsync(networkName, CancellationToken.None);
         }
         
         /// <summary>
@@ -1194,6 +1372,74 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayGetOperationStatusResponse> SetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewaySetSharedKeyParameters parameters)
         {
             return operations.SetSharedKeyAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Update Diagnostics operation starts a diagnostics session for
+        /// the specified virtual network gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Diagnostics operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse UpdateDiagnostics(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).UpdateDiagnosticsAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Update Diagnostics operation starts a diagnostics session for
+        /// the specified virtual network gateway in Azure.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Diagnostics operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> UpdateDiagnosticsAsync(this IGatewayOperations operations, string networkName, UpdateGatewayPublicDiagnostics parameters)
+        {
+            return operations.UpdateDiagnosticsAsync(networkName, parameters, CancellationToken.None);
         }
     }
 }

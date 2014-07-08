@@ -127,9 +127,9 @@
 	
 	<!-- Update all explicit references to dependent versions. -->
     <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
-  </Target>  
-  
-  <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs">
+  </Target>
+
+  <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
     <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
     <RemoveDir Directories="Generated" />
   </Target>

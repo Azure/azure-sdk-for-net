@@ -20,35 +20,45 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the delete role instance by deployment name
-    /// operation.
+    /// Parameters supplied to the Update Load Balancer operation.
     /// </summary>
-    public partial class DeploymentDeleteRoleInstanceParameters
+    public partial class LoadBalancerUpdateParameters
     {
-        private IList<string> _name;
+        private FrontendIPConfiguration _frontendIPConfiguration;
         
         /// <summary>
-        /// Optional. The names of role instances to delete from the deployment
+        /// Optional. The configuration for the virtual IP address (VIP) this
+        /// load balancer provides.
         /// </summary>
-        public IList<string> Name
+        public FrontendIPConfiguration FrontendIPConfiguration
+        {
+            get { return this._frontendIPConfiguration; }
+            set { this._frontendIPConfiguration = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Name of the load balancer.
+        /// </summary>
+        public string Name
         {
             get { return this._name; }
             set { this._name = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeploymentDeleteRoleInstanceParameters class.
+        /// Initializes a new instance of the LoadBalancerUpdateParameters
+        /// class.
         /// </summary>
-        public DeploymentDeleteRoleInstanceParameters()
+        public LoadBalancerUpdateParameters()
         {
-            this.Name = new List<string>();
         }
     }
 }

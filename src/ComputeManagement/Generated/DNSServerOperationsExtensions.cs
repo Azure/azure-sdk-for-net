@@ -37,17 +37,16 @@ namespace Microsoft.WindowsAzure
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class LoadBalancerOperationsExtensions
+    public static partial class DNSServerOperationsExtensions
     {
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -56,7 +55,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// Required. Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -69,24 +68,23 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse BeginCreating(this ILoadBalancerOperations operations, string serviceName, string deploymentName, LoadBalancerCreateParameters parameters)
+        public static OperationStatusResponse AddDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, DNSAddParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).BeginCreatingAsync(serviceName, deploymentName, parameters);
+                return ((IDNSServerOperations)s).AddDNSServerAsync(serviceName, deploymentName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -95,7 +93,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the deployment.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// Required. Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -108,17 +106,19 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> BeginCreatingAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, LoadBalancerCreateParameters parameters)
+        public static Task<OperationStatusResponse> AddDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, DNSAddParameters parameters)
         {
-            return operations.BeginCreatingAsync(serviceName, deploymentName, parameters, CancellationToken.None);
+            return operations.AddDNSServerAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -126,8 +126,8 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -140,21 +140,23 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse BeginDeleting(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
+        public static OperationStatusResponse BeginAddingDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, DNSAddParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).BeginDeletingAsync(serviceName, deploymentName, loadBalancerName);
+                return ((IDNSServerOperations)s).BeginAddingDNSServerAsync(serviceName, deploymentName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Add a definition for a DNS server to an existing deployment. VM's
+        /// in this deployment will be programmed to use this DNS server for
+        /// all DNS resolutions
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -162,8 +164,8 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Add DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -176,18 +178,17 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> BeginDeletingAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
+        public static Task<OperationStatusResponse> BeginAddingDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, DNSAddParameters parameters)
         {
-            return operations.BeginDeletingAsync(serviceName, deploymentName, loadBalancerName, CancellationToken.None);
+            return operations.BeginAddingDNSServerAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -195,11 +196,8 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -212,22 +210,21 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse BeginUpdating(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        public static OperationStatusResponse BeginDeletingDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).BeginUpdatingAsync(serviceName, deploymentName, loadBalancerName, parameters);
+                return ((IDNSServerOperations)s).BeginDeletingDNSServerAsync(serviceName, deploymentName, dnsServerName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -235,11 +232,8 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -252,20 +246,18 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> BeginUpdatingAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        public static Task<OperationStatusResponse> BeginDeletingDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName)
         {
-            return operations.BeginUpdatingAsync(serviceName, deploymentName, loadBalancerName, parameters, CancellationToken.None);
+            return operations.BeginDeletingDNSServerAsync(serviceName, deploymentName, dnsServerName, CancellationToken.None);
         }
         
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -273,8 +265,11 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
+        /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// Required. Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -287,24 +282,22 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse Create(this ILoadBalancerOperations operations, string serviceName, string deploymentName, LoadBalancerCreateParameters parameters)
+        public static OperationStatusResponse BeginUpdatingDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).CreateAsync(serviceName, deploymentName, parameters);
+                return ((IDNSServerOperations)s).BeginUpdatingDNSServerAsync(serviceName, deploymentName, dnsServerName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Add an internal load balancer to a an existing deployment. When
-        /// used by an input endpoint, the internal load balancer will provide
-        /// an additional private VIP that can be used for load balancing to
-        /// the roles in this deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -312,8 +305,11 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
+        /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Load Balancer operation.
+        /// Required. Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -326,17 +322,17 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> CreateAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, LoadBalancerCreateParameters parameters)
+        public static Task<OperationStatusResponse> BeginUpdatingDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters)
         {
-            return operations.CreateAsync(serviceName, deploymentName, parameters, CancellationToken.None);
+            return operations.BeginUpdatingDNSServerAsync(serviceName, deploymentName, dnsServerName, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -344,28 +340,35 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public static OperationResponse Delete(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
+        public static OperationStatusResponse DeleteDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).DeleteAsync(serviceName, deploymentName, loadBalancerName);
+                return ((IDNSServerOperations)s).DeleteDNSServerAsync(serviceName, deploymentName, dnsServerName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Delete an internal load balancer from the deployment.
+        /// Deletes a definition for an existing DNS server from the deployment
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -373,37 +376,8 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the load balancer.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
-        {
-            return operations.DeleteAsync(serviceName, deploymentName, loadBalancerName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
-        /// </param>
-        /// <param name='serviceName'>
-        /// Required. The name of the service.
-        /// </param>
-        /// <param name='deploymentName'>
-        /// Required. The name of the deployment.
-        /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -416,22 +390,58 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static OperationStatusResponse Update(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        public static Task<OperationStatusResponse> DeleteDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName)
+        {
+            return operations.DeleteDNSServerAsync(serviceName, deploymentName, dnsServerName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update DNS Server operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse UpdateDNSServer(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ILoadBalancerOperations)s).UpdateAsync(serviceName, deploymentName, loadBalancerName, parameters);
+                return ((IDNSServerOperations)s).UpdateDNSServerAsync(serviceName, deploymentName, dnsServerName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Updates an internal load balancer associated with an existing
-        /// deployment.
+        /// Updates a definition for an existing DNS server. Updates to address
+        /// is the only change allowed. DNS server name cannot be changed
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// Microsoft.WindowsAzure.Management.Compute.IDNSServerOperations.
         /// </param>
         /// <param name='serviceName'>
         /// Required. The name of the service.
@@ -439,11 +449,11 @@ namespace Microsoft.WindowsAzure
         /// <param name='deploymentName'>
         /// Required. The name of the deployment.
         /// </param>
-        /// <param name='loadBalancerName'>
-        /// Required. The name of the loadBalancer.
+        /// <param name='dnsServerName'>
+        /// Required. The name of the dns server.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// Required. Parameters supplied to the Update DNS Server operation.
         /// </param>
         /// <returns>
         /// The response body contains the status of the specified asynchronous
@@ -456,9 +466,9 @@ namespace Microsoft.WindowsAzure
         /// status code for the failed request and error information regarding
         /// the failure.
         /// </returns>
-        public static Task<OperationStatusResponse> UpdateAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        public static Task<OperationStatusResponse> UpdateDNSServerAsync(this IDNSServerOperations operations, string serviceName, string deploymentName, string dnsServerName, DNSUpdateParameters parameters)
         {
-            return operations.UpdateAsync(serviceName, deploymentName, loadBalancerName, parameters, CancellationToken.None);
+            return operations.UpdateDNSServerAsync(serviceName, deploymentName, dnsServerName, parameters, CancellationToken.None);
         }
     }
 }

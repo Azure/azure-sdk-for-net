@@ -20,35 +20,21 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.Compute.Models
+namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Parameters supplied to the delete role instance by deployment name
-    /// operation.
+    /// Standard states for Virtual Network Gateway Diagnostics Events.
     /// </summary>
-    public partial class DeploymentDeleteRoleInstanceParameters
+    public enum GatewayDiagnosticsState
     {
-        private IList<string> _name;
+        Ready = 0,
         
-        /// <summary>
-        /// Optional. The names of role instances to delete from the deployment
-        /// </summary>
-        public IList<string> Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
+        Scheduled = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the
-        /// DeploymentDeleteRoleInstanceParameters class.
-        /// </summary>
-        public DeploymentDeleteRoleInstanceParameters()
-        {
-            this.Name = new List<string>();
-        }
+        InProgress = 2,
+        
+        StopInProgress = 3,
     }
 }
