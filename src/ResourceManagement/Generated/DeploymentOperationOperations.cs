@@ -194,6 +194,13 @@ namespace Microsoft.Azure.Management.Resources
                         DeploymentOperation operationInstance = new DeploymentOperation();
                         result.Operation = operationInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            operationInstance.Id = idInstance;
+                        }
+                        
                         JToken operationIdValue = responseDoc["operationId"];
                         if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
                         {
@@ -241,11 +248,11 @@ namespace Microsoft.Azure.Management.Resources
                                 TargetResource targetResourceInstance = new TargetResource();
                                 propertiesInstance.TargetResource = targetResourceInstance;
                                 
-                                JToken idValue = targetResourceValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken idValue2 = targetResourceValue["id"];
+                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    targetResourceInstance.Id = idInstance;
+                                    string idInstance2 = ((string)idValue2);
+                                    targetResourceInstance.Id = idInstance2;
                                 }
                                 
                                 JToken resourceNameValue = targetResourceValue["resourceName"];
@@ -428,6 +435,13 @@ namespace Microsoft.Azure.Management.Resources
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
                                 result.Operations.Add(deploymentOperationInstance);
                                 
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    deploymentOperationInstance.Id = idInstance;
+                                }
+                                
                                 JToken operationIdValue = valueValue["operationId"];
                                 if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
                                 {
@@ -475,11 +489,11 @@ namespace Microsoft.Azure.Management.Resources
                                         TargetResource targetResourceInstance = new TargetResource();
                                         propertiesInstance.TargetResource = targetResourceInstance;
                                         
-                                        JToken idValue = targetResourceValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        JToken idValue2 = targetResourceValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            string idInstance = ((string)idValue);
-                                            targetResourceInstance.Id = idInstance;
+                                            string idInstance2 = ((string)idValue2);
+                                            targetResourceInstance.Id = idInstance2;
                                         }
                                         
                                         JToken resourceNameValue = targetResourceValue["resourceName"];
@@ -634,6 +648,13 @@ namespace Microsoft.Azure.Management.Resources
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
                                 result.Operations.Add(deploymentOperationInstance);
                                 
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    deploymentOperationInstance.Id = idInstance;
+                                }
+                                
                                 JToken operationIdValue = valueValue["operationId"];
                                 if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
                                 {
@@ -681,11 +702,11 @@ namespace Microsoft.Azure.Management.Resources
                                         TargetResource targetResourceInstance = new TargetResource();
                                         propertiesInstance.TargetResource = targetResourceInstance;
                                         
-                                        JToken idValue = targetResourceValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        JToken idValue2 = targetResourceValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            string idInstance = ((string)idValue);
-                                            targetResourceInstance.Id = idInstance;
+                                            string idInstance2 = ((string)idValue2);
+                                            targetResourceInstance.Id = idInstance2;
                                         }
                                         
                                         JToken resourceNameValue = targetResourceValue["resourceName"];

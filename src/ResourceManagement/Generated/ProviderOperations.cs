@@ -166,6 +166,13 @@ namespace Microsoft.Azure.Management.Resources
                         Provider providerInstance = new Provider();
                         result.Provider = providerInstance;
                         
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            providerInstance.Id = idInstance;
+                        }
+                        
                         JToken namespaceValue = responseDoc["namespace"];
                         if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                         {
@@ -346,6 +353,13 @@ namespace Microsoft.Azure.Management.Resources
                                 Provider providerInstance = new Provider();
                                 result.Providers.Add(providerInstance);
                                 
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    providerInstance.Id = idInstance;
+                                }
+                                
                                 JToken namespaceValue = valueValue["namespace"];
                                 if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                 {
@@ -521,6 +535,13 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 Provider providerInstance = new Provider();
                                 result.Providers.Add(providerInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    providerInstance.Id = idInstance;
+                                }
                                 
                                 JToken namespaceValue = valueValue["namespace"];
                                 if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
