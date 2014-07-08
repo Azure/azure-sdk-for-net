@@ -39,7 +39,8 @@ namespace Microsoft.WindowsAzure.Common.TransientFaultHandling
                 {
                     if (httpException.StatusCode >= HttpStatusCode.InternalServerError &&
                         httpException.StatusCode != HttpStatusCode.NotImplemented &&
-                        httpException.StatusCode != HttpStatusCode.HttpVersionNotSupported)
+                        httpException.StatusCode != HttpStatusCode.HttpVersionNotSupported &&
+                        httpException.StatusCode != HttpStatusCode.RequestTimeout)
                     {
                         return true;
                     }
