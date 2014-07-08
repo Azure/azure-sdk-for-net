@@ -427,6 +427,13 @@ namespace Microsoft.Azure.Management.Resources
                                     Provider providerInstance = new Provider();
                                     propertiesInstance.Providers.Add(providerInstance);
                                     
+                                    JToken idValue2 = providersValue["id"];
+                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    {
+                                        string idInstance2 = ((string)idValue2);
+                                        providerInstance.Id = idInstance2;
+                                    }
+                                    
                                     JToken namespaceValue = providersValue["namespace"];
                                     if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                     {
@@ -485,11 +492,11 @@ namespace Microsoft.Azure.Management.Resources
                                             BasicDependency basicDependencyInstance = new BasicDependency();
                                             dependencyInstance.DependsOn.Add(basicDependencyInstance);
                                             
-                                            JToken idValue2 = dependsOnValue["id"];
-                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            JToken idValue3 = dependsOnValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                             {
-                                                string idInstance2 = ((string)idValue2);
-                                                basicDependencyInstance.Id = idInstance2;
+                                                string idInstance3 = ((string)idValue3);
+                                                basicDependencyInstance.Id = idInstance3;
                                             }
                                             
                                             JToken resourceTypeValue2 = dependsOnValue["resourceType"];
@@ -508,11 +515,11 @@ namespace Microsoft.Azure.Management.Resources
                                         }
                                     }
                                     
-                                    JToken idValue3 = dependenciesValue["id"];
-                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    JToken idValue4 = dependenciesValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance3 = ((string)idValue3);
-                                        dependencyInstance.Id = idInstance3;
+                                        string idInstance4 = ((string)idValue4);
+                                        dependencyInstance.Id = idInstance4;
                                     }
                                     
                                     JToken resourceTypeValue3 = dependenciesValue["resourceType"];
@@ -774,6 +781,13 @@ namespace Microsoft.Azure.Management.Resources
                                     Provider providerInstance = new Provider();
                                     propertiesInstance.Providers.Add(providerInstance);
                                     
+                                    JToken idValue2 = providersValue["id"];
+                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    {
+                                        string idInstance2 = ((string)idValue2);
+                                        providerInstance.Id = idInstance2;
+                                    }
+                                    
                                     JToken namespaceValue = providersValue["namespace"];
                                     if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                     {
@@ -832,11 +846,11 @@ namespace Microsoft.Azure.Management.Resources
                                             BasicDependency basicDependencyInstance = new BasicDependency();
                                             dependencyInstance.DependsOn.Add(basicDependencyInstance);
                                             
-                                            JToken idValue2 = dependsOnValue["id"];
-                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            JToken idValue3 = dependsOnValue["id"];
+                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                             {
-                                                string idInstance2 = ((string)idValue2);
-                                                basicDependencyInstance.Id = idInstance2;
+                                                string idInstance3 = ((string)idValue3);
+                                                basicDependencyInstance.Id = idInstance3;
                                             }
                                             
                                             JToken resourceTypeValue2 = dependsOnValue["resourceType"];
@@ -855,11 +869,11 @@ namespace Microsoft.Azure.Management.Resources
                                         }
                                     }
                                     
-                                    JToken idValue3 = dependenciesValue["id"];
-                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                    JToken idValue4 = dependenciesValue["id"];
+                                    if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                     {
-                                        string idInstance3 = ((string)idValue3);
-                                        dependencyInstance.Id = idInstance3;
+                                        string idInstance4 = ((string)idValue4);
+                                        dependencyInstance.Id = idInstance4;
                                     }
                                     
                                     JToken resourceTypeValue3 = dependenciesValue["resourceType"];
@@ -1127,6 +1141,13 @@ namespace Microsoft.Azure.Management.Resources
                                             Provider providerInstance = new Provider();
                                             propertiesInstance.Providers.Add(providerInstance);
                                             
+                                            JToken idValue2 = providersValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            {
+                                                string idInstance2 = ((string)idValue2);
+                                                providerInstance.Id = idInstance2;
+                                            }
+                                            
                                             JToken namespaceValue = providersValue["namespace"];
                                             if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                             {
@@ -1185,11 +1206,11 @@ namespace Microsoft.Azure.Management.Resources
                                                     BasicDependency basicDependencyInstance = new BasicDependency();
                                                     dependencyInstance.DependsOn.Add(basicDependencyInstance);
                                                     
-                                                    JToken idValue2 = dependsOnValue["id"];
-                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    JToken idValue3 = dependsOnValue["id"];
+                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance2 = ((string)idValue2);
-                                                        basicDependencyInstance.Id = idInstance2;
+                                                        string idInstance3 = ((string)idValue3);
+                                                        basicDependencyInstance.Id = idInstance3;
                                                     }
                                                     
                                                     JToken resourceTypeValue2 = dependsOnValue["resourceType"];
@@ -1208,11 +1229,11 @@ namespace Microsoft.Azure.Management.Resources
                                                 }
                                             }
                                             
-                                            JToken idValue3 = dependenciesValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue4 = dependenciesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                dependencyInstance.Id = idInstance3;
+                                                string idInstance4 = ((string)idValue4);
+                                                dependencyInstance.Id = idInstance4;
                                             }
                                             
                                             JToken resourceTypeValue3 = dependenciesValue["resourceType"];
@@ -1459,6 +1480,13 @@ namespace Microsoft.Azure.Management.Resources
                                             Provider providerInstance = new Provider();
                                             propertiesInstance.Providers.Add(providerInstance);
                                             
+                                            JToken idValue2 = providersValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                            {
+                                                string idInstance2 = ((string)idValue2);
+                                                providerInstance.Id = idInstance2;
+                                            }
+                                            
                                             JToken namespaceValue = providersValue["namespace"];
                                             if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                             {
@@ -1517,11 +1545,11 @@ namespace Microsoft.Azure.Management.Resources
                                                     BasicDependency basicDependencyInstance = new BasicDependency();
                                                     dependencyInstance.DependsOn.Add(basicDependencyInstance);
                                                     
-                                                    JToken idValue2 = dependsOnValue["id"];
-                                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                                    JToken idValue3 = dependsOnValue["id"];
+                                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                                     {
-                                                        string idInstance2 = ((string)idValue2);
-                                                        basicDependencyInstance.Id = idInstance2;
+                                                        string idInstance3 = ((string)idValue3);
+                                                        basicDependencyInstance.Id = idInstance3;
                                                     }
                                                     
                                                     JToken resourceTypeValue2 = dependsOnValue["resourceType"];
@@ -1540,11 +1568,11 @@ namespace Microsoft.Azure.Management.Resources
                                                 }
                                             }
                                             
-                                            JToken idValue3 = dependenciesValue["id"];
-                                            if (idValue3 != null && idValue3.Type != JTokenType.Null)
+                                            JToken idValue4 = dependenciesValue["id"];
+                                            if (idValue4 != null && idValue4.Type != JTokenType.Null)
                                             {
-                                                string idInstance3 = ((string)idValue3);
-                                                dependencyInstance.Id = idInstance3;
+                                                string idInstance4 = ((string)idValue4);
+                                                dependencyInstance.Id = idInstance4;
                                             }
                                             
                                             JToken resourceTypeValue3 = dependenciesValue["resourceType"];
@@ -1904,6 +1932,13 @@ namespace Microsoft.Azure.Management.Resources
                                     Provider providerInstance = new Provider();
                                     propertiesInstance.Providers.Add(providerInstance);
                                     
+                                    JToken idValue = providersValue["id"];
+                                    if (idValue != null && idValue.Type != JTokenType.Null)
+                                    {
+                                        string idInstance = ((string)idValue);
+                                        providerInstance.Id = idInstance;
+                                    }
+                                    
                                     JToken namespaceValue = providersValue["namespace"];
                                     if (namespaceValue != null && namespaceValue.Type != JTokenType.Null)
                                     {
@@ -1962,11 +1997,11 @@ namespace Microsoft.Azure.Management.Resources
                                             BasicDependency basicDependencyInstance = new BasicDependency();
                                             dependencyInstance.DependsOn.Add(basicDependencyInstance);
                                             
-                                            JToken idValue = dependsOnValue["id"];
-                                            if (idValue != null && idValue.Type != JTokenType.Null)
+                                            JToken idValue2 = dependsOnValue["id"];
+                                            if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                             {
-                                                string idInstance = ((string)idValue);
-                                                basicDependencyInstance.Id = idInstance;
+                                                string idInstance2 = ((string)idValue2);
+                                                basicDependencyInstance.Id = idInstance2;
                                             }
                                             
                                             JToken resourceTypeValue2 = dependsOnValue["resourceType"];
@@ -1985,11 +2020,11 @@ namespace Microsoft.Azure.Management.Resources
                                         }
                                     }
                                     
-                                    JToken idValue2 = dependenciesValue["id"];
-                                    if (idValue2 != null && idValue2.Type != JTokenType.Null)
+                                    JToken idValue3 = dependenciesValue["id"];
+                                    if (idValue3 != null && idValue3.Type != JTokenType.Null)
                                     {
-                                        string idInstance2 = ((string)idValue2);
-                                        dependencyInstance.Id = idInstance2;
+                                        string idInstance3 = ((string)idValue3);
+                                        dependencyInstance.Id = idInstance3;
                                     }
                                     
                                     JToken resourceTypeValue3 = dependenciesValue["resourceType"];

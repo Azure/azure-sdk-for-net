@@ -31,6 +31,17 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class Provider
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. Gets or sets the provider id.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _namespace;
         
         /// <summary>
