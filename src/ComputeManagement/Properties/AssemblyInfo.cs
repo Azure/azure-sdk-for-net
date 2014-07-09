@@ -19,8 +19,8 @@ using System.Resources;
 [assembly: AssemblyTitle("Windows Azure Compute Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Windows Azure Virtual Machines and Hosted Services.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.4.0.0")]
+[assembly: AssemblyVersion("3.0.0.0")]
+[assembly: AssemblyFileVersion("3.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
