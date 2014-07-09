@@ -524,6 +524,150 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Get Package By Name operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Get Package By Name operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginGettingPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginGettingPackageByNameAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Package By Name operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Get Package By Name operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginGettingPackageByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        {
+            return operations.BeginGettingPackageByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Package By Slot operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Get Package By Slot operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginGettingPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginGettingPackageBySlotAsync(serviceName, deploymentSlot, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Package By Slot operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Get Package By Slot operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginGettingPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        {
+            return operations.BeginGettingPackageBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Rebooting Role Instance By Deployment Name operation
         /// requests a reboot of a role instance that is running in a
         /// deployment. This operation is an asynchronous operation. To
@@ -2243,10 +2387,17 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Get Package By Name operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public static OperationResponse GetPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        public static OperationStatusResponse GetPackageByName(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -2281,10 +2432,17 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Get Package By Name operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public static Task<OperationResponse> GetPackageByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
+        public static Task<OperationStatusResponse> GetPackageByNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DeploymentGetPackageParameters parameters)
         {
             return operations.GetPackageByNameAsync(serviceName, deploymentName, parameters, CancellationToken.None);
         }
@@ -2315,10 +2473,17 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Get Package By Slot operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public static OperationResponse GetPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        public static OperationStatusResponse GetPackageBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -2353,10 +2518,17 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the Get Package By Slot operation.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        public static Task<OperationResponse> GetPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
+        public static Task<OperationStatusResponse> GetPackageBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters)
         {
             return operations.GetPackageBySlotAsync(serviceName, deploymentSlot, parameters, CancellationToken.None);
         }

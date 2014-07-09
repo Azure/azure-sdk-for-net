@@ -4547,13 +4547,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(configurationSetsSequenceElement);
                 }
                 
-                if (parameters.AvailabilitySetName != null)
-                {
-                    XElement availabilitySetNameElement = new XElement(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
-                    availabilitySetNameElement.Value = parameters.AvailabilitySetName;
-                    persistentVMRoleElement.Add(availabilitySetNameElement);
-                }
-                
                 if (parameters.ResourceExtensionReferences != null)
                 {
                     XElement resourceExtensionReferencesSequenceElement = new XElement(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
@@ -4630,6 +4623,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                     }
                     persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);
+                }
+                
+                if (parameters.AvailabilitySetName != null)
+                {
+                    XElement availabilitySetNameElement = new XElement(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
+                    availabilitySetNameElement.Value = parameters.AvailabilitySetName;
+                    persistentVMRoleElement.Add(availabilitySetNameElement);
                 }
                 
                 if (parameters.DataVirtualHardDisks != null)
