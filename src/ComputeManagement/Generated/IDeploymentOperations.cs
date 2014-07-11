@@ -236,6 +236,66 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginDeletingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, DeploymentDeleteRoleInstanceParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Get Package By Name operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of your deployment.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Package By Name operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> BeginGettingPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Package By Slot operation retrieves a cloud service package
+        /// for a deployment and stores the package files in Azure Blob
+        /// storage. The following package files are placed in storage: the
+        /// cloud service configuration file (.cscfg), providing configuration
+        /// settings for the cloud service and individual roles, including the
+        /// number of role instances; and the service package (.cspkg),
+        /// containing the application code and the service definition file.
+        /// (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154121.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// The deployment slot.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Get Package By Slot operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> BeginGettingPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Rebooting Role Instance By Deployment Name operation
         /// requests a reboot of a role instance that is running in a
         /// deployment. This operation is an asynchronous operation. To
@@ -986,10 +1046,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        Task<OperationResponse> GetPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> GetPackageByNameAsync(string serviceName, string deploymentName, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Package By Slot operation retrieves a cloud service package
@@ -1016,10 +1083,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
         /// </returns>
-        Task<OperationResponse> GetPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
+        Task<OperationStatusResponse> GetPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Reboot Role Instance By Deployment Name operation requests a

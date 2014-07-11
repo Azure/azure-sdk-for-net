@@ -25,14 +25,16 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Server operation.
+    /// The parameters that are used by the service to provision a server.  The
+    /// parameters marked optional are not required by the service.
     /// </summary>
     public partial class ServerCreateParameters
     {
         private string _administratorPassword;
         
         /// <summary>
-        /// Required. Gets or sets the administrator password.
+        /// Required. Gets or sets the administrator password for the new
+        /// server.
         /// </summary>
         public string AdministratorPassword
         {
@@ -43,7 +45,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _administratorUserName;
         
         /// <summary>
-        /// Required. Gets or sets the administrator username.
+        /// Required. Gets or sets the administrator username that will be used
+        /// for the new server.
         /// </summary>
         public string AdministratorUserName
         {
@@ -55,7 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         
         /// <summary>
         /// Required. Gets or sets the region in which this server will be
-        /// created.
+        /// created.  See http://azure.microsoft.com/en-us/regions/#services
+        /// for a list of all the available regions.
         /// </summary>
         public string Location
         {
@@ -63,11 +67,47 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._location = value; }
         }
         
+        private string _version;
+        
+        /// <summary>
+        /// Optional. Gets or sets the version of server to create.  Valid
+        /// values are: 1.0, 2.0.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ServerCreateParameters class.
         /// </summary>
         public ServerCreateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServerCreateParameters class with
+        /// required arguments.
+        /// </summary>
+        public ServerCreateParameters(string administratorUserName, string administratorPassword, string location)
+            : this()
+        {
+            if (administratorUserName == null)
+            {
+                throw new ArgumentNullException("administratorUserName");
+            }
+            if (administratorPassword == null)
+            {
+                throw new ArgumentNullException("administratorPassword");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.AdministratorUserName = administratorUserName;
+            this.AdministratorPassword = administratorPassword;
+            this.Location = location;
         }
     }
 }

@@ -73,8 +73,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, CancellationToken cancellationToken)
         {
@@ -96,8 +96,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -108,6 +108,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -142,7 +143,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -159,10 +160,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -214,8 +215,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, CrossConnectionUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -246,8 +247,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -258,6 +259,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -314,7 +316,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -331,10 +333,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -404,8 +406,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/crossconnection?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -416,6 +418,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -450,7 +453,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -467,48 +470,51 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement crossConnectionElement = responseDoc.Element(XName.Get("CrossConnection", "http://schemas.microsoft.com/windowsazure"));
-                    if (crossConnectionElement != null && crossConnectionElement.IsEmpty == false)
+                    if (crossConnectionElement != null)
                     {
+                        AzureCrossConnection crossConnectionInstance = new AzureCrossConnection();
+                        result.CrossConnection = crossConnectionInstance;
+                        
                         XElement bandwidthElement = crossConnectionElement.Element(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
-                        if (bandwidthElement != null && bandwidthElement.IsEmpty == false)
+                        if (bandwidthElement != null)
                         {
                             int bandwidthInstance = int.Parse(bandwidthElement.Value, CultureInfo.InvariantCulture);
-                            result.Bandwidth = bandwidthInstance;
+                            crossConnectionInstance.Bandwidth = bandwidthInstance;
                         }
                         
                         XElement provisioningStateElement = crossConnectionElement.Element(XName.Get("ProvisioningState", "http://schemas.microsoft.com/windowsazure"));
-                        if (provisioningStateElement != null && provisioningStateElement.IsEmpty == false)
+                        if (provisioningStateElement != null)
                         {
                             string provisioningStateInstance = provisioningStateElement.Value;
-                            result.ProvisioningState = provisioningStateInstance;
+                            crossConnectionInstance.ProvisioningState = provisioningStateInstance;
                         }
                         
                         XElement primaryAzurePortElement = crossConnectionElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
+                        if (primaryAzurePortElement != null)
                         {
                             string primaryAzurePortInstance = primaryAzurePortElement.Value;
-                            result.PrimaryAzurePort = primaryAzurePortInstance;
+                            crossConnectionInstance.PrimaryAzurePort = primaryAzurePortInstance;
                         }
                         
                         XElement secondaryAzurePortElement = crossConnectionElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                        if (secondaryAzurePortElement != null && secondaryAzurePortElement.IsEmpty == false)
+                        if (secondaryAzurePortElement != null)
                         {
                             string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
-                            result.SecondaryAzurePort = secondaryAzurePortInstance;
+                            crossConnectionInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                         }
                         
                         XElement sTagElement = crossConnectionElement.Element(XName.Get("STag", "http://schemas.microsoft.com/windowsazure"));
-                        if (sTagElement != null && sTagElement.IsEmpty == false)
+                        if (sTagElement != null)
                         {
                             int sTagInstance = int.Parse(sTagElement.Value, CultureInfo.InvariantCulture);
-                            result.STag = sTagInstance;
+                            crossConnectionInstance.STag = sTagInstance;
                         }
                         
                         XElement statusElement = crossConnectionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             string statusInstance = statusElement.Value;
-                            result.Status = statusInstance;
+                            crossConnectionInstance.Status = statusInstance;
                         }
                     }
                     
@@ -566,8 +572,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/crossconnections?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/crossconnections?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -578,6 +584,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -612,7 +619,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -629,50 +636,50 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement crossConnectionsSequenceElement = responseDoc.Element(XName.Get("CrossConnections", "http://schemas.microsoft.com/windowsazure"));
-                    if (crossConnectionsSequenceElement != null && crossConnectionsSequenceElement.IsEmpty == false)
+                    if (crossConnectionsSequenceElement != null)
                     {
                         foreach (XElement crossConnectionsElement in crossConnectionsSequenceElement.Elements(XName.Get("CrossConnection", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            CrossConnectionListResponse.CrossConnection crossConnectionInstance = new CrossConnectionListResponse.CrossConnection();
+                            AzureCrossConnection crossConnectionInstance = new AzureCrossConnection();
                             result.CrossConnections.Add(crossConnectionInstance);
                             
                             XElement bandwidthElement = crossConnectionsElement.Element(XName.Get("Bandwidth", "http://schemas.microsoft.com/windowsazure"));
-                            if (bandwidthElement != null && bandwidthElement.IsEmpty == false)
+                            if (bandwidthElement != null)
                             {
                                 int bandwidthInstance = int.Parse(bandwidthElement.Value, CultureInfo.InvariantCulture);
                                 crossConnectionInstance.Bandwidth = bandwidthInstance;
                             }
                             
-                            XElement primaryAzurePortElement = crossConnectionsElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryAzurePortElement != null && primaryAzurePortElement.IsEmpty == false)
-                            {
-                                string primaryAzurePortInstance = primaryAzurePortElement.Value;
-                                crossConnectionInstance.PrimaryAzurePort = primaryAzurePortInstance;
-                            }
-                            
                             XElement provisioningStateElement = crossConnectionsElement.Element(XName.Get("ProvisioningState", "http://schemas.microsoft.com/windowsazure"));
-                            if (provisioningStateElement != null && provisioningStateElement.IsEmpty == false)
+                            if (provisioningStateElement != null)
                             {
                                 string provisioningStateInstance = provisioningStateElement.Value;
                                 crossConnectionInstance.ProvisioningState = provisioningStateInstance;
                             }
                             
+                            XElement primaryAzurePortElement = crossConnectionsElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
+                            if (primaryAzurePortElement != null)
+                            {
+                                string primaryAzurePortInstance = primaryAzurePortElement.Value;
+                                crossConnectionInstance.PrimaryAzurePort = primaryAzurePortInstance;
+                            }
+                            
                             XElement secondaryAzurePortElement = crossConnectionsElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
-                            if (secondaryAzurePortElement != null && secondaryAzurePortElement.IsEmpty == false)
+                            if (secondaryAzurePortElement != null)
                             {
                                 string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
                                 crossConnectionInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                             }
                             
                             XElement sTagElement = crossConnectionsElement.Element(XName.Get("STag", "http://schemas.microsoft.com/windowsazure"));
-                            if (sTagElement != null && sTagElement.IsEmpty == false)
+                            if (sTagElement != null)
                             {
                                 int sTagInstance = int.Parse(sTagElement.Value, CultureInfo.InvariantCulture);
                                 crossConnectionInstance.STag = sTagInstance;
                             }
                             
                             XElement statusElement = crossConnectionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null && statusElement.IsEmpty == false)
+                            if (statusElement != null)
                             {
                                 string statusInstance = statusElement.Value;
                                 crossConnectionInstance.Status = statusInstance;
@@ -742,7 +749,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.CrossConnection.BeginNewAsync(serviceKey, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.CrossConnections.BeginNewAsync(serviceKey, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -761,7 +768,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                CrossConnectionGetResponse getResult = await client.CrossConnection.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
+                CrossConnectionGetResponse getResult = await client.CrossConnections.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
@@ -816,7 +823,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.CrossConnection.BeginUpdateAsync(serviceKey, parameters, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.CrossConnections.BeginUpdateAsync(serviceKey, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -835,7 +842,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                CrossConnectionGetResponse getResult = await client.CrossConnection.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
+                CrossConnectionGetResponse getResult = await client.CrossConnections.GetAsync(serviceKey, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);

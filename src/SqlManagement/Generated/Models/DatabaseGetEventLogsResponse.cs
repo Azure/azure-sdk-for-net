@@ -28,15 +28,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// A standard service response including an HTTP status code and request
-    /// ID.
+    /// Contains the response to a Get Database Event Logs request.
     /// </summary>
     public partial class DatabaseGetEventLogsResponse : OperationResponse, IEnumerable<DatabaseEventLog>
     {
         private IList<DatabaseEventLog> _eventLogs;
         
         /// <summary>
-        /// Optional. Gets or sets the SQL Server database event logs.
+        /// Optional. Gets or sets the collection of Azure SQL Database event
+        /// logs.
         /// </summary>
         public IList<DatabaseEventLog> EventLogs
         {
@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseGetEventLogsResponse()
         {
-            this._eventLogs = new List<DatabaseEventLog>();
+            this.EventLogs = new List<DatabaseEventLog>();
         }
         
         /// <summary>

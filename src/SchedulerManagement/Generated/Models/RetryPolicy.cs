@@ -70,5 +70,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public RetryPolicy()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RetryPolicy class with required
+        /// arguments.
+        /// </summary>
+        public RetryPolicy(RetryType retryType)
+            : this()
+        {
+            this.RetryType = retryType;
+        }
     }
 }

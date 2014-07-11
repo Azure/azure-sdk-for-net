@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkListResponse()
         {
-            this._virtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
+            this.VirtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
         }
         
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public AddressSpace()
             {
-                this._addressPrefixes = new List<string>();
+                this.AddressPrefixes = new List<string>();
             }
         }
         
@@ -194,7 +194,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Gateway()
             {
-                this._sites = new List<NetworkListResponse.LocalNetworkSite>();
+                this.Sites = new List<NetworkListResponse.LocalNetworkSite>();
             }
         }
         
@@ -253,7 +253,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public LocalNetworkSite()
             {
-                this._connections = new List<NetworkListResponse.Connection>();
+                this.Connections = new List<NetworkListResponse.Connection>();
             }
         }
         
@@ -339,7 +339,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// <summary>
             /// Optional. The gateway that contains a list of Local Network
             /// Sites which enable the Virtual Network Site to communicate
-            /// with a customer’s on-premise networks.
+            /// with a customer's on-premise networks.
             /// </summary>
             public NetworkListResponse.Gateway Gateway
             {
@@ -411,8 +411,8 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VirtualNetworkSite()
             {
-                this._dnsServers = new List<NetworkListResponse.DnsServer>();
-                this._subnets = new List<NetworkListResponse.Subnet>();
+                this.DnsServers = new List<NetworkListResponse.DnsServer>();
+                this.Subnets = new List<NetworkListResponse.Subnet>();
             }
         }
         
@@ -439,7 +439,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VPNClientAddressPool()
             {
-                this._addressPrefixes = new List<string>();
+                this.AddressPrefixes = new List<string>();
             }
         }
     }

@@ -46,29 +46,60 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial class WebSiteManagementClient : ServiceClient<WebSiteManagementClient>, Microsoft.WindowsAzure.Management.WebSites.IWebSiteManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create an Azure subscription, it is uniquely identified by
-        /// a subscription ID. The subscription ID forms part of the URI for
-        /// every call that you make to the Service Management API. The Azure
-        /// Service Management API uses mutual authentication of management
-        /// certificates over SSL to ensure that a request made to the service
-        /// is secure. No anonymous requests are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IServerFarmOperations _serverFarms;
@@ -114,6 +145,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             this._serverFarms = new ServerFarmOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -121,15 +155,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -153,12 +184,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Initializes a new instance of the WebSiteManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public WebSiteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -171,6 +199,104 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private WebSiteManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._serverFarms = new ServerFarmOperations(this);
+            this._webSites = new WebSiteOperations(this);
+            this._webSpaces = new WebSpaceOperations(this);
+            this._apiVersion = "2013-08-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// WebSiteManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of WebSiteManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<WebSiteManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is WebSiteManagementClient)
+            {
+                WebSiteManagementClient clonedClient = ((WebSiteManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -234,8 +360,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + siteName.Trim() + "/operations/" + operationId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -246,6 +372,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -280,7 +407,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -297,17 +424,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null && operationElement.IsEmpty == false)
+                    if (operationElement != null)
                     {
                         XElement createdTimeElement = operationElement.Element(XName.Get("CreatedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (createdTimeElement != null && createdTimeElement.IsEmpty == false)
+                        if (createdTimeElement != null)
                         {
                             DateTime createdTimeInstance = DateTime.Parse(createdTimeElement.Value, CultureInfo.InvariantCulture);
                             result.CreatedTime = createdTimeInstance;
                         }
                         
                         XElement errorsSequenceElement = operationElement.Element(XName.Get("Errors", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorsSequenceElement != null && errorsSequenceElement.IsEmpty == false)
+                        if (errorsSequenceElement != null)
                         {
                             bool isNil = false;
                             XAttribute nilAttribute = errorsSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -323,7 +450,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     result.Errors.Add(errorInstance);
                                     
                                     XElement codeElement = errorsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                                    if (codeElement != null && codeElement.IsEmpty == false)
+                                    if (codeElement != null)
                                     {
                                         bool isNil2 = false;
                                         XAttribute nilAttribute2 = codeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -339,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement messageElement = errorsElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageElement != null && messageElement.IsEmpty == false)
+                                    if (messageElement != null)
                                     {
                                         bool isNil3 = false;
                                         XAttribute nilAttribute3 = messageElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -355,7 +482,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement extendedCodeElement = errorsElement.Element(XName.Get("ExtendedCode", "http://schemas.microsoft.com/windowsazure"));
-                                    if (extendedCodeElement != null && extendedCodeElement.IsEmpty == false)
+                                    if (extendedCodeElement != null)
                                     {
                                         bool isNil4 = false;
                                         XAttribute nilAttribute4 = extendedCodeElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -371,7 +498,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement messageTemplateElement = errorsElement.Element(XName.Get("MessageTemplate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (messageTemplateElement != null && messageTemplateElement.IsEmpty == false)
+                                    if (messageTemplateElement != null)
                                     {
                                         bool isNil5 = false;
                                         XAttribute nilAttribute5 = messageTemplateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -387,7 +514,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement parametersSequenceElement = errorsElement.Element(XName.Get("Parameters", "http://schemas.microsoft.com/windowsazure"));
-                                    if (parametersSequenceElement != null && parametersSequenceElement.IsEmpty == false)
+                                    if (parametersSequenceElement != null)
                                     {
                                         bool isNil6 = false;
                                         XAttribute nilAttribute6 = parametersSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -402,10 +529,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                                 errorInstance.Parameters.Add(parametersElement.Value);
                                             }
                                         }
+                                        else
+                                        {
+                                            errorInstance.Parameters = null;
+                                        }
                                     }
                                     
                                     XElement innerErrorsElement = errorsElement.Element(XName.Get("InnerErrors", "http://schemas.microsoft.com/windowsazure"));
-                                    if (innerErrorsElement != null && innerErrorsElement.IsEmpty == false)
+                                    if (innerErrorsElement != null)
                                     {
                                         bool isNil7 = false;
                                         XAttribute nilAttribute7 = innerErrorsElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -421,17 +552,21 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                 }
                             }
+                            else
+                            {
+                                result.Errors = null;
+                            }
                         }
                         
                         XElement expirationTimeElement = operationElement.Element(XName.Get("ExpirationTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (expirationTimeElement != null && expirationTimeElement.IsEmpty == false)
+                        if (expirationTimeElement != null)
                         {
                             DateTime expirationTimeInstance = DateTime.Parse(expirationTimeElement.Value, CultureInfo.InvariantCulture);
                             result.ExpirationTime = expirationTimeInstance;
                         }
                         
                         XElement geoMasterOperationIdElement = operationElement.Element(XName.Get("GeoMasterOperationId", "http://schemas.microsoft.com/windowsazure"));
-                        if (geoMasterOperationIdElement != null && geoMasterOperationIdElement.IsEmpty == false)
+                        if (geoMasterOperationIdElement != null)
                         {
                             bool isNil8 = false;
                             XAttribute nilAttribute8 = geoMasterOperationIdElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -447,7 +582,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement idElement = operationElement.Element(XName.Get("Id", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             bool isNil9 = false;
                             XAttribute nilAttribute9 = idElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -463,14 +598,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement modifiedTimeElement = operationElement.Element(XName.Get("ModifiedTime", "http://schemas.microsoft.com/windowsazure"));
-                        if (modifiedTimeElement != null && modifiedTimeElement.IsEmpty == false)
+                        if (modifiedTimeElement != null)
                         {
                             DateTime modifiedTimeInstance = DateTime.Parse(modifiedTimeElement.Value, CultureInfo.InvariantCulture);
                             result.ModifiedTime = modifiedTimeInstance;
                         }
                         
                         XElement nameElement = operationElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             bool isNil10 = false;
                             XAttribute nilAttribute10 = nameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -486,7 +621,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             WebSiteOperationStatus statusInstance = ((WebSiteOperationStatus)Enum.Parse(typeof(WebSiteOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
@@ -547,10 +682,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=register";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -561,6 +696,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -595,7 +731,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -660,10 +796,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=website";
             url = url + "&action=unregister";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -674,6 +810,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -708,7 +845,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

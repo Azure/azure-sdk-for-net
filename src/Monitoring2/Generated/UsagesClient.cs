@@ -43,7 +43,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private double _currentValue;
         
         /// <summary>
-        /// The current value for the usage metric.
+        /// Optional. The current value for the usage metric.
         /// </summary>
         public double CurrentValue
         {
@@ -54,7 +54,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _displayName;
         
         /// <summary>
-        /// Get the usage display name.
+        /// Optional. Get the usage display name.
         /// </summary>
         public string DisplayName
         {
@@ -65,7 +65,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private double _limit;
         
         /// <summary>
-        /// The quota limit the usage metric.
+        /// Optional. The quota limit the usage metric.
         /// </summary>
         public double Limit
         {
@@ -76,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _name;
         
         /// <summary>
-        /// Get the usage metric name.
+        /// Optional. Get the usage metric name.
         /// </summary>
         public string Name
         {
@@ -84,12 +84,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
             set { this._name = value; }
         }
         
-        private string _nextResetTime;
+        private System.DateTime? _nextResetTime;
         
         /// <summary>
-        /// When the current value gets reset.
+        /// Optional. When the current value gets reset.
         /// </summary>
-        public string NextResetTime
+        public System.DateTime? NextResetTime
         {
             get { return this._nextResetTime; }
             set { this._nextResetTime = value; }
@@ -98,7 +98,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private System.TimeSpan? _quotaPeriod;
         
         /// <summary>
-        /// When the current value gets reset.
+        /// Optional. When the current value gets reset.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {
@@ -109,7 +109,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private string _unit;
         
         /// <summary>
-        /// The unit for the usage metric.
+        /// Optional. The unit for the usage metric.
         /// </summary>
         public string Unit
         {
@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private IList<UsageMetric> _properties;
         
         /// <summary>
-        /// The usage values.
+        /// Optional. The usage values.
         /// </summary>
         public IList<UsageMetric> Properties
         {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private IList<UsageMetric> _value;
         
         /// <summary>
-        /// The usage values.
+        /// Optional. The usage values.
         /// </summary>
         public IList<UsageMetric> Value
         {
@@ -157,8 +157,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         /// </summary>
         public UsageMetricCollection()
         {
-            this._properties = new List<UsageMetric>();
-            this._value = new List<UsageMetric>();
+            this.Properties = new List<UsageMetric>();
+            this.Value = new List<UsageMetric>();
         }
     }
     
@@ -170,7 +170,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         private UsageMetricCollection _usageMetricCollection;
         
         /// <summary>
-        /// The list of usage metrics.
+        /// Optional. The list of usage metrics.
         /// </summary>
         public UsageMetricCollection UsageMetricCollection
         {
@@ -189,10 +189,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
 {
-    public partial interface IUsagesClient
+    public static partial class UsagesClientExtensions
+    {
+    }
+    
+    public partial interface IUsagesClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -200,11 +212,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         }
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         IUsageMetricsOperations UsageMetrics
@@ -213,16 +243,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         }
     }
     
-    public static partial class UsagesClientExtensions
-    {
-    }
-    
     public partial class UsagesClient : ServiceClient<UsagesClient>, IUsagesClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -232,11 +268,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Windows Azure subscription id.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IUsageMetricsOperations _usageMetrics;
@@ -253,6 +313,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             : base()
         {
             this._usageMetrics = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -260,10 +323,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -286,7 +352,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// Initializes a new instance of the UsagesClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Windows Azure subscription id.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public UsagesClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -299,6 +367,152 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsagesClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private UsagesClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._usageMetrics = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsagesClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public UsagesClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the UsagesClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public UsagesClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another UsagesClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of UsagesClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<UsagesClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is UsagesClient)
+            {
+                UsagesClient clonedClient = ((UsagesClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+    }
+    
+    public static partial class UsageMetricsOperationsExtensions
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, metricNames);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
         }
     }
     
@@ -314,53 +528,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// The List Usage Metric operation response.
         /// </returns>
         Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
-    }
-    
-    public static partial class UsageMetricsOperationsExtensions
-    {
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            try
-            {
-                return operations.ListAsync(resourceUri, metricNames).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Usages.IUsageMetricsOperations.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
-        }
     }
     
     internal partial class UsageMetricsOperations : IServiceOperations<UsagesClient>, IUsageMetricsOperations
@@ -390,6 +557,12 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -421,9 +594,21 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/" + resourceUri + "/usages?";
-            url = url + "api-version=2014-04-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+            string url = "/" + resourceUri.Trim() + "/usages?";
+            url = url + "api-version=2014-01";
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -435,7 +620,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -459,7 +644,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -473,126 +658,130 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new UsageMetricListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
                         result.UsageMetricCollection = usageMetricCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 UsageMetric usageMetricInstance = new UsageMetric();
                                 usageMetricCollectionInstance.Value.Add(usageMetricInstance);
                                 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     usageMetricInstance.Name = nameInstance;
                                 }
                                 
                                 JToken displayNameValue = valueValue["displayName"];
-                                if (displayNameValue != null)
+                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                 {
-                                    string displayNameInstance = (string)displayNameValue;
+                                    string displayNameInstance = ((string)displayNameValue);
                                     usageMetricInstance.DisplayName = displayNameInstance;
                                 }
                                 
                                 JToken currentValueValue = valueValue["currentValue"];
-                                if (currentValueValue != null)
+                                if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
                                 {
-                                    double currentValueInstance = (double)currentValueValue;
+                                    double currentValueInstance = ((double)currentValueValue);
                                     usageMetricInstance.CurrentValue = currentValueInstance;
                                 }
                                 
                                 JToken limitValue = valueValue["limit"];
-                                if (limitValue != null)
+                                if (limitValue != null && limitValue.Type != JTokenType.Null)
                                 {
-                                    double limitInstance = (double)limitValue;
+                                    double limitInstance = ((double)limitValue);
                                     usageMetricInstance.Limit = limitInstance;
                                 }
                                 
                                 JToken unitValue = valueValue["unit"];
-                                if (unitValue != null)
+                                if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
-                                    string unitInstance = (string)unitValue;
+                                    string unitInstance = ((string)unitValue);
                                     usageMetricInstance.Unit = unitInstance;
                                 }
                                 
                                 JToken nextResetTimeValue = valueValue["nextResetTime"];
-                                if (nextResetTimeValue != null)
+                                if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
                                 {
-                                    string nextResetTimeInstance = (string)nextResetTimeValue;
+                                    DateTime nextResetTimeInstance = ((DateTime)nextResetTimeValue);
                                     usageMetricInstance.NextResetTime = nextResetTimeInstance;
                                 }
                                 
                                 JToken quotaPeriodValue = valueValue["quotaPeriod"];
-                                if (quotaPeriodValue != null)
+                                if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan((string)quotaPeriodValue);
+                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue));
                                     usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
                                 }
                             }
                         }
                         
-                        JArray propertiesArray = (JArray)responseDoc["properties"];
-                        if (propertiesArray != null)
+                        JToken propertiesArray = responseDoc["properties"];
+                        if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken propertiesValue in propertiesArray)
+                            foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 UsageMetric usageMetricInstance2 = new UsageMetric();
                                 usageMetricCollectionInstance.Properties.Add(usageMetricInstance2);
                                 
                                 JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null)
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = (string)nameValue2;
+                                    string nameInstance2 = ((string)nameValue2);
                                     usageMetricInstance2.Name = nameInstance2;
                                 }
                                 
                                 JToken displayNameValue2 = propertiesValue["displayName"];
-                                if (displayNameValue2 != null)
+                                if (displayNameValue2 != null && displayNameValue2.Type != JTokenType.Null)
                                 {
-                                    string displayNameInstance2 = (string)displayNameValue2;
+                                    string displayNameInstance2 = ((string)displayNameValue2);
                                     usageMetricInstance2.DisplayName = displayNameInstance2;
                                 }
                                 
                                 JToken currentValueValue2 = propertiesValue["currentValue"];
-                                if (currentValueValue2 != null)
+                                if (currentValueValue2 != null && currentValueValue2.Type != JTokenType.Null)
                                 {
-                                    double currentValueInstance2 = (double)currentValueValue2;
+                                    double currentValueInstance2 = ((double)currentValueValue2);
                                     usageMetricInstance2.CurrentValue = currentValueInstance2;
                                 }
                                 
                                 JToken limitValue2 = propertiesValue["limit"];
-                                if (limitValue2 != null)
+                                if (limitValue2 != null && limitValue2.Type != JTokenType.Null)
                                 {
-                                    double limitInstance2 = (double)limitValue2;
+                                    double limitInstance2 = ((double)limitValue2);
                                     usageMetricInstance2.Limit = limitInstance2;
                                 }
                                 
                                 JToken unitValue2 = propertiesValue["unit"];
-                                if (unitValue2 != null)
+                                if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
                                 {
-                                    string unitInstance2 = (string)unitValue2;
+                                    string unitInstance2 = ((string)unitValue2);
                                     usageMetricInstance2.Unit = unitInstance2;
                                 }
                                 
                                 JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
-                                if (nextResetTimeValue2 != null)
+                                if (nextResetTimeValue2 != null && nextResetTimeValue2.Type != JTokenType.Null)
                                 {
-                                    string nextResetTimeInstance2 = (string)nextResetTimeValue2;
+                                    DateTime nextResetTimeInstance2 = ((DateTime)nextResetTimeValue2);
                                     usageMetricInstance2.NextResetTime = nextResetTimeInstance2;
                                 }
                                 
                                 JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
-                                if (quotaPeriodValue2 != null)
+                                if (quotaPeriodValue2 != null && quotaPeriodValue2.Type != JTokenType.Null)
                                 {
-                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan((string)quotaPeriodValue2);
+                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue2));
                                     usageMetricInstance2.QuotaPeriod = quotaPeriodInstance2;
                                 }
                             }

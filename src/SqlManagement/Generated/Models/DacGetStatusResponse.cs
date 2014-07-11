@@ -28,15 +28,16 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the DAC GetStatus operation.
+    /// Represents a list of import or export status values returned from
+    /// GetStatus.
     /// </summary>
     public partial class DacGetStatusResponse : OperationResponse, IEnumerable<StatusInfo>
     {
         private IList<StatusInfo> _statusInfoList;
         
         /// <summary>
-        /// Optional. Gets or sets the list of statuses relevant to this
-        /// import/export request.
+        /// Optional. Gets a collection of statuses relevant to this import or
+        /// export request.
         /// </summary>
         public IList<StatusInfo> StatusInfoList
         {
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DacGetStatusResponse()
         {
-            this._statusInfoList = new List<StatusInfo>();
+            this.StatusInfoList = new List<StatusInfo>();
         }
         
         /// <summary>

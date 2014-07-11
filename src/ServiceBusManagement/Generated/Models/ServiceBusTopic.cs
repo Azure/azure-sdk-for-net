@@ -92,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// subscriptions. Subscriptions inherit the TTL from the topic unless
         /// they are created explicitly with a smaller TTL. Based on whether
         /// dead-lettering is enabled, a message whose TTL has expired will
-        /// either be moved to the subscription’s associated DeadLtterQueue or
+        /// either be moved to the subscription's associated DeadLtterQueue or
         /// will be permanently deleted. The following values are settable at
         /// topic creation time:* Range: 1 second - TimeSpan.MaxValue*
         /// Default: TimeSpan.MaxValue  (see
@@ -294,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopic()
         {
-            this._authorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
         }
     }
 }

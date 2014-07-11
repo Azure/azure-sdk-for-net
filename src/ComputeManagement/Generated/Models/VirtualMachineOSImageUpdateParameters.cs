@@ -77,14 +77,14 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._imageFamily = value; }
         }
         
-        private bool _isPremium;
+        private bool? _isPremium;
         
         /// <summary>
         /// Optional. Indicates if the image contains software or associated
         /// services that will incur charges above the core price for the
         /// virtual machine.
         /// </summary>
-        public bool IsPremium
+        public bool? IsPremium
         {
             get { return this._isPremium; }
             set { this._isPremium = value; }
@@ -151,6 +151,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._recommendedVMSize = value; }
         }
         
+        private bool? _showInGui;
+        
+        /// <summary>
+        /// Optional. When published, should this image show up in the windows
+        /// azure image gallery or not. True by default.
+        /// </summary>
+        public bool? ShowInGui
+        {
+            get { return this._showInGui; }
+            set { this._showInGui = value; }
+        }
+        
         private Uri _smallIconUri;
         
         /// <summary>
@@ -171,6 +183,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineOSImageUpdateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineOSImageUpdateParameters(string label)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Label = label;
         }
     }
 }

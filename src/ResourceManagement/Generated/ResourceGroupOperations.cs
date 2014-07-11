@@ -110,9 +110,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -123,6 +123,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -156,7 +157,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -253,9 +254,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "?";
+            string url = "subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -266,6 +267,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -299,7 +301,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.NoContent && statusCode != HttpStatusCode.NotFound)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -396,9 +398,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -409,6 +411,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -438,6 +441,18 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
+                JObject tagsDictionary = new JObject();
+                if (parameters.Tags != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                }
+                basicResourceGroupValue["tags"] = tagsDictionary;
+                
                 if (parameters.ProvisioningState != null)
                 {
                     basicResourceGroupValue["provisioningState"] = parameters.ProvisioningState;
@@ -465,7 +480,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -527,6 +542,17 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                             resourceGroupInstance.Properties = propertiesInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey2 = ((string)property.Name);
+                                string tagsValue2 = ((string)property.Value);
+                                resourceGroupInstance.Tags.Add(tagsKey2, tagsValue2);
+                            }
                         }
                         
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];
@@ -608,9 +634,9 @@ namespace Microsoft.Azure.Management.Resources
                 {
                     delayInSeconds = 30;
                 }
-                if (this.Client.LongRunningOperationInitialTimeout >= 0)
+                if (client.LongRunningOperationInitialTimeout >= 0)
                 {
-                    delayInSeconds = this.Client.LongRunningOperationInitialTimeout;
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
                 }
                 while ((result.Status != Microsoft.WindowsAzure.OperationStatus.InProgress) == false)
                 {
@@ -623,9 +649,9 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         delayInSeconds = 15;
                     }
-                    if (this.Client.LongRunningOperationRetryTimeout >= 0)
+                    if (client.LongRunningOperationRetryTimeout >= 0)
                     {
-                        delayInSeconds = this.Client.LongRunningOperationRetryTimeout;
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
                     }
                 }
                 
@@ -686,9 +712,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -699,6 +725,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -732,7 +759,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -796,11 +823,181 @@ namespace Microsoft.Azure.Management.Resources
                             resourceGroupInstance.Properties = propertiesInstance;
                         }
                         
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
+                                resourceGroupInstance.Tags.Add(tagsKey, tagsValue);
+                            }
+                        }
+                        
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];
                         if (provisioningStateValue2 != null && provisioningStateValue2.Type != JTokenType.Null)
                         {
                             string provisioningStateInstance2 = ((string)provisioningStateValue2);
                             resourceGroupInstance.ProvisioningState = provisioningStateInstance2;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a resource group permissions.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. Name of the resource group to get the permissions for.The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Resource group permissions information.
+        /// </returns>
+        public async Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (resourceGroupName != null && resourceGroupName.Length > 1000)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
+            {
+                throw new ArgumentOutOfRangeException("resourceGroupName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                Tracing.Enter(invocationId, this, "GetPermissionsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/permissions?";
+            url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    PermissionGetResult result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new PermissionGetResult();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken valueValue in ((JArray)valueArray))
+                            {
+                                PermittedActionDefinition permittedActionDefinitionInstance = new PermittedActionDefinition();
+                                result.PermittedActions.Add(permittedActionDefinitionInstance);
+                                
+                                JToken actionsArray = valueValue["actions"];
+                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken actionsValue in ((JArray)actionsArray))
+                                    {
+                                        permittedActionDefinitionInstance.Actions.Add(((string)actionsValue));
+                                    }
+                                }
+                            }
                         }
                     }
                     
@@ -862,13 +1059,32 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups?";
-            url = url + "api-version=2014-04-01-preview";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups?";
+            bool appendFilter = true;
+            if (parameters != null && parameters.TagName != null)
+            {
+                appendFilter = false;
+                url = url + "$filter=tagname eq '" + Uri.EscapeDataString(parameters.TagName != null ? parameters.TagName.Trim() : "") + "'";
+            }
+            if (parameters != null && parameters.TagValue != null)
+            {
+                if (appendFilter == true)
+                {
+                    appendFilter = false;
+                    url = url + "$filter=";
+                }
+                else
+                {
+                    url = url + " and ";
+                }
+                url = url + "tagvalue eq '" + Uri.EscapeDataString(parameters.TagValue != null ? parameters.TagValue.Trim() : "") + "'";
+            }
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
+            url = url + "&api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -879,6 +1095,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -912,7 +1129,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -979,6 +1196,17 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                                     resourceGroupJsonFormatInstance.Properties = propertiesInstance;
+                                }
+                                
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in tagsSequenceElement)
+                                    {
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
+                                        resourceGroupJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue2 = valueValue["provisioningState"];
@@ -1094,7 +1322,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1161,6 +1389,17 @@ namespace Microsoft.Azure.Management.Resources
                                 {
                                     string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                                     resourceGroupJsonFormatInstance.Properties = propertiesInstance;
+                                }
+                                
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                                {
+                                    foreach (JProperty property in tagsSequenceElement)
+                                    {
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
+                                        resourceGroupJsonFormatInstance.Tags.Add(tagsKey, tagsValue);
+                                    }
                                 }
                                 
                                 JToken provisioningStateValue2 = valueValue["provisioningState"];
@@ -1266,9 +1505,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1279,6 +1518,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1308,6 +1548,18 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
+                JObject tagsDictionary = new JObject();
+                if (parameters.Tags != null)
+                {
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                }
+                basicResourceGroupValue["tags"] = tagsDictionary;
+                
                 if (parameters.ProvisioningState != null)
                 {
                     basicResourceGroupValue["provisioningState"] = parameters.ProvisioningState;
@@ -1335,7 +1587,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1397,6 +1649,17 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             string propertiesInstance = propertiesValue2.ToString(Formatting.Indented);
                             resourceGroupInstance.Properties = propertiesInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey2 = ((string)property.Name);
+                                string tagsValue2 = ((string)property.Value);
+                                resourceGroupInstance.Tags.Add(tagsKey2, tagsValue2);
+                            }
                         }
                         
                         JToken provisioningStateValue2 = responseDoc["provisioningState"];

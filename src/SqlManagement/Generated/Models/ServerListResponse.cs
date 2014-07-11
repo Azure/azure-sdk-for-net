@@ -28,15 +28,16 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The response structure for the Server List operation.
+    /// The response structure for the Server List operation.  Contains a list
+    /// of all the servers in a subscription.
     /// </summary>
     public partial class ServerListResponse : OperationResponse, IEnumerable<Server>
     {
         private IList<Server> _servers;
         
         /// <summary>
-        /// Optional. Gets or sets the SQL Servers that are valid for your
-        /// subscription.
+        /// Optional. Gets the collection of Azure SQL Database Servers that
+        /// are valid for your subscription.
         /// </summary>
         public IList<Server> Servers
         {
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this._servers = new List<Server>();
+            this.Servers = new List<Server>();
         }
         
         /// <summary>

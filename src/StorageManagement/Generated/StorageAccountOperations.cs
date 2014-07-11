@@ -142,8 +142,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -154,6 +154,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -164,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -261,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -337,8 +338,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/operations/isavailable/" + accountName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/operations/isavailable/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -349,6 +350,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -359,7 +361,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -383,7 +385,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -400,17 +402,17 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement availabilityResponseElement = responseDoc.Element(XName.Get("AvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (availabilityResponseElement != null && availabilityResponseElement.IsEmpty == false)
+                    if (availabilityResponseElement != null)
                     {
                         XElement resultElement = availabilityResponseElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                        if (resultElement != null && resultElement.IsEmpty == false)
+                        if (resultElement != null)
                         {
                             bool resultInstance = bool.Parse(resultElement.Value);
                             result.IsAvailable = resultInstance;
                         }
                         
                         XElement reasonElement = availabilityResponseElement.Element(XName.Get("Reason", "http://schemas.microsoft.com/windowsazure"));
-                        if (reasonElement != null && reasonElement.IsEmpty == false)
+                        if (reasonElement != null)
                         {
                             bool isNil = false;
                             XAttribute nilAttribute = reasonElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -503,6 +505,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -510,6 +516,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -588,8 +598,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/" + accountName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -600,6 +610,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -610,7 +621,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -634,7 +645,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -709,8 +720,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/" + accountName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -721,6 +732,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -731,7 +743,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -755,7 +767,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -772,33 +784,33 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
-                    if (storageServiceElement != null && storageServiceElement.IsEmpty == false)
+                    if (storageServiceElement != null)
                     {
                         StorageAccount storageServiceInstance = new StorageAccount();
                         result.StorageAccount = storageServiceInstance;
                         
                         XElement urlElement = storageServiceElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                        if (urlElement != null && urlElement.IsEmpty == false)
+                        if (urlElement != null)
                         {
                             Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
                             storageServiceInstance.Uri = urlInstance;
                         }
                         
                         XElement serviceNameElement = storageServiceElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                        if (serviceNameElement != null && serviceNameElement.IsEmpty == false)
+                        if (serviceNameElement != null)
                         {
                             string serviceNameInstance = serviceNameElement.Value;
                             storageServiceInstance.Name = serviceNameInstance;
                         }
                         
                         XElement storageServicePropertiesElement = storageServiceElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
-                        if (storageServicePropertiesElement != null && storageServicePropertiesElement.IsEmpty == false)
+                        if (storageServicePropertiesElement != null)
                         {
                             StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
                             storageServiceInstance.Properties = storageServicePropertiesInstance;
                             
                             XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null && descriptionElement.IsEmpty == false)
+                            if (descriptionElement != null)
                             {
                                 bool isNil = false;
                                 XAttribute nilAttribute = descriptionElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -814,35 +826,35 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             }
                             
                             XElement affinityGroupElement = storageServicePropertiesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                            if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
+                            if (affinityGroupElement != null)
                             {
                                 string affinityGroupInstance = affinityGroupElement.Value;
                                 storageServicePropertiesInstance.AffinityGroup = affinityGroupInstance;
                             }
                             
                             XElement locationElement = storageServicePropertiesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                            if (locationElement != null && locationElement.IsEmpty == false)
+                            if (locationElement != null)
                             {
                                 string locationInstance = locationElement.Value;
                                 storageServicePropertiesInstance.Location = locationInstance;
                             }
                             
                             XElement labelElement = storageServicePropertiesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null && labelElement.IsEmpty == false)
+                            if (labelElement != null)
                             {
                                 string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                                 storageServicePropertiesInstance.Label = labelInstance;
                             }
                             
                             XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null && statusElement.IsEmpty == false)
+                            if (statusElement != null)
                             {
                                 StorageAccountStatus statusInstance = ((StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true));
                                 storageServicePropertiesInstance.Status = statusInstance;
                             }
                             
                             XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                            if (endpointsSequenceElement != null && endpointsSequenceElement.IsEmpty == false)
+                            if (endpointsSequenceElement != null)
                             {
                                 foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -851,42 +863,42 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             }
                             
                             XElement geoReplicationEnabledElement = storageServicePropertiesElement.Element(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoReplicationEnabledElement != null && geoReplicationEnabledElement.IsEmpty == false)
+                            if (geoReplicationEnabledElement != null)
                             {
                                 bool geoReplicationEnabledInstance = bool.Parse(geoReplicationEnabledElement.Value);
                                 storageServicePropertiesInstance.GeoReplicationEnabled = geoReplicationEnabledInstance;
                             }
                             
                             XElement geoPrimaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoPrimaryRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoPrimaryRegionElement != null && geoPrimaryRegionElement.IsEmpty == false)
+                            if (geoPrimaryRegionElement != null)
                             {
                                 string geoPrimaryRegionInstance = geoPrimaryRegionElement.Value;
                                 storageServicePropertiesInstance.GeoPrimaryRegion = geoPrimaryRegionInstance;
                             }
                             
                             XElement statusOfPrimaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfPrimary", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusOfPrimaryElement != null && statusOfPrimaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
+                            if (statusOfPrimaryElement != null && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
                             {
                                 GeoRegionStatus statusOfPrimaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true));
                                 storageServicePropertiesInstance.StatusOfGeoPrimaryRegion = statusOfPrimaryInstance;
                             }
                             
                             XElement lastGeoFailoverTimeElement = storageServicePropertiesElement.Element(XName.Get("LastGeoFailoverTime", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastGeoFailoverTimeElement != null && lastGeoFailoverTimeElement.IsEmpty == false && string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value) == false)
+                            if (lastGeoFailoverTimeElement != null && string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value) == false)
                             {
                                 DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture);
                                 storageServicePropertiesInstance.LastGeoFailoverTime = lastGeoFailoverTimeInstance;
                             }
                             
                             XElement geoSecondaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoSecondaryRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoSecondaryRegionElement != null && geoSecondaryRegionElement.IsEmpty == false)
+                            if (geoSecondaryRegionElement != null)
                             {
                                 string geoSecondaryRegionInstance = geoSecondaryRegionElement.Value;
                                 storageServicePropertiesInstance.GeoSecondaryRegion = geoSecondaryRegionInstance;
                             }
                             
                             XElement statusOfSecondaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfSecondary", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusOfSecondaryElement != null && statusOfSecondaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
+                            if (statusOfSecondaryElement != null && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
                             {
                                 GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                 storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
@@ -894,7 +906,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         }
                         
                         XElement extendedPropertiesSequenceElement = storageServiceElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                        if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.IsEmpty == false)
+                        if (extendedPropertiesSequenceElement != null)
                         {
                             foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                             {
@@ -969,8 +981,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/" + accountName.Trim() + "/keys";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/" + accountName.Trim() + "/keys";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -981,6 +993,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -991,7 +1004,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1015,7 +1028,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1032,27 +1045,27 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
-                    if (storageServiceElement != null && storageServiceElement.IsEmpty == false)
+                    if (storageServiceElement != null)
                     {
                         XElement urlElement = storageServiceElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                        if (urlElement != null && urlElement.IsEmpty == false)
+                        if (urlElement != null)
                         {
                             Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
                             result.Uri = urlInstance;
                         }
                         
                         XElement storageServiceKeysElement = storageServiceElement.Element(XName.Get("StorageServiceKeys", "http://schemas.microsoft.com/windowsazure"));
-                        if (storageServiceKeysElement != null && storageServiceKeysElement.IsEmpty == false)
+                        if (storageServiceKeysElement != null)
                         {
                             XElement primaryElement = storageServiceKeysElement.Element(XName.Get("Primary", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryElement != null && primaryElement.IsEmpty == false)
+                            if (primaryElement != null)
                             {
                                 string primaryInstance = primaryElement.Value;
                                 result.PrimaryKey = primaryInstance;
                             }
                             
                             XElement secondaryElement = storageServiceKeysElement.Element(XName.Get("Secondary", "http://schemas.microsoft.com/windowsazure"));
-                            if (secondaryElement != null && secondaryElement.IsEmpty == false)
+                            if (secondaryElement != null)
                             {
                                 string secondaryInstance = secondaryElement.Value;
                                 result.SecondaryKey = secondaryInstance;
@@ -1116,8 +1129,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1128,6 +1141,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1138,7 +1152,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1162,7 +1176,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1179,7 +1193,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
-                    if (storageServicesSequenceElement != null && storageServicesSequenceElement.IsEmpty == false)
+                    if (storageServicesSequenceElement != null)
                     {
                         foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -1187,27 +1201,27 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             result.StorageAccounts.Add(storageServiceInstance);
                             
                             XElement urlElement = storageServicesElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                            if (urlElement != null && urlElement.IsEmpty == false)
+                            if (urlElement != null)
                             {
                                 Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
                                 storageServiceInstance.Uri = urlInstance;
                             }
                             
                             XElement serviceNameElement = storageServicesElement.Element(XName.Get("ServiceName", "http://schemas.microsoft.com/windowsazure"));
-                            if (serviceNameElement != null && serviceNameElement.IsEmpty == false)
+                            if (serviceNameElement != null)
                             {
                                 string serviceNameInstance = serviceNameElement.Value;
                                 storageServiceInstance.Name = serviceNameInstance;
                             }
                             
                             XElement storageServicePropertiesElement = storageServicesElement.Element(XName.Get("StorageServiceProperties", "http://schemas.microsoft.com/windowsazure"));
-                            if (storageServicePropertiesElement != null && storageServicePropertiesElement.IsEmpty == false)
+                            if (storageServicePropertiesElement != null)
                             {
                                 StorageAccountProperties storageServicePropertiesInstance = new StorageAccountProperties();
                                 storageServiceInstance.Properties = storageServicePropertiesInstance;
                                 
                                 XElement descriptionElement = storageServicePropertiesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                                if (descriptionElement != null && descriptionElement.IsEmpty == false)
+                                if (descriptionElement != null)
                                 {
                                     bool isNil = false;
                                     XAttribute nilAttribute = descriptionElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
@@ -1223,35 +1237,35 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 }
                                 
                                 XElement affinityGroupElement = storageServicePropertiesElement.Element(XName.Get("AffinityGroup", "http://schemas.microsoft.com/windowsazure"));
-                                if (affinityGroupElement != null && affinityGroupElement.IsEmpty == false)
+                                if (affinityGroupElement != null)
                                 {
                                     string affinityGroupInstance = affinityGroupElement.Value;
                                     storageServicePropertiesInstance.AffinityGroup = affinityGroupInstance;
                                 }
                                 
                                 XElement locationElement = storageServicePropertiesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                                if (locationElement != null && locationElement.IsEmpty == false)
+                                if (locationElement != null)
                                 {
                                     string locationInstance = locationElement.Value;
                                     storageServicePropertiesInstance.Location = locationInstance;
                                 }
                                 
                                 XElement labelElement = storageServicePropertiesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                                if (labelElement != null && labelElement.IsEmpty == false)
+                                if (labelElement != null)
                                 {
                                     string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                                     storageServicePropertiesInstance.Label = labelInstance;
                                 }
                                 
                                 XElement statusElement = storageServicePropertiesElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                                if (statusElement != null && statusElement.IsEmpty == false)
+                                if (statusElement != null)
                                 {
                                     StorageAccountStatus statusInstance = ((StorageAccountStatus)Enum.Parse(typeof(StorageAccountStatus), statusElement.Value, true));
                                     storageServicePropertiesInstance.Status = statusInstance;
                                 }
                                 
                                 XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                                if (endpointsSequenceElement != null && endpointsSequenceElement.IsEmpty == false)
+                                if (endpointsSequenceElement != null)
                                 {
                                     foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
@@ -1260,42 +1274,42 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 }
                                 
                                 XElement geoReplicationEnabledElement = storageServicePropertiesElement.Element(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                                if (geoReplicationEnabledElement != null && geoReplicationEnabledElement.IsEmpty == false)
+                                if (geoReplicationEnabledElement != null)
                                 {
                                     bool geoReplicationEnabledInstance = bool.Parse(geoReplicationEnabledElement.Value);
                                     storageServicePropertiesInstance.GeoReplicationEnabled = geoReplicationEnabledInstance;
                                 }
                                 
                                 XElement geoPrimaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoPrimaryRegion", "http://schemas.microsoft.com/windowsazure"));
-                                if (geoPrimaryRegionElement != null && geoPrimaryRegionElement.IsEmpty == false)
+                                if (geoPrimaryRegionElement != null)
                                 {
                                     string geoPrimaryRegionInstance = geoPrimaryRegionElement.Value;
                                     storageServicePropertiesInstance.GeoPrimaryRegion = geoPrimaryRegionInstance;
                                 }
                                 
                                 XElement statusOfPrimaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfPrimary", "http://schemas.microsoft.com/windowsazure"));
-                                if (statusOfPrimaryElement != null && statusOfPrimaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
+                                if (statusOfPrimaryElement != null && string.IsNullOrEmpty(statusOfPrimaryElement.Value) == false)
                                 {
                                     GeoRegionStatus statusOfPrimaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfPrimaryElement.Value, true));
                                     storageServicePropertiesInstance.StatusOfGeoPrimaryRegion = statusOfPrimaryInstance;
                                 }
                                 
                                 XElement lastGeoFailoverTimeElement = storageServicePropertiesElement.Element(XName.Get("LastGeoFailoverTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (lastGeoFailoverTimeElement != null && lastGeoFailoverTimeElement.IsEmpty == false && string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value) == false)
+                                if (lastGeoFailoverTimeElement != null && string.IsNullOrEmpty(lastGeoFailoverTimeElement.Value) == false)
                                 {
                                     DateTime lastGeoFailoverTimeInstance = DateTime.Parse(lastGeoFailoverTimeElement.Value, CultureInfo.InvariantCulture);
                                     storageServicePropertiesInstance.LastGeoFailoverTime = lastGeoFailoverTimeInstance;
                                 }
                                 
                                 XElement geoSecondaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoSecondaryRegion", "http://schemas.microsoft.com/windowsazure"));
-                                if (geoSecondaryRegionElement != null && geoSecondaryRegionElement.IsEmpty == false)
+                                if (geoSecondaryRegionElement != null)
                                 {
                                     string geoSecondaryRegionInstance = geoSecondaryRegionElement.Value;
                                     storageServicePropertiesInstance.GeoSecondaryRegion = geoSecondaryRegionInstance;
                                 }
                                 
                                 XElement statusOfSecondaryElement = storageServicePropertiesElement.Element(XName.Get("StatusOfSecondary", "http://schemas.microsoft.com/windowsazure"));
-                                if (statusOfSecondaryElement != null && statusOfSecondaryElement.IsEmpty == false && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
+                                if (statusOfSecondaryElement != null && string.IsNullOrEmpty(statusOfSecondaryElement.Value) == false)
                                 {
                                     GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                     storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
@@ -1303,7 +1317,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             }
                             
                             XElement extendedPropertiesSequenceElement = storageServicesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                            if (extendedPropertiesSequenceElement != null && extendedPropertiesSequenceElement.IsEmpty == false)
+                            if (extendedPropertiesSequenceElement != null)
                             {
                                 foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -1383,8 +1397,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/" + parameters.Name.Trim() + "/keys?action=regenerate";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/" + parameters.Name.Trim() + "/keys?action=regenerate";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1395,6 +1409,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1405,7 +1420,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1444,7 +1459,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1461,27 +1476,27 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement storageServiceElement = responseDoc.Element(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure"));
-                    if (storageServiceElement != null && storageServiceElement.IsEmpty == false)
+                    if (storageServiceElement != null)
                     {
                         XElement urlElement = storageServiceElement.Element(XName.Get("Url", "http://schemas.microsoft.com/windowsazure"));
-                        if (urlElement != null && urlElement.IsEmpty == false)
+                        if (urlElement != null)
                         {
                             Uri urlInstance = TypeConversion.TryParseUri(urlElement.Value);
                             result.Uri = urlInstance;
                         }
                         
                         XElement storageServiceKeysElement = storageServiceElement.Element(XName.Get("StorageServiceKeys", "http://schemas.microsoft.com/windowsazure"));
-                        if (storageServiceKeysElement != null && storageServiceKeysElement.IsEmpty == false)
+                        if (storageServiceKeysElement != null)
                         {
                             XElement primaryElement = storageServiceKeysElement.Element(XName.Get("Primary", "http://schemas.microsoft.com/windowsazure"));
-                            if (primaryElement != null && primaryElement.IsEmpty == false)
+                            if (primaryElement != null)
                             {
                                 string primaryInstance = primaryElement.Value;
                                 result.PrimaryKey = primaryInstance;
                             }
                             
                             XElement secondaryElement = storageServiceKeysElement.Element(XName.Get("Secondary", "http://schemas.microsoft.com/windowsazure"));
-                            if (secondaryElement != null && secondaryElement.IsEmpty == false)
+                            if (secondaryElement != null)
                             {
                                 string secondaryInstance = secondaryElement.Value;
                                 result.SecondaryKey = secondaryInstance;
@@ -1584,8 +1599,8 @@ namespace Microsoft.WindowsAzure.Management.Storage
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/storageservices/" + accountName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/storageservices/" + accountName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1596,6 +1611,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1606,7 +1622,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1691,7 +1707,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

@@ -20,20 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// An individual server in your Windows Azure subscription.
+    /// Represents an individual Azure SQL Database Server.
     /// </summary>
     public partial class Server
     {
         private string _administratorUserName;
         
         /// <summary>
-        /// Optional. Gets or sets the name of an administrator for this server.
+        /// Optional. Gets the administrator login for the server.
         /// </summary>
         public string AdministratorUserName
         {
@@ -41,23 +40,24 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._administratorUserName = value; }
         }
         
-        private IDictionary<string, string> _features;
+        private string _fullyQualifiedDomainName;
         
         /// <summary>
-        /// Optional. Gets or sets the list of features and the type of
-        /// database server for an individual server.
+        /// Optional. Gets the fully qualified domain name of the Azure SQL
+        /// Database Server.
         /// </summary>
-        public IDictionary<string, string> Features
+        public string FullyQualifiedDomainName
         {
-            get { return this._features; }
-            set { this._features = value; }
+            get { return this._fullyQualifiedDomainName; }
+            set { this._fullyQualifiedDomainName = value; }
         }
         
         private string _location;
         
         /// <summary>
-        /// Optional. Gets or sets the name of a data center location that is
-        /// valid for your subscription.
+        /// Optional. Gets the location of this server. See
+        /// http://azure.microsoft.com/en-us/regions/#services for a list of
+        /// valid regions.
         /// </summary>
         public string Location
         {
@@ -68,8 +68,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Gets or sets the name of a SQL Server running in your
-        /// subscription.
+        /// Optional. Gets the name of the Azure SQL Database Server.
         /// </summary>
         public string Name
         {
@@ -77,12 +76,33 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._name = value; }
         }
         
+        private string _state;
+        
+        /// <summary>
+        /// Optional. Gets the current state of the server.
+        /// </summary>
+        public string State
+        {
+            get { return this._state; }
+            set { this._state = value; }
+        }
+        
+        private string _version;
+        
+        /// <summary>
+        /// Optional. Gets the version of the server.
+        /// </summary>
+        public string Version
+        {
+            get { return this._version; }
+            set { this._version = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the Server class.
         /// </summary>
         public Server()
         {
-            this._features = new Dictionary<string, string>();
         }
     }
 }

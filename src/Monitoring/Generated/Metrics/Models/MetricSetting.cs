@@ -70,5 +70,24 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         public MetricSetting()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the MetricSetting class with required
+        /// arguments.
+        /// </summary>
+        public MetricSetting(string resourceId, MetricSettingValue value)
+            : this()
+        {
+            if (resourceId == null)
+            {
+                throw new ArgumentNullException("resourceId");
+            }
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+            this.ResourceId = resourceId;
+            this.Value = value;
+        }
     }
 }

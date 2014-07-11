@@ -76,9 +76,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this._days = new List<string>();
-            this._hours = new List<int>();
-            this._minutes = new List<int>();
+            this.Days = new List<string>();
+            this.Hours = new List<int>();
+            this.Minutes = new List<int>();
         }
     }
 }

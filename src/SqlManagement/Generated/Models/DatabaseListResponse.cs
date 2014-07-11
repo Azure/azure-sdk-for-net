@@ -28,15 +28,16 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the list of databases for a given server.
+    /// Contains a collection of databases for a given Azure SQL Database
+    /// Server.
     /// </summary>
     public partial class DatabaseListResponse : OperationResponse, IEnumerable<Database>
     {
         private IList<Database> _databases;
         
         /// <summary>
-        /// Optional. Gets or sets the SQL Server databases that are housed in
-        /// a server.
+        /// Optional. Gets or sets the collection of databases that are hosted
+        /// on the Azure SQL Database Server.
         /// </summary>
         public IList<Database> Databases
         {
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
-            this._databases = new List<Database>();
+            this.Databases = new List<Database>();
         }
         
         /// <summary>

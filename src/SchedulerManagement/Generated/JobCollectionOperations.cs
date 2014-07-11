@@ -116,8 +116,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -128,6 +128,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -231,7 +232,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -316,8 +317,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -328,6 +329,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -362,7 +364,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -460,8 +462,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/" + jobCollectionName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -472,6 +474,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -579,7 +582,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -670,10 +673,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/JobCollections/?";
             url = url + "op=checknameavailability";
-            url = url + "&resourceName=" + Uri.EscapeUriString(jobCollectionName.Trim());
+            url = url + "&resourceName=" + Uri.EscapeDataString(jobCollectionName.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -684,6 +687,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -718,7 +722,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -735,10 +739,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceNameAvailabilityResponseElement = responseDoc.Element(XName.Get("ResourceNameAvailabilityResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceNameAvailabilityResponseElement != null && resourceNameAvailabilityResponseElement.IsEmpty == false)
+                    if (resourceNameAvailabilityResponseElement != null)
                     {
                         XElement isAvailableElement = resourceNameAvailabilityResponseElement.Element(XName.Get("IsAvailable", "http://schemas.microsoft.com/windowsazure"));
-                        if (isAvailableElement != null && isAvailableElement.IsEmpty == false)
+                        if (isAvailableElement != null)
                         {
                             bool isAvailableInstance = bool.Parse(isAvailableElement.Value);
                             result.IsAvailable = isAvailableInstance;
@@ -828,6 +832,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -835,6 +843,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -926,6 +938,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -933,6 +949,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -1015,8 +1035,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + jobCollectionName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + cloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + jobCollectionName.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1027,6 +1047,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1061,7 +1082,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1078,91 +1099,91 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceElement = responseDoc.Element(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceElement != null && resourceElement.IsEmpty == false)
+                    if (resourceElement != null)
                     {
                         XElement nameElement = resourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null && nameElement.IsEmpty == false)
+                        if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
                             result.Name = nameInstance;
                         }
                         
                         XElement eTagElement = resourceElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
-                        if (eTagElement != null && eTagElement.IsEmpty == false)
+                        if (eTagElement != null)
                         {
                             string eTagInstance = eTagElement.Value;
                             result.ETag = eTagInstance;
                         }
                         
                         XElement stateElement = resourceElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null && stateElement.IsEmpty == false)
+                        if (stateElement != null)
                         {
                             JobCollectionState stateInstance = ((JobCollectionState)Enum.Parse(typeof(JobCollectionState), stateElement.Value, true));
                             result.State = stateInstance;
                         }
                         
                         XElement schemaVersionElement = resourceElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
-                        if (schemaVersionElement != null && schemaVersionElement.IsEmpty == false)
+                        if (schemaVersionElement != null)
                         {
                             string schemaVersionInstance = schemaVersionElement.Value;
                             result.SchemaVersion = schemaVersionInstance;
                         }
                         
                         XElement promotionCodeElement = resourceElement.Element(XName.Get("PromotionCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (promotionCodeElement != null && promotionCodeElement.IsEmpty == false)
+                        if (promotionCodeElement != null)
                         {
                             string promotionCodeInstance = promotionCodeElement.Value;
                             result.PromotionCode = promotionCodeInstance;
                         }
                         
                         XElement intrinsicSettingsElement = resourceElement.Element(XName.Get("IntrinsicSettings", "http://schemas.microsoft.com/windowsazure"));
-                        if (intrinsicSettingsElement != null && intrinsicSettingsElement.IsEmpty == false)
+                        if (intrinsicSettingsElement != null)
                         {
                             JobCollectionIntrinsicSettings intrinsicSettingsInstance = new JobCollectionIntrinsicSettings();
                             result.IntrinsicSettings = intrinsicSettingsInstance;
                             
                             XElement planElement = intrinsicSettingsElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                            if (planElement != null && planElement.IsEmpty == false)
+                            if (planElement != null)
                             {
                                 JobCollectionPlan planInstance = ((JobCollectionPlan)Enum.Parse(typeof(JobCollectionPlan), planElement.Value, true));
                                 intrinsicSettingsInstance.Plan = planInstance;
                             }
                             
                             XElement quotaElement = intrinsicSettingsElement.Element(XName.Get("Quota", "http://schemas.microsoft.com/windowsazure"));
-                            if (quotaElement != null && quotaElement.IsEmpty == false)
+                            if (quotaElement != null)
                             {
                                 JobCollectionQuota quotaInstance = new JobCollectionQuota();
                                 intrinsicSettingsInstance.Quota = quotaInstance;
                                 
                                 XElement maxJobCountElement = quotaElement.Element(XName.Get("MaxJobCount", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobCountElement != null && maxJobCountElement.IsEmpty == false && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
+                                if (maxJobCountElement != null && string.IsNullOrEmpty(maxJobCountElement.Value) == false)
                                 {
                                     int maxJobCountInstance = int.Parse(maxJobCountElement.Value, CultureInfo.InvariantCulture);
                                     quotaInstance.MaxJobCount = maxJobCountInstance;
                                 }
                                 
                                 XElement maxJobOccurrenceElement = quotaElement.Element(XName.Get("MaxJobOccurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxJobOccurrenceElement != null && maxJobOccurrenceElement.IsEmpty == false && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
+                                if (maxJobOccurrenceElement != null && string.IsNullOrEmpty(maxJobOccurrenceElement.Value) == false)
                                 {
                                     int maxJobOccurrenceInstance = int.Parse(maxJobOccurrenceElement.Value, CultureInfo.InvariantCulture);
                                     quotaInstance.MaxJobOccurrence = maxJobOccurrenceInstance;
                                 }
                                 
                                 XElement maxRecurrenceElement = quotaElement.Element(XName.Get("MaxRecurrence", "http://schemas.microsoft.com/windowsazure"));
-                                if (maxRecurrenceElement != null && maxRecurrenceElement.IsEmpty == false)
+                                if (maxRecurrenceElement != null)
                                 {
                                     JobCollectionMaxRecurrence maxRecurrenceInstance = new JobCollectionMaxRecurrence();
                                     quotaInstance.MaxRecurrence = maxRecurrenceInstance;
                                     
                                     XElement frequencyElement = maxRecurrenceElement.Element(XName.Get("Frequency", "http://schemas.microsoft.com/windowsazure"));
-                                    if (frequencyElement != null && frequencyElement.IsEmpty == false)
+                                    if (frequencyElement != null)
                                     {
                                         JobCollectionRecurrenceFrequency frequencyInstance = ((JobCollectionRecurrenceFrequency)Enum.Parse(typeof(JobCollectionRecurrenceFrequency), frequencyElement.Value, true));
                                         maxRecurrenceInstance.Frequency = frequencyInstance;
                                     }
                                     
                                     XElement intervalElement = maxRecurrenceElement.Element(XName.Get("Interval", "http://schemas.microsoft.com/windowsazure"));
-                                    if (intervalElement != null && intervalElement.IsEmpty == false)
+                                    if (intervalElement != null)
                                     {
                                         int intervalInstance = int.Parse(intervalElement.Value, CultureInfo.InvariantCulture);
                                         maxRecurrenceInstance.Interval = intervalInstance;
@@ -1172,33 +1193,33 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         }
                         
                         XElement labelElement = resourceElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null && labelElement.IsEmpty == false)
+                        if (labelElement != null)
                         {
                             string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                             result.Label = labelInstance;
                         }
                         
                         XElement operationStatusElement = resourceElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                        if (operationStatusElement != null && operationStatusElement.IsEmpty == false)
+                        if (operationStatusElement != null)
                         {
                             JobCollectionGetResponse.OperationStatus operationStatusInstance = new JobCollectionGetResponse.OperationStatus();
                             result.LastOperationStatus = operationStatusInstance;
                             
                             XElement errorElement = operationStatusElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                            if (errorElement != null && errorElement.IsEmpty == false)
+                            if (errorElement != null)
                             {
                                 JobCollectionGetResponse.OperationStatusResponseDetails errorInstance = new JobCollectionGetResponse.OperationStatusResponseDetails();
                                 operationStatusInstance.ResponseDetails = errorInstance;
                                 
                                 XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
-                                if (httpCodeElement != null && httpCodeElement.IsEmpty == false)
+                                if (httpCodeElement != null)
                                 {
                                     HttpStatusCode httpCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpCodeElement.Value, true));
                                     errorInstance.StatusCode = httpCodeInstance;
                                 }
                                 
                                 XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                                if (messageElement != null && messageElement.IsEmpty == false)
+                                if (messageElement != null)
                                 {
                                     string messageInstance = messageElement.Value;
                                     errorInstance.Message = messageInstance;
@@ -1206,7 +1227,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             }
                             
                             XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                            if (resultElement != null && resultElement.IsEmpty == false)
+                            if (resultElement != null)
                             {
                                 SchedulerOperationStatus resultInstance = ((SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), resultElement.Value, true));
                                 operationStatusInstance.Status = resultInstance;
@@ -1297,6 +1318,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 cancellationToken.ThrowIfCancellationRequested();
                 SchedulerOperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 15;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != SchedulerOperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -1304,6 +1329,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 10;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)

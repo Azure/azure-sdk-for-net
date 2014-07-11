@@ -37,8 +37,21 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
 {
     public partial class SchedulerManagementClient : ServiceClient<SchedulerManagementClient>, Microsoft.WindowsAzure.Management.Scheduler.ISchedulerManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
+        /// </summary>
         public Uri BaseUri
         {
             get { return this._baseUri; }
@@ -46,9 +59,36 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         
         private SubscriptionCloudCredentials _credentials;
         
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IJobCollectionOperations _jobCollections;
@@ -65,6 +105,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             : base()
         {
             this._jobCollections = new JobCollectionOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -72,10 +115,13 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public SchedulerManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -98,7 +144,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
         /// Initializes a new instance of the SchedulerManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public SchedulerManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -111,6 +159,103 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             this._baseUri = new Uri("https://management.core.windows.net/");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private SchedulerManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._jobCollections = new JobCollectionOperations(this);
+            this._apiVersion = "2013-03-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SchedulerManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SchedulerManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public SchedulerManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net/");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// SchedulerManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of SchedulerManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<SchedulerManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is SchedulerManagementClient)
+            {
+                SchedulerManagementClient clonedClient = ((SchedulerManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -160,8 +305,8 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
+            string url = (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/operations/" + requestId.Trim();
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId.Trim() + "/operations/" + requestId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -172,6 +317,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -206,7 +352,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -223,44 +369,44 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement operationElement = responseDoc.Element(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
-                    if (operationElement != null && operationElement.IsEmpty == false)
+                    if (operationElement != null)
                     {
                         XElement idElement = operationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = operationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             SchedulerOperationStatus statusInstance = ((SchedulerOperationStatus)Enum.Parse(typeof(SchedulerOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = operationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
+                        if (httpStatusCodeElement != null)
                         {
                             HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement errorElement = operationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null && errorElement.IsEmpty == false)
+                        if (errorElement != null)
                         {
                             SchedulerOperationStatusResponse.ErrorDetails errorInstance = new SchedulerOperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null && codeElement.IsEmpty == false)
+                            if (codeElement != null)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null && messageElement.IsEmpty == false)
+                            if (messageElement != null)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;
@@ -322,9 +468,9 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId.Trim() + "/resourceproviders/scheduler/Properties?";
+            string url = (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourceproviders/scheduler/Properties?";
             url = url + "resourceType=JobCollections";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -335,6 +481,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -369,7 +516,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -386,7 +533,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement resourceProviderPropertiesSequenceElement = responseDoc.Element(XName.Get("ResourceProviderProperties", "http://schemas.microsoft.com/windowsazure"));
-                    if (resourceProviderPropertiesSequenceElement != null && resourceProviderPropertiesSequenceElement.IsEmpty == false)
+                    if (resourceProviderPropertiesSequenceElement != null)
                     {
                         foreach (XElement resourceProviderPropertiesElement in resourceProviderPropertiesSequenceElement.Elements(XName.Get("ResourceProviderProperty", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -450,10 +597,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=register";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -464,6 +611,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -498,7 +646,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -563,10 +711,10 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = this.Credentials.SubscriptionId.Trim() + "/services?";
+            string url = (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services?";
             url = url + "service=scheduler.JobCollections";
             url = url + "&action=unregister";
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -577,6 +725,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -611,7 +760,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

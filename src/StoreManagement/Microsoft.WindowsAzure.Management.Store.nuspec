@@ -1,9 +1,9 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Store</id>
     <title>Microsoft Azure Store Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>    
+    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -24,16 +24,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.1.1,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="StoreManagement\**\*.cs" target="src" />
-
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Store.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Store.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Store.xml" target="lib\portable-net45+sl50+wp80+win" />
-
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Store.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Store.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Store.xml" target="lib\net40" />

@@ -29,16 +29,19 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for managing SQL
-    /// Databases for a subscription.
+    /// Represents all the operations for operating on Azure SQL Databases.
+    /// Contains operations to: Create, Retrieve, Update, and Delete
+    /// databases, and also includes the ability to get the event logs for a
+    /// database.
     /// </summary>
     public partial interface IDatabaseOperations
     {
         /// <summary>
-        /// Creates a database in a SQL Server database server.
+        /// Creates a database in an Azure SQL Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database will be created.
+        /// The name of the Azure SQL Database Server where the database will
+        /// be created.
         /// </param>
         /// <param name='parameters'>
         /// The parameters for the create database operation.
@@ -47,20 +50,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database create response.
+        /// Represents the response to a create database request from the
+        /// service.
         /// </returns>
         Task<DatabaseCreateResponse> CreateAsync(string serverName, DatabaseCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Drops a database from an Azure SQL Database Server.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server on which the database is found.
+        /// The name of the Azure SQL Database Server on which the database is
+        /// hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the database to be deleted.
+        /// The name of the Azure SQL Database to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -72,74 +75,78 @@ namespace Microsoft.WindowsAzure.Management.Sql
         Task<OperationResponse> DeleteAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns information about a SQL Server database.
+        /// Returns information about an Azure SQL Database.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// The name of the Azure SQL Database Server on which the database is
+        /// hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database get response.
+        /// Contains the response to a Get Database request.
         /// </returns>
         Task<DatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns information about a SQL Server database event logs.
+        /// Returns information about an Azure SQL Database event logs.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server on which the database is housed.
+        /// The name of the Azure SQL Database Server on which the database is
+        /// hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// The name of the Azure SQL Database to be retrieved.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the get event logs database operation.
+        /// The parameters for the Get Database Event Logs operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response to a Get Database Event Logs request.
         /// </returns>
         Task<DatabaseGetEventLogsResponse> GetEventLogsAsync(string serverName, string databaseName, DatabaseGetEventLogsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns the list SQL Server databases.
+        /// Returns a collection of Azure SQL Databases.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the database server to be queried.
+        /// The name of the Azure SQL Database Server from which to retrieve
+        /// the database.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the list of databases for a given server.
+        /// Contains a collection of databases for a given Azure SQL Database
+        /// Server.
         /// </returns>
         Task<DatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Updates SQL Server database information.
+        /// Updates the properties of an Azure SQL Database.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the SQL Server where the database is housed.
+        /// The name of the Azure SQL Database Server where the database is
+        /// hosted.
         /// </param>
         /// <param name='databaseName'>
-        /// The name of the SQL Server database to be obtained.
+        /// The name of the Azure SQL Database to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters for the update database operation.
+        /// The parameters for the Update Database operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response containing the database update response.
+        /// Contains the response from a request to Update Database.
         /// </returns>
         Task<DatabaseUpdateResponse> UpdateAsync(string serverName, string databaseName, DatabaseUpdateParameters parameters, CancellationToken cancellationToken);
     }

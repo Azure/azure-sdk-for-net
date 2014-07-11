@@ -65,5 +65,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public StoredCertificateSettings()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the StoredCertificateSettings class
+        /// with required arguments.
+        /// </summary>
+        public StoredCertificateSettings(string storeName, string thumbprint)
+            : this()
+        {
+            if (storeName == null)
+            {
+                throw new ArgumentNullException("storeName");
+            }
+            if (thumbprint == null)
+            {
+                throw new ArgumentNullException("thumbprint");
+            }
+            this.StoreName = storeName;
+            this.Thumbprint = thumbprint;
+        }
     }
 }

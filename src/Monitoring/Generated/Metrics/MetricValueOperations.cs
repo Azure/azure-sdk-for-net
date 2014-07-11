@@ -121,17 +121,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/monitoring/metricvalues/query?";
-            url = url + "&resourceId=" + Uri.EscapeUriString(resourceId.Trim());
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/metricvalues/query?";
+            url = url + "&resourceId=" + Uri.EscapeDataString(resourceId.Trim());
             if (metricNamespace != null)
             {
-                url = url + "&namespace=" + Uri.EscapeUriString(metricNamespace.Trim());
+                url = url + "&namespace=" + Uri.EscapeDataString(metricNamespace != null ? metricNamespace.Trim() : "");
             }
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
-            url = url + "&timeGrain=" + Uri.EscapeUriString(TypeConversion.To8601String(timeGrain));
-            url = url + "&startTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
-            url = url + "&endTime=" + Uri.EscapeUriString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
+            url = url + "&timeGrain=" + Uri.EscapeDataString(TypeConversion.To8601String(timeGrain));
+            url = url + "&startTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", startTime.ToUniversalTime()));
+            url = url + "&endTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", endTime.ToUniversalTime()));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -142,6 +142,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -177,7 +178,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

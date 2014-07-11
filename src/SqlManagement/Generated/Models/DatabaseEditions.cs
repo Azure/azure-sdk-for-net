@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Specifies the edition of the SQL database.
+    /// Defines the valid editions of Azure SQL Databases.
     /// </summary>
     public static partial class DatabaseEditions
     {
@@ -44,5 +44,24 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// increments.
         /// </summary>
         public const string Business = "Business";
+        
+        /// <summary>
+        /// The Basic Edition Database is best suited for small databases with
+        /// few transactions (<100) per minute and only a couple users.
+        /// </summary>
+        public const string Basic = "Basic";
+        
+        /// <summary>
+        /// The Standard Edition Database is best suited for a group of users
+        /// makingfewer than 1000 transactions per minute.
+        /// </summary>
+        public const string Standard = "Standard";
+        
+        /// <summary>
+        /// The Premium Edition Database is for situations requiring a high
+        /// number of transactionsper second (>100).  Supports more users than
+        /// Basic and Standard.
+        /// </summary>
+        public const string Premium = "Premium";
     }
 }

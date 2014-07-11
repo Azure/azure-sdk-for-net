@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListAvailableExtensionsResponse()
         {
-            this._extensionImages = new List<HostedServiceListAvailableExtensionsResponse.ExtensionImage>();
+            this.ExtensionImages = new List<HostedServiceListAvailableExtensionsResponse.ExtensionImage>();
         }
         
         /// <summary>
@@ -135,6 +135,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._hostingResources; }
                 set { this._hostingResources = value; }
+            }
+            
+            private bool? _isInternalExtension;
+            
+            /// <summary>
+            /// Optional. Boolean property indicating whether the extension is
+            /// internal or public.
+            /// </summary>
+            public bool? IsInternalExtension
+            {
+                get { return this._isInternalExtension; }
+                set { this._isInternalExtension = value; }
             }
             
             private bool? _isJsonExtension;
@@ -280,6 +292,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public ExtensionImage()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the ExtensionImage class with
+            /// required arguments.
+            /// </summary>
+            public ExtensionImage(string type)
+                : this()
+            {
+                if (type == null)
+                {
+                    throw new ArgumentNullException("type");
+                }
+                this.Type = type;
             }
         }
     }

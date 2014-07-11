@@ -3,7 +3,6 @@
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Management.Sql</id>
     <title>Microsoft Azure SQL Database Management Library</title>
-    <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
     <owners>azure-sdk, Microsoft</owners>
@@ -24,16 +23,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.0,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.1.1,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="SqlManagement\**\*.cs" target="src" />
-
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Sql.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Sql.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Sql.xml" target="lib\portable-net45+sl50+wp80+win" />
-
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Sql.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Sql.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Sql.xml" target="lib\net40" />

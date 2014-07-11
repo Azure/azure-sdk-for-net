@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 new StorageManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<StorageManagementClient> client)
-        {
-            base.Clone(client);
-            StorageManagementClient management = client as StorageManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override StorageManagementClient WithHandler(DelegatingHandler handler)
         {
             return (StorageManagementClient)WithHandler(new StorageManagementClient(), handler);

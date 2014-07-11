@@ -79,13 +79,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._label = value; }
         }
         
+        private string _reverseDnsFqdn;
+        
+        /// <summary>
+        /// Optional. Dns address to which the cloud service's IP address
+        /// resolves when queried using a reverse Dns query.
+        /// </summary>
+        public string ReverseDnsFqdn
+        {
+            get { return this._reverseDnsFqdn; }
+            set { this._reverseDnsFqdn = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the HostedServiceUpdateParameters
         /// class.
         /// </summary>
         public HostedServiceUpdateParameters()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
     }
 }

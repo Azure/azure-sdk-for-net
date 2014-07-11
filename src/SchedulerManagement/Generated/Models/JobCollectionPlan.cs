@@ -29,5 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         Standard = 0,
         
         Free = 1,
+        
+        Premium = 2,
     }
 }

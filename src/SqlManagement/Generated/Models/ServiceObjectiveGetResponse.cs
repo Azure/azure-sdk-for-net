@@ -27,15 +27,17 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the service objective for a given server and
-    /// service objective Id.
+    /// Response containing the service objective for a given Azure SQL
+    /// Database Server with matching service objective Id.
     /// </summary>
     public partial class ServiceObjectiveGetResponse : OperationResponse
     {
         private ServiceObjective _serviceObjective;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the service objective for the given Azure
+        /// SQL Database Server with matching service objective Id.  This
+        /// object contains all the properties of the service objective.
         /// </summary>
         public ServiceObjective ServiceObjective
         {

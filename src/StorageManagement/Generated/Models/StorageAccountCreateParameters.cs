@@ -155,7 +155,26 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountCreateParameters()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the StorageAccountCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public StorageAccountCreateParameters(string name, string label)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            this.Name = name;
+            this.Label = label;
         }
     }
 }

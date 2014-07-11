@@ -29,25 +29,22 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// The SQL Database Management API includes operations for managing SQL
-    /// Database servers for a subscription.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715271.aspx for
-    /// more information)
+    /// Contains methods to allow various operations on Azure SQL Database
+    /// Servers.
     /// </summary>
     public partial interface IServerOperations
     {
         /// <summary>
-        /// Sets the administrative password of a SQL Database server for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715272.aspx
-        /// for more information)
+        /// Changes the administrative password of an existing Azure SQL
+        /// Database Server for a given subscription.
         /// </summary>
         /// <param name='serverName'>
-        /// The server that will have the change made to the administrative
-        /// user.
+        /// The name of the Azure SQL Database Server that will have the
+        /// administrator password changed.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters for the Manage Administrator Password operation.
+        /// The necessary parameters for modifying the adminstrator password
+        /// for a server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -59,28 +56,26 @@ namespace Microsoft.WindowsAzure.Management.Sql
         Task<OperationResponse> ChangeAdministratorPasswordAsync(string serverName, ServerChangeAdministratorPasswordParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Adds a new SQL Database server to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715274.aspx
-        /// for more information)
+        /// Provisions a new SQL Database server in a subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the Create Server operation.
+        /// The parameters needed to provision a server.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response returned from the Create Server operation.
+        /// The response returned from the Create Server operation.  This
+        /// contains all the information returned from the service when a
+        /// server is created.
         /// </returns>
         Task<ServerCreateResponse> CreateAsync(ServerCreateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Drops a SQL Database server from a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715285.aspx
-        /// for more information)
+        /// Deletes the specified Azure SQL Database Server from a subscription.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server to be deleted.
+        /// The name of the Azure SQL Database Server to be deleted.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -92,16 +87,15 @@ namespace Microsoft.WindowsAzure.Management.Sql
         Task<OperationResponse> DeleteAsync(string serverName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Returns all SQL Database servers that are provisioned for a
-        /// subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715269.aspx
-        /// for more information)
+        /// Returns all SQL Database Servers that are provisioned for a
+        /// subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the Server List operation.
+        /// The response structure for the Server List operation.  Contains a
+        /// list of all the servers in a subscription.
         /// </returns>
         Task<ServerListResponse> ListAsync(CancellationToken cancellationToken);
     }

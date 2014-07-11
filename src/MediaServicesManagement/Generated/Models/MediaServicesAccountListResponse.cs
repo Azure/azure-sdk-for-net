@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         /// </summary>
         public MediaServicesAccountListResponse()
         {
-            this._accounts = new List<MediaServicesAccountListResponse.MediaServiceAccount>();
+            this.Accounts = new List<MediaServicesAccountListResponse.MediaServiceAccount>();
         }
         
         /// <summary>

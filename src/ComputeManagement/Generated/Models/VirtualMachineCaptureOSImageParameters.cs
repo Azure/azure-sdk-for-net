@@ -34,9 +34,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         
         /// <summary>
         /// Required. Specifies the action that is performed after the capture
-        /// operation finishes. Possible values are: Delete – this value
+        /// operation finishes. Possible values are: Delete - this value
         /// causes the virtual machine to be deleted after the image has been
-        /// captured; or Reprovision – this value causes the virtual machine
+        /// captured; or Reprovision - this value causes the virtual machine
         /// to be redeployed after the image is captured by using the
         /// specified information in ProvisioningConfiguration.
         /// </summary>
@@ -89,6 +89,27 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineCaptureOSImageParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineCaptureOSImageParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineCaptureOSImageParameters(PostCaptureAction postCaptureAction, string targetImageLabel, string targetImageName)
+            : this()
+        {
+            if (targetImageLabel == null)
+            {
+                throw new ArgumentNullException("targetImageLabel");
+            }
+            if (targetImageName == null)
+            {
+                throw new ArgumentNullException("targetImageName");
+            }
+            this.PostCaptureAction = postCaptureAction;
+            this.TargetImageLabel = targetImageLabel;
+            this.TargetImageName = targetImageName;
         }
     }
 }

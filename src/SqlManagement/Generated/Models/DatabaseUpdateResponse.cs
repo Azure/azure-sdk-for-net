@@ -27,14 +27,15 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Response containing the database update response.
+    /// Contains the response from a request to Update Database.
     /// </summary>
     public partial class DatabaseUpdateResponse : OperationResponse
     {
         private Database _database;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The database object returned from the call to Update
+        /// Database reflecting the changes made.
         /// </summary>
         public Database Database
         {

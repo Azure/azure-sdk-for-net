@@ -25,15 +25,15 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// The parameters for the Create Firewall Rule operation.
+    /// Represents the parameters for the Create Firewall Rule operation.
     /// </summary>
     public partial class FirewallRuleUpdateParameters
     {
         private string _endIPAddress;
         
         /// <summary>
-        /// Required. Gets or sets the ending IP address applied to this
-        /// firewall rule.
+        /// Required. Gets or sets the new ending IP address for this Firewall
+        /// Rule.
         /// </summary>
         public string EndIPAddress
         {
@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _name;
         
         /// <summary>
-        /// Required. Gets or sets the name of this firewall rule.
+        /// Required. Gets or sets the new name of the Firewall Rule.
         /// </summary>
         public string Name
         {
@@ -55,8 +55,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _startIPAddress;
         
         /// <summary>
-        /// Required. Gets or sets the beginning IP address applied to this
-        /// firewall rule.
+        /// Required. Gets or sets the new beginning IP address for this
+        /// Firewall Rule.
         /// </summary>
         public string StartIPAddress
         {
@@ -70,6 +70,30 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public FirewallRuleUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the FirewallRuleUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public FirewallRuleUpdateParameters(string name, string startIPAddress, string endIPAddress)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (startIPAddress == null)
+            {
+                throw new ArgumentNullException("startIPAddress");
+            }
+            if (endIPAddress == null)
+            {
+                throw new ArgumentNullException("endIPAddress");
+            }
+            this.Name = name;
+            this.StartIPAddress = startIPAddress;
+            this.EndIPAddress = endIPAddress;
         }
     }
 }

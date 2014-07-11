@@ -46,10 +46,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     /// </summary>
     public partial class ExpressRouteManagementClient : ServiceClient<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IExpressRouteManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all golden gate requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -59,47 +69,70 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
         }
         
-        private IBgpPeeringOperations _bgpPeering;
+        private int _longRunningOperationInitialTimeout;
         
-        public virtual IBgpPeeringOperations BgpPeering
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
         {
-            get { return this._bgpPeering; }
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
         }
         
-        private ICrossConnectionOperations _crossConnection;
+        private int _longRunningOperationRetryTimeout;
         
-        public virtual ICrossConnectionOperations CrossConnection
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
         {
-            get { return this._crossConnection; }
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private IDedicatedCircuitLinkOperations _dedicatedCircuitLink;
+        private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
         
-        public virtual IDedicatedCircuitLinkOperations DedicatedCircuitLink
+        public virtual IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
-            get { return this._dedicatedCircuitLink; }
+            get { return this._borderGatewayProtocolPeerings; }
         }
         
-        private IDedicatedCircuitOperations _dedicatedCircuit;
+        private ICrossConnectionOperations _crossConnections;
         
-        public virtual IDedicatedCircuitOperations DedicatedCircuit
+        public virtual ICrossConnectionOperations CrossConnections
         {
-            get { return this._dedicatedCircuit; }
+            get { return this._crossConnections; }
         }
         
-        private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProvider;
+        private IDedicatedCircuitLinkOperations _dedicatedCircuitLinks;
         
-        public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProvider
+        public virtual IDedicatedCircuitLinkOperations DedicatedCircuitLinks
         {
-            get { return this._dedicatedCircuitServiceProvider; }
+            get { return this._dedicatedCircuitLinks; }
+        }
+        
+        private IDedicatedCircuitOperations _dedicatedCircuits;
+        
+        public virtual IDedicatedCircuitOperations DedicatedCircuits
+        {
+            get { return this._dedicatedCircuits; }
+        }
+        
+        private IDedicatedCircuitServiceProviderOperations _dedicatedCircuitServiceProviders;
+        
+        public virtual IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
+        {
+            get { return this._dedicatedCircuitServiceProviders; }
         }
         
         /// <summary>
@@ -109,11 +142,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient()
             : base()
         {
-            this._bgpPeering = new BgpPeeringOperations(this);
-            this._crossConnection = new CrossConnectionOperations(this);
-            this._dedicatedCircuitLink = new DedicatedCircuitLinkOperations(this);
-            this._dedicatedCircuit = new DedicatedCircuitOperations(this);
-            this._dedicatedCircuitServiceProvider = new DedicatedCircuitServiceProviderOperations(this);
+            this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
+            this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
+            this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._apiVersion = "2011-10-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -122,11 +158,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all golden gate requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -150,8 +188,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. The customer subscription ID forms part of the URI for
-        /// every call that you make to the Express Route Gateway Manager.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -164,6 +203,110 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private ExpressRouteManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
+            this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
+            this._dedicatedCircuits = new DedicatedCircuitOperations(this);
+            this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
+            this._apiVersion = "2011-10-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExpressRouteManagementClient
+        /// class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ExpressRouteManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// ExpressRouteManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of ExpressRouteManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<ExpressRouteManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is ExpressRouteManagementClient)
+            {
+                ExpressRouteManagementClient clonedClient = ((ExpressRouteManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -209,8 +352,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/services/networking/operation/" + operationId.Trim();
             string baseUrl = this.BaseUri.AbsoluteUri;
-            string url = "/" + this.Credentials.SubscriptionId.Trim() + "/services/networking/operation/" + operationId.Trim();
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -221,6 +364,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -255,7 +399,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -272,51 +416,51 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationElement = responseDoc.Element(XName.Get("GatewayOperation", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationElement != null && gatewayOperationElement.IsEmpty == false)
+                    if (gatewayOperationElement != null)
                     {
                         XElement idElement = gatewayOperationElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.Id = idInstance;
                         }
                         
                         XElement statusElement = gatewayOperationElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null && statusElement.IsEmpty == false)
+                        if (statusElement != null)
                         {
                             ExpressRouteOperationStatus statusInstance = ((ExpressRouteOperationStatus)Enum.Parse(typeof(ExpressRouteOperationStatus), statusElement.Value, true));
                             result.Status = statusInstance;
                         }
                         
                         XElement httpStatusCodeElement = gatewayOperationElement.Element(XName.Get("HttpStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                        if (httpStatusCodeElement != null && httpStatusCodeElement.IsEmpty == false)
+                        if (httpStatusCodeElement != null)
                         {
                             HttpStatusCode httpStatusCodeInstance = ((HttpStatusCode)Enum.Parse(typeof(HttpStatusCode), httpStatusCodeElement.Value, true));
                             result.HttpStatusCode = httpStatusCodeInstance;
                         }
                         
                         XElement dataElement = gatewayOperationElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
-                        if (dataElement != null && dataElement.IsEmpty == false)
+                        if (dataElement != null)
                         {
                             string dataInstance = dataElement.Value;
                             result.Data = dataInstance;
                         }
                         
                         XElement errorElement = gatewayOperationElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
-                        if (errorElement != null && errorElement.IsEmpty == false)
+                        if (errorElement != null)
                         {
                             ExpressRouteOperationStatusResponse.ErrorDetails errorInstance = new ExpressRouteOperationStatusResponse.ErrorDetails();
                             result.Error = errorInstance;
                             
                             XElement codeElement = errorElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
-                            if (codeElement != null && codeElement.IsEmpty == false)
+                            if (codeElement != null)
                             {
                                 string codeInstance = codeElement.Value;
                                 errorInstance.Code = codeInstance;
                             }
                             
                             XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
-                            if (messageElement != null && messageElement.IsEmpty == false)
+                            if (messageElement != null)
                             {
                                 string messageInstance = messageElement.Value;
                                 errorInstance.Message = messageInstance;

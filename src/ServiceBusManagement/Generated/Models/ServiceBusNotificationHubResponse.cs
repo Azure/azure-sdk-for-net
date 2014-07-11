@@ -27,7 +27,7 @@ using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
     /// <summary>
-    /// A standard storage response including an HTTP status code and request
+    /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
     public partial class ServiceBusNotificationHubResponse : OperationResponse

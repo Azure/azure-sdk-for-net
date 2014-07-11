@@ -89,5 +89,20 @@ namespace Microsoft.Azure.Management.Resources
         /// request ID.
         /// </returns>
         Task<OperationResponse> RegisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Unregisters provider from a subscription.
+        /// </summary>
+        /// <param name='resourceProviderNamespace'>
+        /// Namespace of the resource provider.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UnregisterAsync(string resourceProviderNamespace, CancellationToken cancellationToken);
     }
 }

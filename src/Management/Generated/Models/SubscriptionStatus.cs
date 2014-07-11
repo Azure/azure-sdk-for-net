@@ -29,8 +29,14 @@ namespace Microsoft.WindowsAzure.Management.Models
     /// </summary>
     public enum SubscriptionStatus
     {
-        Active = 0,
+        Active = 1,
         
-        Disabled = 1,
+        Disabled = 2,
+        
+        Deleting = 3,
+        
+        Deleted = 4,
+        
+        Warned = 5,
     }
 }

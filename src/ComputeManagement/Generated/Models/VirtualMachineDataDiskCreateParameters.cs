@@ -21,7 +21,6 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -30,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class VirtualMachineDataDiskCreateParameters
     {
-        private VirtualHardDiskHostCaching _hostCaching;
+        private string _hostCaching;
         
         /// <summary>
         /// Required. Specifies the platform caching behavior of data disk blob
@@ -38,7 +37,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// values are: None, ReadOnly, or ReadWrite. Warning: Setting this
         /// property impacts the consistency of the disk.
         /// </summary>
-        public VirtualHardDiskHostCaching HostCaching
+        public string HostCaching
         {
             get { return this._hostCaching; }
             set { this._hostCaching = value; }
@@ -134,6 +133,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineDataDiskCreateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineDataDiskCreateParameters class with required
+        /// arguments.
+        /// </summary>
+        public VirtualMachineDataDiskCreateParameters(string hostCaching, Uri mediaLinkUri)
+            : this()
+        {
+            if (hostCaching == null)
+            {
+                throw new ArgumentNullException("hostCaching");
+            }
+            if (mediaLinkUri == null)
+            {
+                throw new ArgumentNullException("mediaLinkUri");
+            }
+            this.HostCaching = hostCaching;
+            this.MediaLinkUri = mediaLinkUri;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListWebSitesResponse()
         {
-            this._webSites = new List<WebSite>();
+            this.WebSites = new List<WebSite>();
         }
         
         /// <summary>

@@ -122,9 +122,9 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/operations/" + operationId.Trim() + "?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/operations/" + operationId.Trim() + "?";
             url = url + "api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -135,6 +135,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -168,7 +169,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -192,6 +193,13 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         DeploymentOperation operationInstance = new DeploymentOperation();
                         result.Operation = operationInstance;
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            operationInstance.Id = idInstance;
+                        }
                         
                         JToken operationIdValue = responseDoc["operationId"];
                         if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
@@ -240,11 +248,11 @@ namespace Microsoft.Azure.Management.Resources
                                 TargetResource targetResourceInstance = new TargetResource();
                                 propertiesInstance.TargetResource = targetResourceInstance;
                                 
-                                JToken idValue = targetResourceValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                JToken idValue2 = targetResourceValue["id"];
+                                if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                 {
-                                    string idInstance = ((string)idValue);
-                                    targetResourceInstance.Id = idInstance;
+                                    string idInstance2 = ((string)idValue2);
+                                    targetResourceInstance.Id = idInstance2;
                                 }
                                 
                                 JToken resourceNameValue = targetResourceValue["resourceName"];
@@ -346,13 +354,13 @@ namespace Microsoft.Azure.Management.Resources
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + this.Client.Credentials.SubscriptionId.Trim() + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/operations?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/deployments/" + deploymentName.Trim() + "/operations?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
             url = url + "&api-version=2014-04-01-preview";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -363,6 +371,7 @@ namespace Microsoft.Azure.Management.Resources
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -396,7 +405,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -425,6 +434,13 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
                                 result.Operations.Add(deploymentOperationInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    deploymentOperationInstance.Id = idInstance;
+                                }
                                 
                                 JToken operationIdValue = valueValue["operationId"];
                                 if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
@@ -473,11 +489,11 @@ namespace Microsoft.Azure.Management.Resources
                                         TargetResource targetResourceInstance = new TargetResource();
                                         propertiesInstance.TargetResource = targetResourceInstance;
                                         
-                                        JToken idValue = targetResourceValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        JToken idValue2 = targetResourceValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            string idInstance = ((string)idValue);
-                                            targetResourceInstance.Id = idInstance;
+                                            string idInstance2 = ((string)idValue2);
+                                            targetResourceInstance.Id = idInstance2;
                                         }
                                         
                                         JToken resourceNameValue = targetResourceValue["resourceName"];
@@ -602,7 +618,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -631,6 +647,13 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
                                 result.Operations.Add(deploymentOperationInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    deploymentOperationInstance.Id = idInstance;
+                                }
                                 
                                 JToken operationIdValue = valueValue["operationId"];
                                 if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
@@ -679,11 +702,11 @@ namespace Microsoft.Azure.Management.Resources
                                         TargetResource targetResourceInstance = new TargetResource();
                                         propertiesInstance.TargetResource = targetResourceInstance;
                                         
-                                        JToken idValue = targetResourceValue["id"];
-                                        if (idValue != null && idValue.Type != JTokenType.Null)
+                                        JToken idValue2 = targetResourceValue["id"];
+                                        if (idValue2 != null && idValue2.Type != JTokenType.Null)
                                         {
-                                            string idInstance = ((string)idValue);
-                                            targetResourceInstance.Id = idInstance;
+                                            string idInstance2 = ((string)idValue2);
+                                            targetResourceInstance.Id = idInstance2;
                                         }
                                         
                                         JToken resourceNameValue = targetResourceValue["resourceName"];

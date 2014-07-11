@@ -176,9 +176,9 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public GalleryItem()
         {
-            this._categoryIds = new List<string>();
-            this._iconFileUrls = new Dictionary<string, string>();
-            this._screenshotUrls = new List<string>();
+            this.CategoryIds = new List<string>();
+            this.IconFileUrls = new Dictionary<string, string>();
+            this.ScreenshotUrls = new List<string>();
         }
     }
 }

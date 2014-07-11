@@ -29,14 +29,15 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
     /// Response containing the list of service objective for a given server.
+    /// This is returnedfrom a call to List Service Objectives.
     /// </summary>
     public partial class ServiceObjectiveListResponse : OperationResponse, IEnumerable<ServiceObjective>
     {
         private IList<ServiceObjective> _serviceObjectives;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Service Objectives that are
-        /// existing in a server.
+        /// Optional. Gets or sets list of all of the Service Objectives that
+        /// exist in an Azure SQL Database Server.
         /// </summary>
         public IList<ServiceObjective> ServiceObjectives
         {
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjectiveListResponse()
         {
-            this._serviceObjectives = new List<ServiceObjective>();
+            this.ServiceObjectives = new List<ServiceObjective>();
         }
         
         /// <summary>

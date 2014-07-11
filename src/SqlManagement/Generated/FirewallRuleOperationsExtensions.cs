@@ -30,33 +30,28 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// The SQL Database Management API is a REST API for managing SQL Database
-    /// servers and the firewall rules associated with SQL Database servers.
-    /// (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715283.aspx for
-    /// more information)
+    /// This is the main client class for interacting with the Azure SQL
+    /// Database REST APIs.
     /// </summary>
     public static partial class FirewallRuleOperationsExtensions
     {
         /// <summary>
-        /// Adds a new server-level firewall rule for a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Adds a new server-level Firewall Rule for an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server to which this
+        /// rule will be applied.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Create Firewall Rule operation.
+        /// Required. The parameters for the Create Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule create response.
+        /// Contains the response to a Create Firewall Rule operation.
         /// </returns>
         public static FirewallRuleCreateResponse Create(this IFirewallRuleOperations operations, string serverName, FirewallRuleCreateParameters parameters)
         {
@@ -68,24 +63,22 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Adds a new server-level firewall rule for a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Adds a new server-level Firewall Rule for an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server to which this
+        /// rule will be applied.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Create Firewall Rule operation.
+        /// Required. The parameters for the Create Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule create response.
+        /// Contains the response to a Create Firewall Rule operation.
         /// </returns>
         public static Task<FirewallRuleCreateResponse> CreateAsync(this IFirewallRuleOperations operations, string serverName, FirewallRuleCreateParameters parameters)
         {
@@ -93,21 +86,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Deletes a server-level firewall rule from a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715277.aspx
-        /// for more information)
+        /// Deletes a server-level Firewall Rule from an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server that will be have new firewall
-        /// rule applied to it.
+        /// Required. The name of the Azure SQL Database Server that will have
+        /// the Firewall Fule removed from it.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the new firewall rule.
+        /// Required. The name of the Firewall Fule to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -123,21 +114,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Deletes a server-level firewall rule from a SQL Database server
-        /// that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715277.aspx
-        /// for more information)
+        /// Deletes a server-level Firewall Rule from an Azure SQL Database
+        /// Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server that will be have new firewall
-        /// rule applied to it.
+        /// Required. The name of the Azure SQL Database Server that will have
+        /// the Firewall Fule removed from it.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the new firewall rule.
+        /// Required. The name of the Firewall Fule to delete.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -149,24 +138,22 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns the Firewall rule for an Azure SQL Database Server with a
+        /// matching name.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server to query for
+        /// the Firewall Rule.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the rule for which the call is being made.
+        /// Required. The name of the rule to retrieve.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to Get Firewall Rule.
         /// </returns>
         public static FirewallRuleGetResponse Get(this IFirewallRuleOperations operations, string serverName, string ruleName)
         {
@@ -178,24 +165,22 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns the Firewall rule for an Azure SQL Database Server with a
+        /// matching name.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server to query for
+        /// the Firewall Rule.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the rule for which the call is being made.
+        /// Required. The name of the rule to retrieve.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to Get Firewall Rule.
         /// </returns>
         public static Task<FirewallRuleGetResponse> GetAsync(this IFirewallRuleOperations operations, string serverName, string ruleName)
         {
@@ -203,21 +188,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns a list of server-level Firewall Rules for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// list the Firewall Rules.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to List Firewall Rules.
         /// </returns>
         public static FirewallRuleListResponse List(this IFirewallRuleOperations operations, string serverName)
         {
@@ -229,21 +212,19 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Returns a list of all the server-level firewall rules for a SQL
-        /// Database server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715278.aspx
-        /// for more information)
+        /// Returns a list of server-level Firewall Rules for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the server for which the call is being made.
+        /// Required. The name of the Azure SQL Database Server from which to
+        /// list the Firewall Rules.
         /// </param>
         /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
+        /// Contains the response from a request to List Firewall Rules.
         /// </returns>
         public static Task<FirewallRuleListResponse> ListAsync(this IFirewallRuleOperations operations, string serverName)
         {
@@ -251,27 +232,25 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Updates an existing server-level firewall rule for a SQL Database
-        /// server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Updates an existing server-level Firewall Rule for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server that has the
+        /// Firewall Rule to be updated.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the firewall rule to be updated.
+        /// Required. The name of the Firewall Rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Update Firewall Rule operation.
+        /// Required. The parameters for the Update Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule update response.
+        /// Represents the firewall rule update response.
         /// </returns>
         public static FirewallRuleUpdateResponse Update(this IFirewallRuleOperations operations, string serverName, string ruleName, FirewallRuleUpdateParameters parameters)
         {
@@ -283,27 +262,25 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Updates an existing server-level firewall rule for a SQL Database
-        /// server that belongs to a subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg715280.aspx
-        /// for more information)
+        /// Updates an existing server-level Firewall Rule for an Azure SQL
+        /// Database Server.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IFirewallRuleOperations.
         /// </param>
         /// <param name='serverName'>
-        /// Required. The name of the SQL database server to which this rule
-        /// will be applied.
+        /// Required. The name of the Azure SQL Database Server that has the
+        /// Firewall Rule to be updated.
         /// </param>
         /// <param name='ruleName'>
-        /// Required. The name of the firewall rule to be updated.
+        /// Required. The name of the Firewall Rule to be updated.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters for the Update Firewall Rule operation.
+        /// Required. The parameters for the Update Firewall Rule operation.
         /// </param>
         /// <returns>
-        /// Response containing the firewall rule update response.
+        /// Represents the firewall rule update response.
         /// </returns>
         public static Task<FirewallRuleUpdateResponse> UpdateAsync(this IFirewallRuleOperations operations, string serverName, string ruleName, FirewallRuleUpdateParameters parameters)
         {

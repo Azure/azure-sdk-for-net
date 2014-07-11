@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopicsResponse()
         {
-            this._topics = new List<ServiceBusTopic>();
+            this.Topics = new List<ServiceBusTopic>();
         }
         
         /// <summary>

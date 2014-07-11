@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using System.Net.Http;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
@@ -35,14 +36,25 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
     /// </summary>
     public partial class WebSiteExtensionsClient : ServiceClient<WebSiteExtensionsClient>, IWebSiteExtensionsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all kudu requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
             get { return this._baseUri; }
+            set { this._baseUri = value; }
         }
         
         private BasicAuthenticationCloudCredentials _credentials;
@@ -53,6 +65,29 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public BasicAuthenticationCloudCredentials Credentials
         {
             get { return this._credentials; }
+            set { this._credentials = value; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private string _siteName;
@@ -63,6 +98,17 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         public string SiteName
         {
             get { return this._siteName; }
+            set { this._siteName = value; }
+        }
+        
+        private IContinuousWebJobOperations _continuousWebJobs;
+        
+        /// <summary>
+        /// Operations for managing continuous WebJobs.
+        /// </summary>
+        public virtual IContinuousWebJobOperations ContinuousWebJobs
+        {
+            get { return this._continuousWebJobs; }
         }
         
         private IDeploymentOperations _deployments;
@@ -105,14 +151,14 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             get { return this._settings; }
         }
         
-        private IWebJobOperations _webJobs;
+        private ITriggeredWebJobOperations _triggeredWebJobs;
         
         /// <summary>
-        /// Operations for managing the jobs.
+        /// Operations for managing Triggered WebJobs.
         /// </summary>
-        public virtual IWebJobOperations WebJobs
+        public virtual ITriggeredWebJobOperations TriggeredWebJobs
         {
-            get { return this._webJobs; }
+            get { return this._triggeredWebJobs; }
         }
         
         /// <summary>
@@ -121,11 +167,15 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         private WebSiteExtensionsClient()
             : base()
         {
+            this._continuousWebJobs = new ContinuousWebJobOperations(this);
             this._deployments = new DeploymentOperations(this);
             this._diagnostics = new DiagnosticOperations(this);
             this._repository = new RepositoryOperations(this);
             this._settings = new SettingsOperations(this);
-            this._webJobs = new WebJobOperations(this);
+            this._triggeredWebJobs = new TriggeredWebJobOperations(this);
+            this._apiVersion = "2";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -139,7 +189,8 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
         /// Required. TBD.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all kudu requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri)
             : this()
@@ -188,6 +239,121 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private WebSiteExtensionsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._continuousWebJobs = new ContinuousWebJobOperations(this);
+            this._deployments = new DeploymentOperations(this);
+            this._diagnostics = new DiagnosticOperations(this);
+            this._repository = new RepositoryOperations(this);
+            this._settings = new SettingsOperations(this);
+            this._triggeredWebJobs = new TriggeredWebJobOperations(this);
+            this._apiVersion = "2";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='siteName'>
+        /// Required. The site name.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. TBD.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException("siteName");
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._siteName = siteName;
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteExtensionsClient class.
+        /// </summary>
+        /// <param name='siteName'>
+        /// Required. The site name.
+        /// </param>
+        /// <param name='credentials'>
+        /// Required. TBD.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public WebSiteExtensionsClient(string siteName, BasicAuthenticationCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (siteName == null)
+            {
+                throw new ArgumentNullException("siteName");
+            }
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._siteName = siteName;
+            this._credentials = credentials;
+            this._baseUri = TypeConversion.TryParseUri("https://" + SiteName + ".scm.azurewebsites.net:443");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// WebSiteExtensionsClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of WebSiteExtensionsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<WebSiteExtensionsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is WebSiteExtensionsClient)
+            {
+                WebSiteExtensionsClient clonedClient = ((WebSiteExtensionsClient)client);
+                
+                clonedClient._siteName = this._siteName;
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>

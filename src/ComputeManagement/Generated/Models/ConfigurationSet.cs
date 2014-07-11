@@ -162,6 +162,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._inputEndpoints = value; }
         }
         
+        private IList<ConfigurationSet.PublicIP> _publicIPs;
+        
+        /// <summary>
+        /// Optional. Optional. A set of public IPs. Currently, only one
+        /// additional public IP per role is supported in an IaaS deployment.
+        /// The IP address is in addition to the default VIP for the
+        /// deployment.
+        /// </summary>
+        public IList<ConfigurationSet.PublicIP> PublicIPs
+        {
+            get { return this._publicIPs; }
+            set { this._publicIPs = value; }
+        }
+        
         private bool? _resetPasswordOnFirstLogon;
         
         /// <summary>
@@ -289,9 +303,47 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ConfigurationSet()
         {
-            this._inputEndpoints = new List<InputEndpoint>();
-            this._storedCertificateSettings = new List<StoredCertificateSettings>();
-            this._subnetNames = new List<string>();
+            this.InputEndpoints = new List<InputEndpoint>();
+            this.PublicIPs = new List<ConfigurationSet.PublicIP>();
+            this.StoredCertificateSettings = new List<StoredCertificateSettings>();
+            this.SubnetNames = new List<string>();
+        }
+        
+        /// <summary>
+        /// An additional public IP that will be created for the role. The
+        /// public IP will be an additional IP for the role. The role
+        /// continues to be addressable via the default deployment VIP.
+        /// </summary>
+        public partial class PublicIP
+        {
+            private int? _idleTimeoutInMinutes;
+            
+            /// <summary>
+            /// Optional. The idle timeout in minutes for this Public IP.
+            /// </summary>
+            public int? IdleTimeoutInMinutes
+            {
+                get { return this._idleTimeoutInMinutes; }
+                set { this._idleTimeoutInMinutes = value; }
+            }
+            
+            private string _name;
+            
+            /// <summary>
+            /// Optional. The name of the public IP.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the PublicIP class.
+            /// </summary>
+            public PublicIP()
+            {
+            }
         }
     }
 }

@@ -28,68 +28,103 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql
 {
     /// <summary>
-    /// Includes operations for importing and exporting SQL Databases into and
-    /// out of Windows Azure blob storage.
+    /// Includes operations for importing and exporting Azure SQL Databases
+    /// into and out of Azure blob storage.
     /// </summary>
     public partial interface IDacOperations
     {
         /// <summary>
-        /// Export DAC into Windows Azure blob storage.
+        /// Exports an Azure SQL Database into a DACPAC file in Azure Blob
+        /// Storage.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being exported from.
+        /// The name of the Azure SQL Database Server in which the database to
+        /// export resides.
         /// </param>
         /// <param name='parameters'>
-        /// Export parameters.
+        /// The parameters needed to initiate the export request.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for an DAC Import/Export request.
+        /// Represents the response that the service returns once an import or
+        /// export operation has been initiated.
         /// </returns>
         Task<DacImportExportResponse> ExportAsync(string serverName, DacExportParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the status of the DAC.
+        /// Gets the status of the import or export operation in the specified
+        /// server with the corresponding request ID.  The request ID is
+        /// provided in the responses of the import or export operation.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server.
+        /// The name of the server in which the import or export operation is
+        /// taking place.
         /// </param>
         /// <param name='fullyQualifiedServerName'>
-        /// The fully qualified name of the server.
+        /// The fully qualified domain name of the Azure SQL Database Server
+        /// where the operation is taking place. Example:
+        /// a9s7f7s9d3.database.windows.net
         /// </param>
         /// <param name='username'>
-        /// The server's username.
+        /// The administrator username for the Azure SQL Database Server.
         /// </param>
         /// <param name='password'>
-        /// The server's password.
+        /// The administrator password for the Azure SQL Database Server.
         /// </param>
         /// <param name='requestId'>
-        /// The request ID of the operation being queried.
+        /// The request ID of the operation being queried.  The request ID is
+        /// obtained from the responses of the import and export operations.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response structure for the DAC GetStatus operation.
+        /// Represents a list of import or export status values returned from
+        /// GetStatus.
         /// </returns>
         Task<DacGetStatusResponse> GetStatusAsync(string serverName, string fullyQualifiedServerName, string username, string password, string requestId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Import DAC from Windows Azure blob storage.
+        /// Gets the status of the import or export operation in the specified
+        /// server with the corresponding request ID.  The request ID is
+        /// provided in the responses of the import or export operation.
         /// </summary>
         /// <param name='serverName'>
-        /// The name of the server being imported to.
+        /// The name of the server in which the import or export operation is
+        /// taking place.
         /// </param>
         /// <param name='parameters'>
-        /// Import parameters.
+        /// The parameters needed to get the status of an import or export
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response for an DAC Import/Export request.
+        /// Represents a list of import or export status values returned from
+        /// GetStatus.
+        /// </returns>
+        Task<DacGetStatusResponse> GetStatusPostAsync(string serverName, DacGetStatusParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Initiates an Import of a DACPAC file from Azure Blob Storage into a
+        /// Azure SQL Database.
+        /// </summary>
+        /// <param name='serverName'>
+        /// The name of the Azure SQL Database Server into which the database
+        /// is being imported.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters needed to initiated the Import request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response that the service returns once an import or
+        /// export operation has been initiated.
         /// </returns>
         Task<DacImportExportResponse> ImportAsync(string serverName, DacImportParameters parameters, CancellationToken cancellationToken);
     }

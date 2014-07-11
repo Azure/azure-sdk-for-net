@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobCollectionJobsUpdateStateResponse()
         {
-            this._jobs = new List<Job>();
+            this.Jobs = new List<Job>();
         }
         
         /// <summary>

@@ -25,22 +25,10 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Preview Only. Parameters supplied to the Create Reserved IP operation.
+    /// Parameters supplied to the Create Reserved IP operation.
     /// </summary>
     public partial class NetworkReservedIPCreateParameters
     {
-        private string _affinityGroup;
-        
-        /// <summary>
-        /// Optional. An affinity group, which indirectly refers to the
-        /// location where the virtual network exists.
-        /// </summary>
-        public string AffinityGroup
-        {
-            get { return this._affinityGroup; }
-            set { this._affinityGroup = value; }
-        }
-        
         private string _deploymentName;
         
         /// <summary>
@@ -61,6 +49,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         {
             get { return this._label; }
             set { this._label = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Optional. Location where the virtual network exists.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
         }
         
         private string _name;

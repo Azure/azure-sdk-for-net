@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// A standard storage response including an HTTP status code and request
+    /// A standard service response including an HTTP status code and request
     /// ID.
     /// </summary>
     public partial class GatewayOperationResponse : OperationResponse

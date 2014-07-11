@@ -93,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/locations";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/locations";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -105,6 +105,7 @@ namespace Microsoft.WindowsAzure.Management
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -115,7 +116,7 @@ namespace Microsoft.WindowsAzure.Management
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -139,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -156,7 +157,7 @@ namespace Microsoft.WindowsAzure.Management
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement locationsSequenceElement = responseDoc.Element(XName.Get("Locations", "http://schemas.microsoft.com/windowsazure"));
-                    if (locationsSequenceElement != null && locationsSequenceElement.IsEmpty == false)
+                    if (locationsSequenceElement != null)
                     {
                         foreach (XElement locationsElement in locationsSequenceElement.Elements(XName.Get("Location", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -164,25 +165,50 @@ namespace Microsoft.WindowsAzure.Management
                             result.Locations.Add(locationInstance);
                             
                             XElement nameElement = locationsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 locationInstance.Name = nameInstance;
                             }
                             
                             XElement displayNameElement = locationsElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
-                            if (displayNameElement != null && displayNameElement.IsEmpty == false)
+                            if (displayNameElement != null)
                             {
                                 string displayNameInstance = displayNameElement.Value;
                                 locationInstance.DisplayName = displayNameInstance;
                             }
                             
                             XElement availableServicesSequenceElement = locationsElement.Element(XName.Get("AvailableServices", "http://schemas.microsoft.com/windowsazure"));
-                            if (availableServicesSequenceElement != null && availableServicesSequenceElement.IsEmpty == false)
+                            if (availableServicesSequenceElement != null)
                             {
                                 foreach (XElement availableServicesElement in availableServicesSequenceElement.Elements(XName.Get("AvailableService", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     locationInstance.AvailableServices.Add(availableServicesElement.Value);
+                                }
+                            }
+                            
+                            XElement computeCapabilitiesElement = locationsElement.Element(XName.Get("ComputeCapabilities", "http://schemas.microsoft.com/windowsazure"));
+                            if (computeCapabilitiesElement != null)
+                            {
+                                ComputeCapabilities computeCapabilitiesInstance = new ComputeCapabilities();
+                                locationInstance.ComputeCapabilities = computeCapabilitiesInstance;
+                                
+                                XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (virtualMachinesRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
+                                    }
+                                }
+                                
+                                XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
+                                if (webWorkerRoleSizesSequenceElement != null)
+                                {
+                                    foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
+                                    }
                                 }
                             }
                         }

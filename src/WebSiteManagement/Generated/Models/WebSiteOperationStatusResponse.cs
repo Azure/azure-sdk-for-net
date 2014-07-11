@@ -132,11 +132,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteOperationStatusResponse()
         {
-            this._errors = new List<WebSiteOperationStatusResponse.Error>();
+            this.Errors = new List<WebSiteOperationStatusResponse.Error>();
         }
         
         /// <summary>
-        /// Information about an error that occured during the operation.
+        /// Information about an error that occurred during the operation.
         /// </summary>
         public partial class Error
         {
@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public Error()
             {
-                this._parameters = new List<string>();
+                this.Parameters = new List<string>();
             }
         }
     }

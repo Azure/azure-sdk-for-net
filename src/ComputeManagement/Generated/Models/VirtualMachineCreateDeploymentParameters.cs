@@ -69,6 +69,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._label = value; }
         }
         
+        private IList<LoadBalancer> _loadBalancers;
+        
+        /// <summary>
+        /// Optional. A list of internal load balancers that each provide load
+        /// balancing on a private VIP.
+        /// </summary>
+        public IList<LoadBalancer> LoadBalancers
+        {
+            get { return this._loadBalancers; }
+            set { this._loadBalancers = value; }
+        }
+        
         private string _name;
         
         /// <summary>
@@ -84,9 +96,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _reservedIPName;
         
         /// <summary>
-        /// Optional. Optional and Preview Only. Specifies the name of an
-        /// existing reserved IP to which the deployment will belong. Reserved
-        /// IPs are created by calling the Create Reserved IP operation.
+        /// Optional. Optional. Specifies the name of an existing reserved IP
+        /// to which the deployment will belong. Reserved IPs are created by
+        /// calling the Create Reserved IP operation.
         /// </summary>
         public string ReservedIPName
         {
@@ -125,7 +137,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineCreateDeploymentParameters()
         {
-            this._roles = new List<Role>();
+            this.LoadBalancers = new List<LoadBalancer>();
+            this.Roles = new List<Role>();
         }
     }
 }

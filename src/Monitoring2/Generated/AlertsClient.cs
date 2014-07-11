@@ -57,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private DateTime _activatedTime;
         
         /// <summary>
-        /// The time at which the incident got activated.
+        /// Optional. The time at which the incident got activated.
         /// </summary>
         public DateTime ActivatedTime
         {
@@ -68,7 +68,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _isActive;
         
         /// <summary>
-        /// A boolean to indicate whether the incident is active or resolved.
+        /// Optional. A boolean to indicate whether the incident is active or
+        /// resolved.
         /// </summary>
         public bool IsActive
         {
@@ -79,7 +80,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _name;
         
         /// <summary>
-        /// Incident name.
+        /// Optional. Incident name.
         /// </summary>
         public string Name
         {
@@ -90,8 +91,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private System.DateTime? _resolvedTime;
         
         /// <summary>
-        /// The time at which the incident got resolved. If null, it means the
-        /// incident is still active.
+        /// Optional. The time at which the incident got resolved. If null, it
+        /// means the incident is still active.
         /// </summary>
         public System.DateTime? ResolvedTime
         {
@@ -102,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _ruleName;
         
         /// <summary>
-        /// Rule name that is associated with the incident.
+        /// Optional. Rule name that is associated with the incident.
         /// </summary>
         public string RuleName
         {
@@ -126,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Incident _incident;
         
         /// <summary>
-        /// The retrieved incident.
+        /// Optional. The retrieved incident.
         /// </summary>
         public Incident Incident
         {
@@ -150,7 +151,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<Incident> _value;
         
         /// <summary>
-        /// Incident collection.
+        /// Optional. Incident collection.
         /// </summary>
         public IList<Incident> Value
         {
@@ -163,7 +164,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this._value = new List<Incident>();
+            this.Value = new List<Incident>();
         }
         
         /// <summary>
@@ -191,7 +192,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Condition data source.
+        /// Optional. Condition data source.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -202,7 +203,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private int _failedLocationCount;
         
         /// <summary>
-        /// Failed location count.
+        /// Optional. Failed location count.
         /// </summary>
         public int FailedLocationCount
         {
@@ -213,8 +214,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// The time period over which the alert rule is evaluated. Condition
-        /// window size depends on the metric.
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// Condition window size depends on the metric.
         /// </summary>
         public TimeSpan WindowSize
         {
@@ -239,7 +240,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleAction _action;
         
         /// <summary>
-        /// Rule action.
+        /// Optional. Rule action.
         /// </summary>
         public RuleAction Action
         {
@@ -250,7 +251,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleCondition _condition;
         
         /// <summary>
-        /// Rule condition.
+        /// Optional. Rule condition.
         /// </summary>
         public RuleCondition Condition
         {
@@ -261,7 +262,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _description;
         
         /// <summary>
-        /// Rule description.
+        /// Optional. Rule description.
         /// </summary>
         public string Description
         {
@@ -272,7 +273,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _isEnabled;
         
         /// <summary>
-        /// A flag that determines whether the rule is enabled or disabled.
+        /// Optional. A flag that determines whether the rule is enabled or
+        /// disabled.
         /// </summary>
         public bool IsEnabled
         {
@@ -283,7 +285,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private DateTime _lastUpdatedTime;
         
         /// <summary>
-        /// Rule last updated time.
+        /// Optional. Rule last updated time.
         /// </summary>
         public DateTime LastUpdatedTime
         {
@@ -294,7 +296,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _name;
         
         /// <summary>
-        /// Rule name.
+        /// Optional. Rule name.
         /// </summary>
         public string Name
         {
@@ -344,7 +346,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _location;
         
         /// <summary>
-        /// The location of the rule.
+        /// Optional. The location of the rule.
         /// </summary>
         public string Location
         {
@@ -355,7 +357,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Rule _properties;
         
         /// <summary>
-        /// The rule to create or update.
+        /// Optional. The rule to create or update.
         /// </summary>
         public Rule Properties
         {
@@ -366,7 +368,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -380,7 +382,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleCreateOrUpdateParameters()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -405,7 +407,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<string> _customEmails;
         
         /// <summary>
-        /// The email address of an adminstrative user.
+        /// Optional. The email address of an adminstrative user.
         /// </summary>
         public IList<string> CustomEmails
         {
@@ -416,8 +418,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private bool _sendToServiceOwners;
         
         /// <summary>
-        /// This indicates if email is sent to sevice adminstrator and
-        /// co-administrators.
+        /// Optional. This indicates if email is sent to sevice adminstrator
+        /// and co-administrators.
         /// </summary>
         public bool SendToServiceOwners
         {
@@ -430,7 +432,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this._customEmails = new List<string>();
+            this.CustomEmails = new List<string>();
         }
     }
     
@@ -442,7 +444,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _id;
         
         /// <summary>
-        /// The resource id of the rule.
+        /// Optional. The resource id of the rule.
         /// </summary>
         public string Id
         {
@@ -453,7 +455,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _location;
         
         /// <summary>
-        /// The location of the rule.
+        /// Optional. The location of the rule.
         /// </summary>
         public string Location
         {
@@ -464,7 +466,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _name;
         
         /// <summary>
-        /// The name of the rule.
+        /// Optional. The name of the rule.
         /// </summary>
         public string Name
         {
@@ -475,7 +477,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Rule _properties;
         
         /// <summary>
-        /// The retrieved rule.
+        /// Optional. The retrieved rule.
         /// </summary>
         public Rule Properties
         {
@@ -486,7 +488,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -499,7 +501,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleGetResponse()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -511,7 +513,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleResourceCollection _ruleResourceCollection;
         
         /// <summary>
-        /// Alert rules collection.
+        /// Optional. Alert rules collection.
         /// </summary>
         public RuleResourceCollection RuleResourceCollection
         {
@@ -535,7 +537,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _metricName;
         
         /// <summary>
-        /// Metric name.
+        /// Optional. Metric name.
         /// </summary>
         public string MetricName
         {
@@ -546,8 +548,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// Metric namespace. When creating a rule on endpoint monitoring
-        /// metrics, WindowsAzure.Availability namespace is required.
+        /// Optional. Metric namespace. When creating a rule on endpoint
+        /// monitoring metrics, WindowsAzure.Availability namespace is
+        /// required.
         /// </summary>
         public string MetricNamespace
         {
@@ -558,7 +561,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _resourceUri;
         
         /// <summary>
-        /// Metric resource uri.
+        /// Optional. Metric resource uri.
         /// </summary>
         public string ResourceUri
         {
@@ -582,7 +585,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _id;
         
         /// <summary>
-        /// The resource id of the rule.
+        /// Optional. The resource id of the rule.
         /// </summary>
         public string Id
         {
@@ -593,7 +596,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _location;
         
         /// <summary>
-        /// The location of the rule.
+        /// Optional. The location of the rule.
         /// </summary>
         public string Location
         {
@@ -604,7 +607,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private string _name;
         
         /// <summary>
-        /// The name of the rule.
+        /// Optional. The name of the rule.
         /// </summary>
         public string Name
         {
@@ -615,7 +618,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private Rule _properties;
         
         /// <summary>
-        /// The retrieved rule.
+        /// Optional. The retrieved rule.
         /// </summary>
         public Rule Properties
         {
@@ -626,7 +629,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -639,7 +642,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleResource()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -651,7 +654,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private IList<RuleResource> _value;
         
         /// <summary>
-        /// The values for the alert rule resources.
+        /// Optional. The values for the alert rule resources.
         /// </summary>
         public IList<RuleResource> Value
         {
@@ -664,7 +667,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleResourceCollection()
         {
-            this._value = new List<RuleResource>();
+            this.Value = new List<RuleResource>();
         }
     }
     
@@ -676,7 +679,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Condition data source.
+        /// Optional. Condition data source.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -687,7 +690,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private ConditionOperator _operator;
         
         /// <summary>
-        /// Condition operator.
+        /// Optional. Condition operator.
         /// </summary>
         public ConditionOperator Operator
         {
@@ -698,7 +701,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private double _threshold;
         
         /// <summary>
-        /// Condition threshold.
+        /// Optional. Condition threshold.
         /// </summary>
         public double Threshold
         {
@@ -709,8 +712,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// The time period over which the alert rule is evaluated. Condition
-        /// window size depends on the metric.
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// Condition window size depends on the metric.
         /// </summary>
         public TimeSpan WindowSize
         {
@@ -729,10 +732,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
 {
-    public partial interface IAlertsClient
+    public static partial class AlertsClientExtensions
+    {
+    }
+    
+    public partial interface IAlertsClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter for Azure REST.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -740,17 +755,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>
@@ -770,16 +797,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
     }
     
-    public static partial class AlertsClientExtensions
-    {
-    }
-    
     public partial class AlertsClient : ServiceClient<AlertsClient>, IAlertsClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter for Azure REST.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -789,17 +822,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IIncidentOperations _incidents;
@@ -830,6 +881,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         {
             this._incidents = new IncidentOperations(this);
             this._rules = new RuleOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -837,16 +891,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// Initializes a new instance of the AlertsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Optional base uri parameter for Azure REST.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public AlertsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -869,13 +920,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// Initializes a new instance of the AlertsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public AlertsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -888,6 +935,193 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private AlertsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._incidents = new IncidentOperations(this);
+            this._rules = new RuleOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another AlertsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of AlertsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<AlertsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is AlertsClient)
+            {
+                AlertsClient clonedClient = ((AlertsClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+    }
+    
+    public static partial class IncidentOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// Required. The name of the incident to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        public static IncidentGetResponse Get(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).GetAsync(resourceGroupName, ruleName, incidentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// Required. The name of the incident to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        public static Task<IncidentGetResponse> GetAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
+        {
+            return operations.GetAsync(resourceGroupName, ruleName, incidentName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        public static IncidentListResponse ListForRule(this IIncidentOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).ListForRuleAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        public static Task<IncidentListResponse> ListForRuleAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.ListForRuleAsync(resourceGroupName, ruleName, CancellationToken.None);
         }
     }
     
@@ -931,118 +1165,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
     /// <summary>
     /// Operations for managing the alert incidents.
     /// </summary>
-    public static partial class IncidentOperationsExtensions
-    {
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
-        /// </param>
-        /// <param name='incidentName'>
-        /// The name of the incident to retrieve.
-        /// </param>
-        /// <returns>
-        /// The Get Incident operation response.
-        /// </returns>
-        public static IncidentGetResponse Get(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
-        {
-            try
-            {
-                return operations.GetAsync(resourceGroupName, ruleName, incidentName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
-        /// </param>
-        /// <param name='incidentName'>
-        /// The name of the incident to retrieve.
-        /// </param>
-        /// <returns>
-        /// The Get Incident operation response.
-        /// </returns>
-        public static Task<IncidentGetResponse> GetAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
-        {
-            return operations.GetAsync(resourceGroupName, ruleName, incidentName, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
-        /// </param>
-        /// <returns>
-        /// The List incidents operation response.
-        /// </returns>
-        public static IncidentListResponse ListForRule(this IIncidentOperations operations, string resourceGroupName, string ruleName)
-        {
-            try
-            {
-                return operations.ListForRuleAsync(resourceGroupName, ruleName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule.
-        /// </param>
-        /// <returns>
-        /// The List incidents operation response.
-        /// </returns>
-        public static Task<IncidentListResponse> ListForRuleAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName)
-        {
-            return operations.ListForRuleAsync(resourceGroupName, ruleName, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for managing the alert incidents.
-    /// </summary>
     internal partial class IncidentOperations : IServiceOperations<AlertsClient>, IIncidentOperations
     {
         /// <summary>
@@ -1068,13 +1190,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the rule.
+        /// Required. The name of the rule.
         /// </param>
         /// <param name='incidentName'>
-        /// The name of the incident to retrieve.
+        /// Required. The name of the incident to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1112,8 +1234,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + ruleName + "/incidents/" + incidentName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents/" + incidentName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1148,7 +1282,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1162,45 +1296,49 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new IncidentGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         Incident incidentInstance = new Incident();
                         result.Incident = incidentInstance;
                         
                         JToken nameValue = responseDoc["name"];
-                        if (nameValue != null)
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             incidentInstance.Name = nameInstance;
                         }
                         
                         JToken ruleNameValue = responseDoc["ruleName"];
-                        if (ruleNameValue != null)
+                        if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
                         {
-                            string ruleNameInstance = (string)ruleNameValue;
+                            string ruleNameInstance = ((string)ruleNameValue);
                             incidentInstance.RuleName = ruleNameInstance;
                         }
                         
                         JToken isActiveValue = responseDoc["isActive"];
-                        if (isActiveValue != null)
+                        if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
                         {
-                            bool isActiveInstance = (bool)isActiveValue;
+                            bool isActiveInstance = ((bool)isActiveValue);
                             incidentInstance.IsActive = isActiveInstance;
                         }
                         
                         JToken activatedTimeValue = responseDoc["activatedTime"];
-                        if (activatedTimeValue != null)
+                        if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime activatedTimeInstance = (DateTime)activatedTimeValue;
+                            DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
                             incidentInstance.ActivatedTime = activatedTimeInstance;
                         }
                         
                         JToken resolvedTimeValue = responseDoc["resolvedTime"];
-                        if (resolvedTimeValue != null)
+                        if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
+                            DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
                             incidentInstance.ResolvedTime = resolvedTimeInstance;
                         }
                     }
@@ -1235,10 +1373,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the rule.
+        /// Required. The name of the rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1271,8 +1409,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + ruleName + "/incidents?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1307,7 +1457,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1321,50 +1471,54 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new IncidentListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
-                    
-                    if (responseDoc != null)
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
                     {
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();
                                 result.Value.Add(incidentInstance);
                                 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     incidentInstance.Name = nameInstance;
                                 }
                                 
                                 JToken ruleNameValue = valueValue["ruleName"];
-                                if (ruleNameValue != null)
+                                if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
                                 {
-                                    string ruleNameInstance = (string)ruleNameValue;
+                                    string ruleNameInstance = ((string)ruleNameValue);
                                     incidentInstance.RuleName = ruleNameInstance;
                                 }
                                 
                                 JToken isActiveValue = valueValue["isActive"];
-                                if (isActiveValue != null)
+                                if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
                                 {
-                                    bool isActiveInstance = (bool)isActiveValue;
+                                    bool isActiveInstance = ((bool)isActiveValue);
                                     incidentInstance.IsActive = isActiveInstance;
                                 }
                                 
                                 JToken activatedTimeValue = valueValue["activatedTime"];
-                                if (activatedTimeValue != null)
+                                if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime activatedTimeInstance = (DateTime)activatedTimeValue;
+                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
                                     incidentInstance.ActivatedTime = activatedTimeInstance;
                                 }
                                 
                                 JToken resolvedTimeValue = valueValue["resolvedTime"];
-                                if (resolvedTimeValue != null)
+                                if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime resolvedTimeInstance = (DateTime)resolvedTimeValue;
+                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
                                     incidentInstance.ResolvedTime = resolvedTimeInstance;
                                 }
                             }
@@ -1398,6 +1552,221 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     httpRequest.Dispose();
                 }
             }
+        }
+    }
+    
+    public static partial class RuleOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to create or update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse CreateOrUpdate(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to create or update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> CreateOrUpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to delete.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).DeleteAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to delete.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.DeleteAsync(resourceGroupName, ruleName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Rule operation response.
+        /// </returns>
+        public static RuleGetResponse Get(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).GetAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Rule operation response.
+        /// </returns>
+        public static Task<RuleGetResponse> GetAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.GetAsync(resourceGroupName, ruleName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// List the alert rules within a resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Required. The resource uri of the target of the alert rule.
+        /// </param>
+        /// <returns>
+        /// The List Rules operation response.
+        /// </returns>
+        public static RuleListResponse List(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).ListAsync(resourceGroupName, targetResourceUri);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// List the alert rules within a resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Required. The resource uri of the target of the alert rule.
+        /// </param>
+        /// <returns>
+        /// The List Rules operation response.
+        /// </returns>
+        public static Task<RuleListResponse> ListAsync(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return operations.ListAsync(resourceGroupName, targetResourceUri, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Update(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).UpdateAsync(resourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(resourceGroupName, parameters, CancellationToken.None);
         }
     }
     
@@ -1486,274 +1855,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
     /// <summary>
     /// Operations for managing the alert rules.
     /// </summary>
-    public static partial class RuleOperationsExtensions
-    {
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// The rule to create or update.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse CreateOrUpdate(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// The rule to create or update.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
-        {
-            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule to delete.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Delete(this IRuleOperations operations, string resourceGroupName, string ruleName)
-        {
-            try
-            {
-                return operations.DeleteAsync(resourceGroupName, ruleName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule to delete.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
-        {
-            return operations.DeleteAsync(resourceGroupName, ruleName, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule to retrieve.
-        /// </param>
-        /// <returns>
-        /// The Get Rule operation response.
-        /// </returns>
-        public static RuleGetResponse Get(this IRuleOperations operations, string resourceGroupName, string ruleName)
-        {
-            try
-            {
-                return operations.GetAsync(resourceGroupName, ruleName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// The name of the rule to retrieve.
-        /// </param>
-        /// <returns>
-        /// The Get Rule operation response.
-        /// </returns>
-        public static Task<RuleGetResponse> GetAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
-        {
-            return operations.GetAsync(resourceGroupName, ruleName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// List the alert rules within a resource group.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the alert rule.
-        /// </param>
-        /// <returns>
-        /// The List Rules operation response.
-        /// </returns>
-        public static RuleListResponse List(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
-        {
-            try
-            {
-                return operations.ListAsync(resourceGroupName, targetResourceUri).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// List the alert rules within a resource group.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the alert rule.
-        /// </param>
-        /// <returns>
-        /// The List Rules operation response.
-        /// </returns>
-        public static Task<RuleListResponse> ListAsync(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
-        {
-            return operations.ListAsync(resourceGroupName, targetResourceUri, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// The rule to update.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Update(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.UpdateAsync(resourceGroupName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='parameters'>
-        /// The rule to update.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
-        {
-            return operations.UpdateAsync(resourceGroupName, parameters, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for managing the alert rules.
-    /// </summary>
     internal partial class RuleOperations : IServiceOperations<AlertsClient>, IRuleOperations
     {
         /// <summary>
@@ -1779,10 +1880,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='parameters'>
-        /// The rule to create or update.
+        /// Required. The rule to create or update.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1816,8 +1917,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + parameters.Properties.Name + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name != null ? parameters.Properties.Name.Trim() : "") + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1839,7 +1952,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 JToken requestDoc = null;
                 
                 JObject ruleCreateOrUpdateParametersValue = new JObject();
-                requestDoc = ruleCreateOrUpdateParametersValue;
+                requestDoc = new JObject();
+                requestDoc["ruleCreateOrUpdateParameters"] = ruleCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -1879,19 +1993,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject conditionValue = new JObject();
                         propertiesValue["condition"] = conditionValue;
-                        conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                         if (parameters.Properties.Condition is ThresholdRuleCondition)
                         {
-                            ThresholdRuleCondition derived = (ThresholdRuleCondition)parameters.Properties.Condition;
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
+                            ThresholdRuleCondition derived = ((ThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived.DataSource != null)
                             {
                                 JObject dataSourceValue = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue;
-                                dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                 if (derived.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived2 = (RuleMetricDataSource)derived.DataSource;
+                                    dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
+                                    RuleMetricDataSource derived2 = ((RuleMetricDataSource)derived.DataSource);
                                     
                                     if (derived2.ResourceUri != null)
                                     {
@@ -1918,16 +2032,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
-                            LocationThresholdRuleCondition derived3 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
+                            LocationThresholdRuleCondition derived3 = ((LocationThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived3.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                 if (derived3.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived4 = (RuleMetricDataSource)derived3.DataSource;
+                                    dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
+                                    RuleMetricDataSource derived4 = ((RuleMetricDataSource)derived3.DataSource);
                                     
                                     if (derived4.ResourceUri != null)
                                     {
@@ -1956,10 +2071,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject actionValue = new JObject();
                         propertiesValue["action"] = actionValue;
-                        actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
-                            RuleEmailAction derived5 = (RuleEmailAction)parameters.Properties.Action;
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
+                            RuleEmailAction derived5 = ((RuleEmailAction)parameters.Properties.Action);
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
                             
@@ -2000,7 +2115,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2041,10 +2156,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the rule to delete.
+        /// Required. The name of the rule to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2078,8 +2193,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + ruleName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2114,7 +2241,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2155,10 +2282,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='ruleName'>
-        /// The name of the rule to retrieve.
+        /// Required. The name of the rule to retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2191,8 +2318,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + ruleName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2227,7 +2366,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2241,103 +2380,107 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JToken idValue = responseDoc["id"];
-                        if (idValue != null)
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string idInstance = (string)idValue;
+                            string idInstance = ((string)idValue);
                             result.Id = idInstance;
                         }
                         
                         JToken nameValue = responseDoc["name"];
-                        if (nameValue != null)
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             result.Name = nameInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
-                        if (locationValue != null)
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
                         {
-                            string locationInstance = (string)locationValue;
+                            string locationInstance = ((string)locationValue);
                             result.Location = locationInstance;
                         }
                         
-                        JToken tagsSequenceElement = responseDoc["tags"];
-                        if (tagsSequenceElement != null)
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
                             foreach (JProperty property in tagsSequenceElement)
                             {
-                                string tagsKey = (string)property.Name;
-                                string tagsValue = (string)property.Value;
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
                                 result.Tags.Add(tagsKey, tagsValue);
                             }
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null)
+                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             Rule propertiesInstance = new Rule();
                             result.Properties = propertiesInstance;
                             
                             JToken nameValue2 = propertiesValue["name"];
-                            if (nameValue2 != null)
+                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                             {
-                                string nameInstance2 = (string)nameValue2;
+                                string nameInstance2 = ((string)nameValue2);
                                 propertiesInstance.Name = nameInstance2;
                             }
                             
                             JToken descriptionValue = propertiesValue["description"];
-                            if (descriptionValue != null)
+                            if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                             {
-                                string descriptionInstance = (string)descriptionValue;
+                                string descriptionInstance = ((string)descriptionValue);
                                 propertiesInstance.Description = descriptionInstance;
                             }
                             
                             JToken isEnabledValue = propertiesValue["isEnabled"];
-                            if (isEnabledValue != null)
+                            if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
                             {
-                                bool isEnabledInstance = (bool)isEnabledValue;
+                                bool isEnabledInstance = ((bool)isEnabledValue);
                                 propertiesInstance.IsEnabled = isEnabledInstance;
                             }
                             
                             JToken conditionValue = propertiesValue["condition"];
-                            if (conditionValue != null)
+                            if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                             {
-                                string typeName = (string)conditionValue["odata.type"];
+                                string typeName = ((string)conditionValue["odata.type"]);
                                 if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition")
                                 {
                                     ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
                                     
                                     JToken dataSourceValue = conditionValue["dataSource"];
-                                    if (dataSourceValue != null)
+                                    if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
                                     {
-                                        string typeName2 = (string)dataSourceValue["odata.type"];
+                                        string typeName2 = ((string)dataSourceValue["odata.type"]);
                                         if (typeName2 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
                                         {
                                             RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
                                             
                                             JToken resourceUriValue = dataSourceValue["resourceUri"];
-                                            if (resourceUriValue != null)
+                                            if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                             {
-                                                string resourceUriInstance = (string)resourceUriValue;
+                                                string resourceUriInstance = ((string)resourceUriValue);
                                                 ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
                                             }
                                             
                                             JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
-                                            if (metricNamespaceValue != null)
+                                            if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                             {
-                                                string metricNamespaceInstance = (string)metricNamespaceValue;
+                                                string metricNamespaceInstance = ((string)metricNamespaceValue);
                                                 ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
                                             }
                                             
                                             JToken metricNameValue = dataSourceValue["metricName"];
-                                            if (metricNameValue != null)
+                                            if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                             {
-                                                string metricNameInstance = (string)metricNameValue;
+                                                string metricNameInstance = ((string)metricNameValue);
                                                 ruleMetricDataSourceInstance.MetricName = metricNameInstance;
                                             }
                                             thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
@@ -2345,24 +2488,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     }
                                     
                                     JToken operatorValue = conditionValue["operator"];
-                                    if (operatorValue != null)
+                                    if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                     {
-                                        // how
-                                        ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                        ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
                                         thresholdRuleConditionInstance.Operator = operatorInstance;
                                     }
                                     
                                     JToken thresholdValue = conditionValue["threshold"];
-                                    if (thresholdValue != null)
+                                    if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                     {
-                                        double thresholdInstance = (double)thresholdValue;
+                                        double thresholdInstance = ((double)thresholdValue);
                                         thresholdRuleConditionInstance.Threshold = thresholdInstance;
                                     }
                                     
                                     JToken windowSizeValue = conditionValue["windowSize"];
-                                    if (windowSizeValue != null)
+                                    if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
                                     {
-                                        TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan((string)windowSizeValue);
+                                        TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
                                         thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
                                     }
                                     propertiesInstance.Condition = thresholdRuleConditionInstance;
@@ -2372,31 +2514,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
                                     
                                     JToken dataSourceValue2 = conditionValue["dataSource"];
-                                    if (dataSourceValue2 != null)
+                                    if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
                                     {
-                                        string typeName3 = (string)dataSourceValue2["odata.type"];
+                                        string typeName3 = ((string)dataSourceValue2["odata.type"]);
                                         if (typeName3 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
                                         {
                                             RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
                                             
                                             JToken resourceUriValue2 = dataSourceValue2["resourceUri"];
-                                            if (resourceUriValue2 != null)
+                                            if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
                                             {
-                                                string resourceUriInstance2 = (string)resourceUriValue2;
+                                                string resourceUriInstance2 = ((string)resourceUriValue2);
                                                 ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance2;
                                             }
                                             
                                             JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
-                                            if (metricNamespaceValue2 != null)
+                                            if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
                                             {
-                                                string metricNamespaceInstance2 = (string)metricNamespaceValue2;
+                                                string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
                                                 ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
                                             }
                                             
                                             JToken metricNameValue2 = dataSourceValue2["metricName"];
-                                            if (metricNameValue2 != null)
+                                            if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
                                             {
-                                                string metricNameInstance2 = (string)metricNameValue2;
+                                                string metricNameInstance2 = ((string)metricNameValue2);
                                                 ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
                                             }
                                             locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
@@ -2404,16 +2546,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     }
                                     
                                     JToken windowSizeValue2 = conditionValue["windowSize"];
-                                    if (windowSizeValue2 != null)
+                                    if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
                                     {
-                                        TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan((string)windowSizeValue2);
+                                        TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan(((string)windowSizeValue2));
                                         locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
                                     }
                                     
                                     JToken failedLocationCountValue = conditionValue["failedLocationCount"];
-                                    if (failedLocationCountValue != null)
+                                    if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
                                     {
-                                        int failedLocationCountInstance = (int)failedLocationCountValue;
+                                        int failedLocationCountInstance = ((int)failedLocationCountValue);
                                         locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
                                     }
                                     propertiesInstance.Condition = locationThresholdRuleConditionInstance;
@@ -2421,26 +2563,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             }
                             
                             JToken actionValue = propertiesValue["action"];
-                            if (actionValue != null)
+                            if (actionValue != null && actionValue.Type != JTokenType.Null)
                             {
-                                string typeName4 = (string)actionValue["odata.type"];
+                                string typeName4 = ((string)actionValue["odata.type"]);
                                 if (typeName4 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction")
                                 {
                                     RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                     
                                     JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
-                                    if (sendToServiceOwnersValue != null)
+                                    if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
                                     {
-                                        bool sendToServiceOwnersInstance = (bool)sendToServiceOwnersValue;
+                                        bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
                                         ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                     }
                                     
-                                    JArray customEmailsArray = (JArray)actionValue["customEmails"];
-                                    if (customEmailsArray != null)
+                                    JToken customEmailsArray = actionValue["customEmails"];
+                                    if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken customEmailsValue in customEmailsArray)
+                                        foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                         {
-                                            ruleEmailActionInstance.CustomEmails.Add((string)customEmailsValue);
+                                            ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
                                         }
                                     }
                                     propertiesInstance.Action = ruleEmailActionInstance;
@@ -2448,9 +2590,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             }
                             
                             JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
-                            if (lastUpdatedTimeValue != null)
+                            if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
                             {
-                                DateTime lastUpdatedTimeInstance = (DateTime)lastUpdatedTimeValue;
+                                DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
                                 propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
                             }
                         }
@@ -2489,10 +2631,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// List the alert rules within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the alert rule.
+        /// Required. The resource uri of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2521,12 +2663,24 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules?";
+            url = url + "api-version=2014-04";
             if (targetResourceUri != null)
             {
-                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeUriString(targetResourceUri);
+                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri != null ? targetResourceUri.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2561,7 +2715,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2575,114 +2729,118 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new RuleListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         RuleResourceCollection ruleResourceCollectionInstance = new RuleResourceCollection();
                         result.RuleResourceCollection = ruleResourceCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RuleResource ruleResourceInstance = new RuleResource();
                                 ruleResourceCollectionInstance.Value.Add(ruleResourceInstance);
                                 
                                 JToken idValue = valueValue["id"];
-                                if (idValue != null)
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = (string)idValue;
+                                    string idInstance = ((string)idValue);
                                     ruleResourceInstance.Id = idInstance;
                                 }
                                 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     ruleResourceInstance.Name = nameInstance;
                                 }
                                 
                                 JToken locationValue = valueValue["location"];
-                                if (locationValue != null)
+                                if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
-                                    string locationInstance = (string)locationValue;
+                                    string locationInstance = ((string)locationValue);
                                     ruleResourceInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = valueValue["tags"];
-                                if (tagsSequenceElement != null)
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
-                                        string tagsKey = (string)property.Name;
-                                        string tagsValue = (string)property.Value;
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
                                         ruleResourceInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
                                 
                                 JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null)
+                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     Rule propertiesInstance = new Rule();
                                     ruleResourceInstance.Properties = propertiesInstance;
                                     
                                     JToken nameValue2 = propertiesValue["name"];
-                                    if (nameValue2 != null)
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = (string)nameValue2;
+                                        string nameInstance2 = ((string)nameValue2);
                                         propertiesInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken descriptionValue = propertiesValue["description"];
-                                    if (descriptionValue != null)
+                                    if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                     {
-                                        string descriptionInstance = (string)descriptionValue;
+                                        string descriptionInstance = ((string)descriptionValue);
                                         propertiesInstance.Description = descriptionInstance;
                                     }
                                     
                                     JToken isEnabledValue = propertiesValue["isEnabled"];
-                                    if (isEnabledValue != null)
+                                    if (isEnabledValue != null && isEnabledValue.Type != JTokenType.Null)
                                     {
-                                        bool isEnabledInstance = (bool)isEnabledValue;
+                                        bool isEnabledInstance = ((bool)isEnabledValue);
                                         propertiesInstance.IsEnabled = isEnabledInstance;
                                     }
                                     
                                     JToken conditionValue = propertiesValue["condition"];
-                                    if (conditionValue != null)
+                                    if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                                     {
-                                        string typeName = (string)conditionValue["odata.type"];
+                                        string typeName = ((string)conditionValue["odata.type"]);
                                         if (typeName == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.ThresholdRuleCondition")
                                         {
                                             ThresholdRuleCondition thresholdRuleConditionInstance = new ThresholdRuleCondition();
                                             
                                             JToken dataSourceValue = conditionValue["dataSource"];
-                                            if (dataSourceValue != null)
+                                            if (dataSourceValue != null && dataSourceValue.Type != JTokenType.Null)
                                             {
-                                                string typeName2 = (string)dataSourceValue["odata.type"];
+                                                string typeName2 = ((string)dataSourceValue["odata.type"]);
                                                 if (typeName2 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
                                                 {
                                                     RuleMetricDataSource ruleMetricDataSourceInstance = new RuleMetricDataSource();
                                                     
                                                     JToken resourceUriValue = dataSourceValue["resourceUri"];
-                                                    if (resourceUriValue != null)
+                                                    if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                                     {
-                                                        string resourceUriInstance = (string)resourceUriValue;
+                                                        string resourceUriInstance = ((string)resourceUriValue);
                                                         ruleMetricDataSourceInstance.ResourceUri = resourceUriInstance;
                                                     }
                                                     
                                                     JToken metricNamespaceValue = dataSourceValue["metricNamespace"];
-                                                    if (metricNamespaceValue != null)
+                                                    if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                                     {
-                                                        string metricNamespaceInstance = (string)metricNamespaceValue;
+                                                        string metricNamespaceInstance = ((string)metricNamespaceValue);
                                                         ruleMetricDataSourceInstance.MetricNamespace = metricNamespaceInstance;
                                                     }
                                                     
                                                     JToken metricNameValue = dataSourceValue["metricName"];
-                                                    if (metricNameValue != null)
+                                                    if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                                     {
-                                                        string metricNameInstance = (string)metricNameValue;
+                                                        string metricNameInstance = ((string)metricNameValue);
                                                         ruleMetricDataSourceInstance.MetricName = metricNameInstance;
                                                     }
                                                     thresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance;
@@ -2690,24 +2848,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             }
                                             
                                             JToken operatorValue = conditionValue["operator"];
-                                            if (operatorValue != null)
+                                            if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                             {
-                                                // how
-                                                ConditionOperator operatorInstance = (ConditionOperator)Enum.Parse(typeof(ConditionOperator), (string)operatorValue, false);
+                                                ConditionOperator operatorInstance = ((ConditionOperator)Enum.Parse(typeof(ConditionOperator), ((string)operatorValue), true));
                                                 thresholdRuleConditionInstance.Operator = operatorInstance;
                                             }
                                             
                                             JToken thresholdValue = conditionValue["threshold"];
-                                            if (thresholdValue != null)
+                                            if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                             {
-                                                double thresholdInstance = (double)thresholdValue;
+                                                double thresholdInstance = ((double)thresholdValue);
                                                 thresholdRuleConditionInstance.Threshold = thresholdInstance;
                                             }
                                             
                                             JToken windowSizeValue = conditionValue["windowSize"];
-                                            if (windowSizeValue != null)
+                                            if (windowSizeValue != null && windowSizeValue.Type != JTokenType.Null)
                                             {
-                                                TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan((string)windowSizeValue);
+                                                TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
                                                 thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
                                             }
                                             propertiesInstance.Condition = thresholdRuleConditionInstance;
@@ -2717,31 +2874,31 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             LocationThresholdRuleCondition locationThresholdRuleConditionInstance = new LocationThresholdRuleCondition();
                                             
                                             JToken dataSourceValue2 = conditionValue["dataSource"];
-                                            if (dataSourceValue2 != null)
+                                            if (dataSourceValue2 != null && dataSourceValue2.Type != JTokenType.Null)
                                             {
-                                                string typeName3 = (string)dataSourceValue2["odata.type"];
+                                                string typeName3 = ((string)dataSourceValue2["odata.type"]);
                                                 if (typeName3 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource")
                                                 {
                                                     RuleMetricDataSource ruleMetricDataSourceInstance2 = new RuleMetricDataSource();
                                                     
                                                     JToken resourceUriValue2 = dataSourceValue2["resourceUri"];
-                                                    if (resourceUriValue2 != null)
+                                                    if (resourceUriValue2 != null && resourceUriValue2.Type != JTokenType.Null)
                                                     {
-                                                        string resourceUriInstance2 = (string)resourceUriValue2;
+                                                        string resourceUriInstance2 = ((string)resourceUriValue2);
                                                         ruleMetricDataSourceInstance2.ResourceUri = resourceUriInstance2;
                                                     }
                                                     
                                                     JToken metricNamespaceValue2 = dataSourceValue2["metricNamespace"];
-                                                    if (metricNamespaceValue2 != null)
+                                                    if (metricNamespaceValue2 != null && metricNamespaceValue2.Type != JTokenType.Null)
                                                     {
-                                                        string metricNamespaceInstance2 = (string)metricNamespaceValue2;
+                                                        string metricNamespaceInstance2 = ((string)metricNamespaceValue2);
                                                         ruleMetricDataSourceInstance2.MetricNamespace = metricNamespaceInstance2;
                                                     }
                                                     
                                                     JToken metricNameValue2 = dataSourceValue2["metricName"];
-                                                    if (metricNameValue2 != null)
+                                                    if (metricNameValue2 != null && metricNameValue2.Type != JTokenType.Null)
                                                     {
-                                                        string metricNameInstance2 = (string)metricNameValue2;
+                                                        string metricNameInstance2 = ((string)metricNameValue2);
                                                         ruleMetricDataSourceInstance2.MetricName = metricNameInstance2;
                                                     }
                                                     locationThresholdRuleConditionInstance.DataSource = ruleMetricDataSourceInstance2;
@@ -2749,16 +2906,16 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             }
                                             
                                             JToken windowSizeValue2 = conditionValue["windowSize"];
-                                            if (windowSizeValue2 != null)
+                                            if (windowSizeValue2 != null && windowSizeValue2.Type != JTokenType.Null)
                                             {
-                                                TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan((string)windowSizeValue2);
+                                                TimeSpan windowSizeInstance2 = TypeConversion.From8601TimeSpan(((string)windowSizeValue2));
                                                 locationThresholdRuleConditionInstance.WindowSize = windowSizeInstance2;
                                             }
                                             
                                             JToken failedLocationCountValue = conditionValue["failedLocationCount"];
-                                            if (failedLocationCountValue != null)
+                                            if (failedLocationCountValue != null && failedLocationCountValue.Type != JTokenType.Null)
                                             {
-                                                int failedLocationCountInstance = (int)failedLocationCountValue;
+                                                int failedLocationCountInstance = ((int)failedLocationCountValue);
                                                 locationThresholdRuleConditionInstance.FailedLocationCount = failedLocationCountInstance;
                                             }
                                             propertiesInstance.Condition = locationThresholdRuleConditionInstance;
@@ -2766,26 +2923,26 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     }
                                     
                                     JToken actionValue = propertiesValue["action"];
-                                    if (actionValue != null)
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        string typeName4 = (string)actionValue["odata.type"];
+                                        string typeName4 = ((string)actionValue["odata.type"]);
                                         if (typeName4 == "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleEmailAction")
                                         {
                                             RuleEmailAction ruleEmailActionInstance = new RuleEmailAction();
                                             
                                             JToken sendToServiceOwnersValue = actionValue["sendToServiceOwners"];
-                                            if (sendToServiceOwnersValue != null)
+                                            if (sendToServiceOwnersValue != null && sendToServiceOwnersValue.Type != JTokenType.Null)
                                             {
-                                                bool sendToServiceOwnersInstance = (bool)sendToServiceOwnersValue;
+                                                bool sendToServiceOwnersInstance = ((bool)sendToServiceOwnersValue);
                                                 ruleEmailActionInstance.SendToServiceOwners = sendToServiceOwnersInstance;
                                             }
                                             
-                                            JArray customEmailsArray = (JArray)actionValue["customEmails"];
-                                            if (customEmailsArray != null)
+                                            JToken customEmailsArray = actionValue["customEmails"];
+                                            if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken customEmailsValue in customEmailsArray)
+                                                foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                                 {
-                                                    ruleEmailActionInstance.CustomEmails.Add((string)customEmailsValue);
+                                                    ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
                                                 }
                                             }
                                             propertiesInstance.Action = ruleEmailActionInstance;
@@ -2793,9 +2950,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     }
                                     
                                     JToken lastUpdatedTimeValue = propertiesValue["lastUpdatedTime"];
-                                    if (lastUpdatedTimeValue != null)
+                                    if (lastUpdatedTimeValue != null && lastUpdatedTimeValue.Type != JTokenType.Null)
                                     {
-                                        DateTime lastUpdatedTimeInstance = (DateTime)lastUpdatedTimeValue;
+                                        DateTime lastUpdatedTimeInstance = ((DateTime)lastUpdatedTimeValue);
                                         propertiesInstance.LastUpdatedTime = lastUpdatedTimeInstance;
                                     }
                                 }
@@ -2833,10 +2990,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         }
         
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Required. The name of the resource group.
         /// </param>
         /// <param name='parameters'>
-        /// The rule to update.
+        /// Required. The rule to update.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2870,8 +3027,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/alertrules/" + parameters.Properties.Name + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + (parameters.Properties.Name != null ? parameters.Properties.Name.Trim() : "") + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2893,7 +3062,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 JToken requestDoc = null;
                 
                 JObject ruleCreateOrUpdateParametersValue = new JObject();
-                requestDoc = ruleCreateOrUpdateParametersValue;
+                requestDoc = new JObject();
+                requestDoc["ruleCreateOrUpdateParameters"] = ruleCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -2933,19 +3103,19 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject conditionValue = new JObject();
                         propertiesValue["condition"] = conditionValue;
-                        conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
                         if (parameters.Properties.Condition is ThresholdRuleCondition)
                         {
-                            ThresholdRuleCondition derived = (ThresholdRuleCondition)parameters.Properties.Condition;
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
+                            ThresholdRuleCondition derived = ((ThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived.DataSource != null)
                             {
                                 JObject dataSourceValue = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue;
-                                dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
                                 if (derived.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived2 = (RuleMetricDataSource)derived.DataSource;
+                                    dataSourceValue["odata.type"] = derived.DataSource.GetType().FullName;
+                                    RuleMetricDataSource derived2 = ((RuleMetricDataSource)derived.DataSource);
                                     
                                     if (derived2.ResourceUri != null)
                                     {
@@ -2972,16 +3142,17 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
-                            LocationThresholdRuleCondition derived3 = (LocationThresholdRuleCondition)parameters.Properties.Condition;
+                            conditionValue["odata.type"] = parameters.Properties.Condition.GetType().FullName;
+                            LocationThresholdRuleCondition derived3 = ((LocationThresholdRuleCondition)parameters.Properties.Condition);
                             
                             if (derived3.DataSource != null)
                             {
                                 JObject dataSourceValue2 = new JObject();
                                 conditionValue["dataSource"] = dataSourceValue2;
-                                dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
                                 if (derived3.DataSource is RuleMetricDataSource)
                                 {
-                                    RuleMetricDataSource derived4 = (RuleMetricDataSource)derived3.DataSource;
+                                    dataSourceValue2["odata.type"] = derived3.DataSource.GetType().FullName;
+                                    RuleMetricDataSource derived4 = ((RuleMetricDataSource)derived3.DataSource);
                                     
                                     if (derived4.ResourceUri != null)
                                     {
@@ -3010,10 +3181,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     {
                         JObject actionValue = new JObject();
                         propertiesValue["action"] = actionValue;
-                        actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
                         if (parameters.Properties.Action is RuleEmailAction)
                         {
-                            RuleEmailAction derived5 = (RuleEmailAction)parameters.Properties.Action;
+                            actionValue["odata.type"] = parameters.Properties.Action.GetType().FullName;
+                            RuleEmailAction derived5 = ((RuleEmailAction)parameters.Properties.Action);
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
                             
@@ -3054,7 +3225,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentListResult()
         {
-            this._deployments = new List<Deployment>();
+            this.Deployments = new List<Deployment>();
         }
     }
 }

@@ -29,6 +29,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class InstanceEndpoint
     {
+        private int? _idleTimeoutInMinutes;
+        
+        /// <summary>
+        /// Optional. The idle timeout in minutes for this endpoint.
+        /// </summary>
+        public int? IdleTimeoutInMinutes
+        {
+            get { return this._idleTimeoutInMinutes; }
+            set { this._idleTimeoutInMinutes = value; }
+        }
+        
         private int? _localPort;
         
         /// <summary>

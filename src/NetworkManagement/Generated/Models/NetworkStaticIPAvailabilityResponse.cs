@@ -60,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkStaticIPAvailabilityResponse()
         {
-            this._availableAddresses = new List<string>();
+            this.AvailableAddresses = new List<string>();
         }
     }
 }

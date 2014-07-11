@@ -53,6 +53,30 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._resourceType = value; }
         }
         
+        private string _tagName;
+        
+        /// <summary>
+        /// Optional. Filter the results based on a particular tag name.
+        /// Optional.
+        /// </summary>
+        public string TagName
+        {
+            get { return this._tagName; }
+            set { this._tagName = value; }
+        }
+        
+        private string _tagValue;
+        
+        /// <summary>
+        /// Optional. Filter the results for a tag name along with a particular
+        /// tag value. Optional.
+        /// </summary>
+        public string TagValue
+        {
+            get { return this._tagValue; }
+            set { this._tagValue = value; }
+        }
+        
         private int? _top;
         
         /// <summary>

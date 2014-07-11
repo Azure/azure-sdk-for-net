@@ -90,7 +90,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// <summary>
         /// Optional. This field controls how the Service Bus handles a message
         /// whose TTL has expired. If it is enabled and a message expires, the
-        /// Service Bus moves the message from the queue into the queue’s
+        /// Service Bus moves the message from the queue into the queue's
         /// dead-letter sub-queue. If disabled, message will be permanently
         /// deleted from the queue. Settable only at queue creation time.*
         /// Default: false  (see
@@ -287,7 +287,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         
         /// <summary>
         /// Optional. Reflects the actual bytes that messages in the queue
-        /// currently occupy toward the queue’s quota.* Range: 0
+        /// currently occupy toward the queue's quota.* Range: 0
         /// -MaxTopicSizeinMegaBytes  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/hh780773.aspx
         /// for more information)
@@ -343,7 +343,21 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusQueueCreateParameters()
         {
-            this._authorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServiceBusQueueCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public ServiceBusQueueCreateParameters(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
         }
     }
 }

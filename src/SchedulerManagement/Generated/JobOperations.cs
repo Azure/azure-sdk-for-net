@@ -164,9 +164,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -177,6 +177,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -437,7 +438,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -979,9 +980,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -992,6 +993,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1252,7 +1254,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1718,9 +1720,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1731,6 +1733,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1765,7 +1768,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1837,9 +1840,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -1850,6 +1853,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1884,7 +1888,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2357,11 +2361,11 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
-            url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
+            url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.ToString());
+            url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.ToString());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2372,6 +2376,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2406,7 +2411,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2579,12 +2584,12 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "/history?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=status eq " + Uri.EscapeUriString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
-            url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.ToString());
-            url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.ToString());
+            url = url + "&$filter=status eq " + Uri.EscapeDataString(SchedulerClient.JobHistoryStatusToString(parameters.Status));
+            url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.ToString());
+            url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.ToString());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2595,6 +2600,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2629,7 +2635,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2793,17 +2799,17 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
+                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -2814,6 +2820,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2848,7 +2855,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3322,18 +3329,18 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=state eq " + Uri.EscapeUriString(SchedulerClient.JobStateToString(parameters.State));
+            url = url + "&$filter=state eq " + Uri.EscapeDataString(SchedulerClient.JobStateToString(parameters.State));
             if (parameters.Skip != null)
             {
-                url = url + "&$skip=" + Uri.EscapeUriString(parameters.Skip.Value.ToString());
+                url = url + "&$skip=" + Uri.EscapeDataString(parameters.Skip.Value.ToString());
             }
             if (parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeUriString(parameters.Top.Value.ToString());
+                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top.Value.ToString());
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3344,6 +3351,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3378,7 +3386,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3850,8 +3858,8 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -3862,6 +3870,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3912,7 +3921,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -4392,9 +4401,9 @@ namespace Microsoft.WindowsAzure.Scheduler
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = this.Client.Credentials.SubscriptionId.Trim() + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
+            string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/scheduler/~/JobCollections/" + this.Client.JobCollectionName.Trim() + "/jobs/" + jobId.Trim() + "?";
             url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -4405,6 +4414,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -4457,7 +4467,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

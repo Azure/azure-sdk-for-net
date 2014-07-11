@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineExtensionListResponse()
         {
-            this._resourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
+            this.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
         }
         
         /// <summary>
@@ -85,6 +85,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._description = value; }
             }
             
+            private bool? _disallowMajorVersionUpgrade;
+            
+            /// <summary>
+            /// Optional. Boolean property indicating whether the extension
+            /// allows major version upgrade.
+            /// </summary>
+            public bool? DisallowMajorVersionUpgrade
+            {
+                get { return this._disallowMajorVersionUpgrade; }
+                set { this._disallowMajorVersionUpgrade = value; }
+            }
+            
             private Uri _eula;
             
             /// <summary>
@@ -111,6 +123,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._homepageUri; }
                 set { this._homepageUri = value; }
+            }
+            
+            private bool? _isInternalExtension;
+            
+            /// <summary>
+            /// Optional. Boolean property indicating whether the extension is
+            /// internal or public.
+            /// </summary>
+            public bool? IsInternalExtension
+            {
+                get { return this._isInternalExtension; }
+                set { this._isInternalExtension = value; }
             }
             
             private bool? _isJsonExtension;

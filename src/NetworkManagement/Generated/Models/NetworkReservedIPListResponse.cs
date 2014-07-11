@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Preview Only. The response structure for the Server List operation.
+    /// The response structure for the Server List operation.
     /// </summary>
     public partial class NetworkReservedIPListResponse : OperationResponse, IEnumerable<NetworkReservedIPListResponse.ReservedIP>
     {
@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkReservedIPListResponse()
         {
-            this._reservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
+            this.ReservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
         }
         
         /// <summary>
@@ -82,18 +82,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             {
                 get { return this._address; }
                 set { this._address = value; }
-            }
-            
-            private string _affinityGroup;
-            
-            /// <summary>
-            /// Optional. An affinity group, which indirectly refers to the
-            /// location where the virtual network exists.
-            /// </summary>
-            public string AffinityGroup
-            {
-                get { return this._affinityGroup; }
-                set { this._affinityGroup = value; }
             }
             
             private string _deploymentName;
@@ -139,6 +127,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             {
                 get { return this._label; }
                 set { this._label = value; }
+            }
+            
+            private string _location;
+            
+            /// <summary>
+            /// Optional. Location where the virtual network exists.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
             }
             
             private string _name;

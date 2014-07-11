@@ -46,7 +46,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleCapacity _capacity;
         
         /// <summary>
-        /// The number of instances that can be used in the scaling action.
+        /// Optional. The number of instances that can be used in the scaling
+        /// action.
         /// </summary>
         public ScaleCapacity Capacity
         {
@@ -57,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeWindow _fixedDate;
         
         /// <summary>
-        /// A specific date for the scaling action. This element is not used if
-        /// the Recurrence element is used.
+        /// Optional. A specific date for the scaling action. This element is
+        /// not used if the Recurrence element is used.
         /// </summary>
         public TimeWindow FixedDate
         {
@@ -69,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _name;
         
         /// <summary>
-        /// The name of the profile.
+        /// Optional. The name of the profile.
         /// </summary>
         public string Name
         {
@@ -80,8 +81,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private Recurrence _recurrence;
         
         /// <summary>
-        /// The frequency and schedule for the scaling action. This element is
-        /// not used if the FixedDate element is used.
+        /// Optional. The frequency and schedule for the scaling action. This
+        /// element is not used if the FixedDate element is used.
         /// </summary>
         public Recurrence Recurrence
         {
@@ -92,8 +93,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IList<ScaleRule> _rules;
         
         /// <summary>
-        /// A collection of rules that provide the triggers and parameters for
-        /// the scaling action.
+        /// Optional. A collection of rules that provide the triggers and
+        /// parameters for the scaling action.
         /// </summary>
         public IList<ScaleRule> Rules
         {
@@ -106,7 +107,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleProfile()
         {
-            this._rules = new List<ScaleRule>();
+            this.Rules = new List<ScaleRule>();
         }
     }
     
@@ -117,6 +118,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private bool _enabled;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public bool Enabled
         {
             get { return this._enabled; }
@@ -125,6 +129,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private string _name;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string Name
         {
             get { return this._name; }
@@ -133,6 +140,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<AutoscaleProfile> _profiles;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<AutoscaleProfile> Profiles
         {
             get { return this._profiles; }
@@ -141,6 +151,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private string _targetResourceUri;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string TargetResourceUri
         {
             get { return this._targetResourceUri; }
@@ -152,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSetting()
         {
-            this._profiles = new List<AutoscaleProfile>();
+            this.Profiles = new List<AutoscaleProfile>();
         }
     }
     
@@ -164,7 +177,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _location;
         
         /// <summary>
-        /// The location of the setting.
+        /// Optional. The location of the setting.
         /// </summary>
         public string Location
         {
@@ -175,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private AutoscaleSetting _properties;
         
         /// <summary>
-        /// The setting to create or update.
+        /// Optional. The setting to create or update.
         /// </summary>
         public AutoscaleSetting Properties
         {
@@ -186,7 +199,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -200,7 +213,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingCreateOrUpdateParameters()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -213,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _id;
         
         /// <summary>
-        /// The resource id of the setting.
+        /// Optional. The resource id of the setting.
         /// </summary>
         public string Id
         {
@@ -224,7 +237,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _location;
         
         /// <summary>
-        /// The location of the setting.
+        /// Optional. The location of the setting.
         /// </summary>
         public string Location
         {
@@ -235,7 +248,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _name;
         
         /// <summary>
-        /// The name of the setting.
+        /// Optional. The name of the setting.
         /// </summary>
         public string Name
         {
@@ -246,7 +259,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private AutoscaleSetting _properties;
         
         /// <summary>
-        /// The retrieved setting.
+        /// Optional. The retrieved setting.
         /// </summary>
         public AutoscaleSetting Properties
         {
@@ -257,7 +270,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -270,7 +283,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingGetResponse()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -282,7 +295,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private AutoscaleSettingResourceCollection _autoscaleSettingResourceCollection;
         
         /// <summary>
-        /// The retrieved autoscale settings.
+        /// Optional. The retrieved autoscale settings.
         /// </summary>
         public AutoscaleSettingResourceCollection AutoscaleSettingResourceCollection
         {
@@ -307,7 +320,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _id;
         
         /// <summary>
-        /// The resource id of the autoscale setting.
+        /// Optional. The resource id of the autoscale setting.
         /// </summary>
         public string Id
         {
@@ -318,7 +331,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _location;
         
         /// <summary>
-        /// The location of the autoscale setting.
+        /// Optional. The location of the autoscale setting.
         /// </summary>
         public string Location
         {
@@ -329,7 +342,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _name;
         
         /// <summary>
-        /// The name of the autoscale setting.
+        /// Optional. The name of the autoscale setting.
         /// </summary>
         public string Name
         {
@@ -340,7 +353,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private AutoscaleSetting _properties;
         
         /// <summary>
-        /// The retrieved autoscale setting.
+        /// Optional. The retrieved autoscale setting.
         /// </summary>
         public AutoscaleSetting Properties
         {
@@ -351,7 +364,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// The tags of the rule.
+        /// Optional. The tags of the rule.
         /// </summary>
         public IDictionary<string, string> Tags
         {
@@ -364,7 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingResource()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -376,7 +389,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private IList<AutoscaleSettingResource> _value;
         
         /// <summary>
-        /// The values for the autoscale settings.
+        /// Optional. The values for the autoscale settings.
         /// </summary>
         public IList<AutoscaleSettingResource> Value
         {
@@ -390,7 +403,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSettingResourceCollection()
         {
-            this._value = new List<AutoscaleSettingResource>();
+            this.Value = new List<AutoscaleSettingResource>();
         }
     }
     
@@ -458,7 +471,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricName;
         
         /// <summary>
-        /// The name of the metric.
+        /// Optional. The name of the metric.
         /// </summary>
         public string MetricName
         {
@@ -469,7 +482,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricNamespace;
         
         /// <summary>
-        /// The namespace of the metric.
+        /// Optional. The namespace of the metric.
         /// </summary>
         public string MetricNamespace
         {
@@ -480,7 +493,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _metricResourceUri;
         
         /// <summary>
-        /// The metric resource uri.
+        /// Optional. The metric resource uri.
         /// </summary>
         public string MetricResourceUri
         {
@@ -491,7 +504,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ComparisonOperationType _operator;
         
         /// <summary>
-        /// The operator that is used to evaluate the metric.
+        /// Optional. The operator that is used to evaluate the metric.
         /// </summary>
         public ComparisonOperationType Operator
         {
@@ -502,7 +515,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private MetricStatisticType _statistic;
         
         /// <summary>
-        /// How the metrics from multiple instances are combined.
+        /// Optional. How the metrics from multiple instances are combined.
         /// </summary>
         public MetricStatisticType Statistic
         {
@@ -513,7 +526,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private double _threshold;
         
         /// <summary>
-        /// The percentage of usage that triggers the scaling operation.
+        /// Optional. The percentage of usage that triggers the scaling
+        /// operation.
         /// </summary>
         public double Threshold
         {
@@ -524,7 +538,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeAggregationType _timeAggregation;
         
         /// <summary>
-        /// How the data that is collected should be combined over time.
+        /// Optional. How the data that is collected should be combined over
+        /// time.
         /// </summary>
         public TimeAggregationType TimeAggregation
         {
@@ -535,7 +550,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _timeGrain;
         
         /// <summary>
-        /// The frequency of data collection.
+        /// Optional. The frequency of data collection.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -546,7 +561,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _timeWindow;
         
         /// <summary>
-        /// The range of time in which instance data is collected.
+        /// Optional. The range of time in which instance data is collected.
         /// </summary>
         public TimeSpan TimeWindow
         {
@@ -570,6 +585,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private RecurrenceFrequency _frequency;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public RecurrenceFrequency Frequency
         {
             get { return this._frequency; }
@@ -578,6 +596,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private RecurrentSchedule _schedule;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public RecurrentSchedule Schedule
         {
             get { return this._schedule; }
@@ -639,6 +660,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
     {
         private IList<string> _days;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<string> Days
         {
             get { return this._days; }
@@ -647,6 +671,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<int> _hours;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<int> Hours
         {
             get { return this._hours; }
@@ -655,6 +682,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private IList<int> _minutes;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public IList<int> Minutes
         {
             get { return this._minutes; }
@@ -663,6 +693,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         
         private string _timeZone;
         
+        /// <summary>
+        /// Optional.
+        /// </summary>
         public string TimeZone
         {
             get { return this._timeZone; }
@@ -674,9 +707,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this._days = new List<string>();
-            this._hours = new List<int>();
-            this._minutes = new List<int>();
+            this.Days = new List<string>();
+            this.Hours = new List<int>();
+            this.Minutes = new List<int>();
         }
     }
     
@@ -688,7 +721,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private TimeSpan _cooldown;
         
         /// <summary>
-        /// The cooldown interval for scaling action.
+        /// Optional. The cooldown interval for scaling action.
         /// </summary>
         public TimeSpan Cooldown
         {
@@ -699,7 +732,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleDirection _direction;
         
         /// <summary>
-        /// The direction of scaling.
+        /// Optional. The direction of scaling.
         /// </summary>
         public ScaleDirection Direction
         {
@@ -710,7 +743,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleType _type;
         
         /// <summary>
-        /// The type of scaling.
+        /// Optional. The type of scaling.
         /// </summary>
         public ScaleType Type
         {
@@ -721,7 +754,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _value;
         
         /// <summary>
-        /// The rate of scaling.
+        /// Optional. The rate of scaling.
         /// </summary>
         public string Value
         {
@@ -745,8 +778,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _default;
         
         /// <summary>
-        /// The default number of instances that are available for the scaling
-        /// action.
+        /// Optional. The default number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Default
         {
@@ -757,8 +790,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _maximum;
         
         /// <summary>
-        /// The maximum number of instances that are available for the scaling
-        /// action.
+        /// Optional. The maximum number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Maximum
         {
@@ -769,8 +802,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _minimum;
         
         /// <summary>
-        /// The minimum number of instances that are available for the scaling
-        /// action.
+        /// Optional. The minimum number of instances that are available for
+        /// the scaling action.
         /// </summary>
         public string Minimum
         {
@@ -812,7 +845,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private MetricTrigger _metricTrigger;
         
         /// <summary>
-        /// The metrics that are used to determine when a scaling action occurs.
+        /// Optional. The metrics that are used to determine when a scaling
+        /// action occurs.
         /// </summary>
         public MetricTrigger MetricTrigger
         {
@@ -823,7 +857,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private ScaleAction _scaleAction;
         
         /// <summary>
-        /// The parameters for the scaling action.
+        /// Optional. The parameters for the scaling action.
         /// </summary>
         public ScaleAction ScaleAction
         {
@@ -903,7 +937,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private DateTime _end;
         
         /// <summary>
-        /// The end of the time window.
+        /// Optional. The end of the time window.
         /// </summary>
         public DateTime End
         {
@@ -914,7 +948,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private DateTime _start;
         
         /// <summary>
-        /// The start of the time window.
+        /// Optional. The start of the time window.
         /// </summary>
         public DateTime Start
         {
@@ -925,7 +959,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         private string _timeZone;
         
         /// <summary>
-        /// The time zone information.
+        /// Optional. The time zone information.
         /// </summary>
         public string TimeZone
         {
@@ -944,10 +978,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
 {
-    public partial interface IAutoscaleClient
+    public static partial class AutoscaleClientExtensions
+    {
+    }
+    
+    public partial interface IAutoscaleClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -955,17 +1001,29 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
         }
         
         /// <summary>
@@ -977,16 +1035,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
     }
     
-    public static partial class AutoscaleClientExtensions
-    {
-    }
-    
     public partial class AutoscaleClient : ServiceClient<AutoscaleClient>, IAutoscaleClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -996,17 +1060,35 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private ISettingOperations _settings;
@@ -1026,6 +1108,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             : base()
         {
             this._settings = new SettingOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -1033,16 +1118,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public AutoscaleClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1065,13 +1147,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         /// Initializes a new instance of the AutoscaleClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public AutoscaleClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1084,6 +1162,326 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutoscaleClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private AutoscaleClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._settings = new SettingOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutoscaleClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AutoscaleClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AutoscaleClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AutoscaleClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another AutoscaleClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of AutoscaleClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<AutoscaleClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is AutoscaleClient)
+            {
+                AutoscaleClient clonedClient = ((AutoscaleClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+    }
+    
+    public static partial class SettingOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse CreateOrUpdate(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISettingOperations)s).CreateOrUpdateAsync(resourceGroupName, autoscaleSettingName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> CreateOrUpdateAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISettingOperations)s).DeleteAsync(resourceGroupName, autoscaleSettingName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
+        {
+            return operations.DeleteAsync(resourceGroupName, autoscaleSettingName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AutoscaleSettingGetResponse Get(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISettingOperations)s).GetAsync(resourceGroupName, autoscaleSettingName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AutoscaleSettingGetResponse> GetAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
+        {
+            return operations.GetAsync(resourceGroupName, autoscaleSettingName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Required. The resource uri of the target of the autoscale setting.
+        /// </param>
+        /// <returns>
+        /// The List Autoscale settings operation response.
+        /// </returns>
+        public static AutoscaleSettingListResponse List(this ISettingOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISettingOperations)s).ListAsync(resourceGroupName, targetResourceUri);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Required. The resource uri of the target of the autoscale setting.
+        /// </param>
+        /// <returns>
+        /// The List Autoscale settings operation response.
+        /// </returns>
+        public static Task<AutoscaleSettingListResponse> ListAsync(this ISettingOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return operations.ListAsync(resourceGroupName, targetResourceUri, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Update(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISettingOperations)s).UpdateAsync(resourceGroupName, autoscaleSettingName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The resource name.
+        /// </param>
+        /// <param name='autoscaleSettingName'>
+        /// Required. The autoscale setting name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
         }
     }
     
@@ -1176,282 +1574,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
     /// <summary>
     /// Operations for managing the autoscale settings.
     /// </summary>
-    public static partial class SettingOperationsExtensions
-    {
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse CreateOrUpdate(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, autoscaleSettingName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> CreateOrUpdateAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
-        {
-            return operations.CreateOrUpdateAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Delete(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
-        {
-            try
-            {
-                return operations.DeleteAsync(resourceGroupName, autoscaleSettingName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
-        {
-            return operations.DeleteAsync(resourceGroupName, autoscaleSettingName, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static AutoscaleSettingGetResponse Get(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
-        {
-            try
-            {
-                return operations.GetAsync(resourceGroupName, autoscaleSettingName).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<AutoscaleSettingGetResponse> GetAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName)
-        {
-            return operations.GetAsync(resourceGroupName, autoscaleSettingName, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the autoscale setting.
-        /// </param>
-        /// <returns>
-        /// The List Autoscale settings operation response.
-        /// </returns>
-        public static AutoscaleSettingListResponse List(this ISettingOperations operations, string resourceGroupName, string targetResourceUri)
-        {
-            try
-            {
-                return operations.ListAsync(resourceGroupName, targetResourceUri).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the autoscale setting.
-        /// </param>
-        /// <returns>
-        /// The List Autoscale settings operation response.
-        /// </returns>
-        public static Task<AutoscaleSettingListResponse> ListAsync(this ISettingOperations operations, string resourceGroupName, string targetResourceUri)
-        {
-            return operations.ListAsync(resourceGroupName, targetResourceUri, CancellationToken.None);
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static OperationResponse Update(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
-        {
-            try
-            {
-                return operations.UpdateAsync(resourceGroupName, autoscaleSettingName, parameters).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-        
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.WindowsAzure.Management.Monitoring.Autoscale.ISettingOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource name.
-        /// </param>
-        /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the operation.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public static Task<OperationResponse> UpdateAsync(this ISettingOperations operations, string resourceGroupName, string autoscaleSettingName, AutoscaleSettingCreateOrUpdateParameters parameters)
-        {
-            return operations.UpdateAsync(resourceGroupName, autoscaleSettingName, parameters, CancellationToken.None);
-        }
-    }
-    
-    /// <summary>
-    /// Operations for managing the autoscale settings.
-    /// </summary>
     internal partial class SettingOperations : IServiceOperations<AutoscaleClient>, ISettingOperations
     {
         /// <summary>
@@ -1477,13 +1599,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceGroupName'>
-        /// The resource name.
+        /// Required. The resource name.
         /// </param>
         /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
+        /// Required. The autoscale setting name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1522,8 +1644,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1545,7 +1679,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 JToken requestDoc = null;
                 
                 JObject autoscaleSettingCreateOrUpdateParametersValue = new JObject();
-                requestDoc = autoscaleSettingCreateOrUpdateParametersValue;
+                requestDoc = new JObject();
+                requestDoc["autoscaleSettingCreateOrUpdateParameters"] = autoscaleSettingCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -1766,7 +1901,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1807,10 +1942,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceGroupName'>
-        /// The resource name.
+        /// Required. The resource name.
         /// </param>
         /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
+        /// Required. The autoscale setting name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1844,8 +1979,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1880,7 +2027,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1921,10 +2068,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceGroupName'>
-        /// The resource name.
+        /// Required. The resource name.
         /// </param>
         /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
+        /// Required. The autoscale setting name.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1958,8 +2105,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1994,7 +2153,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2008,205 +2167,204 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new AutoscaleSettingGetResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JToken idValue = responseDoc["id"];
-                        if (idValue != null)
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            string idInstance = (string)idValue;
+                            string idInstance = ((string)idValue);
                             result.Id = idInstance;
                         }
                         
                         JToken nameValue = responseDoc["name"];
-                        if (nameValue != null)
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
                         {
-                            string nameInstance = (string)nameValue;
+                            string nameInstance = ((string)nameValue);
                             result.Name = nameInstance;
                         }
                         
                         JToken locationValue = responseDoc["location"];
-                        if (locationValue != null)
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
                         {
-                            string locationInstance = (string)locationValue;
+                            string locationInstance = ((string)locationValue);
                             result.Location = locationInstance;
                         }
                         
-                        JToken tagsSequenceElement = responseDoc["tags"];
-                        if (tagsSequenceElement != null)
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
                             foreach (JProperty property in tagsSequenceElement)
                             {
-                                string tagsKey = (string)property.Name;
-                                string tagsValue = (string)property.Value;
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
                                 result.Tags.Add(tagsKey, tagsValue);
                             }
                         }
                         
                         JToken propertiesValue = responseDoc["properties"];
-                        if (propertiesValue != null)
+                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             AutoscaleSetting propertiesInstance = new AutoscaleSetting();
                             result.Properties = propertiesInstance;
                             
-                            JArray profilesArray = (JArray)propertiesValue["profiles"];
-                            if (profilesArray != null)
+                            JToken profilesArray = propertiesValue["profiles"];
+                            if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                             {
-                                foreach (JToken profilesValue in profilesArray)
+                                foreach (JToken profilesValue in ((JArray)profilesArray))
                                 {
                                     AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                     propertiesInstance.Profiles.Add(autoscaleProfileInstance);
                                     
                                     JToken nameValue2 = profilesValue["name"];
-                                    if (nameValue2 != null)
+                                    if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                     {
-                                        string nameInstance2 = (string)nameValue2;
+                                        string nameInstance2 = ((string)nameValue2);
                                         autoscaleProfileInstance.Name = nameInstance2;
                                     }
                                     
                                     JToken capacityValue = profilesValue["capacity"];
-                                    if (capacityValue != null)
+                                    if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                     {
                                         ScaleCapacity capacityInstance = new ScaleCapacity();
                                         autoscaleProfileInstance.Capacity = capacityInstance;
                                         
                                         JToken minimumValue = capacityValue["minimum"];
-                                        if (minimumValue != null)
+                                        if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                         {
-                                            string minimumInstance = (string)minimumValue;
+                                            string minimumInstance = ((string)minimumValue);
                                             capacityInstance.Minimum = minimumInstance;
                                         }
                                         
                                         JToken maximumValue = capacityValue["maximum"];
-                                        if (maximumValue != null)
+                                        if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                         {
-                                            string maximumInstance = (string)maximumValue;
+                                            string maximumInstance = ((string)maximumValue);
                                             capacityInstance.Maximum = maximumInstance;
                                         }
                                         
                                         JToken defaultValue = capacityValue["default"];
-                                        if (defaultValue != null)
+                                        if (defaultValue != null && defaultValue.Type != JTokenType.Null)
                                         {
-                                            string defaultInstance = (string)defaultValue;
+                                            string defaultInstance = ((string)defaultValue);
                                             capacityInstance.Default = defaultInstance;
                                         }
                                     }
                                     
-                                    JArray rulesArray = (JArray)profilesValue["rules"];
-                                    if (rulesArray != null)
+                                    JToken rulesArray = profilesValue["rules"];
+                                    if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken rulesValue in rulesArray)
+                                        foreach (JToken rulesValue in ((JArray)rulesArray))
                                         {
                                             ScaleRule scaleRuleInstance = new ScaleRule();
                                             autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
                                             
                                             JToken metricTriggerValue = rulesValue["metricTrigger"];
-                                            if (metricTriggerValue != null)
+                                            if (metricTriggerValue != null && metricTriggerValue.Type != JTokenType.Null)
                                             {
                                                 MetricTrigger metricTriggerInstance = new MetricTrigger();
                                                 scaleRuleInstance.MetricTrigger = metricTriggerInstance;
                                                 
                                                 JToken metricNameValue = metricTriggerValue["metricName"];
-                                                if (metricNameValue != null)
+                                                if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                                 {
-                                                    string metricNameInstance = (string)metricNameValue;
+                                                    string metricNameInstance = ((string)metricNameValue);
                                                     metricTriggerInstance.MetricName = metricNameInstance;
                                                 }
                                                 
                                                 JToken metricNamespaceValue = metricTriggerValue["metricNamespace"];
-                                                if (metricNamespaceValue != null)
+                                                if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                                 {
-                                                    string metricNamespaceInstance = (string)metricNamespaceValue;
+                                                    string metricNamespaceInstance = ((string)metricNamespaceValue);
                                                     metricTriggerInstance.MetricNamespace = metricNamespaceInstance;
                                                 }
                                                 
                                                 JToken metricResourceUriValue = metricTriggerValue["metricResourceUri"];
-                                                if (metricResourceUriValue != null)
+                                                if (metricResourceUriValue != null && metricResourceUriValue.Type != JTokenType.Null)
                                                 {
-                                                    string metricResourceUriInstance = (string)metricResourceUriValue;
+                                                    string metricResourceUriInstance = ((string)metricResourceUriValue);
                                                     metricTriggerInstance.MetricResourceUri = metricResourceUriInstance;
                                                 }
                                                 
                                                 JToken timeGrainValue = metricTriggerValue["timeGrain"];
-                                                if (timeGrainValue != null)
+                                                if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                                 {
-                                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                                     metricTriggerInstance.TimeGrain = timeGrainInstance;
                                                 }
                                                 
                                                 JToken statisticValue = metricTriggerValue["statistic"];
-                                                if (statisticValue != null)
+                                                if (statisticValue != null && statisticValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
+                                                    MetricStatisticType statisticInstance = ((MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), ((string)statisticValue), true));
                                                     metricTriggerInstance.Statistic = statisticInstance;
                                                 }
                                                 
                                                 JToken timeWindowValue = metricTriggerValue["timeWindow"];
-                                                if (timeWindowValue != null)
+                                                if (timeWindowValue != null && timeWindowValue.Type != JTokenType.Null)
                                                 {
-                                                    TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan((string)timeWindowValue);
+                                                    TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan(((string)timeWindowValue));
                                                     metricTriggerInstance.TimeWindow = timeWindowInstance;
                                                 }
                                                 
                                                 JToken timeAggregationValue = metricTriggerValue["timeAggregation"];
-                                                if (timeAggregationValue != null)
+                                                if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
+                                                    TimeAggregationType timeAggregationInstance = ((TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), ((string)timeAggregationValue), true));
                                                     metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                                 }
                                                 
                                                 JToken operatorValue = metricTriggerValue["operator"];
-                                                if (operatorValue != null)
+                                                if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
+                                                    ComparisonOperationType operatorInstance = ((ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), ((string)operatorValue), true));
                                                     metricTriggerInstance.Operator = operatorInstance;
                                                 }
                                                 
                                                 JToken thresholdValue = metricTriggerValue["threshold"];
-                                                if (thresholdValue != null)
+                                                if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                                 {
-                                                    double thresholdInstance = (double)thresholdValue;
+                                                    double thresholdInstance = ((double)thresholdValue);
                                                     metricTriggerInstance.Threshold = thresholdInstance;
                                                 }
                                             }
                                             
                                             JToken scaleActionValue = rulesValue["scaleAction"];
-                                            if (scaleActionValue != null)
+                                            if (scaleActionValue != null && scaleActionValue.Type != JTokenType.Null)
                                             {
                                                 ScaleAction scaleActionInstance = new ScaleAction();
                                                 scaleRuleInstance.ScaleAction = scaleActionInstance;
                                                 
                                                 JToken directionValue = scaleActionValue["direction"];
-                                                if (directionValue != null)
+                                                if (directionValue != null && directionValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
+                                                    ScaleDirection directionInstance = ((ScaleDirection)Enum.Parse(typeof(ScaleDirection), ((string)directionValue), true));
                                                     scaleActionInstance.Direction = directionInstance;
                                                 }
                                                 
                                                 JToken typeValue = scaleActionValue["type"];
-                                                if (typeValue != null)
+                                                if (typeValue != null && typeValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
+                                                    ScaleType typeInstance = ((ScaleType)Enum.Parse(typeof(ScaleType), ((string)typeValue), true));
                                                     scaleActionInstance.Type = typeInstance;
                                                 }
                                                 
                                                 JToken valueValue = scaleActionValue["value"];
-                                                if (valueValue != null)
+                                                if (valueValue != null && valueValue.Type != JTokenType.Null)
                                                 {
-                                                    string valueInstance = (string)valueValue;
+                                                    string valueInstance = ((string)valueValue);
                                                     scaleActionInstance.Value = valueInstance;
                                                 }
                                                 
                                                 JToken cooldownValue = scaleActionValue["cooldown"];
-                                                if (cooldownValue != null)
+                                                if (cooldownValue != null && cooldownValue.Type != JTokenType.Null)
                                                 {
-                                                    TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan((string)cooldownValue);
+                                                    TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan(((string)cooldownValue));
                                                     scaleActionInstance.Cooldown = cooldownInstance;
                                                 }
                                             }
@@ -2214,84 +2372,83 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     }
                                     
                                     JToken fixedDateValue = profilesValue["fixedDate"];
-                                    if (fixedDateValue != null)
+                                    if (fixedDateValue != null && fixedDateValue.Type != JTokenType.Null)
                                     {
                                         TimeWindow fixedDateInstance = new TimeWindow();
                                         autoscaleProfileInstance.FixedDate = fixedDateInstance;
                                         
                                         JToken timeZoneValue = fixedDateValue["timeZone"];
-                                        if (timeZoneValue != null)
+                                        if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
                                         {
-                                            string timeZoneInstance = (string)timeZoneValue;
+                                            string timeZoneInstance = ((string)timeZoneValue);
                                             fixedDateInstance.TimeZone = timeZoneInstance;
                                         }
                                         
                                         JToken startValue = fixedDateValue["start"];
-                                        if (startValue != null)
+                                        if (startValue != null && startValue.Type != JTokenType.Null)
                                         {
-                                            DateTime startInstance = (DateTime)startValue;
+                                            DateTime startInstance = ((DateTime)startValue);
                                             fixedDateInstance.Start = startInstance;
                                         }
                                         
                                         JToken endValue = fixedDateValue["end"];
-                                        if (endValue != null)
+                                        if (endValue != null && endValue.Type != JTokenType.Null)
                                         {
-                                            DateTime endInstance = (DateTime)endValue;
+                                            DateTime endInstance = ((DateTime)endValue);
                                             fixedDateInstance.End = endInstance;
                                         }
                                     }
                                     
                                     JToken recurrenceValue = profilesValue["recurrence"];
-                                    if (recurrenceValue != null)
+                                    if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
                                     {
                                         Recurrence recurrenceInstance = new Recurrence();
                                         autoscaleProfileInstance.Recurrence = recurrenceInstance;
                                         
                                         JToken frequencyValue = recurrenceValue["frequency"];
-                                        if (frequencyValue != null)
+                                        if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                         {
-                                            // how
-                                            RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
+                                            RecurrenceFrequency frequencyInstance = ((RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), ((string)frequencyValue), true));
                                             recurrenceInstance.Frequency = frequencyInstance;
                                         }
                                         
                                         JToken scheduleValue = recurrenceValue["schedule"];
-                                        if (scheduleValue != null)
+                                        if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
                                         {
                                             RecurrentSchedule scheduleInstance = new RecurrentSchedule();
                                             recurrenceInstance.Schedule = scheduleInstance;
                                             
                                             JToken timeZoneValue2 = scheduleValue["timeZone"];
-                                            if (timeZoneValue2 != null)
+                                            if (timeZoneValue2 != null && timeZoneValue2.Type != JTokenType.Null)
                                             {
-                                                string timeZoneInstance2 = (string)timeZoneValue2;
+                                                string timeZoneInstance2 = ((string)timeZoneValue2);
                                                 scheduleInstance.TimeZone = timeZoneInstance2;
                                             }
                                             
-                                            JArray daysArray = (JArray)scheduleValue["days"];
-                                            if (daysArray != null)
+                                            JToken daysArray = scheduleValue["days"];
+                                            if (daysArray != null && daysArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken daysValue in daysArray)
+                                                foreach (JToken daysValue in ((JArray)daysArray))
                                                 {
-                                                    scheduleInstance.Days.Add((string)daysValue);
+                                                    scheduleInstance.Days.Add(((string)daysValue));
                                                 }
                                             }
                                             
-                                            JArray hoursArray = (JArray)scheduleValue["hours"];
-                                            if (hoursArray != null)
+                                            JToken hoursArray = scheduleValue["hours"];
+                                            if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken hoursValue in hoursArray)
+                                                foreach (JToken hoursValue in ((JArray)hoursArray))
                                                 {
-                                                    scheduleInstance.Hours.Add((int)hoursValue);
+                                                    scheduleInstance.Hours.Add(((int)hoursValue));
                                                 }
                                             }
                                             
-                                            JArray minutesArray = (JArray)scheduleValue["minutes"];
-                                            if (minutesArray != null)
+                                            JToken minutesArray = scheduleValue["minutes"];
+                                            if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken minutesValue in minutesArray)
+                                                foreach (JToken minutesValue in ((JArray)minutesArray))
                                                 {
-                                                    scheduleInstance.Minutes.Add((int)minutesValue);
+                                                    scheduleInstance.Minutes.Add(((int)minutesValue));
                                                 }
                                             }
                                         }
@@ -2300,23 +2457,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                             }
                             
                             JToken enabledValue = propertiesValue["enabled"];
-                            if (enabledValue != null)
+                            if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                             {
-                                bool enabledInstance = (bool)enabledValue;
+                                bool enabledInstance = ((bool)enabledValue);
                                 propertiesInstance.Enabled = enabledInstance;
                             }
                             
                             JToken nameValue3 = propertiesValue["name"];
-                            if (nameValue3 != null)
+                            if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                             {
-                                string nameInstance3 = (string)nameValue3;
+                                string nameInstance3 = ((string)nameValue3);
                                 propertiesInstance.Name = nameInstance3;
                             }
                             
                             JToken targetResourceUriValue = propertiesValue["targetResourceUri"];
-                            if (targetResourceUriValue != null)
+                            if (targetResourceUriValue != null && targetResourceUriValue.Type != JTokenType.Null)
                             {
-                                string targetResourceUriInstance = (string)targetResourceUriValue;
+                                string targetResourceUriInstance = ((string)targetResourceUriValue);
                                 propertiesInstance.TargetResourceUri = targetResourceUriInstance;
                             }
                         }
@@ -2352,10 +2509,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceGroupName'>
-        /// The resource name.
+        /// Required. The resource name.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the autoscale setting.
+        /// Required. The resource uri of the target of the autoscale setting.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2384,12 +2541,24 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/autoscalesettings?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings?";
+            url = url + "api-version=2014-04";
             if (targetResourceUri != null)
             {
-                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeUriString(targetResourceUri);
+                url = url + "&$filter=targetResourceUri eq " + Uri.EscapeDataString(targetResourceUri != null ? targetResourceUri.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2424,7 +2593,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2438,216 +2607,215 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new AutoscaleSettingListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
                     
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         AutoscaleSettingResourceCollection autoscaleSettingResourceCollectionInstance = new AutoscaleSettingResourceCollection();
                         result.AutoscaleSettingResourceCollection = autoscaleSettingResourceCollectionInstance;
                         
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 AutoscaleSettingResource autoscaleSettingResourceInstance = new AutoscaleSettingResource();
                                 autoscaleSettingResourceCollectionInstance.Value.Add(autoscaleSettingResourceInstance);
                                 
                                 JToken idValue = valueValue["id"];
-                                if (idValue != null)
+                                if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
-                                    string idInstance = (string)idValue;
+                                    string idInstance = ((string)idValue);
                                     autoscaleSettingResourceInstance.Id = idInstance;
                                 }
                                 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     autoscaleSettingResourceInstance.Name = nameInstance;
                                 }
                                 
                                 JToken locationValue = valueValue["location"];
-                                if (locationValue != null)
+                                if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
-                                    string locationInstance = (string)locationValue;
+                                    string locationInstance = ((string)locationValue);
                                     autoscaleSettingResourceInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = valueValue["tags"];
-                                if (tagsSequenceElement != null)
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
+                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
-                                        string tagsKey = (string)property.Name;
-                                        string tagsValue = (string)property.Value;
+                                        string tagsKey = ((string)property.Name);
+                                        string tagsValue = ((string)property.Value);
                                         autoscaleSettingResourceInstance.Tags.Add(tagsKey, tagsValue);
                                     }
                                 }
                                 
                                 JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null)
+                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     AutoscaleSetting propertiesInstance = new AutoscaleSetting();
                                     autoscaleSettingResourceInstance.Properties = propertiesInstance;
                                     
-                                    JArray profilesArray = (JArray)propertiesValue["profiles"];
-                                    if (profilesArray != null)
+                                    JToken profilesArray = propertiesValue["profiles"];
+                                    if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                                     {
-                                        foreach (JToken profilesValue in profilesArray)
+                                        foreach (JToken profilesValue in ((JArray)profilesArray))
                                         {
                                             AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
                                             propertiesInstance.Profiles.Add(autoscaleProfileInstance);
                                             
                                             JToken nameValue2 = profilesValue["name"];
-                                            if (nameValue2 != null)
+                                            if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                             {
-                                                string nameInstance2 = (string)nameValue2;
+                                                string nameInstance2 = ((string)nameValue2);
                                                 autoscaleProfileInstance.Name = nameInstance2;
                                             }
                                             
                                             JToken capacityValue = profilesValue["capacity"];
-                                            if (capacityValue != null)
+                                            if (capacityValue != null && capacityValue.Type != JTokenType.Null)
                                             {
                                                 ScaleCapacity capacityInstance = new ScaleCapacity();
                                                 autoscaleProfileInstance.Capacity = capacityInstance;
                                                 
                                                 JToken minimumValue = capacityValue["minimum"];
-                                                if (minimumValue != null)
+                                                if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                                 {
-                                                    string minimumInstance = (string)minimumValue;
+                                                    string minimumInstance = ((string)minimumValue);
                                                     capacityInstance.Minimum = minimumInstance;
                                                 }
                                                 
                                                 JToken maximumValue = capacityValue["maximum"];
-                                                if (maximumValue != null)
+                                                if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                                 {
-                                                    string maximumInstance = (string)maximumValue;
+                                                    string maximumInstance = ((string)maximumValue);
                                                     capacityInstance.Maximum = maximumInstance;
                                                 }
                                                 
                                                 JToken defaultValue = capacityValue["default"];
-                                                if (defaultValue != null)
+                                                if (defaultValue != null && defaultValue.Type != JTokenType.Null)
                                                 {
-                                                    string defaultInstance = (string)defaultValue;
+                                                    string defaultInstance = ((string)defaultValue);
                                                     capacityInstance.Default = defaultInstance;
                                                 }
                                             }
                                             
-                                            JArray rulesArray = (JArray)profilesValue["rules"];
-                                            if (rulesArray != null)
+                                            JToken rulesArray = profilesValue["rules"];
+                                            if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken rulesValue in rulesArray)
+                                                foreach (JToken rulesValue in ((JArray)rulesArray))
                                                 {
                                                     ScaleRule scaleRuleInstance = new ScaleRule();
                                                     autoscaleProfileInstance.Rules.Add(scaleRuleInstance);
                                                     
                                                     JToken metricTriggerValue = rulesValue["metricTrigger"];
-                                                    if (metricTriggerValue != null)
+                                                    if (metricTriggerValue != null && metricTriggerValue.Type != JTokenType.Null)
                                                     {
                                                         MetricTrigger metricTriggerInstance = new MetricTrigger();
                                                         scaleRuleInstance.MetricTrigger = metricTriggerInstance;
                                                         
                                                         JToken metricNameValue = metricTriggerValue["metricName"];
-                                                        if (metricNameValue != null)
+                                                        if (metricNameValue != null && metricNameValue.Type != JTokenType.Null)
                                                         {
-                                                            string metricNameInstance = (string)metricNameValue;
+                                                            string metricNameInstance = ((string)metricNameValue);
                                                             metricTriggerInstance.MetricName = metricNameInstance;
                                                         }
                                                         
                                                         JToken metricNamespaceValue = metricTriggerValue["metricNamespace"];
-                                                        if (metricNamespaceValue != null)
+                                                        if (metricNamespaceValue != null && metricNamespaceValue.Type != JTokenType.Null)
                                                         {
-                                                            string metricNamespaceInstance = (string)metricNamespaceValue;
+                                                            string metricNamespaceInstance = ((string)metricNamespaceValue);
                                                             metricTriggerInstance.MetricNamespace = metricNamespaceInstance;
                                                         }
                                                         
                                                         JToken metricResourceUriValue = metricTriggerValue["metricResourceUri"];
-                                                        if (metricResourceUriValue != null)
+                                                        if (metricResourceUriValue != null && metricResourceUriValue.Type != JTokenType.Null)
                                                         {
-                                                            string metricResourceUriInstance = (string)metricResourceUriValue;
+                                                            string metricResourceUriInstance = ((string)metricResourceUriValue);
                                                             metricTriggerInstance.MetricResourceUri = metricResourceUriInstance;
                                                         }
                                                         
                                                         JToken timeGrainValue = metricTriggerValue["timeGrain"];
-                                                        if (timeGrainValue != null)
+                                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                                             metricTriggerInstance.TimeGrain = timeGrainInstance;
                                                         }
                                                         
                                                         JToken statisticValue = metricTriggerValue["statistic"];
-                                                        if (statisticValue != null)
+                                                        if (statisticValue != null && statisticValue.Type != JTokenType.Null)
                                                         {
-                                                            // how
-                                                            MetricStatisticType statisticInstance = (MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), (string)statisticValue, false);
+                                                            MetricStatisticType statisticInstance = ((MetricStatisticType)Enum.Parse(typeof(MetricStatisticType), ((string)statisticValue), true));
                                                             metricTriggerInstance.Statistic = statisticInstance;
                                                         }
                                                         
                                                         JToken timeWindowValue = metricTriggerValue["timeWindow"];
-                                                        if (timeWindowValue != null)
+                                                        if (timeWindowValue != null && timeWindowValue.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan((string)timeWindowValue);
+                                                            TimeSpan timeWindowInstance = TypeConversion.From8601TimeSpan(((string)timeWindowValue));
                                                             metricTriggerInstance.TimeWindow = timeWindowInstance;
                                                         }
                                                         
                                                         JToken timeAggregationValue = metricTriggerValue["timeAggregation"];
-                                                        if (timeAggregationValue != null)
+                                                        if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
                                                         {
-                                                            // how
-                                                            TimeAggregationType timeAggregationInstance = (TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), (string)timeAggregationValue, false);
+                                                            TimeAggregationType timeAggregationInstance = ((TimeAggregationType)Enum.Parse(typeof(TimeAggregationType), ((string)timeAggregationValue), true));
                                                             metricTriggerInstance.TimeAggregation = timeAggregationInstance;
                                                         }
                                                         
                                                         JToken operatorValue = metricTriggerValue["operator"];
-                                                        if (operatorValue != null)
+                                                        if (operatorValue != null && operatorValue.Type != JTokenType.Null)
                                                         {
-                                                            // how
-                                                            ComparisonOperationType operatorInstance = (ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), (string)operatorValue, false);
+                                                            ComparisonOperationType operatorInstance = ((ComparisonOperationType)Enum.Parse(typeof(ComparisonOperationType), ((string)operatorValue), true));
                                                             metricTriggerInstance.Operator = operatorInstance;
                                                         }
                                                         
                                                         JToken thresholdValue = metricTriggerValue["threshold"];
-                                                        if (thresholdValue != null)
+                                                        if (thresholdValue != null && thresholdValue.Type != JTokenType.Null)
                                                         {
-                                                            double thresholdInstance = (double)thresholdValue;
+                                                            double thresholdInstance = ((double)thresholdValue);
                                                             metricTriggerInstance.Threshold = thresholdInstance;
                                                         }
                                                     }
                                                     
                                                     JToken scaleActionValue = rulesValue["scaleAction"];
-                                                    if (scaleActionValue != null)
+                                                    if (scaleActionValue != null && scaleActionValue.Type != JTokenType.Null)
                                                     {
                                                         ScaleAction scaleActionInstance = new ScaleAction();
                                                         scaleRuleInstance.ScaleAction = scaleActionInstance;
                                                         
                                                         JToken directionValue = scaleActionValue["direction"];
-                                                        if (directionValue != null)
+                                                        if (directionValue != null && directionValue.Type != JTokenType.Null)
                                                         {
-                                                            // how
-                                                            ScaleDirection directionInstance = (ScaleDirection)Enum.Parse(typeof(ScaleDirection), (string)directionValue, false);
+                                                            ScaleDirection directionInstance = ((ScaleDirection)Enum.Parse(typeof(ScaleDirection), ((string)directionValue), true));
                                                             scaleActionInstance.Direction = directionInstance;
                                                         }
                                                         
                                                         JToken typeValue = scaleActionValue["type"];
-                                                        if (typeValue != null)
+                                                        if (typeValue != null && typeValue.Type != JTokenType.Null)
                                                         {
-                                                            // how
-                                                            ScaleType typeInstance = (ScaleType)Enum.Parse(typeof(ScaleType), (string)typeValue, false);
+                                                            ScaleType typeInstance = ((ScaleType)Enum.Parse(typeof(ScaleType), ((string)typeValue), true));
                                                             scaleActionInstance.Type = typeInstance;
                                                         }
                                                         
                                                         JToken valueValue2 = scaleActionValue["value"];
-                                                        if (valueValue2 != null)
+                                                        if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                                         {
-                                                            string valueInstance = (string)valueValue2;
+                                                            string valueInstance = ((string)valueValue2);
                                                             scaleActionInstance.Value = valueInstance;
                                                         }
                                                         
                                                         JToken cooldownValue = scaleActionValue["cooldown"];
-                                                        if (cooldownValue != null)
+                                                        if (cooldownValue != null && cooldownValue.Type != JTokenType.Null)
                                                         {
-                                                            TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan((string)cooldownValue);
+                                                            TimeSpan cooldownInstance = TypeConversion.From8601TimeSpan(((string)cooldownValue));
                                                             scaleActionInstance.Cooldown = cooldownInstance;
                                                         }
                                                     }
@@ -2655,84 +2823,83 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                             }
                                             
                                             JToken fixedDateValue = profilesValue["fixedDate"];
-                                            if (fixedDateValue != null)
+                                            if (fixedDateValue != null && fixedDateValue.Type != JTokenType.Null)
                                             {
                                                 TimeWindow fixedDateInstance = new TimeWindow();
                                                 autoscaleProfileInstance.FixedDate = fixedDateInstance;
                                                 
                                                 JToken timeZoneValue = fixedDateValue["timeZone"];
-                                                if (timeZoneValue != null)
+                                                if (timeZoneValue != null && timeZoneValue.Type != JTokenType.Null)
                                                 {
-                                                    string timeZoneInstance = (string)timeZoneValue;
+                                                    string timeZoneInstance = ((string)timeZoneValue);
                                                     fixedDateInstance.TimeZone = timeZoneInstance;
                                                 }
                                                 
                                                 JToken startValue = fixedDateValue["start"];
-                                                if (startValue != null)
+                                                if (startValue != null && startValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime startInstance = (DateTime)startValue;
+                                                    DateTime startInstance = ((DateTime)startValue);
                                                     fixedDateInstance.Start = startInstance;
                                                 }
                                                 
                                                 JToken endValue = fixedDateValue["end"];
-                                                if (endValue != null)
+                                                if (endValue != null && endValue.Type != JTokenType.Null)
                                                 {
-                                                    DateTime endInstance = (DateTime)endValue;
+                                                    DateTime endInstance = ((DateTime)endValue);
                                                     fixedDateInstance.End = endInstance;
                                                 }
                                             }
                                             
                                             JToken recurrenceValue = profilesValue["recurrence"];
-                                            if (recurrenceValue != null)
+                                            if (recurrenceValue != null && recurrenceValue.Type != JTokenType.Null)
                                             {
                                                 Recurrence recurrenceInstance = new Recurrence();
                                                 autoscaleProfileInstance.Recurrence = recurrenceInstance;
                                                 
                                                 JToken frequencyValue = recurrenceValue["frequency"];
-                                                if (frequencyValue != null)
+                                                if (frequencyValue != null && frequencyValue.Type != JTokenType.Null)
                                                 {
-                                                    // how
-                                                    RecurrenceFrequency frequencyInstance = (RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), (string)frequencyValue, false);
+                                                    RecurrenceFrequency frequencyInstance = ((RecurrenceFrequency)Enum.Parse(typeof(RecurrenceFrequency), ((string)frequencyValue), true));
                                                     recurrenceInstance.Frequency = frequencyInstance;
                                                 }
                                                 
                                                 JToken scheduleValue = recurrenceValue["schedule"];
-                                                if (scheduleValue != null)
+                                                if (scheduleValue != null && scheduleValue.Type != JTokenType.Null)
                                                 {
                                                     RecurrentSchedule scheduleInstance = new RecurrentSchedule();
                                                     recurrenceInstance.Schedule = scheduleInstance;
                                                     
                                                     JToken timeZoneValue2 = scheduleValue["timeZone"];
-                                                    if (timeZoneValue2 != null)
+                                                    if (timeZoneValue2 != null && timeZoneValue2.Type != JTokenType.Null)
                                                     {
-                                                        string timeZoneInstance2 = (string)timeZoneValue2;
+                                                        string timeZoneInstance2 = ((string)timeZoneValue2);
                                                         scheduleInstance.TimeZone = timeZoneInstance2;
                                                     }
                                                     
-                                                    JArray daysArray = (JArray)scheduleValue["days"];
-                                                    if (daysArray != null)
+                                                    JToken daysArray = scheduleValue["days"];
+                                                    if (daysArray != null && daysArray.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken daysValue in daysArray)
+                                                        foreach (JToken daysValue in ((JArray)daysArray))
                                                         {
-                                                            scheduleInstance.Days.Add((string)daysValue);
+                                                            scheduleInstance.Days.Add(((string)daysValue));
                                                         }
                                                     }
                                                     
-                                                    JArray hoursArray = (JArray)scheduleValue["hours"];
-                                                    if (hoursArray != null)
+                                                    JToken hoursArray = scheduleValue["hours"];
+                                                    if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken hoursValue in hoursArray)
+                                                        foreach (JToken hoursValue in ((JArray)hoursArray))
                                                         {
-                                                            scheduleInstance.Hours.Add((int)hoursValue);
+                                                            scheduleInstance.Hours.Add(((int)hoursValue));
                                                         }
                                                     }
                                                     
-                                                    JArray minutesArray = (JArray)scheduleValue["minutes"];
-                                                    if (minutesArray != null)
+                                                    JToken minutesArray = scheduleValue["minutes"];
+                                                    if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                                     {
-                                                        foreach (JToken minutesValue in minutesArray)
+                                                        foreach (JToken minutesValue in ((JArray)minutesArray))
                                                         {
-                                                            scheduleInstance.Minutes.Add((int)minutesValue);
+                                                            scheduleInstance.Minutes.Add(((int)minutesValue));
                                                         }
                                                     }
                                                 }
@@ -2741,23 +2908,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                     }
                                     
                                     JToken enabledValue = propertiesValue["enabled"];
-                                    if (enabledValue != null)
+                                    if (enabledValue != null && enabledValue.Type != JTokenType.Null)
                                     {
-                                        bool enabledInstance = (bool)enabledValue;
+                                        bool enabledInstance = ((bool)enabledValue);
                                         propertiesInstance.Enabled = enabledInstance;
                                     }
                                     
                                     JToken nameValue3 = propertiesValue["name"];
-                                    if (nameValue3 != null)
+                                    if (nameValue3 != null && nameValue3.Type != JTokenType.Null)
                                     {
-                                        string nameInstance3 = (string)nameValue3;
+                                        string nameInstance3 = ((string)nameValue3);
                                         propertiesInstance.Name = nameInstance3;
                                     }
                                     
                                     JToken targetResourceUriValue = propertiesValue["targetResourceUri"];
-                                    if (targetResourceUriValue != null)
+                                    if (targetResourceUriValue != null && targetResourceUriValue.Type != JTokenType.Null)
                                     {
-                                        string targetResourceUriInstance = (string)targetResourceUriValue;
+                                        string targetResourceUriInstance = ((string)targetResourceUriValue);
                                         propertiesInstance.TargetResourceUri = targetResourceUriInstance;
                                     }
                                 }
@@ -2795,13 +2962,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
         }
         
         /// <param name='resourceGroupName'>
-        /// The resource name.
+        /// Required. The resource name.
         /// </param>
         /// <param name='autoscaleSettingName'>
-        /// The autoscale setting name.
+        /// Required. The autoscale setting name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the operation.
+        /// Required. Parameters supplied to the operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2840,8 +3007,20 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
             }
             
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/resourcegroups/" + resourceGroupName + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName + "?";
-            url = url + "api-version=2014-04-01";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/autoscalesettings/" + autoscaleSettingName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2863,7 +3042,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 JToken requestDoc = null;
                 
                 JObject autoscaleSettingCreateOrUpdateParametersValue = new JObject();
-                requestDoc = autoscaleSettingCreateOrUpdateParametersValue;
+                requestDoc = new JObject();
+                requestDoc["autoscaleSettingCreateOrUpdateParameters"] = autoscaleSettingCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -3084,7 +3264,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);

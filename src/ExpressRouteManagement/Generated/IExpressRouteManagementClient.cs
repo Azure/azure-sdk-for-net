@@ -41,7 +41,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public partial interface IExpressRouteManagementClient : IDisposable
     {
         /// <summary>
-        /// The URI used as the base for all golden gate requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -49,35 +57,52 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The customer subscription ID forms part of the URI for every call
-        /// that you make to the Express Route Gateway Manager.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get; 
         }
         
-        IBgpPeeringOperations BgpPeering
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
         {
             get; 
         }
         
-        ICrossConnectionOperations CrossConnection
+        ICrossConnectionOperations CrossConnections
         {
             get; 
         }
         
-        IDedicatedCircuitLinkOperations DedicatedCircuitLink
+        IDedicatedCircuitLinkOperations DedicatedCircuitLinks
         {
             get; 
         }
         
-        IDedicatedCircuitOperations DedicatedCircuit
+        IDedicatedCircuitOperations DedicatedCircuits
         {
             get; 
         }
         
-        IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProvider
+        IDedicatedCircuitServiceProviderOperations DedicatedCircuitServiceProviders
         {
             get; 
         }

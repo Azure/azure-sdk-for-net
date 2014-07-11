@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSet()
         {
-            this._metricValues = new List<MetricValue>();
+            this.MetricValues = new List<MetricValue>();
         }
     }
 }

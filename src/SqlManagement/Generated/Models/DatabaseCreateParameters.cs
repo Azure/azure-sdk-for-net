@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Database operation.
+    /// Represents the parameters required to create a new database on a Azure
+    /// SQL Database Server.
     /// </summary>
     public partial class DatabaseCreateParameters
     {
@@ -43,7 +44,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Required. Gets or sets the edition for the new database.
+        /// Optional. Gets or sets the edition for the new database.  The
+        /// DatabaseEditions enumeration contains the valid values for this
+        /// property.
         /// </summary>
         public string Edition
         {
@@ -51,13 +54,27 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._edition = value; }
         }
         
-        private int _maximumDatabaseSizeInGB;
+        private long? _maximumDatabaseSizeInBytes;
         
         /// <summary>
-        /// Required. Gets or sets the maximum size of this database, in
-        /// Gigabytes.
+        /// Optional. Gets or sets the maximum size of this database expressed
+        /// in bytes.  If this is used in conjunction with
+        /// MaximumDatabaseSizeInGB they must agree.
         /// </summary>
-        public int MaximumDatabaseSizeInGB
+        public long? MaximumDatabaseSizeInBytes
+        {
+            get { return this._maximumDatabaseSizeInBytes; }
+            set { this._maximumDatabaseSizeInBytes = value; }
+        }
+        
+        private int? _maximumDatabaseSizeInGB;
+        
+        /// <summary>
+        /// Optional. Gets or sets the maximum size of this database expressed
+        /// in gigabytes.  If this is used in conjunction with
+        /// MaximumDatabaseSizeInBytes they must agree.
+        /// </summary>
+        public int? MaximumDatabaseSizeInGB
         {
             get { return this._maximumDatabaseSizeInGB; }
             set { this._maximumDatabaseSizeInGB = value; }
@@ -77,7 +94,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveId;
         
         /// <summary>
-        /// Optional. Gets or sets the id of this service objective.
+        /// Optional. Gets or sets the service objective ID to be applied to
+        /// the database.
         /// </summary>
         public string ServiceObjectiveId
         {
@@ -90,6 +108,20 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseCreateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseCreateParameters class
+        /// with required arguments.
+        /// </summary>
+        public DatabaseCreateParameters(string name)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Name = name;
         }
     }
 }

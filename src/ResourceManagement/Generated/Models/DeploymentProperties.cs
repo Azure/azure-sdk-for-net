@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 
@@ -41,6 +42,17 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._correlationId = value; }
         }
         
+        private IList<Dependency> _dependencies;
+        
+        /// <summary>
+        /// Optional. Gets the list of deployment dependencies.
+        /// </summary>
+        public IList<Dependency> Dependencies
+        {
+            get { return this._dependencies; }
+            set { this._dependencies = value; }
+        }
+        
         private string _outputs;
         
         /// <summary>
@@ -51,6 +63,18 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             get { return this._outputs; }
             set { this._outputs = value; }
+        }
+        
+        private IList<Provider> _providers;
+        
+        /// <summary>
+        /// Optional. Gets the list of resource providers needed for the
+        /// deployment.
+        /// </summary>
+        public IList<Provider> Providers
+        {
+            get { return this._providers; }
+            set { this._providers = value; }
         }
         
         private string _provisioningState;
@@ -80,6 +104,8 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
+            this.Dependencies = new List<Dependency>();
+            this.Providers = new List<Provider>();
         }
     }
 }

@@ -141,7 +141,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this._metricAvailabilities = new List<MetricAvailability>();
+            this.MetricAvailabilities = new List<MetricAvailability>();
         }
     }
 }

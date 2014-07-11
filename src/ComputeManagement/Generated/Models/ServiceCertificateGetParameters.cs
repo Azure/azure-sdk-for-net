@@ -69,5 +69,29 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ServiceCertificateGetParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServiceCertificateGetParameters
+        /// class with required arguments.
+        /// </summary>
+        public ServiceCertificateGetParameters(string serviceName, string thumbprintAlgorithm, string thumbprint)
+            : this()
+        {
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (thumbprintAlgorithm == null)
+            {
+                throw new ArgumentNullException("thumbprintAlgorithm");
+            }
+            if (thumbprint == null)
+            {
+                throw new ArgumentNullException("thumbprint");
+            }
+            this.ServiceName = serviceName;
+            this.ThumbprintAlgorithm = thumbprintAlgorithm;
+            this.Thumbprint = thumbprint;
+        }
     }
 }

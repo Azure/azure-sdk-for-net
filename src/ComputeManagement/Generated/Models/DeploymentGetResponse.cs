@@ -133,14 +133,27 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._lastModifiedTime = value; }
         }
         
-        private bool _locked;
+        private IList<LoadBalancer> _loadBalancers;
+        
+        /// <summary>
+        /// Optional. Optional. A list of internal load balancers that each
+        /// provide load balancing on a private VIP. It's created when a name
+        /// is assigned in the list here.
+        /// </summary>
+        public IList<LoadBalancer> LoadBalancers
+        {
+            get { return this._loadBalancers; }
+            set { this._loadBalancers = value; }
+        }
+        
+        private bool? _locked;
         
         /// <summary>
         /// Optional. Indicates whether the deployment is locked for new write
         /// operations because an existing operation is updating the
         /// deployment.
         /// </summary>
-        public bool Locked
+        public bool? Locked
         {
             get { return this._locked; }
             set { this._locked = value; }
@@ -183,8 +196,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private string _reservedIPName;
         
         /// <summary>
-        /// Optional. Preview Only. The name of the Reserved IP that the
-        /// deployment belongs to.
+        /// Optional. The name of the Reserved IP that the deployment belongs
+        /// to.
         /// </summary>
         public string ReservedIPName
         {
@@ -214,13 +227,13 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._roles = value; }
         }
         
-        private bool _rollbackAllowed;
+        private bool? _rollbackAllowed;
         
         /// <summary>
         /// Optional. Indicates whether the Rollback Update Or Upgrade
         /// operation is allowed at this time.
         /// </summary>
-        public bool RollbackAllowed
+        public bool? RollbackAllowed
         {
             get { return this._rollbackAllowed; }
             set { this._rollbackAllowed = value; }
@@ -316,10 +329,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentGetResponse()
         {
-            this._extendedProperties = new Dictionary<string, string>();
-            this._roleInstances = new List<RoleInstance>();
-            this._roles = new List<Role>();
-            this._virtualIPAddresses = new List<VirtualIPAddress>();
+            this.ExtendedProperties = new Dictionary<string, string>();
+            this.LoadBalancers = new List<LoadBalancer>();
+            this.RoleInstances = new List<RoleInstance>();
+            this.Roles = new List<Role>();
+            this.VirtualIPAddresses = new List<VirtualIPAddress>();
         }
     }
 }

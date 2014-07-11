@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common.Tracing.Etw</id>
@@ -27,7 +27,6 @@ The ETW tracing provider requires .NET Framework 4.5 or newer.</description>
   </metadata>
   <files>
     <file src="Common.Tracing.Etw\**\*.cs" target="src" />
-
     <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.dll" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.pdb" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.Tracing.Etw.xml" target="lib\net45" />

@@ -71,5 +71,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         public WebSiteDeleteParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the WebSiteDeleteParameters class
+        /// with required arguments.
+        /// </summary>
+        public WebSiteDeleteParameters(bool deleteEmptyServerFarm, bool deleteMetrics, bool deleteAllSlots)
+            : this()
+        {
+            this.DeleteEmptyServerFarm = deleteEmptyServerFarm;
+            this.DeleteMetrics = deleteMetrics;
+            this.DeleteAllSlots = deleteAllSlots;
+        }
     }
 }

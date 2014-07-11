@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusRegionsResponse()
         {
-            this._regions = new List<ServiceBusLocation>();
+            this.Regions = new List<ServiceBusLocation>();
         }
         
         /// <summary>

@@ -54,6 +54,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._endpointAcl = value; }
         }
         
+        private int? _idleTimeoutInMinutes;
+        
+        /// <summary>
+        /// Optional. The idle timeout in minutes for this endpoint.
+        /// </summary>
+        public int? IdleTimeoutInMinutes
+        {
+            get { return this._idleTimeoutInMinutes; }
+            set { this._idleTimeoutInMinutes = value; }
+        }
+        
         private string _loadBalancedEndpointSetName;
         
         /// <summary>
@@ -65,6 +76,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         {
             get { return this._loadBalancedEndpointSetName; }
             set { this._loadBalancedEndpointSetName = value; }
+        }
+        
+        private string _loadBalancerName;
+        
+        /// <summary>
+        /// Optional. Optional. Specify the name of an internal load balancer
+        /// if this endpoint shall not be exposed on the default load balancer.
+        /// </summary>
+        public string LoadBalancerName
+        {
+            get { return this._loadBalancerName; }
+            set { this._loadBalancerName = value; }
         }
         
         private LoadBalancerProbe _loadBalancerProbe;

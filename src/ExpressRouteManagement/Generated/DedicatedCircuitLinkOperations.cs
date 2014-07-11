@@ -74,8 +74,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
@@ -102,8 +102,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -114,6 +114,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -148,7 +149,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -165,10 +166,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -218,8 +219,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, string vnetName, CancellationToken cancellationToken)
         {
@@ -246,8 +247,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -258,6 +259,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -292,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -309,10 +311,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement gatewayOperationAsyncResponseElement = responseDoc.Element(XName.Get("GatewayOperationAsyncResponse", "http://schemas.microsoft.com/windowsazure"));
-                    if (gatewayOperationAsyncResponseElement != null && gatewayOperationAsyncResponseElement.IsEmpty == false)
+                    if (gatewayOperationAsyncResponseElement != null)
                     {
                         XElement idElement = gatewayOperationAsyncResponseElement.Element(XName.Get("ID", "http://schemas.microsoft.com/windowsazure"));
-                        if (idElement != null && idElement.IsEmpty == false)
+                        if (idElement != null)
                         {
                             string idInstance = idElement.Value;
                             result.OperationId = idInstance;
@@ -389,8 +391,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets/" + vnetName.Trim() + "?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -401,6 +403,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -435,7 +438,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -452,20 +455,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinkElement = responseDoc.Element(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinkElement != null && dedicatedCircuitLinkElement.IsEmpty == false)
+                    if (dedicatedCircuitLinkElement != null)
                     {
                         AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();
                         result.DedicatedCircuitLink = dedicatedCircuitLinkInstance;
                         
                         XElement stateElement = dedicatedCircuitLinkElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null && stateElement.IsEmpty == false)
+                        if (stateElement != null)
                         {
                             DedicatedCircuitLinkState stateInstance = ((DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true));
                             dedicatedCircuitLinkInstance.State = stateInstance;
                         }
                         
                         XElement vnetNameElement = dedicatedCircuitLinkElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                        if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
+                        if (vnetNameElement != null)
                         {
                             string vnetNameInstance = vnetNameElement.Value;
                             dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
@@ -531,8 +534,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + (serviceKey != null ? serviceKey.Trim() : "") + "/vnets?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/vnets?api-version=1.0";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -543,6 +546,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -577,7 +581,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -594,7 +598,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement dedicatedCircuitLinksSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuitLinks", "http://schemas.microsoft.com/windowsazure"));
-                    if (dedicatedCircuitLinksSequenceElement != null && dedicatedCircuitLinksSequenceElement.IsEmpty == false)
+                    if (dedicatedCircuitLinksSequenceElement != null)
                     {
                         foreach (XElement dedicatedCircuitLinksElement in dedicatedCircuitLinksSequenceElement.Elements(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -602,14 +606,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             result.DedicatedCircuitLinks.Add(dedicatedCircuitLinkInstance);
                             
                             XElement stateElement = dedicatedCircuitLinksElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                            if (stateElement != null && stateElement.IsEmpty == false)
+                            if (stateElement != null)
                             {
                                 DedicatedCircuitLinkState stateInstance = ((DedicatedCircuitLinkState)Enum.Parse(typeof(DedicatedCircuitLinkState), stateElement.Value, true));
                                 dedicatedCircuitLinkInstance.State = stateInstance;
                             }
                             
                             XElement vnetNameElement = dedicatedCircuitLinksElement.Element(XName.Get("VnetName", "http://schemas.microsoft.com/windowsazure"));
-                            if (vnetNameElement != null && vnetNameElement.IsEmpty == false)
+                            if (vnetNameElement != null)
                             {
                                 string vnetNameInstance = vnetNameElement.Value;
                                 dedicatedCircuitLinkInstance.VnetName = vnetNameInstance;
@@ -683,7 +687,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLink.BeginNewAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLinks.BeginNewAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -702,7 +706,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
-                DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLink.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLinks.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)
                 {
                     Tracing.Exit(invocationId, result);
@@ -764,7 +768,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLink.BeginRemoveAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
+                ExpressRouteOperationResponse originalResponse = await client.DedicatedCircuitLinks.BeginRemoveAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 ExpressRouteOperationStatusResponse result = await client.GetOperationStatusAsync(originalResponse.OperationId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;

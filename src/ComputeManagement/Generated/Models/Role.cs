@@ -89,6 +89,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._label = value; }
         }
         
+        private Uri _mediaLocation;
+        
+        /// <summary>
+        /// Optional. Storage location where the VM Image VHDs should be
+        /// copied, for published VM Images.
+        /// </summary>
+        public Uri MediaLocation
+        {
+            get { return this._mediaLocation; }
+            set { this._mediaLocation = value; }
+        }
+        
         private string _oSVersion;
         
         /// <summary>
@@ -195,9 +207,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public Role()
         {
-            this._configurationSets = new List<ConfigurationSet>();
-            this._dataVirtualHardDisks = new List<DataVirtualHardDisk>();
-            this._resourceExtensionReferences = new List<ResourceExtensionReference>();
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
         }
     }
 }

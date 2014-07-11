@@ -124,8 +124,8 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/CloudServices/" + parameters.Name.Trim() + "/";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/" + parameters.Name.Trim() + "/";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -136,6 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -197,7 +198,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -287,6 +288,10 @@ namespace Microsoft.WindowsAzure.Management.Store
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
                 while ((result.Status != OperationStatus.InProgress) == false)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
@@ -294,6 +299,10 @@ namespace Microsoft.WindowsAzure.Management.Store
                     cancellationToken.ThrowIfCancellationRequested();
                     result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                     delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
                 }
                 
                 if (shouldTrace)
@@ -361,8 +370,8 @@ namespace Microsoft.WindowsAzure.Management.Store
             }
             
             // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/CloudServices/";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/" + this.Client.Credentials.SubscriptionId.Trim() + "/CloudServices/";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -373,6 +382,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -407,7 +417,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -424,7 +434,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
                     XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
-                    if (cloudServicesSequenceElement != null && cloudServicesSequenceElement.IsEmpty == false)
+                    if (cloudServicesSequenceElement != null)
                     {
                         foreach (XElement cloudServicesElement in cloudServicesSequenceElement.Elements(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure")))
                         {
@@ -432,35 +442,35 @@ namespace Microsoft.WindowsAzure.Management.Store
                             result.CloudServices.Add(cloudServiceInstance);
                             
                             XElement nameElement = cloudServicesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            if (nameElement != null && nameElement.IsEmpty == false)
+                            if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
                                 cloudServiceInstance.Name = nameInstance;
                             }
                             
                             XElement labelElement = cloudServicesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                            if (labelElement != null && labelElement.IsEmpty == false)
+                            if (labelElement != null)
                             {
                                 string labelInstance = TypeConversion.FromBase64String(labelElement.Value);
                                 cloudServiceInstance.Label = labelInstance;
                             }
                             
                             XElement descriptionElement = cloudServicesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null && descriptionElement.IsEmpty == false)
+                            if (descriptionElement != null)
                             {
                                 string descriptionInstance = descriptionElement.Value;
                                 cloudServiceInstance.Description = descriptionInstance;
                             }
                             
                             XElement geoRegionElement = cloudServicesElement.Element(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoRegionElement != null && geoRegionElement.IsEmpty == false)
+                            if (geoRegionElement != null)
                             {
                                 string geoRegionInstance = geoRegionElement.Value;
                                 cloudServiceInstance.GeoRegion = geoRegionInstance;
                             }
                             
                             XElement resourcesSequenceElement = cloudServicesElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
-                            if (resourcesSequenceElement != null && resourcesSequenceElement.IsEmpty == false)
+                            if (resourcesSequenceElement != null)
                             {
                                 foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
                                 {
@@ -468,56 +478,56 @@ namespace Microsoft.WindowsAzure.Management.Store
                                     cloudServiceInstance.Resources.Add(resourceInstance);
                                     
                                     XElement resourceProviderNamespaceElement = resourcesElement.Element(XName.Get("ResourceProviderNamespace", "http://schemas.microsoft.com/windowsazure"));
-                                    if (resourceProviderNamespaceElement != null && resourceProviderNamespaceElement.IsEmpty == false)
+                                    if (resourceProviderNamespaceElement != null)
                                     {
                                         string resourceProviderNamespaceInstance = resourceProviderNamespaceElement.Value;
                                         resourceInstance.Namespace = resourceProviderNamespaceInstance;
                                     }
                                     
                                     XElement typeElement = resourcesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    if (typeElement != null && typeElement.IsEmpty == false)
+                                    if (typeElement != null)
                                     {
                                         string typeInstance = typeElement.Value;
                                         resourceInstance.Type = typeInstance;
                                     }
                                     
                                     XElement nameElement2 = resourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    if (nameElement2 != null && nameElement2.IsEmpty == false)
+                                    if (nameElement2 != null)
                                     {
                                         string nameInstance2 = nameElement2.Value;
                                         resourceInstance.Name = nameInstance2;
                                     }
                                     
                                     XElement planElement = resourcesElement.Element(XName.Get("Plan", "http://schemas.microsoft.com/windowsazure"));
-                                    if (planElement != null && planElement.IsEmpty == false)
+                                    if (planElement != null)
                                     {
                                         string planInstance = planElement.Value;
                                         resourceInstance.Plan = planInstance;
                                     }
                                     
                                     XElement schemaVersionElement = resourcesElement.Element(XName.Get("SchemaVersion", "http://schemas.microsoft.com/windowsazure"));
-                                    if (schemaVersionElement != null && schemaVersionElement.IsEmpty == false)
+                                    if (schemaVersionElement != null)
                                     {
                                         string schemaVersionInstance = schemaVersionElement.Value;
                                         resourceInstance.SchemaVersion = schemaVersionInstance;
                                     }
                                     
                                     XElement eTagElement = resourcesElement.Element(XName.Get("ETag", "http://schemas.microsoft.com/windowsazure"));
-                                    if (eTagElement != null && eTagElement.IsEmpty == false)
+                                    if (eTagElement != null)
                                     {
                                         string eTagInstance = eTagElement.Value;
                                         resourceInstance.ETag = eTagInstance;
                                     }
                                     
                                     XElement stateElement = resourcesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                    if (stateElement != null && stateElement.IsEmpty == false)
+                                    if (stateElement != null)
                                     {
                                         string stateInstance = stateElement.Value;
                                         resourceInstance.State = stateInstance;
                                     }
                                     
                                     XElement usageMetersSequenceElement = resourcesElement.Element(XName.Get("UsageMeters", "http://schemas.microsoft.com/windowsazure"));
-                                    if (usageMetersSequenceElement != null && usageMetersSequenceElement.IsEmpty == false)
+                                    if (usageMetersSequenceElement != null)
                                     {
                                         foreach (XElement usageMetersElement in usageMetersSequenceElement.Elements(XName.Get("UsageMeter", "http://schemas.microsoft.com/windowsazure")))
                                         {
@@ -525,28 +535,28 @@ namespace Microsoft.WindowsAzure.Management.Store
                                             resourceInstance.UsageLimits.Add(usageMeterInstance);
                                             
                                             XElement nameElement3 = usageMetersElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                            if (nameElement3 != null && nameElement3.IsEmpty == false)
+                                            if (nameElement3 != null)
                                             {
                                                 string nameInstance3 = nameElement3.Value;
                                                 usageMeterInstance.Name = nameInstance3;
                                             }
                                             
                                             XElement unitElement = usageMetersElement.Element(XName.Get("Unit", "http://schemas.microsoft.com/windowsazure"));
-                                            if (unitElement != null && unitElement.IsEmpty == false)
+                                            if (unitElement != null)
                                             {
                                                 string unitInstance = unitElement.Value;
                                                 usageMeterInstance.Unit = unitInstance;
                                             }
                                             
                                             XElement includedElement = usageMetersElement.Element(XName.Get("Included", "http://schemas.microsoft.com/windowsazure"));
-                                            if (includedElement != null && includedElement.IsEmpty == false)
+                                            if (includedElement != null)
                                             {
                                                 long includedInstance = long.Parse(includedElement.Value, CultureInfo.InvariantCulture);
                                                 usageMeterInstance.AmountIncluded = includedInstance;
                                             }
                                             
                                             XElement usedElement = usageMetersElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
-                                            if (usedElement != null && usedElement.IsEmpty == false)
+                                            if (usedElement != null)
                                             {
                                                 long usedInstance = long.Parse(usedElement.Value, CultureInfo.InvariantCulture);
                                                 usageMeterInstance.AmountUsed = usedInstance;
@@ -555,7 +565,7 @@ namespace Microsoft.WindowsAzure.Management.Store
                                     }
                                     
                                     XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
-                                    if (outputItemsSequenceElement != null && outputItemsSequenceElement.IsEmpty == false)
+                                    if (outputItemsSequenceElement != null)
                                     {
                                         foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
                                         {
@@ -566,20 +576,20 @@ namespace Microsoft.WindowsAzure.Management.Store
                                     }
                                     
                                     XElement operationStatusElement = resourcesElement.Element(XName.Get("OperationStatus", "http://schemas.microsoft.com/windowsazure"));
-                                    if (operationStatusElement != null && operationStatusElement.IsEmpty == false)
+                                    if (operationStatusElement != null)
                                     {
                                         CloudServiceListResponse.CloudService.AddOnResource.OperationStatus operationStatusInstance = new CloudServiceListResponse.CloudService.AddOnResource.OperationStatus();
                                         resourceInstance.Status = operationStatusInstance;
                                         
                                         XElement typeElement2 = operationStatusElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                        if (typeElement2 != null && typeElement2.IsEmpty == false)
+                                        if (typeElement2 != null)
                                         {
                                             string typeInstance2 = typeElement2.Value;
                                             operationStatusInstance.Type = typeInstance2;
                                         }
                                         
                                         XElement resultElement = operationStatusElement.Element(XName.Get("Result", "http://schemas.microsoft.com/windowsazure"));
-                                        if (resultElement != null && resultElement.IsEmpty == false)
+                                        if (resultElement != null)
                                         {
                                             string resultInstance = resultElement.Value;
                                             operationStatusInstance.Result = resultInstance;

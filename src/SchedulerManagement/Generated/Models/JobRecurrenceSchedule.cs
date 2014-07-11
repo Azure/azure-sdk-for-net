@@ -104,12 +104,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobRecurrenceSchedule()
         {
-            this._days = new List<JobScheduleDay>();
-            this._hours = new List<int>();
-            this._minutes = new List<int>();
-            this._monthDays = new List<int>();
-            this._monthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
-            this._months = new List<int>();
         }
     }
 }

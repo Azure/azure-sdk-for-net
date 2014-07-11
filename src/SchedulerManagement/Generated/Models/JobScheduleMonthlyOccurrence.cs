@@ -61,5 +61,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobScheduleMonthlyOccurrence()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobScheduleMonthlyOccurrence
+        /// class with required arguments.
+        /// </summary>
+        public JobScheduleMonthlyOccurrence(JobScheduleDay day)
+            : this()
+        {
+            this.Day = day;
+        }
     }
 }

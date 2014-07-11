@@ -51,8 +51,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginNew(this ICrossConnectionOperations operations, string serviceKey)
         {
@@ -75,8 +75,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Service key of the dedicated circuit.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginNewAsync(this ICrossConnectionOperations operations, string serviceKey)
         {
@@ -100,8 +100,8 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static ExpressRouteOperationResponse BeginUpdate(this ICrossConnectionOperations operations, string serviceKey, CrossConnectionUpdateParameters parameters)
         {
@@ -129,8 +129,8 @@ namespace Microsoft.WindowsAzure
         /// operation.
         /// </param>
         /// <returns>
-        /// A standard express route gateway response including an HTTP status
-        /// code and request ID.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
         public static Task<ExpressRouteOperationResponse> BeginUpdateAsync(this ICrossConnectionOperations operations, string serviceKey, CrossConnectionUpdateParameters parameters)
         {

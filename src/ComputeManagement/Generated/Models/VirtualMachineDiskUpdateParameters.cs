@@ -98,5 +98,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public VirtualMachineDiskUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// VirtualMachineDiskUpdateParameters class with required arguments.
+        /// </summary>
+        public VirtualMachineDiskUpdateParameters(string label, string name)
+            : this()
+        {
+            if (label == null)
+            {
+                throw new ArgumentNullException("label");
+            }
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            this.Label = label;
+            this.Name = name;
+        }
     }
 }

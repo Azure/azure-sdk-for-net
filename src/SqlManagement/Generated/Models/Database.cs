@@ -21,18 +21,31 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.Sql.Models;
 
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// SQL Server database.
+    /// Represents a database in the Azure SQL Database service.
     /// </summary>
-    public partial class Database
+    public partial class Database : SqlModelCommon
     {
+        private string _assignedServiceObjectiveId;
+        
+        /// <summary>
+        /// Optional. Gets the ID of the assigned service objective for this
+        /// database.  This is the ID of the service objective being applied.
+        /// </summary>
+        public string AssignedServiceObjectiveId
+        {
+            get { return this._assignedServiceObjectiveId; }
+            set { this._assignedServiceObjectiveId = value; }
+        }
+        
         private string _collationName;
         
         /// <summary>
-        /// Optional. Gets or sets the database resource's collation name.
+        /// Optional. Gets the name of the collation for this database.
         /// </summary>
         public string CollationName
         {
@@ -43,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private DateTime _creationDate;
         
         /// <summary>
-        /// Optional. Gets or sets the date this database was created.
+        /// Optional. Gets the date this database was created.
         /// </summary>
         public DateTime CreationDate
         {
@@ -54,7 +67,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _edition;
         
         /// <summary>
-        /// Optional. Gets or sets the database resource's edition.
+        /// Optional. Gets the edition of the Azure SQL Database.  The
+        /// DatabaseEditions enumeration contains all the valid editions.
         /// </summary>
         public string Edition
         {
@@ -65,7 +79,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private int _id;
         
         /// <summary>
-        /// Optional. Gets or sets the id of the database.
+        /// Optional. Gets the ID of the database.  This ID is unique within
+        /// the server that contains the database.
         /// </summary>
         public int Id
         {
@@ -76,8 +91,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isFederationRoot;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether the database is a
-        /// federation root.
+        /// Optional. Gets whether or not the database is a federation root.
         /// </summary>
         public bool IsFederationRoot
         {
@@ -88,8 +102,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private bool _isSystemObject;
         
         /// <summary>
-        /// Optional. Gets or sets a value indicating whether the database is a
-        /// system object.
+        /// Optional. Gets whether or not the database is a system object.
         /// </summary>
         public bool IsSystemObject
         {
@@ -97,11 +110,22 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._isSystemObject = value; }
         }
         
+        private long _maximumDatabaseSizeInBytes;
+        
+        /// <summary>
+        /// Optional. Gets the maximum size of this database expressed in bytes.
+        /// </summary>
+        public long MaximumDatabaseSizeInBytes
+        {
+            get { return this._maximumDatabaseSizeInBytes; }
+            set { this._maximumDatabaseSizeInBytes = value; }
+        }
+        
         private int _maximumDatabaseSizeInGB;
         
         /// <summary>
-        /// Optional. Gets or sets the maximum size of this database, in
-        /// Gigabytes.
+        /// Optional. Gets the maximum size of this database expressed in
+        /// gigabytes.
         /// </summary>
         public int MaximumDatabaseSizeInGB
         {
@@ -109,21 +133,23 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._maximumDatabaseSizeInGB = value; }
         }
         
-        private string _name;
+        private System.DateTime? _recoveryPeriodStartDate;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the database.
+        /// Optional. Gets the starting date of the restorable period for this
+        /// database.
         /// </summary>
-        public string Name
+        public System.DateTime? RecoveryPeriodStartDate
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._recoveryPeriodStartDate; }
+            set { this._recoveryPeriodStartDate = value; }
         }
         
         private string _serviceObjectiveAssignmentErrorCode;
         
         /// <summary>
-        /// Optional. Gets or sets the error code for this service objective.
+        /// Optional. Gets the error code raised when assigning a new service
+        /// objective if there was one.
         /// </summary>
         public string ServiceObjectiveAssignmentErrorCode
         {
@@ -134,7 +160,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentErrorDescription;
         
         /// <summary>
-        /// Optional. Gets or sets the error description, if any.
+        /// Optional. Gets the description of the error if an error occured
+        /// while applying a new service objective.
         /// </summary>
         public string ServiceObjectiveAssignmentErrorDescription
         {
@@ -145,7 +172,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentState;
         
         /// <summary>
-        /// Optional. Gets or sets the state of the current assignment.
+        /// Optional. Gets the state of the current service objective
+        /// assignment in numerical format.
         /// </summary>
         public string ServiceObjectiveAssignmentState
         {
@@ -156,7 +184,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentStateDescription;
         
         /// <summary>
-        /// Optional. Gets or sets the state description.
+        /// Optional. Gets the description of the state of the current service
+        /// objective assignment.
         /// </summary>
         public string ServiceObjectiveAssignmentStateDescription
         {
@@ -167,7 +196,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveAssignmentSuccessDate;
         
         /// <summary>
-        /// Optional. Gets or sets the date the service's assignment succeeded.
+        /// Optional. Gets the date the service objective assignment succeeded.
         /// </summary>
         public string ServiceObjectiveAssignmentSuccessDate
         {
@@ -178,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _serviceObjectiveId;
         
         /// <summary>
-        /// Optional. Gets or sets the id of this service objective.
+        /// Optional. Gets the ID of the current service objective.
         /// </summary>
         public string ServiceObjectiveId
         {
@@ -189,34 +218,12 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private string _sizeMB;
         
         /// <summary>
-        /// Optional. Gets or sets the size of this database in megabytes (MB).
+        /// Optional. Gets the current usage of the database in megabytes.
         /// </summary>
         public string SizeMB
         {
             get { return this._sizeMB; }
             set { this._sizeMB = value; }
-        }
-        
-        private string _state;
-        
-        /// <summary>
-        /// Optional. Gets or sets the state of the database.
-        /// </summary>
-        public string State
-        {
-            get { return this._state; }
-            set { this._state = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Gets or sets the type of resource.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
         }
         
         /// <summary>

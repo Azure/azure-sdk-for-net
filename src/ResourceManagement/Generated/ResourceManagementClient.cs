@@ -36,11 +36,20 @@ namespace Microsoft.Azure.Management.Resources
 {
     public partial class ResourceManagementClient : ServiceClient<ResourceManagementClient>, IResourceManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Gets or sets the URI used as the base for all cloud service
-        /// management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -50,9 +59,9 @@ namespace Microsoft.Azure.Management.Resources
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Windows  Azure subscription. The subscription ID forms part of the
-        /// URI for  every call that you make to the Service Management API.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -61,6 +70,9 @@ namespace Microsoft.Azure.Management.Resources
         
         private int _longRunningOperationInitialTimeout;
         
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
         public int LongRunningOperationInitialTimeout
         {
             get { return this._longRunningOperationInitialTimeout; }
@@ -69,6 +81,9 @@ namespace Microsoft.Azure.Management.Resources
         
         private int _longRunningOperationRetryTimeout;
         
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
         public int LongRunningOperationRetryTimeout
         {
             get { return this._longRunningOperationRetryTimeout; }
@@ -125,6 +140,16 @@ namespace Microsoft.Azure.Management.Resources
             get { return this._resources; }
         }
         
+        private ITagOperations _tags;
+        
+        /// <summary>
+        /// Operations for managing tags.
+        /// </summary>
+        public virtual ITagOperations Tags
+        {
+            get { return this._tags; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
@@ -136,6 +161,8 @@ namespace Microsoft.Azure.Management.Resources
             this._providers = new ProviderOperations(this);
             this._resourceGroups = new ResourceGroupOperations(this);
             this._resources = new ResourceOperations(this);
+            this._tags = new TagOperations(this);
+            this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -145,14 +172,13 @@ namespace Microsoft.Azure.Management.Resources
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets or sets the URI used as the base for all cloud
-        /// service management requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public ResourceManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -175,10 +201,9 @@ namespace Microsoft.Azure.Management.Resources
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Windows  Azure subscription. The subscription ID forms
-        /// part of the URI for  every call that you make to the Service
-        /// Management API.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public ResourceManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -191,6 +216,108 @@ namespace Microsoft.Azure.Management.Resources
             this._baseUri = new Uri("https://management.azure.com/");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private ResourceManagementClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._deploymentOperations = new DeploymentOperationOperations(this);
+            this._deployments = new DeploymentOperations(this);
+            this._providers = new ProviderOperations(this);
+            this._resourceGroups = new ResourceGroupOperations(this);
+            this._resources = new ResourceOperations(this);
+            this._tags = new TagOperations(this);
+            this._apiVersion = "2014-04-01-preview";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ResourceManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ResourceManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public ResourceManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.azure.com/");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// ResourceManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of ResourceManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<ResourceManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is ResourceManagementClient)
+            {
+                ResourceManagementClient clonedClient = ((ResourceManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -263,7 +390,7 @@ namespace Microsoft.Azure.Management.Resources
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Xml);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -309,42 +436,6 @@ namespace Microsoft.Azure.Management.Resources
                     httpRequest.Dispose();
                 }
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type ResourceValidationMode.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static ResourceValidationMode ParseResourceValidationMode(string value)
-        {
-            if ("nameValidation".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return ResourceValidationMode.NameValidation;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type ResourceValidationMode to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string ResourceValidationModeToString(ResourceValidationMode value)
-        {
-            if (value == ResourceValidationMode.NameValidation)
-            {
-                return "nameValidation";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
     }
 }
