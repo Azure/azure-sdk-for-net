@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Insights
                 return new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode =  HttpStatusCode.OK
+                    StatusCode = HttpStatusCode.OK
                 };
             }
 
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Insights
                     MetricValues = new List<MetricValue>(),
                     Properties = new Dictionary<string, string>()
                 });
-            
+
             // Create response (merge and wrap metrics)
             return new MetricListResponse()
             {
