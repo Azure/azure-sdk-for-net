@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ItemGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wp80' ">
+  <ItemGroup Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wpa81' ">
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp80\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -10,14 +10,17 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
       <HintPath>..\..\packages\Microsoft.Bcl.Async.1.0.168\lib\wp80\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+    <Reference Include="System.Net.Http, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.27-beta\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Extensions">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+    <Reference Include="System.Net.Http.Extensions, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.27-beta\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="System.Net.Http.Primitives">
-      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.22\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+    <Reference Include="System.Net.Http.Primitives, Version=1.5.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Microsoft.Net.Http.2.2.27-beta\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>

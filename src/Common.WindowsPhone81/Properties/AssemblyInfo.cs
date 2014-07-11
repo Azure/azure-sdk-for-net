@@ -20,8 +20,8 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Windows Azure Common Library (Windows Phone)")]
 [assembly: AssemblyDescription("Provides Windows Phone App-specific extensions to the common Windows Azure library.")]
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.2.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
