@@ -99,6 +99,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     throw new ArgumentNullException("parameters.Certificate.StoreLocation");
                 }
             }
+            if (parameters.CompanyName == null)
+            {
+                throw new ArgumentNullException("parameters.CompanyName");
+            }
             if (parameters.ExtensionEndpoints != null)
             {
                 if (parameters.ExtensionEndpoints.InputEndpoints != null)
@@ -143,6 +147,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             if (parameters.ProviderNameSpace == null)
             {
                 throw new ArgumentNullException("parameters.ProviderNameSpace");
+            }
+            if (parameters.SupportedOS == null)
+            {
+                throw new ArgumentNullException("parameters.SupportedOS");
             }
             if (parameters.Type == null)
             {
@@ -267,8 +275,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -294,7 +302,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -317,7 +325,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -433,6 +441,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     disallowMajorVersionUpgradeElement.Value = parameters.DisallowMajorVersionUpgrade.ToString().ToLower();
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
                 }
+                
+                XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                supportedOSElement.Value = parameters.SupportedOS;
+                extensionImageElement.Add(supportedOSElement);
+                
+                XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                companyNameElement.Value = parameters.CompanyName;
+                extensionImageElement.Add(companyNameElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -677,6 +693,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     throw new ArgumentNullException("parameters.Certificate.StoreLocation");
                 }
             }
+            if (parameters.CompanyName == null)
+            {
+                throw new ArgumentNullException("parameters.CompanyName");
+            }
             if (parameters.ExtensionEndpoints != null)
             {
                 if (parameters.ExtensionEndpoints.InputEndpoints != null)
@@ -721,6 +741,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             if (parameters.ProviderNameSpace == null)
             {
                 throw new ArgumentNullException("parameters.ProviderNameSpace");
+            }
+            if (parameters.SupportedOS == null)
+            {
+                throw new ArgumentNullException("parameters.SupportedOS");
             }
             if (parameters.Type == null)
             {
@@ -845,8 +869,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -872,7 +896,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -895,7 +919,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -1011,6 +1035,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     disallowMajorVersionUpgradeElement.Value = parameters.DisallowMajorVersionUpgrade.ToString().ToLower();
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
                 }
+                
+                XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                supportedOSElement.Value = parameters.SupportedOS;
+                extensionImageElement.Add(supportedOSElement);
+                
+                XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                companyNameElement.Value = parameters.CompanyName;
+                extensionImageElement.Add(companyNameElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
