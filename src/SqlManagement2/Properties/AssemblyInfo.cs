@@ -1,4 +1,4 @@
-﻿//
+//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +14,19 @@
 //
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Resources;
+using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Common Library (Windows Phone)")]
-[assembly: AssemblyDescription("Provides Windows Phone App-specific extensions to the common Windows Azure library.")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.2.0.0")]
+[assembly: AssemblyTitle("Microsoft Azure SQL Server Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure SQL.")]
+
+[assembly: AssemblyVersion("0.9.0.0")]
+[assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
-[assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
+[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
+[assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
-[assembly: ComVisible(false)]
-[assembly: Guid("997eadb9-7ffe-42ff-aa2f-d5f90f39b86d")]
