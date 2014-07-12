@@ -21,21 +21,16 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
     /// <summary>
-    /// Parameters supplied to the Update Extension Image operation.
+    /// Known values for the extension supported OStype.
     /// </summary>
-    public partial class ExtensionImageUpdateParameters : ExtensionImageRegisterParameters
+    public static partial class ExtensionImageSupportedOperatingSystemType
     {
-        /// <summary>
-        /// Initializes a new instance of the ExtensionImageUpdateParameters
-        /// class.
-        /// </summary>
-        public ExtensionImageUpdateParameters()
-        {
-        }
+        public const string Windows = "Windows";
+        
+        public const string Linux = "Linux";
     }
 }

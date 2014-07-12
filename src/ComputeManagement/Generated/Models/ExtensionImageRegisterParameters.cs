@@ -62,6 +62,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._certificate = value; }
         }
         
+        private string _companyName;
+        
+        /// <summary>
+        /// Required. String property containing the name of the
+        /// company/organization who publishes the extension.
+        /// </summary>
+        public string CompanyName
+        {
+            get { return this._companyName; }
+            set { this._companyName = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -309,6 +321,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._sampleConfig = value; }
         }
         
+        private string _supportedOS;
+        
+        /// <summary>
+        /// Required. String property indicating the OS which the extension
+        /// supports. Current values are 'Windows' or 'Linux'.
+        /// </summary>
+        public string SupportedOS
+        {
+            get { return this._supportedOS; }
+            set { this._supportedOS = value; }
+        }
+        
         private string _type;
         
         /// <summary>
@@ -338,30 +362,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ExtensionImageRegisterParameters()
         {
             this.LocalResources = new List<ExtensionLocalResourceConfiguration>();
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the ExtensionImageRegisterParameters
-        /// class with required arguments.
-        /// </summary>
-        public ExtensionImageRegisterParameters(string providerNameSpace, string type, string version)
-            : this()
-        {
-            if (providerNameSpace == null)
-            {
-                throw new ArgumentNullException("providerNameSpace");
-            }
-            if (type == null)
-            {
-                throw new ArgumentNullException("type");
-            }
-            if (version == null)
-            {
-                throw new ArgumentNullException("version");
-            }
-            this.ProviderNameSpace = providerNameSpace;
-            this.Type = type;
-            this.Version = version;
         }
     }
 }
