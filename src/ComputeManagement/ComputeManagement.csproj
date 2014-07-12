@@ -76,6 +76,7 @@
     <Compile Include="Generated\Models\ExtensionConfiguration.cs" />
     <Compile Include="Generated\Models\ExtensionEndpointConfiguration.cs" />
     <Compile Include="Generated\Models\ExtensionImageRegisterParameters.cs" />
+    <Compile Include="Generated\Models\ExtensionImageSupportedOperatingSystemType.cs" />
     <Compile Include="Generated\Models\ExtensionImageUpdateParameters.cs" />
     <Compile Include="Generated\Models\ExtensionLocalResourceConfiguration.cs" />
     <Compile Include="Generated\Models\FrontendIPConfiguration.cs" />
