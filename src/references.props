@@ -19,4 +19,5 @@
   <Import Project="references.net45.props" />
   <Import Project="references.windows8.props" />
   <Import Project="references.wp80.props" />
+  <Import Project="references.wpa81.props" />
 </Project>
