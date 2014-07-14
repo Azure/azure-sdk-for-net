@@ -35,7 +35,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="GenerateCode.props" />
     <None Include="Microsoft.Azure.Insights.nuget.proj" />
     <None Include="Microsoft.Azure.Insights.nuspec" />
@@ -57,7 +59,7 @@
       <HintPath>..\..\packages\Microsoft.Data.Services.Client.5.6.0\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Common">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.0\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.0.3\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -74,10 +76,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
-  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
-    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
-    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
