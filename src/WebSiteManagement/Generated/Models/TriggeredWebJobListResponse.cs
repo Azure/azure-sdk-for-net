@@ -49,7 +49,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         public TriggeredWebJobListResponse()
         {
             this.TriggeredWebJobs = new List<TriggeredWebJob>();
-            this.Jobs = new List<WebJob>();
         }
         
         /// <summary>

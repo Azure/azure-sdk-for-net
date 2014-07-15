@@ -1226,28 +1226,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             result.WebSites.Add(siteInstance);
                             
                             XElement adminEnabledElement = sitesElement.Element(XName.Get("AdminEnabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (adminEnabledElement != null)
+                            if (adminEnabledElement != null && string.IsNullOrEmpty(adminEnabledElement.Value) == false)
                             {
                                 bool adminEnabledInstance = bool.Parse(adminEnabledElement.Value);
                                 siteInstance.AdminEnabled = adminEnabledInstance;
                             }
                             
                             XElement availabilityStateElement = sitesElement.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (availabilityStateElement != null)
+                            if (availabilityStateElement != null && string.IsNullOrEmpty(availabilityStateElement.Value) == false)
                             {
                                 WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                                 siteInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
                             XElement computeModeElement = sitesElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                            if (computeModeElement != null)
+                            if (computeModeElement != null && string.IsNullOrEmpty(computeModeElement.Value) == false)
                             {
                                 WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true));
                                 siteInstance.ComputeMode = computeModeInstance;
                             }
                             
                             XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (enabledElement != null)
+                            if (enabledElement != null && string.IsNullOrEmpty(enabledElement.Value) == false)
                             {
                                 bool enabledInstance = bool.Parse(enabledElement.Value);
                                 siteInstance.Enabled = enabledInstance;
@@ -1278,7 +1278,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     }
                                     
                                     XElement sslStateElement = hostNameSslStatesElement.Element(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
-                                    if (sslStateElement != null)
+                                    if (sslStateElement != null && string.IsNullOrEmpty(sslStateElement.Value) == false)
                                     {
                                         WebSiteSslState sslStateInstance = ((WebSiteSslState)Enum.Parse(typeof(WebSiteSslState), sslStateElement.Value, true));
                                         hostNameSslStateInstance.SslState = sslStateInstance;
@@ -1328,7 +1328,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             
                             XElement lastModifiedTimeUtcElement = sitesElement.Element(XName.Get("LastModifiedTimeUtc", "http://schemas.microsoft.com/windowsazure"));
-                            if (lastModifiedTimeUtcElement != null)
+                            if (lastModifiedTimeUtcElement != null && string.IsNullOrEmpty(lastModifiedTimeUtcElement.Value) == false)
                             {
                                 DateTime lastModifiedTimeUtcInstance = DateTime.Parse(lastModifiedTimeUtcElement.Value, CultureInfo.InvariantCulture);
                                 siteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
@@ -1365,7 +1365,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             
                             XElement runtimeAvailabilityStateElement = sitesElement.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                            if (runtimeAvailabilityStateElement != null)
+                            if (runtimeAvailabilityStateElement != null && string.IsNullOrEmpty(runtimeAvailabilityStateElement.Value) == false)
                             {
                                 WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
                                 siteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
@@ -1623,7 +1623,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             
                             XElement siteModeElement = sitesElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                            if (siteModeElement != null)
+                            if (siteModeElement != null && string.IsNullOrEmpty(siteModeElement.Value) == false)
                             {
                                 WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true));
                                 siteInstance.SiteMode = siteModeInstance;
@@ -1677,7 +1677,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             
                             XElement usageStateElement = sitesElement.Element(XName.Get("UsageState", "http://schemas.microsoft.com/windowsazure"));
-                            if (usageStateElement != null)
+                            if (usageStateElement != null && string.IsNullOrEmpty(usageStateElement.Value) == false)
                             {
                                 WebSiteUsageState usageStateInstance = ((WebSiteUsageState)Enum.Parse(typeof(WebSiteUsageState), usageStateElement.Value, true));
                                 siteInstance.UsageState = usageStateInstance;
