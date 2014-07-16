@@ -26,10 +26,10 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// Parameters supplied to the Get Historical Usage Metrics Web Site
-    /// operation.
+    /// Parameters supplied to the Get Historical Usage Metrics Web hosting
+    /// plan operation.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsParameters
+    public partial class WebHostingPlanGetHistoricalUsageMetricsParameters
     {
         private System.DateTime? _endTime;
         
@@ -83,9 +83,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// WebSiteGetHistoricalUsageMetricsParameters class.
+        /// WebHostingPlanGetHistoricalUsageMetricsParameters class.
         /// </summary>
-        public WebSiteGetHistoricalUsageMetricsParameters()
+        public WebHostingPlanGetHistoricalUsageMetricsParameters()
         {
             this.MetricNames = new List<string>();
         }

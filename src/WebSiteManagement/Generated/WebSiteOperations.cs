@@ -2792,6 +2792,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
             }
+            if (parameters.TimeGrain != null)
+            {
+                url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain != null ? parameters.TimeGrain.Trim() : "");
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2861,7 +2865,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric metricResponseInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric();
+                                HistoricalUsageMetric metricResponseInstance = new HistoricalUsageMetric();
                                 result.UsageMetrics.Add(metricResponseInstance);
                                 
                                 XElement codeElement = usageMetricsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
@@ -2874,7 +2878,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement dataElement = usageMetricsElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
                                 if (dataElement != null)
                                 {
-                                    WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData dataInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData();
+                                    HistoricalUsageMetricData dataInstance = new HistoricalUsageMetricData();
                                     metricResponseInstance.Data = dataInstance;
                                     
                                     XElement displayNameElement = dataElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
@@ -2931,7 +2935,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     {
                                         foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
                                         {
-                                            WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample metricSampleInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample();
+                                            HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
                                             dataInstance.Values.Add(metricSampleInstance);
                                             
                                             XElement countElement = valuesElement.Element(XName.Get("Count", "http://schemas.microsoft.com/windowsazure"));

@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.WebSites</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>420c4af1</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>a7072c3e</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
@@ -29,6 +29,7 @@
     <Compile Include="Generated\IServerFarmOperations.cs" />
     <Compile Include="Generated\ISettingsOperations.cs" />
     <Compile Include="Generated\ITriggeredWebJobOperations.cs" />
+    <Compile Include="Generated\IWebHostingPlanOperations.cs" />
     <Compile Include="Generated\IWebSiteExtensionsClient.cs" />
     <Compile Include="Generated\IWebSiteManagementClient.cs" />
     <Compile Include="Generated\IWebSiteOperations.cs" />
@@ -50,7 +51,10 @@
     <Compile Include="Generated\Models\DiagnosticGetResponse.cs" />
     <Compile Include="Generated\Models\DiagnosticUpdateParameters.cs" />
     <Compile Include="Generated\Models\GeoRegionNames.cs" />
+    <Compile Include="Generated\Models\HistoricalUsageMetric.cs" />
+    <Compile Include="Generated\Models\HistoricalUsageMetricData.cs" />
     <Compile Include="Generated\Models\HistoricalUsageMetricNames.cs" />
+    <Compile Include="Generated\Models\HistoricalUsageMetricSample.cs" />
     <Compile Include="Generated\Models\LogEntryType.cs" />
     <Compile Include="Generated\Models\ManagedPipelineMode.cs" />
     <Compile Include="Generated\Models\RampUpRule.cs" />
@@ -67,6 +71,7 @@
     <Compile Include="Generated\Models\SettingsGetResponse.cs" />
     <Compile Include="Generated\Models\SettingsListResponse.cs" />
     <Compile Include="Generated\Models\SettingsUpdateParameters.cs" />
+    <Compile Include="Generated\Models\StatusOptions.cs" />
     <Compile Include="Generated\Models\TriggeredWebJob.cs" />
     <Compile Include="Generated\Models\TriggeredWebJobGetResponse.cs" />
     <Compile Include="Generated\Models\TriggeredWebJobGetRunResponse.cs" />
@@ -75,6 +80,11 @@
     <Compile Include="Generated\Models\TriggeredWebJobRunListResponse.cs" />
     <Compile Include="Generated\Models\TriggeredWebJobSettingsResponse.cs" />
     <Compile Include="Generated\Models\TriggeredWebJobSettingsUpdateParameters.cs" />
+    <Compile Include="Generated\Models\WebHostingPlan.cs" />
+    <Compile Include="Generated\Models\WebHostingPlanGetHistoricalUsageMetricsParameters.cs" />
+    <Compile Include="Generated\Models\WebHostingPlanGetHistoricalUsageMetricsResponse.cs" />
+    <Compile Include="Generated\Models\WebHostingPlanGetResponse.cs" />
+    <Compile Include="Generated\Models\WebHostingPlanListResponse.cs" />
     <Compile Include="Generated\Models\WebJobBase.cs" />
     <Compile Include="Generated\Models\WebJobType.cs" />
     <Compile Include="Generated\Models\WebSite.cs" />
@@ -116,6 +126,7 @@
     <Compile Include="Generated\Models\WebSpacesListWebSitesResponse.cs" />
     <Compile Include="Generated\Models\WebSpaceStatus.cs" />
     <Compile Include="Generated\Models\WebSpaceWorkerSize.cs" />
+    <Compile Include="Generated\Models\WorkerSizeOptions.cs" />
     <Compile Include="Generated\RepositoryOperations.cs" />
     <Compile Include="Generated\RepositoryOperationsExtensions.cs" />
     <Compile Include="Generated\ServerFarmOperations.cs" />
@@ -124,6 +135,8 @@
     <Compile Include="Generated\SettingsOperationsExtensions.cs" />
     <Compile Include="Generated\TriggeredWebJobOperations.cs" />
     <Compile Include="Generated\TriggeredWebJobOperationsExtensions.cs" />
+    <Compile Include="Generated\WebHostingPlanOperations.cs" />
+    <Compile Include="Generated\WebHostingPlanOperationsExtensions.cs" />
     <Compile Include="Generated\WebSiteExtendedErrorCodes.cs" />
     <Compile Include="Generated\WebSiteExtensionsClient.cs" />
     <Compile Include="Generated\WebSiteExtensionsClientExtensions.cs" />
@@ -173,22 +186,22 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets'))" />
   </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5309.32163-prerelease\build\Hydra.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.3.0.5308.25268-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.3.0.5310.26147-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.3.0.5308.25274-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.3.0.5310.26153-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

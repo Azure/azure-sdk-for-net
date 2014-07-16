@@ -28,40 +28,39 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Historical Usage Metrics Web Site operation response.
+    /// The List Web Hosting Plans operation response.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class WebHostingPlanListResponse : OperationResponse, IEnumerable<WebHostingPlan>
     {
-        private IList<HistoricalUsageMetric> _usageMetrics;
+        private IList<WebHostingPlan> _webHostingPlans;
         
         /// <summary>
-        /// Optional. Historical metric snapshots for the web site.
+        /// Optional. The web spaces associated with the specified subscription.
         /// </summary>
-        public IList<HistoricalUsageMetric> UsageMetrics
+        public IList<WebHostingPlan> WebHostingPlans
         {
-            get { return this._usageMetrics; }
-            set { this._usageMetrics = value; }
+            get { return this._webHostingPlans; }
+            set { this._webHostingPlans = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// WebSiteGetHistoricalUsageMetricsResponse class.
+        /// Initializes a new instance of the WebHostingPlanListResponse class.
         /// </summary>
-        public WebSiteGetHistoricalUsageMetricsResponse()
+        public WebHostingPlanListResponse()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
+            this.WebHostingPlans = new List<WebHostingPlan>();
         }
         
         /// <summary>
-        /// Gets the sequence of UsageMetrics.
+        /// Gets the sequence of WebHostingPlans.
         /// </summary>
-        public IEnumerator<HistoricalUsageMetric> GetEnumerator()
+        public IEnumerator<WebHostingPlan> GetEnumerator()
         {
-            return this.UsageMetrics.GetEnumerator();
+            return this.WebHostingPlans.GetEnumerator();
         }
         
         /// <summary>
-        /// Gets the sequence of UsageMetrics.
+        /// Gets the sequence of WebHostingPlans.
         /// </summary>
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
