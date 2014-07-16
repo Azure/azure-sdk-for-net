@@ -39,19 +39,6 @@ namespace Microsoft.Azure.Insights
             return WithHandler(new InsightsClient(), handler);
         }
 
-        protected override void Clone(ServiceClient<InsightsClient> client)
-        {
-            base.Clone(client);
-
-            InsightsClient insightsClient = client as InsightsClient;
-            if (insightsClient != null)
-            {
-                insightsClient._credentials = Credentials;
-                insightsClient._baseUri = BaseUri;
-                insightsClient.Credentials.InitializeServiceClient(insightsClient);
-            }
-        }
-
         public class MetricDefinitionCache : SizeBoundedCache<string, IEnumerable<MetricDefinition>>
         {
         }
