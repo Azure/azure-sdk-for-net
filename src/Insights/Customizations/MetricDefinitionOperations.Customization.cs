@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Insights
     {
         public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
+            // Ensure exactly one '/' at the start
+            resourceUri = '/' + resourceUri.TrimStart('/');
             IEnumerable<MetricDefinition> definitions;
 
             // If no filter string, must request all metric definiitons since we don't know if we have them all

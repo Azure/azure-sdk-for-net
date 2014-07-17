@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Insights
             Dictionary<string, string> otherProperties = new Dictionary<string, string>();
             MetricValue metricValue = new MetricValue()
             {
-                Timestamp = entity.Timestamp.UtcDateTime
+                Timestamp = entity["TIMESTAMP"].DateTime ?? entity.Timestamp.UtcDateTime
             };
 
             foreach (string key in entity.Properties.Keys)
