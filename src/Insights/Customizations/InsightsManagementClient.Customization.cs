@@ -28,18 +28,5 @@ namespace Microsoft.Azure.Management.Insights
         {
             return WithHandler(new InsightsManagementClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<InsightsManagementClient> client)
-        {
-            base.Clone(client);
-
-            InsightsManagementClient insightsManagementClient = client as InsightsManagementClient;
-            if (insightsManagementClient != null)
-            {
-                insightsManagementClient._credentials = Credentials;
-                insightsManagementClient._baseUri = BaseUri;
-                insightsManagementClient.Credentials.InitializeServiceClient(insightsManagementClient);
-            }
-        }
     }
 }

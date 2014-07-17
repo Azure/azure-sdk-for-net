@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _eventTime;
 
         /// <summary>
-        /// The event time.
+        /// Optional. The event time.
         /// </summary>
         public DateTime EventTime
         {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Insights.Models
         private int _failedEventsCount;
 
         /// <summary>
-        /// The total number of failed events.
+        /// Optional. The total number of failed events.
         /// </summary>
         public int FailedEventsCount
         {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Insights.Models
         private int _totalEventsCount;
 
         /// <summary>
-        /// The total number of events.
+        /// Optional. The total number of events.
         /// </summary>
         public int TotalEventsCount
         {
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _endTime;
 
         /// <summary>
-        /// The event summary end time.
+        /// Optional. The event summary end time.
         /// </summary>
         public string EndTime
         {
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _eventPropertyName;
 
         /// <summary>
-        /// The event property name.
+        /// Optional. The event property name.
         /// </summary>
         public string EventPropertyName
         {
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _eventPropertyValue;
 
         /// <summary>
-        /// The event property value.
+        /// Optional. The event property value.
         /// </summary>
         public string EventPropertyValue
         {
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
 
         /// <summary>
-        /// The event summary start time.
+        /// Optional. The event summary start time.
         /// </summary>
         public DateTime StartTime
         {
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<CountSummaryItem> _summaryItems;
 
         /// <summary>
-        /// The event summaries.
+        /// Optional. The event summaries.
         /// </summary>
         public IList<CountSummaryItem> SummaryItems
         {
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
 
         /// <summary>
-        /// The event summary time grain.
+        /// Optional. The event summary time grain.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventCountSummaryResponse()
         {
-            this._summaryItems = new List<CountSummaryItem>();
+            this.SummaryItems = new List<CountSummaryItem>();
         }
     }
 
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Insights.Models
         private SenderAuthorization _authorization;
 
         /// <summary>
-        /// Gets or sets the authorization.
+        /// Optional. Gets or sets the authorization.
         /// </summary>
         public SenderAuthorization Authorization
         {
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _claims;
 
         /// <summary>
-        /// Gets or sets the claims
+        /// Optional. Gets or sets the claims
         /// </summary>
         public Dictionary<string, string> Claims
         {
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _correlationId;
 
         /// <summary>
-        /// Gets or sets the correlation Id
+        /// Optional. Gets or sets the correlation Id
         /// </summary>
         public string CorrelationId
         {
@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _description;
 
         /// <summary>
-        /// Gets or sets the description
+        /// Optional. Gets or sets the description
         /// </summary>
         public string Description
         {
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Insights.Models
         private EventChannels _eventChannels;
 
         /// <summary>
-        /// Gets or sets the event channels
+        /// Optional. Gets or sets the event channels
         /// </summary>
         public EventChannels EventChannels
         {
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _eventDataId;
 
         /// <summary>
-        /// Gets or sets the event data Id
+        /// Optional. Gets or sets the event data Id
         /// </summary>
         public string EventDataId
         {
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _eventName;
 
         /// <summary>
-        /// Gets or sets the event name
+        /// Optional. Gets or sets the event name
         /// </summary>
         public LocalizableString EventName
         {
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _eventSource;
 
         /// <summary>
-        /// Gets or sets the event source
+        /// Optional. Gets or sets the event source
         /// </summary>
         public LocalizableString EventSource
         {
@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _eventTimestamp;
 
         /// <summary>
-        /// Gets or sets the time event occured
+        /// Optional. Gets or sets the time event occured
         /// </summary>
         public DateTime EventTimestamp
         {
@@ -332,7 +332,7 @@ namespace Microsoft.Azure.Insights.Models
         private HttpRequestInfo _httpRequest;
 
         /// <summary>
-        /// Gets or sets the http request info.
+        /// Optional. Gets or sets the http request info.
         /// </summary>
         public HttpRequestInfo HttpRequest
         {
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Insights.Models
         private EventLevel _level;
 
         /// <summary>
-        /// Gets or sets the event level
+        /// Optional. Gets or sets the event level
         /// </summary>
         public EventLevel Level
         {
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _operationId;
 
         /// <summary>
-        /// Gets or sets the operation id
+        /// Optional. Gets or sets the operation id
         /// </summary>
         public string OperationId
         {
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _operationName;
 
         /// <summary>
-        /// Gets or sets the operation name
+        /// Optional. Gets or sets the operation name
         /// </summary>
         public LocalizableString OperationName
         {
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _properties;
 
         /// <summary>
-        /// Gets or sets the property bag
+        /// Optional. Gets or sets the property bag
         /// </summary>
         public Dictionary<string, string> Properties
         {
@@ -387,7 +387,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceGroupName;
 
         /// <summary>
-        /// Gets or sets the resource group name.
+        /// Optional. Gets or sets the resource group name.
         /// </summary>
         public string ResourceGroupName
         {
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _resourceProviderName;
 
         /// <summary>
-        /// Gets or sets the resource provider name.
+        /// Optional. Gets or sets the resource provider name.
         /// </summary>
         public LocalizableString ResourceProviderName
         {
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceUri;
 
         /// <summary>
-        /// Gets or sets the resource uri
+        /// Optional. Gets or sets the resource uri
         /// </summary>
         public string ResourceUri
         {
@@ -420,7 +420,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _status;
 
         /// <summary>
-        /// Gets or sets the event status
+        /// Optional. Gets or sets the event status
         /// </summary>
         public LocalizableString Status
         {
@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _submissionTimestamp;
 
         /// <summary>
-        /// Gets or sets the event submission time.
+        /// Optional. Gets or sets the event submission time.
         /// </summary>
         public DateTime SubmissionTimestamp
         {
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _subscriptionId;
 
         /// <summary>
-        /// Gets or sets the subscription id
+        /// Optional. Gets or sets the subscription id
         /// </summary>
         public string SubscriptionId
         {
@@ -453,7 +453,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _subStatus;
 
         /// <summary>
-        /// Gets or sets the event sub status
+        /// Optional. Gets or sets the event sub status
         /// </summary>
         public LocalizableString SubStatus
         {
@@ -466,8 +466,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventData()
         {
-            this._claims = new Dictionary<string, string>();
-            this._properties = new Dictionary<string, string>();
+            this.Claims = new Dictionary<string, string>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
 
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _nextLink;
 
         /// <summary>
-        /// The continuation token.
+        /// Optional. The continuation token.
         /// </summary>
         public string NextLink
         {
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<EventData> _value;
 
         /// <summary>
-        /// The list of events.
+        /// Optional. The list of events.
         /// </summary>
         public IList<EventData> Value
         {
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventDataCollection()
         {
-            this._value = new List<EventData>();
+            this.Value = new List<EventData>();
         }
     }
 
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Insights.Models
         private EventDataCollection _eventDataCollection;
 
         /// <summary>
-        /// The retrieved events.
+        /// Optional. The retrieved events.
         /// </summary>
         public EventDataCollection EventDataCollection
         {
@@ -570,7 +570,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _clientIpAddress;
 
         /// <summary>
-        /// The client Ip Address
+        /// Optional. The client Ip Address
         /// </summary>
         public string ClientIpAddress
         {
@@ -581,7 +581,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _clientRequestId;
 
         /// <summary>
-        /// The client request id.
+        /// Optional. The client request id.
         /// </summary>
         public string ClientRequestId
         {
@@ -592,7 +592,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _method;
 
         /// <summary>
-        /// The method.
+        /// Optional. The method.
         /// </summary>
         public string Method
         {
@@ -603,7 +603,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _uri;
 
         /// <summary>
-        /// The Uri.
+        /// Optional. The Uri.
         /// </summary>
         public string Uri
         {
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _localizedValue;
 
         /// <summary>
-        /// The locale specific value.
+        /// Optional. The locale specific value.
         /// </summary>
         public string LocalizedValue
         {
@@ -638,7 +638,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _value;
 
         /// <summary>
-        /// The invariant value.
+        /// Optional. The invariant value.
         /// </summary>
         public string Value
         {
@@ -662,7 +662,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _endTime;
 
         /// <summary>
-        /// The end time.
+        /// Optional. The end time.
         /// </summary>
         public DateTime EndTime
         {
@@ -673,7 +673,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricValue> _metricValues;
 
         /// <summary>
-        /// The collection of MetricValues..
+        /// Optional. The collection of MetricValues..
         /// </summary>
         public IList<MetricValue> MetricValues
         {
@@ -684,7 +684,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
 
         /// <summary>
-        /// The name.
+        /// Optional. The name.
         /// </summary>
         public LocalizableString Name
         {
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _properties;
 
         /// <summary>
-        /// The extendable properties.
+        /// Optional. The extendable properties.
         /// </summary>
         public Dictionary<string, string> Properties
         {
@@ -706,7 +706,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceId;
 
         /// <summary>
-        /// the name of the resource this metric belongs to.
+        /// Optional. the name of the resource this metric belongs to.
         /// </summary>
         public string ResourceId
         {
@@ -717,7 +717,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
 
         /// <summary>
-        /// The start time.
+        /// Optional. The start time.
         /// </summary>
         public DateTime StartTime
         {
@@ -728,7 +728,7 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
 
         /// <summary>
-        /// The timegrain value..
+        /// Optional. The timegrain value..
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -739,7 +739,7 @@ namespace Microsoft.Azure.Insights.Models
         private Unit _unit;
 
         /// <summary>
-        /// The unit type.
+        /// Optional. The unit type.
         /// </summary>
         public Unit Unit
         {
@@ -752,8 +752,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public Metric()
         {
-            this._metricValues = new List<MetricValue>();
-            this._properties = new Dictionary<string, string>();
+            this.MetricValues = new List<MetricValue>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
 
@@ -766,7 +766,7 @@ namespace Microsoft.Azure.Insights.Models
         private MetricLocation _location;
 
         /// <summary>
-        /// The location info for this availability
+        /// Optional. The location info for this availability
         /// </summary>
         public MetricLocation Location
         {
@@ -777,7 +777,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _retention;
 
         /// <summary>
-        /// The retention period for the metric at the specified timegrain.
+        /// Optional. The retention period for the metric at the specified
+        /// timegrain.
         /// </summary>
         public TimeSpan Retention
         {
@@ -788,7 +789,8 @@ namespace Microsoft.Azure.Insights.Models
         private TimeSpan _timeGrain;
 
         /// <summary>
-        /// The time grain specifies the aggregation interval for the metric.
+        /// Optional. The time grain specifies the aggregation interval for the
+        /// metric.
         /// </summary>
         public TimeSpan TimeGrain
         {
@@ -812,7 +814,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<Metric> _value;
 
         /// <summary>
-        /// The collection.
+        /// Optional. The collection.
         /// </summary>
         public IList<Metric> Value
         {
@@ -825,7 +827,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricCollection()
         {
-            this._value = new List<Metric>();
+            this.Value = new List<Metric>();
         }
     }
 
@@ -837,8 +839,8 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricAvailability> _metricAvailabilities;
 
         /// <summary>
-        /// Collection of availability information defining what timeGrains are
-        /// available to be queried.
+        /// Optional. Collection of availability information defining what
+        /// timeGrains are available to be queried.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
@@ -849,7 +851,7 @@ namespace Microsoft.Azure.Insights.Models
         private LocalizableString _name;
 
         /// <summary>
-        /// The name.
+        /// Optional. The name.
         /// </summary>
         public LocalizableString Name
         {
@@ -860,8 +862,8 @@ namespace Microsoft.Azure.Insights.Models
         private AggregationType _primaryAggregationType;
 
         /// <summary>
-        /// The primary aggregation type value defining how to use the values
-        /// for display.
+        /// Optional. The primary aggregation type value defining how to use
+        /// the values for display.
         /// </summary>
         public AggregationType PrimaryAggregationType
         {
@@ -872,7 +874,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _properties;
 
         /// <summary>
-        /// Collection of extended properties.
+        /// Optional. Collection of extended properties.
         /// </summary>
         public Dictionary<string, string> Properties
         {
@@ -883,7 +885,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _resourceUri;
 
         /// <summary>
-        /// The target resource uri.
+        /// Optional. The target resource uri.
         /// </summary>
         public string ResourceUri
         {
@@ -894,7 +896,7 @@ namespace Microsoft.Azure.Insights.Models
         private Unit _unit;
 
         /// <summary>
-        /// The unit of the metric.
+        /// Optional. The unit of the metric.
         /// </summary>
         public Unit Unit
         {
@@ -907,8 +909,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinition()
         {
-            this._metricAvailabilities = new List<MetricAvailability>();
-            this._properties = new Dictionary<string, string>();
+            this.MetricAvailabilities = new List<MetricAvailability>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
 
@@ -920,7 +922,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricDefinition> _value;
 
         /// <summary>
-        /// The values for the metric definitions.
+        /// Optional. The values for the metric definitions.
         /// </summary>
         public IList<MetricDefinition> Value
         {
@@ -933,7 +935,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
-            this._value = new List<MetricDefinition>();
+            this.Value = new List<MetricDefinition>();
         }
     }
 
@@ -945,7 +947,7 @@ namespace Microsoft.Azure.Insights.Models
         private MetricDefinitionCollection _metricDefinitionCollection;
 
         /// <summary>
-        /// The retrieved metric definitions.
+        /// Optional. The retrieved metric definitions.
         /// </summary>
         public MetricDefinitionCollection MetricDefinitionCollection
         {
@@ -970,7 +972,7 @@ namespace Microsoft.Azure.Insights.Models
         private MetricCollection _metricCollection;
 
         /// <summary>
-        /// The retrieved metric value sets.
+        /// Optional. The retrieved metric value sets.
         /// </summary>
         public MetricCollection MetricCollection
         {
@@ -994,7 +996,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _partitionKey;
 
         /// <summary>
-        /// The partition key.
+        /// Optional. The partition key.
         /// </summary>
         public string PartitionKey
         {
@@ -1005,7 +1007,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableEndpoint;
 
         /// <summary>
-        /// The table endpoint.
+        /// Optional. The table endpoint.
         /// </summary>
         public string TableEndpoint
         {
@@ -1016,7 +1018,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<MetricTableInfo> _tableInfo;
 
         /// <summary>
-        /// The table info.
+        /// Optional. The table info.
         /// </summary>
         public IList<MetricTableInfo> TableInfo
         {
@@ -1029,7 +1031,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricLocation()
         {
-            this._tableInfo = new List<MetricTableInfo>();
+            this.TableInfo = new List<MetricTableInfo>();
         }
     }
 
@@ -1042,7 +1044,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _endTime;
 
         /// <summary>
-        /// Gets or sets the end time of the range for this table.
+        /// Optional. Gets or sets the end time of the range for this table.
         /// </summary>
         public DateTime EndTime
         {
@@ -1053,7 +1055,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _sasToken;
 
         /// <summary>
-        /// Gets or sets the SAS Key for accessing Table Storage.
+        /// Optional. Gets or sets the SAS Key for accessing Table Storage.
         /// </summary>
         public string SasToken
         {
@@ -1064,7 +1066,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _sasTokenExpirationTime;
 
         /// <summary>
-        /// Gets or sets the expiration time of the SAS token (UTC).
+        /// Optional. Gets or sets the expiration time of the SAS token (UTC).
         /// </summary>
         public DateTime SasTokenExpirationTime
         {
@@ -1075,7 +1077,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
 
         /// <summary>
-        /// Gets or sets the start time of the range for this table.
+        /// Optional. Gets or sets the start time of the range for this table.
         /// </summary>
         public DateTime StartTime
         {
@@ -1086,7 +1088,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableName;
 
         /// <summary>
-        /// Gets or sets the table name.
+        /// Optional. Gets or sets the table name.
         /// </summary>
         public string TableName
         {
@@ -1110,7 +1112,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _average;
 
         /// <summary>
-        /// Specifies the average value in the time interval.
+        /// Optional. Specifies the average value in the time interval.
         /// </summary>
         public double? Average
         {
@@ -1121,9 +1123,9 @@ namespace Microsoft.Azure.Insights.Models
         private long? _count;
 
         /// <summary>
-        /// Specifies the sample count in the time interval. Can be used to
-        /// determine the number of values that contributed to the average
-        /// value.
+        /// Optional. Specifies the sample count in the time interval. Can be
+        /// used to determine the number of values that contributed to the
+        /// average value.
         /// </summary>
         public long? Count
         {
@@ -1134,7 +1136,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _last;
 
         /// <summary>
-        /// Specifies the last sample in the time interval.
+        /// Optional. Specifies the last sample in the time interval.
         /// </summary>
         public double? Last
         {
@@ -1145,7 +1147,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _maximum;
 
         /// <summary>
-        /// Specifies the maximum value in the time interval.
+        /// Optional. Specifies the maximum value in the time interval.
         /// </summary>
         public double? Maximum
         {
@@ -1156,7 +1158,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _minimum;
 
         /// <summary>
-        /// Specifies the minimum value in the time interval.
+        /// Optional. Specifies the minimum value in the time interval.
         /// </summary>
         public double? Minimum
         {
@@ -1167,7 +1169,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _properties;
 
         /// <summary>
-        /// The extendable properties.
+        /// Optional. The extendable properties.
         /// </summary>
         public Dictionary<string, string> Properties
         {
@@ -1178,7 +1180,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _timestamp;
 
         /// <summary>
-        /// The timestamp for the metric value.
+        /// Optional. The timestamp for the metric value.
         /// </summary>
         public DateTime Timestamp
         {
@@ -1189,7 +1191,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _total;
 
         /// <summary>
-        /// Specifies the total value in the time interval.
+        /// Optional. Specifies the total value in the time interval.
         /// </summary>
         public double? Total
         {
@@ -1202,7 +1204,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricValue()
         {
-            this._properties = new Dictionary<string, string>();
+            this.Properties = new Dictionary<string, string>();
         }
     }
 
@@ -1214,7 +1216,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _action;
 
         /// <summary>
-        /// The Action.
+        /// Optional. The Action.
         /// </summary>
         public string Action
         {
@@ -1225,7 +1227,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _condition;
 
         /// <summary>
-        /// The condition.
+        /// Optional. The condition.
         /// </summary>
         public string Condition
         {
@@ -1236,7 +1238,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _role;
 
         /// <summary>
-        /// The role.
+        /// Optional. The role.
         /// </summary>
         public string Role
         {
@@ -1247,7 +1249,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _scope;
 
         /// <summary>
-        /// The scope.
+        /// Optional. The scope.
         /// </summary>
         public string Scope
         {
@@ -1307,7 +1309,7 @@ namespace Microsoft.Azure.Insights.Models
         private double _currentValue;
 
         /// <summary>
-        /// The current value for the usage metric.
+        /// Optional. The current value for the usage metric.
         /// </summary>
         public double CurrentValue
         {
@@ -1318,7 +1320,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _displayName;
 
         /// <summary>
-        /// Get the usage display name.
+        /// Optional. Get the usage display name.
         /// </summary>
         public string DisplayName
         {
@@ -1329,7 +1331,7 @@ namespace Microsoft.Azure.Insights.Models
         private double _limit;
 
         /// <summary>
-        /// The quota limit the usage metric.
+        /// Optional. The quota limit the usage metric.
         /// </summary>
         public double Limit
         {
@@ -1340,7 +1342,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _name;
 
         /// <summary>
-        /// Get the usage metric name.
+        /// Optional. Get the usage metric name.
         /// </summary>
         public string Name
         {
@@ -1351,7 +1353,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _nextResetTime;
 
         /// <summary>
-        /// When the current value gets reset.
+        /// Optional. When the current value gets reset.
         /// </summary>
         public string NextResetTime
         {
@@ -1362,7 +1364,7 @@ namespace Microsoft.Azure.Insights.Models
         private System.TimeSpan? _quotaPeriod;
 
         /// <summary>
-        /// When the current value gets reset.
+        /// Optional. When the current value gets reset.
         /// </summary>
         public System.TimeSpan? QuotaPeriod
         {
@@ -1373,7 +1375,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _unit;
 
         /// <summary>
-        /// The unit for the usage metric.
+        /// Optional. The unit for the usage metric.
         /// </summary>
         public string Unit
         {
@@ -1397,7 +1399,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<UsageMetric> _properties;
 
         /// <summary>
-        /// The usage values.
+        /// Optional. The usage values.
         /// </summary>
         public IList<UsageMetric> Properties
         {
@@ -1408,7 +1410,7 @@ namespace Microsoft.Azure.Insights.Models
         private IList<UsageMetric> _value;
 
         /// <summary>
-        /// The usage values.
+        /// Optional. The usage values.
         /// </summary>
         public IList<UsageMetric> Value
         {
@@ -1421,8 +1423,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public UsageMetricCollection()
         {
-            this._properties = new List<UsageMetric>();
-            this._value = new List<UsageMetric>();
+            this.Properties = new List<UsageMetric>();
+            this.Value = new List<UsageMetric>();
         }
     }
 
@@ -1434,7 +1436,7 @@ namespace Microsoft.Azure.Insights.Models
         private UsageMetricCollection _usageMetricCollection;
 
         /// <summary>
-        /// The list of usage metrics.
+        /// Optional. The list of usage metrics.
         /// </summary>
         public UsageMetricCollection UsageMetricCollection
         {
@@ -1453,10 +1455,22 @@ namespace Microsoft.Azure.Insights.Models
 
 namespace Microsoft.Azure.Insights
 {
-    public partial interface IInsightsClient
+    public static partial class InsightsClientExtensions
+    {
+    }
+
+    public partial interface IInsightsClient : IDisposable
     {
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -1464,17 +1478,29 @@ namespace Microsoft.Azure.Insights
         }
 
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
             get;
+        }
+
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set;
+        }
+
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set;
         }
 
         /// <summary>
@@ -1507,16 +1533,22 @@ namespace Microsoft.Azure.Insights
         }
     }
 
-    public static partial class InsightsClientExtensions
-    {
-    }
-
     public partial class InsightsClient : ServiceClient<InsightsClient>, IInsightsClient
     {
+        private string _apiVersion;
+
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+
         private Uri _baseUri;
 
         /// <summary>
-        /// Optional base uri parameter.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -1526,17 +1558,35 @@ namespace Microsoft.Azure.Insights
         private SubscriptionCloudCredentials _credentials;
 
         /// <summary>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+
+        private int _longRunningOperationInitialTimeout;
+
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+
+        private int _longRunningOperationRetryTimeout;
+
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
 
         private IEventOperations _eventOperations;
@@ -1586,6 +1636,9 @@ namespace Microsoft.Azure.Insights
             this._metricDefinitionOperations = new MetricDefinitionOperations(this);
             this._metricOperations = new MetricOperations(this);
             this._usageMetricOperations = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-04-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
 
@@ -1593,16 +1646,13 @@ namespace Microsoft.Azure.Insights
         /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Optional base uri parameter.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -1625,13 +1675,9 @@ namespace Microsoft.Azure.Insights
         /// Initializes a new instance of the InsightsClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// When you create a Windows Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API.  The Windows Azure Service ManagementAPI use mutual
-        /// authentication of management certificates over SSL to ensure that
-        /// a request made to the service is secure.  No anonymous requests
-        /// are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public InsightsClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -1644,6 +1690,231 @@ namespace Microsoft.Azure.Insights
             this._baseUri = new Uri("https://management.azure.com");
 
             this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the InsightsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private InsightsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._eventOperations = new EventOperations(this);
+            this._metricDefinitionOperations = new MetricDefinitionOperations(this);
+            this._metricOperations = new MetricOperations(this);
+            this._usageMetricOperations = new UsageMetricsOperations(this);
+            this._apiVersion = "2014-04-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the InsightsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public InsightsClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the InsightsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public InsightsClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.azure.com");
+
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        /// <summary>
+        /// Clones properties from current instance to another InsightsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of InsightsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<InsightsClient> client)
+        {
+            base.Clone(client);
+
+            if (client is InsightsClient)
+            {
+                InsightsClient clonedClient = ((InsightsClient)client);
+
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+    }
+
+    public static partial class EventOperationsExtensions
+    {
+        /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The event count summary response.
+        /// </returns>
+        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, string filterString)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IEventOperations)s).GetCountSummaryAsync(filterString);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The event count summary response.
+        /// </returns>
+        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, string filterString)
+        {
+            return operations.GetCountSummaryAsync(filterString, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Required. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEvents(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IEventOperations)s).ListEventsAsync(filterString, selectedProperties);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The List Event Values operation lists the events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Required. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return operations.ListEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IEventOperations)s).ListEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The List Event Next operation lists the next set of events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListEventsNextAsync(nextLink, CancellationToken.None);
         }
     }
 
@@ -1702,164 +1973,6 @@ namespace Microsoft.Azure.Insights
     /// <summary>
     /// Operations for event data.
     /// </summary>
-    public static partial class EventOperationsExtensions
-    {
-        /// <summary>
-        /// The count of events in a subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// The filter string.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static EventCountSummaryResponse GetCountSummary(this IEventOperations operations, string filterString)
-        {
-            try
-            {
-                return operations.GetCountSummaryAsync(filterString).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The count of events in a subscription.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// The filter string.
-        /// </param>
-        /// <returns>
-        /// The event count summary response.
-        /// </returns>
-        public static Task<EventCountSummaryResponse> GetCountSummaryAsync(this IEventOperations operations, string filterString)
-        {
-            return operations.GetCountSummaryAsync(filterString, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// The filter string
-        /// </param>
-        /// <param name='selectedProperties'>
-        /// The list of property names to be returned. You can save bandwith by
-        /// selecting only the properties you need.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEvents(this IEventOperations operations, string filterString, string selectedProperties)
-        {
-            try
-            {
-                return operations.ListEventsAsync(filterString, selectedProperties).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The List Event Values operation lists the events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='filterString'>
-        /// The filter string
-        /// </param>
-        /// <param name='selectedProperties'>
-        /// The list of property names to be returned. You can save bandwith by
-        /// selecting only the properties you need.
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
-        {
-            return operations.ListEventsAsync(filterString, selectedProperties, CancellationToken.None);
-        }
-
-        /// <summary>
-        /// The List Event Next operation lists the next set of events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// The next link
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static EventDataListResponse ListEventsNext(this IEventOperations operations, string nextLink)
-        {
-            try
-            {
-                return operations.ListEventsNextAsync(nextLink).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The List Event Next operation lists the next set of events.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// The next link
-        /// </param>
-        /// <returns>
-        /// The List Events operation response.
-        /// </returns>
-        public static Task<EventDataListResponse> ListEventsNextAsync(this IEventOperations operations, string nextLink)
-        {
-            return operations.ListEventsNextAsync(nextLink, CancellationToken.None);
-        }
-    }
-
-    /// <summary>
-    /// Operations for event data.
-    /// </summary>
     internal partial class EventOperations : IServiceOperations<InsightsClient>, IEventOperations
     {
         /// <summary>
@@ -1887,7 +2000,7 @@ namespace Microsoft.Azure.Insights
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='filterString'>
-        /// The filter string.
+        /// Required. The filter string.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1915,9 +2028,21 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/summaries/count?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -1952,7 +2077,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -1966,72 +2091,75 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new EventCountSummaryResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         JToken eventPropertyNameValue = responseDoc["eventPropertyName"];
-                        if (eventPropertyNameValue != null)
+                        if (eventPropertyNameValue != null && eventPropertyNameValue.Type != JTokenType.Null)
                         {
-                            string eventPropertyNameInstance = (string)eventPropertyNameValue;
+                            string eventPropertyNameInstance = ((string)eventPropertyNameValue);
                             result.EventPropertyName = eventPropertyNameInstance;
                         }
 
                         JToken eventPropertyValueValue = responseDoc["eventPropertyValue"];
-                        if (eventPropertyValueValue != null)
+                        if (eventPropertyValueValue != null && eventPropertyValueValue.Type != JTokenType.Null)
                         {
-                            string eventPropertyValueInstance = (string)eventPropertyValueValue;
+                            string eventPropertyValueInstance = ((string)eventPropertyValueValue);
                             result.EventPropertyValue = eventPropertyValueInstance;
                         }
 
                         JToken startTimeValue = responseDoc["startTime"];
-                        if (startTimeValue != null)
+                        if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                         {
-                            DateTime startTimeInstance = (DateTime)startTimeValue;
+                            DateTime startTimeInstance = ((DateTime)startTimeValue);
                             result.StartTime = startTimeInstance;
                         }
 
                         JToken endTimeValue = responseDoc["endTime"];
-                        if (endTimeValue != null)
+                        if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                         {
-                            string endTimeInstance = (string)endTimeValue;
+                            string endTimeInstance = ((string)endTimeValue);
                             result.EndTime = endTimeInstance;
                         }
 
                         JToken timeGrainValue = responseDoc["TimeGrain"];
-                        if (timeGrainValue != null)
+                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                         {
-                            // how
-                            TimeSpan timeGrainInstance = TimeSpan.Parse((string)timeGrainValue, CultureInfo.InvariantCulture);
+                            TimeSpan timeGrainInstance = TimeSpan.Parse(((string)timeGrainValue), CultureInfo.InvariantCulture);
                             result.TimeGrain = timeGrainInstance;
                         }
 
-                        JArray summaryItemsArray = (JArray)responseDoc["summaryItems"];
-                        if (summaryItemsArray != null)
+                        JToken summaryItemsArray = responseDoc["summaryItems"];
+                        if (summaryItemsArray != null && summaryItemsArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken summaryItemsValue in summaryItemsArray)
+                            foreach (JToken summaryItemsValue in ((JArray)summaryItemsArray))
                             {
                                 CountSummaryItem countSummaryItemInstance = new CountSummaryItem();
                                 result.SummaryItems.Add(countSummaryItemInstance);
 
                                 JToken eventTimeValue = summaryItemsValue["eventTime"];
-                                if (eventTimeValue != null)
+                                if (eventTimeValue != null && eventTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime eventTimeInstance = (DateTime)eventTimeValue;
+                                    DateTime eventTimeInstance = ((DateTime)eventTimeValue);
                                     countSummaryItemInstance.EventTime = eventTimeInstance;
                                 }
 
                                 JToken totalEventsCountValue = summaryItemsValue["totalEventsCount"];
-                                if (totalEventsCountValue != null)
+                                if (totalEventsCountValue != null && totalEventsCountValue.Type != JTokenType.Null)
                                 {
-                                    int totalEventsCountInstance = (int)totalEventsCountValue;
+                                    int totalEventsCountInstance = ((int)totalEventsCountValue);
                                     countSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
                                 }
 
                                 JToken failedEventsCountValue = summaryItemsValue["failedEventsCount"];
-                                if (failedEventsCountValue != null)
+                                if (failedEventsCountValue != null && failedEventsCountValue.Type != JTokenType.Null)
                                 {
-                                    int failedEventsCountInstance = (int)failedEventsCountValue;
+                                    int failedEventsCountInstance = ((int)failedEventsCountValue);
                                     countSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
                                 }
                             }
@@ -2071,11 +2199,11 @@ namespace Microsoft.Azure.Insights
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
-        /// The filter string
+        /// Required. The filter string
         /// </param>
         /// <param name='selectedProperties'>
-        /// The list of property names to be returned. You can save bandwith by
-        /// selecting only the properties you need.
+        /// Required. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2104,13 +2232,25 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = this.Client.BaseUri + "/subscriptions/" + this.Client.Credentials.SubscriptionId + "/providers/microsoft.insights/eventtypes/management/values?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/values?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
             if (selectedProperties != null)
             {
-                url = url + "&$select=" + Uri.EscapeUriString(selectedProperties);
+                url = url + "&$select=" + Uri.EscapeDataString(selectedProperties != null ? selectedProperties.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2145,7 +2285,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2159,324 +2299,326 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         EventDataCollection eventDataCollectionInstance = new EventDataCollection();
                         result.EventDataCollection = eventDataCollectionInstance;
 
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
                                 eventDataCollectionInstance.Value.Add(eventDataInstance);
 
                                 JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
+                                if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
                                 {
                                     SenderAuthorization authorizationInstance = new SenderAuthorization();
                                     eventDataInstance.Authorization = authorizationInstance;
 
                                     JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        string actionInstance = (string)actionValue;
+                                        string actionInstance = ((string)actionValue);
                                         authorizationInstance.Action = actionInstance;
                                     }
 
                                     JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
+                                    if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                                     {
-                                        string conditionInstance = (string)conditionValue;
+                                        string conditionInstance = ((string)conditionValue);
                                         authorizationInstance.Condition = conditionInstance;
                                     }
 
                                     JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
+                                    if (roleValue != null && roleValue.Type != JTokenType.Null)
                                     {
-                                        string roleInstance = (string)roleValue;
+                                        string roleInstance = ((string)roleValue);
                                         authorizationInstance.Role = roleInstance;
                                     }
 
                                     JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
+                                    if (scopeValue != null && scopeValue.Type != JTokenType.Null)
                                     {
-                                        string scopeInstance = (string)scopeValue;
+                                        string scopeInstance = ((string)scopeValue);
                                         authorizationInstance.Scope = scopeInstance;
                                     }
                                 }
 
                                 JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
+                                if (channelsValue != null && channelsValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
+                                    EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
                                     eventDataInstance.EventChannels = channelsInstance;
                                 }
 
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
+                                JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
+                                        string claimsKey = ((string)property.Name);
+                                        string claimsValue = ((string)property.Value);
                                         eventDataInstance.Claims.Add(claimsKey, claimsValue);
                                     }
                                 }
 
                                 JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
-                                    string descriptionInstance = (string)descriptionValue;
+                                    string descriptionInstance = ((string)descriptionValue);
                                     eventDataInstance.Description = descriptionInstance;
                                 }
 
                                 JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
+                                if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
                                 {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
+                                    string eventDataIdInstance = ((string)eventDataIdValue);
                                     eventDataInstance.EventDataId = eventDataIdInstance;
                                 }
 
                                 JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
+                                if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
                                 {
-                                    string correlationIdInstance = (string)correlationIdValue;
+                                    string correlationIdInstance = ((string)correlationIdValue);
                                     eventDataInstance.CorrelationId = correlationIdInstance;
                                 }
 
                                 JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
+                                if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString eventNameInstance = new LocalizableString();
                                     eventDataInstance.EventName = eventNameInstance;
 
                                     JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = (string)valueValue2;
+                                        string valueInstance = ((string)valueValue2);
                                         eventNameInstance.Value = valueInstance;
                                     }
 
                                     JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
+                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance = (string)localizedValueValue;
+                                        string localizedValueInstance = ((string)localizedValueValue);
                                         eventNameInstance.LocalizedValue = localizedValueInstance;
                                     }
                                 }
 
                                 JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
+                                if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString eventSourceInstance = new LocalizableString();
                                     eventDataInstance.EventSource = eventSourceInstance;
 
                                     JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
+                                    if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                     {
-                                        string valueInstance2 = (string)valueValue3;
+                                        string valueInstance2 = ((string)valueValue3);
                                         eventSourceInstance.Value = valueInstance2;
                                     }
 
                                     JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
+                                    if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
+                                        string localizedValueInstance2 = ((string)localizedValueValue2);
                                         eventSourceInstance.LocalizedValue = localizedValueInstance2;
                                     }
                                 }
 
                                 JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
+                                if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
                                 {
                                     HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
                                     eventDataInstance.HttpRequest = httpRequestInstance;
 
                                     JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
+                                    if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
                                     {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
+                                        string clientRequestIdInstance = ((string)clientRequestIdValue);
                                         httpRequestInstance.ClientRequestId = clientRequestIdInstance;
                                     }
 
                                     JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
+                                    if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
                                     {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
+                                        string clientIpAddressInstance = ((string)clientIpAddressValue);
                                         httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
                                     }
 
                                     JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
+                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
                                     {
-                                        string methodInstance = (string)methodValue;
+                                        string methodInstance = ((string)methodValue);
                                         httpRequestInstance.Method = methodInstance;
                                     }
 
                                     JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
+                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
                                     {
-                                        string uriInstance = (string)uriValue;
+                                        string uriInstance = ((string)uriValue);
                                         httpRequestInstance.Uri = uriInstance;
                                     }
                                 }
 
                                 JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
+                                if (levelValue != null && levelValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
+                                    EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
                                     eventDataInstance.Level = levelInstance;
                                 }
 
                                 JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
+                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
                                 {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
+                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
                                     eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
                                 }
 
                                 JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
+                                if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString resourceProviderNameInstance = new LocalizableString();
                                     eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
 
                                     JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
+                                    if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
                                     {
-                                        string valueInstance3 = (string)valueValue4;
+                                        string valueInstance3 = ((string)valueValue4);
                                         resourceProviderNameInstance.Value = valueInstance3;
                                     }
 
                                     JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
+                                    if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
+                                        string localizedValueInstance3 = ((string)localizedValueValue3);
                                         resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
                                     }
                                 }
 
                                 JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
+                                if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                 {
-                                    string resourceUriInstance = (string)resourceUriValue;
+                                    string resourceUriInstance = ((string)resourceUriValue);
                                     eventDataInstance.ResourceUri = resourceUriInstance;
                                 }
 
                                 JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
+                                if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
                                 {
-                                    string operationIdInstance = (string)operationIdValue;
+                                    string operationIdInstance = ((string)operationIdValue);
                                     eventDataInstance.OperationId = operationIdInstance;
                                 }
 
                                 JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
+                                if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString operationNameInstance = new LocalizableString();
                                     eventDataInstance.OperationName = operationNameInstance;
 
                                     JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
+                                    if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
                                     {
-                                        string valueInstance4 = (string)valueValue5;
+                                        string valueInstance4 = ((string)valueValue5);
                                         operationNameInstance.Value = valueInstance4;
                                     }
 
                                     JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
+                                    if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
+                                        string localizedValueInstance4 = ((string)localizedValueValue4);
                                         operationNameInstance.LocalizedValue = localizedValueInstance4;
                                     }
                                 }
 
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
+                                JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
+                                        string propertiesKey = ((string)property2.Name);
+                                        string propertiesValue = ((string)property2.Value);
                                         eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
                                     }
                                 }
 
                                 JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString statusInstance = new LocalizableString();
                                     eventDataInstance.Status = statusInstance;
 
                                     JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
+                                    if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                     {
-                                        string valueInstance5 = (string)valueValue6;
+                                        string valueInstance5 = ((string)valueValue6);
                                         statusInstance.Value = valueInstance5;
                                     }
 
                                     JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
+                                    if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
+                                        string localizedValueInstance5 = ((string)localizedValueValue5);
                                         statusInstance.LocalizedValue = localizedValueInstance5;
                                     }
                                 }
 
                                 JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
+                                if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString subStatusInstance = new LocalizableString();
                                     eventDataInstance.SubStatus = subStatusInstance;
 
                                     JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
+                                    if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                     {
-                                        string valueInstance6 = (string)valueValue7;
+                                        string valueInstance6 = ((string)valueValue7);
                                         subStatusInstance.Value = valueInstance6;
                                     }
 
                                     JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
+                                    if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
+                                        string localizedValueInstance6 = ((string)localizedValueValue6);
                                         subStatusInstance.LocalizedValue = localizedValueInstance6;
                                     }
                                 }
 
                                 JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
+                                if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
                                 {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
+                                    DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
                                     eventDataInstance.EventTimestamp = eventTimestampInstance;
                                 }
 
                                 JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
+                                if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
                                 {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
+                                    DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
                                     eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
                                 }
 
                                 JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
+                                if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                                 {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
+                                    string subscriptionIdInstance = ((string)subscriptionIdValue);
                                     eventDataInstance.SubscriptionId = subscriptionIdInstance;
                                 }
                             }
                         }
 
                         JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
+                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                         {
-                            string nextLinkInstance = (string)nextLinkValue;
+                            string nextLinkInstance = ((string)nextLinkValue);
                             eventDataCollectionInstance.NextLink = nextLinkInstance;
                         }
                     }
@@ -2514,7 +2656,7 @@ namespace Microsoft.Azure.Insights
         /// The List Event Next operation lists the next set of events.
         /// </summary>
         /// <param name='nextLink'>
-        /// The next link
+        /// Required. The next link
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2542,7 +2684,7 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = nextLink;
+            string url = nextLink.Trim();
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -2577,7 +2719,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -2591,324 +2733,326 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new EventDataListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         EventDataCollection eventDataCollectionInstance = new EventDataCollection();
                         result.EventDataCollection = eventDataCollectionInstance;
 
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
                                 eventDataCollectionInstance.Value.Add(eventDataInstance);
 
                                 JToken authorizationValue = valueValue["authorization"];
-                                if (authorizationValue != null)
+                                if (authorizationValue != null && authorizationValue.Type != JTokenType.Null)
                                 {
                                     SenderAuthorization authorizationInstance = new SenderAuthorization();
                                     eventDataInstance.Authorization = authorizationInstance;
 
                                     JToken actionValue = authorizationValue["action"];
-                                    if (actionValue != null)
+                                    if (actionValue != null && actionValue.Type != JTokenType.Null)
                                     {
-                                        string actionInstance = (string)actionValue;
+                                        string actionInstance = ((string)actionValue);
                                         authorizationInstance.Action = actionInstance;
                                     }
 
                                     JToken conditionValue = authorizationValue["condition"];
-                                    if (conditionValue != null)
+                                    if (conditionValue != null && conditionValue.Type != JTokenType.Null)
                                     {
-                                        string conditionInstance = (string)conditionValue;
+                                        string conditionInstance = ((string)conditionValue);
                                         authorizationInstance.Condition = conditionInstance;
                                     }
 
                                     JToken roleValue = authorizationValue["role"];
-                                    if (roleValue != null)
+                                    if (roleValue != null && roleValue.Type != JTokenType.Null)
                                     {
-                                        string roleInstance = (string)roleValue;
+                                        string roleInstance = ((string)roleValue);
                                         authorizationInstance.Role = roleInstance;
                                     }
 
                                     JToken scopeValue = authorizationValue["scope"];
-                                    if (scopeValue != null)
+                                    if (scopeValue != null && scopeValue.Type != JTokenType.Null)
                                     {
-                                        string scopeInstance = (string)scopeValue;
+                                        string scopeInstance = ((string)scopeValue);
                                         authorizationInstance.Scope = scopeInstance;
                                     }
                                 }
 
                                 JToken channelsValue = valueValue["channels"];
-                                if (channelsValue != null)
+                                if (channelsValue != null && channelsValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    EventChannels channelsInstance = (EventChannels)Enum.Parse(typeof(EventChannels), (string)channelsValue, false);
+                                    EventChannels channelsInstance = ((EventChannels)Enum.Parse(typeof(EventChannels), ((string)channelsValue), true));
                                     eventDataInstance.EventChannels = channelsInstance;
                                 }
 
-                                JToken claimsSequenceElement = valueValue["claims"];
-                                if (claimsSequenceElement != null)
+                                JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
+                                if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
-                                        string claimsKey = (string)property.Name;
-                                        string claimsValue = (string)property.Value;
+                                        string claimsKey = ((string)property.Name);
+                                        string claimsValue = ((string)property.Value);
                                         eventDataInstance.Claims.Add(claimsKey, claimsValue);
                                     }
                                 }
 
                                 JToken descriptionValue = valueValue["description"];
-                                if (descriptionValue != null)
+                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
                                 {
-                                    string descriptionInstance = (string)descriptionValue;
+                                    string descriptionInstance = ((string)descriptionValue);
                                     eventDataInstance.Description = descriptionInstance;
                                 }
 
                                 JToken eventDataIdValue = valueValue["eventDataId"];
-                                if (eventDataIdValue != null)
+                                if (eventDataIdValue != null && eventDataIdValue.Type != JTokenType.Null)
                                 {
-                                    string eventDataIdInstance = (string)eventDataIdValue;
+                                    string eventDataIdInstance = ((string)eventDataIdValue);
                                     eventDataInstance.EventDataId = eventDataIdInstance;
                                 }
 
                                 JToken correlationIdValue = valueValue["correlationId"];
-                                if (correlationIdValue != null)
+                                if (correlationIdValue != null && correlationIdValue.Type != JTokenType.Null)
                                 {
-                                    string correlationIdInstance = (string)correlationIdValue;
+                                    string correlationIdInstance = ((string)correlationIdValue);
                                     eventDataInstance.CorrelationId = correlationIdInstance;
                                 }
 
                                 JToken eventNameValue = valueValue["eventName"];
-                                if (eventNameValue != null)
+                                if (eventNameValue != null && eventNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString eventNameInstance = new LocalizableString();
                                     eventDataInstance.EventName = eventNameInstance;
 
                                     JToken valueValue2 = eventNameValue["value"];
-                                    if (valueValue2 != null)
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = (string)valueValue2;
+                                        string valueInstance = ((string)valueValue2);
                                         eventNameInstance.Value = valueInstance;
                                     }
 
                                     JToken localizedValueValue = eventNameValue["localizedValue"];
-                                    if (localizedValueValue != null)
+                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance = (string)localizedValueValue;
+                                        string localizedValueInstance = ((string)localizedValueValue);
                                         eventNameInstance.LocalizedValue = localizedValueInstance;
                                     }
                                 }
 
                                 JToken eventSourceValue = valueValue["eventSource"];
-                                if (eventSourceValue != null)
+                                if (eventSourceValue != null && eventSourceValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString eventSourceInstance = new LocalizableString();
                                     eventDataInstance.EventSource = eventSourceInstance;
 
                                     JToken valueValue3 = eventSourceValue["value"];
-                                    if (valueValue3 != null)
+                                    if (valueValue3 != null && valueValue3.Type != JTokenType.Null)
                                     {
-                                        string valueInstance2 = (string)valueValue3;
+                                        string valueInstance2 = ((string)valueValue3);
                                         eventSourceInstance.Value = valueInstance2;
                                     }
 
                                     JToken localizedValueValue2 = eventSourceValue["localizedValue"];
-                                    if (localizedValueValue2 != null)
+                                    if (localizedValueValue2 != null && localizedValueValue2.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance2 = (string)localizedValueValue2;
+                                        string localizedValueInstance2 = ((string)localizedValueValue2);
                                         eventSourceInstance.LocalizedValue = localizedValueInstance2;
                                     }
                                 }
 
                                 JToken httpRequestValue = valueValue["httpRequest"];
-                                if (httpRequestValue != null)
+                                if (httpRequestValue != null && httpRequestValue.Type != JTokenType.Null)
                                 {
                                     HttpRequestInfo httpRequestInstance = new HttpRequestInfo();
                                     eventDataInstance.HttpRequest = httpRequestInstance;
 
                                     JToken clientRequestIdValue = httpRequestValue["clientRequestId"];
-                                    if (clientRequestIdValue != null)
+                                    if (clientRequestIdValue != null && clientRequestIdValue.Type != JTokenType.Null)
                                     {
-                                        string clientRequestIdInstance = (string)clientRequestIdValue;
+                                        string clientRequestIdInstance = ((string)clientRequestIdValue);
                                         httpRequestInstance.ClientRequestId = clientRequestIdInstance;
                                     }
 
                                     JToken clientIpAddressValue = httpRequestValue["clientIpAddress"];
-                                    if (clientIpAddressValue != null)
+                                    if (clientIpAddressValue != null && clientIpAddressValue.Type != JTokenType.Null)
                                     {
-                                        string clientIpAddressInstance = (string)clientIpAddressValue;
+                                        string clientIpAddressInstance = ((string)clientIpAddressValue);
                                         httpRequestInstance.ClientIpAddress = clientIpAddressInstance;
                                     }
 
                                     JToken methodValue = httpRequestValue["method"];
-                                    if (methodValue != null)
+                                    if (methodValue != null && methodValue.Type != JTokenType.Null)
                                     {
-                                        string methodInstance = (string)methodValue;
+                                        string methodInstance = ((string)methodValue);
                                         httpRequestInstance.Method = methodInstance;
                                     }
 
                                     JToken uriValue = httpRequestValue["uri"];
-                                    if (uriValue != null)
+                                    if (uriValue != null && uriValue.Type != JTokenType.Null)
                                     {
-                                        string uriInstance = (string)uriValue;
+                                        string uriInstance = ((string)uriValue);
                                         httpRequestInstance.Uri = uriInstance;
                                     }
                                 }
 
                                 JToken levelValue = valueValue["level"];
-                                if (levelValue != null)
+                                if (levelValue != null && levelValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    EventLevel levelInstance = (EventLevel)Enum.Parse(typeof(EventLevel), (string)levelValue, false);
+                                    EventLevel levelInstance = ((EventLevel)Enum.Parse(typeof(EventLevel), ((string)levelValue), true));
                                     eventDataInstance.Level = levelInstance;
                                 }
 
                                 JToken resourceGroupNameValue = valueValue["resourceGroupName"];
-                                if (resourceGroupNameValue != null)
+                                if (resourceGroupNameValue != null && resourceGroupNameValue.Type != JTokenType.Null)
                                 {
-                                    string resourceGroupNameInstance = (string)resourceGroupNameValue;
+                                    string resourceGroupNameInstance = ((string)resourceGroupNameValue);
                                     eventDataInstance.ResourceGroupName = resourceGroupNameInstance;
                                 }
 
                                 JToken resourceProviderNameValue = valueValue["resourceProviderName"];
-                                if (resourceProviderNameValue != null)
+                                if (resourceProviderNameValue != null && resourceProviderNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString resourceProviderNameInstance = new LocalizableString();
                                     eventDataInstance.ResourceProviderName = resourceProviderNameInstance;
 
                                     JToken valueValue4 = resourceProviderNameValue["value"];
-                                    if (valueValue4 != null)
+                                    if (valueValue4 != null && valueValue4.Type != JTokenType.Null)
                                     {
-                                        string valueInstance3 = (string)valueValue4;
+                                        string valueInstance3 = ((string)valueValue4);
                                         resourceProviderNameInstance.Value = valueInstance3;
                                     }
 
                                     JToken localizedValueValue3 = resourceProviderNameValue["localizedValue"];
-                                    if (localizedValueValue3 != null)
+                                    if (localizedValueValue3 != null && localizedValueValue3.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance3 = (string)localizedValueValue3;
+                                        string localizedValueInstance3 = ((string)localizedValueValue3);
                                         resourceProviderNameInstance.LocalizedValue = localizedValueInstance3;
                                     }
                                 }
 
                                 JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
+                                if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                 {
-                                    string resourceUriInstance = (string)resourceUriValue;
+                                    string resourceUriInstance = ((string)resourceUriValue);
                                     eventDataInstance.ResourceUri = resourceUriInstance;
                                 }
 
                                 JToken operationIdValue = valueValue["operationId"];
-                                if (operationIdValue != null)
+                                if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
                                 {
-                                    string operationIdInstance = (string)operationIdValue;
+                                    string operationIdInstance = ((string)operationIdValue);
                                     eventDataInstance.OperationId = operationIdInstance;
                                 }
 
                                 JToken operationNameValue = valueValue["operationName"];
-                                if (operationNameValue != null)
+                                if (operationNameValue != null && operationNameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString operationNameInstance = new LocalizableString();
                                     eventDataInstance.OperationName = operationNameInstance;
 
                                     JToken valueValue5 = operationNameValue["value"];
-                                    if (valueValue5 != null)
+                                    if (valueValue5 != null && valueValue5.Type != JTokenType.Null)
                                     {
-                                        string valueInstance4 = (string)valueValue5;
+                                        string valueInstance4 = ((string)valueValue5);
                                         operationNameInstance.Value = valueInstance4;
                                     }
 
                                     JToken localizedValueValue4 = operationNameValue["localizedValue"];
-                                    if (localizedValueValue4 != null)
+                                    if (localizedValueValue4 != null && localizedValueValue4.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance4 = (string)localizedValueValue4;
+                                        string localizedValueInstance4 = ((string)localizedValueValue4);
                                         operationNameInstance.LocalizedValue = localizedValueInstance4;
                                     }
                                 }
 
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
+                                JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
-                                        string propertiesKey = (string)property2.Name;
-                                        string propertiesValue = (string)property2.Value;
+                                        string propertiesKey = ((string)property2.Name);
+                                        string propertiesValue = ((string)property2.Value);
                                         eventDataInstance.Properties.Add(propertiesKey, propertiesValue);
                                     }
                                 }
 
                                 JToken statusValue = valueValue["status"];
-                                if (statusValue != null)
+                                if (statusValue != null && statusValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString statusInstance = new LocalizableString();
                                     eventDataInstance.Status = statusInstance;
 
                                     JToken valueValue6 = statusValue["value"];
-                                    if (valueValue6 != null)
+                                    if (valueValue6 != null && valueValue6.Type != JTokenType.Null)
                                     {
-                                        string valueInstance5 = (string)valueValue6;
+                                        string valueInstance5 = ((string)valueValue6);
                                         statusInstance.Value = valueInstance5;
                                     }
 
                                     JToken localizedValueValue5 = statusValue["localizedValue"];
-                                    if (localizedValueValue5 != null)
+                                    if (localizedValueValue5 != null && localizedValueValue5.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance5 = (string)localizedValueValue5;
+                                        string localizedValueInstance5 = ((string)localizedValueValue5);
                                         statusInstance.LocalizedValue = localizedValueInstance5;
                                     }
                                 }
 
                                 JToken subStatusValue = valueValue["subStatus"];
-                                if (subStatusValue != null)
+                                if (subStatusValue != null && subStatusValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString subStatusInstance = new LocalizableString();
                                     eventDataInstance.SubStatus = subStatusInstance;
 
                                     JToken valueValue7 = subStatusValue["value"];
-                                    if (valueValue7 != null)
+                                    if (valueValue7 != null && valueValue7.Type != JTokenType.Null)
                                     {
-                                        string valueInstance6 = (string)valueValue7;
+                                        string valueInstance6 = ((string)valueValue7);
                                         subStatusInstance.Value = valueInstance6;
                                     }
 
                                     JToken localizedValueValue6 = subStatusValue["localizedValue"];
-                                    if (localizedValueValue6 != null)
+                                    if (localizedValueValue6 != null && localizedValueValue6.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance6 = (string)localizedValueValue6;
+                                        string localizedValueInstance6 = ((string)localizedValueValue6);
                                         subStatusInstance.LocalizedValue = localizedValueInstance6;
                                     }
                                 }
 
                                 JToken eventTimestampValue = valueValue["eventTimestamp"];
-                                if (eventTimestampValue != null)
+                                if (eventTimestampValue != null && eventTimestampValue.Type != JTokenType.Null)
                                 {
-                                    DateTime eventTimestampInstance = (DateTime)eventTimestampValue;
+                                    DateTime eventTimestampInstance = ((DateTime)eventTimestampValue);
                                     eventDataInstance.EventTimestamp = eventTimestampInstance;
                                 }
 
                                 JToken submissionTimestampValue = valueValue["submissionTimestamp"];
-                                if (submissionTimestampValue != null)
+                                if (submissionTimestampValue != null && submissionTimestampValue.Type != JTokenType.Null)
                                 {
-                                    DateTime submissionTimestampInstance = (DateTime)submissionTimestampValue;
+                                    DateTime submissionTimestampInstance = ((DateTime)submissionTimestampValue);
                                     eventDataInstance.SubmissionTimestamp = submissionTimestampInstance;
                                 }
 
                                 JToken subscriptionIdValue = valueValue["subscriptionId"];
-                                if (subscriptionIdValue != null)
+                                if (subscriptionIdValue != null && subscriptionIdValue.Type != JTokenType.Null)
                                 {
-                                    string subscriptionIdInstance = (string)subscriptionIdValue;
+                                    string subscriptionIdInstance = ((string)subscriptionIdValue);
                                     eventDataInstance.SubscriptionId = subscriptionIdInstance;
                                 }
                             }
                         }
 
                         JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null)
+                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
                         {
-                            string nextLinkInstance = (string)nextLinkValue;
+                            string nextLinkInstance = ((string)nextLinkValue);
                             eventDataCollectionInstance.NextLink = nextLinkInstance;
                         }
                     }
@@ -2943,6 +3087,59 @@ namespace Microsoft.Azure.Insights
         }
     }
 
+    public static partial class MetricDefinitionOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static MetricDefinitionListResponse GetMetricDefinitions(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IMetricDefinitionOperations)s).GetMetricDefinitionsAsync(resourceUri, filterString);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The List Metric Definitions operation lists the metric definitions
+        /// for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric Definitions operation response.
+        /// </returns>
+        public static Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
+        {
+            return operations.GetMetricDefinitionsAsync(resourceUri, filterString, CancellationToken.None);
+        }
+    }
+
     /// <summary>
     /// Operations for metric definitions.
     /// </summary>
@@ -2966,72 +3163,6 @@ namespace Microsoft.Azure.Insights
         /// The List Metric Definitions operation response.
         /// </returns>
         Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
-    }
-
-    /// <summary>
-    /// Operations for metric definitions.
-    /// </summary>
-    public static partial class MetricDefinitionOperationsExtensions
-    {
-        /// <summary>
-        /// The List Metric Definitions operation lists the metric definitions
-        /// for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
-        /// </param>
-        /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
-        /// </param>
-        /// <returns>
-        /// The List Metric Definitions operation response.
-        /// </returns>
-        public static MetricDefinitionListResponse GetMetricDefinitions(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
-        {
-            try
-            {
-                return operations.GetMetricDefinitionsAsync(resourceUri, filterString).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The List Metric Definitions operation lists the metric definitions
-        /// for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
-        /// </param>
-        /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
-        /// </param>
-        /// <returns>
-        /// The List Metric Definitions operation response.
-        /// </returns>
-        public static Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(this IMetricDefinitionOperations operations, string resourceUri, string filterString)
-        {
-            return operations.GetMetricDefinitionsAsync(resourceUri, filterString, CancellationToken.None);
-        }
     }
 
     /// <summary>
@@ -3065,11 +3196,11 @@ namespace Microsoft.Azure.Insights
         /// for the resource.
         /// </summary>
         /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
+        /// Required. The uri of the target resource to get metrics for.
         /// </param>
         /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3102,9 +3233,21 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = this.Client.BaseUri + "/" + resourceUri + "/metricDefinitions?";
+            string url = "/" + resourceUri.Trim() + "/metricDefinitions?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+            url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3140,7 +3283,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3154,162 +3297,164 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricDefinitionListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         MetricDefinitionCollection metricDefinitionCollectionInstance = new MetricDefinitionCollection();
                         result.MetricDefinitionCollection = metricDefinitionCollectionInstance;
 
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
                                 metricDefinitionCollectionInstance.Value.Add(metricDefinitionInstance);
 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString nameInstance = new LocalizableString();
                                     metricDefinitionInstance.Name = nameInstance;
 
                                     JToken valueValue2 = nameValue["value"];
-                                    if (valueValue2 != null)
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = (string)valueValue2;
+                                        string valueInstance = ((string)valueValue2);
                                         nameInstance.Value = valueInstance;
                                     }
 
                                     JToken localizedValueValue = nameValue["localizedValue"];
-                                    if (localizedValueValue != null)
+                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance = (string)localizedValueValue;
+                                        string localizedValueInstance = ((string)localizedValueValue);
                                         nameInstance.LocalizedValue = localizedValueInstance;
                                     }
                                 }
 
                                 JToken unitValue = valueValue["unit"];
-                                if (unitValue != null)
+                                if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    Unit unitInstance = (Unit)Enum.Parse(typeof(Unit), (string)unitValue, false);
+                                    Unit unitInstance = ((Unit)Enum.Parse(typeof(Unit), ((string)unitValue), true));
                                     metricDefinitionInstance.Unit = unitInstance;
                                 }
 
                                 JToken primaryAggregationTypeValue = valueValue["primaryAggregationType"];
-                                if (primaryAggregationTypeValue != null)
+                                if (primaryAggregationTypeValue != null && primaryAggregationTypeValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    AggregationType primaryAggregationTypeInstance = (AggregationType)Enum.Parse(typeof(AggregationType), (string)primaryAggregationTypeValue, false);
+                                    AggregationType primaryAggregationTypeInstance = ((AggregationType)Enum.Parse(typeof(AggregationType), ((string)primaryAggregationTypeValue), true));
                                     metricDefinitionInstance.PrimaryAggregationType = primaryAggregationTypeInstance;
                                 }
 
                                 JToken resourceUriValue = valueValue["resourceUri"];
-                                if (resourceUriValue != null)
+                                if (resourceUriValue != null && resourceUriValue.Type != JTokenType.Null)
                                 {
-                                    string resourceUriInstance = (string)resourceUriValue;
+                                    string resourceUriInstance = ((string)resourceUriValue);
                                     metricDefinitionInstance.ResourceUri = resourceUriInstance;
                                 }
 
-                                JArray metricAvailabilitiesArray = (JArray)valueValue["metricAvailabilities"];
-                                if (metricAvailabilitiesArray != null)
+                                JToken metricAvailabilitiesArray = valueValue["metricAvailabilities"];
+                                if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken metricAvailabilitiesValue in metricAvailabilitiesArray)
+                                    foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
                                         metricDefinitionInstance.MetricAvailabilities.Add(metricAvailabilityInstance);
 
                                         JToken timeGrainValue = metricAvailabilitiesValue["timeGrain"];
-                                        if (timeGrainValue != null)
+                                        if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                         {
-                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                             metricAvailabilityInstance.TimeGrain = timeGrainInstance;
                                         }
 
                                         JToken retentionValue = metricAvailabilitiesValue["retention"];
-                                        if (retentionValue != null)
+                                        if (retentionValue != null && retentionValue.Type != JTokenType.Null)
                                         {
-                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan((string)retentionValue);
+                                            TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
                                             metricAvailabilityInstance.Retention = retentionInstance;
                                         }
 
                                         JToken locationValue = metricAvailabilitiesValue["location"];
-                                        if (locationValue != null)
+                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
                                         {
                                             MetricLocation locationInstance = new MetricLocation();
                                             metricAvailabilityInstance.Location = locationInstance;
 
                                             JToken tableEndpointValue = locationValue["tableEndpoint"];
-                                            if (tableEndpointValue != null)
+                                            if (tableEndpointValue != null && tableEndpointValue.Type != JTokenType.Null)
                                             {
-                                                string tableEndpointInstance = (string)tableEndpointValue;
+                                                string tableEndpointInstance = ((string)tableEndpointValue);
                                                 locationInstance.TableEndpoint = tableEndpointInstance;
                                             }
 
-                                            JArray tableInfoArray = (JArray)locationValue["tableInfo"];
-                                            if (tableInfoArray != null)
+                                            JToken tableInfoArray = locationValue["tableInfo"];
+                                            if (tableInfoArray != null && tableInfoArray.Type != JTokenType.Null)
                                             {
-                                                foreach (JToken tableInfoValue in tableInfoArray)
+                                                foreach (JToken tableInfoValue in ((JArray)tableInfoArray))
                                                 {
                                                     MetricTableInfo metricTableInfoInstance = new MetricTableInfo();
                                                     locationInstance.TableInfo.Add(metricTableInfoInstance);
 
                                                     JToken tableNameValue = tableInfoValue["tableName"];
-                                                    if (tableNameValue != null)
+                                                    if (tableNameValue != null && tableNameValue.Type != JTokenType.Null)
                                                     {
-                                                        string tableNameInstance = (string)tableNameValue;
+                                                        string tableNameInstance = ((string)tableNameValue);
                                                         metricTableInfoInstance.TableName = tableNameInstance;
                                                     }
 
                                                     JToken startTimeValue = tableInfoValue["startTime"];
-                                                    if (startTimeValue != null)
+                                                    if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                                     {
-                                                        DateTime startTimeInstance = (DateTime)startTimeValue;
+                                                        DateTime startTimeInstance = ((DateTime)startTimeValue);
                                                         metricTableInfoInstance.StartTime = startTimeInstance;
                                                     }
 
                                                     JToken endTimeValue = tableInfoValue["endTime"];
-                                                    if (endTimeValue != null)
+                                                    if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                                     {
-                                                        DateTime endTimeInstance = (DateTime)endTimeValue;
+                                                        DateTime endTimeInstance = ((DateTime)endTimeValue);
                                                         metricTableInfoInstance.EndTime = endTimeInstance;
                                                     }
 
                                                     JToken sasTokenValue = tableInfoValue["sasToken"];
-                                                    if (sasTokenValue != null)
+                                                    if (sasTokenValue != null && sasTokenValue.Type != JTokenType.Null)
                                                     {
-                                                        string sasTokenInstance = (string)sasTokenValue;
+                                                        string sasTokenInstance = ((string)sasTokenValue);
                                                         metricTableInfoInstance.SasToken = sasTokenInstance;
                                                     }
 
                                                     JToken sasTokenExpirationTimeValue = tableInfoValue["sasTokenExpirationTime"];
-                                                    if (sasTokenExpirationTimeValue != null)
+                                                    if (sasTokenExpirationTimeValue != null && sasTokenExpirationTimeValue.Type != JTokenType.Null)
                                                     {
-                                                        DateTime sasTokenExpirationTimeInstance = (DateTime)sasTokenExpirationTimeValue;
+                                                        DateTime sasTokenExpirationTimeInstance = ((DateTime)sasTokenExpirationTimeValue);
                                                         metricTableInfoInstance.SasTokenExpirationTime = sasTokenExpirationTimeInstance;
                                                     }
                                                 }
                                             }
 
                                             JToken partitionKeyValue = locationValue["partitionKey"];
-                                            if (partitionKeyValue != null)
+                                            if (partitionKeyValue != null && partitionKeyValue.Type != JTokenType.Null)
                                             {
-                                                string partitionKeyInstance = (string)partitionKeyValue;
+                                                string partitionKeyInstance = ((string)partitionKeyValue);
                                                 locationInstance.PartitionKey = partitionKeyInstance;
                                             }
                                         }
                                     }
                                 }
 
-                                JToken propertiesSequenceElement = valueValue["properties"];
-                                if (propertiesSequenceElement != null)
+                                JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
+                                if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in propertiesSequenceElement)
                                     {
-                                        string propertiesKey = (string)property.Name;
-                                        string propertiesValue = (string)property.Value;
+                                        string propertiesKey = ((string)property.Name);
+                                        string propertiesValue = ((string)property.Value);
                                         metricDefinitionInstance.Properties.Add(propertiesKey, propertiesValue);
                                     }
                                 }
@@ -3347,6 +3492,57 @@ namespace Microsoft.Azure.Insights
         }
     }
 
+    public static partial class MetricOperationsExtensions
+    {
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static MetricListResponse GetMetrics(this IMetricOperations operations, string resourceUri, string filterString)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IMetricOperations)s).GetMetricsAsync(resourceUri, filterString);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The List Metric operation lists the metric value sets for the
+        /// resource metrics.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The uri of the target resource to get metrics for.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
+        /// </param>
+        /// <returns>
+        /// The List Metric values operation response.
+        /// </returns>
+        public static Task<MetricListResponse> GetMetricsAsync(this IMetricOperations operations, string resourceUri, string filterString)
+        {
+            return operations.GetMetricsAsync(resourceUri, filterString, CancellationToken.None);
+        }
+    }
+
     /// <summary>
     /// Operations for metric values.
     /// </summary>
@@ -3370,70 +3566,6 @@ namespace Microsoft.Azure.Insights
         /// The List Metric values operation response.
         /// </returns>
         Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
-    }
-
-    /// <summary>
-    /// Operations for metric values.
-    /// </summary>
-    public static partial class MetricOperationsExtensions
-    {
-        /// <summary>
-        /// The List Metric operation lists the metric value sets for the
-        /// resource metrics.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
-        /// </param>
-        /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
-        /// </param>
-        /// <returns>
-        /// The List Metric values operation response.
-        /// </returns>
-        public static MetricListResponse GetMetrics(this IMetricOperations operations, string resourceUri, string filterString)
-        {
-            try
-            {
-                return operations.GetMetricsAsync(resourceUri, filterString).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The List Metric operation lists the metric value sets for the
-        /// resource metrics.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IMetricOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
-        /// </param>
-        /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
-        /// </param>
-        /// <returns>
-        /// The List Metric values operation response.
-        /// </returns>
-        public static Task<MetricListResponse> GetMetricsAsync(this IMetricOperations operations, string resourceUri, string filterString)
-        {
-            return operations.GetMetricsAsync(resourceUri, filterString, CancellationToken.None);
-        }
     }
 
     /// <summary>
@@ -3467,11 +3599,11 @@ namespace Microsoft.Azure.Insights
         /// resource metrics.
         /// </summary>
         /// <param name='resourceUri'>
-        /// The uri of the target resource to get metrics for.
+        /// Required. The uri of the target resource to get metrics for.
         /// </param>
         /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
+        /// Required. An OData $filter expression that supports querying by the
+        /// name of the metric definition.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3500,12 +3632,24 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = this.Client.BaseUri + "/" + resourceUri + "/metrics?";
+            string url = "/" + resourceUri.Trim() + "/metrics?";
             url = url + "api-version=2014-04-01";
             if (filterString != null)
             {
-                url = url + "&$filter=" + Uri.EscapeUriString(filterString);
+                url = url + "&$filter=" + Uri.EscapeDataString(filterString != null ? filterString.Trim() : "");
             }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3541,7 +3685,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3555,135 +3699,138 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new MetricListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         MetricCollection metricCollectionInstance = new MetricCollection();
                         result.MetricCollection = metricCollectionInstance;
 
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Metric metricInstance = new Metric();
                                 metricCollectionInstance.Value.Add(metricInstance);
 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     LocalizableString nameInstance = new LocalizableString();
                                     metricInstance.Name = nameInstance;
 
                                     JToken valueValue2 = nameValue["value"];
-                                    if (valueValue2 != null)
+                                    if (valueValue2 != null && valueValue2.Type != JTokenType.Null)
                                     {
-                                        string valueInstance = (string)valueValue2;
+                                        string valueInstance = ((string)valueValue2);
                                         nameInstance.Value = valueInstance;
                                     }
 
                                     JToken localizedValueValue = nameValue["localizedValue"];
-                                    if (localizedValueValue != null)
+                                    if (localizedValueValue != null && localizedValueValue.Type != JTokenType.Null)
                                     {
-                                        string localizedValueInstance = (string)localizedValueValue;
+                                        string localizedValueInstance = ((string)localizedValueValue);
                                         nameInstance.LocalizedValue = localizedValueInstance;
                                     }
                                 }
 
                                 JToken unitValue = valueValue["unit"];
-                                if (unitValue != null)
+                                if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
-                                    // how
-                                    Unit unitInstance = (Unit)Enum.Parse(typeof(Unit), (string)unitValue, false);
+                                    Unit unitInstance = ((Unit)Enum.Parse(typeof(Unit), ((string)unitValue), true));
                                     metricInstance.Unit = unitInstance;
                                 }
 
                                 JToken timeGrainValue = valueValue["timeGrain"];
-                                if (timeGrainValue != null)
+                                if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan((string)timeGrainValue);
+                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                                     metricInstance.TimeGrain = timeGrainInstance;
                                 }
 
                                 JToken startTimeValue = valueValue["startTime"];
-                                if (startTimeValue != null)
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime startTimeInstance = (DateTime)startTimeValue;
+                                    DateTime startTimeInstance = ((DateTime)startTimeValue);
                                     metricInstance.StartTime = startTimeInstance;
                                 }
 
                                 JToken endTimeValue = valueValue["endTime"];
-                                if (endTimeValue != null)
+                                if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                                 {
-                                    DateTime endTimeInstance = (DateTime)endTimeValue;
+                                    DateTime endTimeInstance = ((DateTime)endTimeValue);
                                     metricInstance.EndTime = endTimeInstance;
                                 }
 
-                                JArray metricValuesArray = (JArray)valueValue["metricValues"];
-                                if (metricValuesArray != null)
+                                JToken metricValuesArray = valueValue["metricValues"];
+                                if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
                                 {
-                                    foreach (JToken metricValuesValue in metricValuesArray)
+                                    foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
                                     {
                                         MetricValue metricValueInstance = new MetricValue();
                                         metricInstance.MetricValues.Add(metricValueInstance);
 
                                         JToken timestampValue = metricValuesValue["timestamp"];
-                                        if (timestampValue != null)
+                                        if (timestampValue != null && timestampValue.Type != JTokenType.Null)
                                         {
-                                            DateTime timestampInstance = (DateTime)timestampValue;
+                                            DateTime timestampInstance = ((DateTime)timestampValue);
                                             metricValueInstance.Timestamp = timestampInstance;
                                         }
 
                                         JToken averageValue = metricValuesValue["average"];
-                                        if (averageValue != null)
+                                        if (averageValue != null && averageValue.Type != JTokenType.Null)
                                         {
-                                            double averageInstance = (double)averageValue;
+                                            double averageInstance = ((double)averageValue);
                                             metricValueInstance.Average = averageInstance;
                                         }
 
                                         JToken minimumValue = metricValuesValue["minimum"];
-                                        if (minimumValue != null)
+                                        if (minimumValue != null && minimumValue.Type != JTokenType.Null)
                                         {
-                                            double minimumInstance = (double)minimumValue;
+                                            double minimumInstance = ((double)minimumValue);
                                             metricValueInstance.Minimum = minimumInstance;
                                         }
 
                                         JToken maximumValue = metricValuesValue["maximum"];
-                                        if (maximumValue != null)
+                                        if (maximumValue != null && maximumValue.Type != JTokenType.Null)
                                         {
-                                            double maximumInstance = (double)maximumValue;
+                                            double maximumInstance = ((double)maximumValue);
                                             metricValueInstance.Maximum = maximumInstance;
                                         }
 
                                         JToken totalValue = metricValuesValue["total"];
-                                        if (totalValue != null)
+                                        if (totalValue != null && totalValue.Type != JTokenType.Null)
                                         {
-                                            double totalInstance = (double)totalValue;
+                                            double totalInstance = ((double)totalValue);
                                             metricValueInstance.Total = totalInstance;
                                         }
 
                                         JToken countValue = metricValuesValue["count"];
-                                        if (countValue != null)
+                                        if (countValue != null && countValue.Type != JTokenType.Null)
                                         {
-                                            long countInstance = (long)countValue;
+                                            long countInstance = ((long)countValue);
                                             metricValueInstance.Count = countInstance;
                                         }
 
                                         JToken lastValue = metricValuesValue["last"];
-                                        if (lastValue != null)
+                                        if (lastValue != null && lastValue.Type != JTokenType.Null)
                                         {
-                                            double lastInstance = (double)lastValue;
+                                            double lastInstance = ((double)lastValue);
                                             metricValueInstance.Last = lastInstance;
                                         }
 
-                                        JToken propertiesSequenceElement = metricValuesValue["properties"];
-                                        if (propertiesSequenceElement != null)
+                                        JToken propertiesSequenceElement = ((JToken)metricValuesValue["properties"]);
+                                        if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                         {
                                             foreach (JProperty property in propertiesSequenceElement)
                                             {
-                                                string propertiesKey = (string)property.Name;
-                                                string propertiesValue = (string)property.Value;
+                                                string propertiesKey = ((string)property.Name);
+                                                string propertiesValue = ((string)property.Value);
                                                 metricValueInstance.Properties.Add(propertiesKey, propertiesValue);
                                             }
                                         }
@@ -3691,19 +3838,19 @@ namespace Microsoft.Azure.Insights
                                 }
 
                                 JToken resourceIdValue = valueValue["resourceId"];
-                                if (resourceIdValue != null)
+                                if (resourceIdValue != null && resourceIdValue.Type != JTokenType.Null)
                                 {
-                                    string resourceIdInstance = (string)resourceIdValue;
+                                    string resourceIdInstance = ((string)resourceIdValue);
                                     metricInstance.ResourceId = resourceIdInstance;
                                 }
 
-                                JToken propertiesSequenceElement2 = valueValue["properties"];
-                                if (propertiesSequenceElement2 != null)
+                                JToken propertiesSequenceElement2 = ((JToken)valueValue["properties"]);
+                                if (propertiesSequenceElement2 != null && propertiesSequenceElement2.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property2 in propertiesSequenceElement2)
                                     {
-                                        string propertiesKey2 = (string)property2.Name;
-                                        string propertiesValue2 = (string)property2.Value;
+                                        string propertiesKey2 = ((string)property2.Name);
+                                        string propertiesValue2 = ((string)property2.Value);
                                         metricInstance.Properties.Add(propertiesKey2, propertiesValue2);
                                     }
                                 }
@@ -3741,6 +3888,53 @@ namespace Microsoft.Azure.Insights
         }
     }
 
+    public static partial class UsageMetricsOperationsExtensions
+    {
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, metricNames);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
+        /// <returns>
+        /// The List Usage Metric operation response.
+        /// </returns>
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
+        {
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
+        }
+    }
+
     public partial interface IUsageMetricsOperations
     {
         /// <summary>
@@ -3753,51 +3947,6 @@ namespace Microsoft.Azure.Insights
         /// The List Usage Metric operation response.
         /// </returns>
         Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
-    }
-
-    public static partial class UsageMetricsOperationsExtensions
-    {
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            try
-            {
-                return operations.ListAsync(resourceUri, metricNames).Result;
-            }
-            catch (AggregateException ex)
-            {
-                if (ex.InnerExceptions.Count > 1)
-                {
-                    throw;
-                }
-                else
-                {
-                    throw ex.InnerException;
-                }
-            }
-        }
-
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
-        }
     }
 
     internal partial class UsageMetricsOperations : IServiceOperations<InsightsClient>, IUsageMetricsOperations
@@ -3826,6 +3975,12 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
+        /// <param name='resourceUri'>
+        /// Required.
+        /// </param>
+        /// <param name='metricNames'>
+        /// Required.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -3857,9 +4012,21 @@ namespace Microsoft.Azure.Insights
             }
 
             // Construct URL
-            string url = this.Client.BaseUri + "/" + resourceUri + "/usages?";
+            string url = "/" + resourceUri.Trim() + "/usages?";
             url = url + "api-version=2014-04-01";
-            url = url + "&names=" + Uri.EscapeUriString(string.Join(",", metricNames));
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
 
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -3895,7 +4062,7 @@ namespace Microsoft.Azure.Insights
                     if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false), CloudExceptionType.Json);
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             Tracing.Error(invocationId, ex);
@@ -3909,126 +4076,130 @@ namespace Microsoft.Azure.Insights
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                     result = new UsageMetricListResponse();
-                    JToken responseDoc = JToken.Parse(responseContent);
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
 
-                    if (responseDoc != null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
                         UsageMetricCollection usageMetricCollectionInstance = new UsageMetricCollection();
                         result.UsageMetricCollection = usageMetricCollectionInstance;
 
-                        JArray valueArray = (JArray)responseDoc["value"];
-                        if (valueArray != null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken valueValue in valueArray)
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 UsageMetric usageMetricInstance = new UsageMetric();
                                 usageMetricCollectionInstance.Value.Add(usageMetricInstance);
 
                                 JToken nameValue = valueValue["name"];
-                                if (nameValue != null)
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
-                                    string nameInstance = (string)nameValue;
+                                    string nameInstance = ((string)nameValue);
                                     usageMetricInstance.Name = nameInstance;
                                 }
 
                                 JToken displayNameValue = valueValue["displayName"];
-                                if (displayNameValue != null)
+                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
                                 {
-                                    string displayNameInstance = (string)displayNameValue;
+                                    string displayNameInstance = ((string)displayNameValue);
                                     usageMetricInstance.DisplayName = displayNameInstance;
                                 }
 
                                 JToken currentValueValue = valueValue["currentValue"];
-                                if (currentValueValue != null)
+                                if (currentValueValue != null && currentValueValue.Type != JTokenType.Null)
                                 {
-                                    double currentValueInstance = (double)currentValueValue;
+                                    double currentValueInstance = ((double)currentValueValue);
                                     usageMetricInstance.CurrentValue = currentValueInstance;
                                 }
 
                                 JToken limitValue = valueValue["limit"];
-                                if (limitValue != null)
+                                if (limitValue != null && limitValue.Type != JTokenType.Null)
                                 {
-                                    double limitInstance = (double)limitValue;
+                                    double limitInstance = ((double)limitValue);
                                     usageMetricInstance.Limit = limitInstance;
                                 }
 
                                 JToken unitValue = valueValue["unit"];
-                                if (unitValue != null)
+                                if (unitValue != null && unitValue.Type != JTokenType.Null)
                                 {
-                                    string unitInstance = (string)unitValue;
+                                    string unitInstance = ((string)unitValue);
                                     usageMetricInstance.Unit = unitInstance;
                                 }
 
                                 JToken nextResetTimeValue = valueValue["nextResetTime"];
-                                if (nextResetTimeValue != null)
+                                if (nextResetTimeValue != null && nextResetTimeValue.Type != JTokenType.Null)
                                 {
-                                    string nextResetTimeInstance = (string)nextResetTimeValue;
+                                    string nextResetTimeInstance = ((string)nextResetTimeValue);
                                     usageMetricInstance.NextResetTime = nextResetTimeInstance;
                                 }
 
                                 JToken quotaPeriodValue = valueValue["quotaPeriod"];
-                                if (quotaPeriodValue != null)
+                                if (quotaPeriodValue != null && quotaPeriodValue.Type != JTokenType.Null)
                                 {
-                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan((string)quotaPeriodValue);
+                                    TimeSpan quotaPeriodInstance = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue));
                                     usageMetricInstance.QuotaPeriod = quotaPeriodInstance;
                                 }
                             }
                         }
 
-                        JArray propertiesArray = (JArray)responseDoc["properties"];
-                        if (propertiesArray != null)
+                        JToken propertiesArray = responseDoc["properties"];
+                        if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken propertiesValue in propertiesArray)
+                            foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 UsageMetric usageMetricInstance2 = new UsageMetric();
                                 usageMetricCollectionInstance.Properties.Add(usageMetricInstance2);
 
                                 JToken nameValue2 = propertiesValue["name"];
-                                if (nameValue2 != null)
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
                                 {
-                                    string nameInstance2 = (string)nameValue2;
+                                    string nameInstance2 = ((string)nameValue2);
                                     usageMetricInstance2.Name = nameInstance2;
                                 }
 
                                 JToken displayNameValue2 = propertiesValue["displayName"];
-                                if (displayNameValue2 != null)
+                                if (displayNameValue2 != null && displayNameValue2.Type != JTokenType.Null)
                                 {
-                                    string displayNameInstance2 = (string)displayNameValue2;
+                                    string displayNameInstance2 = ((string)displayNameValue2);
                                     usageMetricInstance2.DisplayName = displayNameInstance2;
                                 }
 
                                 JToken currentValueValue2 = propertiesValue["currentValue"];
-                                if (currentValueValue2 != null)
+                                if (currentValueValue2 != null && currentValueValue2.Type != JTokenType.Null)
                                 {
-                                    double currentValueInstance2 = (double)currentValueValue2;
+                                    double currentValueInstance2 = ((double)currentValueValue2);
                                     usageMetricInstance2.CurrentValue = currentValueInstance2;
                                 }
 
                                 JToken limitValue2 = propertiesValue["limit"];
-                                if (limitValue2 != null)
+                                if (limitValue2 != null && limitValue2.Type != JTokenType.Null)
                                 {
-                                    double limitInstance2 = (double)limitValue2;
+                                    double limitInstance2 = ((double)limitValue2);
                                     usageMetricInstance2.Limit = limitInstance2;
                                 }
 
                                 JToken unitValue2 = propertiesValue["unit"];
-                                if (unitValue2 != null)
+                                if (unitValue2 != null && unitValue2.Type != JTokenType.Null)
                                 {
-                                    string unitInstance2 = (string)unitValue2;
+                                    string unitInstance2 = ((string)unitValue2);
                                     usageMetricInstance2.Unit = unitInstance2;
                                 }
 
                                 JToken nextResetTimeValue2 = propertiesValue["nextResetTime"];
-                                if (nextResetTimeValue2 != null)
+                                if (nextResetTimeValue2 != null && nextResetTimeValue2.Type != JTokenType.Null)
                                 {
-                                    string nextResetTimeInstance2 = (string)nextResetTimeValue2;
+                                    string nextResetTimeInstance2 = ((string)nextResetTimeValue2);
                                     usageMetricInstance2.NextResetTime = nextResetTimeInstance2;
                                 }
 
                                 JToken quotaPeriodValue2 = propertiesValue["quotaPeriod"];
-                                if (quotaPeriodValue2 != null)
+                                if (quotaPeriodValue2 != null && quotaPeriodValue2.Type != JTokenType.Null)
                                 {
-                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan((string)quotaPeriodValue2);
+                                    TimeSpan quotaPeriodInstance2 = TypeConversion.From8601TimeSpan(((string)quotaPeriodValue2));
                                     usageMetricInstance2.QuotaPeriod = quotaPeriodInstance2;
                                 }
                             }

@@ -119,4 +119,19 @@
     <Error Condition="!Exists('$(StyleCopMSBuildTargetsFile)') And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestore)" />
     <Error Condition="Exists('$(StyleCopMSBuildTargetsFile)')  And $(RestorePackages)==true And $(StyleCopTreatErrorsAsWarnings)==false" Text="$(StyleCopMSBuildMessageRestored)" />
   </Target>
+  
+  <Target Name="SyncPackageVersions" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <PowerShellExe Condition=" '$(PowerShellExe)'=='' ">%WINDIR%\System32\WindowsPowerShell\v1.0\powershell.exe</PowerShellExe>   
+      <NuSpecSyncScript>$(SolutionDir)\tools\Sync-NuspecDependencies.ps1</NuSpecSyncScript>	  
+    </PropertyGroup>
+	
+	<!-- Update all explicit references to dependent versions. -->
+    <Exec Command="$(PowerShellExe) -NonInteractive -ExecutionPolicy bypass -Command &quot;&amp; { &amp;&apos;$(NuSpecSyncScript)&apos; &apos;$(MSBuildProjectDirectory)&apos; }&quot;" />
+  </Target>
+
+  <Target Name="BeforeCodeGen" BeforeTargets="GenerateCodeFromSpecs" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
+    <Message Text="Removing Hydra generated files before building project $(ProjectFileName)"/>
+    <RemoveDir Directories="Generated" />
+  </Target>
 </Project>
