@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hydra>
+  <Assembly>Microsoft.Azure.Management.RedisCache.Specification.dll</Assembly>
+  <OutputDirectory>Generated</OutputDirectory>
+
+  <Specification>
+    <Type>Microsoft.Azure.Management.RedisCache.RedisCacheManagementClient</Type>
+
+    <Platform>
+      <Flavor>CSharp.Azure</Flavor>
+      <OutputPath>RedisCacheManagementClient.cs</OutputPath>
+    </Platform>
+
+  </Specification>
+</Hydra>
