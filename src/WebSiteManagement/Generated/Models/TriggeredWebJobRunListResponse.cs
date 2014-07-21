@@ -50,7 +50,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         public TriggeredWebJobRunListResponse()
         {
             this.TriggeredWebJobRuns = new List<TriggeredWebJobRun>();
-            this.JobRuns = new List<WebJobRun>();
         }
         
         /// <summary>
