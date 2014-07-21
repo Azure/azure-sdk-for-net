@@ -42,6 +42,18 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._isContinuous = value; }
         }
         
+        private bool _isOfflineSecondary;
+        
+        /// <summary>
+        /// Optional. Gets a value that indicates whether it is an offline
+        /// secondary copy.
+        /// </summary>
+        public bool IsOfflineSecondary
+        {
+            get { return this._isOfflineSecondary; }
+            set { this._isOfflineSecondary = value; }
+        }
+        
         private string _partnerDatabase;
         
         /// <summary>
