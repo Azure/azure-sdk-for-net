@@ -8,7 +8,9 @@
 
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>RedisCacheManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure.Management.RedisCache</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
 
   </Specification>
