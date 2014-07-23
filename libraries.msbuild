@@ -27,6 +27,11 @@
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
 
+  /t:BuildDelaySignedPackages
+    Builds packages containing delay signed binaries
+    signed with the official key.
+    Drops into the .\binaries\packages folder.
+
   /t:BuildPackages
     Builds NuGet packages using the binaries folder contents.
     The packages will drop to .\binaries\packages.
@@ -107,7 +112,7 @@
     <NuGetSymbolPublishingSource></NuGetSymbolPublishingSource>
     <NuGetKey></NuGetKey>
   </PropertyGroup>
-  
+
   <!--
   Hydra related profiles
   -->
@@ -123,7 +128,7 @@
     <OfficialMSBuildProperties>Configuration=Release;OfficialBuild=true;Platform=Any CPU;GenerateHydraSpecs=$(GenerateHydraSpecs)</OfficialMSBuildProperties>
     <Net40BuildProperty>BuildSecondConfiguration=true</Net40BuildProperty>
   </PropertyGroup>
-  
+
   <!--
   Regular developer build
   -->
@@ -340,6 +345,23 @@
   </Target>
 
   <!--
+  Build delay signed packages, useful for local testing before
+  spec updates are published.
+  -->
+  <Target Name="BuildDelaySignedPackages">
+    <CallTarget Targets="OfficialBuild" />
+    <ItemGroup>
+      <PclBinaries Include="binaries\unsigned\*.dll" />
+      <Net40Binaries Include="binaries\net40\unsigned\*.dll" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(PclBinaries)" DestinationFolder="binaries" />
+    <Copy SourceFiles="@(Net40Binaries)" DestinationFolder="binaries\net40" />
+
+    <CallTarget Targets="BuildPackages" />
+  </Target>
+
+  <!--
   Publish packages to a NuGet Server (nuget.org or myget.org).
   -->
   <Target Name="PublishPackages" DependsOnTargets="BuildPackages">
@@ -394,7 +416,7 @@
     <!-- delete config file, don't want to leave passwords hanging around on the build server file system -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
   </Target>
-  
+
   <!--
   Force nuget package restore so that packages that include .targets files
   don't need to be checked into source control. Skips all private packages.

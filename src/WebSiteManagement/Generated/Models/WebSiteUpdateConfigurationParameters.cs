@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> _connectionStrings;
         
         /// <summary>
-        /// Optional. Connection strings for database and other external
+        /// Optional. The connection strings for database and other external
         /// resources.
         /// </summary>
         public IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> ConnectionStrings
@@ -58,10 +58,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<string> _defaultDocuments;
         
         /// <summary>
-        /// Optional. Elements that list, in order of preference, the name of
-        /// the file that a web site returns when the web site's domain name
-        /// is requested by itself. For example, if the default document for
-        /// http://contoso.com is default.htm, the page
+        /// Optional. One or more string elements that list, in order of
+        /// preference, the name of the file that a web site returns when the
+        /// web site's domain name is requested by itself. For example, if the
+        /// default document for http://contoso.com is default.htm, the page
         /// http://www.contoso.com/default.htm is returned when the browser is
         /// pointed to http://www.contoso.com.
         /// </summary>
@@ -74,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private bool? _detailedErrorLoggingEnabled;
         
         /// <summary>
-        /// Optional. Indicated if detailed error logging is enabled.
+        /// Optional. Indicates if detailed error logging is enabled.
         /// </summary>
         public bool? DetailedErrorLoggingEnabled
         {
@@ -165,9 +165,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. The number of web workers allotted to the web site. If
-        /// the site mode is Free, this value is 1. If the site mode is
-        /// Shared, this value can range from 1 through 6. If the site mode is
-        /// Standard, this value can range from 1 through 10.
+        /// the web site mode is Free, this value is 1. If the web site mode
+        /// is Shared, this value can range from 1 through 6. If the web site
+        /// mode is Standard, this value can range from 1 through 10.
         /// </summary>
         public int? NumberOfWorkers
         {
@@ -178,7 +178,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _phpVersion;
         
         /// <summary>
-        /// Optional. The web site's PHP version. Supported values are an empty
+        /// Optional. The web site PHP version. Supported values are an empty
         /// string (an empty string disables PHP), 5.3, and 5.4.
         /// </summary>
         public string PhpVersion
@@ -256,6 +256,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._requestTracingExpirationTime = value; }
         }
         
+        private IList<RoutingRule> _routingRules;
+        
+        /// <summary>
+        /// Optional. List of routing rules for the website.
+        /// </summary>
+        public IList<RoutingRule> RoutingRules
+        {
+            get { return this._routingRules; }
+            set { this._routingRules = value; }
+        }
+        
         private string _scmType;
         
         /// <summary>
@@ -302,11 +313,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             this.DefaultDocuments = new List<string>();
             this.HandlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
             this.Metadata = new Dictionary<string, string>();
+            this.RoutingRules = new List<RoutingRule>();
         }
         
         /// <summary>
-        /// Connection string information for database and other external
-        /// resources.
+        /// Connection string for database and other external resources.
         /// </summary>
         public partial class ConnectionStringInfo
         {
@@ -332,13 +343,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private string _type;
+            private ConnectionStringType _type;
             
             /// <summary>
             /// Optional. The type of the connection string (for example,
             /// "MySQL").
             /// </summary>
-            public string Type
+            public ConnectionStringType Type
             {
                 get { return this._type; }
                 set { this._type = value; }
