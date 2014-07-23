@@ -1,6 +1,6 @@
-# Windows Azure Common Library ETW Logger
+# Microsoft Azure Common Library ETW Logger
 
-Exposes Windows Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source. Requires .NET Framework 4.5 or newer.
+Exposes Microsoft Azure Libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to Microsoft-WindowsAzure event source. Requires .NET Framework 4.5 or newer.
 
 # Getting started
 

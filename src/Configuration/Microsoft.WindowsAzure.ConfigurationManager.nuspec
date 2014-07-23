@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>Microsoft Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</description>
     <summary>Microsoft Azure Configuration Manager provides a unified API to load configuration settings regardless of where the application is hosted - whether on-premises or in a Cloud Service.</summary>
-    <tags>Microsoft "Microsoft Azure" Configuration "Configuration Manager" cloud windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Configuration "Configuration Manager" cloud azureofficial</tags>
     <references>
       <reference file="Microsoft.WindowsAzure.Configuration.dll" />
     </references>

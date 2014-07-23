@@ -14,7 +14,7 @@
     <summary>Provides capabilities to query Microsoft Azure gallery.</summary>
     <description>Provides capabilities to query Microsoft Azure gallery.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure gallery REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft Azure gallery REST HTTP client azureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Gallery.dll" />

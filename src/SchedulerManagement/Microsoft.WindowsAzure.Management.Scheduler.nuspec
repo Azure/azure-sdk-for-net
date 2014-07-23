@@ -13,7 +13,7 @@
     <summary>Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</summary>
     <description>Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure scheduler REST HTTP cron scheduler client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure scheduler REST HTTP cron scheduler client azureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Scheduler.dll" />

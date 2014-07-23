@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAzure
 {
     /// <summary>
     /// The CloudCredentials class is the base class for providing credentials
-    /// to access Windows Azure services.
+    /// to access Microsoft Azure services.
     /// </summary>
     public abstract class CloudCredentials
     {

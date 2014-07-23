@@ -212,7 +212,7 @@ namespace Microsoft.WindowsAzure.Common.Platform
         }
 
         /// <summary>
-        /// Gets the setting defined in the Windows Azure configuration file.
+        /// Gets the setting defined in the Microsoft Azure configuration file.
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <returns>Setting value.</returns>

@@ -14,7 +14,7 @@
     <summary>Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Microsoft Azure services.</summary>
     <description>Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Microsoft Azure services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure monitoring "monitoring services" metrics alerts autoscale REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure monitoring "monitoring services" metrics alerts autoscale REST HTTP client azureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Monitoring.dll" />
