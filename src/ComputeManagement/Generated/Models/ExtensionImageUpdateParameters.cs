@@ -37,5 +37,29 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ExtensionImageUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ExtensionImageUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public ExtensionImageUpdateParameters(string providerNameSpace, string type, string version)
+            : this()
+        {
+            if (providerNameSpace == null)
+            {
+                throw new ArgumentNullException("providerNameSpace");
+            }
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            if (version == null)
+            {
+                throw new ArgumentNullException("version");
+            }
+            this.ProviderNameSpace = providerNameSpace;
+            this.Type = type;
+            this.Version = version;
+        }
     }
 }
