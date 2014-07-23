@@ -3845,14 +3845,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         foreach (XElement extensionImagesElement in extensionImagesSequenceElement.Elements(XName.Get("ExtensionImage", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            HostedServiceListAvailableExtensionsResponse.ExtensionImage extensionImageInstance = new HostedServiceListAvailableExtensionsResponse.ExtensionImage();
+                            ExtensionImage extensionImageInstance = new ExtensionImage();
                             result.ExtensionImages.Add(extensionImageInstance);
                             
                             XElement providerNameSpaceElement = extensionImagesElement.Element(XName.Get("ProviderNameSpace", "http://schemas.microsoft.com/windowsazure"));
                             if (providerNameSpaceElement != null)
                             {
                                 string providerNameSpaceInstance = providerNameSpaceElement.Value;
-                                extensionImageInstance.ProviderNamespace = providerNameSpaceInstance;
+                                extensionImageInstance.ProviderNameSpace = providerNameSpaceInstance;
                             }
                             
                             XElement typeElement = extensionImagesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
@@ -3876,13 +3876,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Label = labelInstance;
                             }
                             
-                            XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                extensionImageInstance.Description = descriptionInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
@@ -3890,11 +3883,122 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
+                            XElement mediaLinkElement = extensionImagesElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
                             {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                extensionImageInstance.MediaLink = mediaLinkInstance;
+                            }
+                            
+                            XElement certificateElement = extensionImagesElement.Element(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
+                            if (certificateElement != null)
+                            {
+                                ExtensionCertificateConfiguration certificateInstance = new ExtensionCertificateConfiguration();
+                                extensionImageInstance.Certificate = certificateInstance;
+                                
+                                XElement storeLocationElement = certificateElement.Element(XName.Get("StoreLocation", "http://schemas.microsoft.com/windowsazure"));
+                                if (storeLocationElement != null)
+                                {
+                                    string storeLocationInstance = storeLocationElement.Value;
+                                    certificateInstance.StoreLocation = storeLocationInstance;
+                                }
+                                
+                                XElement storeNameElement = certificateElement.Element(XName.Get("StoreName", "http://schemas.microsoft.com/windowsazure"));
+                                if (storeNameElement != null)
+                                {
+                                    string storeNameInstance = storeNameElement.Value;
+                                    certificateInstance.StoreName = storeNameInstance;
+                                }
+                                
+                                XElement thumbprintRequiredElement = certificateElement.Element(XName.Get("ThumbprintRequired", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintRequiredElement != null && string.IsNullOrEmpty(thumbprintRequiredElement.Value) == false)
+                                {
+                                    bool thumbprintRequiredInstance = bool.Parse(thumbprintRequiredElement.Value);
+                                    certificateInstance.ThumbprintRequired = thumbprintRequiredInstance;
+                                }
+                                
+                                XElement thumbprintAlgorithmElement = certificateElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintAlgorithmElement != null)
+                                {
+                                    string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                    certificateInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
+                                }
+                            }
+                            
+                            XElement endpointsElement = extensionImagesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                            if (endpointsElement != null)
+                            {
+                                ExtensionEndpointConfiguration endpointsInstance = new ExtensionEndpointConfiguration();
+                                extensionImageInstance.ExtensionEndpoints = endpointsInstance;
+                                
+                                XElement inputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                if (inputEndpointsSequenceElement != null)
+                                {
+                                    foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ExtensionEndpointConfiguration.InputEndpoint inputEndpointInstance = new ExtensionEndpointConfiguration.InputEndpoint();
+                                        endpointsInstance.InputEndpoints.Add(inputEndpointInstance);
+                                        
+                                        XElement nameElement = inputEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement != null)
+                                        {
+                                            string nameInstance = nameElement.Value;
+                                            inputEndpointInstance.Name = nameInstance;
+                                        }
+                                        
+                                        XElement protocolElement = inputEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        if (protocolElement != null)
+                                        {
+                                            string protocolInstance = protocolElement.Value;
+                                            inputEndpointInstance.Protocol = protocolInstance;
+                                        }
+                                        
+                                        XElement portElement = inputEndpointsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                        if (portElement != null)
+                                        {
+                                            int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
+                                            inputEndpointInstance.Port = portInstance;
+                                        }
+                                        
+                                        XElement localPortElement = inputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                        if (localPortElement != null)
+                                        {
+                                            int localPortInstance = int.Parse(localPortElement.Value, CultureInfo.InvariantCulture);
+                                            inputEndpointInstance.LocalPort = localPortInstance;
+                                        }
+                                    }
+                                }
+                                
+                                XElement internalEndpointsSequenceElement = endpointsElement.Element(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                if (internalEndpointsSequenceElement != null)
+                                {
+                                    foreach (XElement internalEndpointsElement in internalEndpointsSequenceElement.Elements(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ExtensionEndpointConfiguration.InternalEndpoint internalEndpointInstance = new ExtensionEndpointConfiguration.InternalEndpoint();
+                                        endpointsInstance.InternalEndpoints.Add(internalEndpointInstance);
+                                        
+                                        XElement nameElement2 = internalEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            internalEndpointInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement protocolElement2 = internalEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        if (protocolElement2 != null)
+                                        {
+                                            string protocolInstance2 = protocolElement2.Value;
+                                            internalEndpointInstance.Protocol = protocolInstance2;
+                                        }
+                                        
+                                        XElement portElement2 = internalEndpointsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                        if (portElement2 != null)
+                                        {
+                                            int portInstance2 = int.Parse(portElement2.Value, CultureInfo.InvariantCulture);
+                                            internalEndpointInstance.Port = portInstance2;
+                                        }
+                                    }
+                                }
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -3911,6 +4015,51 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.PrivateConfigurationSchema = privateConfigurationSchemaInstance;
                             }
                             
+                            XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                extensionImageInstance.Description = descriptionInstance;
+                            }
+                            
+                            XElement publisherNameElement = extensionImagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                extensionImageInstance.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                extensionImageInstance.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement localResourcesSequenceElement = extensionImagesElement.Element(XName.Get("LocalResources", "http://schemas.microsoft.com/windowsazure"));
+                            if (localResourcesSequenceElement != null)
+                            {
+                                foreach (XElement localResourcesElement in localResourcesSequenceElement.Elements(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
+                                    extensionImageInstance.LocalResources.Add(localResourceInstance);
+                                    
+                                    XElement nameElement3 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement3 != null)
+                                    {
+                                        string nameInstance3 = nameElement3.Value;
+                                        localResourceInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    XElement sizeInMBElement = localResourcesElement.Element(XName.Get("SizeInMB", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sizeInMBElement != null && string.IsNullOrEmpty(sizeInMBElement.Value) == false)
+                                    {
+                                        int sizeInMBInstance = int.Parse(sizeInMBElement.Value, CultureInfo.InvariantCulture);
+                                        localResourceInstance.SizeInMB = sizeInMBInstance;
+                                    }
+                                }
+                            }
+                            
                             XElement blockRoleUponFailureElement = extensionImagesElement.Element(XName.Get("BlockRoleUponFailure", "http://schemas.microsoft.com/windowsazure"));
                             if (blockRoleUponFailureElement != null && string.IsNullOrEmpty(blockRoleUponFailureElement.Value) == false)
                             {
@@ -3918,18 +4067,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.BlockRoleUponFailure = blockRoleUponFailureInstance;
                             }
                             
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
+                            }
+                            
                             XElement sampleConfigElement = extensionImagesElement.Element(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
                             if (sampleConfigElement != null)
                             {
-                                string sampleConfigInstance = TypeConversion.FromBase64String(sampleConfigElement.Value);
+                                string sampleConfigInstance = sampleConfigElement.Value;
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
-                            }
-                            
-                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
-                            {
-                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
-                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
                             }
                             
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -3960,11 +4109,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
                             }
                             
-                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            XElement disallowMajorVersionUpgradeElement = extensionImagesElement.Element(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
+                            if (disallowMajorVersionUpgradeElement != null && string.IsNullOrEmpty(disallowMajorVersionUpgradeElement.Value) == false)
                             {
-                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
-                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
+                                bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
+                                extensionImageInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
+                            }
+                            
+                            XElement supportedOSElement = extensionImagesElement.Element(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                            if (supportedOSElement != null)
+                            {
+                                string supportedOSInstance = supportedOSElement.Value;
+                                extensionImageInstance.SupportedOS = supportedOSInstance;
+                            }
+                            
+                            XElement companyNameElement = extensionImagesElement.Element(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                            if (companyNameElement != null)
+                            {
+                                string companyNameInstance = companyNameElement.Value;
+                                extensionImageInstance.CompanyName = companyNameInstance;
                             }
                         }
                     }
@@ -4299,14 +4462,14 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     {
                         foreach (XElement extensionImagesElement in extensionImagesSequenceElement.Elements(XName.Get("ExtensionImage", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            HostedServiceListAvailableExtensionsResponse.ExtensionImage extensionImageInstance = new HostedServiceListAvailableExtensionsResponse.ExtensionImage();
+                            ExtensionImage extensionImageInstance = new ExtensionImage();
                             result.ExtensionImages.Add(extensionImageInstance);
                             
                             XElement providerNameSpaceElement = extensionImagesElement.Element(XName.Get("ProviderNameSpace", "http://schemas.microsoft.com/windowsazure"));
                             if (providerNameSpaceElement != null)
                             {
                                 string providerNameSpaceInstance = providerNameSpaceElement.Value;
-                                extensionImageInstance.ProviderNamespace = providerNameSpaceInstance;
+                                extensionImageInstance.ProviderNameSpace = providerNameSpaceInstance;
                             }
                             
                             XElement typeElement = extensionImagesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
@@ -4330,13 +4493,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.Label = labelInstance;
                             }
                             
-                            XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
-                            if (descriptionElement != null)
-                            {
-                                string descriptionInstance = descriptionElement.Value;
-                                extensionImageInstance.Description = descriptionInstance;
-                            }
-                            
                             XElement hostingResourcesElement = extensionImagesElement.Element(XName.Get("HostingResources", "http://schemas.microsoft.com/windowsazure"));
                             if (hostingResourcesElement != null)
                             {
@@ -4344,11 +4500,122 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.HostingResources = hostingResourcesInstance;
                             }
                             
-                            XElement thumbprintAlgorithmElement = extensionImagesElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
-                            if (thumbprintAlgorithmElement != null)
+                            XElement mediaLinkElement = extensionImagesElement.Element(XName.Get("MediaLink", "http://schemas.microsoft.com/windowsazure"));
+                            if (mediaLinkElement != null)
                             {
-                                string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
-                                extensionImageInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
+                                Uri mediaLinkInstance = TypeConversion.TryParseUri(mediaLinkElement.Value);
+                                extensionImageInstance.MediaLink = mediaLinkInstance;
+                            }
+                            
+                            XElement certificateElement = extensionImagesElement.Element(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
+                            if (certificateElement != null)
+                            {
+                                ExtensionCertificateConfiguration certificateInstance = new ExtensionCertificateConfiguration();
+                                extensionImageInstance.Certificate = certificateInstance;
+                                
+                                XElement storeLocationElement = certificateElement.Element(XName.Get("StoreLocation", "http://schemas.microsoft.com/windowsazure"));
+                                if (storeLocationElement != null)
+                                {
+                                    string storeLocationInstance = storeLocationElement.Value;
+                                    certificateInstance.StoreLocation = storeLocationInstance;
+                                }
+                                
+                                XElement storeNameElement = certificateElement.Element(XName.Get("StoreName", "http://schemas.microsoft.com/windowsazure"));
+                                if (storeNameElement != null)
+                                {
+                                    string storeNameInstance = storeNameElement.Value;
+                                    certificateInstance.StoreName = storeNameInstance;
+                                }
+                                
+                                XElement thumbprintRequiredElement = certificateElement.Element(XName.Get("ThumbprintRequired", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintRequiredElement != null && string.IsNullOrEmpty(thumbprintRequiredElement.Value) == false)
+                                {
+                                    bool thumbprintRequiredInstance = bool.Parse(thumbprintRequiredElement.Value);
+                                    certificateInstance.ThumbprintRequired = thumbprintRequiredInstance;
+                                }
+                                
+                                XElement thumbprintAlgorithmElement = certificateElement.Element(XName.Get("ThumbprintAlgorithm", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintAlgorithmElement != null)
+                                {
+                                    string thumbprintAlgorithmInstance = thumbprintAlgorithmElement.Value;
+                                    certificateInstance.ThumbprintAlgorithm = thumbprintAlgorithmInstance;
+                                }
+                            }
+                            
+                            XElement endpointsElement = extensionImagesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                            if (endpointsElement != null)
+                            {
+                                ExtensionEndpointConfiguration endpointsInstance = new ExtensionEndpointConfiguration();
+                                extensionImageInstance.ExtensionEndpoints = endpointsInstance;
+                                
+                                XElement inputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                if (inputEndpointsSequenceElement != null)
+                                {
+                                    foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ExtensionEndpointConfiguration.InputEndpoint inputEndpointInstance = new ExtensionEndpointConfiguration.InputEndpoint();
+                                        endpointsInstance.InputEndpoints.Add(inputEndpointInstance);
+                                        
+                                        XElement nameElement = inputEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement != null)
+                                        {
+                                            string nameInstance = nameElement.Value;
+                                            inputEndpointInstance.Name = nameInstance;
+                                        }
+                                        
+                                        XElement protocolElement = inputEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        if (protocolElement != null)
+                                        {
+                                            string protocolInstance = protocolElement.Value;
+                                            inputEndpointInstance.Protocol = protocolInstance;
+                                        }
+                                        
+                                        XElement portElement = inputEndpointsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                        if (portElement != null)
+                                        {
+                                            int portInstance = int.Parse(portElement.Value, CultureInfo.InvariantCulture);
+                                            inputEndpointInstance.Port = portInstance;
+                                        }
+                                        
+                                        XElement localPortElement = inputEndpointsElement.Element(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                        if (localPortElement != null)
+                                        {
+                                            int localPortInstance = int.Parse(localPortElement.Value, CultureInfo.InvariantCulture);
+                                            inputEndpointInstance.LocalPort = localPortInstance;
+                                        }
+                                    }
+                                }
+                                
+                                XElement internalEndpointsSequenceElement = endpointsElement.Element(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                if (internalEndpointsSequenceElement != null)
+                                {
+                                    foreach (XElement internalEndpointsElement in internalEndpointsSequenceElement.Elements(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        ExtensionEndpointConfiguration.InternalEndpoint internalEndpointInstance = new ExtensionEndpointConfiguration.InternalEndpoint();
+                                        endpointsInstance.InternalEndpoints.Add(internalEndpointInstance);
+                                        
+                                        XElement nameElement2 = internalEndpointsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            internalEndpointInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement protocolElement2 = internalEndpointsElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                        if (protocolElement2 != null)
+                                        {
+                                            string protocolInstance2 = protocolElement2.Value;
+                                            internalEndpointInstance.Protocol = protocolInstance2;
+                                        }
+                                        
+                                        XElement portElement2 = internalEndpointsElement.Element(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                        if (portElement2 != null)
+                                        {
+                                            int portInstance2 = int.Parse(portElement2.Value, CultureInfo.InvariantCulture);
+                                            internalEndpointInstance.Port = portInstance2;
+                                        }
+                                    }
+                                }
                             }
                             
                             XElement publicConfigurationSchemaElement = extensionImagesElement.Element(XName.Get("PublicConfigurationSchema", "http://schemas.microsoft.com/windowsazure"));
@@ -4365,6 +4632,51 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.PrivateConfigurationSchema = privateConfigurationSchemaInstance;
                             }
                             
+                            XElement descriptionElement = extensionImagesElement.Element(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
+                            if (descriptionElement != null)
+                            {
+                                string descriptionInstance = descriptionElement.Value;
+                                extensionImageInstance.Description = descriptionInstance;
+                            }
+                            
+                            XElement publisherNameElement = extensionImagesElement.Element(XName.Get("PublisherName", "http://schemas.microsoft.com/windowsazure"));
+                            if (publisherNameElement != null)
+                            {
+                                string publisherNameInstance = publisherNameElement.Value;
+                                extensionImageInstance.PublisherName = publisherNameInstance;
+                            }
+                            
+                            XElement publishedDateElement = extensionImagesElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                extensionImageInstance.PublishedDate = publishedDateInstance;
+                            }
+                            
+                            XElement localResourcesSequenceElement = extensionImagesElement.Element(XName.Get("LocalResources", "http://schemas.microsoft.com/windowsazure"));
+                            if (localResourcesSequenceElement != null)
+                            {
+                                foreach (XElement localResourcesElement in localResourcesSequenceElement.Elements(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
+                                    extensionImageInstance.LocalResources.Add(localResourceInstance);
+                                    
+                                    XElement nameElement3 = localResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement3 != null)
+                                    {
+                                        string nameInstance3 = nameElement3.Value;
+                                        localResourceInstance.Name = nameInstance3;
+                                    }
+                                    
+                                    XElement sizeInMBElement = localResourcesElement.Element(XName.Get("SizeInMB", "http://schemas.microsoft.com/windowsazure"));
+                                    if (sizeInMBElement != null && string.IsNullOrEmpty(sizeInMBElement.Value) == false)
+                                    {
+                                        int sizeInMBInstance = int.Parse(sizeInMBElement.Value, CultureInfo.InvariantCulture);
+                                        localResourceInstance.SizeInMB = sizeInMBInstance;
+                                    }
+                                }
+                            }
+                            
                             XElement blockRoleUponFailureElement = extensionImagesElement.Element(XName.Get("BlockRoleUponFailure", "http://schemas.microsoft.com/windowsazure"));
                             if (blockRoleUponFailureElement != null && string.IsNullOrEmpty(blockRoleUponFailureElement.Value) == false)
                             {
@@ -4372,18 +4684,18 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.BlockRoleUponFailure = blockRoleUponFailureInstance;
                             }
                             
+                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
+                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            {
+                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
+                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
+                            }
+                            
                             XElement sampleConfigElement = extensionImagesElement.Element(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
                             if (sampleConfigElement != null)
                             {
-                                string sampleConfigInstance = TypeConversion.FromBase64String(sampleConfigElement.Value);
+                                string sampleConfigInstance = sampleConfigElement.Value;
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
-                            }
-                            
-                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
-                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
-                            {
-                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
-                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
                             }
                             
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -4414,11 +4726,25 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.IsJsonExtension = isJsonExtensionInstance;
                             }
                             
-                            XElement isInternalExtensionElement = extensionImagesElement.Element(XName.Get("IsInternalExtension", "http://schemas.microsoft.com/windowsazure"));
-                            if (isInternalExtensionElement != null && string.IsNullOrEmpty(isInternalExtensionElement.Value) == false)
+                            XElement disallowMajorVersionUpgradeElement = extensionImagesElement.Element(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
+                            if (disallowMajorVersionUpgradeElement != null && string.IsNullOrEmpty(disallowMajorVersionUpgradeElement.Value) == false)
                             {
-                                bool isInternalExtensionInstance = bool.Parse(isInternalExtensionElement.Value);
-                                extensionImageInstance.IsInternalExtension = isInternalExtensionInstance;
+                                bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
+                                extensionImageInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
+                            }
+                            
+                            XElement supportedOSElement = extensionImagesElement.Element(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                            if (supportedOSElement != null)
+                            {
+                                string supportedOSInstance = supportedOSElement.Value;
+                                extensionImageInstance.SupportedOS = supportedOSInstance;
+                            }
+                            
+                            XElement companyNameElement = extensionImagesElement.Element(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                            if (companyNameElement != null)
+                            {
+                                string companyNameInstance = companyNameElement.Value;
+                                extensionImageInstance.CompanyName = companyNameInstance;
                             }
                         }
                     }

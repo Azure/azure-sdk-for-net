@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -271,6 +272,27 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
                                 resourceExtensionInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
+                            }
+                            
+                            XElement supportedOSElement = resourceExtensionsElement.Element(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                            if (supportedOSElement != null)
+                            {
+                                string supportedOSInstance = supportedOSElement.Value;
+                                resourceExtensionInstance.SupportedOS = supportedOSInstance;
+                            }
+                            
+                            XElement companyNameElement = resourceExtensionsElement.Element(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                            if (companyNameElement != null)
+                            {
+                                string companyNameInstance = companyNameElement.Value;
+                                resourceExtensionInstance.CompanyName = companyNameInstance;
+                            }
+                            
+                            XElement publishedDateElement = resourceExtensionsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                resourceExtensionInstance.PublishedDate = publishedDateInstance;
                             }
                         }
                     }
@@ -525,6 +547,27 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 bool disallowMajorVersionUpgradeInstance = bool.Parse(disallowMajorVersionUpgradeElement.Value);
                                 resourceExtensionInstance.DisallowMajorVersionUpgrade = disallowMajorVersionUpgradeInstance;
+                            }
+                            
+                            XElement supportedOSElement = resourceExtensionsElement.Element(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                            if (supportedOSElement != null)
+                            {
+                                string supportedOSInstance = supportedOSElement.Value;
+                                resourceExtensionInstance.SupportedOS = supportedOSInstance;
+                            }
+                            
+                            XElement companyNameElement = resourceExtensionsElement.Element(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                            if (companyNameElement != null)
+                            {
+                                string companyNameInstance = companyNameElement.Value;
+                                resourceExtensionInstance.CompanyName = companyNameInstance;
+                            }
+                            
+                            XElement publishedDateElement = resourceExtensionsElement.Element(XName.Get("PublishedDate", "http://schemas.microsoft.com/windowsazure"));
+                            if (publishedDateElement != null && string.IsNullOrEmpty(publishedDateElement.Value) == false)
+                            {
+                                DateTime publishedDateInstance = DateTime.Parse(publishedDateElement.Value, CultureInfo.InvariantCulture);
+                                resourceExtensionInstance.PublishedDate = publishedDateInstance;
                             }
                         }
                     }
