@@ -31,18 +31,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSite
     {
-        private bool _adminEnabled;
+        private bool? _adminEnabled;
         
         /// <summary>
         /// Optional. Read-only. This value is always true.
         /// </summary>
-        public bool AdminEnabled
+        public bool? AdminEnabled
         {
             get { return this._adminEnabled; }
             set { this._adminEnabled = value; }
         }
         
-        private WebSpaceAvailabilityState _availabilityState;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceAvailabilityState? _availabilityState;
         
         /// <summary>
         /// Optional. The state of the availability of management information
@@ -52,32 +52,32 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// partial management information for the web site is available and
         /// that detailed web site information is unavailable.
         /// </summary>
-        public WebSpaceAvailabilityState AvailabilityState
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceAvailabilityState? AvailabilityState
         {
             get { return this._availabilityState; }
             set { this._availabilityState = value; }
         }
         
-        private WebSiteComputeMode _computeMode;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
         
         /// <summary>
         /// Optional. The Compute Mode for the web site. Possible values are
         /// Shared or Dedicated.
         /// </summary>
-        public WebSiteComputeMode ComputeMode
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
         {
             get { return this._computeMode; }
             set { this._computeMode = value; }
         }
         
-        private bool _enabled;
+        private bool? _enabled;
         
         /// <summary>
         /// Optional. The current state of the web site. This is true if the
         /// site is enabled and false otherwise. Setting this value to false
         /// disables the site (takes the site offline).
         /// </summary>
-        public bool Enabled
+        public bool? Enabled
         {
             get { return this._enabled; }
             set { this._enabled = value; }
@@ -124,13 +124,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._hostNameSslStates = value; }
         }
         
-        private DateTime _lastModifiedTimeUtc;
+        private System.DateTime? _lastModifiedTimeUtc;
         
         /// <summary>
         /// Optional. A dateTime value that contains, in Coordinated Universal
         /// Time, the last time the web site was modified.
         /// </summary>
-        public DateTime LastModifiedTimeUtc
+        public System.DateTime? LastModifiedTimeUtc
         {
             get { return this._lastModifiedTimeUtc; }
             set { this._lastModifiedTimeUtc = value; }
@@ -169,7 +169,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._repositorySiteName = value; }
         }
         
-        private WebSiteRuntimeAvailabilityState _runtimeAvailabilityState;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? _runtimeAvailabilityState;
         
         /// <summary>
         /// Optional. The current availability state for the web site. Possible
@@ -180,7 +180,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// site has been excluded from provisioning. This typically occurs
         /// only for free sites.
         /// </summary>
-        public WebSiteRuntimeAvailabilityState RuntimeAvailabilityState
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? RuntimeAvailabilityState
         {
             get { return this._runtimeAvailabilityState; }
             set { this._runtimeAvailabilityState = value; }
@@ -198,7 +198,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._serverFarm = value; }
         }
         
-        private WebSiteMode _siteMode;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? _siteMode;
         
         /// <summary>
         /// Optional. A string representing the web site mode. If the web site
@@ -206,7 +206,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// Shared, this value is Basic. Note: The SiteMode value is not used
         /// for Reserved mode. Reserved mode uses the ComputeMode setting.
         /// </summary>
-        public WebSiteMode SiteMode
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
         {
             get { return this._siteMode; }
             set { this._siteMode = value; }
@@ -259,14 +259,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._uri = value; }
         }
         
-        private WebSiteUsageState _usageState;
+        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteUsageState? _usageState;
         
         /// <summary>
         /// Optional. The usage state of the web site. Possible values are
         /// Normal or Exceeded. If any quota is exceeded, the UsageState value
         /// changes to Exceeded and the site goes offline.
         /// </summary>
-        public WebSiteUsageState UsageState
+        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteUsageState? UsageState
         {
             get { return this._usageState; }
             set { this._usageState = value; }
@@ -311,13 +311,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private WebSiteSslState _sslState;
+            private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteSslState? _sslState;
             
             /// <summary>
             /// Optional. The SSL state. Possible values are Disabled,
             /// SniEnabled, or IpBasedEnabled.
             /// </summary>
-            public WebSiteSslState SslState
+            public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteSslState? SslState
             {
                 get { return this._sslState; }
                 set { this._sslState = value; }
