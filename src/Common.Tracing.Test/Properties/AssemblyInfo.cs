@@ -17,15 +17,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Common Library ETW Logger Tests")]
-[assembly: AssemblyDescription("Tests for the Windows Azure Common Library ETW Logger.")]
+[assembly: AssemblyTitle("Microsoft Azure Common Library ETW Logger Tests")]
+[assembly: AssemblyDescription("Tests for the Microsoft Azure Common Library ETW Logger.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

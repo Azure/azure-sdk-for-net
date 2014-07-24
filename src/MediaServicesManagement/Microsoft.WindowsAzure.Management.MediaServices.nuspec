@@ -13,7 +13,7 @@
     <summary>Provides Microsoft Azure Media Services management functionality.</summary>
     <description>Provides Microsoft Azure Media Services management functionality.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure media encoding management "media services" "media services management" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure media encoding management "media services" "media services management" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.MediaServices.dll" />

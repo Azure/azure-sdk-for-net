@@ -28,11 +28,11 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public class TokenCloudCredentials : SubscriptionCloudCredentials
     {
-        // The Windows Azure Subscription ID.
+        // The Microsoft Azure Subscription ID.
         private readonly string _subscriptionId = null;
 
         /// <summary>
-        /// Gets subscription ID which uniquely identifies Windows Azure 
+        /// Gets subscription ID which uniquely identifies Microsoft Azure 
         /// subscription. The subscription ID forms part of the URI for 
         /// every call that you make to the Service Management API.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// Gets or sets secure token used to authenticate against Windows Azure API. 
+        /// Gets or sets secure token used to authenticate against Microsoft Azure API. 
         /// No anonymous requests are allowed.
         /// </summary>
         public string Token { get; set; }

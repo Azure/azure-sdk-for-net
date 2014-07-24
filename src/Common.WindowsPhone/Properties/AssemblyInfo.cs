@@ -18,14 +18,14 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Common Library (Windows Phone)")]
-[assembly: AssemblyDescription("Provides Windows Phone App-specific extensions to the common Windows Azure library.")]
+[assembly: AssemblyTitle("Microsoft Azure Common Library (Windows Phone)")]
+[assembly: AssemblyDescription("Provides Windows Phone App-specific extensions to the common Microsoft Azure library.")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.2.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

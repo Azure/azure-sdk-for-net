@@ -17,14 +17,14 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Common Library (Windows Store App)")]
-[assembly: AssemblyDescription("Provides Windows Store App-specific extensions to the common Windows Azure library.")]
+[assembly: AssemblyTitle("Microsoft Azure Common Library (Windows Store App)")]
+[assembly: AssemblyDescription("Provides Windows Store App-specific extensions to the common Microsoft Azure library.")]
 [assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.9.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright © Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

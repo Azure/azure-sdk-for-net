@@ -16,15 +16,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Infrastructure Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Windows Azure infrastructure.")]
+[assembly: AssemblyTitle("Microsoft Azure Infrastructure Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure infrastructure.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.2.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

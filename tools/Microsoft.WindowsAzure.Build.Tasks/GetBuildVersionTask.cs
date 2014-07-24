@@ -21,7 +21,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 {
     /// <summary>
     /// A Microsoft Build task that is used for generated a build string to use
-    /// for Windows Azure SDK open source builds.
+    /// for Microsoft Azure SDK open source builds.
     /// </summary>
     public class GetBuildVersionTask : Task
     {
@@ -34,14 +34,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         /// <summary>
         /// Generate a string representing a build number for the current
-        /// Windows Azure open source build.
+        /// Microsoft Azure open source build.
         /// </summary>
         /// <returns>Returns true. Hopefully.</returns>
         public override bool Execute()
         {
             try
             {
-                // Rooting at 2013 for Windows Azure Libraries
+                // Rooting at 2013 for Microsoft Azure Libraries
                 const int rootYear = 2013;
 
                 DateTime now = DateTime.Now;

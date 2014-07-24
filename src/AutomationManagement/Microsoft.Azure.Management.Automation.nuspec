@@ -13,7 +13,7 @@
     <summary>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</summary>
     <description>Provides Microsoft Azure Automation management operations including the ability to create, update and delete runbooks and schedules.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Automation Azure REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Management.Automation.dll" />

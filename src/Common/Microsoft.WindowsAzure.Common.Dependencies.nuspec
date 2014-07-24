@@ -14,7 +14,7 @@
     <description>Provides popular portable components for a common HTTP pipeline and JSON parsing. This package is included as a dependency to other libraries such as the Microsoft Azure Management Libraries and should not be directly added to your project.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <!-- A subset of tags here as this library is less useful on its own. -->
-    <tags>windowsazureofficial</tags>
+    <tags>azureofficial windowsazureofficial</tags>
     <dependencies>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <dependency id="Microsoft.Bcl" version="1.1.9" />

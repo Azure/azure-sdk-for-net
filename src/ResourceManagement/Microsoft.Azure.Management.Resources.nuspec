@@ -14,7 +14,7 @@
     <summary>Provides resource group and resource management capabilities for Microsoft Azure.</summary>
     <description>Provides resource group and resource management capabilities for Microsoft Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure resource management "resource management" "resource groups" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft Azure resource management "resource management" "resource groups" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.ResourceManager.dll" />

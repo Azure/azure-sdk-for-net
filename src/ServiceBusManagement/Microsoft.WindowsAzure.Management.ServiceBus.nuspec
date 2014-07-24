@@ -14,7 +14,7 @@
     <summary>Provides Microsoft Azure Service Bus management operations for Microsoft Azure including the ability to create, delete, list and update Namespaces, Topics, Queues and Notification Hubs.</summary>
     <description>Provides Microsoft Azure Service Bus management operations for Microsoft Azure including the ability to create, delete, list and update Namespaces, Topics, Queues and Notification Hubs.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure servicebus "service bus" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure servicebus "service bus" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.ServiceBus.dll" />
