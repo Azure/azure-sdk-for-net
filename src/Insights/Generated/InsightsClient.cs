@@ -3899,18 +3899,17 @@ namespace Microsoft.Azure.Insights
         /// <param name='resourceUri'>
         /// Required.
         /// </param>
-        /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// <param name='metricNames'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, string filterString)
+        public static UsageMetricListResponse List(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
         {
             return Task.Factory.StartNew((object s) =>
             {
-                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, filterString);
+                return ((IUsageMetricsOperations)s).ListAsync(resourceUri, metricNames);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -3924,16 +3923,15 @@ namespace Microsoft.Azure.Insights
         /// <param name='resourceUri'>
         /// Required.
         /// </param>
-        /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// <param name='metricNames'>
+        /// Required.
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, string filterString)
+        public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
         {
-            return operations.ListAsync(resourceUri, filterString, CancellationToken.None);
+            return operations.ListAsync(resourceUri, metricNames, CancellationToken.None);
         }
     }
 
@@ -3942,17 +3940,13 @@ namespace Microsoft.Azure.Insights
         /// <summary>
         /// The List operation lists the usage metrics for the resource.
         /// </summary>
-        /// <param name='filterString'>
-        /// An OData $filter expression that supports querying by the name of
-        /// the metric definition.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken);
+        Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken);
     }
 
     internal partial class UsageMetricsOperations : IServiceOperations<InsightsClient>, IUsageMetricsOperations
@@ -3984,9 +3978,8 @@ namespace Microsoft.Azure.Insights
         /// <param name='resourceUri'>
         /// Required.
         /// </param>
-        /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// <param name='metricNames'>
+        /// Required.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3994,12 +3987,16 @@ namespace Microsoft.Azure.Insights
         /// <returns>
         /// The List Usage Metric operation response.
         /// </returns>
-        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
+        public async Task<UsageMetricListResponse> ListAsync(string resourceUri, IList<string> metricNames, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)
             {
                 throw new ArgumentNullException("resourceUri");
+            }
+            if (metricNames == null)
+            {
+                throw new ArgumentNullException("metricNames");
             }
 
             // Tracing
@@ -4010,17 +4007,14 @@ namespace Microsoft.Azure.Insights
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceUri", resourceUri);
-                tracingParameters.Add("filterString", filterString);
+                tracingParameters.Add("metricNames", metricNames);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
 
             // Construct URL
             string url = "/" + resourceUri.Trim() + "/usages?";
             url = url + "api-version=2014-04-01";
-            if (filterString != null)
-            {
-                url = url + "&$filter=" + Uri.EscapeDataString(filterString != null ? filterString.Trim() : "");
-            }
+            url = url + "&names=" + Uri.EscapeDataString(string.Join(",", metricNames));
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

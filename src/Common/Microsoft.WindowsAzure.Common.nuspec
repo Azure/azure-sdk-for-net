@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.WindowsAzure.Common</id>
@@ -19,13 +19,13 @@ At this time, applications looking to use the Windows Azure Management Libraries
 Supported Portable Library Platforms:
 - .NET Framework 4.5, 4.5.1
 - .NET for Windows Store apps
-- Windows Phone 8
+- Windows Phone 8, 8.1
 - Silverlight 5
 - Portable Class Libraries</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Windows Azure" Azure cloud REST HTTP client core common windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net45+sl50+wp8+wpa81+win">
         <reference file="Microsoft.WindowsAzure.Common.dll" />
       </group>
       <group targetFramework="net45">
@@ -40,9 +40,13 @@ Supported Portable Library Platforms:
         <reference file="Microsoft.WindowsAzure.Common.dll" />
         <reference file="Microsoft.WindowsAzure.Common.WindowsStore.dll" />
       </group>
-      <group targetFramework="wp80">
+      <group targetFramework="wp8">
         <reference file="Microsoft.WindowsAzure.Common.dll" />
         <reference file="Microsoft.WindowsAzure.Common.WindowsPhone.dll" />
+      </group>
+      <group targetFramework="wpa81">
+        <reference file="Microsoft.WindowsAzure.Common.dll" />
+        <reference file="Microsoft.WindowsAzure.Common.WindowsPhone81.dll" />
       </group>
     </references>
     <dependencies>
@@ -53,9 +57,9 @@ Supported Portable Library Platforms:
     <file src="Common\**\*.cs" target="src\Common" />
     <file src="Common\Properties\*.resx" target="src\Common\Properties" />
     <file src="Common.NetFramework\**\*.cs" target="src\Common.NetFramework" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\portable-net45+sl50+wp8+wpa81+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\net45" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\net45" />
@@ -74,11 +78,17 @@ Supported Portable Library Platforms:
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.dll" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.xml" target="lib\windows8" />
     <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsStore.pdb" target="lib\windows8" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\wp80" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\wp80" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\wp80" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.dll" target="lib\wp80" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.xml" target="lib\wp80" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.pdb" target="lib\wp80" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.dll" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.xml" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone.pdb" target="lib\wp8" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.dll" target="lib\wpa81" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.pdb" target="lib\wpa81" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.xml" target="lib\wpa81" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone81.dll" target="lib\wpa81" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone81.xml" target="lib\wpa81" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Common.WindowsPhone81.pdb" target="lib\wpa81" />
   </files>
 </package>
