@@ -15,7 +15,7 @@
     
 The ETW tracing provider requires .NET Framework 4.5 or newer.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" SDK ETW "Event Tracing" azureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" SDK ETW "Event Tracing" azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="net45">
         <reference file="Microsoft.WindowsAzure.Common.Tracing.Etw.dll" />

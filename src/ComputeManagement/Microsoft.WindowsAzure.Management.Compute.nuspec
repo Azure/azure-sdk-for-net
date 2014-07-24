@@ -13,7 +13,7 @@
     <summary>Provides virtual machine and hosted service management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</summary>
     <description>Provides virtual machine and hosted service management capabilities to developers. Launch, restart, scale, and manage VMs, hosted services, virtual disks, operating system images, and more.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Compute.dll" />

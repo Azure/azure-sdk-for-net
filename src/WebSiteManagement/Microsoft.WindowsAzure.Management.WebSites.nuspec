@@ -13,7 +13,7 @@
     <summary>Provides management capabilities for Microsoft Azure Web Sites.  Deploy, configure, debug, and scale your websites using familiar APIs.</summary>
     <description>Provides management capabilities for Microsoft Azure Web Sites.  Deploy, configure, debug, and scale your websites using familiar APIs.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure web site management "web sites" "web sites management" REST HTTP client azureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure web site management "web sites" "web sites management" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.WebSites.dll" />

@@ -13,7 +13,7 @@
     <summary>Provides Microsoft Azure SQL Database management operations for Microsoft Azure.</summary>
     <description>Provides Microsoft Azure SQL Database management operations for Microsoft Azure</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure sql database "SQL database" REST HTTP client azureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure sql database "SQL database" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Sql.dll" />

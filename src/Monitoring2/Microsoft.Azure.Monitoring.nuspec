@@ -14,7 +14,7 @@
     <summary>Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, events, usages, and autoscale rules for your Microsoft Azure services using Resource Manager.</summary>
     <description>Provides Monitoring access for Microsoft Azure using Resource Manager.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft Azure Monitoring REST HTTP client azureofficial</tags>
+    <tags>Microsoft Azure Monitoring REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.Azure.Monitoring.dll" />

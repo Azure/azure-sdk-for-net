@@ -26,7 +26,7 @@ Using the full .NET Framework is recommended during preview.
 Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Looking to the future, we are enabling PCL early: Microsoft Azure Active Directory integration enables token-based authentication. Coupled with appropriate platform-specific libraries, in the future more platforms will light up with support for managing Microsoft Azure services.
     </description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>azureofficial management cloud libraries "Microsoft azure management"</tags>
+    <tags>azureofficial windowsazureofficial management cloud libraries "Microsoft azure management"</tags>
     <dependencies>
       <group>
         <dependency id="Microsoft.WindowsAzure.Common" version="[1.0.2,2.0)" />
