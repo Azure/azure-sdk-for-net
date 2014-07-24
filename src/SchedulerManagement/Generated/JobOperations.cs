@@ -724,6 +724,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken minutesArray2 = scheduleValue2["minutes"];
                                 if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Minutes = new List<int>();
                                     foreach (JToken minutesValue in ((JArray)minutesArray2))
                                     {
                                         scheduleInstance.Minutes.Add(((int)minutesValue));
@@ -733,6 +734,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken hoursArray2 = scheduleValue2["hours"];
                                 if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Hours = new List<int>();
                                     foreach (JToken hoursValue in ((JArray)hoursArray2))
                                     {
                                         scheduleInstance.Hours.Add(((int)hoursValue));
@@ -742,6 +744,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken weekDaysArray2 = scheduleValue2["weekDays"];
                                 if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Days = new List<JobScheduleDay>();
                                     foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
@@ -751,6 +754,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthsArray2 = scheduleValue2["months"];
                                 if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Months = new List<int>();
                                     foreach (JToken monthsValue in ((JArray)monthsArray2))
                                     {
                                         scheduleInstance.Months.Add(((int)monthsValue));
@@ -760,6 +764,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthDaysArray2 = scheduleValue2["monthDays"];
                                 if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.MonthDays = new List<int>();
                                     foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
                                     {
                                         scheduleInstance.MonthDays.Add(((int)monthDaysValue));
@@ -769,6 +774,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
                                     foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
@@ -1540,6 +1546,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken minutesArray2 = scheduleValue2["minutes"];
                                 if (minutesArray2 != null && minutesArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Minutes = new List<int>();
                                     foreach (JToken minutesValue in ((JArray)minutesArray2))
                                     {
                                         scheduleInstance.Minutes.Add(((int)minutesValue));
@@ -1549,6 +1556,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken hoursArray2 = scheduleValue2["hours"];
                                 if (hoursArray2 != null && hoursArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Hours = new List<int>();
                                     foreach (JToken hoursValue in ((JArray)hoursArray2))
                                     {
                                         scheduleInstance.Hours.Add(((int)hoursValue));
@@ -1558,6 +1566,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken weekDaysArray2 = scheduleValue2["weekDays"];
                                 if (weekDaysArray2 != null && weekDaysArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Days = new List<JobScheduleDay>();
                                     foreach (JToken weekDaysValue in ((JArray)weekDaysArray2))
                                     {
                                         scheduleInstance.Days.Add(SchedulerClient.ParseJobScheduleDay(((string)weekDaysValue)));
@@ -1567,6 +1576,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthsArray2 = scheduleValue2["months"];
                                 if (monthsArray2 != null && monthsArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.Months = new List<int>();
                                     foreach (JToken monthsValue in ((JArray)monthsArray2))
                                     {
                                         scheduleInstance.Months.Add(((int)monthsValue));
@@ -1576,6 +1586,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthDaysArray2 = scheduleValue2["monthDays"];
                                 if (monthDaysArray2 != null && monthDaysArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.MonthDays = new List<int>();
                                     foreach (JToken monthDaysValue in ((JArray)monthDaysArray2))
                                     {
                                         scheduleInstance.MonthDays.Add(((int)monthDaysValue));
@@ -1585,6 +1596,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken monthlyOccurrencesArray2 = scheduleValue2["monthlyOccurrences"];
                                 if (monthlyOccurrencesArray2 != null && monthlyOccurrencesArray2.Type != JTokenType.Null)
                                 {
+                                    scheduleInstance.MonthlyOccurrences = new List<JobScheduleMonthlyOccurrence>();
                                     foreach (JToken monthlyOccurrencesValue in ((JArray)monthlyOccurrencesArray2))
                                     {
                                         JobScheduleMonthlyOccurrence jobScheduleMonthlyOccurrenceInstance = new JobScheduleMonthlyOccurrence();
