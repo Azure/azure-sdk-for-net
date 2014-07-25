@@ -112,6 +112,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             get { return this._serverFarms; }
         }
         
+        private IWebHostingPlanOperations _webHostingPlans;
+        
+        /// <summary>
+        /// Operations for managing web hosting plans beneath your subscription.
+        /// </summary>
+        public virtual IWebHostingPlanOperations WebHostingPlans
+        {
+            get { return this._webHostingPlans; }
+        }
+        
         private IWebSiteOperations _webSites;
         
         /// <summary>
@@ -141,6 +151,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             : base()
         {
             this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
             this._apiVersion = "2013-08-01";
@@ -209,6 +220,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             : base(httpClient)
         {
             this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
             this._apiVersion = "2013-08-01";

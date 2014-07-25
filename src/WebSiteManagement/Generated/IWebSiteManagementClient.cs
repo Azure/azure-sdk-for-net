@@ -92,6 +92,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// Operations for managing web hosting plans beneath your subscription.
+        /// </summary>
+        IWebHostingPlanOperations WebHostingPlans
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing the web sites in a web space.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166981.aspx
         /// for more information)

@@ -28,9 +28,9 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Historical Usage Metrics Web Site operation response.
+    /// The Get Historical Usage Metrics Web hosting plan operation response.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class WebHostingPlanGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
     {
         private IList<HistoricalUsageMetric> _usageMetrics;
         
@@ -45,9 +45,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         
         /// <summary>
         /// Initializes a new instance of the
-        /// WebSiteGetHistoricalUsageMetricsResponse class.
+        /// WebHostingPlanGetHistoricalUsageMetricsResponse class.
         /// </summary>
-        public WebSiteGetHistoricalUsageMetricsResponse()
+        public WebHostingPlanGetHistoricalUsageMetricsResponse()
         {
             this.UsageMetrics = new List<HistoricalUsageMetric>();
         }

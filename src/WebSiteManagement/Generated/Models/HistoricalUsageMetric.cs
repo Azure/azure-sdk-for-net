@@ -20,52 +20,54 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Historical Usage Metrics Web Site operation response.
+    /// Historical metric snapshot for the web site.
     /// </summary>
-    public partial class WebSiteGetHistoricalUsageMetricsResponse : OperationResponse, IEnumerable<HistoricalUsageMetric>
+    public partial class HistoricalUsageMetric
     {
-        private IList<HistoricalUsageMetric> _usageMetrics;
+        private string _code;
         
         /// <summary>
-        /// Optional. Historical metric snapshots for the web site.
+        /// Optional. Reports whether the metric data was returned successfully.
         /// </summary>
-        public IList<HistoricalUsageMetric> UsageMetrics
+        public string Code
         {
-            get { return this._usageMetrics; }
-            set { this._usageMetrics = value; }
+            get { return this._code; }
+            set { this._code = value; }
+        }
+        
+        private HistoricalUsageMetricData _data;
+        
+        /// <summary>
+        /// Optional. Historical metric snapshot data for the web site.
+        /// </summary>
+        public HistoricalUsageMetricData Data
+        {
+            get { return this._data; }
+            set { this._data = value; }
+        }
+        
+        private string _message;
+        
+        /// <summary>
+        /// Optional. A string for optional message content.
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// WebSiteGetHistoricalUsageMetricsResponse class.
+        /// Initializes a new instance of the HistoricalUsageMetric class.
         /// </summary>
-        public WebSiteGetHistoricalUsageMetricsResponse()
+        public HistoricalUsageMetric()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of UsageMetrics.
-        /// </summary>
-        public IEnumerator<HistoricalUsageMetric> GetEnumerator()
-        {
-            return this.UsageMetrics.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of UsageMetrics.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
     }
 }
