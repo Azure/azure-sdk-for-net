@@ -3729,8 +3729,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject ruleCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["ruleCreateOrUpdateParameters"] = ruleCreateOrUpdateParametersValue;
+                requestDoc = ruleCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -6052,8 +6051,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject ruleCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["ruleCreateOrUpdateParameters"] = ruleCreateOrUpdateParametersValue;
+                requestDoc = ruleCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -6899,8 +6897,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject autoscaleSettingCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["autoscaleSettingCreateOrUpdateParameters"] = autoscaleSettingCreateOrUpdateParametersValue;
+                requestDoc = autoscaleSettingCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -8262,8 +8259,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject autoscaleSettingCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["autoscaleSettingCreateOrUpdateParameters"] = autoscaleSettingCreateOrUpdateParametersValue;
+                requestDoc = autoscaleSettingCreateOrUpdateParametersValue;
                 
                 if (parameters.Location != null)
                 {
@@ -8797,8 +8793,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject monitoringConfigurationCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["monitoringConfigurationCreateOrUpdateParameters"] = monitoringConfigurationCreateOrUpdateParametersValue;
+                requestDoc = monitoringConfigurationCreateOrUpdateParametersValue;
                 
                 if (parameters.Properties != null)
                 {
@@ -9934,8 +9929,7 @@ namespace Microsoft.Azure.Management.Insights
                 JToken requestDoc = null;
                 
                 JObject monitoringConfigurationCreateOrUpdateParametersValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["monitoringConfigurationCreateOrUpdateParameters"] = monitoringConfigurationCreateOrUpdateParametersValue;
+                requestDoc = monitoringConfigurationCreateOrUpdateParametersValue;
                 
                 if (parameters.Properties != null)
                 {
