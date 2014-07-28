@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.RedisCache.Model;
 
@@ -75,17 +74,6 @@ namespace Microsoft.Azure.Management.RedisCache.Model
             set { this._properties = value; }
         }
         
-        private IDictionary<string, string> _tags;
-        
-        /// <summary>
-        /// Optional. The resource tags.
-        /// </summary>
-        public IDictionary<string, string> Tags
-        {
-            get { return this._tags; }
-            set { this._tags = value; }
-        }
-        
         private string _type;
         
         /// <summary>
@@ -102,7 +90,6 @@ namespace Microsoft.Azure.Management.RedisCache.Model
         /// </summary>
         public RedisResource()
         {
-            this._tags = new Dictionary<string, string>();
         }
     }
 }

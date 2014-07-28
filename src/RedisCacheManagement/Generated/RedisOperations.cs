@@ -171,18 +171,6 @@ namespace Microsoft.Azure.Management.RedisCache
                 
                 redisCreateParametersValue["location"] = parameters.Location;
                 
-                JObject tagsDictionary = new JObject();
-                if (parameters.Tags != null)
-                {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
-                    {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
-                    }
-                }
-                redisCreateParametersValue["tags"] = tagsDictionary;
-                
                 JObject propertiesValue = new JObject();
                 redisCreateParametersValue["properties"] = propertiesValue;
                 
@@ -195,10 +183,10 @@ namespace Microsoft.Azure.Management.RedisCache
                 JObject configDictionary = new JObject();
                 if (parameters.Properties.Config != null)
                 {
-                    foreach (KeyValuePair<string, string> pair2 in parameters.Properties.Config)
+                    foreach (KeyValuePair<string, string> pair in parameters.Properties.Config)
                     {
-                        string configKey = pair2.Key;
-                        string configValue = pair2.Value;
+                        string configKey = pair.Key;
+                        string configValue = pair.Value;
                         configDictionary[configKey] = configValue;
                     }
                 }
@@ -279,17 +267,6 @@ namespace Microsoft.Azure.Management.RedisCache
                             valueInstance.Type = typeInstance;
                         }
                         
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey2 = ((string)property.Name);
-                                string tagsValue2 = ((string)property.Value);
-                                valueInstance.Tags.Add(tagsKey2, tagsValue2);
-                            }
-                        }
-                        
                         JToken propertiesValue2 = responseDoc["properties"];
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
@@ -348,10 +325,10 @@ namespace Microsoft.Azure.Management.RedisCache
                             JToken configSequenceElement = ((JToken)propertiesValue2["config"]);
                             if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in configSequenceElement)
+                                foreach (JProperty property in configSequenceElement)
                                 {
-                                    string configKey2 = ((string)property2.Name);
-                                    string configValue2 = ((string)property2.Value);
+                                    string configKey2 = ((string)property.Name);
+                                    string configValue2 = ((string)property.Value);
                                     propertiesInstance.Config.Add(configKey2, configValue2);
                                 }
                             }
@@ -653,17 +630,6 @@ namespace Microsoft.Azure.Management.RedisCache
                             valueInstance.Type = typeInstance;
                         }
                         
-                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
-                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property in tagsSequenceElement)
-                            {
-                                string tagsKey = ((string)property.Name);
-                                string tagsValue = ((string)property.Value);
-                                valueInstance.Tags.Add(tagsKey, tagsValue);
-                            }
-                        }
-                        
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
@@ -722,10 +688,10 @@ namespace Microsoft.Azure.Management.RedisCache
                             JToken configSequenceElement = ((JToken)propertiesValue["config"]);
                             if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property2 in configSequenceElement)
+                                foreach (JProperty property in configSequenceElement)
                                 {
-                                    string configKey = ((string)property2.Name);
-                                    string configValue = ((string)property2.Value);
+                                    string configKey = ((string)property.Name);
+                                    string configValue = ((string)property.Value);
                                     propertiesInstance.Config.Add(configKey, configValue);
                                 }
                             }
@@ -897,17 +863,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                     redisResourceInstance.Type = typeInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        redisResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
@@ -966,10 +921,10 @@ namespace Microsoft.Azure.Management.RedisCache
                                     JToken configSequenceElement = ((JToken)propertiesValue["config"]);
                                     if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in configSequenceElement)
+                                        foreach (JProperty property in configSequenceElement)
                                         {
-                                            string configKey = ((string)property2.Name);
-                                            string configValue = ((string)property2.Value);
+                                            string configKey = ((string)property.Name);
+                                            string configValue = ((string)property.Value);
                                             propertiesInstance.Config.Add(configKey, configValue);
                                         }
                                     }
@@ -1142,17 +1097,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                     redisResourceInstance.Type = typeInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        redisResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
@@ -1211,10 +1155,10 @@ namespace Microsoft.Azure.Management.RedisCache
                                     JToken configSequenceElement = ((JToken)propertiesValue["config"]);
                                     if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in configSequenceElement)
+                                        foreach (JProperty property in configSequenceElement)
                                         {
-                                            string configKey = ((string)property2.Name);
-                                            string configValue = ((string)property2.Value);
+                                            string configKey = ((string)property.Name);
+                                            string configValue = ((string)property.Value);
                                             propertiesInstance.Config.Add(configKey, configValue);
                                         }
                                     }
@@ -1384,17 +1328,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                     redisResourceInstance.Type = typeInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        redisResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
@@ -1453,10 +1386,10 @@ namespace Microsoft.Azure.Management.RedisCache
                                     JToken configSequenceElement = ((JToken)propertiesValue["config"]);
                                     if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in configSequenceElement)
+                                        foreach (JProperty property in configSequenceElement)
                                         {
-                                            string configKey = ((string)property2.Name);
-                                            string configValue = ((string)property2.Value);
+                                            string configKey = ((string)property.Name);
+                                            string configValue = ((string)property.Value);
                                             propertiesInstance.Config.Add(configKey, configValue);
                                         }
                                     }
@@ -1627,17 +1560,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                     redisResourceInstance.Type = typeInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
-                                if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
-                                {
-                                    foreach (JProperty property in tagsSequenceElement)
-                                    {
-                                        string tagsKey = ((string)property.Name);
-                                        string tagsValue = ((string)property.Value);
-                                        redisResourceInstance.Tags.Add(tagsKey, tagsValue);
-                                    }
-                                }
-                                
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
@@ -1696,10 +1618,10 @@ namespace Microsoft.Azure.Management.RedisCache
                                     JToken configSequenceElement = ((JToken)propertiesValue["config"]);
                                     if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property2 in configSequenceElement)
+                                        foreach (JProperty property in configSequenceElement)
                                         {
-                                            string configKey = ((string)property2.Name);
-                                            string configValue = ((string)property2.Value);
+                                            string configKey = ((string)property.Name);
+                                            string configValue = ((string)property.Value);
                                             propertiesInstance.Config.Add(configKey, configValue);
                                         }
                                     }
