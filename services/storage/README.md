@@ -1,8 +1,8 @@
-# Windows Azure Storage Service #
+# Microsoft Azure Storage Service #
 
 ## Latest v3 Release
 
-The sources for the Windows Azure Storage Client Library is available in the azure-storage-net repository at [https://github.com/WindowsAzure/azure-storage-net](https://github.com/WindowsAzure/azure-storage-net).
+The sources for the Microsoft Azure Storage Client Library is available in the azure-storage-net repository at [https://github.com/WindowsAzure/azure-storage-net](https://github.com/WindowsAzure/azure-storage-net).
 
 ### v2.0.1.4 Tag
 

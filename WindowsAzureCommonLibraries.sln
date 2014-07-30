@@ -1,7 +1,6 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-VisualStudioVersion = 12.0.30324.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -55,6 +54,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsStore", "src\Common.WindowsStore\Common.WindowsStore.csproj", "{65C1AFA4-9F6A-4105-B28C-AA1B95C17494}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone", "src\Common.WindowsPhone\Common.WindowsPhone.csproj", "{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.WindowsPhone81", "src\Common.WindowsPhone81\Common.WindowsPhone81.csproj", "{0B661D48-49D3-4D23-8E51-E528C80C8816}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -138,12 +139,20 @@ Global
 		{65C1AFA4-9F6A-4105-B28C-AA1B95C17494}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Mixed Platforms.Build.0 = Release|x86
+		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{0B661D48-49D3-4D23-8E51-E528C80C8816}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +168,7 @@ Global
 		{0645E75E-9C0B-47EE-B5A2-239286E1DED9} = {7C044DD1-F76B-49A7-A8DF-A5DEEE748EBB}
 		{65C1AFA4-9F6A-4105-B28C-AA1B95C17494} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{997EADB9-7FFE-42FF-AA2F-D5F90F39B86D} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{0B661D48-49D3-4D23-8E51-E528C80C8816} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi

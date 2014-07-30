@@ -25,7 +25,7 @@ using System.Reflection;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Windows Azure settings.
+    /// Microsoft Azure settings.
     /// </summary>
     internal class AzureApplicationSettings
     {

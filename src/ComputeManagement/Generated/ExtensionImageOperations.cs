@@ -267,8 +267,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -294,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -317,7 +317,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -432,6 +432,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement disallowMajorVersionUpgradeElement = new XElement(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
                     disallowMajorVersionUpgradeElement.Value = parameters.DisallowMajorVersionUpgrade.ToString().ToLower();
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
+                }
+                
+                if (parameters.SupportedOS != null)
+                {
+                    XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                    supportedOSElement.Value = parameters.SupportedOS;
+                    extensionImageElement.Add(supportedOSElement);
+                }
+                
+                if (parameters.CompanyName != null)
+                {
+                    XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                    companyNameElement.Value = parameters.CompanyName;
+                    extensionImageElement.Add(companyNameElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -845,8 +859,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -872,7 +886,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -895,7 +909,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -1010,6 +1024,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement disallowMajorVersionUpgradeElement = new XElement(XName.Get("DisallowMajorVersionUpgrade", "http://schemas.microsoft.com/windowsazure"));
                     disallowMajorVersionUpgradeElement.Value = parameters.DisallowMajorVersionUpgrade.ToString().ToLower();
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
+                }
+                
+                if (parameters.SupportedOS != null)
+                {
+                    XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                    supportedOSElement.Value = parameters.SupportedOS;
+                    extensionImageElement.Add(supportedOSElement);
+                }
+                
+                if (parameters.CompanyName != null)
+                {
+                    XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                    companyNameElement.Value = parameters.CompanyName;
+                    extensionImageElement.Add(companyNameElement);
                 }
                 
                 requestContent = requestDoc.ToString();

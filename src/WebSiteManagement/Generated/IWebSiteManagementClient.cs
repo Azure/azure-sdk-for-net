@@ -52,7 +52,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </summary>
         Uri BaseUri
         {
-            get; set; 
+            get; 
         }
         
         /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
-            get; set; 
+            get; 
         }
         
         /// <summary>
@@ -87,6 +87,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// for more information)
         /// </summary>
         IServerFarmOperations ServerFarms
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing web hosting plans beneath your subscription.
+        /// </summary>
+        IWebHostingPlanOperations WebHostingPlans
         {
             get; 
         }

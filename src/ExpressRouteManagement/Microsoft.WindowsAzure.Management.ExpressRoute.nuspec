@@ -14,7 +14,7 @@
     <summary>Provides express route management capabilities to developers. Create, delete, list, retrieve dedicated circuits, bgp peerings, dedicated circuit links, and more.</summary>
     <description>Provides express route management capabilities to developers. Create, delete, list, retrieve dedicated circuits, bgp peerings, dedicated circuit links, and more.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" "Express Route" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" "Express Route" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.ExpressRoute.dll" />

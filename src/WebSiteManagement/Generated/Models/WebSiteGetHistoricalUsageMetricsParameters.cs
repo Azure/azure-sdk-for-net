@@ -69,6 +69,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._startTime = value; }
         }
         
+        private string _timeGrain;
+        
+        /// <summary>
+        /// Optional. The grain at which the metrics are returned. Supported
+        /// values are PT1M (minute), PT1H (hour), P1D (day).
+        /// </summary>
+        public string TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// WebSiteGetHistoricalUsageMetricsParameters class.

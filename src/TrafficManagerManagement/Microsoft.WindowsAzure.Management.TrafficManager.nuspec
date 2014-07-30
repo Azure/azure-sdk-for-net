@@ -11,10 +11,10 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>Provides Windows Azure Traffic Manager management operations for Windows Azure including the ability to create, update, list, and delete Traffic Manager profiles and definitions.</summary>
-    <description>Provides Windows Azure Traffic Manager management operations for Windows Azure including the ability to create, update, list, and delete Traffic Manager profiles and definitions.</description>
+    <summary>Provides Microsoft Azure Traffic Manager management operations for Microsoft Azure including the ability to create, update, list, and delete Traffic Manager profiles and definitions.</summary>
+    <description>Provides Microsoft Azure Traffic Manager management operations for Microsoft Azure including the ability to create, update, list, and delete Traffic Manager profiles and definitions.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Windows Azure" Azure trafficmanager "traffic manager" REST HTTP client windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure trafficmanager "traffic manager" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.TrafficManager.dll" />

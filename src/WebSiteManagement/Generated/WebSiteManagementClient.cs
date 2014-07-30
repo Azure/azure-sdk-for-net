@@ -64,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public Uri BaseUri
         {
             get { return this._baseUri; }
-            set { this._baseUri = value; }
         }
         
         private SubscriptionCloudCredentials _credentials;
@@ -77,7 +76,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
-            set { this._credentials = value; }
         }
         
         private int _longRunningOperationInitialTimeout;
@@ -114,6 +112,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             get { return this._serverFarms; }
         }
         
+        private IWebHostingPlanOperations _webHostingPlans;
+        
+        /// <summary>
+        /// Operations for managing web hosting plans beneath your subscription.
+        /// </summary>
+        public virtual IWebHostingPlanOperations WebHostingPlans
+        {
+            get { return this._webHostingPlans; }
+        }
+        
         private IWebSiteOperations _webSites;
         
         /// <summary>
@@ -143,6 +151,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             : base()
         {
             this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
             this._apiVersion = "2013-08-01";
@@ -211,6 +220,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             : base(httpClient)
         {
             this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
             this._apiVersion = "2013-08-01";
@@ -295,6 +305,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 clonedClient._apiVersion = this._apiVersion;
                 clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
                 clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
                 clonedClient.Credentials.InitializeServiceClient(clonedClient);
             }
         }

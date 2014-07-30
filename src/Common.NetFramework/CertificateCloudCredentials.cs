@@ -32,11 +32,11 @@ namespace Microsoft.WindowsAzure
     public sealed class CertificateCloudCredentials
         : SubscriptionCloudCredentials
     {
-        // The Windows Azure Subscription ID.
+        // The Microsoft Azure Subscription ID.
         private readonly string _subscriptionId = null;
 
         /// <summary>
-        /// Gets subscription ID which uniquely identifies Windows Azure 
+        /// Gets subscription ID which uniquely identifies Microsoft Azure 
         /// subscription. The subscription ID forms part of the URI for 
         /// every call that you make to the Service Management API.
         /// </summary>
@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure
         }
 
         /// <summary>
-        /// The Windows Azure Service Management API use mutual authentication
+        /// The Microsoft Azure Service Management API use mutual authentication
         /// of management certificates over SSL to ensure that a request made
         /// to the service is secure. No anonymous requests are allowed.
         /// </summary>

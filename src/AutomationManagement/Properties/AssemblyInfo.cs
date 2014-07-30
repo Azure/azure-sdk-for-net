@@ -16,15 +16,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Automation Management Library")]
-[assembly: AssemblyDescription("Provides Windows Azure Automation management operations.")]
+[assembly: AssemblyTitle("Microsoft Azure Automation Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Automation management operations.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
 [assembly: AssemblyFileVersion("0.10.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

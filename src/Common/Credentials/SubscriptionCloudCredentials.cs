@@ -22,7 +22,7 @@ namespace Microsoft.WindowsAzure
         : CloudCredentials
     {
         /// <summary>
-        /// Gets subscription ID which uniquely identifies Windows Azure 
+        /// Gets subscription ID which uniquely identifies Microsoft Azure 
         /// subscription. The subscription ID forms part of the URI for 
         /// every call that you make to the Service Management API.
         /// </summary>

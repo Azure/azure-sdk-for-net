@@ -14,7 +14,7 @@
     <summary>Provides store management operations for Microsoft Azure.</summary>
     <description>Provides store management operations for Microsoft Azure.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure cloud management store REST HTTP client core common windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management store REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
         <reference file="Microsoft.WindowsAzure.Management.Store.dll" />
