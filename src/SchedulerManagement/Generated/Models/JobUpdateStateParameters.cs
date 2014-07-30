@@ -59,5 +59,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobUpdateStateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobUpdateStateParameters class
+        /// with required arguments.
+        /// </summary>
+        public JobUpdateStateParameters(JobState state)
+            : this()
+        {
+            this.State = state;
+        }
     }
 }

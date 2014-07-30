@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public ScheduleListResponse()
         {
-            this._schedules = new List<Schedule>();
+            this.Schedules = new List<Schedule>();
         }
     }
 }

@@ -70,5 +70,15 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobErrorAction()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobErrorAction class with
+        /// required arguments.
+        /// </summary>
+        public JobErrorAction(JobActionType type)
+            : this()
+        {
+            this.Type = type;
+        }
     }
 }

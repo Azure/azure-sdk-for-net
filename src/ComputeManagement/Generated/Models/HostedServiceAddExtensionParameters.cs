@@ -140,5 +140,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public HostedServiceAddExtensionParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// HostedServiceAddExtensionParameters class with required arguments.
+        /// </summary>
+        public HostedServiceAddExtensionParameters(string type, string id)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            this.Type = type;
+            this.Id = id;
+        }
     }
 }

@@ -62,18 +62,6 @@ namespace Microsoft.Azure.Management.Resources
                 new ResourceManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<ResourceManagementClient> client)
-        {
-            base.Clone(client);
-            ResourceManagementClient management = client as ResourceManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override ResourceManagementClient WithHandler(DelegatingHandler handler)
         {
             return WithHandler(new ResourceManagementClient(), handler);

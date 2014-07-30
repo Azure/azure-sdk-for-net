@@ -105,7 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjective()
         {
-            this._dimensionSettings = new List<ServiceObjective.DimensionSettingResponse>();
+            this.DimensionSettings = new List<ServiceObjective.DimensionSettingResponse>();
         }
         
         /// <summary>

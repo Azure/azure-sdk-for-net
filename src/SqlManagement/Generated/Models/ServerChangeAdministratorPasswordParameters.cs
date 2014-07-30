@@ -48,5 +48,20 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public ServerChangeAdministratorPasswordParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// ServerChangeAdministratorPasswordParameters class with required
+        /// arguments.
+        /// </summary>
+        public ServerChangeAdministratorPasswordParameters(string newPassword)
+            : this()
+        {
+            if (newPassword == null)
+            {
+                throw new ArgumentNullException("newPassword");
+            }
+            this.NewPassword = newPassword;
+        }
     }
 }

@@ -102,5 +102,23 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public Job()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the Job class with required arguments.
+        /// </summary>
+        public Job(string id, JobAction action)
+            : this()
+        {
+            if (id == null)
+            {
+                throw new ArgumentNullException("id");
+            }
+            if (action == null)
+            {
+                throw new ArgumentNullException("action");
+            }
+            this.Id = id;
+            this.Action = action;
+        }
     }
 }

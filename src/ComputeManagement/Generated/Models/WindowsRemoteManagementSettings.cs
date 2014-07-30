@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public WindowsRemoteManagementSettings()
         {
-            this._listeners = new List<WindowsRemoteManagementListener>();
+            this.Listeners = new List<WindowsRemoteManagementListener>();
         }
     }
 }

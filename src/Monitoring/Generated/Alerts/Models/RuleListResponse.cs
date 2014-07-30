@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleListResponse()
         {
-            this._value = new List<Rule>();
+            this.Value = new List<Rule>();
         }
         
         /// <summary>

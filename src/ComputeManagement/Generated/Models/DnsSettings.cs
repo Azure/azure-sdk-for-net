@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DnsSettings()
         {
-            this._dnsServers = new List<DnsServer>();
+            this.DnsServers = new List<DnsServer>();
         }
     }
 }

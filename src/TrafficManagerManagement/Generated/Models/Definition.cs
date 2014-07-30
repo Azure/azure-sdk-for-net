@@ -93,7 +93,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public Definition()
         {
-            this._monitors = new List<DefinitionMonitor>();
+            this.Monitors = new List<DefinitionMonitor>();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DiagnosticUpdateParameters()
         {
-            this._settings = new Dictionary<string, string>();
+            this.Settings = new Dictionary<string, string>();
         }
     }
 }

@@ -1,6 +1,8 @@
 [CmdletBinding()]
 Param(
-[Parameter(Mandatory=$False, Position=0, ValueFromPipeline=$true)]
+[Parameter(Mandatory=$False, Position=0)]
+[string]$Folder,
+[Parameter(Mandatory=$False)]
 [string]$BasePath
 )
 
@@ -12,6 +14,35 @@ $ErrorActionPreference = "Stop"
 function SyncNuspecFile([string]$FolderPath)
 {
 	Write-Debug "folder: $FolderPath"
+	
+	# Try updating Assembly
+	if((Test-Path -Path $FolderPath\*.nuget.proj) -and (Test-Path -Path $FolderPath\Properties\AssemblyInfo.cs)) { 
+        echo "Updating AssemblyInfo.cs"
+		$folderName = (Get-Item $FolderPath).Name
+        [xml]$nuproj = $null
+        if ($folderName -eq "Common") {
+            [xml]$nuproj = Get-Content (Get-Item $FolderPath\*.Common.nuget.proj)
+        } else {
+		    [xml]$nuproj = Get-Content (Get-Item $FolderPath\*.nuget.proj | select -First 1)
+        }
+
+        $assemblyContent = Get-Content $FolderPath\Properties\AssemblyInfo.cs
+
+        #Updating AssemblyFileVersion
+		$packageVersion = $nuproj.Project.ItemGroup.SdkNuGetPackage.PackageVersion
+        $packageVersion = ([regex]"[\d\.]+").Match($packageVersion).Value
+        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyFileVersion\s*\(\s*`"[\d\.\s]+`"\s*\)\s*\]","[assembly: AssemblyFileVersion(`"$packageVersion.0`")]"
+
+        #Updating AssemblyVersion
+        $majorVersion = ([regex]"\d+").Match($packageVersion).Captures[0].Value
+        $assemblyVersion = "$majorVersion.0.0.0"
+        if ($majorVersion -eq "0") {
+            $assemblyVersion = "0.9.0.0"
+        }
+        $assemblyContent = $assemblyContent -replace "\[assembly\:\s*AssemblyVersion\s*\(\s*`"[\d\.\s]+","[assembly: AssemblyVersion(`"$assemblyVersion"
+
+        Set-Content -Path $FolderPath\Properties\AssemblyInfo.cs -Value $assemblyContent
+	}
 
 	# Check files exist
 	if(!(Test-Path -Path $FolderPath\*.nuspec) -or !(Test-Path -Path $FolderPath\packages.config)) { 
@@ -37,7 +68,6 @@ function SyncNuspecFile([string]$FolderPath)
 		Write-Debug "package file: $PackageConfigPath"
 
 		[xml]$nuspec = New-Object System.Xml.XmlDataDocument
-		#$nuspec.psbase.PreserveWhitespace = $true
 		$nuspec.Load($NuSpecPath)
 		[xml]$pkgconfig = Get-Content $PackageConfigPath
 
@@ -71,8 +101,12 @@ function SyncNuspecFile([string]$FolderPath)
 	}
 }
 
-$subFolders = Get-ChildItem -Directory -Path $BasePath
-ForEach ($subFolder in $subFolders) {
-	SyncNuspecFile $subFolder.FullName
+if ($Folder -eq '' -or $Folder -eq $null) {
+    $subFolders = Get-ChildItem -Directory -Path $BasePath
+    ForEach ($subFolder in $subFolders) {
+	    SyncNuspecFile $subFolder.FullName
+    }
+} else {
+    SyncNuspecFile $Folder
 }
 

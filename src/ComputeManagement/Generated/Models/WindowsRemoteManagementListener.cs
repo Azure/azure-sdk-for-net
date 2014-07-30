@@ -65,5 +65,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public WindowsRemoteManagementListener()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the WindowsRemoteManagementListener
+        /// class with required arguments.
+        /// </summary>
+        public WindowsRemoteManagementListener(VirtualMachineWindowsRemoteManagementListenerType listenerType)
+            : this()
+        {
+            this.ListenerType = listenerType;
+        }
     }
 }

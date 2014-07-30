@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public RoleSizeListResponse()
         {
-            this._roleSizes = new List<RoleSizeListResponse.RoleSize>();
+            this.RoleSizes = new List<RoleSizeListResponse.RoleSize>();
         }
         
         /// <summary>
@@ -92,6 +92,18 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._label; }
                 set { this._label = value; }
+            }
+            
+            private int _maxDataDiskCount;
+            
+            /// <summary>
+            /// Optional. Number of data disks that can be attached for the
+            /// given role size.
+            /// </summary>
+            public int MaxDataDiskCount
+            {
+                get { return this._maxDataDiskCount; }
+                set { this._maxDataDiskCount = value; }
             }
             
             private int _memoryInMb;
@@ -138,6 +150,30 @@ namespace Microsoft.WindowsAzure.Management.Models
             {
                 get { return this._supportedByWebWorkerRoles; }
                 set { this._supportedByWebWorkerRoles = value; }
+            }
+            
+            private int _virtualMachineResourceDiskSizeInMb;
+            
+            /// <summary>
+            /// Optional. Resource disk drive size for the role size in IaaS
+            /// deployment.
+            /// </summary>
+            public int VirtualMachineResourceDiskSizeInMb
+            {
+                get { return this._virtualMachineResourceDiskSizeInMb; }
+                set { this._virtualMachineResourceDiskSizeInMb = value; }
+            }
+            
+            private int _webWorkerResourceDiskSizeInMb;
+            
+            /// <summary>
+            /// Optional. Resource disk drive size for the role size in PaaS
+            /// deployment.
+            /// </summary>
+            public int WebWorkerResourceDiskSizeInMb
+            {
+                get { return this._webWorkerResourceDiskSizeInMb; }
+                set { this._webWorkerResourceDiskSizeInMb = value; }
             }
             
             /// <summary>

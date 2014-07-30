@@ -69,5 +69,19 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         public JobCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobCreateParameters class with
+        /// required arguments.
+        /// </summary>
+        public JobCreateParameters(JobAction action)
+            : this()
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException("action");
+            }
+            this.Action = action;
+        }
     }
 }

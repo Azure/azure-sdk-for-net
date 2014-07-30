@@ -71,5 +71,29 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public FirewallRuleCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the FirewallRuleCreateParameters
+        /// class with required arguments.
+        /// </summary>
+        public FirewallRuleCreateParameters(string name, string startIPAddress, string endIPAddress)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (startIPAddress == null)
+            {
+                throw new ArgumentNullException("startIPAddress");
+            }
+            if (endIPAddress == null)
+            {
+                throw new ArgumentNullException("endIPAddress");
+            }
+            this.Name = name;
+            this.StartIPAddress = startIPAddress;
+            this.EndIPAddress = endIPAddress;
+        }
     }
 }

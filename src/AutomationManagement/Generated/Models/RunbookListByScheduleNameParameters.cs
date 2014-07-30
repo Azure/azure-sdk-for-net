@@ -48,5 +48,19 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookListByScheduleNameParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookListByScheduleNameParameters class with required arguments.
+        /// </summary>
+        public RunbookListByScheduleNameParameters(string scheduleName)
+            : this()
+        {
+            if (scheduleName == null)
+            {
+                throw new ArgumentNullException("scheduleName");
+            }
+            this.ScheduleName = scheduleName;
+        }
     }
 }

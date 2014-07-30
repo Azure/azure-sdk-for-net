@@ -121,5 +121,19 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public HostedServiceGetExtensionResponse()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the HostedServiceGetExtensionResponse
+        /// class with required arguments.
+        /// </summary>
+        public HostedServiceGetExtensionResponse(string type)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            this.Type = type;
+        }
     }
 }

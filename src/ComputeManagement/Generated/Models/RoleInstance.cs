@@ -228,9 +228,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public RoleInstance()
         {
-            this._instanceEndpoints = new List<InstanceEndpoint>();
-            this._publicIPs = new List<RoleInstance.PublicIP>();
-            this._resourceExtensionStatusList = new List<ResourceExtensionStatus>();
+            this.InstanceEndpoints = new List<InstanceEndpoint>();
+            this.PublicIPs = new List<RoleInstance.PublicIP>();
+            this.ResourceExtensionStatusList = new List<ResourceExtensionStatus>();
         }
         
         /// <summary>
@@ -249,6 +249,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._address; }
                 set { this._address = value; }
+            }
+            
+            private int? _idleTimeoutInMinutes;
+            
+            /// <summary>
+            /// Optional. The idle timeout in minutes for this Public IP.
+            /// </summary>
+            public int? IdleTimeoutInMinutes
+            {
+                get { return this._idleTimeoutInMinutes; }
+                set { this._idleTimeoutInMinutes = value; }
             }
             
             private string _name;

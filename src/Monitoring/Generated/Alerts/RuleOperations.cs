@@ -95,8 +95,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + (parameters.Rule.Id != null ? parameters.Rule.Id.Trim() : "");
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -107,6 +107,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -128,33 +129,32 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 string requestContent = null;
                 JToken requestDoc = null;
                 
+                JObject ruleCreateOrUpdateParametersValue = new JObject();
+                requestDoc = ruleCreateOrUpdateParametersValue;
+                
                 if (parameters.Rule != null)
                 {
                     if (parameters.Rule.Id != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Id"] = parameters.Rule.Id;
+                        ruleCreateOrUpdateParametersValue["Id"] = parameters.Rule.Id;
                     }
                     
                     if (parameters.Rule.Name != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Name"] = parameters.Rule.Name;
+                        ruleCreateOrUpdateParametersValue["Name"] = parameters.Rule.Name;
                     }
                     
                     if (parameters.Rule.Description != null)
                     {
-                        requestDoc = new JObject();
-                        requestDoc["Description"] = parameters.Rule.Description;
+                        ruleCreateOrUpdateParametersValue["Description"] = parameters.Rule.Description;
                     }
                     
-                    requestDoc = new JObject();
-                    requestDoc["IsEnabled"] = parameters.Rule.IsEnabled;
+                    ruleCreateOrUpdateParametersValue["IsEnabled"] = parameters.Rule.IsEnabled;
                     
                     if (parameters.Rule.Condition != null)
                     {
                         JObject conditionValue = new JObject();
-                        requestDoc["Condition"] = conditionValue;
+                        ruleCreateOrUpdateParametersValue["Condition"] = conditionValue;
                         if (parameters.Rule.Condition is ThresholdRuleCondition)
                         {
                             conditionValue["odata.type"] = parameters.Rule.Condition.GetType().FullName;
@@ -219,10 +219,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 }
                             }
                         }
-                        requestDoc = actionsArray;
+                        ruleCreateOrUpdateParametersValue["Actions"] = actionsArray;
                     }
                     
-                    requestDoc["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
+                    ruleCreateOrUpdateParametersValue["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -317,8 +317,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + ruleId.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -329,6 +329,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -433,8 +434,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules/" + ruleId.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -445,6 +446,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -688,8 +690,8 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
             }
             
             // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/monitoring/alertrules";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -700,6 +702,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;

@@ -68,5 +68,24 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         public AddOnCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the AddOnCreateParameters class with
+        /// required arguments.
+        /// </summary>
+        public AddOnCreateParameters(string type, string plan)
+            : this()
+        {
+            if (type == null)
+            {
+                throw new ArgumentNullException("type");
+            }
+            if (plan == null)
+            {
+                throw new ArgumentNullException("plan");
+            }
+            this.Type = type;
+            this.Plan = plan;
+        }
     }
 }

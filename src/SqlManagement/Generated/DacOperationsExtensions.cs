@@ -171,6 +171,62 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Gets the status of the import or export operation in the specified
+        /// server with the corresponding request ID.  The request ID is
+        /// provided in the responses of the import or export operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the server in which the import or export
+        /// operation is taking place.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters needed to get the status of an import or
+        /// export operation.
+        /// </param>
+        /// <returns>
+        /// Represents a list of import or export status values returned from
+        /// GetStatus.
+        /// </returns>
+        public static DacGetStatusResponse GetStatusPost(this IDacOperations operations, string serverName, DacGetStatusParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDacOperations)s).GetStatusPostAsync(serverName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of the import or export operation in the specified
+        /// server with the corresponding request ID.  The request ID is
+        /// provided in the responses of the import or export operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Sql.IDacOperations.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the server in which the import or export
+        /// operation is taking place.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters needed to get the status of an import or
+        /// export operation.
+        /// </param>
+        /// <returns>
+        /// Represents a list of import or export status values returned from
+        /// GetStatus.
+        /// </returns>
+        public static Task<DacGetStatusResponse> GetStatusPostAsync(this IDacOperations operations, string serverName, DacGetStatusParameters parameters)
+        {
+            return operations.GetStatusPostAsync(serverName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Initiates an Import of a DACPAC file from Azure Blob Storage into a
         /// Azure SQL Database.
         /// </summary>

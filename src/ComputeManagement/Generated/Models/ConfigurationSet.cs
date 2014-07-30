@@ -303,10 +303,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ConfigurationSet()
         {
-            this._inputEndpoints = new List<InputEndpoint>();
-            this._publicIPs = new List<ConfigurationSet.PublicIP>();
-            this._storedCertificateSettings = new List<StoredCertificateSettings>();
-            this._subnetNames = new List<string>();
+            this.InputEndpoints = new List<InputEndpoint>();
+            this.PublicIPs = new List<ConfigurationSet.PublicIP>();
+            this.StoredCertificateSettings = new List<StoredCertificateSettings>();
+            this.SubnetNames = new List<string>();
         }
         
         /// <summary>
@@ -316,6 +316,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class PublicIP
         {
+            private int? _idleTimeoutInMinutes;
+            
+            /// <summary>
+            /// Optional. The idle timeout in minutes for this Public IP.
+            /// </summary>
+            public int? IdleTimeoutInMinutes
+            {
+                get { return this._idleTimeoutInMinutes; }
+                set { this._idleTimeoutInMinutes = value; }
+            }
+            
             private string _name;
             
             /// <summary>

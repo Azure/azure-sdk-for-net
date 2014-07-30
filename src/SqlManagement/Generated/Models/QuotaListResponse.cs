@@ -49,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public QuotaListResponse()
         {
-            this._quotas = new List<Quota>();
+            this.Quotas = new List<Quota>();
         }
         
         /// <summary>

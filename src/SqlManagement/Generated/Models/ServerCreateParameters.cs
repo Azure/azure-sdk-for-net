@@ -85,5 +85,29 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public ServerCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the ServerCreateParameters class with
+        /// required arguments.
+        /// </summary>
+        public ServerCreateParameters(string administratorUserName, string administratorPassword, string location)
+            : this()
+        {
+            if (administratorUserName == null)
+            {
+                throw new ArgumentNullException("administratorUserName");
+            }
+            if (administratorPassword == null)
+            {
+                throw new ArgumentNullException("administratorPassword");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            this.AdministratorUserName = administratorUserName;
+            this.AdministratorPassword = administratorPassword;
+            this.Location = location;
+        }
     }
 }

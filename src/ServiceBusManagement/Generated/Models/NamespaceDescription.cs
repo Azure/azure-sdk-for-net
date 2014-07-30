@@ -95,7 +95,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public NamespaceDescription()
         {
-            this._rights = new List<AccessRight>();
+            this.Rights = new List<AccessRight>();
         }
     }
 }

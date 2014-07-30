@@ -63,18 +63,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 new ExpressRouteManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<ExpressRouteManagementClient> client)
-        {
-            base.Clone(client);
-            ExpressRouteManagementClient management = client as ExpressRouteManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override ExpressRouteManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ExpressRouteManagementClient)WithHandler(new ExpressRouteManagementClient(), handler);

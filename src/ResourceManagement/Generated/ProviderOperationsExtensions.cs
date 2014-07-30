@@ -196,5 +196,47 @@ namespace Microsoft.Azure.Management.Resources
         {
             return operations.RegisterAsync(resourceProviderNamespace, CancellationToken.None);
         }
+        
+        /// <summary>
+        /// Unregisters provider from a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IProviderOperations.
+        /// </param>
+        /// <param name='resourceProviderNamespace'>
+        /// Required. Namespace of the resource provider.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Unregister(this IProviderOperations operations, string resourceProviderNamespace)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IProviderOperations)s).UnregisterAsync(resourceProviderNamespace);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Unregisters provider from a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Resources.IProviderOperations.
+        /// </param>
+        /// <param name='resourceProviderNamespace'>
+        /// Required. Namespace of the resource provider.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UnregisterAsync(this IProviderOperations operations, string resourceProviderNamespace)
+        {
+            return operations.UnregisterAsync(resourceProviderNamespace, CancellationToken.None);
+        }
     }
 }

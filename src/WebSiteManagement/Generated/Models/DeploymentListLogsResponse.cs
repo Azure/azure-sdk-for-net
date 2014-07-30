@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListLogsResponse()
         {
-            this._logs = new List<DeploymentLog>();
+            this.Logs = new List<DeploymentLog>();
         }
         
         /// <summary>

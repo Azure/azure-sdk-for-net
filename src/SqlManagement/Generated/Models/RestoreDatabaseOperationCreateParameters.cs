@@ -94,5 +94,25 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public RestoreDatabaseOperationCreateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RestoreDatabaseOperationCreateParameters class with required
+        /// arguments.
+        /// </summary>
+        public RestoreDatabaseOperationCreateParameters(string sourceDatabaseName, string targetDatabaseName)
+            : this()
+        {
+            if (sourceDatabaseName == null)
+            {
+                throw new ArgumentNullException("sourceDatabaseName");
+            }
+            if (targetDatabaseName == null)
+            {
+                throw new ArgumentNullException("targetDatabaseName");
+            }
+            this.SourceDatabaseName = sourceDatabaseName;
+            this.TargetDatabaseName = targetDatabaseName;
+        }
     }
 }

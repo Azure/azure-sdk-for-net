@@ -35,6 +35,11 @@ namespace Microsoft.Azure.Management.Resources.Models
         public const string NotRegistered = "NotRegistered";
         
         /// <summary>
+        /// Provider registration state is unregistering.
+        /// </summary>
+        public const string Unregistering = "Unregistering";
+        
+        /// <summary>
         /// Provider registration state is registering.
         /// </summary>
         public const string Registering = "Registering";

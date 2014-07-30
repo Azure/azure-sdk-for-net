@@ -28,18 +28,5 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         {
             return WithHandler(new MetricsClient(), handler);
         }
-
-        protected override void Clone(ServiceClient<MetricsClient> client)
-        {
-            base.Clone(client);
-
-            MetricsClient metricsClient = client as MetricsClient;
-            if (metricsClient != null)
-            {
-                metricsClient._credentials = Credentials;
-                metricsClient._baseUri = BaseUri;
-                metricsClient.Credentials.InitializeServiceClient(metricsClient);
-            }
-        }
     }
 }

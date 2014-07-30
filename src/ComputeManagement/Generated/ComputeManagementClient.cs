@@ -45,10 +45,20 @@ namespace Microsoft.WindowsAzure.Management.Compute
     /// </summary>
     public partial class ComputeManagementClient : ServiceClient<ComputeManagementClient>, Microsoft.WindowsAzure.Management.Compute.IComputeManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// The URI used as the base for all Service Management requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -58,16 +68,35 @@ namespace Microsoft.WindowsAzure.Management.Compute
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// When you create an Azure subscription, it is uniquely identified by
-        /// a subscription ID. The subscription ID forms part of the URI for
-        /// every call that you make to the Service Management API. The Azure
-        /// Service Management API uses mutual authentication of management
-        /// certificates over SSL to ensure that a request made to the service
-        /// is secure. No anonymous requests are allowed.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
             get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
         }
         
         private IDeploymentOperations _deployments;
@@ -81,6 +110,29 @@ namespace Microsoft.WindowsAzure.Management.Compute
         public virtual IDeploymentOperations Deployments
         {
             get { return this._deployments; }
+        }
+        
+        private IDNSServerOperations _dnsServer;
+        
+        /// <summary>
+        /// The Compute Management API includes operations for managing the dns
+        /// servers for your subscription.
+        /// </summary>
+        public virtual IDNSServerOperations DnsServer
+        {
+            get { return this._dnsServer; }
+        }
+        
+        private IExtensionImageOperations _extensionImages;
+        
+        /// <summary>
+        /// The Service Management API includes operations for managing the
+        /// service and virtual machine extension images in your publisher
+        /// subscription.
+        /// </summary>
+        public virtual IExtensionImageOperations ExtensionImages
+        {
+            get { return this._extensionImages; }
         }
         
         private IHostedServiceOperations _hostedServices;
@@ -203,6 +255,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base()
         {
             this._deployments = new DeploymentOperations(this);
+            this._dnsServer = new DNSServerOperations(this);
+            this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._operatingSystems = new OperatingSystemOperations(this);
@@ -212,6 +266,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
             this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
+            this._apiVersion = "2014-06-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -219,15 +276,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public ComputeManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -251,12 +305,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public ComputeManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -281,6 +332,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             : base(httpClient)
         {
             this._deployments = new DeploymentOperations(this);
+            this._dnsServer = new DNSServerOperations(this);
+            this._extensionImages = new ExtensionImageOperations(this);
             this._hostedServices = new HostedServiceOperations(this);
             this._loadBalancers = new LoadBalancerOperations(this);
             this._operatingSystems = new OperatingSystemOperations(this);
@@ -290,6 +343,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._virtualMachines = new VirtualMachineOperations(this);
             this._virtualMachineOSImages = new VirtualMachineOSImageOperations(this);
             this._virtualMachineVMImages = new VirtualMachineVMImageOperations(this);
+            this._apiVersion = "2014-06-01";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
         }
         
@@ -297,15 +353,12 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. The URI used as the base for all Service Management
+        /// Required. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>
@@ -332,12 +385,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// Initializes a new instance of the ComputeManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. When you create an Azure subscription, it is uniquely
-        /// identified by a subscription ID. The subscription ID forms part of
-        /// the URI for every call that you make to the Service Management
-        /// API. The Azure Service Management API uses mutual authentication
-        /// of management certificates over SSL to ensure that a request made
-        /// to the service is secure. No anonymous requests are allowed.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -353,6 +403,31 @@ namespace Microsoft.WindowsAzure.Management.Compute
             this._baseUri = new Uri("https://management.core.windows.net");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// ComputeManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of ComputeManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<ComputeManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is ComputeManagementClient)
+            {
+                ComputeManagementClient clonedClient = ((ComputeManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
         
         /// <summary>
@@ -402,8 +477,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             
             // Construct URL
-            string baseUrl = this.BaseUri.AbsoluteUri;
             string url = "/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/operations/" + requestId.Trim();
+            string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
             {
@@ -414,6 +489,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 url = url.Substring(1);
             }
             url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
             
             // Create HTTP transport objects
             HttpRequestMessage httpRequest = null;
@@ -424,7 +500,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

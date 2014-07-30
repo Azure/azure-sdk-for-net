@@ -65,5 +65,25 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         public EntitleResourceParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the EntitleResourceParameters class
+        /// with required arguments.
+        /// </summary>
+        public EntitleResourceParameters(string resourceNamespace, string resourceType, DateTime registrationDate)
+            : this()
+        {
+            if (resourceNamespace == null)
+            {
+                throw new ArgumentNullException("resourceNamespace");
+            }
+            if (resourceType == null)
+            {
+                throw new ArgumentNullException("resourceType");
+            }
+            this.ResourceNamespace = resourceNamespace;
+            this.ResourceType = resourceType;
+            this.RegistrationDate = registrationDate;
+        }
     }
 }

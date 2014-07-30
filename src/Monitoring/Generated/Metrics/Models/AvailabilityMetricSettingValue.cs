@@ -60,8 +60,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this._availableLocations = new List<NameConfig>();
-            this._endpoints = new List<EndpointConfig>();
+            this.AvailableLocations = new List<NameConfig>();
+            this.Endpoints = new List<EndpointConfig>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AvailabilityMetricSettingValue
+        /// class with required arguments.
+        /// </summary>
+        public AvailabilityMetricSettingValue(IList<EndpointConfig> endpoints)
+            : this()
+        {
+            if (endpoints == null)
+            {
+                throw new ArgumentNullException("endpoints");
+            }
+            this.Endpoints = endpoints;
         }
     }
 }

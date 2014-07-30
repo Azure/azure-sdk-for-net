@@ -62,18 +62,6 @@ namespace Microsoft.Azure.Gallery
                 new GalleryClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<GalleryClient> client)
-        {
-            base.Clone(client);
-            GalleryClient management = client as GalleryClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override GalleryClient WithHandler(DelegatingHandler handler)
         {
             return (GalleryClient)WithHandler(new GalleryClient(), handler);

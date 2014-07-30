@@ -132,7 +132,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteOperationStatusResponse()
         {
-            this._errors = new List<WebSiteOperationStatusResponse.Error>();
+            this.Errors = new List<WebSiteOperationStatusResponse.Error>();
         }
         
         /// <summary>
@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public Error()
             {
-                this._parameters = new List<string>();
+                this.Parameters = new List<string>();
             }
         }
     }

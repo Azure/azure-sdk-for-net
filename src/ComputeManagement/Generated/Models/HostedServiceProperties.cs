@@ -130,6 +130,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._location = value; }
         }
         
+        private string _reverseDnsFqdn;
+        
+        /// <summary>
+        /// Optional. Dns address to which the cloud service's IP address
+        /// resolves when queried using a reverse Dns query.
+        /// </summary>
+        public string ReverseDnsFqdn
+        {
+            get { return this._reverseDnsFqdn; }
+            set { this._reverseDnsFqdn = value; }
+        }
+        
         private HostedServiceStatus _status;
         
         /// <summary>
@@ -146,7 +158,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceProperties()
         {
-            this._extendedProperties = new Dictionary<string, string>();
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
     }
 }

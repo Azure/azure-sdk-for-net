@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageListResponse()
         {
-            this._vMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
+            this.VMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
         }
         
         /// <summary>
@@ -379,6 +379,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._language = value; }
             }
             
+            private string _location;
+            
+            /// <summary>
+            /// Optional. The location name of the virtual machine image.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
+            }
+            
             private System.DateTime? _modifiedTime;
             
             /// <summary>
@@ -519,7 +530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public VirtualMachineVMImage()
             {
-                this._dataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+                this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
             }
         }
     }

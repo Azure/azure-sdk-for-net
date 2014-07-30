@@ -57,5 +57,24 @@ namespace Microsoft.Azure.Management.Automation.Models
         public RunbookPublishParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RunbookPublishParameters class
+        /// with required arguments.
+        /// </summary>
+        public RunbookPublishParameters(string runbookId, string publishedBy)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            if (publishedBy == null)
+            {
+                throw new ArgumentNullException("publishedBy");
+            }
+            this.RunbookId = runbookId;
+            this.PublishedBy = publishedBy;
+        }
     }
 }

@@ -48,7 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateLoadBalancedSetParameters()
         {
-            this._loadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
+            this.LoadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
         }
         
         /// <summary>
@@ -66,6 +66,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._enableDirectServerReturn; }
                 set { this._enableDirectServerReturn = value; }
+            }
+            
+            private int? _idleTimeoutInMinutes;
+            
+            /// <summary>
+            /// Optional. The idle timeout in minutes for this endpoint.
+            /// </summary>
+            public int? IdleTimeoutInMinutes
+            {
+                get { return this._idleTimeoutInMinutes; }
+                set { this._idleTimeoutInMinutes = value; }
             }
             
             private string _loadBalancedEndpointSetName;
@@ -199,7 +210,21 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public InputEndpoint()
             {
-                this._rules = new List<AccessControlListRule>();
+                this.Rules = new List<AccessControlListRule>();
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the InputEndpoint class with
+            /// required arguments.
+            /// </summary>
+            public InputEndpoint(string loadBalancedEndpointSetName)
+                : this()
+            {
+                if (loadBalancedEndpointSetName == null)
+                {
+                    throw new ArgumentNullException("loadBalancedEndpointSetName");
+                }
+                this.LoadBalancedEndpointSetName = loadBalancedEndpointSetName;
             }
         }
     }

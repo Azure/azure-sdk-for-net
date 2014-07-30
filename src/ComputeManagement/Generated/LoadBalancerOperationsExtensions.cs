@@ -182,6 +182,82 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// Required. The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse BeginUpdating(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ILoadBalancerOperations)s).BeginUpdatingAsync(serviceName, deploymentName, loadBalancerName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// Required. The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> BeginUpdatingAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        {
+            return operations.BeginUpdatingAsync(serviceName, deploymentName, loadBalancerName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Add an internal load balancer to a an existing deployment. When
         /// used by an input endpoint, the internal load balancer will provide
         /// an additional private VIP that can be used for load balancing to
@@ -307,6 +383,82 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationResponse> DeleteAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName)
         {
             return operations.DeleteAsync(serviceName, deploymentName, loadBalancerName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// Required. The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse Update(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ILoadBalancerOperations)s).UpdateAsync(serviceName, deploymentName, loadBalancerName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.ILoadBalancerOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// Required. The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> UpdateAsync(this ILoadBalancerOperations operations, string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(serviceName, deploymentName, loadBalancerName, parameters, CancellationToken.None);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineDiskListResponse()
         {
-            this._disks = new List<VirtualMachineDiskListResponse.VirtualMachineDisk>();
+            this.Disks = new List<VirtualMachineDiskListResponse.VirtualMachineDisk>();
         }
         
         /// <summary>

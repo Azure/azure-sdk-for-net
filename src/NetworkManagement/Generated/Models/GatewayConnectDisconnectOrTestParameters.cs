@@ -64,5 +64,16 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         public GatewayConnectDisconnectOrTestParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// GatewayConnectDisconnectOrTestParameters class with required
+        /// arguments.
+        /// </summary>
+        public GatewayConnectDisconnectOrTestParameters(GatewayConnectionUpdateOperation operation)
+            : this()
+        {
+            this.Operation = operation;
+        }
     }
 }

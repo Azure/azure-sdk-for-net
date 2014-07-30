@@ -31,6 +31,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public partial class HostedServiceGetResponse : OperationResponse
     {
+        private ComputeCapabilities _computeCapabilities;
+        
+        /// <summary>
+        /// Optional. The compute capabilities in this hosted service.
+        /// </summary>
+        public ComputeCapabilities ComputeCapabilities
+        {
+            get { return this._computeCapabilities; }
+            set { this._computeCapabilities = value; }
+        }
+        
         private HostedServiceProperties _properties;
         
         /// <summary>

@@ -80,7 +80,26 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobHttpRequest()
         {
-            this._headers = new Dictionary<string, string>();
+            this.Headers = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the JobHttpRequest class with
+        /// required arguments.
+        /// </summary>
+        public JobHttpRequest(Uri uri, string method)
+            : this()
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException("uri");
+            }
+            if (method == null)
+            {
+                throw new ArgumentNullException("method");
+            }
+            this.Uri = uri;
+            this.Method = method;
         }
     }
 }

@@ -51,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseOperationListResponse()
         {
-            this._databaseOperations = new List<DatabaseOperation>();
+            this.DatabaseOperations = new List<DatabaseOperation>();
         }
         
         /// <summary>

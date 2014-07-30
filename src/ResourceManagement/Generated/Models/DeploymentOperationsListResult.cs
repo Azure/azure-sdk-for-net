@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentOperationsListResult()
         {
-            this._operations = new List<DeploymentOperation>();
+            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

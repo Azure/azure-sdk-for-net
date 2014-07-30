@@ -70,7 +70,26 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookCreateScheduleLinkParameters()
         {
-            this._parameters = new List<NameValuePair>();
+            this.Parameters = new List<NameValuePair>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// RunbookCreateScheduleLinkParameters class with required arguments.
+        /// </summary>
+        public RunbookCreateScheduleLinkParameters(string runbookId, string scheduleId)
+            : this()
+        {
+            if (runbookId == null)
+            {
+                throw new ArgumentNullException("runbookId");
+            }
+            if (scheduleId == null)
+            {
+                throw new ArgumentNullException("scheduleId");
+            }
+            this.RunbookId = runbookId;
+            this.ScheduleId = scheduleId;
         }
     }
 }

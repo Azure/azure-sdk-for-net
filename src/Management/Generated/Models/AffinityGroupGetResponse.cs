@@ -46,6 +46,28 @@ namespace Microsoft.WindowsAzure.Management.Models
             set { this._capabilities = value; }
         }
         
+        private ComputeCapabilities _computeCapabilities;
+        
+        /// <summary>
+        /// Optional. The compute capabilities in this affinity group.
+        /// </summary>
+        public ComputeCapabilities ComputeCapabilities
+        {
+            get { return this._computeCapabilities; }
+            set { this._computeCapabilities = value; }
+        }
+        
+        private System.DateTime? _createdTime;
+        
+        /// <summary>
+        /// Optional. The time that the affinity group was created.
+        /// </summary>
+        public System.DateTime? CreatedTime
+        {
+            get { return this._createdTime; }
+            set { this._createdTime = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -119,9 +141,9 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupGetResponse()
         {
-            this._capabilities = new List<string>();
-            this._hostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
-            this._storageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
+            this.Capabilities = new List<string>();
+            this.HostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
+            this.StorageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
         }
         
         /// <summary>

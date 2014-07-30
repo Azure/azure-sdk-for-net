@@ -95,5 +95,19 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         public DatabaseUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseUpdateParameters class
+        /// with required arguments.
+        /// </summary>
+        public DatabaseUpdateParameters(string edition)
+            : this()
+        {
+            if (edition == null)
+            {
+                throw new ArgumentNullException("edition");
+            }
+            this.Edition = edition;
+        }
     }
 }

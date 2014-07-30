@@ -50,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseGetEventLogsResponse()
         {
-            this._eventLogs = new List<DatabaseEventLog>();
+            this.EventLogs = new List<DatabaseEventLog>();
         }
         
         /// <summary>

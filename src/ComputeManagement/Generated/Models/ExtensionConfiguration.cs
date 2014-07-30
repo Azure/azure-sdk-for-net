@@ -60,8 +60,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionConfiguration()
         {
-            this._allRoles = new List<ExtensionConfiguration.Extension>();
-            this._namedRoles = new List<ExtensionConfiguration.NamedRole>();
+            this.AllRoles = new List<ExtensionConfiguration.Extension>();
+            this.NamedRoles = new List<ExtensionConfiguration.NamedRole>();
         }
         
         /// <summary>
@@ -89,6 +89,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public Extension()
             {
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the Extension class with required
+            /// arguments.
+            /// </summary>
+            public Extension(string id)
+                : this()
+            {
+                if (id == null)
+                {
+                    throw new ArgumentNullException("id");
+                }
+                this.Id = id;
             }
         }
         
@@ -126,7 +140,26 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public NamedRole()
             {
-                this._extensions = new List<ExtensionConfiguration.Extension>();
+                this.Extensions = new List<ExtensionConfiguration.Extension>();
+            }
+            
+            /// <summary>
+            /// Initializes a new instance of the NamedRole class with required
+            /// arguments.
+            /// </summary>
+            public NamedRole(string roleName, IList<ExtensionConfiguration.Extension> extensions)
+                : this()
+            {
+                if (roleName == null)
+                {
+                    throw new ArgumentNullException("roleName");
+                }
+                if (extensions == null)
+                {
+                    throw new ArgumentNullException("extensions");
+                }
+                this.RoleName = roleName;
+                this.Extensions = extensions;
             }
         }
     }

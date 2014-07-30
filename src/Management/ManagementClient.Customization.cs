@@ -61,18 +61,6 @@ namespace Microsoft.WindowsAzure.Management
                 new ManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<ManagementClient> client)
-        {
-            base.Clone(client);
-            ManagementClient management = client as ManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override ManagementClient WithHandler(DelegatingHandler handler)
         {
             return (ManagementClient)WithHandler(new ManagementClient(), handler);
