@@ -572,6 +572,186 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceUri'>
         /// Required. The resource uri.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The create or update monitoring setting response. It's marked as
+        /// empty. We only pass it to ensure json error handling
+        /// </returns>
+        public async Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateOrUpdateStorageConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
+            url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject createOrUpdateStorageConfigurationParametersValue = new JObject();
+                requestDoc = createOrUpdateStorageConfigurationParametersValue;
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    createOrUpdateStorageConfigurationParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.LoggingConfiguration != null)
+                    {
+                        JObject loggingValue = new JObject();
+                        propertiesValue["logging"] = loggingValue;
+                        
+                        loggingValue["delete"] = parameters.Properties.LoggingConfiguration.Delete;
+                        
+                        loggingValue["read"] = parameters.Properties.LoggingConfiguration.Read;
+                        
+                        loggingValue["write"] = parameters.Properties.LoggingConfiguration.Write;
+                        
+                        loggingValue["retention"] = TypeConversion.To8601String(parameters.Properties.LoggingConfiguration.Retention);
+                    }
+                    
+                    if (parameters.Properties.MetricConfiguration != null)
+                    {
+                        JObject metricsValue = new JObject();
+                        propertiesValue["metrics"] = metricsValue;
+                        
+                        if (parameters.Properties.MetricConfiguration.MetricAggregations != null)
+                        {
+                            JArray aggregationsArray = new JArray();
+                            foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                            {
+                                JObject storageMetricAggregationValue = new JObject();
+                                aggregationsArray.Add(storageMetricAggregationValue);
+                                
+                                storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                
+                                storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                
+                                storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                            }
+                            metricsValue["aggregations"] = aggregationsArray;
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    MonitoringConfigurationCreateOrUpdateResponse result = null;
+                    result = new MonitoringConfigurationCreateOrUpdateResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -1205,6 +1385,230 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceUri'>
         /// Required. The resource uri.
         /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<StorageConfigurationGetResponse> GetStorageConfigurationAsync(string resourceUri, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                Tracing.Enter(invocationId, this, "GetStorageConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
+            url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    StorageConfigurationGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new StorageConfigurationGetResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            result.Name = nameInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            result.Location = locationInstance;
+                        }
+                        
+                        JToken propertiesValue = responseDoc["properties"];
+                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        {
+                            StorageConfiguration propertiesInstance = new StorageConfiguration();
+                            result.Properties = propertiesInstance;
+                            
+                            JToken loggingValue = propertiesValue["logging"];
+                            if (loggingValue != null && loggingValue.Type != JTokenType.Null)
+                            {
+                                StorageLoggingConfiguration loggingInstance = new StorageLoggingConfiguration();
+                                propertiesInstance.LoggingConfiguration = loggingInstance;
+                                
+                                JToken deleteValue = loggingValue["delete"];
+                                if (deleteValue != null && deleteValue.Type != JTokenType.Null)
+                                {
+                                    bool deleteInstance = ((bool)deleteValue);
+                                    loggingInstance.Delete = deleteInstance;
+                                }
+                                
+                                JToken readValue = loggingValue["read"];
+                                if (readValue != null && readValue.Type != JTokenType.Null)
+                                {
+                                    bool readInstance = ((bool)readValue);
+                                    loggingInstance.Read = readInstance;
+                                }
+                                
+                                JToken writeValue = loggingValue["write"];
+                                if (writeValue != null && writeValue.Type != JTokenType.Null)
+                                {
+                                    bool writeInstance = ((bool)writeValue);
+                                    loggingInstance.Write = writeInstance;
+                                }
+                                
+                                JToken retentionValue = loggingValue["retention"];
+                                if (retentionValue != null && retentionValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan retentionInstance = TypeConversion.From8601TimeSpan(((string)retentionValue));
+                                    loggingInstance.Retention = retentionInstance;
+                                }
+                            }
+                            
+                            JToken metricsValue = propertiesValue["metrics"];
+                            if (metricsValue != null && metricsValue.Type != JTokenType.Null)
+                            {
+                                StorageMetricConfiguration metricsInstance = new StorageMetricConfiguration();
+                                propertiesInstance.MetricConfiguration = metricsInstance;
+                                
+                                JToken aggregationsArray = metricsValue["aggregations"];
+                                if (aggregationsArray != null && aggregationsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken aggregationsValue in ((JArray)aggregationsArray))
+                                    {
+                                        StorageMetricAggregation storageMetricAggregationInstance = new StorageMetricAggregation();
+                                        metricsInstance.MetricAggregations.Add(storageMetricAggregationInstance);
+                                        
+                                        JToken scheduledTransferPeriodValue = aggregationsValue["scheduledTransferPeriod"];
+                                        if (scheduledTransferPeriodValue != null && scheduledTransferPeriodValue.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan scheduledTransferPeriodInstance = TypeConversion.From8601TimeSpan(((string)scheduledTransferPeriodValue));
+                                            storageMetricAggregationInstance.ScheduledTransferPeriod = scheduledTransferPeriodInstance;
+                                        }
+                                        
+                                        JToken retentionValue2 = aggregationsValue["retention"];
+                                        if (retentionValue2 != null && retentionValue2.Type != JTokenType.Null)
+                                        {
+                                            TimeSpan retentionInstance2 = TypeConversion.From8601TimeSpan(((string)retentionValue2));
+                                            storageMetricAggregationInstance.Retention = retentionInstance2;
+                                        }
+                                        
+                                        JToken levelValue = aggregationsValue["level"];
+                                        if (levelValue != null && levelValue.Type != JTokenType.Null)
+                                        {
+                                            StorageMetricLevel levelInstance = ((StorageMetricLevel)Enum.Parse(typeof(StorageMetricLevel), ((string)levelValue), true));
+                                            storageMetricAggregationInstance.Level = levelInstance;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
@@ -1663,6 +2067,186 @@ namespace Microsoft.Azure.Management.Insights
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
                     if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceUri == null)
+            {
+                throw new ArgumentNullException("resourceUri");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateStorageConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + resourceUri.Trim() + "/diagnosticSettings/storage?";
+            url = url + "api-version=2014-04-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = new HttpMethod("PATCH");
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject createOrUpdateStorageConfigurationParametersValue = new JObject();
+                requestDoc = createOrUpdateStorageConfigurationParametersValue;
+                
+                if (parameters.Properties != null)
+                {
+                    JObject propertiesValue = new JObject();
+                    createOrUpdateStorageConfigurationParametersValue["properties"] = propertiesValue;
+                    
+                    if (parameters.Properties.LoggingConfiguration != null)
+                    {
+                        JObject loggingValue = new JObject();
+                        propertiesValue["logging"] = loggingValue;
+                        
+                        loggingValue["delete"] = parameters.Properties.LoggingConfiguration.Delete;
+                        
+                        loggingValue["read"] = parameters.Properties.LoggingConfiguration.Read;
+                        
+                        loggingValue["write"] = parameters.Properties.LoggingConfiguration.Write;
+                        
+                        loggingValue["retention"] = TypeConversion.To8601String(parameters.Properties.LoggingConfiguration.Retention);
+                    }
+                    
+                    if (parameters.Properties.MetricConfiguration != null)
+                    {
+                        JObject metricsValue = new JObject();
+                        propertiesValue["metrics"] = metricsValue;
+                        
+                        if (parameters.Properties.MetricConfiguration.MetricAggregations != null)
+                        {
+                            JArray aggregationsArray = new JArray();
+                            foreach (StorageMetricAggregation aggregationsItem in parameters.Properties.MetricConfiguration.MetricAggregations)
+                            {
+                                JObject storageMetricAggregationValue = new JObject();
+                                aggregationsArray.Add(storageMetricAggregationValue);
+                                
+                                storageMetricAggregationValue["scheduledTransferPeriod"] = TypeConversion.To8601String(aggregationsItem.ScheduledTransferPeriod);
+                                
+                                storageMetricAggregationValue["retention"] = TypeConversion.To8601String(aggregationsItem.Retention);
+                                
+                                storageMetricAggregationValue["level"] = aggregationsItem.Level.ToString();
+                            }
+                            metricsValue["aggregations"] = aggregationsArray;
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));

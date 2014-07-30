@@ -80,6 +80,48 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceUri'>
         /// Required. The resource uri.
         /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// The create or update monitoring setting response. It's marked as
+        /// empty. We only pass it to ensure json error handling
+        /// </returns>
+        public static MonitoringConfigurationCreateOrUpdateResponse CreateOrUpdateStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMonitoringConfigurationOperations)s).CreateOrUpdateStorageConfigurationAsync(resourceUri, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// The create or update monitoring setting response. It's marked as
+        /// empty. We only pass it to ensure json error handling
+        /// </returns>
+        public static Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        {
+            return operations.CreateOrUpdateStorageConfigurationAsync(resourceUri, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
@@ -107,6 +149,42 @@ namespace Microsoft.Azure.Management.Insights
         public static Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri)
         {
             return operations.GetConfigurationAsync(resourceUri, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static StorageConfigurationGetResponse GetStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMonitoringConfigurationOperations)s).GetStorageConfigurationAsync(resourceUri);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<StorageConfigurationGetResponse> GetStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri)
+        {
+            return operations.GetStorageConfigurationAsync(resourceUri, CancellationToken.None);
         }
         
         /// <param name='operations'>
@@ -149,6 +227,48 @@ namespace Microsoft.Azure.Management.Insights
         public static Task<OperationResponse> UpdateConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters)
         {
             return operations.UpdateConfigurationAsync(resourceUri, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IMonitoringConfigurationOperations)s).UpdateStorageConfigurationAsync(resourceUri, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// Required. The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
+        {
+            return operations.UpdateStorageConfigurationAsync(resourceUri, parameters, CancellationToken.None);
         }
     }
 }

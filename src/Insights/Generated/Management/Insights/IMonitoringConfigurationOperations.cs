@@ -51,6 +51,21 @@ namespace Microsoft.Azure.Management.Insights
         /// <param name='resourceUri'>
         /// The resource uri.
         /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The create or update monitoring setting response. It's marked as
+        /// empty. We only pass it to ensure json error handling
+        /// </returns>
+        Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -59,6 +74,18 @@ namespace Microsoft.Azure.Management.Insights
         /// request ID.
         /// </returns>
         Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(string resourceUri, CancellationToken cancellationToken);
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<StorageConfigurationGetResponse> GetStorageConfigurationAsync(string resourceUri, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
         /// The resource uri.
@@ -74,5 +101,20 @@ namespace Microsoft.Azure.Management.Insights
         /// request ID.
         /// </returns>
         Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='resourceUri'>
+        /// The resource uri.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken);
     }
 }
