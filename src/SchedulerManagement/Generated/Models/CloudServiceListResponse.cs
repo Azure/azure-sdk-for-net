@@ -270,6 +270,17 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
                 /// </summary>
                 public partial class OperationStatus
                 {
+                    private Error _error;
+                    
+                    /// <summary>
+                    /// Optional. The error details for operations that failed.
+                    /// </summary>
+                    public Error Error
+                    {
+                        get { return this._error; }
+                        set { this._error = value; }
+                    }
+                    
                     private string _result;
                     
                     /// <summary>
