@@ -37,6 +37,7 @@
     <Compile Include="Generated\Models\CloudServiceOperationStatus.cs" />
     <Compile Include="Generated\Models\CloudServiceOperationStatusResponse.cs" />
     <Compile Include="Generated\Models\EntitleResourceParameters.cs" />
+    <Compile Include="Generated\Models\Error.cs" />
     <Compile Include="Generated\Models\GetCloudServiceResourceState.cs" />
     <Compile Include="Generated\Models\Job.cs" />
     <Compile Include="Generated\Models\JobAction.cs" />
@@ -120,9 +121,6 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Target Name="CopyMicrosoftWindowsAzureManagementCloudServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5275.27150-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
-  </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -138,5 +136,8 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementSchedulerSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Scheduler.Specification.1.0.5291.26596-prerelease\tools\Microsoft.WindowsAzure.Management.Scheduler.Specification.dll" DestinationFolder="." />
+  </Target>
+  <Target Name="CopyMicrosoftWindowsAzureManagementCloudServicesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.CloudServices.Specification.1.0.5325.27709-prerelease\tools\Microsoft.WindowsAzure.Management.CloudServices.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
