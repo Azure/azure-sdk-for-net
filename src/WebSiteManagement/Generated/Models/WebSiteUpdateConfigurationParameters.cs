@@ -127,12 +127,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._logsDirectorySizeLimit = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? _managedPipelineMode;
+        private string _managedPipelineMode;
         
         /// <summary>
         /// Optional. The managed pipeline mode.
         /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.ManagedPipelineMode? ManagedPipelineMode
+        public string ManagedPipelineMode
         {
             get { return this._managedPipelineMode; }
             set { this._managedPipelineMode = value; }
@@ -343,13 +343,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._name = value; }
             }
             
-            private ConnectionStringType _type;
+            private string _type;
             
             /// <summary>
             /// Optional. The type of the connection string (for example,
             /// "MySQL").
             /// </summary>
-            public ConnectionStringType Type
+            public string Type
             {
                 get { return this._type; }
                 set { this._type = value; }

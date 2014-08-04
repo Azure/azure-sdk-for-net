@@ -2451,7 +2451,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 JToken typeValue = connectionStringsValue["Type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    ConnectionStringType typeInstance = ((ConnectionStringType)Enum.Parse(typeof(ConnectionStringType), ((string)typeValue), true));
+                                    string typeInstance = ((string)typeValue);
                                     connectionStringInfoInstance.Type = typeInstance;
                                 }
                             }
@@ -2528,7 +2528,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken managedPipelineModeValue = responseDoc["ManagedPipelineMode"];
                         if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
                         {
-                            ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                            string managedPipelineModeInstance = ((string)managedPipelineModeValue);
                             result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
@@ -5187,7 +5187,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             connectionStringInfoValue["Name"] = connectionStringsItem.Name;
                         }
                         
-                        connectionStringInfoValue["Type"] = connectionStringsItem.Type.ToString();
+                        if (connectionStringsItem.Type != null)
+                        {
+                            connectionStringInfoValue["Type"] = connectionStringsItem.Type;
+                        }
                     }
                     webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                 }
@@ -5250,7 +5253,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = parameters.ManagedPipelineMode.ToString();
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = parameters.ManagedPipelineMode;
                 }
                 
                 JArray metadataDictionary = new JArray();
