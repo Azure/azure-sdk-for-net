@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Gallery
         /// Gets a gallery items.
         /// </summary>
         /// <param name='itemIdentity'>
-        /// Required. Gallery item identity.
+        /// Optional. Gallery item identity.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

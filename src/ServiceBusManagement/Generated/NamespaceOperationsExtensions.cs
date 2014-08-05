@@ -101,7 +101,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// Required. The namespace region.
+        /// Optional. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The namespace name.
         /// </param>
         /// <param name='region'>
-        /// Required. The namespace region.
+        /// Optional. The namespace region.
         /// </param>
         /// <returns>
         /// The response to a request for a particular namespace.

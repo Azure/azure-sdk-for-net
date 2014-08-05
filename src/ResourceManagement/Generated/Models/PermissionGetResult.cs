@@ -28,19 +28,19 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group permissions information.
+    /// Permissions information.
     /// </summary>
     public partial class PermissionGetResult : OperationResponse
     {
-        private IList<PermittedActionDefinition> _permittedActions;
+        private IList<Permission> _permissions;
         
         /// <summary>
-        /// Optional. Gets or sets permitted actions.
+        /// Optional. Gets or sets permissions.
         /// </summary>
-        public IList<PermittedActionDefinition> PermittedActions
+        public IList<Permission> Permissions
         {
-            get { return this._permittedActions; }
-            set { this._permittedActions = value; }
+            get { return this._permissions; }
+            set { this._permissions = value; }
         }
         
         /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public PermissionGetResult()
         {
-            this.PermittedActions = new List<PermittedActionDefinition>();
+            this.Permissions = new List<Permission>();
         }
     }
 }

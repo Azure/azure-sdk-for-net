@@ -366,6 +366,7 @@ namespace Microsoft.Azure.Management.Resources
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -766,7 +767,7 @@ namespace Microsoft.Azure.Management.Resources
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -902,7 +903,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         public async Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, ResourceIdentity identity, CancellationToken cancellationToken)
         {
@@ -1027,15 +1028,24 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                PermittedActionDefinition permittedActionDefinitionInstance = new PermittedActionDefinition();
-                                result.PermittedActions.Add(permittedActionDefinitionInstance);
+                                Permission permissionInstance = new Permission();
+                                result.Permissions.Add(permissionInstance);
                                 
                                 JToken actionsArray = valueValue["actions"];
                                 if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                 {
                                     foreach (JToken actionsValue in ((JArray)actionsArray))
                                     {
-                                        permittedActionDefinitionInstance.Actions.Add(((string)actionsValue));
+                                        permissionInstance.Actions.Add(((string)actionsValue));
+                                    }
+                                }
+                                
+                                JToken notActionsArray = valueValue["notActions"];
+                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
+                                {
+                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
+                                    {
+                                        permissionInstance.NotActions.Add(((string)notActionsValue));
                                     }
                                 }
                             }

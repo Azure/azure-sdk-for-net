@@ -47,7 +47,7 @@ namespace Microsoft.WindowsAzure
         /// Optional. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.The value is either null or
+        /// Optional. The namespace of the metrics.The value is either null or
         /// WindowsAzure.Availability.WindowsAzure.Availability returns the
         /// metric definitions for endpoint monitoring metrics
         /// </param>
@@ -79,7 +79,7 @@ namespace Microsoft.WindowsAzure
         /// Optional. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.The value is either null or
+        /// Optional. The namespace of the metrics.The value is either null or
         /// WindowsAzure.Availability.WindowsAzure.Availability returns the
         /// metric definitions for endpoint monitoring metrics
         /// </param>
