@@ -53,6 +53,30 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._parameters = value; }
         }
         
+        private ParametersLink _parametersLink;
+        
+        /// <summary>
+        /// Optional. Gets or sets the URI referencing the parameters. Use only
+        /// one of Parameters or ParametersLink.
+        /// </summary>
+        public ParametersLink ParametersLink
+        {
+            get { return this._parametersLink; }
+            set { this._parametersLink = value; }
+        }
+        
+        private string _template;
+        
+        /// <summary>
+        /// Optional. Gets or sets the template content. Use only one of
+        /// Template or TemplateLink.
+        /// </summary>
+        public string Template
+        {
+            get { return this._template; }
+            set { this._template = value; }
+        }
+        
         private TemplateLink _templateLink;
         
         /// <summary>

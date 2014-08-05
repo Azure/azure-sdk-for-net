@@ -26,14 +26,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Resource group permission actions information
+    /// Permission actions information
     /// </summary>
-    public partial class PermittedActionDefinition
+    public partial class Permission
     {
         private IList<string> _actions;
         
         /// <summary>
-        /// Optional. Gets or sets available actions
+        /// Optional. Get or set allowed actions.
         /// </summary>
         public IList<string> Actions
         {
@@ -41,12 +41,24 @@ namespace Microsoft.Azure.Management.Resources.Models
             set { this._actions = value; }
         }
         
+        private IList<string> _notActions;
+        
         /// <summary>
-        /// Initializes a new instance of the PermittedActionDefinition class.
+        /// Optional. Get or set denied actions.
         /// </summary>
-        public PermittedActionDefinition()
+        public IList<string> NotActions
+        {
+            get { return this._notActions; }
+            set { this._notActions = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Permission class.
+        /// </summary>
+        public Permission()
         {
             this.Actions = new List<string>();
+            this.NotActions = new List<string>();
         }
     }
 }
