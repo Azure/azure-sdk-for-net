@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Gallery
         /// Reference to the Microsoft.Azure.Gallery.IItemOperations.
         /// </param>
         /// <param name='itemIdentity'>
-        /// Required. Gallery item identity.
+        /// Optional. Gallery item identity.
         /// </param>
         /// <returns>
         /// Gallery item information.
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Gallery
         /// Reference to the Microsoft.Azure.Gallery.IItemOperations.
         /// </param>
         /// <param name='itemIdentity'>
-        /// Required. Gallery item identity.
+        /// Optional. Gallery item identity.
         /// </param>
         /// <returns>
         /// Gallery item information.
