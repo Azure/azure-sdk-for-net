@@ -29,25 +29,25 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// </summary>
     public partial class JobGetHistoryParameters
     {
-        private int _skip;
+        private int? _skip;
         
         /// <summary>
-        /// Required. Specify the (0-based) index of the history list from
+        /// Optional. Specify the (0-based) index of the history list from
         /// which to begin requesting entries.
         /// </summary>
-        public int Skip
+        public int? Skip
         {
             get { return this._skip; }
             set { this._skip = value; }
         }
         
-        private int _top;
+        private int? _top;
         
         /// <summary>
-        /// Required. Specify the number of history entries to request, in the
+        /// Optional. Specify the number of history entries to request, in the
         /// of range [1..100].
         /// </summary>
-        public int Top
+        public int? Top
         {
             get { return this._top; }
             set { this._top = value; }
@@ -58,17 +58,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobGetHistoryParameters()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the JobGetHistoryParameters class
-        /// with required arguments.
-        /// </summary>
-        public JobGetHistoryParameters(int skip, int top)
-            : this()
-        {
-            this.Skip = skip;
-            this.Top = top;
         }
     }
 }
