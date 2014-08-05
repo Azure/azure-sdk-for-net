@@ -48,5 +48,19 @@ namespace Microsoft.Azure.Management.Sql.Models
         public FirewallRuleCreateOrUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// FirewallRuleCreateOrUpdateParameters class with required arguments.
+        /// </summary>
+        public FirewallRuleCreateOrUpdateParameters(FirewallRuleCreateOrUpdateProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
+        }
     }
 }

@@ -510,7 +510,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// key.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Required.
+        /// Optional.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

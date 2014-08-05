@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this._servers = new List<Server>();
+            this.Servers = new List<Server>();
         }
         
         /// <summary>

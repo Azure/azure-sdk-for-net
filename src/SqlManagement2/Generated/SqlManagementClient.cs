@@ -36,11 +36,20 @@ namespace Microsoft.Azure.Management.Sql
     /// </summary>
     public partial class SqlManagementClient : ServiceClient<SqlManagementClient>, ISqlManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Gets or sets the URI used as the base for all cloud service
-        /// requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -50,9 +59,9 @@ namespace Microsoft.Azure.Management.Sql
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Microsoft Azure subscription. The subscription ID forms part of
-        /// the URI for every service call.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -127,6 +136,7 @@ namespace Microsoft.Azure.Management.Sql
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._servers = new ServerOperations(this);
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -136,13 +146,13 @@ namespace Microsoft.Azure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets or sets the URI used as the base for all cloud
-        /// service requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -165,9 +175,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public SqlManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -194,6 +204,7 @@ namespace Microsoft.Azure.Management.Sql
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._servers = new ServerOperations(this);
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -203,13 +214,13 @@ namespace Microsoft.Azure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets or sets the URI used as the base for all cloud
-        /// service requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -235,9 +246,9 @@ namespace Microsoft.Azure.Management.Sql
         /// Initializes a new instance of the SqlManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -253,6 +264,31 @@ namespace Microsoft.Azure.Management.Sql
             this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// SqlManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of SqlManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<SqlManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is SqlManagementClient)
+            {
+                SqlManagementClient clonedClient = ((SqlManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
 }

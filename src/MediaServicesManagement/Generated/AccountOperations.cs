@@ -216,6 +216,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
