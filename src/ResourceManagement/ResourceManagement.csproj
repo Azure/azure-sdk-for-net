@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <WindowsAzureLibraryProfileSet>portable/net40</WindowsAzureLibraryProfileSet>
+    <ProjectGuid>{165EF660-235B-45AF-83CB-0D32BEF4C1A2}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Management.Resources</RootNamespace>
+    <AssemblyName>Microsoft.Azure.ResourceManager</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <Import Project="..\library.props" />
+  <ItemGroup>
+    <Compile Include="Generated\Models\BasicDependency.cs" />
+    <Compile Include="Generated\Models\Dependency.cs" />
+    <Compile Include="Generated\Models\Subscription.cs" />
+    <Compile Include="SubscriptionClient.Customization.cs" />
+    <Compile Include="Generated\DeploymentOperationOperations.cs" />
+    <Compile Include="Generated\DeploymentOperationOperationsExtensions.cs" />
+    <Compile Include="Generated\DeploymentOperations.cs" />
+    <Compile Include="Generated\DeploymentOperationsExtensions.cs" />
+    <Compile Include="Generated\IDeploymentOperationOperations.cs" />
+    <Compile Include="Generated\IDeploymentOperations.cs" />
+    <Compile Include="Generated\IProviderOperations.cs" />
+    <Compile Include="Generated\IResourceGroupOperations.cs" />
+    <Compile Include="Generated\IResourceManagementClient.cs" />
+    <Compile Include="Generated\IResourceOperations.cs" />
+    <Compile Include="Generated\ISubscriptionClient.cs" />
+    <Compile Include="Generated\ISubscriptionOperations.cs" />
+    <Compile Include="Generated\ITagOperations.cs" />
+    <Compile Include="Generated\ITenantOperations.cs" />
+    <Compile Include="Generated\Models\BasicDeployment.cs" />
+    <Compile Include="Generated\Models\BasicResource.cs" />
+    <Compile Include="Generated\Models\BasicResourceGroup.cs" />
+    <Compile Include="Generated\Models\Deployment.cs" />
+    <Compile Include="Generated\Models\DeploymentGetResult.cs" />
+    <Compile Include="Generated\Models\DeploymentListParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentListResult.cs" />
+    <Compile Include="Generated\Models\DeploymentMode.cs" />
+    <Compile Include="Generated\Models\DeploymentOperation.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationProperties.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsCreateResult.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsGetResult.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsListParameters.cs" />
+    <Compile Include="Generated\Models\DeploymentOperationsListResult.cs" />
+    <Compile Include="Generated\Models\DeploymentProperties.cs" />
+    <Compile Include="Generated\Models\DeploymentValidateResponse.cs" />
+    <Compile Include="Generated\Models\GetSubscriptionResult.cs" />
+    <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
+    <Compile Include="Generated\Models\PermissionGetResult.cs" />
+    <Compile Include="Generated\Models\PermittedActionDefinition.cs" />
+    <Compile Include="Generated\Models\Provider.cs" />
+    <Compile Include="Generated\Models\ProviderGetResult.cs" />
+    <Compile Include="Generated\Models\ProviderListParameters.cs" />
+    <Compile Include="Generated\Models\ProviderListResult.cs" />
+    <Compile Include="Generated\Models\ProviderRegistrationState.cs" />
+    <Compile Include="Generated\Models\ProviderResourceType.cs" />
+    <Compile Include="Generated\Models\ProvisioningState.cs" />
+    <Compile Include="Generated\Models\Resource.cs" />
+    <Compile Include="Generated\Models\ResourceCreateOrUpdateResult.cs" />
+    <Compile Include="Generated\Models\ResourceExistsResult.cs" />
+    <Compile Include="Generated\Models\ResourceGetResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroup.cs" />
+    <Compile Include="Generated\Models\ResourceGroupCreateOrUpdateResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupExistsResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupGetResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupListParameters.cs" />
+    <Compile Include="Generated\Models\ResourceGroupListResult.cs" />
+    <Compile Include="Generated\Models\ResourceGroupPatchResult.cs" />
+    <Compile Include="Generated\Models\ResourceIdentity.cs" />
+    <Compile Include="Generated\Models\ResourceListParameters.cs" />
+    <Compile Include="Generated\Models\ResourceListResult.cs" />
+    <Compile Include="Generated\Models\ResourceManagementError.cs" />
+    <Compile Include="Generated\Models\ResourceManagementErrorWithDetails.cs" />
+    <Compile Include="Generated\Models\SubscriptionListResult.cs" />
+    <Compile Include="Generated\Models\TagCount.cs" />
+    <Compile Include="Generated\Models\TagCreateResult.cs" />
+    <Compile Include="Generated\Models\TagCreateValueResult.cs" />
+    <Compile Include="Generated\Models\TagDetails.cs" />
+    <Compile Include="Generated\Models\TagsListResult.cs" />
+    <Compile Include="Generated\Models\TagValue.cs" />
+    <Compile Include="Generated\Models\TargetResource.cs" />
+    <Compile Include="Generated\Models\TemplateLink.cs" />
+    <Compile Include="Generated\Models\TenantIdDescription.cs" />
+    <Compile Include="Generated\Models\TenantListResult.cs" />
+    <Compile Include="Generated\ProviderOperations.cs" />
+    <Compile Include="Generated\ProviderOperationsExtensions.cs" />
+    <Compile Include="Generated\ResourceGroupOperations.cs" />
+    <Compile Include="Generated\ResourceGroupOperationsExtensions.cs" />
+    <Compile Include="Generated\ResourceManagementClient.cs" />
+    <Compile Include="Generated\ResourceManagementClientExtensions.cs" />
+    <Compile Include="Generated\ResourceOperations.cs" />
+    <Compile Include="Generated\ResourceOperationsExtensions.cs" />
+    <Compile Include="Generated\SubscriptionClient.cs" />
+    <Compile Include="Generated\SubscriptionClientExtensions.cs" />
+    <Compile Include="Generated\SubscriptionOperations.cs" />
+    <Compile Include="Generated\SubscriptionOperationsExtensions.cs" />
+    <Compile Include="Generated\TagOperations.cs" />
+    <Compile Include="Generated\TagOperationsExtensions.cs" />
+    <Compile Include="Generated\TenantOperations.cs" />
+    <Compile Include="Generated\TenantOperationsExtensions.cs" />
+    <Compile Include="Models\ResourceIdentity.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResourceManagementClient.Customization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.Azure.Management.Resources.nuspec" />
+    <None Include="Microsoft.Azure.Management.Resources.nuget.proj" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.1.1\lib\portable-net45+sl50+wp80+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
+  <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
+  <Import Project="$(SolutionDir)\src\library.targets" />
+  <Import Project="GenerateCode.props" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets'))" />
+  </Target>
+  <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
+    <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
+  </Target>
+  <Target Name="CopyMicrosoftAzureManagementResourcesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Resources.Specification.1.0.5302.17755-prerelease\tools\Microsoft.Azure.Management.Resources.Specification.dll" DestinationFolder="." />
+  </Target>
+</Project>

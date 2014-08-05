@@ -290,8 +290,8 @@
     <Message Text="Validating the source tree, binaries, packages and more..." />
     <CallTarget Targets="ValidateCorporateCompliance" />
 
-    <!--<Message Text="Build the official NuGet packages" />
-    <CallTarget Targets="BuildPackages" />-->
+    <Message Text="Build the official NuGet packages" />
+    <CallTarget Targets="BuildPackages" />
 
     <RemoveDir Directories="binaries\unsigned" Condition="Exists('binaries\unsigned')" ContinueOnError="true" />
     <RemoveDir Directories="binaries\net40\unsigned" Condition="Exists('binaries\net40\unsigned')" ContinueOnError="true" />

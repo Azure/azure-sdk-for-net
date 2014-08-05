@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Insights
             string partitionFilter = TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, partitionKey);
             string rowStartFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.GreaterThanOrEqual, startRowKey);
             string rowEndFilter = TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.LessThan, endRowKey);
-
+            
             return new TableQuery()
             {
                 FilterString = TableQuery.CombineFilters(partitionFilter, TableOperators.And, TableQuery.CombineFilters(rowStartFilter, TableOperators.And, rowEndFilter))
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Insights
             Dictionary<string, string> otherProperties = new Dictionary<string, string>();
             MetricValue metricValue = new MetricValue()
             {
-                Timestamp = entity.Timestamp.UtcDateTime
+                Timestamp = entity["TIMESTAMP"].DateTime ?? entity.Timestamp.UtcDateTime
             };
 
             foreach (string key in entity.Properties.Keys)

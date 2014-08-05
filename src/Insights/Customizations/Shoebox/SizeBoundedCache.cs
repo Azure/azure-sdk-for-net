@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Insights
             //while (!dictionary.TryRemove(list.Last.Value.Key, out val))
             //{ }
             dictionary.Remove(list.Last.Value.Key);
-
+            
             list.RemoveLast();
         }
 

@@ -478,7 +478,7 @@ namespace Microsoft.Azure.Insights
                         {
                             case '\'':
                                 StringBuilder sb = new StringBuilder();
-
+                                
                                 // slight variation here to avoid capturing opening quote
                                 for (pos++; pos < filterString.Length && (c = filterString[pos]) != '\''; pos++)
                                 {

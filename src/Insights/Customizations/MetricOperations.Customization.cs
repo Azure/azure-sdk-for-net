@@ -12,6 +12,9 @@ namespace Microsoft.Azure.Insights
     {
         public async Task<MetricListResponse> GetMetricsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
+            // Ensure exactly one '/' at the start
+            resourceUri = '/' + resourceUri.TrimStart('/');
+
             // Get Definitions for requested Metrics and pass through to get by definition
             return
                 await this.GetMetricsAsync(
@@ -34,7 +37,7 @@ namespace Microsoft.Azure.Insights
                 return new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
-                    StatusCode = HttpStatusCode.OK
+                    StatusCode =  HttpStatusCode.OK
                 };
             }
 
@@ -90,7 +93,7 @@ namespace Microsoft.Azure.Insights
                     MetricValues = new List<MetricValue>(),
                     Properties = new Dictionary<string, string>()
                 });
-
+            
             // Create response (merge and wrap metrics)
             return new MetricListResponse()
             {
