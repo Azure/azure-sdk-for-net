@@ -245,6 +245,13 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.ParametersLink != null)
+            {
+                if (parameters.ParametersLink.Uri == null)
+                {
+                    throw new ArgumentNullException("parameters.ParametersLink.Uri");
+                }
+            }
             if (parameters.TemplateLink != null)
             {
                 if (parameters.TemplateLink.Uri == null)
@@ -304,6 +311,11 @@ namespace Microsoft.Azure.Management.Resources
                 requestDoc = new JObject();
                 requestDoc["properties"] = propertiesValue;
                 
+                if (parameters.Template != null)
+                {
+                    propertiesValue["template"] = JObject.Parse(parameters.Template);
+                }
+                
                 if (parameters.TemplateLink != null)
                 {
                     JObject templateLinkValue = new JObject();
@@ -320,6 +332,19 @@ namespace Microsoft.Azure.Management.Resources
                 if (parameters.Parameters != null)
                 {
                     propertiesValue["parameters"] = JObject.Parse(parameters.Parameters);
+                }
+                
+                if (parameters.ParametersLink != null)
+                {
+                    JObject parametersLinkValue = new JObject();
+                    propertiesValue["parametersLink"] = parametersLinkValue;
+                    
+                    parametersLinkValue["uri"] = parameters.ParametersLink.Uri.AbsoluteUri;
+                    
+                    if (parameters.ParametersLink.ContentVersion != null)
+                    {
+                        parametersLinkValue["contentVersion"] = parameters.ParametersLink.ContentVersion;
+                    }
                 }
                 
                 propertiesValue["mode"] = parameters.Mode.ToString();
@@ -538,6 +563,13 @@ namespace Microsoft.Azure.Management.Resources
                                 }
                             }
                             
+                            JToken templateValue = propertiesValue2["template"];
+                            if (templateValue != null && templateValue.Type != JTokenType.Null)
+                            {
+                                string templateInstance = templateValue.ToString(Formatting.Indented);
+                                propertiesInstance.Template = templateInstance;
+                            }
+                            
                             JToken templateLinkValue2 = propertiesValue2["templateLink"];
                             if (templateLinkValue2 != null && templateLinkValue2.Type != JTokenType.Null)
                             {
@@ -564,6 +596,27 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 string parametersInstance = parametersValue.ToString(Formatting.Indented);
                                 propertiesInstance.Parameters = parametersInstance;
+                            }
+                            
+                            JToken parametersLinkValue2 = propertiesValue2["parametersLink"];
+                            if (parametersLinkValue2 != null && parametersLinkValue2.Type != JTokenType.Null)
+                            {
+                                ParametersLink parametersLinkInstance = new ParametersLink();
+                                propertiesInstance.ParametersLink = parametersLinkInstance;
+                                
+                                JToken uriValue2 = parametersLinkValue2["uri"];
+                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                {
+                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                    parametersLinkInstance.Uri = uriInstance2;
+                                }
+                                
+                                JToken contentVersionValue2 = parametersLinkValue2["contentVersion"];
+                                if (contentVersionValue2 != null && contentVersionValue2.Type != JTokenType.Null)
+                                {
+                                    string contentVersionInstance2 = ((string)contentVersionValue2);
+                                    parametersLinkInstance.ContentVersion = contentVersionInstance2;
+                                }
                             }
                             
                             JToken modeValue = propertiesValue2["mode"];
@@ -892,6 +945,13 @@ namespace Microsoft.Azure.Management.Resources
                                 }
                             }
                             
+                            JToken templateValue = propertiesValue["template"];
+                            if (templateValue != null && templateValue.Type != JTokenType.Null)
+                            {
+                                string templateInstance = templateValue.ToString(Formatting.Indented);
+                                propertiesInstance.Template = templateInstance;
+                            }
+                            
                             JToken templateLinkValue = propertiesValue["templateLink"];
                             if (templateLinkValue != null && templateLinkValue.Type != JTokenType.Null)
                             {
@@ -918,6 +978,27 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 string parametersInstance = parametersValue.ToString(Formatting.Indented);
                                 propertiesInstance.Parameters = parametersInstance;
+                            }
+                            
+                            JToken parametersLinkValue = propertiesValue["parametersLink"];
+                            if (parametersLinkValue != null && parametersLinkValue.Type != JTokenType.Null)
+                            {
+                                ParametersLink parametersLinkInstance = new ParametersLink();
+                                propertiesInstance.ParametersLink = parametersLinkInstance;
+                                
+                                JToken uriValue2 = parametersLinkValue["uri"];
+                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                {
+                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                    parametersLinkInstance.Uri = uriInstance2;
+                                }
+                                
+                                JToken contentVersionValue2 = parametersLinkValue["contentVersion"];
+                                if (contentVersionValue2 != null && contentVersionValue2.Type != JTokenType.Null)
+                                {
+                                    string contentVersionInstance2 = ((string)contentVersionValue2);
+                                    parametersLinkInstance.ContentVersion = contentVersionInstance2;
+                                }
                             }
                             
                             JToken modeValue = propertiesValue["mode"];
@@ -1252,6 +1333,13 @@ namespace Microsoft.Azure.Management.Resources
                                         }
                                     }
                                     
+                                    JToken templateValue = propertiesValue["template"];
+                                    if (templateValue != null && templateValue.Type != JTokenType.Null)
+                                    {
+                                        string templateInstance = templateValue.ToString(Formatting.Indented);
+                                        propertiesInstance.Template = templateInstance;
+                                    }
+                                    
                                     JToken templateLinkValue = propertiesValue["templateLink"];
                                     if (templateLinkValue != null && templateLinkValue.Type != JTokenType.Null)
                                     {
@@ -1278,6 +1366,27 @@ namespace Microsoft.Azure.Management.Resources
                                     {
                                         string parametersInstance = parametersValue.ToString(Formatting.Indented);
                                         propertiesInstance.Parameters = parametersInstance;
+                                    }
+                                    
+                                    JToken parametersLinkValue = propertiesValue["parametersLink"];
+                                    if (parametersLinkValue != null && parametersLinkValue.Type != JTokenType.Null)
+                                    {
+                                        ParametersLink parametersLinkInstance = new ParametersLink();
+                                        propertiesInstance.ParametersLink = parametersLinkInstance;
+                                        
+                                        JToken uriValue2 = parametersLinkValue["uri"];
+                                        if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                            parametersLinkInstance.Uri = uriInstance2;
+                                        }
+                                        
+                                        JToken contentVersionValue2 = parametersLinkValue["contentVersion"];
+                                        if (contentVersionValue2 != null && contentVersionValue2.Type != JTokenType.Null)
+                                        {
+                                            string contentVersionInstance2 = ((string)contentVersionValue2);
+                                            parametersLinkInstance.ContentVersion = contentVersionInstance2;
+                                        }
                                     }
                                     
                                     JToken modeValue = propertiesValue["mode"];
@@ -1591,6 +1700,13 @@ namespace Microsoft.Azure.Management.Resources
                                         }
                                     }
                                     
+                                    JToken templateValue = propertiesValue["template"];
+                                    if (templateValue != null && templateValue.Type != JTokenType.Null)
+                                    {
+                                        string templateInstance = templateValue.ToString(Formatting.Indented);
+                                        propertiesInstance.Template = templateInstance;
+                                    }
+                                    
                                     JToken templateLinkValue = propertiesValue["templateLink"];
                                     if (templateLinkValue != null && templateLinkValue.Type != JTokenType.Null)
                                     {
@@ -1617,6 +1733,27 @@ namespace Microsoft.Azure.Management.Resources
                                     {
                                         string parametersInstance = parametersValue.ToString(Formatting.Indented);
                                         propertiesInstance.Parameters = parametersInstance;
+                                    }
+                                    
+                                    JToken parametersLinkValue = propertiesValue["parametersLink"];
+                                    if (parametersLinkValue != null && parametersLinkValue.Type != JTokenType.Null)
+                                    {
+                                        ParametersLink parametersLinkInstance = new ParametersLink();
+                                        propertiesInstance.ParametersLink = parametersLinkInstance;
+                                        
+                                        JToken uriValue2 = parametersLinkValue["uri"];
+                                        if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                        {
+                                            Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                            parametersLinkInstance.Uri = uriInstance2;
+                                        }
+                                        
+                                        JToken contentVersionValue2 = parametersLinkValue["contentVersion"];
+                                        if (contentVersionValue2 != null && contentVersionValue2.Type != JTokenType.Null)
+                                        {
+                                            string contentVersionInstance2 = ((string)contentVersionValue2);
+                                            parametersLinkInstance.ContentVersion = contentVersionInstance2;
+                                        }
                                     }
                                     
                                     JToken modeValue = propertiesValue["mode"];
@@ -1708,6 +1845,13 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.ParametersLink != null)
+            {
+                if (parameters.ParametersLink.Uri == null)
+                {
+                    throw new ArgumentNullException("parameters.ParametersLink.Uri");
+                }
+            }
             if (parameters.TemplateLink != null)
             {
                 if (parameters.TemplateLink.Uri == null)
@@ -1767,6 +1911,11 @@ namespace Microsoft.Azure.Management.Resources
                 requestDoc = new JObject();
                 requestDoc["properties"] = propertiesValue;
                 
+                if (parameters.Template != null)
+                {
+                    propertiesValue["template"] = JObject.Parse(parameters.Template);
+                }
+                
                 if (parameters.TemplateLink != null)
                 {
                     JObject templateLinkValue = new JObject();
@@ -1783,6 +1932,19 @@ namespace Microsoft.Azure.Management.Resources
                 if (parameters.Parameters != null)
                 {
                     propertiesValue["parameters"] = JObject.Parse(parameters.Parameters);
+                }
+                
+                if (parameters.ParametersLink != null)
+                {
+                    JObject parametersLinkValue = new JObject();
+                    propertiesValue["parametersLink"] = parametersLinkValue;
+                    
+                    parametersLinkValue["uri"] = parameters.ParametersLink.Uri.AbsoluteUri;
+                    
+                    if (parameters.ParametersLink.ContentVersion != null)
+                    {
+                        parametersLinkValue["contentVersion"] = parameters.ParametersLink.ContentVersion;
+                    }
                 }
                 
                 propertiesValue["mode"] = parameters.Mode.ToString();
@@ -2043,6 +2205,13 @@ namespace Microsoft.Azure.Management.Resources
                                 }
                             }
                             
+                            JToken templateValue = propertiesValue2["template"];
+                            if (templateValue != null && templateValue.Type != JTokenType.Null)
+                            {
+                                string templateInstance = templateValue.ToString(Formatting.Indented);
+                                propertiesInstance.Template = templateInstance;
+                            }
+                            
                             JToken templateLinkValue2 = propertiesValue2["templateLink"];
                             if (templateLinkValue2 != null && templateLinkValue2.Type != JTokenType.Null)
                             {
@@ -2069,6 +2238,27 @@ namespace Microsoft.Azure.Management.Resources
                             {
                                 string parametersInstance = parametersValue.ToString(Formatting.Indented);
                                 propertiesInstance.Parameters = parametersInstance;
+                            }
+                            
+                            JToken parametersLinkValue2 = propertiesValue2["parametersLink"];
+                            if (parametersLinkValue2 != null && parametersLinkValue2.Type != JTokenType.Null)
+                            {
+                                ParametersLink parametersLinkInstance = new ParametersLink();
+                                propertiesInstance.ParametersLink = parametersLinkInstance;
+                                
+                                JToken uriValue2 = parametersLinkValue2["uri"];
+                                if (uriValue2 != null && uriValue2.Type != JTokenType.Null)
+                                {
+                                    Uri uriInstance2 = TypeConversion.TryParseUri(((string)uriValue2));
+                                    parametersLinkInstance.Uri = uriInstance2;
+                                }
+                                
+                                JToken contentVersionValue2 = parametersLinkValue2["contentVersion"];
+                                if (contentVersionValue2 != null && contentVersionValue2.Type != JTokenType.Null)
+                                {
+                                    string contentVersionInstance2 = ((string)contentVersionValue2);
+                                    parametersLinkInstance.ContentVersion = contentVersionInstance2;
+                                }
                             }
                             
                             JToken modeValue = propertiesValue2["mode"];
