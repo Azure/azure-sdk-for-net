@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Resources
         /// name is case insensitive.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         public static PermissionGetResult GetPermissions(this IResourceGroupOperations operations, string resourceGroupName)
         {
@@ -288,7 +288,7 @@ namespace Microsoft.Azure.Management.Resources
         /// name is case insensitive.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         public static Task<PermissionGetResult> GetPermissionsAsync(this IResourceGroupOperations operations, string resourceGroupName)
         {

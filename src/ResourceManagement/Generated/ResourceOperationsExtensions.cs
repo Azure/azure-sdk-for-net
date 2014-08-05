@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Resource identity.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         public static PermissionGetResult GetPermissions(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
@@ -272,7 +272,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Required. Resource identity.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         public static Task<PermissionGetResult> GetPermissionsAsync(this IResourceOperations operations, string resourceGroupName, ResourceIdentity identity)
         {
