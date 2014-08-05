@@ -27,16 +27,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// <summary>
     /// The managed pipeline mode of a web site.
     /// </summary>
-    public static partial class ManagedPipelineMode
+    public enum ManagedPipelineMode
     {
         /// <summary>
         /// Integrated Managed Pipeline Mode.
         /// </summary>
-        public const string Integrated = "0";
+        Integrated = 0,
         
         /// <summary>
         /// Classic Managed Pipeline Mode.
         /// </summary>
-        public const string Classic = "1";
+        Classic = 1,
     }
 }

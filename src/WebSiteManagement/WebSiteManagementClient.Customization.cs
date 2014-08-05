@@ -21,6 +21,7 @@ using System.Net.Http;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites;
+using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure
 {
@@ -61,6 +62,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             return baseUri != null ?
                 new WebSiteManagementClient(credentials, baseUri) :
                 new WebSiteManagementClient(credentials);
+        }
+
+        /// <summary>
+        /// Convert an enum of type ManagedPipelineMode to a string.
+        /// This is temp workaround for hydra generation issue with nulable enums with custom values
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ManagedPipelineModeToString(ManagedPipelineMode? value)
+        {
+            if (!value.HasValue)
+            {
+                return null;
+            }
+
+            return ManagedPipelineModeToString(value.GetValueOrDefault());
         }
 
         public override WebSiteManagementClient WithHandler(DelegatingHandler handler)
