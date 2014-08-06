@@ -20,7 +20,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides Microsoft Azure Monitoring Services operations including a unified API to retrieve and configure monitoring metrics, alerts, and autoscale rules for your Microsoft Azure services.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.3.0")]
+[assembly: AssemblyFileVersion("0.11.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
