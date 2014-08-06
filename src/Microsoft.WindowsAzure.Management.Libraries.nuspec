@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Microsoft Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites, Media, Monitoring, Sql, and Store and core data center infrastructure management.</summary>
+    <summary>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Microsoft Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
     <description>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support:
 - Microsoft Azure Virtual Machines
 - Hosted Services
@@ -20,10 +20,6 @@
 - Subscription information
 - Networks
 - Web Sites
-- Media
-- Monitoring
-- SQL
-- Store
 
 Using the full .NET Framework is recommended during preview.
 
@@ -35,18 +31,13 @@ Management operations require the X509Certificate2 type that is not present in t
       <group>
         <dependency id="Microsoft.WindowsAzure.Common" version="[1.3.0,2.0)" />
         <dependency id="Microsoft.WindowsAzure.Management" version="__VERSION_Microsoft.WindowsAzure.Management__" />
-		<dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
-		<dependency id="Microsoft.WindowsAzure.Management.ExpressRoute" version="__VERSION_Microsoft.WindowsAzure.Management.ExpressRoute__" />
-		<dependency id="Microsoft.WindowsAzure.Management.MediaServices" version="__VERSION_Microsoft.WindowsAzure.Management.MediaServices__" />
-		<dependency id="Microsoft.WindowsAzure.Management.Monitoring" version="__VERSION_Microsoft.WindowsAzure.Management.Monitoring__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Compute" version="__VERSION_Microsoft.WindowsAzure.Management.Compute__" />
         <dependency id="Microsoft.WindowsAzure.Management.Storage" version="__VERSION_Microsoft.WindowsAzure.Management.Storage__" />
         <dependency id="Microsoft.WindowsAzure.Management.Network" version="__VERSION_Microsoft.WindowsAzure.Management.Network__" />
-		<dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
-		<dependency id="Microsoft.WindowsAzure.Management.ServiceBus" version="__VERSION_Microsoft.WindowsAzure.Management.ServiceBus__" />
-		<dependency id="Microsoft.WindowsAzure.Management.Sql" version="__VERSION_Microsoft.WindowsAzure.Management.Sql__" />
-        <dependency id="Microsoft.WindowsAzure.Management.Store" version="__VERSION_Microsoft.WindowsAzure.Management.Store__" />
-        <dependency id="Microsoft.WindowsAzure.Management.TrafficManager" version="__VERSION_Microsoft.WindowsAzure.Management.TrafficManager__" />
-		<dependency id="Microsoft.WindowsAzure.Management.WebSites" version="__VERSION_Microsoft.WindowsAzure.Management.WebSites__" />
+        <dependency id="Microsoft.WindowsAzure.Management.WebSites" version="2.0.1" />
+        <dependency id="Microsoft.WindowsAzure.Management.Scheduler" version="__VERSION_Microsoft.WindowsAzure.Management.Scheduler__" />
+        <dependency id="Microsoft.WindowsAzure.Management.MediaServices" version="__VERSION_Microsoft.WindowsAzure.Management.MediaServices__" />
+        <dependency id="Microsoft.WindowsAzure.Management.Sql" version="__VERSION_Microsoft.WindowsAzure.Management.Sql__" />
       </group>
     </dependencies>
   </metadata>
