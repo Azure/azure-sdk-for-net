@@ -595,6 +595,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2451,7 +2452,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 JToken typeValue = connectionStringsValue["Type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    string typeInstance = ((string)typeValue);
+                                    ConnectionStringType typeInstance = WebSiteManagementClient.ParseConnectionStringType(((string)typeValue));
                                     connectionStringInfoInstance.Type = typeInstance;
                                 }
                             }
@@ -2528,7 +2529,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken managedPipelineModeValue = responseDoc["ManagedPipelineMode"];
                         if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
                         {
-                            string managedPipelineModeInstance = ((string)managedPipelineModeValue);
+                            ManagedPipelineMode managedPipelineModeInstance = WebSiteManagementClient.ParseManagedPipelineMode(((string)managedPipelineModeValue));
                             result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
@@ -4528,6 +4529,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -5187,10 +5189,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             connectionStringInfoValue["Name"] = connectionStringsItem.Name;
                         }
                         
-                        if (connectionStringsItem.Type != null)
-                        {
-                            connectionStringInfoValue["Type"] = connectionStringsItem.Type;
-                        }
+                        connectionStringInfoValue["Type"] = WebSiteManagementClient.ConnectionStringTypeToString(connectionStringsItem.Type);
                     }
                     webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                 }
@@ -5253,7 +5252,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = parameters.ManagedPipelineMode;
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode);
                 }
                 
                 JArray metadataDictionary = new JArray();
@@ -5384,6 +5383,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

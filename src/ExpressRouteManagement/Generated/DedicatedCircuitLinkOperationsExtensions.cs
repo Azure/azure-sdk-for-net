@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required.
+        /// Optional.
         /// </param>
         /// <returns>
         /// The List Dedicated Circuit Link operation response.
@@ -221,7 +221,7 @@ namespace Microsoft.WindowsAzure
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required.
+        /// Optional.
         /// </param>
         /// <returns>
         /// The List Dedicated Circuit Link operation response.

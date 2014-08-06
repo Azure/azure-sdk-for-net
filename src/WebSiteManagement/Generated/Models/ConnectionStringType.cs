@@ -24,14 +24,14 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    public static partial class ConnectionStringType
+    public enum ConnectionStringType
     {
-        public const string MySql = "0";
+        MySql = 0,
         
-        public const string SqlServer = "1";
+        SqlServer = 1,
         
-        public const string SqlAzure = "2";
+        SqlAzure = 2,
         
-        public const string Custom = "3";
+        Custom = 3,
     }
 }
