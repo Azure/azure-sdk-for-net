@@ -21,14 +21,13 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
     /// Usage Metric data.
     /// </summary>
-    public partial class UsageMetric
+    public partial class UsageMetricDeprecated
     {
         private double _currentValue;
         
@@ -39,6 +38,17 @@ namespace Microsoft.Azure.Insights.Models
         {
             get { return this._currentValue; }
             set { this._currentValue = value; }
+        }
+        
+        private string _displayName;
+        
+        /// <summary>
+        /// Optional. Get the usage display name.
+        /// </summary>
+        public string DisplayName
+        {
+            get { return this._displayName; }
+            set { this._displayName = value; }
         }
         
         private double _limit;
@@ -52,12 +62,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._limit = value; }
         }
         
-        private LocalizableString _name;
+        private string _name;
         
         /// <summary>
         /// Optional. Get the usage metric name.
         /// </summary>
-        public LocalizableString Name
+        public string Name
         {
             get { return this._name; }
             set { this._name = value; }
@@ -97,9 +107,9 @@ namespace Microsoft.Azure.Insights.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the UsageMetric class.
+        /// Initializes a new instance of the UsageMetricDeprecated class.
         /// </summary>
-        public UsageMetric()
+        public UsageMetricDeprecated()
         {
         }
     }

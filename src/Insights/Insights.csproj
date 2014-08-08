@@ -79,6 +79,9 @@
     <Compile Include="Generated\Insights\Models\UsageMetric.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricCollection.cs" />
     <Compile Include="Generated\Insights\Models\UsageMetricListResponse.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricDeprecated.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricCollectionDeprecated.cs" />
+    <Compile Include="Generated\Insights\Models\UsageMetricListResponseDeprecated.cs" />
     <Compile Include="Generated\Management\Insights\AlertOperations.cs" />
     <Compile Include="Generated\Management\Insights\AlertOperationsExtensions.cs" />
     <Compile Include="Generated\Management\Insights\AutoscaleOperations.cs" />
