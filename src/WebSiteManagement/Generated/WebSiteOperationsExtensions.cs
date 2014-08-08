@@ -67,11 +67,11 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
+        public static WebSiteOperationStatusResponse BeginSwappingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
+                return ((IWebSiteOperations)s).BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -104,9 +104,9 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
+        public static Task<WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
-            return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
+            return operations.BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
         }
         
         /// <summary>

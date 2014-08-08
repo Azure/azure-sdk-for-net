@@ -321,6 +321,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain != null ? parameters.TimeGrain.Trim() : "");
             }
+            url = url + "&details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -514,6 +515,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                             {
                                                 string totalInstance = totalElement.Value;
                                                 metricSampleInstance.Total = totalInstance;
+                                            }
+                                            
+                                            XElement instanceNameElement = valuesElement.Element(XName.Get("InstanceName", "http://schemas.microsoft.com/windowsazure"));
+                                            if (instanceNameElement != null)
+                                            {
+                                                string instanceNameInstance = instanceNameElement.Value;
+                                                metricSampleInstance.InstanceName = instanceNameInstance;
                                             }
                                         }
                                     }
