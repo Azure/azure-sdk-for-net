@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -12,6 +16,11 @@ namespace Microsoft.Azure.Insights
     {
         public async Task<MetricDefinitionListResponse> GetMetricDefinitionsAsync(string resourceUri, string filterString, CancellationToken cancellationToken)
         {
+            MetricDefinitionListResponse result;
+
+            string invocationId = Tracing.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            this.LogStartGetMetricDefinitions(invocationId, resourceUri, filterString);
+
             // Ensure exactly one '/' at the start
             resourceUri = '/' + resourceUri.TrimStart('/');
             IEnumerable<MetricDefinition> definitions;
@@ -20,13 +29,14 @@ namespace Microsoft.Azure.Insights
             if (string.IsNullOrWhiteSpace(filterString))
             {
                 // request all definitions
-                definitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, string.Empty, CancellationToken.None)).MetricDefinitionCollection.Value;
+                definitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, string.Empty, CancellationToken.None).ConfigureAwait(false))
+                    .MetricDefinitionCollection.Value;
 
                 // cache definitions
                 this.Client.Cache[resourceUri] = definitions;
 
                 // wrap and return definitions
-                return new MetricDefinitionListResponse()
+                result = new MetricDefinitionListResponse()
                 {
                     StatusCode = HttpStatusCode.OK,
                     MetricDefinitionCollection = new MetricDefinitionCollection()
@@ -34,6 +44,10 @@ namespace Microsoft.Azure.Insights
                         Value = definitions.ToList()
                     }
                 };
+
+                this.LogEndGetMetricDefinitions(invocationId, result);
+
+                return result;
             }
 
             // Parse the filter and retrieve cached definitions
@@ -48,19 +62,21 @@ namespace Microsoft.Azure.Insights
             // Request any missing definitions and update cache (if any)
             if (missing.Any())
             {
-                definitions =
-                    (definitions ?? new MetricDefinition[0]).Union(
-                        (await
-                            this.GetMetricDefinitionsInternalAsync(resourceUri,
-                                ShoeboxHelper.GenerateMetricDefinitionFilterString(missing), cancellationToken))
-                            .MetricDefinitionCollection.Value);
+                string missingFilter = ShoeboxHelper.GenerateMetricDefinitionFilterString(missing);
+
+                // Request missing definitions
+                var missingDefinitions = (await this.GetMetricDefinitionsInternalAsync(resourceUri, missingFilter, cancellationToken).ConfigureAwait(false))
+                    .MetricDefinitionCollection.Value;
+
+                // merge definitions
+                definitions = (definitions ?? new MetricDefinition[0]).Union(missingDefinitions);
 
                 // Store the new set of definitions
                 this.Client.Cache[resourceUri] = definitions;
             }
 
             // Filter out the metrics that were cached but not requested and wrap
-            return new MetricDefinitionListResponse()
+            result = new MetricDefinitionListResponse()
             {
                 StatusCode = HttpStatusCode.OK,
                 MetricDefinitionCollection = new MetricDefinitionCollection()
@@ -68,6 +84,33 @@ namespace Microsoft.Azure.Insights
                     Value = definitions.Where(d => names.Contains(d.Name.Value)).ToList()
                 }
             };
+
+            this.LogEndGetMetricDefinitions(invocationId, result);
+
+            return result;
+        }
+
+        private void LogStartGetMetricDefinitions(string invocationId, string resourceUri, string filterString)
+        {
+            invocationId = null;
+
+            if (CloudContext.Configuration.Tracing.IsEnabled)
+            {
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("filterString", filterString);
+
+                
+                Tracing.Enter(invocationId, this, "GetMetricDefinitionsAsync", tracingParameters);
+            }
+        }
+
+        private void LogEndGetMetricDefinitions(string invocationId, MetricDefinitionListResponse result)
+        {
+            if (CloudContext.Configuration.Tracing.IsEnabled)
+            {
+                Tracing.Exit(invocationId, result);
+            }
         }
     }
 }
