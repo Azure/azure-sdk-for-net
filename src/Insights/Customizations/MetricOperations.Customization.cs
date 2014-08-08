@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights
 {
@@ -15,30 +18,47 @@ namespace Microsoft.Azure.Insights
             // Ensure exactly one '/' at the start
             resourceUri = '/' + resourceUri.TrimStart('/');
 
-            // Get Definitions for requested Metrics and pass through to get by definition
-            return
-                await this.GetMetricsAsync(
+            // Generate filter strings
+            string metricFilter = RemoveNamesFromFilterString(filterString);
+            string definitionFilter = ShoeboxHelper.GenerateMetricDefinitionFilterString(MetricFilterExpressionParser.Parse(filterString).Names);
+
+            // Get definitions for requested metrics
+            IList<MetricDefinition> definitions =
+                (await this.Client.MetricDefinitionOperations.GetMetricDefinitionsAsync(
                     resourceUri,
-                    RemoveNamesFromFilterString(filterString),
-                    (await this.Client.MetricDefinitionOperations.GetMetricDefinitionsAsync(
-                        resourceUri,
-                        ShoeboxHelper.GenerateMetricDefinitionFilterString(MetricFilterExpressionParser.Parse(filterString).Names),
-                        cancellationToken)).MetricDefinitionCollection.Value,
-                    cancellationToken);
+                    definitionFilter,
+                    cancellationToken).ConfigureAwait(false)).MetricDefinitionCollection.Value;
+
+            // Get Metrics by definitions
+            return await this.GetMetricsAsync(resourceUri, metricFilter, definitions, cancellationToken).ConfigureAwait(false);
         }
 
         // Alternate method for getting metrics by passing in the definitions
         public async Task<MetricListResponse> GetMetricsAsync(
             string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions, CancellationToken cancellationToken)
         {
-            // If no definitions provided, return empty collection
-            if (definitions == null || !definitions.Any())
+            MetricListResponse result;
+
+            if (definitions == null)
             {
-                return new MetricListResponse()
+                throw new ArgumentNullException("definitions");
+            }
+
+            string invocationId = Tracing.NextInvocationId.ToString(CultureInfo.InvariantCulture);
+            this.LogStartGetMetrics(invocationId, resourceUri, filterString, definitions);
+
+            // If no definitions provided, return empty collection
+            if (!definitions.Any())
+            {
+                result = new MetricListResponse()
                 {
                     RequestId = Guid.NewGuid().ToString("D"),
                     StatusCode =  HttpStatusCode.OK
                 };
+
+                this.LogEndGetMetrics(invocationId, result);
+
+                return result;
             }
 
             // Parse MetricFilter
@@ -70,19 +90,22 @@ namespace Microsoft.Azure.Insights
             // Get Metrics from each location (group)
             IEnumerable<Task<MetricListResponse>> locationTasks = groups.Select(g => g.Key.Location == null
                     ? this.GetMetricsInternalAsync(resourceUri, ShoeboxHelper.GenerateMetricFilterString(g.Value), cancellationToken)
-                    : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location));
+                    : ShoeboxClient.GetMetricsInternalAsync(g.Value, g.Key.Location, invocationId));
 
             // Aggregate metrics from all groups
             MetricListResponse[] results = (await Task.Factory.ContinueWhenAll(locationTasks.ToArray(), tasks => tasks.Select(t => t.Result))).ToArray();
             IEnumerable<Metric> metrics = results.Aggregate<MetricListResponse, IEnumerable<Metric>>(
                 new List<Metric>(), (list, response) => list.Union(response.MetricCollection.Value));
+            
+            this.LogMetricCountFromResponses(invocationId, metrics.Count());
 
             // Fill in values (resourceUri, displayName, unit) from definitions
             CompleteShoeboxMetrics(metrics, definitions, resourceUri);
 
             // Add empty objects for metrics that had no values come back, ensuring a metric is returned for each definition
-            IEnumerable<Metric> emptyMetrics = definitions.Where(
-                d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase))).Select(d => new Metric()
+            IEnumerable<Metric> emptyMetrics = definitions
+                .Where(d => !metrics.Any(m => string.Equals(m.Name.Value, d.Name.Value, StringComparison.OrdinalIgnoreCase)))
+                .Select(d => new Metric()
                 {
                     Name = d.Name,
                     Unit = d.Unit,
@@ -95,7 +118,7 @@ namespace Microsoft.Azure.Insights
                 });
             
             // Create response (merge and wrap metrics)
-            return new MetricListResponse()
+            result = new MetricListResponse()
             {
                 RequestId = Guid.NewGuid().ToString("D"),
                 StatusCode = HttpStatusCode.OK,
@@ -104,6 +127,39 @@ namespace Microsoft.Azure.Insights
                     Value = metrics.Union(emptyMetrics).ToList()
                 }
             };
+
+            this.LogEndGetMetrics(invocationId, result);
+
+            return result;
+        }
+
+        private void LogMetricCountFromResponses(string invocationId, int metricsCount)
+        {
+            if (CloudContext.Configuration.Tracing.IsEnabled)
+            {
+                Tracing.Information("InvocationId: {0}. Total number of metrics in all resposes: {1}", invocationId, metricsCount);
+            }
+        }
+
+        private void LogEndGetMetrics(string invocationId, MetricListResponse result)
+        {
+            if (CloudContext.Configuration.Tracing.IsEnabled)
+            {
+                Tracing.Exit(invocationId, result);
+            }
+        }
+
+        private void LogStartGetMetrics(string invocationId, string resourceUri, string filterString, IEnumerable<MetricDefinition> definitions)
+        {
+            if (CloudContext.Configuration.Tracing.IsEnabled)
+            {
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceUri", resourceUri);
+                tracingParameters.Add("filterString", filterString);
+                tracingParameters.Add("definitions", string.Concat(definitions.Select(d => d.Name)));
+
+                Tracing.Enter(invocationId, this, "GetMetricsAsync", tracingParameters);
+            }
         }
 
         private static void CompleteShoeboxMetrics(IEnumerable<Metric> collection, IEnumerable<MetricDefinition> definitions, string resourceUri)
