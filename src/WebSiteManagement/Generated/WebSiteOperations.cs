@@ -96,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 tracingParameters.Add("webSiteName", webSiteName);
                 tracingParameters.Add("sourceSlotName", sourceSlotName);
                 tracingParameters.Add("targetSlotName", targetSlotName);
-                Tracing.Enter(invocationId, this, "BeginSwapingSlotsAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginSwappingSlotsAsync", tracingParameters);
             }
             
             // Construct URL
@@ -2797,6 +2797,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain != null ? parameters.TimeGrain.Trim() : "");
             }
+            url = url + "&details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower());
+            url = url + "&slotView=" + Uri.EscapeDataString(parameters.SlotView.ToString().ToLower());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2990,6 +2992,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                             {
                                                 string totalInstance = totalElement.Value;
                                                 metricSampleInstance.Total = totalInstance;
+                                            }
+                                            
+                                            XElement instanceNameElement = valuesElement.Element(XName.Get("InstanceName", "http://schemas.microsoft.com/windowsazure"));
+                                            if (instanceNameElement != null)
+                                            {
+                                                string instanceNameInstance = instanceNameElement.Value;
+                                                metricSampleInstance.InstanceName = instanceNameInstance;
                                             }
                                         }
                                     }
@@ -4101,7 +4110,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                WebSiteOperationStatusResponse response = await client.WebSites.BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, cancellationToken).ConfigureAwait(false);
+                WebSiteOperationStatusResponse response = await client.WebSites.BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == WebSiteOperationStatus.Succeeded)
                 {
                     return response;

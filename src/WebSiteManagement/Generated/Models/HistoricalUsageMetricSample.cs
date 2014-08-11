@@ -40,6 +40,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._count = value; }
         }
         
+        private string _instanceName;
+        
+        /// <summary>
+        /// Optional. Name of the instance for which the metric applies. If
+        /// empty the metric is aggregated on all instances.
+        /// </summary>
+        public string InstanceName
+        {
+            get { return this._instanceName; }
+            set { this._instanceName = value; }
+        }
+        
         private string _maximum;
         
         /// <summary>

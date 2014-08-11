@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
+        Task<WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can create a web site by using a POST request that includes the
