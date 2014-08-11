@@ -399,6 +399,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
+                }
+                
                 if (parameters.Eula != null)
                 {
                     XElement eulaElement = new XElement(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -990,6 +997,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement sampleConfigElement = new XElement(XName.Get("SampleConfig", "http://schemas.microsoft.com/windowsazure"));
                     sampleConfigElement.Value = parameters.SampleConfig;
                     extensionImageElement.Add(sampleConfigElement);
+                }
+                
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
                 }
                 
                 if (parameters.Eula != null)

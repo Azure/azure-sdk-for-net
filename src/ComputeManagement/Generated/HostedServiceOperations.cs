@@ -4083,6 +4083,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
                             }
                             
+                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
+                            {
+                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
+                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
+                            }
+                            
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
                             if (eulaElement != null)
                             {
@@ -4700,6 +4707,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
                             }
                             
+                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
+                            {
+                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
+                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
+                            }
+                            
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
                             if (eulaElement != null)
                             {
@@ -4816,10 +4830,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentOutOfRangeException("parameters.Description");
             }
-            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
+            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.ExtendedProperties != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
             if (minimumUpdateCount < 1)
             {
-                throw new ArgumentException("Expected at least one of parameters.Description, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
+                throw new ArgumentException("Expected at least one of parameters.Description, parameters.ExtendedProperties, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
             }
             
             // Tracing

@@ -2103,7 +2103,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 deploymentElement.Add(deploymentSlotElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 deploymentElement.Add(labelElement);
                 
                 XElement roleListSequenceElement = new XElement(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
