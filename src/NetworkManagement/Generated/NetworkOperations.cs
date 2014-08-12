@@ -141,7 +141,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                 string requestContent = parameters.Configuration;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
