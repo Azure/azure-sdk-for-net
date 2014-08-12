@@ -85,10 +85,6 @@ namespace Microsoft.Azure.Insights
             {
                 throw new ArgumentNullException("resourceUri");
             }
-            if (filterString == null)
-            {
-                throw new ArgumentNullException("filterString");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -105,7 +101,10 @@ namespace Microsoft.Azure.Insights
             // Construct URL
             string url = "/" + resourceUri.Trim() + "/metricDefinitions?";
             url = url + "api-version=2014-04-01";
-            url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
+            if (filterString != null)
+            {
+                url = url + "&$filter=" + Uri.EscapeDataString(filterString != null ? filterString.Trim() : "");
+            }
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
