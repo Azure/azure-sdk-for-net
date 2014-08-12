@@ -36,9 +36,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <summary>
         /// Issues a recovery request for an Azure SQL Database.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// The name of the Azure SQL Database Server on which to recover the
-        /// source database.
+        /// <param name='sourceServerName'>
+        /// The name of the Azure SQL Database Server on which the database was
+        /// hosted.
         /// </param>
         /// <param name='parameters'>
         /// Additional parameters for the Create Recover Database Operation
@@ -51,6 +51,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Contains the response to the Create Recover Database Operation
         /// request.
         /// </returns>
-        Task<RecoverDatabaseOperationCreateResponse> CreateAsync(string targetServerName, RecoverDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken);
+        Task<RecoverDatabaseOperationCreateResponse> CreateAsync(string sourceServerName, RecoverDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken);
     }
 }
