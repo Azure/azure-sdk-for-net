@@ -125,8 +125,6 @@
     <Compile Include="Generated\Management\Insights\Models\LocalizedString.cs" />
     <Compile Include="Generated\Management\Insights\Models\LocationThresholdRuleCondition.cs" />
     <Compile Include="Generated\Management\Insights\Models\LogLevel.cs" />
-    <Compile Include="Generated\Management\Insights\Models\ManagementEventAggregationCondition.cs" />
-    <Compile Include="Generated\Management\Insights\Models\ManagementEventRuleCondition.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricAggregation.cs" />
     <Compile Include="Generated\Management\Insights\Models\Metrics.cs" />
     <Compile Include="Generated\Management\Insights\Models\MetricStatisticType.cs" />
@@ -148,8 +146,6 @@
     <Compile Include="Generated\Management\Insights\Models\RuleEmailAction.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleListResponse.cs" />
-    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventClaimsDataSource.cs" />
-    <Compile Include="Generated\Management\Insights\Models\RuleManagementEventDataSource.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleMetricDataSource.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleResource.cs" />
     <Compile Include="Generated\Management\Insights\Models\RuleResourceCollection.cs" />
