@@ -184,6 +184,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1036,6 +1037,34 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                         {
                                             string resultInstance = resultElement.Value;
                                             operationStatusInstance.Result = resultInstance;
+                                        }
+                                        
+                                        XElement errorElement = operationStatusElement.Element(XName.Get("Error", "http://schemas.microsoft.com/windowsazure"));
+                                        if (errorElement != null)
+                                        {
+                                            Error errorInstance = new Error();
+                                            operationStatusInstance.Error = errorInstance;
+                                            
+                                            XElement httpCodeElement = errorElement.Element(XName.Get("HttpCode", "http://schemas.microsoft.com/windowsazure"));
+                                            if (httpCodeElement != null)
+                                            {
+                                                string httpCodeInstance = httpCodeElement.Value;
+                                                errorInstance.HttpCode = httpCodeInstance;
+                                            }
+                                            
+                                            XElement messageElement = errorElement.Element(XName.Get("Message", "http://schemas.microsoft.com/windowsazure"));
+                                            if (messageElement != null)
+                                            {
+                                                string messageInstance = messageElement.Value;
+                                                errorInstance.Message = messageInstance;
+                                            }
+                                            
+                                            XElement extendedCodeElement = errorElement.Element(XName.Get("ExtendedCode", "http://schemas.microsoft.com/windowsazure"));
+                                            if (extendedCodeElement != null)
+                                            {
+                                                string extendedCodeInstance = extendedCodeElement.Value;
+                                                errorInstance.ExtendedCode = extendedCodeInstance;
+                                            }
                                         }
                                     }
                                 }

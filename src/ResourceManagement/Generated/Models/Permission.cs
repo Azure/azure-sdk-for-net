@@ -20,47 +20,45 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Create or update Firewall Rule parameters.
+    /// Permission actions information
     /// </summary>
-    public partial class FirewallRuleCreateOrUpdateParameters
+    public partial class Permission
     {
-        private FirewallRuleCreateOrUpdateProperties _properties;
+        private IList<string> _actions;
         
         /// <summary>
-        /// Required. Gets or sets the properties of the request.
+        /// Optional. Get or set allowed actions.
         /// </summary>
-        public FirewallRuleCreateOrUpdateProperties Properties
+        public IList<string> Actions
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._actions; }
+            set { this._actions = value; }
+        }
+        
+        private IList<string> _notActions;
+        
+        /// <summary>
+        /// Optional. Get or set denied actions.
+        /// </summary>
+        public IList<string> NotActions
+        {
+            get { return this._notActions; }
+            set { this._notActions = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// FirewallRuleCreateOrUpdateParameters class.
+        /// Initializes a new instance of the Permission class.
         /// </summary>
-        public FirewallRuleCreateOrUpdateParameters()
+        public Permission()
         {
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the
-        /// FirewallRuleCreateOrUpdateParameters class with required arguments.
-        /// </summary>
-        public FirewallRuleCreateOrUpdateParameters(FirewallRuleCreateOrUpdateProperties properties)
-            : this()
-        {
-            if (properties == null)
-            {
-                throw new ArgumentNullException("properties");
-            }
-            this.Properties = properties;
+            this.Actions = new List<string>();
+            this.NotActions = new List<string>();
         }
     }
 }

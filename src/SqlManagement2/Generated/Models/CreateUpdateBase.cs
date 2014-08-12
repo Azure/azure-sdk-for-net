@@ -54,7 +54,26 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public CreateUpdateBase()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the CreateUpdateBase class with
+        /// required arguments.
+        /// </summary>
+        public CreateUpdateBase(string location, IDictionary<string, string> tags)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            if (tags == null)
+            {
+                throw new ArgumentNullException("tags");
+            }
+            this.Location = location;
+            this.Tags = tags;
         }
     }
 }

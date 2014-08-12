@@ -20,52 +20,57 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.Sql.Models;
-using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.Sql.Models
+namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// Represents the response to a List Firewall Rules request.
+    /// Entity representing the reference to the deployment paramaters.
     /// </summary>
-    public partial class FirewallRuleListResponse : OperationResponse, IEnumerable<FirewallRule>
+    public partial class ParametersLink
     {
-        private IList<FirewallRule> _firewallRules;
+        private string _contentVersion;
         
         /// <summary>
-        /// Optional. Gets or sets the list of Azure Sql Database Server
-        /// firewall rules for the server.
+        /// Optional. If included it must match the ContentVersion in the
+        /// template.
         /// </summary>
-        public IList<FirewallRule> FirewallRules
+        public string ContentVersion
         {
-            get { return this._firewallRules; }
-            set { this._firewallRules = value; }
+            get { return this._contentVersion; }
+            set { this._contentVersion = value; }
+        }
+        
+        private Uri _uri;
+        
+        /// <summary>
+        /// Required. URI referencing the template.
+        /// </summary>
+        public Uri Uri
+        {
+            get { return this._uri; }
+            set { this._uri = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the FirewallRuleListResponse class.
+        /// Initializes a new instance of the ParametersLink class.
         /// </summary>
-        public FirewallRuleListResponse()
+        public ParametersLink()
         {
-            this.FirewallRules = new List<FirewallRule>();
         }
         
         /// <summary>
-        /// Gets the sequence of FirewallRules.
+        /// Initializes a new instance of the ParametersLink class with
+        /// required arguments.
         /// </summary>
-        public IEnumerator<FirewallRule> GetEnumerator()
+        public ParametersLink(Uri uri)
+            : this()
         {
-            return this.FirewallRules.GetEnumerator();
-        }
-        
-        /// <summary>
-        /// Gets the sequence of FirewallRules.
-        /// </summary>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
+            if (uri == null)
+            {
+                throw new ArgumentNullException("uri");
+            }
+            this.Uri = uri;
         }
     }
 }

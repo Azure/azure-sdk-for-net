@@ -732,7 +732,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='skipToken'>
-        /// Required. The skip token.
+        /// Optional. The skip token.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

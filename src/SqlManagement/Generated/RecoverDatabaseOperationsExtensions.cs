@@ -41,9 +41,9 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
+        /// <param name='sourceServerName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database was hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Recover Database
@@ -53,11 +53,11 @@ namespace Microsoft.WindowsAzure
         /// Contains the response to the Create Recover Database Operation
         /// request.
         /// </returns>
-        public static RecoverDatabaseOperationCreateResponse Create(this IRecoverDatabaseOperations operations, string targetServerName, RecoverDatabaseOperationCreateParameters parameters)
+        public static RecoverDatabaseOperationCreateResponse Create(this IRecoverDatabaseOperations operations, string sourceServerName, RecoverDatabaseOperationCreateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoverDatabaseOperations)s).CreateAsync(targetServerName, parameters);
+                return ((IRecoverDatabaseOperations)s).CreateAsync(sourceServerName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -69,9 +69,9 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
+        /// <param name='sourceServerName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database was hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Recover Database
@@ -81,9 +81,9 @@ namespace Microsoft.WindowsAzure
         /// Contains the response to the Create Recover Database Operation
         /// request.
         /// </returns>
-        public static Task<RecoverDatabaseOperationCreateResponse> CreateAsync(this IRecoverDatabaseOperations operations, string targetServerName, RecoverDatabaseOperationCreateParameters parameters)
+        public static Task<RecoverDatabaseOperationCreateResponse> CreateAsync(this IRecoverDatabaseOperations operations, string sourceServerName, RecoverDatabaseOperationCreateParameters parameters)
         {
-            return operations.CreateAsync(targetServerName, parameters, CancellationToken.None);
+            return operations.CreateAsync(sourceServerName, parameters, CancellationToken.None);
         }
     }
 }

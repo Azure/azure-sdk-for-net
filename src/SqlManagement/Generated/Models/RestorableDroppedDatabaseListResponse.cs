@@ -35,8 +35,9 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private IList<RestorableDroppedDatabase> _databases;
         
         /// <summary>
-        /// Optional. Gets the collection of restorable dropped databases that
-        /// has been returned from a List Restorable Dropped Databases request.
+        /// Optional. Gets or sets the collection of restorable dropped
+        /// databases that has been returned from a List Restorable Dropped
+        /// Databases request.
         /// </summary>
         public IList<RestorableDroppedDatabase> Databases
         {

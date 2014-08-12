@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.Sql.Models;
 namespace Microsoft.WindowsAzure.Management.Sql.Models
 {
     /// <summary>
-    /// A dropped Azure SQL Database that can be restored.
+    /// Represents a dropped Azure SQL Database that can be restored.
     /// </summary>
     public partial class RestorableDroppedDatabase : SqlModelCommon
     {

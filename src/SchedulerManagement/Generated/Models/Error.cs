@@ -20,33 +20,53 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Resources.Models
+namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
     /// <summary>
-    /// Resource group permission actions information
+    /// The error details for operations that failed
     /// </summary>
-    public partial class PermittedActionDefinition
+    public partial class Error
     {
-        private IList<string> _actions;
+        private string _extendedCode;
         
         /// <summary>
-        /// Optional. Gets or sets available actions
+        /// Optional. The extended code, if any.
         /// </summary>
-        public IList<string> Actions
+        public string ExtendedCode
         {
-            get { return this._actions; }
-            set { this._actions = value; }
+            get { return this._extendedCode; }
+            set { this._extendedCode = value; }
+        }
+        
+        private string _httpCode;
+        
+        /// <summary>
+        /// Optional. The Http Code returned.
+        /// </summary>
+        public string HttpCode
+        {
+            get { return this._httpCode; }
+            set { this._httpCode = value; }
+        }
+        
+        private string _message;
+        
+        /// <summary>
+        /// Optional. The error message.
+        /// </summary>
+        public string Message
+        {
+            get { return this._message; }
+            set { this._message = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the PermittedActionDefinition class.
+        /// Initializes a new instance of the Error class.
         /// </summary>
-        public PermittedActionDefinition()
+        public Error()
         {
-            this.Actions = new List<string>();
         }
     }
 }

@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Resources
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Resource group permissions information.
+        /// Permissions information.
         /// </returns>
         Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, CancellationToken cancellationToken);
         

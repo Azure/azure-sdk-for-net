@@ -301,6 +301,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._publisherName = value; }
         }
         
+        private bool? _replicationCompleted;
+        
+        /// <summary>
+        /// Optional. Indicates whether this version of extension has been
+        /// replicated to all regions or not. If true, then the given
+        /// extension version can be used in creating or updating deployments.
+        /// Otherwise, the given extension version might cause failure in
+        /// creating or updating deployments. The typical time is 20 minutes
+        /// for a newly-registered or newly-updated extension to replicate
+        /// completely by Azure.
+        /// </summary>
+        public bool? ReplicationCompleted
+        {
+            get { return this._replicationCompleted; }
+            set { this._replicationCompleted = value; }
+        }
+        
         private string _sampleConfig;
         
         /// <summary>

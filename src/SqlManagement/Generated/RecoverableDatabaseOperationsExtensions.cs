@@ -41,26 +41,22 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverableDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// database was hosted.
         /// </param>
-        /// <param name='sourceDatabaseName'>
+        /// <param name='databaseName'>
         /// Required. The name of the recoverable Azure SQL Database to be
         /// obtained.
         /// </param>
         /// <returns>
         /// Contains the response to the Get Recoverable Database request.
         /// </returns>
-        public static RecoverableDatabaseGetResponse Get(this IRecoverableDatabaseOperations operations, string targetServerName, string sourceServerName, string sourceDatabaseName)
+        public static RecoverableDatabaseGetResponse Get(this IRecoverableDatabaseOperations operations, string serverName, string databaseName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoverableDatabaseOperations)s).GetAsync(targetServerName, sourceServerName, sourceDatabaseName);
+                return ((IRecoverableDatabaseOperations)s).GetAsync(serverName, databaseName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -72,24 +68,20 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverableDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// database was hosted.
         /// </param>
-        /// <param name='sourceDatabaseName'>
+        /// <param name='databaseName'>
         /// Required. The name of the recoverable Azure SQL Database to be
         /// obtained.
         /// </param>
         /// <returns>
         /// Contains the response to the Get Recoverable Database request.
         /// </returns>
-        public static Task<RecoverableDatabaseGetResponse> GetAsync(this IRecoverableDatabaseOperations operations, string targetServerName, string sourceServerName, string sourceDatabaseName)
+        public static Task<RecoverableDatabaseGetResponse> GetAsync(this IRecoverableDatabaseOperations operations, string serverName, string databaseName)
         {
-            return operations.GetAsync(targetServerName, sourceServerName, sourceDatabaseName, CancellationToken.None);
+            return operations.GetAsync(serverName, databaseName, CancellationToken.None);
         }
         
         /// <summary>
@@ -100,22 +92,18 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverableDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// databases were hosted.
         /// </param>
         /// <returns>
         /// Contains the response to the List Recoverable Databases request.
         /// </returns>
-        public static RecoverableDatabaseListResponse List(this IRecoverableDatabaseOperations operations, string targetServerName, string sourceServerName)
+        public static RecoverableDatabaseListResponse List(this IRecoverableDatabaseOperations operations, string serverName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRecoverableDatabaseOperations)s).ListAsync(targetServerName, sourceServerName);
+                return ((IRecoverableDatabaseOperations)s).ListAsync(serverName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -128,20 +116,16 @@ namespace Microsoft.WindowsAzure
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.Sql.IRecoverableDatabaseOperations.
         /// </param>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// databases were hosted.
         /// </param>
         /// <returns>
         /// Contains the response to the List Recoverable Databases request.
         /// </returns>
-        public static Task<RecoverableDatabaseListResponse> ListAsync(this IRecoverableDatabaseOperations operations, string targetServerName, string sourceServerName)
+        public static Task<RecoverableDatabaseListResponse> ListAsync(this IRecoverableDatabaseOperations operations, string serverName)
         {
-            return operations.ListAsync(targetServerName, sourceServerName, CancellationToken.None);
+            return operations.ListAsync(serverName, CancellationToken.None);
         }
     }
 }
