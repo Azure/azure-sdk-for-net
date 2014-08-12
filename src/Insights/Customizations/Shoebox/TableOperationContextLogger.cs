@@ -173,7 +173,6 @@ namespace Microsoft.Azure.Insights
             
             string message = string.Format(
                 CultureInfo.InvariantCulture,
-                format,
                 tableUri,
                 this.operationName,
                 result,
@@ -196,7 +195,6 @@ namespace Microsoft.Azure.Insights
 
             string message = string.Format(
                 CultureInfo.InvariantCulture,
-                format,
                 tableUri,
                 this.operationName,
                 this.requestId,

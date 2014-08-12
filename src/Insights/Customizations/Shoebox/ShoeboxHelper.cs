@@ -54,14 +54,12 @@ namespace Microsoft.Azure.Insights
 
         public static string GenerateMetricDefinitionFilterString(IEnumerable<string> names)
         {
-            return names.Select(n => "name.value eq '" + n + "'").Aggregate((a, b) => a + " or " + b);
+            return names == null || !names.Any() ? null : names.Select(n => "name.value eq '" + n + "'").Aggregate((a, b) => a + " or " + b);
         }
 
         public static string GenerateMetricFilterString(MetricFilter filter)
         {
-
-            return string.Format(CultureInfo.InvariantCulture,
-                "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
+            return string.Format(CultureInfo.InvariantCulture, "{0}timeGrain eq duration'{1}' and startTime eq {2} and endTime eq {3}",
                 filter.Names == null || !filter.Names.Any() ? string.Empty : "(" + GenerateMetricDefinitionFilterString(filter.Names) + ") and ",
                 filter.TimeGrain.To8601String(),
                 filter.StartTime.ToString("O"),
