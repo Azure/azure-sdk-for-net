@@ -706,6 +706,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
                 DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLinks.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)
                 {
