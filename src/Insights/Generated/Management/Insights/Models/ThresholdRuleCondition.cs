@@ -63,6 +63,17 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._threshold = value; }
         }
         
+        private Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? _timeAggregation;
+        
+        /// <summary>
+        /// Optional. Time aggregation operator.
+        /// </summary>
+        public Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? TimeAggregation
+        {
+            get { return this._timeAggregation; }
+            set { this._timeAggregation = value; }
+        }
+        
         private TimeSpan _windowSize;
         
         /// <summary>

@@ -39,6 +39,7 @@
     <Compile Include="Generated\Management\Insights\Models\StorageMetricAggregation.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageMetricConfiguration.cs" />
     <Compile Include="Generated\Management\Insights\Models\StorageMetricLevel.cs" />
+    <Compile Include="Generated\Management\Insights\Models\TimeAggregationOperator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="OnetimeGenerated\MetricDefinitionOperations.cs" />
     <Compile Include="OnetimeGenerated\MetricOperations.cs" />
