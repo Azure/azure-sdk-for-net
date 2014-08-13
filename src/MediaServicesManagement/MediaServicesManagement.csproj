@@ -35,7 +35,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

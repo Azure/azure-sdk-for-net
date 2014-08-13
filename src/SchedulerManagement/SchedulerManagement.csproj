@@ -105,7 +105,6 @@
   <ItemGroup>
     <Content Include="CloudServices.hydra.xml" />
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="Scheduler.hydra.xml" />
   </ItemGroup>
   <ItemGroup>
