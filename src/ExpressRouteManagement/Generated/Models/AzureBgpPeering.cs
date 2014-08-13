@@ -26,33 +26,33 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// Describes a Bgp Peering.
+    /// Describes a Border Gateway Protocol Peering.
     /// </summary>
     public partial class AzureBgpPeering
     {
-        private uint _azureAsn;
+        private uint _azureAutonomousSystemNumber;
         
         /// <summary>
         /// Optional. Specifies the numeric identifier of the public autonomous
         /// system (AS) in which the device of Windows Azure is configured.
         /// </summary>
-        public uint AzureAsn
+        public uint AzureAutonomousSystemNumber
         {
-            get { return this._azureAsn; }
-            set { this._azureAsn = value; }
+            get { return this._azureAutonomousSystemNumber; }
+            set { this._azureAutonomousSystemNumber = value; }
         }
         
-        private uint _peerAsn;
+        private uint _peerAutonomousSystemNumber;
         
         /// <summary>
         /// Optional. Specifies the numeric identifier of the public autonomous
         /// system (AS) in which the device of the service provider is
         /// configured.
         /// </summary>
-        public uint PeerAsn
+        public uint PeerAutonomousSystemNumber
         {
-            get { return this._peerAsn; }
-            set { this._peerAsn = value; }
+            get { return this._peerAutonomousSystemNumber; }
+            set { this._peerAutonomousSystemNumber = value; }
         }
         
         private string _primaryAzurePort;
@@ -113,16 +113,16 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._state = value; }
         }
         
-        private uint _vlanId;
+        private uint _virtualLanId;
         
         /// <summary>
         /// Optional. Specifies the identifier that is used to identify the
         /// customer.
         /// </summary>
-        public uint VlanId
+        public uint VirtualLanId
         {
-            get { return this._vlanId; }
-            set { this._vlanId = value; }
+            get { return this._virtualLanId; }
+            set { this._virtualLanId = value; }
         }
         
         /// <summary>
