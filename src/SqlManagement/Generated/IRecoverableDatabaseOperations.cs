@@ -36,15 +36,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <summary>
         /// Returns information about a recoverable Azure SQL Database.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// The name of the Azure SQL Database Server on which to recover the
-        /// source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// The name of the Azure SQL Database Server on which the database was
         /// hosted.
         /// </param>
-        /// <param name='sourceDatabaseName'>
+        /// <param name='databaseName'>
         /// The name of the recoverable Azure SQL Database to be obtained.
         /// </param>
         /// <param name='cancellationToken'>
@@ -53,17 +49,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response to the Get Recoverable Database request.
         /// </returns>
-        Task<RecoverableDatabaseGetResponse> GetAsync(string targetServerName, string sourceServerName, string sourceDatabaseName, CancellationToken cancellationToken);
+        Task<RecoverableDatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Returns a collection of databases that can be recovered from a
         /// specified server.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// The name of the Azure SQL Database Server on which to recover the
-        /// source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// The name of the Azure SQL Database Server on which the databases
         /// were hosted.
         /// </param>
@@ -73,6 +65,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response to the List Recoverable Databases request.
         /// </returns>
-        Task<RecoverableDatabaseListResponse> ListAsync(string targetServerName, string sourceServerName, CancellationToken cancellationToken);
+        Task<RecoverableDatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken);
     }
 }

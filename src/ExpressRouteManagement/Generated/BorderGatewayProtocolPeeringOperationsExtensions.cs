@@ -40,7 +40,8 @@ namespace Microsoft.WindowsAzure
     public static partial class BorderGatewayProtocolPeeringOperationsExtensions
     {
         /// <summary>
-        /// The New Dedicated Circuit operation creates a new dedicated circuit.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// Border Gateway Protocol Peering
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -54,7 +55,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -70,7 +72,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The New Dedicated Circuit operation creates a new dedicated circuit.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// Border Gateway Protocol Peering
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -84,7 +87,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -96,15 +100,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Remove Bgp Peering Route operation deletes an existing bgp
-        /// peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required. Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -123,15 +128,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Remove Bgp Peering Route operation deletes an existing bgp
-        /// peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required. Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -146,7 +152,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing bgp peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -160,7 +167,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -176,7 +184,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing bgp peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -190,7 +199,8 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -202,8 +212,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Bgp Peering operation retrieves the bgp peering for the
-        /// dedicated circuit with the specified service key.
+        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
+        /// peering for the dedicated circuit with the specified service key.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -216,7 +226,7 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static BorderGatewayProtocolPeeringGetResponse Get(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
@@ -228,8 +238,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Get Bgp Peering operation retrieves the bgp peering for the
-        /// dedicated circuit with the specified service key.
+        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
+        /// peering for the dedicated circuit with the specified service key.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -242,7 +252,7 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType)
         {
@@ -250,8 +260,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The New Bgp Peering operation creates a new bgp peering associated
-        /// with the dedicated circuit specified by the service key provided.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// border gateway protocol peering associated with the dedicated
+        /// circuit specified by the service key provided.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -268,7 +279,7 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static BorderGatewayProtocolPeeringGetResponse New(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
@@ -280,8 +291,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The New Bgp Peering operation creates a new bgp peering associated
-        /// with the dedicated circuit specified by the service key provided.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// border gateway protocol peering associated with the dedicated
+        /// circuit specified by the service key provided.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -298,7 +310,7 @@ namespace Microsoft.WindowsAzure
         /// Required. Parameters supplied to the New Bgp Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters)
         {
@@ -306,14 +318,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Remove Bgp Peering operation deletes an existing bgp peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required. Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -339,14 +353,16 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Remove Bgp Peering operation deletes an existing bgp peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.WindowsAzure.Management.ExpressRoute.IBorderGatewayProtocolPeeringOperations.
         /// </param>
         /// <param name='serviceKey'>
-        /// Required. Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -368,8 +384,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering or
-        /// creates a new one if one doesn't exist.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing border gateway protocol peering or creates a new one if
+        /// one doesn't exist.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -383,10 +400,11 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static BorderGatewayProtocolPeeringGetResponse Update(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {
@@ -398,8 +416,9 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering or
-        /// creates a new one if one doesn't exist.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing border gateway protocol peering or creates a new one if
+        /// one doesn't exist.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -413,10 +432,11 @@ namespace Microsoft.WindowsAzure
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public static Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(this IBorderGatewayProtocolPeeringOperations operations, string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters)
         {

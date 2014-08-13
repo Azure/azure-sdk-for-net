@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
@@ -36,6 +37,54 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public static partial class NotificationHubOperationsExtensions
     {
+        /// <summary>
+        /// Deletes a notification hub associated with a namespace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((INotificationHubOperations)s).DeleteAsync(namespaceName, notificationHubName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes a notification hub associated with a namespace.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.INotificationHubOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// Required. The notification hub name.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this INotificationHubOperations operations, string namespaceName, string notificationHubName)
+        {
+            return operations.DeleteAsync(namespaceName, notificationHubName, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>
