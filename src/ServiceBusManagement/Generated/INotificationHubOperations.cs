@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus
@@ -33,6 +34,24 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
     /// </summary>
     public partial interface INotificationHubOperations
     {
+        /// <summary>
+        /// Deletes a notification hub associated with a namespace.
+        /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='notificationHubName'>
+        /// The notification hub name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string namespaceName, string notificationHubName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Lists the notification hubs associated with a namespace.
         /// </summary>

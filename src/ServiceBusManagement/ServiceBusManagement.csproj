@@ -32,6 +32,7 @@
     <Compile Include="Generated\Models\ServiceBusConnectionDetailsResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusLocation.cs" />
     <Compile Include="Generated\Models\ServiceBusNamespace.cs" />
+    <Compile Include="Generated\Models\ServiceBusNamespaceCreateParameters.cs" />
     <Compile Include="Generated\Models\ServiceBusNamespaceDescriptionResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusNamespaceResponse.cs" />
     <Compile Include="Generated\Models\ServiceBusNamespacesResponse.cs" />

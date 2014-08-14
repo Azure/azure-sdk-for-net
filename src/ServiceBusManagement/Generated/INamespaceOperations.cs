@@ -92,6 +92,26 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         Task<ServiceBusAuthorizationRuleResponse> CreateAuthorizationRuleAsync(string namespaceName, ServiceBusSharedAccessAuthorizationRule rule, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Creates a new service namespace. Once created, this namespace's
+        /// resource manifest is immutable. This operation is idempotent.
+        /// (see http://msdn.microsoft.com/en-us/library/windowsazure/jj856303.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='namespaceEntity'>
+        /// The service bus namespace.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a request for a particular namespace.
+        /// </returns>
+        Task<ServiceBusNamespaceResponse> CreateNamespaceAsync(string namespaceName, ServiceBusNamespaceCreateParameters namespaceEntity, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Deletes an existing namespace. This operation also removes all
         /// associated entities including queues, topics, relay points, and
         /// messages stored under the namespace.  (see
