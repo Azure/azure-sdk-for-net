@@ -31,8 +31,22 @@
     <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generated\IRedisCacheManagementClient.cs" />
+    <Compile Include="Generated\IRedisOperations.cs" />
+    <Compile Include="Generated\Model\RedisCreateParameters.cs" />
+    <Compile Include="Generated\Model\RedisCreateProperties.cs" />
+    <Compile Include="Generated\Model\RedisKeyType.cs" />
+    <Compile Include="Generated\Model\RedisListKeysResponse.cs" />
+    <Compile Include="Generated\Model\RedisProperties.cs" />
+    <Compile Include="Generated\Model\RedisRegenerateKeyParameters.cs" />
+    <Compile Include="Generated\Model\RedisResource.cs" />
+    <Compile Include="Generated\Model\RedisResourceListResponse.cs" />
+    <Compile Include="Generated\Model\RedisResourceResponse.cs" />
+    <Compile Include="Generated\RedisCacheManagementClient.cs" />
+    <Compile Include="Generated\RedisCacheManagementClientExtensions.cs" />
+    <Compile Include="Generated\RedisOperations.cs" />
+    <Compile Include="Generated\RedisOperationsExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedisCacheManagementClient.cs" />
     <Compile Include="RedisCacheManagementClient.Customization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
