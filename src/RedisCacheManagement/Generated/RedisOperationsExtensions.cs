@@ -24,7 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.RedisCache;
-using Microsoft.Azure.Management.RedisCache.Model;
+using Microsoft.Azure.Management.RedisCache.Models;
 using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.RedisCache

@@ -22,10 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Model;
+using Microsoft.Azure.Management.RedisCache.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache.Model
+namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
     /// The response to a get-all redis operation.

@@ -21,32 +21,16 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Model;
 
-namespace Microsoft.Azure.Management.RedisCache.Model
+namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Specifies which redis access keys to reset.
+    /// Specifies which redis access key an operation refers to.
     /// </summary>
-    public partial class RedisRegenerateKeyParameters
+    public enum RedisKeyType
     {
-        private RedisKeyType _keyType;
+        Primary = 0,
         
-        /// <summary>
-        /// Required. Which redis access key to reset
-        /// </summary>
-        public RedisKeyType KeyType
-        {
-            get { return this._keyType; }
-            set { this._keyType = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RedisRegenerateKeyParameters
-        /// class.
-        /// </summary>
-        public RedisRegenerateKeyParameters()
-        {
-        }
+        Secondary = 1,
     }
 }

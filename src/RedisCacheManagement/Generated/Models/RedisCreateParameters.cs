@@ -21,31 +21,41 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Model;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure.Management.RedisCache.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Model
+namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// The response to a create/get redis operation.
+    /// Resource parameters supplied to the CREATE Redis operation.
     /// </summary>
-    public partial class RedisResourceResponse : OperationResponse
+    public partial class RedisCreateParameters
     {
-        private RedisResource _value;
+        private string _location;
         
         /// <summary>
-        /// Optional. Results of the GET operation
+        /// Required. The resource data center location.
         /// </summary>
-        public RedisResource Value
+        public string Location
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private RedisCreateProperties _properties;
+        
+        /// <summary>
+        /// Required. The resource properties.
+        /// </summary>
+        public RedisCreateProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisResourceResponse class.
+        /// Initializes a new instance of the RedisCreateParameters class.
         /// </summary>
-        public RedisResourceResponse()
+        public RedisCreateParameters()
         {
         }
     }

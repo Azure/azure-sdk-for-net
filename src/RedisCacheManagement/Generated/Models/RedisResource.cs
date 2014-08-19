@@ -21,19 +21,30 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Model;
+using Microsoft.Azure.Management.RedisCache.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Model
+namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Resource parameters supplied to the CREATE Redis operation.
+    /// A redis item in a response to a GET operation.
     /// </summary>
-    public partial class RedisCreateParameters
+    public partial class RedisResource
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. The id of the created resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
         private string _location;
         
         /// <summary>
-        /// Required. The resource data center location.
+        /// Optional. The resource's geographic location.
         /// </summary>
         public string Location
         {
@@ -41,21 +52,43 @@ namespace Microsoft.Azure.Management.RedisCache.Model
             set { this._location = value; }
         }
         
-        private RedisCreateProperties _properties;
+        private string _name;
         
         /// <summary>
-        /// Required. The resource properties.
+        /// Optional. Name of the cache.
         /// </summary>
-        public RedisCreateProperties Properties
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private RedisProperties _properties;
+        
+        /// <summary>
+        /// Optional. properties
+        /// </summary>
+        public RedisProperties Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the RedisCreateParameters class.
+        /// Optional. Resource's type.
         /// </summary>
-        public RedisCreateParameters()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RedisResource class.
+        /// </summary>
+        public RedisResource()
         {
         }
     }
