@@ -82,16 +82,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// Operations for managing the server farm in a web space.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        IServerFarmOperations ServerFarms
-        {
-            get; 
-        }
-        
-        /// <summary>
         /// Operations for managing web hosting plans beneath your subscription.
         /// </summary>
         IWebHostingPlanOperations WebHostingPlans

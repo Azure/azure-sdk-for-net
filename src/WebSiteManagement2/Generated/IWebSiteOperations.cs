@@ -34,6 +34,26 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IWebSiteOperations
     {
         /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='backupRequestEnvelope'>
+        /// A backup specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        Task<WebSiteBackupResponse> BackupAsync(string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can create a web site by using a POST request that includes the
         /// name of the web site and other information in the request body.
         /// (see
@@ -125,6 +145,31 @@ namespace Microsoft.Azure.Management.WebSites
         Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// KNOWN BUG: This has to be called against an exisingsite, otherwise
+        /// will hit an error about non-existing resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='restoreRequestEnvelope'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// You can generate a new random password for publishing a site by
         /// issuing an HTTP POST request.  Tip: If you want to verify that the
         /// publish password has changed, call HTTP GET on /publishxml before
@@ -172,6 +217,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// The Get Web Site Details operation response.
         /// </returns>
         Task<WebSiteGetResponse> GetAsync(string resourceGroupName, string webSiteName, WebSiteGetParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an
@@ -304,6 +366,23 @@ namespace Microsoft.Azure.Management.WebSites
         Task<WebSiteListResponse> ListAsync(string resourceGroupName, WebSiteListParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Returns list of all backups which are tracked by the system.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        Task<WebSiteGetBackupsResponse> ListBackupsAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Restart the web site.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -320,6 +399,48 @@ namespace Microsoft.Azure.Management.WebSites
         /// request ID.
         /// </returns>
         Task<OperationResponse> RestartAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='restoreRequestEnvelope'>
+        /// A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        Task<WebSiteRestoreResponse> RestoreAsync(string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='backupRequestEnvelope'>
+        /// A backup schedule specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateBackupConfigurationAsync(string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can retrieve the config settings for a web site by issuing an

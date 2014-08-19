@@ -100,18 +100,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private IServerFarmOperations _serverFarms;
-        
-        /// <summary>
-        /// Operations for managing the server farm in a web space.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
-        /// </summary>
-        public virtual IServerFarmOperations ServerFarms
-        {
-            get { return this._serverFarms; }
-        }
-        
         private IWebHostingPlanOperations _webHostingPlans;
         
         /// <summary>
@@ -150,11 +138,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private WebSiteManagementClient()
             : base()
         {
-            this._serverFarms = new ServerFarmOperations(this);
             this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
-            this._apiVersion = "2013-08-01";
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -219,11 +206,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private WebSiteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._serverFarms = new ServerFarmOperations(this);
             this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
-            this._apiVersion = "2013-08-01";
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -394,7 +380,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -718,7 +704,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -832,7 +818,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

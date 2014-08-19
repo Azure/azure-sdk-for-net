@@ -31,6 +31,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteUpdateConfigurationParameters
     {
+        private bool? _alwaysOn;
+        
+        /// <summary>
+        /// Optional. True if Always On functionality is enabled for the site;
+        /// otherwise, false.
+        /// </summary>
+        public bool? AlwaysOn
+        {
+            get { return this._alwaysOn; }
+            set { this._alwaysOn = value; }
+        }
+        
         private IDictionary<string, string> _appSettings;
         
         /// <summary>
@@ -154,8 +166,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         private string _netFrameworkVersion;
         
         /// <summary>
-        /// Optional. The .NET Framework version. Supported values are v2.0 and
-        /// v4.0.
+        /// Optional. The .NET Framework version. Supported values are v2.0,
+        /// v4.0 and v4.5.
         /// </summary>
         public string NetFrameworkVersion
         {
@@ -187,31 +199,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._phpVersion; }
             set { this._phpVersion = value; }
-        }
-        
-        private string _publishingPassword;
-        
-        /// <summary>
-        /// Optional. Hash value of the password used for publishing the web
-        /// site.
-        /// </summary>
-        public string PublishingPassword
-        {
-            get { return this._publishingPassword; }
-            set { this._publishingPassword = value; }
-        }
-        
-        private string _publishingUserName;
-        
-        /// <summary>
-        /// Optional. The username used for publishing the web site. This is
-        /// normally a dollar sign prepended to the web site name (for
-        /// example, "$contoso").
-        /// </summary>
-        public string PublishingUserName
-        {
-            get { return this._publishingUserName; }
-            set { this._publishingUserName = value; }
         }
         
         private bool? _remoteDebuggingEnabled;

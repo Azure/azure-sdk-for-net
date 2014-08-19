@@ -25,6 +25,8 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -64,9 +66,214 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
-        /// You can retrieve details for a specified web hosting plan name by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// Creates a new Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Web Hosting Plan Parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Web Web Hosting Plan operation response.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebHostingPlanCreateResponse> CreateAsync(string webSpaceName, WebHostingPlanCreateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Name");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/ServerFarms";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(serverFarmElement);
+                
+                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                nameElement.Value = parameters.Name;
+                serverFarmElement.Add(nameElement);
+                
+                if (parameters.NumberOfWorkers != null)
+                {
+                    XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                    numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
+                    serverFarmElement.Add(numberOfWorkersElement);
+                }
+                
+                XElement sKUElement = new XElement(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                sKUElement.Value = parameters.SKU.ToString();
+                serverFarmElement.Add(sKUElement);
+                
+                if (parameters.WorkerSize != null)
+                {
+                    XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                    workerSizeElement.Value = parameters.WorkerSize.ToString();
+                    serverFarmElement.Add(workerSizeElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebHostingPlanCreateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebHostingPlanCreateResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmElement2 != null)
+                    {
+                        WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                        result.WebHostingPlan = webHostingPlanInstance;
+                        
+                        XElement nameElement2 = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement2 != null)
+                        {
+                            string nameInstance = nameElement2.Value;
+                            webHostingPlanInstance.Name = nameInstance;
+                        }
+                        
+                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement2 != null && string.IsNullOrEmpty(numberOfWorkersElement2.Value) == false)
+                        {
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            webHostingPlanInstance.NumberOfWorkers = numberOfWorkersInstance;
+                        }
+                        
+                        XElement sKUElement2 = serverFarmElement2.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement2 != null)
+                        {
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement2.Value, true));
+                            webHostingPlanInstance.SKU = sKUInstance;
+                        }
+                        
+                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement2 != null && string.IsNullOrEmpty(workerSizeElement2.Value) == false)
+                        {
+                            WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement2.Value, true));
+                            webHostingPlanInstance.WorkerSize = workerSizeInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Deletes a Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -79,7 +286,136 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Hosting Plans details operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> DeleteAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webHostingPlanName == null)
+            {
+                throw new ArgumentNullException("webHostingPlanName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webHostingPlanName", webHostingPlanName);
+                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/ServerFarms/" + webHostingPlanName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets details of an existing Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Hosting Plan operation response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebHostingPlanGetResponse> GetAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken)
         {
@@ -129,7 +465,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -172,53 +508,35 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement serverFarmElement = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
                     if (serverFarmElement != null)
                     {
+                        WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                        result.WebHostingPlan = webHostingPlanInstance;
+                        
                         XElement nameElement = serverFarmElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
-                        }
-                        
-                        XElement sKUElement = serverFarmElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
-                        if (sKUElement != null)
-                        {
-                            string sKUInstance = sKUElement.Value;
-                            result.SKU = sKUInstance;
-                        }
-                        
-                        XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
-                        {
-                            WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement.Value, true));
-                            result.WorkerSize = workerSizeInstance;
+                            webHostingPlanInstance.Name = nameInstance;
                         }
                         
                         XElement numberOfWorkersElement = serverFarmElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
                         if (numberOfWorkersElement != null && string.IsNullOrEmpty(numberOfWorkersElement.Value) == false)
                         {
                             int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                            result.NumberOfWorkers = numberOfWorkersInstance;
+                            webHostingPlanInstance.NumberOfWorkers = numberOfWorkersInstance;
                         }
                         
-                        XElement currentWorkerSizeElement = serverFarmElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
+                        XElement sKUElement = serverFarmElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement != null)
                         {
-                            WorkerSizeOptions currentWorkerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), currentWorkerSizeElement.Value, true));
-                            result.CurrentWorkerSize = currentWorkerSizeInstance;
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                            webHostingPlanInstance.SKU = sKUInstance;
                         }
                         
-                        XElement currentNumberOfWorkersElement = serverFarmElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                        if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
+                        XElement workerSizeElement = serverFarmElement.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement != null && string.IsNullOrEmpty(workerSizeElement.Value) == false)
                         {
-                            int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                            result.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                        }
-                        
-                        XElement statusElement = serverFarmElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                        if (statusElement != null)
-                        {
-                            StatusOptions statusInstance = ((StatusOptions)Enum.Parse(typeof(StatusOptions), statusElement.Value, true));
-                            result.Status = statusInstance;
+                            WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement.Value, true));
+                            webHostingPlanInstance.WorkerSize = workerSizeInstance;
                         }
                     }
                     
@@ -344,7 +662,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -624,7 +942,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -679,10 +997,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 serverFarmInstance.Name = nameInstance;
                             }
                             
+                            XElement numberOfWorkersElement = serverFarmsElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                            if (numberOfWorkersElement != null && string.IsNullOrEmpty(numberOfWorkersElement.Value) == false)
+                            {
+                                int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
+                                serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
+                            }
+                            
                             XElement sKUElement = serverFarmsElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
                             if (sKUElement != null)
                             {
-                                string sKUInstance = sKUElement.Value;
+                                SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
                                 serverFarmInstance.SKU = sKUInstance;
                             }
                             
@@ -692,34 +1017,213 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement.Value, true));
                                 serverFarmInstance.WorkerSize = workerSizeInstance;
                             }
-                            
-                            XElement numberOfWorkersElement = serverFarmsElement.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (numberOfWorkersElement != null && string.IsNullOrEmpty(numberOfWorkersElement.Value) == false)
-                            {
-                                int numberOfWorkersInstance = int.Parse(numberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                serverFarmInstance.NumberOfWorkers = numberOfWorkersInstance;
-                            }
-                            
-                            XElement currentWorkerSizeElement = serverFarmsElement.Element(XName.Get("CurrentWorkerSize", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentWorkerSizeElement != null && string.IsNullOrEmpty(currentWorkerSizeElement.Value) == false)
-                            {
-                                WorkerSizeOptions currentWorkerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), currentWorkerSizeElement.Value, true));
-                                serverFarmInstance.CurrentWorkerSize = currentWorkerSizeInstance;
-                            }
-                            
-                            XElement currentNumberOfWorkersElement = serverFarmsElement.Element(XName.Get("CurrentNumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
-                            if (currentNumberOfWorkersElement != null && string.IsNullOrEmpty(currentNumberOfWorkersElement.Value) == false)
-                            {
-                                int currentNumberOfWorkersInstance = int.Parse(currentNumberOfWorkersElement.Value, CultureInfo.InvariantCulture);
-                                serverFarmInstance.CurrentNumberOfWorkers = currentNumberOfWorkersInstance;
-                            }
-                            
-                            XElement statusElement = serverFarmsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                            if (statusElement != null)
-                            {
-                                StatusOptions statusInstance = ((StatusOptions)Enum.Parse(typeof(StatusOptions), statusElement.Value, true));
-                                serverFarmInstance.Status = statusInstance;
-                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Updates an existing Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Web Hosting Plan
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Web Hosting Plan operation response.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebHostingPlanUpdateResponse> UpdateAsync(string webSpaceName, string webHostingPlanName, WebHostingPlanUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webHostingPlanName == null)
+            {
+                throw new ArgumentNullException("webHostingPlanName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webHostingPlanName", webHostingPlanName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/ServerFarms/" + webHostingPlanName.Trim();
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(serverFarmElement);
+                
+                if (parameters.NumberOfWorkers != null)
+                {
+                    XElement numberOfWorkersElement = new XElement(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                    numberOfWorkersElement.Value = parameters.NumberOfWorkers.ToString();
+                    serverFarmElement.Add(numberOfWorkersElement);
+                }
+                
+                XElement sKUElement = new XElement(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                sKUElement.Value = parameters.SKU.ToString();
+                serverFarmElement.Add(sKUElement);
+                
+                if (parameters.WorkerSize != null)
+                {
+                    XElement workerSizeElement = new XElement(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                    workerSizeElement.Value = parameters.WorkerSize.ToString();
+                    serverFarmElement.Add(workerSizeElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebHostingPlanUpdateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebHostingPlanUpdateResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement serverFarmElement2 = responseDoc.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                    if (serverFarmElement2 != null)
+                    {
+                        WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
+                        result.WebHostingPlan = webHostingPlanInstance;
+                        
+                        XElement nameElement = serverFarmElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            webHostingPlanInstance.Name = nameInstance;
+                        }
+                        
+                        XElement numberOfWorkersElement2 = serverFarmElement2.Element(XName.Get("NumberOfWorkers", "http://schemas.microsoft.com/windowsazure"));
+                        if (numberOfWorkersElement2 != null && string.IsNullOrEmpty(numberOfWorkersElement2.Value) == false)
+                        {
+                            int numberOfWorkersInstance = int.Parse(numberOfWorkersElement2.Value, CultureInfo.InvariantCulture);
+                            webHostingPlanInstance.NumberOfWorkers = numberOfWorkersInstance;
+                        }
+                        
+                        XElement sKUElement2 = serverFarmElement2.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement2 != null)
+                        {
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement2.Value, true));
+                            webHostingPlanInstance.SKU = sKUInstance;
+                        }
+                        
+                        XElement workerSizeElement2 = serverFarmElement2.Element(XName.Get("WorkerSize", "http://schemas.microsoft.com/windowsazure"));
+                        if (workerSizeElement2 != null && string.IsNullOrEmpty(workerSizeElement2.Value) == false)
+                        {
+                            WorkerSizeOptions workerSizeInstance = ((WorkerSizeOptions)Enum.Parse(typeof(WorkerSizeOptions), workerSizeElement2.Value, true));
+                            webHostingPlanInstance.WorkerSize = workerSizeInstance;
                         }
                     }
                     
