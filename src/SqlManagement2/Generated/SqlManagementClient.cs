@@ -115,6 +115,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._firewallRules; }
         }
         
+        private ISecurityOperations _databaseSecurity;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// security policy.  Contains operations to: Retrieve and Update
+        /// security policy
+        /// </summary>
+        public virtual ISecurityOperations DatabaseSecurity
+        {
+            get { return this._databaseSecurity; }
+        }
+        
         private IServerOperations _servers;
         
         /// <summary>
@@ -135,6 +147,7 @@ namespace Microsoft.Azure.Management.Sql
         {
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -203,6 +216,7 @@ namespace Microsoft.Azure.Management.Sql
         {
             this._databases = new DatabaseOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
+            this._databaseSecurity = new SecurityOperations(this);
             this._servers = new ServerOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;

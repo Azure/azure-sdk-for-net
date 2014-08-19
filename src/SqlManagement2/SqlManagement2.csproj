@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>770db1b9</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>11dea04a</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
     <DocumentationFile>bin\Debug\Microsoft.Azure.Management.Sql.xml</DocumentationFile>
@@ -22,6 +22,13 @@
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
+    <Compile Include="Generated\SecurityOperations.cs" />
+    <Compile Include="Generated\SecurityOperationsExtensions.cs" />
+    <Compile Include="Generated\ISecurityOperations.cs" />
+    <Compile Include="Generated\Models\DatabaseSecurityPolicyGetResponse.cs" />
+    <Compile Include="Generated\Models\DatabaseSecurityPolicyUpdateParameters.cs" />
+    <Compile Include="Generated\Models\DatabaseSecurityPolicy.cs" />
+    <Compile Include="Generated\Models\DatabaseSecurityPolicyProperties.cs" />
     <Compile Include="Generated\DatabaseOperations.cs" />
     <Compile Include="Generated\DatabaseOperationsExtensions.cs" />
     <Compile Include="Generated\FirewallRuleOperations.cs" />
@@ -69,6 +76,7 @@
     <Content Include="hydra.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
@@ -98,6 +106,6 @@
     <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5337.27642-prerelease\build\Hydra.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftAzureManagementSqlSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Sql.Specification.0.9.5338.19001-prerelease\tools\Microsoft.Azure.Management.Sql.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Sql.Specification.0.9.5343.22195-prerelease\tools\Microsoft.Azure.Management.Sql.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
