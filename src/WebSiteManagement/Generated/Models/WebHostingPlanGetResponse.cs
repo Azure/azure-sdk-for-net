@@ -27,89 +27,19 @@ using Microsoft.WindowsAzure.Management.WebSites.Models;
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Get Web Hosting Plans details operation response.
+    /// The Get Web Hosting Plan operation response.
     /// </summary>
     public partial class WebHostingPlanGetResponse : OperationResponse
     {
-        private int? _currentNumberOfWorkers;
+        private WebHostingPlan _webHostingPlan;
         
         /// <summary>
-        /// Optional. The number of workers currently serving requests.
+        /// Optional. Details of the created Web Hosting Plan.
         /// </summary>
-        public int? CurrentNumberOfWorkers
+        public WebHostingPlan WebHostingPlan
         {
-            get { return this._currentNumberOfWorkers; }
-            set { this._currentNumberOfWorkers = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _currentWorkerSize;
-        
-        /// <summary>
-        /// Optional. The worker size of currently used workers. Possible
-        /// values are Small, Medium, and Large. For JSON, the equivalents are
-        /// 0 = Small, 1 = Medium, and 2 = Large.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? CurrentWorkerSize
-        {
-            get { return this._currentWorkerSize; }
-            set { this._currentWorkerSize = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Name of the Web hosting plan.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private int? _numberOfWorkers;
-        
-        /// <summary>
-        /// Optional. The requested number of workers.
-        /// </summary>
-        public int? NumberOfWorkers
-        {
-            get { return this._numberOfWorkers; }
-            set { this._numberOfWorkers = value; }
-        }
-        
-        private string _sKU;
-        
-        /// <summary>
-        /// Optional. Name of the Web hosting plan.
-        /// </summary>
-        public string SKU
-        {
-            get { return this._sKU; }
-            set { this._sKU = value; }
-        }
-        
-        private StatusOptions _status;
-        
-        /// <summary>
-        /// Optional. The status of the web hosting plan.
-        /// </summary>
-        public StatusOptions Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _workerSize;
-        
-        /// <summary>
-        /// Optional. The worker size. Possible values are Small, Medium, and
-        /// Large. For JSON, the equivalents are 0 = Small, 1 = Medium, and 2
-        /// = Large.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? WorkerSize
-        {
-            get { return this._workerSize; }
-            set { this._workerSize = value; }
+            get { return this._webHostingPlan; }
+            set { this._webHostingPlan = value; }
         }
         
         /// <summary>

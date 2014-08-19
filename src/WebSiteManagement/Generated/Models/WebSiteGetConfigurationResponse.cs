@@ -32,6 +32,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteGetConfigurationResponse : OperationResponse
     {
+        private bool? _alwaysOn;
+        
+        /// <summary>
+        /// Optional. Indicates if site's Always On feature is enabled.
+        /// </summary>
+        public bool? AlwaysOn
+        {
+            get { return this._alwaysOn; }
+            set { this._alwaysOn = value; }
+        }
+        
         private IDictionary<string, string> _appSettings;
         
         /// <summary>

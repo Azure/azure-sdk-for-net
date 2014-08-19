@@ -58,18 +58,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._availabilityState = value; }
         }
         
-        private WebSiteComputeMode _computeMode;
-        
-        /// <summary>
-        /// Optional. The Compute Mode for the web site. Possible values are
-        /// Shared or Dedicated.
-        /// </summary>
-        public WebSiteComputeMode ComputeMode
-        {
-            get { return this._computeMode; }
-            set { this._computeMode = value; }
-        }
-        
         private bool _enabled;
         
         /// <summary>
@@ -135,17 +123,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._lastModifiedTimeUtc = value; }
         }
         
-        private string _owner;
-        
-        /// <summary>
-        /// Optional. Owner of the web site.
-        /// </summary>
-        public string Owner
-        {
-            get { return this._owner; }
-            set { this._owner = value; }
-        }
-        
         private WebSiteProperties.SiteProperties _properties;
         
         /// <summary>
@@ -198,8 +175,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. String. If a server farm exists, this value is
-        /// DefaultServerFarm.
+        /// Optional. Name of a Web Hosting Plan (Server Farm) that this site
+        /// belongs to.
         /// </summary>
         public string ServerFarm
         {
@@ -207,29 +184,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._serverFarm = value; }
         }
         
-        private WebSiteMode _siteMode;
+        private SkuOptions _sku;
         
         /// <summary>
-        /// Optional. String that represents the web site mode. If the web site
-        /// mode is Free, this value is Limited. If the web site mode is
-        /// Shared, this value is Basic.  Note: The SiteMode value is not used
-        /// for Reserved mode. Reserved mode uses the ComputeMode setting.
+        /// Optional. SKU of a Web Hosting Plan (Server Farm) that this site
+        /// belongs to.
         /// </summary>
-        public WebSiteMode SiteMode
+        public SkuOptions Sku
         {
-            get { return this._siteMode; }
-            set { this._siteMode = value; }
-        }
-        
-        private IList<WebSiteProperties.WebSiteSslCertificate> _sslCertificates;
-        
-        /// <summary>
-        /// Optional. SSL certificates bound to the web site.
-        /// </summary>
-        public IList<WebSiteProperties.WebSiteSslCertificate> SslCertificates
-        {
-            get { return this._sslCertificates; }
-            set { this._sslCertificates = value; }
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         private WebSiteState _state;
@@ -301,7 +265,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             this.EnabledHostNames = new List<string>();
             this.HostNames = new List<string>();
             this.HostNameSslStates = new List<WebSiteProperties.WebSiteHostNameSslState>();
-            this.SslCertificates = new List<WebSiteProperties.WebSiteSslCertificate>();
             this.TrafficManagerHostNames = new List<string>();
         }
         
@@ -445,196 +408,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             /// </summary>
             public WebSiteHostNameSslState()
             {
-            }
-        }
-        
-        /// <summary>
-        /// Contains SSL certificate properties.
-        /// </summary>
-        public partial class WebSiteSslCertificate
-        {
-            private byte[] _cerBlob;
-            
-            /// <summary>
-            /// Optional. The certificate blob.
-            /// </summary>
-            public byte[] CerBlob
-            {
-                get { return this._cerBlob; }
-                set { this._cerBlob = value; }
-            }
-            
-            private DateTime _expirationDate;
-            
-            /// <summary>
-            /// Optional. A dateTime value that contains the expiration date of
-            /// the certificate.
-            /// </summary>
-            public DateTime ExpirationDate
-            {
-                get { return this._expirationDate; }
-                set { this._expirationDate = value; }
-            }
-            
-            private string _friendlyName;
-            
-            /// <summary>
-            /// Optional. A string that contains the friendly name of the
-            /// certificate.
-            /// </summary>
-            public string FriendlyName
-            {
-                get { return this._friendlyName; }
-                set { this._friendlyName = value; }
-            }
-            
-            private IList<string> _hostNames;
-            
-            /// <summary>
-            /// Optional. An array of strings that contain the hostnames to
-            /// which the certificate is bound.
-            /// </summary>
-            public IList<string> HostNames
-            {
-                get { return this._hostNames; }
-                set { this._hostNames = value; }
-            }
-            
-            private DateTime _issueDate;
-            
-            /// <summary>
-            /// Optional. A dateTime value that contains the date that the
-            /// certificate was issued.
-            /// </summary>
-            public DateTime IssueDate
-            {
-                get { return this._issueDate; }
-                set { this._issueDate = value; }
-            }
-            
-            private string _issuer;
-            
-            /// <summary>
-            /// Optional. A string that identifies the issuer of the
-            /// certificate.
-            /// </summary>
-            public string Issuer
-            {
-                get { return this._issuer; }
-                set { this._issuer = value; }
-            }
-            
-            private bool _isValid;
-            
-            /// <summary>
-            /// Optional. Boolean. true if the certificate is valid; otherwise,
-            /// false.
-            /// </summary>
-            public bool IsValid
-            {
-                get { return this._isValid; }
-                set { this._isValid = value; }
-            }
-            
-            private string _password;
-            
-            /// <summary>
-            /// Optional. A string that contains the password for the
-            /// certificate.
-            /// </summary>
-            public string Password
-            {
-                get { return this._password; }
-                set { this._password = value; }
-            }
-            
-            private byte[] _pfxBlob;
-            
-            /// <summary>
-            /// Optional. A base64Binary value that contains the PfxBlob of the
-            /// certificate.
-            /// </summary>
-            public byte[] PfxBlob
-            {
-                get { return this._pfxBlob; }
-                set { this._pfxBlob = value; }
-            }
-            
-            private string _publicKeyHash;
-            
-            /// <summary>
-            /// Optional. The public key hash.
-            /// </summary>
-            public string PublicKeyHash
-            {
-                get { return this._publicKeyHash; }
-                set { this._publicKeyHash = value; }
-            }
-            
-            private Uri _selfLinkUri;
-            
-            /// <summary>
-            /// Optional. An anyURI value that contains the endpoint of the
-            /// site to which the certificate is bound.
-            /// </summary>
-            public Uri SelfLinkUri
-            {
-                get { return this._selfLinkUri; }
-                set { this._selfLinkUri = value; }
-            }
-            
-            private string _siteName;
-            
-            /// <summary>
-            /// Optional. A string that contains the name of the site to which
-            /// the certificate is bound.
-            /// </summary>
-            public string SiteName
-            {
-                get { return this._siteName; }
-                set { this._siteName = value; }
-            }
-            
-            private string _subjectName;
-            
-            /// <summary>
-            /// Optional. A string that contains the name of the entity to whom
-            /// the certificate was issued.
-            /// </summary>
-            public string SubjectName
-            {
-                get { return this._subjectName; }
-                set { this._subjectName = value; }
-            }
-            
-            private string _thumbprint;
-            
-            /// <summary>
-            /// Optional. A string that contains the certificate thumbprint.
-            /// </summary>
-            public string Thumbprint
-            {
-                get { return this._thumbprint; }
-                set { this._thumbprint = value; }
-            }
-            
-            private bool _toDelete;
-            
-            /// <summary>
-            /// Optional. Boolean. true if the certificate is to be deleted.
-            /// </summary>
-            public bool ToDelete
-            {
-                get { return this._toDelete; }
-                set { this._toDelete = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the WebSiteSslCertificate class.
-            /// </summary>
-            public WebSiteSslCertificate()
-            {
-                this.HostNames = new List<string>();
             }
         }
     }

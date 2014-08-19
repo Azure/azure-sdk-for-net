@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.WebSites;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
@@ -39,9 +40,58 @@ namespace Microsoft.WindowsAzure
     public static partial class WebHostingPlanOperationsExtensions
     {
         /// <summary>
-        /// You can retrieve details for a specified web hosting plan name by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// Creates a new Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Web Hosting Plan Parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Web Web Hosting Plan operation response.
+        /// </returns>
+        public static WebHostingPlanCreateResponse Create(this IWebHostingPlanOperations operations, string webSpaceName, WebHostingPlanCreateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebHostingPlanOperations)s).CreateAsync(webSpaceName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates a new Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Web Hosting Plan Parameters.
+        /// </param>
+        /// <returns>
+        /// The Create Web Web Hosting Plan operation response.
+        /// </returns>
+        public static Task<WebHostingPlanCreateResponse> CreateAsync(this IWebHostingPlanOperations operations, string webSpaceName, WebHostingPlanCreateParameters parameters)
+        {
+            return operations.CreateAsync(webSpaceName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes a Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -55,7 +105,59 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the web hosting plan.
         /// </param>
         /// <returns>
-        /// The Get Web Hosting Plans details operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebHostingPlanOperations)s).DeleteAsync(webSpaceName, webHostingPlanName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes a Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
+        {
+            return operations.DeleteAsync(webSpaceName, webHostingPlanName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets details of an existing Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <returns>
+        /// The Get Web Hosting Plan operation response.
         /// </returns>
         public static WebHostingPlanGetResponse Get(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
         {
@@ -67,9 +169,8 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// You can retrieve details for a specified web hosting plan name by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// Gets details of an existing Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -83,7 +184,7 @@ namespace Microsoft.WindowsAzure
         /// Required. The name of the web hosting plan.
         /// </param>
         /// <returns>
-        /// The Get Web Hosting Plans details operation response.
+        /// The Get Web Hosting Plan operation response.
         /// </returns>
         public static Task<WebHostingPlanGetResponse> GetAsync(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName)
         {
@@ -196,6 +297,64 @@ namespace Microsoft.WindowsAzure
         public static Task<WebHostingPlanListResponse> ListAsync(this IWebHostingPlanOperations operations, string webSpaceName)
         {
             return operations.ListAsync(webSpaceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates an existing Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Web Hosting Plan
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The Create Web Hosting Plan operation response.
+        /// </returns>
+        public static WebHostingPlanUpdateResponse Update(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName, WebHostingPlanUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebHostingPlanOperations)s).UpdateAsync(webSpaceName, webHostingPlanName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates an existing Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebHostingPlanOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// Required. The name of the web hosting plan.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Update Web Hosting Plan
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The Create Web Hosting Plan operation response.
+        /// </returns>
+        public static Task<WebHostingPlanUpdateResponse> UpdateAsync(this IWebHostingPlanOperations operations, string webSpaceName, string webHostingPlanName, WebHostingPlanUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(webSpaceName, webHostingPlanName, parameters, CancellationToken.None);
         }
     }
 }

@@ -103,16 +103,26 @@ namespace Microsoft.Azure.Management.WebSites
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private IServerFarmOperations _serverFarms;
+        private IWebHostingPlanOperations _webHostingPlans;
         
         /// <summary>
-        /// Operations for managing the server farm in a resource group.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// Operations for managing the Web Hosting Plans in a resource group.
+        /// Web hosting plans (WHPs) represent a set of features and capacity
+        /// that you can share across your web sites. Web hosting plans
+        /// support the 4 Azure Web Sites pricing tiers (Free, Shared, Basic,
+        /// and Standard) where each tier has its own capabilities and
+        /// capacity. Sites in the same subscription, resource group, and
+        /// geographic location can share a web hosting plan. All the sites
+        /// sharing a web hosting plan can leverage all the capabilities and
+        /// features defined by the web hosting plan tier. All web sites
+        /// associated with a given web hosting plan run on the resources
+        /// defined by the web hosting plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
-        public virtual IServerFarmOperations ServerFarms
+        public virtual IWebHostingPlanOperations WebHostingPlans
         {
-            get { return this._serverFarms; }
+            get { return this._webHostingPlans; }
         }
         
         private IWebSiteOperations _webSites;
@@ -131,7 +141,7 @@ namespace Microsoft.Azure.Management.WebSites
         private WebSiteManagementClient()
             : base()
         {
-            this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -184,7 +194,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
@@ -198,7 +208,7 @@ namespace Microsoft.Azure.Management.WebSites
         private WebSiteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
@@ -257,7 +267,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw new ArgumentNullException("credentials");
             }
             this._credentials = credentials;
-            this._baseUri = new Uri("https://management.core.windows.net");
+            this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
         }
