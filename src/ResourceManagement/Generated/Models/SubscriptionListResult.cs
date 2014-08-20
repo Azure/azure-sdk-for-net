@@ -39,6 +39,22 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public IList<Subscription> Subscriptions
         {
+            get
+            {
+                if (this._subscriptions == null)
+                {
+                    this._subscriptions = new System.Collections.Generic.List<Microsoft.Azure.Subscriptions.Models.Subscription>();
+                }
+                return this._subscriptions;
+            }
+            set { this._subscriptions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets subscriptions.
+        /// </summary>
+        public IList<Subscription> SubscriptionsValue
+        {
             get { return this._subscriptions; }
             set { this._subscriptions = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public SubscriptionListResult()
         {
-            this.Subscriptions = new List<Subscription>();
         }
     }
 }

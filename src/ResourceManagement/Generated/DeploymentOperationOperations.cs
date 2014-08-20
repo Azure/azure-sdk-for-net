@@ -430,6 +430,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Operations = new List<DeploymentOperation>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
@@ -643,6 +644,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Operations = new List<DeploymentOperation>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 DeploymentOperation deploymentOperationInstance = new DeploymentOperation();
