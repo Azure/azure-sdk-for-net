@@ -442,9 +442,9 @@ namespace Microsoft.Azure.Management.Resources
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.Tags != null)
+                if (parameters.TagsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -547,6 +547,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -826,6 +827,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -839,174 +841,6 @@ namespace Microsoft.Azure.Management.Resources
                         {
                             string provisioningStateInstance2 = ((string)provisioningStateValue2);
                             resourceGroupInstance.ProvisioningState = provisioningStateInstance2;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets a resource group permissions.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. Name of the resource group to get the permissions for.The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Permissions information.
-        /// </returns>
-        public async Task<PermissionGetResult> GetPermissionsAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (resourceGroupName != null && resourceGroupName.Length > 1000)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            if (Regex.IsMatch(resourceGroupName, "^[-\\w\\._]+$") == false)
-            {
-                throw new ArgumentOutOfRangeException("resourceGroupName");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                Tracing.Enter(invocationId, this, "GetPermissionsAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/permissions?";
-            url = url + "api-version=2014-04-01-preview";
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    PermissionGetResult result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new PermissionGetResult();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                Permission permissionInstance = new Permission();
-                                result.Permissions.Add(permissionInstance);
-                                
-                                JToken actionsArray = valueValue["actions"];
-                                if (actionsArray != null && actionsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken actionsValue in ((JArray)actionsArray))
-                                    {
-                                        permissionInstance.Actions.Add(((string)actionsValue));
-                                    }
-                                }
-                                
-                                JToken notActionsArray = valueValue["notActions"];
-                                if (notActionsArray != null && notActionsArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken notActionsValue in ((JArray)notActionsArray))
-                                    {
-                                        permissionInstance.NotActions.Add(((string)notActionsValue));
-                                    }
-                                }
-                            }
                         }
                     }
                     
@@ -1163,6 +997,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.ResourceGroups = new List<ResourceGroup>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
@@ -1210,6 +1045,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    resourceGroupJsonFormatInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
@@ -1356,6 +1192,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.ResourceGroups = new List<ResourceGroup>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
@@ -1403,6 +1240,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    resourceGroupJsonFormatInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
@@ -1558,9 +1396,9 @@ namespace Microsoft.Azure.Management.Resources
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.Tags != null)
+                if (parameters.TagsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -1663,6 +1501,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);

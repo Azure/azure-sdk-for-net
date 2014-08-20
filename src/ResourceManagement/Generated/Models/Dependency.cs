@@ -38,6 +38,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<BasicDependency> DependsOn
         {
+            get
+            {
+                if (this._dependsOn == null)
+                {
+                    this._dependsOn = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.BasicDependency>();
+                }
+                return this._dependsOn;
+            }
+            set { this._dependsOn = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets the list of dependencies.
+        /// </summary>
+        public IList<BasicDependency> DependsOnValue
+        {
             get { return this._dependsOn; }
             set { this._dependsOn = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public Dependency()
         {
-            this.DependsOn = new List<BasicDependency>();
         }
     }
 }

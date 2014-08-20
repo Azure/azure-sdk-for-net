@@ -35,6 +35,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<ResourceManagementError> Details
         {
+            get
+            {
+                if (this._details == null)
+                {
+                    this._details = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ResourceManagementError>();
+                }
+                return this._details;
+            }
+            set { this._details = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets validation error.
+        /// </summary>
+        public IList<ResourceManagementError> DetailsValue
+        {
             get { return this._details; }
             set { this._details = value; }
         }
@@ -45,7 +61,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceManagementErrorWithDetails()
         {
-            this.Details = new List<ResourceManagementError>();
         }
         
         /// <summary>

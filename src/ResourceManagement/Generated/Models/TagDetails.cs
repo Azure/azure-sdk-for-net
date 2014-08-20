@@ -71,6 +71,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<TagValue> Values
         {
+            get
+            {
+                if (this._values == null)
+                {
+                    this._values = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.TagValue>();
+                }
+                return this._values;
+            }
+            set { this._values = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of tag values.
+        /// </summary>
+        public IList<TagValue> ValuesValue
+        {
             get { return this._values; }
             set { this._values = value; }
         }
@@ -80,7 +96,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public TagDetails()
         {
-            this.Values = new List<TagValue>();
         }
     }
 }

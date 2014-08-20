@@ -49,6 +49,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<Dependency> Dependencies
         {
+            get
+            {
+                if (this._dependencies == null)
+                {
+                    this._dependencies = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.Dependency>();
+                }
+                return this._dependencies;
+            }
+            set { this._dependencies = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets the list of deployment dependencies.
+        /// </summary>
+        public IList<Dependency> DependenciesValue
+        {
             get { return this._dependencies; }
             set { this._dependencies = value; }
         }
@@ -72,6 +88,23 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// deployment.
         /// </summary>
         public IList<Provider> Providers
+        {
+            get
+            {
+                if (this._providers == null)
+                {
+                    this._providers = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.Provider>();
+                }
+                return this._providers;
+            }
+            set { this._providers = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets the list of resource providers needed for the
+        /// deployment.
+        /// </summary>
+        public IList<Provider> ProvidersValue
         {
             get { return this._providers; }
             set { this._providers = value; }
@@ -104,8 +137,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentProperties()
         {
-            this.Dependencies = new List<Dependency>();
-            this.Providers = new List<Provider>();
         }
     }
 }
