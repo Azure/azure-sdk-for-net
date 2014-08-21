@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
@@ -30,15 +29,17 @@ namespace Microsoft.Azure.Management.RedisCache.Models
     /// </summary>
     public partial class RedisCreateProperties
     {
-        private IDictionary<string, string> _config;
+        private string _maxMemoryPolicy;
         
         /// <summary>
-        /// Optional. configuration for radis cache
+        /// Optional. what is maxMemoryPolicy of redis cache. Valid values:
+        /// (volatile-lru, allkeys-lru, volatile-random, allkeys-random,
+        /// volatile-ttl, noeviction)
         /// </summary>
-        public IDictionary<string, string> Config
+        public string MaxMemoryPolicy
         {
-            get { return this._config; }
-            set { this._config = value; }
+            get { return this._maxMemoryPolicy; }
+            set { this._maxMemoryPolicy = value; }
         }
         
         private string _redisVersion;
@@ -56,8 +57,8 @@ namespace Microsoft.Azure.Management.RedisCache.Models
         private string _size;
         
         /// <summary>
-        /// Required. What size of redis cache to deploy. Valid values:
-        /// (ExtraSmall, Small, Medium, Large, ExtraLarge, A5, A6, A7, A8)
+        /// Required. What size of redis cache to deploy. Valid values: (C0,
+        /// C1, C2, C3, C4, C5, C6)
         /// </summary>
         public string Size
         {
@@ -82,7 +83,6 @@ namespace Microsoft.Azure.Management.RedisCache.Models
         /// </summary>
         public RedisCreateProperties()
         {
-            this._config = new Dictionary<string, string>();
         }
     }
 }

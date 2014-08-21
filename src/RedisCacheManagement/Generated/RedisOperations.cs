@@ -180,17 +180,10 @@ namespace Microsoft.Azure.Management.RedisCache
                 
                 propertiesValue["size"] = parameters.Properties.Size;
                 
-                JObject configDictionary = new JObject();
-                if (parameters.Properties.Config != null)
+                if (parameters.Properties.MaxMemoryPolicy != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Properties.Config)
-                    {
-                        string configKey = pair.Key;
-                        string configValue = pair.Value;
-                        configDictionary[configKey] = configValue;
-                    }
+                    propertiesValue["maxMemoryPolicy"] = parameters.Properties.MaxMemoryPolicy;
                 }
-                propertiesValue["config"] = configDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -301,6 +294,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
+                            JToken runtimeVersionValue = propertiesValue2["runtimeVersion"];
+                            if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                            {
+                                string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                            }
+                            
                             JToken versionValue = propertiesValue2["version"];
                             if (versionValue != null && versionValue.Type != JTokenType.Null)
                             {
@@ -322,15 +322,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                 propertiesInstance.Size = sizeInstance;
                             }
                             
-                            JToken configSequenceElement = ((JToken)propertiesValue2["config"]);
-                            if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                            JToken maxMemoryPolicyValue = propertiesValue2["maxMemoryPolicy"];
+                            if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in configSequenceElement)
-                                {
-                                    string configKey2 = ((string)property.Name);
-                                    string configValue2 = ((string)property.Value);
-                                    propertiesInstance.Config.Add(configKey2, configValue2);
-                                }
+                                string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
                         }
                     }
@@ -664,6 +660,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
+                            JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                            if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                            {
+                                string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                            }
+                            
                             JToken versionValue = propertiesValue["version"];
                             if (versionValue != null && versionValue.Type != JTokenType.Null)
                             {
@@ -685,15 +688,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                 propertiesInstance.Size = sizeInstance;
                             }
                             
-                            JToken configSequenceElement = ((JToken)propertiesValue["config"]);
-                            if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                            JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                            if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                             {
-                                foreach (JProperty property in configSequenceElement)
-                                {
-                                    string configKey = ((string)property.Name);
-                                    string configValue = ((string)property.Value);
-                                    propertiesInstance.Config.Add(configKey, configValue);
-                                }
+                                string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
                         }
                     }
@@ -897,6 +896,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
+                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                    }
+                                    
                                     JToken versionValue = propertiesValue["version"];
                                     if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
@@ -918,15 +924,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.Size = sizeInstance;
                                     }
                                     
-                                    JToken configSequenceElement = ((JToken)propertiesValue["config"]);
-                                    if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in configSequenceElement)
-                                        {
-                                            string configKey = ((string)property.Name);
-                                            string configValue = ((string)property.Value);
-                                            propertiesInstance.Config.Add(configKey, configValue);
-                                        }
+                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
                                 }
                             }
@@ -1131,6 +1133,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
+                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                    }
+                                    
                                     JToken versionValue = propertiesValue["version"];
                                     if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
@@ -1152,15 +1161,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.Size = sizeInstance;
                                     }
                                     
-                                    JToken configSequenceElement = ((JToken)propertiesValue["config"]);
-                                    if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in configSequenceElement)
-                                        {
-                                            string configKey = ((string)property.Name);
-                                            string configValue = ((string)property.Value);
-                                            propertiesInstance.Config.Add(configKey, configValue);
-                                        }
+                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
                                 }
                             }
@@ -1362,6 +1367,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
+                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                    }
+                                    
                                     JToken versionValue = propertiesValue["version"];
                                     if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
@@ -1383,15 +1395,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.Size = sizeInstance;
                                     }
                                     
-                                    JToken configSequenceElement = ((JToken)propertiesValue["config"]);
-                                    if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in configSequenceElement)
-                                        {
-                                            string configKey = ((string)property.Name);
-                                            string configValue = ((string)property.Value);
-                                            propertiesInstance.Config.Add(configKey, configValue);
-                                        }
+                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
                                 }
                             }
@@ -1594,6 +1602,13 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
+                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                    }
+                                    
                                     JToken versionValue = propertiesValue["version"];
                                     if (versionValue != null && versionValue.Type != JTokenType.Null)
                                     {
@@ -1615,15 +1630,11 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.Size = sizeInstance;
                                     }
                                     
-                                    JToken configSequenceElement = ((JToken)propertiesValue["config"]);
-                                    if (configSequenceElement != null && configSequenceElement.Type != JTokenType.Null)
+                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
                                     {
-                                        foreach (JProperty property in configSequenceElement)
-                                        {
-                                            string configKey = ((string)property.Name);
-                                            string configValue = ((string)property.Value);
-                                            propertiesInstance.Config.Add(configKey, configValue);
-                                        }
+                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
                                 }
                             }

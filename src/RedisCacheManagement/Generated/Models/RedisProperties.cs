@@ -63,6 +63,17 @@ namespace Microsoft.Azure.Management.RedisCache.Models
             set { this._provisioningState = value; }
         }
         
+        private string _runtimeVersion;
+        
+        /// <summary>
+        /// Optional. The detailed version of Redis to deploy.
+        /// </summary>
+        public string RuntimeVersion
+        {
+            get { return this._runtimeVersion; }
+            set { this._runtimeVersion = value; }
+        }
+        
         private string _sslPort;
         
         /// <summary>
