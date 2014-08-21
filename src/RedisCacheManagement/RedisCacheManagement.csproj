@@ -9,7 +9,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Management.RedisCache</RootNamespace>
-    <AssemblyName>Microsoft.Azure.RedisCacheManager</AssemblyName>
+    <AssemblyName>Microsoft.Azure.Management.RedisCache</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>1109c050</NuGetPackageImportStamp>

@@ -17,10 +17,10 @@
     <tags>Microsoft Azure Redis Cache management REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
-        <reference file="Microsoft.Azure.RedisCacheManager.dll" />
+        <reference file="Microsoft.Azure.Management.RedisCache.dll" />
       </group>
       <group targetFramework="net40">
-        <reference file="Microsoft.Azure.RedisCacheManager.dll" />
+        <reference file="Microsoft.Azure.Management.RedisCache.dll" />
       </group>
     </references>
     <dependencies>
@@ -29,11 +29,11 @@
   </metadata>
   <files>
     <file src="RedisCacheManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.Azure.RedisCacheManager.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.Azure.RedisCacheManager.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.Azure.RedisCacheManager.xml" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.RedisCacheManager.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.RedisCacheManager.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.RedisCacheManager.xml" target="lib\net40" />
+    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.xml" target="lib\net40" />
   </files>
 </package>
