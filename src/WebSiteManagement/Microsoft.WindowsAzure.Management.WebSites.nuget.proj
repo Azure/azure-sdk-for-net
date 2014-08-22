@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.WebSites
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.WebSites">
-      <PackageVersion>3.2.0-prerelease</PackageVersion>
+      <PackageVersion>3.0.0</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
