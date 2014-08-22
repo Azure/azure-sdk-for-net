@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// <summary>
     /// Parameters describing a redis instance
     /// </summary>
-    public partial class RedisReadableProperties : RedisWriteableProperties
+    public partial class RedisReadableProperties : RedisProperties
     {
         private string _hostName;
         

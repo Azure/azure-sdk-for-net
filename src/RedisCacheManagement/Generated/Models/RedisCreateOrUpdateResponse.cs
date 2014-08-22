@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._name = value; }
         }
         
-        private RedisProperties _properties;
+        private RedisReadablePropertiesWithAccessKey _properties;
         
         /// <summary>
         /// Optional. properties
         /// </summary>
-        public RedisProperties Properties
+        public RedisReadablePropertiesWithAccessKey Properties
         {
             get { return this._properties; }
             set { this._properties = value; }

@@ -21,24 +21,61 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Redis.Models;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Properties generated only in response to CreateOrUpdate redis operation.
+    /// Parameters supplied to the create redis operation.
     /// </summary>
-    public partial class RedisProperties : RedisReadableProperties
+    public partial class RedisProperties
     {
-        private RedisAccessKeys _accessKeys;
+        private string _maxMemoryPolicy;
         
         /// <summary>
-        /// Optional. Redis cache access keys.
+        /// Optional. what is maxMemoryPolicy of redis cache. Valid values:
+        /// (volatile-lru, allkeys-lru, volatile-random, allkeys-random,
+        /// volatile-ttl, noeviction)
         /// </summary>
-        public RedisAccessKeys AccessKeys
+        public string MaxMemoryPolicy
         {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
+            get { return this._maxMemoryPolicy; }
+            set { this._maxMemoryPolicy = value; }
+        }
+        
+        private string _redisVersion;
+        
+        /// <summary>
+        /// Required. The version of Redis to deploy, or 'latest'. Valid
+        /// values: (2.8)
+        /// </summary>
+        public string RedisVersion
+        {
+            get { return this._redisVersion; }
+            set { this._redisVersion = value; }
+        }
+        
+        private string _size;
+        
+        /// <summary>
+        /// Required. What size of redis cache to deploy. Valid values: (C0,
+        /// C1, C2, C3, C4, C5, C6)
+        /// </summary>
+        public string Size
+        {
+            get { return this._size; }
+            set { this._size = value; }
+        }
+        
+        private string _sku;
+        
+        /// <summary>
+        /// Required. What size of redis cache to deploy. Valid values: (Basic,
+        /// Standard)
+        /// </summary>
+        public string Sku
+        {
+            get { return this._sku; }
+            set { this._sku = value; }
         }
         
         /// <summary>

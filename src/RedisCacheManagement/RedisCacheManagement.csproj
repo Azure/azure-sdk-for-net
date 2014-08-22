@@ -64,13 +64,11 @@
     <Compile Include="Generated\Models\RedisReadableProperties.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\RedisReadablePropertiesWithAccessKey.cs" />
     <Compile Include="Generated\Models\RedisRegenerateKeyParameters.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\RedisResource.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Generated\Models\RedisWriteableProperties.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generated\Models\Size.cs">

@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Redis
                         JToken propertiesValue2 = responseDoc["properties"];
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
-                            RedisProperties propertiesInstance = new RedisProperties();
+                            RedisReadablePropertiesWithAccessKey propertiesInstance = new RedisReadablePropertiesWithAccessKey();
                             result.Properties = propertiesInstance;
                             
                             JToken accessKeysValue = propertiesValue2["accessKeys"];

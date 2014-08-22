@@ -26,37 +26,26 @@ using Microsoft.Azure.Management.Redis.Models;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Redis operation.
+    /// Properties generated only in response to CreateOrUpdate redis operation.
     /// </summary>
-    public partial class RedisCreateOrUpdateParameters
+    public partial class RedisReadablePropertiesWithAccessKey : RedisReadableProperties
     {
-        private string _location;
+        private RedisAccessKeys _accessKeys;
         
         /// <summary>
-        /// Required. The resource data center location.
+        /// Optional. Redis cache access keys.
         /// </summary>
-        public string Location
+        public RedisAccessKeys AccessKeys
         {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private RedisProperties _properties;
-        
-        /// <summary>
-        /// Required. The resource properties.
-        /// </summary>
-        public RedisProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._accessKeys; }
+            set { this._accessKeys = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCreateOrUpdateParameters
-        /// class.
+        /// Initializes a new instance of the
+        /// RedisReadablePropertiesWithAccessKey class.
         /// </summary>
-        public RedisCreateOrUpdateParameters()
+        public RedisReadablePropertiesWithAccessKey()
         {
         }
     }
