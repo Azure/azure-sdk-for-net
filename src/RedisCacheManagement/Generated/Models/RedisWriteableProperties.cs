@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RedisCache.Models
     /// <summary>
     /// Parameters supplied to the create redis operation.
     /// </summary>
-    public partial class RedisCreateProperties
+    public partial class RedisWriteableProperties
     {
         private string _maxMemoryPolicy;
         
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.RedisCache.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCreateProperties class.
+        /// Initializes a new instance of the RedisWriteableProperties class.
         /// </summary>
-        public RedisCreateProperties()
+        public RedisWriteableProperties()
         {
         }
     }

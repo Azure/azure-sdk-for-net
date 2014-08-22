@@ -20,46 +20,32 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.RedisCache.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// The response to a get-all redis operation.
+    /// A redis item in a response to CreateOrUpdate Operation.
     /// </summary>
-    public partial class RedisResourceListResponse : OperationResponse
+    public partial class RedisWithAccessKeys : RedisBasic
     {
-        private string _nextLink;
+        private RedisProperties _properties;
         
         /// <summary>
-        /// Optional. Link for next set of locations.
+        /// Optional. properties
         /// </summary>
-        public string NextLink
+        public RedisProperties Properties
         {
-            get { return this._nextLink; }
-            set { this._nextLink = value; }
-        }
-        
-        private IList<RedisResource> _value;
-        
-        /// <summary>
-        /// Optional. Results of the GET All operation
-        /// </summary>
-        public IList<RedisResource> Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisResourceListResponse class.
+        /// Initializes a new instance of the RedisWithAccessKeys class.
         /// </summary>
-        public RedisResourceListResponse()
+        public RedisWithAccessKeys()
         {
-            this._value = new List<RedisResource>();
         }
     }
 }

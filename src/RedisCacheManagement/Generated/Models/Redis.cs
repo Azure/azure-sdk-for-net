@@ -26,25 +26,26 @@ using Microsoft.Azure.Management.RedisCache.Models;
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Properties generated only in response to CreateOrUpdate redis operation.
+    /// A redis item in a response to a GET operation or single redis item in
+    /// LIST Operation.
     /// </summary>
-    public partial class RedisProperties : RedisReadableProperties
+    public partial class Redis : RedisBasic
     {
-        private RedisKeys _accessKeys;
+        private RedisReadableProperties _properties;
         
         /// <summary>
-        /// Optional. Redis cache access keys.
+        /// Optional. properties
         /// </summary>
-        public RedisKeys AccessKeys
+        public RedisReadableProperties Properties
         {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisProperties class.
+        /// Initializes a new instance of the Redis class.
         /// </summary>
-        public RedisProperties()
+        public Redis()
         {
         }
     }

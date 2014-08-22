@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a CreateOrUpdate redis operation.
         /// </returns>
-        public async Task<RedisResourceResponse> CreateOrUpdateAsync(string resourceGroupName, string name, RedisCreateParameters parameters, CancellationToken cancellationToken)
+        public async Task<RedisCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -166,13 +166,13 @@ namespace Microsoft.Azure.Management.RedisCache
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject redisCreateParametersValue = new JObject();
-                requestDoc = redisCreateParametersValue;
+                JObject redisCreateOrUpdateParametersValue = new JObject();
+                requestDoc = redisCreateOrUpdateParametersValue;
                 
-                redisCreateParametersValue["location"] = parameters.Location;
+                redisCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 JObject propertiesValue = new JObject();
-                redisCreateParametersValue["properties"] = propertiesValue;
+                redisCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
                 propertiesValue["version"] = parameters.Properties.RedisVersion;
                 
@@ -216,11 +216,11 @@ namespace Microsoft.Azure.Management.RedisCache
                     }
                     
                     // Create Result
-                    RedisResourceResponse result = null;
+                    RedisCreateOrUpdateResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceResponse();
+                    result = new RedisCreateOrUpdateResponse();
                     JToken responseDoc = null;
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
@@ -229,42 +229,35 @@ namespace Microsoft.Azure.Management.RedisCache
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        RedisResource valueInstance = new RedisResource();
+                        RedisWithAccessKeys valueInstance = new RedisWithAccessKeys();
                         result.Value = valueInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
-                        }
                         
                         JToken propertiesValue2 = responseDoc["properties"];
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
                             RedisProperties propertiesInstance = new RedisProperties();
                             valueInstance.Properties = propertiesInstance;
+                            
+                            JToken accessKeysValue = propertiesValue2["accessKeys"];
+                            if (accessKeysValue != null && accessKeysValue.Type != JTokenType.Null)
+                            {
+                                RedisKeys accessKeysInstance = new RedisKeys();
+                                propertiesInstance.AccessKeys = accessKeysInstance;
+                                
+                                JToken primaryKeyValue = accessKeysValue["primaryKey"];
+                                if (primaryKeyValue != null && primaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string primaryKeyInstance = ((string)primaryKeyValue);
+                                    accessKeysInstance.PrimaryKey = primaryKeyInstance;
+                                }
+                                
+                                JToken secondaryKeyValue = accessKeysValue["secondaryKey"];
+                                if (secondaryKeyValue != null && secondaryKeyValue.Type != JTokenType.Null)
+                                {
+                                    string secondaryKeyInstance = ((string)secondaryKeyValue);
+                                    accessKeysInstance.SecondaryKey = secondaryKeyInstance;
+                                }
+                            }
                             
                             JToken provisioningStateValue = propertiesValue2["provisioningState"];
                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -283,14 +276,14 @@ namespace Microsoft.Azure.Management.RedisCache
                             JToken portValue = propertiesValue2["port"];
                             if (portValue != null && portValue.Type != JTokenType.Null)
                             {
-                                string portInstance = ((string)portValue);
+                                int portInstance = ((int)portValue);
                                 propertiesInstance.Port = portInstance;
                             }
                             
                             JToken sslPortValue = propertiesValue2["sslPort"];
                             if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
                             {
-                                string sslPortInstance = ((string)sslPortValue);
+                                int sslPortInstance = ((int)sslPortValue);
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
@@ -328,6 +321,34 @@ namespace Microsoft.Azure.Management.RedisCache
                                 string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
+                        }
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            valueInstance.Id = idInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            valueInstance.Location = locationInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            valueInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            valueInstance.Type = typeInstance;
                         }
                     }
                     
@@ -500,9 +521,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a GET redis operation.
         /// </returns>
-        public async Task<RedisResourceResponse> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
+        public async Task<RedisGetResponse> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -582,11 +603,11 @@ namespace Microsoft.Azure.Management.RedisCache
                     }
                     
                     // Create Result
-                    RedisResourceResponse result = null;
+                    RedisGetResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceResponse();
+                    result = new RedisGetResponse();
                     JToken responseDoc = null;
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
@@ -595,41 +616,13 @@ namespace Microsoft.Azure.Management.RedisCache
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        RedisResource valueInstance = new RedisResource();
+                        Redis valueInstance = new Redis();
                         result.Value = valueInstance;
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
-                        }
                         
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
-                            RedisProperties propertiesInstance = new RedisProperties();
+                            RedisReadableProperties propertiesInstance = new RedisReadableProperties();
                             valueInstance.Properties = propertiesInstance;
                             
                             JToken provisioningStateValue = propertiesValue["provisioningState"];
@@ -649,14 +642,14 @@ namespace Microsoft.Azure.Management.RedisCache
                             JToken portValue = propertiesValue["port"];
                             if (portValue != null && portValue.Type != JTokenType.Null)
                             {
-                                string portInstance = ((string)portValue);
+                                int portInstance = ((int)portValue);
                                 propertiesInstance.Port = portInstance;
                             }
                             
                             JToken sslPortValue = propertiesValue["sslPort"];
                             if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
                             {
-                                string sslPortInstance = ((string)sslPortValue);
+                                int sslPortInstance = ((int)sslPortValue);
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
@@ -695,6 +688,34 @@ namespace Microsoft.Azure.Management.RedisCache
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
                         }
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            valueInstance.Id = idInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            valueInstance.Location = locationInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            valueInstance.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            valueInstance.Type = typeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -727,7 +748,8 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions).
+        /// Gets all redis caches in a resource group (if provided) otherwise
+        /// all in subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -736,15 +758,11 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a get-all redis operation.
+        /// The response to a list redis operation.
         /// </returns>
-        public async Task<RedisResourceListResponse> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public async Task<RedisListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -754,12 +772,17 @@ namespace Microsoft.Azure.Management.RedisCache
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                Tracing.Enter(invocationId, this, "GetAllAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Cache/Redis/?";
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "");
+            if (resourceGroupName != null)
+            {
+                url = url + "/resourceGroups/" + Uri.EscapeUriString(resourceGroupName != null ? resourceGroupName.Trim() : "");
+            }
+            url = url + "/providers/Microsoft.Cache/Redis/?";
             url = url + "api-version=2014-04-01-preview";
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -813,11 +836,11 @@ namespace Microsoft.Azure.Management.RedisCache
                     }
                     
                     // Create Result
-                    RedisResourceListResponse result = null;
+                    RedisListResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceListResponse();
+                    result = new RedisListResponse();
                     JToken responseDoc = null;
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
@@ -831,42 +854,14 @@ namespace Microsoft.Azure.Management.RedisCache
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                RedisResource redisResourceInstance = new RedisResource();
-                                result.Value.Add(redisResourceInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    redisResourceInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    redisResourceInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    redisResourceInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    redisResourceInstance.Type = typeInstance;
-                                }
+                                Redis redisInstance = new Redis();
+                                result.Value.Add(redisInstance);
                                 
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
-                                    RedisProperties propertiesInstance = new RedisProperties();
-                                    redisResourceInstance.Properties = propertiesInstance;
+                                    RedisReadableProperties propertiesInstance = new RedisReadableProperties();
+                                    redisInstance.Properties = propertiesInstance;
                                     
                                     JToken provisioningStateValue = propertiesValue["provisioningState"];
                                     if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -885,14 +880,14 @@ namespace Microsoft.Azure.Management.RedisCache
                                     JToken portValue = propertiesValue["port"];
                                     if (portValue != null && portValue.Type != JTokenType.Null)
                                     {
-                                        string portInstance = ((string)portValue);
+                                        int portInstance = ((int)portValue);
                                         propertiesInstance.Port = portInstance;
                                     }
                                     
                                     JToken sslPortValue = propertiesValue["sslPort"];
                                     if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
                                     {
-                                        string sslPortInstance = ((string)sslPortValue);
+                                        int sslPortInstance = ((int)sslPortValue);
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
@@ -931,711 +926,33 @@ namespace Microsoft.Azure.Management.RedisCache
                                         propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
                                 }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions).
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public async Task<RedisResourceListResponse> GetAllInSubscriptionAsync(CancellationToken cancellationToken)
-        {
-            // Validate
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "GetAllInSubscriptionAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Cache/Redis/?";
-            url = url + "api-version=2014-04-01-preview";
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    RedisResourceListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                RedisResource redisResourceInstance = new RedisResource();
-                                result.Value.Add(redisResourceInstance);
                                 
                                 JToken idValue = valueValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = ((string)idValue);
-                                    redisResourceInstance.Id = idInstance;
+                                    redisInstance.Id = idInstance;
                                 }
                                 
                                 JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
-                                    redisResourceInstance.Location = locationInstance;
+                                    redisInstance.Location = locationInstance;
                                 }
                                 
                                 JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
-                                    redisResourceInstance.Name = nameInstance;
+                                    redisInstance.Name = nameInstance;
                                 }
                                 
                                 JToken typeValue = valueValue["type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
                                     string typeInstance = ((string)typeValue);
-                                    redisResourceInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RedisProperties propertiesInstance = new RedisProperties();
-                                    redisResourceInstance.Properties = propertiesInstance;
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    
-                                    JToken hostNameValue = propertiesValue["hostName"];
-                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
-                                    {
-                                        string hostNameInstance = ((string)hostNameValue);
-                                        propertiesInstance.HostName = hostNameInstance;
-                                    }
-                                    
-                                    JToken portValue = propertiesValue["port"];
-                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                    {
-                                        string portInstance = ((string)portValue);
-                                        propertiesInstance.Port = portInstance;
-                                    }
-                                    
-                                    JToken sslPortValue = propertiesValue["sslPort"];
-                                    if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
-                                    {
-                                        string sslPortInstance = ((string)sslPortValue);
-                                        propertiesInstance.SslPort = sslPortInstance;
-                                    }
-                                    
-                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
-                                    {
-                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                                    }
-                                    
-                                    JToken versionValue = propertiesValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        string versionInstance = ((string)versionValue);
-                                        propertiesInstance.RedisVersion = versionInstance;
-                                    }
-                                    
-                                    JToken skuValue = propertiesValue["sku"];
-                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
-                                    {
-                                        string skuInstance = ((string)skuValue);
-                                        propertiesInstance.Sku = skuInstance;
-                                    }
-                                    
-                                    JToken sizeValue = propertiesValue["size"];
-                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                    {
-                                        string sizeInstance = ((string)sizeValue);
-                                        propertiesInstance.Size = sizeInstance;
-                                    }
-                                    
-                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
-                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
-                                    {
-                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
-                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions) using next link.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public async Task<RedisResourceListResponse> GetAllInSubscriptionUsingNextLinkAsync(string nextLink, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "GetAllInSubscriptionUsingNextLinkAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = nextLink.Trim();
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    RedisResourceListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                RedisResource redisResourceInstance = new RedisResource();
-                                result.Value.Add(redisResourceInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    redisResourceInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    redisResourceInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    redisResourceInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    redisResourceInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RedisProperties propertiesInstance = new RedisProperties();
-                                    redisResourceInstance.Properties = propertiesInstance;
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    
-                                    JToken hostNameValue = propertiesValue["hostName"];
-                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
-                                    {
-                                        string hostNameInstance = ((string)hostNameValue);
-                                        propertiesInstance.HostName = hostNameInstance;
-                                    }
-                                    
-                                    JToken portValue = propertiesValue["port"];
-                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                    {
-                                        string portInstance = ((string)portValue);
-                                        propertiesInstance.Port = portInstance;
-                                    }
-                                    
-                                    JToken sslPortValue = propertiesValue["sslPort"];
-                                    if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
-                                    {
-                                        string sslPortInstance = ((string)sslPortValue);
-                                        propertiesInstance.SslPort = sslPortInstance;
-                                    }
-                                    
-                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
-                                    {
-                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                                    }
-                                    
-                                    JToken versionValue = propertiesValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        string versionInstance = ((string)versionValue);
-                                        propertiesInstance.RedisVersion = versionInstance;
-                                    }
-                                    
-                                    JToken skuValue = propertiesValue["sku"];
-                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
-                                    {
-                                        string skuInstance = ((string)skuValue);
-                                        propertiesInstance.Sku = skuInstance;
-                                    }
-                                    
-                                    JToken sizeValue = propertiesValue["size"];
-                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                    {
-                                        string sizeInstance = ((string)sizeValue);
-                                        propertiesInstance.Size = sizeInstance;
-                                    }
-                                    
-                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
-                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
-                                    {
-                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
-                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
-                                    }
-                                }
-                            }
-                        }
-                        
-                        JToken nextLinkValue = responseDoc["nextLink"];
-                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
-                        {
-                            string nextLinkInstance = ((string)nextLinkValue);
-                            result.NextLink = nextLinkInstance;
-                        }
-                    }
-                    
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        Tracing.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions)
-        /// using next link.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public async Task<RedisResourceListResponse> GetAllUsingNextLinkAsync(string nextLink, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException("nextLink");
-            }
-            
-            // Tracing
-            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = Tracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("nextLink", nextLink);
-                Tracing.Enter(invocationId, this, "GetAllUsingNextLinkAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = nextLink.Trim();
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        Tracing.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        Tracing.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            Tracing.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    RedisResourceListResponse result = null;
-                    // Deserialize Response
-                    cancellationToken.ThrowIfCancellationRequested();
-                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new RedisResourceListResponse();
-                    JToken responseDoc = null;
-                    if (string.IsNullOrEmpty(responseContent) == false)
-                    {
-                        responseDoc = JToken.Parse(responseContent);
-                    }
-                    
-                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                    {
-                        JToken valueArray = responseDoc["value"];
-                        if (valueArray != null && valueArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken valueValue in ((JArray)valueArray))
-                            {
-                                RedisResource redisResourceInstance = new RedisResource();
-                                result.Value.Add(redisResourceInstance);
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    redisResourceInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    redisResourceInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    redisResourceInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    redisResourceInstance.Type = typeInstance;
-                                }
-                                
-                                JToken propertiesValue = valueValue["properties"];
-                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
-                                {
-                                    RedisProperties propertiesInstance = new RedisProperties();
-                                    redisResourceInstance.Properties = propertiesInstance;
-                                    
-                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
-                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
-                                    {
-                                        string provisioningStateInstance = ((string)provisioningStateValue);
-                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
-                                    }
-                                    
-                                    JToken hostNameValue = propertiesValue["hostName"];
-                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
-                                    {
-                                        string hostNameInstance = ((string)hostNameValue);
-                                        propertiesInstance.HostName = hostNameInstance;
-                                    }
-                                    
-                                    JToken portValue = propertiesValue["port"];
-                                    if (portValue != null && portValue.Type != JTokenType.Null)
-                                    {
-                                        string portInstance = ((string)portValue);
-                                        propertiesInstance.Port = portInstance;
-                                    }
-                                    
-                                    JToken sslPortValue = propertiesValue["sslPort"];
-                                    if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
-                                    {
-                                        string sslPortInstance = ((string)sslPortValue);
-                                        propertiesInstance.SslPort = sslPortInstance;
-                                    }
-                                    
-                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
-                                    {
-                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                                    }
-                                    
-                                    JToken versionValue = propertiesValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        string versionInstance = ((string)versionValue);
-                                        propertiesInstance.RedisVersion = versionInstance;
-                                    }
-                                    
-                                    JToken skuValue = propertiesValue["sku"];
-                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
-                                    {
-                                        string skuInstance = ((string)skuValue);
-                                        propertiesInstance.Sku = skuInstance;
-                                    }
-                                    
-                                    JToken sizeValue = propertiesValue["size"];
-                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                    {
-                                        string sizeInstance = ((string)sizeValue);
-                                        propertiesInstance.Size = sizeInstance;
-                                    }
-                                    
-                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
-                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
-                                    {
-                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
-                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
-                                    }
+                                    redisInstance.Type = typeInstance;
                                 }
                             }
                         }
@@ -1798,6 +1115,240 @@ namespace Microsoft.Azure.Management.RedisCache
                         {
                             string secondaryKeyInstance = ((string)secondaryKeyValue);
                             result.SecondaryKey = secondaryKeyInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets all redis caches using next link.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a list redis operation.
+        /// </returns>
+        public async Task<RedisListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException("nextLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("nextLink", nextLink);
+                Tracing.Enter(invocationId, this, "ListNextAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = nextLink.Trim();
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    RedisListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new RedisListResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken valueValue in ((JArray)valueArray))
+                            {
+                                Redis redisInstance = new Redis();
+                                result.Value.Add(redisInstance);
+                                
+                                JToken propertiesValue = valueValue["properties"];
+                                if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                                {
+                                    RedisReadableProperties propertiesInstance = new RedisReadableProperties();
+                                    redisInstance.Properties = propertiesInstance;
+                                    
+                                    JToken provisioningStateValue = propertiesValue["provisioningState"];
+                                    if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
+                                    {
+                                        string provisioningStateInstance = ((string)provisioningStateValue);
+                                        propertiesInstance.ProvisioningState = provisioningStateInstance;
+                                    }
+                                    
+                                    JToken hostNameValue = propertiesValue["hostName"];
+                                    if (hostNameValue != null && hostNameValue.Type != JTokenType.Null)
+                                    {
+                                        string hostNameInstance = ((string)hostNameValue);
+                                        propertiesInstance.HostName = hostNameInstance;
+                                    }
+                                    
+                                    JToken portValue = propertiesValue["port"];
+                                    if (portValue != null && portValue.Type != JTokenType.Null)
+                                    {
+                                        int portInstance = ((int)portValue);
+                                        propertiesInstance.Port = portInstance;
+                                    }
+                                    
+                                    JToken sslPortValue = propertiesValue["sslPort"];
+                                    if (sslPortValue != null && sslPortValue.Type != JTokenType.Null)
+                                    {
+                                        int sslPortInstance = ((int)sslPortValue);
+                                        propertiesInstance.SslPort = sslPortInstance;
+                                    }
+                                    
+                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
+                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    {
+                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
+                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                    }
+                                    
+                                    JToken versionValue = propertiesValue["version"];
+                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
+                                    {
+                                        string versionInstance = ((string)versionValue);
+                                        propertiesInstance.RedisVersion = versionInstance;
+                                    }
+                                    
+                                    JToken skuValue = propertiesValue["sku"];
+                                    if (skuValue != null && skuValue.Type != JTokenType.Null)
+                                    {
+                                        string skuInstance = ((string)skuValue);
+                                        propertiesInstance.Sku = skuInstance;
+                                    }
+                                    
+                                    JToken sizeValue = propertiesValue["size"];
+                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
+                                    {
+                                        string sizeInstance = ((string)sizeValue);
+                                        propertiesInstance.Size = sizeInstance;
+                                    }
+                                    
+                                    JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
+                                    if (maxMemoryPolicyValue != null && maxMemoryPolicyValue.Type != JTokenType.Null)
+                                    {
+                                        string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
+                                        propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
+                                    }
+                                }
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    redisInstance.Id = idInstance;
+                                }
+                                
+                                JToken locationValue = valueValue["location"];
+                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                {
+                                    string locationInstance = ((string)locationValue);
+                                    redisInstance.Location = locationInstance;
+                                }
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    redisInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    redisInstance.Type = typeInstance;
+                                }
+                            }
+                        }
+                        
+                        JToken nextLinkValue = responseDoc["nextLink"];
+                        if (nextLinkValue != null && nextLinkValue.Type != JTokenType.Null)
+                        {
+                            string nextLinkInstance = ((string)nextLinkValue);
+                            result.NextLink = nextLinkInstance;
                         }
                     }
                     

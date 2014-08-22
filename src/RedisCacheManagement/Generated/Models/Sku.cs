@@ -21,32 +21,22 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
-using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// The response to a create/get redis operation.
+    /// Know Sku values.
     /// </summary>
-    public partial class RedisResourceResponse : OperationResponse
+    public static partial class Sku
     {
-        private RedisResource _value;
+        /// <summary>
+        /// Basic (one node) sku.
+        /// </summary>
+        public const string Basic = "Basic";
         
         /// <summary>
-        /// Optional. Results of the GET operation
+        /// Standard (two node) sku.
         /// </summary>
-        public RedisResource Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RedisResourceResponse class.
-        /// </summary>
-        public RedisResourceResponse()
-        {
-        }
+        public const string Standard = "Standard";
     }
 }

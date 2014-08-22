@@ -21,30 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Properties generated only in response to CreateOrUpdate redis operation.
+    /// Redis cache access keys.
     /// </summary>
-    public partial class RedisProperties : RedisReadableProperties
+    public partial class RedisKeys
     {
-        private RedisKeys _accessKeys;
+        private string _primaryKey;
         
         /// <summary>
-        /// Optional. Redis cache access keys.
+        /// Optional. The current primary password that clients can use to
+        /// authenticate with redis.
         /// </summary>
-        public RedisKeys AccessKeys
+        public string PrimaryKey
         {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
+            get { return this._primaryKey; }
+            set { this._primaryKey = value; }
+        }
+        
+        private string _secondaryKey;
+        
+        /// <summary>
+        /// Optional. The current secondary password that clients can use to
+        /// authenticate with redis.
+        /// </summary>
+        public string SecondaryKey
+        {
+            get { return this._secondaryKey; }
+            set { this._secondaryKey = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisProperties class.
+        /// Initializes a new instance of the RedisKeys class.
         /// </summary>
-        public RedisProperties()
+        public RedisKeys()
         {
         }
     }

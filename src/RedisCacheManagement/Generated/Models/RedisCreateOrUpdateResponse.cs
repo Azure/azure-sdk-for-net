@@ -22,29 +22,30 @@
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Properties generated only in response to CreateOrUpdate redis operation.
+    /// The response to a CreateOrUpdate redis operation.
     /// </summary>
-    public partial class RedisProperties : RedisReadableProperties
+    public partial class RedisCreateOrUpdateResponse : OperationResponse
     {
-        private RedisKeys _accessKeys;
+        private RedisWithAccessKeys _value;
         
         /// <summary>
-        /// Optional. Redis cache access keys.
+        /// Optional. Results of the CreateOrUpdate operation
         /// </summary>
-        public RedisKeys AccessKeys
+        public RedisWithAccessKeys Value
         {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisProperties class.
+        /// Initializes a new instance of the RedisCreateOrUpdateResponse class.
         /// </summary>
-        public RedisProperties()
+        public RedisCreateOrUpdateResponse()
         {
         }
     }

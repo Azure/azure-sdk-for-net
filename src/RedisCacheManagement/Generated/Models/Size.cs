@@ -21,31 +21,47 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Properties generated only in response to CreateOrUpdate redis operation.
+    /// Know Size values for cache.
     /// </summary>
-    public partial class RedisProperties : RedisReadableProperties
+    public static partial class Size
     {
-        private RedisKeys _accessKeys;
+        /// <summary>
+        /// 250MB Cache.
+        /// </summary>
+        public const string C0 = "C0";
         
         /// <summary>
-        /// Optional. Redis cache access keys.
+        /// 1GB Cache.
         /// </summary>
-        public RedisKeys AccessKeys
-        {
-            get { return this._accessKeys; }
-            set { this._accessKeys = value; }
-        }
+        public const string C1 = "C1";
         
         /// <summary>
-        /// Initializes a new instance of the RedisProperties class.
+        /// 2.5GB Cache.
         /// </summary>
-        public RedisProperties()
-        {
-        }
+        public const string C2 = "C2";
+        
+        /// <summary>
+        /// 6GB Cache.
+        /// </summary>
+        public const string C3 = "C3";
+        
+        /// <summary>
+        /// 13GB Cache.
+        /// </summary>
+        public const string C4 = "C4";
+        
+        /// <summary>
+        /// 26GB Cache.
+        /// </summary>
+        public const string C5 = "C5";
+        
+        /// <summary>
+        /// 53GB Cache.
+        /// </summary>
+        public const string C6 = "C6";
     }
 }

@@ -26,69 +26,69 @@ using Microsoft.Azure.Management.RedisCache.Models;
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// A redis item in a response to a GET operation.
+    /// Parameters describing a redis instance
     /// </summary>
-    public partial class RedisResource
+    public partial class RedisReadableProperties : RedisWriteableProperties
     {
-        private string _id;
+        private string _hostName;
         
         /// <summary>
-        /// Optional. The id of the created resource.
+        /// Optional. The redis host name
         /// </summary>
-        public string Id
+        public string HostName
         {
-            get { return this._id; }
-            set { this._id = value; }
+            get { return this._hostName; }
+            set { this._hostName = value; }
         }
         
-        private string _location;
+        private int _port;
         
         /// <summary>
-        /// Optional. The resource's geographic location.
+        /// Optional. The redis non-ssl port
         /// </summary>
-        public string Location
+        public int Port
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._port; }
+            set { this._port = value; }
         }
         
-        private string _name;
+        private string _provisioningState;
         
         /// <summary>
-        /// Optional. Name of the cache.
+        /// Optional. The redis instance provisioning status
         /// </summary>
-        public string Name
+        public string ProvisioningState
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._provisioningState; }
+            set { this._provisioningState = value; }
         }
         
-        private RedisProperties _properties;
+        private string _runtimeVersion;
         
         /// <summary>
-        /// Optional. properties
+        /// Optional. The detailed version of Redis deploy.
         /// </summary>
-        public RedisProperties Properties
+        public string RuntimeVersion
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._runtimeVersion; }
+            set { this._runtimeVersion = value; }
         }
         
-        private string _type;
+        private int _sslPort;
         
         /// <summary>
-        /// Optional. Resource's type.
+        /// Optional. The redis ssl port
         /// </summary>
-        public string Type
+        public int SslPort
         {
-            get { return this._type; }
-            set { this._type = value; }
+            get { return this._sslPort; }
+            set { this._sslPort = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisResource class.
+        /// Initializes a new instance of the RedisReadableProperties class.
         /// </summary>
-        public RedisResource()
+        public RedisReadableProperties()
         {
         }
     }

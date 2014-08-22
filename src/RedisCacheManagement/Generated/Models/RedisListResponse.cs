@@ -20,43 +20,46 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.WindowsAzure;
 
 namespace Microsoft.Azure.Management.RedisCache.Models
 {
     /// <summary>
-    /// Resource parameters supplied to the CREATE Redis operation.
+    /// The response to a list redis operation.
     /// </summary>
-    public partial class RedisCreateParameters
+    public partial class RedisListResponse : OperationResponse
     {
-        private string _location;
+        private string _nextLink;
         
         /// <summary>
-        /// Required. The resource data center location.
+        /// Optional. Link for next set of locations.
         /// </summary>
-        public string Location
+        public string NextLink
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._nextLink; }
+            set { this._nextLink = value; }
         }
         
-        private RedisCreateProperties _properties;
+        private IList<Redis> _value;
         
         /// <summary>
-        /// Required. The resource properties.
+        /// Optional. Results of the list operation
         /// </summary>
-        public RedisCreateProperties Properties
+        public IList<Redis> Value
         {
-            get { return this._properties; }
-            set { this._properties = value; }
+            get { return this._value; }
+            set { this._value = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCreateParameters class.
+        /// Initializes a new instance of the RedisListResponse class.
         /// </summary>
-        public RedisCreateParameters()
+        public RedisListResponse()
         {
+            this._value = new List<Redis>();
         }
     }
 }

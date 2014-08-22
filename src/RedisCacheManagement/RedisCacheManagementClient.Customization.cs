@@ -28,18 +28,6 @@ namespace Microsoft.Azure.Management.RedisCache
                 new RedisCacheManagementClient(credentials);
         }
 
-        protected override void Clone(ServiceClient<RedisCacheManagementClient> client)
-        {
-            base.Clone(client);
-            RedisCacheManagementClient management = client as RedisCacheManagementClient;
-            if (management != null)
-            {
-                management._credentials = Credentials;
-                management._baseUri = BaseUri;
-                management.Credentials.InitializeServiceClient(management);
-            }
-        }
-
         public override RedisCacheManagementClient WithHandler(DelegatingHandler handler)
         {
             return (RedisCacheManagementClient)WithHandler(new RedisCacheManagementClient(), handler);

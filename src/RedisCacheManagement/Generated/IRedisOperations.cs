@@ -50,9 +50,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a CreateOrUpdate redis operation.
         /// </returns>
-        Task<RedisResourceResponse> CreateOrUpdateAsync(string resourceGroupName, string name, RedisCreateParameters parameters, CancellationToken cancellationToken);
+        Task<RedisCreateOrUpdateResponse> CreateOrUpdateAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Deletes a redis cache. This operation takes a while to complete.
@@ -85,12 +85,13 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a GET redis operation.
         /// </returns>
-        Task<RedisResourceResponse> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
+        Task<RedisGetResponse> GetAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions).
+        /// Gets all redis caches in a resource group (if provided) otherwise
+        /// all in subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -99,51 +100,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response to a get-all redis operation.
+        /// The response to a list redis operation.
         /// </returns>
-        Task<RedisResourceListResponse> GetAllAsync(string resourceGroupName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions).
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        Task<RedisResourceListResponse> GetAllInSubscriptionAsync(CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions) using next link.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to GetAllInSubscription
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        Task<RedisResourceListResponse> GetAllInSubscriptionUsingNextLinkAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions)
-        /// using next link.
-        /// </summary>
-        /// <param name='nextLink'>
-        /// NextLink from the previous successful call to GetAllInSubscription
-        /// operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        Task<RedisResourceListResponse> GetAllUsingNextLinkAsync(string nextLink, CancellationToken cancellationToken);
+        Task<RedisListResponse> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve a redis cache's access keys. This operation requires write
@@ -162,6 +121,20 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Response to the redis list keys operation.
         /// </returns>
         Task<RedisListKeysResponse> ListKeysAsync(string resourceGroupName, string name, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets all redis caches using next link.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response to a list redis operation.
+        /// </returns>
+        Task<RedisListResponse> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// Retrieve a redis cache's access keys. This operation requires write

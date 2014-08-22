@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. Parameters supplied to the create redis operation.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a CreateOrUpdate redis operation.
         /// </returns>
-        public static RedisResourceResponse CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters)
+        public static RedisCreateOrUpdateResponse CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. Parameters supplied to the create redis operation.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a CreateOrUpdate redis operation.
         /// </returns>
-        public static Task<RedisResourceResponse> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters)
+        public static Task<RedisCreateOrUpdateResponse> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
         {
             return operations.CreateOrUpdateAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
@@ -150,9 +150,9 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a GET redis operation.
         /// </returns>
-        public static RedisResourceResponse Get(this IRedisOperations operations, string resourceGroupName, string name)
+        public static RedisGetResponse Get(this IRedisOperations operations, string resourceGroupName, string name)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -175,15 +175,16 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// The response to a create/get redis operation.
+        /// The response to a GET redis operation.
         /// </returns>
-        public static Task<RedisResourceResponse> GetAsync(this IRedisOperations operations, string resourceGroupName, string name)
+        public static Task<RedisGetResponse> GetAsync(this IRedisOperations operations, string resourceGroupName, string name)
         {
             return operations.GetAsync(resourceGroupName, name, CancellationToken.None);
         }
         
         /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions).
+        /// Gets all redis caches in a resource group (if provided) otherwise
+        /// all in subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -193,19 +194,20 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The response to a get-all redis operation.
+        /// The response to a list redis operation.
         /// </returns>
-        public static RedisResourceListResponse GetAll(this IRedisOperations operations, string resourceGroupName)
+        public static RedisListResponse List(this IRedisOperations operations, string resourceGroupName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IRedisOperations)s).GetAllAsync(resourceGroupName);
+                return ((IRedisOperations)s).ListAsync(resourceGroupName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions).
+        /// Gets all redis caches in a resource group (if provided) otherwise
+        /// all in subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -215,131 +217,11 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The response to a get-all redis operation.
+        /// The response to a list redis operation.
         /// </returns>
-        public static Task<RedisResourceListResponse> GetAllAsync(this IRedisOperations operations, string resourceGroupName)
+        public static Task<RedisListResponse> ListAsync(this IRedisOperations operations, string resourceGroupName)
         {
-            return operations.GetAllAsync(resourceGroupName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions).
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static RedisResourceListResponse GetAllInSubscription(this IRedisOperations operations)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IRedisOperations)s).GetAllInSubscriptionAsync();
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions).
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static Task<RedisResourceListResponse> GetAllInSubscriptionAsync(this IRedisOperations operations)
-        {
-            return operations.GetAllInSubscriptionAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions) using next link.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static RedisResourceListResponse GetAllInSubscriptionUsingNextLink(this IRedisOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IRedisOperations)s).GetAllInSubscriptionUsingNextLinkAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets all redis caches (resource descriptions) using next link.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static Task<RedisResourceListResponse> GetAllInSubscriptionUsingNextLinkAsync(this IRedisOperations operations, string nextLink)
-        {
-            return operations.GetAllInSubscriptionUsingNextLinkAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions)
-        /// using next link.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static RedisResourceListResponse GetAllUsingNextLink(this IRedisOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IRedisOperations)s).GetAllUsingNextLinkAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets all redis caches in a resource group (resource descriptions)
-        /// using next link.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. NextLink from the previous successful call to
-        /// GetAllInSubscription operation.
-        /// </param>
-        /// <returns>
-        /// The response to a get-all redis operation.
-        /// </returns>
-        public static Task<RedisResourceListResponse> GetAllUsingNextLinkAsync(this IRedisOperations operations, string nextLink)
-        {
-            return operations.GetAllUsingNextLinkAsync(nextLink, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, CancellationToken.None);
         }
         
         /// <summary>
@@ -388,6 +270,48 @@ namespace Microsoft.Azure.Management.RedisCache
         public static Task<RedisListKeysResponse> ListKeysAsync(this IRedisOperations operations, string resourceGroupName, string name)
         {
             return operations.ListKeysAsync(resourceGroupName, name, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets all redis caches using next link.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response to a list redis operation.
+        /// </returns>
+        public static RedisListResponse ListNext(this IRedisOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRedisOperations)s).ListNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets all redis caches using next link.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. NextLink from the previous successful call to List
+        /// operation.
+        /// </param>
+        /// <returns>
+        /// The response to a list redis operation.
+        /// </returns>
+        public static Task<RedisListResponse> ListNextAsync(this IRedisOperations operations, string nextLink)
+        {
+            return operations.ListNextAsync(nextLink, CancellationToken.None);
         }
         
         /// <summary>

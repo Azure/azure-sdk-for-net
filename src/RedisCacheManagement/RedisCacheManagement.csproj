@@ -33,15 +33,22 @@
   <ItemGroup>
     <Compile Include="Generated\IRedisCacheManagementClient.cs" />
     <Compile Include="Generated\IRedisOperations.cs" />
-    <Compile Include="Generated\Models\RedisCreateParameters.cs" />
-    <Compile Include="Generated\Models\RedisCreateProperties.cs" />
+    <Compile Include="Generated\Models\Redis.cs" />
+    <Compile Include="Generated\Models\RedisBasic.cs" />
+    <Compile Include="Generated\Models\RedisCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\RedisCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\RedisGetResponse.cs" />
+    <Compile Include="Generated\Models\RedisKeys.cs" />
     <Compile Include="Generated\Models\RedisKeyType.cs" />
     <Compile Include="Generated\Models\RedisListKeysResponse.cs" />
+    <Compile Include="Generated\Models\RedisListResponse.cs" />
     <Compile Include="Generated\Models\RedisProperties.cs" />
+    <Compile Include="Generated\Models\RedisReadableProperties.cs" />
     <Compile Include="Generated\Models\RedisRegenerateKeyParameters.cs" />
-    <Compile Include="Generated\Models\RedisResource.cs" />
-    <Compile Include="Generated\Models\RedisResourceListResponse.cs" />
-    <Compile Include="Generated\Models\RedisResourceResponse.cs" />
+    <Compile Include="Generated\Models\RedisWithAccessKeys.cs" />
+    <Compile Include="Generated\Models\RedisWriteableProperties.cs" />
+    <Compile Include="Generated\Models\Size.cs" />
+    <Compile Include="Generated\Models\Sku.cs" />
     <Compile Include="Generated\RedisCacheManagementClient.cs" />
     <Compile Include="Generated\RedisCacheManagementClientExtensions.cs" />
     <Compile Include="Generated\RedisOperations.cs" />
