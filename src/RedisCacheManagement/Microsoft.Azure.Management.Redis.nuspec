@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
-    <id>Microsoft.Azure.Management.RedisCache</id>
+    <id>Microsoft.Azure.Management.Redis</id>
     <title>Microsoft Azure Redis Cache Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
@@ -17,10 +17,10 @@
     <tags>Microsoft Azure Redis Cache management REST HTTP client windowsazureofficial</tags>
     <references>
       <group targetFramework="portable-net45+sl50+wp80+win">
-        <reference file="Microsoft.Azure.Management.RedisCache.dll" />
+        <reference file="Microsoft.Azure.Management.Redis.dll" />
       </group>
       <group targetFramework="net40">
-        <reference file="Microsoft.Azure.Management.RedisCache.dll" />
+        <reference file="Microsoft.Azure.Management.Redis.dll" />
       </group>
     </references>
     <dependencies>
@@ -28,12 +28,12 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="RedisCacheManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.Azure.Management.RedisCache.xml" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.RedisCache.xml" target="lib\net40" />
+    <file src="RedisManagement\**\*.cs" target="src" />
+    <file src="..\binaries\Microsoft.Azure.Management.Redis.dll" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.Redis.pdb" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.Redis.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Redis.dll" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Redis.pdb" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.Redis.xml" target="lib\net40" />
   </files>
 </package>

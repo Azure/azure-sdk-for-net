@@ -4,7 +4,7 @@
     <!--
     Microsoft.Azure.Management.RedisCache
     -->
-    <SdkNuGetPackage Include="Microsoft.Azure.Management.RedisCache">
+    <SdkNuGetPackage Include="Microsoft.Azure.Management.Redis">
       <PackageVersion>0.0.1-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>

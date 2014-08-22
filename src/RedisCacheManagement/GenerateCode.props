@@ -16,7 +16,7 @@
     <SpecAssemblyProjectDirName>AzureRedisCache.Specification</SpecAssemblyProjectDirName>
 
     <!-- The filename for the generated spec assembly -->
-    <SpecAssemblyFileName>Microsoft.Azure.Management.RedisCache.Specification.dll</SpecAssemblyFileName>
+    <SpecAssemblyFileName>Microsoft.Azure.Management.Redis.Specification.dll</SpecAssemblyFileName>
   </PropertyGroup>
 
   <!-- User settable properties to control how specs are retrieved from NuGet -->

@@ -8,8 +8,8 @@
     <ProjectGuid>{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Azure.Management.RedisCache</RootNamespace>
-    <AssemblyName>Microsoft.Azure.Management.RedisCache</AssemblyName>
+    <RootNamespace>Microsoft.Azure.Management.Redis</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Management.Redis</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>1109c050</NuGetPackageImportStamp>
@@ -23,8 +23,8 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="GenerateCode.props" />
-    <None Include="Microsoft.Azure.Management.RedisCache.nuget.proj" />
-    <None Include="Microsoft.Azure.Management.RedisCache.nuspec" />
+    <None Include="Microsoft.Azure.Management.Redis.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.Redis.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

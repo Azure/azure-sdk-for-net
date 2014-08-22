@@ -3,7 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-# Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "src\WebSiteManagement\WebSiteManagement.csproj", "{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}"
@@ -75,7 +74,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement2", "src\SqlManagement2\SqlManagement2.csproj", "{04B53727-16E6-4EF0-9116-04C7F1C33842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCacheManagement", "src\RedisCacheManagement\RedisCacheManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManagement", "src\RedisCacheManagement\RedisManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
