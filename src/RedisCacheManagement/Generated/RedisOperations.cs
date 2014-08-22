@@ -28,20 +28,20 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RedisCache;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Microsoft.Azure.Management.RedisCache
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
     /// Operations for managing the redis cache.
     /// </summary>
-    internal partial class RedisOperations : IServiceOperations<RedisCacheManagementClient>, IRedisOperations
+    internal partial class RedisOperations : IServiceOperations<RedisManagementClient>, IRedisOperations
     {
         /// <summary>
         /// Initializes a new instance of the RedisOperations class.
@@ -49,18 +49,18 @@ namespace Microsoft.Azure.Management.RedisCache
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal RedisOperations(RedisCacheManagementClient client)
+        internal RedisOperations(RedisManagementClient client)
         {
             this._client = client;
         }
         
-        private RedisCacheManagementClient _client;
+        private RedisManagementClient _client;
         
         /// <summary>
         /// Gets a reference to the
-        /// Microsoft.Azure.Management.RedisCache.RedisCacheManagementClient.
+        /// Microsoft.Azure.Management.Redis.RedisManagementClient.
         /// </summary>
-        public RedisCacheManagementClient Client
+        public RedisManagementClient Client
         {
             get { return this._client; }
         }
@@ -229,19 +229,44 @@ namespace Microsoft.Azure.Management.RedisCache
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        RedisWithAccessKeys valueInstance = new RedisWithAccessKeys();
-                        result.Value = valueInstance;
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            result.Id = idInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            result.Location = locationInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            result.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            result.Type = typeInstance;
+                        }
                         
                         JToken propertiesValue2 = responseDoc["properties"];
                         if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
                         {
                             RedisProperties propertiesInstance = new RedisProperties();
-                            valueInstance.Properties = propertiesInstance;
+                            result.Properties = propertiesInstance;
                             
                             JToken accessKeysValue = propertiesValue2["accessKeys"];
                             if (accessKeysValue != null && accessKeysValue.Type != JTokenType.Null)
                             {
-                                RedisKeys accessKeysInstance = new RedisKeys();
+                                RedisAccessKeys accessKeysInstance = new RedisAccessKeys();
                                 propertiesInstance.AccessKeys = accessKeysInstance;
                                 
                                 JToken primaryKeyValue = accessKeysValue["primaryKey"];
@@ -321,34 +346,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                 string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
                         }
                     }
                     
@@ -616,14 +613,39 @@ namespace Microsoft.Azure.Management.RedisCache
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        Redis valueInstance = new Redis();
-                        result.Value = valueInstance;
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            result.Id = idInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            result.Location = locationInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            result.Name = nameInstance;
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            result.Type = typeInstance;
+                        }
                         
                         JToken propertiesValue = responseDoc["properties"];
                         if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
                             RedisReadableProperties propertiesInstance = new RedisReadableProperties();
-                            valueInstance.Properties = propertiesInstance;
+                            result.Properties = propertiesInstance;
                             
                             JToken provisioningStateValue = propertiesValue["provisioningState"];
                             if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -687,34 +709,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                 string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                 propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                             }
-                        }
-                        
-                        JToken idValue = responseDoc["id"];
-                        if (idValue != null && idValue.Type != JTokenType.Null)
-                        {
-                            string idInstance = ((string)idValue);
-                            valueInstance.Id = idInstance;
-                        }
-                        
-                        JToken locationValue = responseDoc["location"];
-                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                        {
-                            string locationInstance = ((string)locationValue);
-                            valueInstance.Location = locationInstance;
-                        }
-                        
-                        JToken nameValue = responseDoc["name"];
-                        if (nameValue != null && nameValue.Type != JTokenType.Null)
-                        {
-                            string nameInstance = ((string)nameValue);
-                            valueInstance.Name = nameInstance;
-                        }
-                        
-                        JToken typeValue = responseDoc["type"];
-                        if (typeValue != null && typeValue.Type != JTokenType.Null)
-                        {
-                            string typeInstance = ((string)typeValue);
-                            valueInstance.Type = typeInstance;
                         }
                     }
                     
@@ -854,14 +848,42 @@ namespace Microsoft.Azure.Management.RedisCache
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                Redis redisInstance = new Redis();
-                                result.Value.Add(redisInstance);
+                                RedisResource redisResourceInstance = new RedisResource();
+                                result.Value.Add(redisResourceInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    redisResourceInstance.Id = idInstance;
+                                }
+                                
+                                JToken locationValue = valueValue["location"];
+                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                {
+                                    string locationInstance = ((string)locationValue);
+                                    redisResourceInstance.Location = locationInstance;
+                                }
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    redisResourceInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    redisResourceInstance.Type = typeInstance;
+                                }
                                 
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     RedisReadableProperties propertiesInstance = new RedisReadableProperties();
-                                    redisInstance.Properties = propertiesInstance;
+                                    redisResourceInstance.Properties = propertiesInstance;
                                     
                                     JToken provisioningStateValue = propertiesValue["provisioningState"];
                                     if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -925,34 +947,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                         string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                         propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    redisInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    redisInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    redisInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    redisInstance.Type = typeInstance;
                                 }
                             }
                         }
@@ -1241,14 +1235,42 @@ namespace Microsoft.Azure.Management.RedisCache
                         {
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
-                                Redis redisInstance = new Redis();
-                                result.Value.Add(redisInstance);
+                                RedisResource redisResourceInstance = new RedisResource();
+                                result.Value.Add(redisResourceInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    redisResourceInstance.Id = idInstance;
+                                }
+                                
+                                JToken locationValue = valueValue["location"];
+                                if (locationValue != null && locationValue.Type != JTokenType.Null)
+                                {
+                                    string locationInstance = ((string)locationValue);
+                                    redisResourceInstance.Location = locationInstance;
+                                }
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    redisResourceInstance.Name = nameInstance;
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    redisResourceInstance.Type = typeInstance;
+                                }
                                 
                                 JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     RedisReadableProperties propertiesInstance = new RedisReadableProperties();
-                                    redisInstance.Properties = propertiesInstance;
+                                    redisResourceInstance.Properties = propertiesInstance;
                                     
                                     JToken provisioningStateValue = propertiesValue["provisioningState"];
                                     if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
@@ -1312,34 +1334,6 @@ namespace Microsoft.Azure.Management.RedisCache
                                         string maxMemoryPolicyInstance = ((string)maxMemoryPolicyValue);
                                         propertiesInstance.MaxMemoryPolicy = maxMemoryPolicyInstance;
                                     }
-                                }
-                                
-                                JToken idValue = valueValue["id"];
-                                if (idValue != null && idValue.Type != JTokenType.Null)
-                                {
-                                    string idInstance = ((string)idValue);
-                                    redisInstance.Id = idInstance;
-                                }
-                                
-                                JToken locationValue = valueValue["location"];
-                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                {
-                                    string locationInstance = ((string)locationValue);
-                                    redisInstance.Location = locationInstance;
-                                }
-                                
-                                JToken nameValue = valueValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    redisInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = valueValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    string typeInstance = ((string)typeValue);
-                                    redisInstance.Type = typeInstance;
                                 }
                             }
                         }

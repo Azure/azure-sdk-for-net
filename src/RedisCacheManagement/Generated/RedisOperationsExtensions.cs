@@ -23,11 +23,11 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RedisCache;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
     /// .Net client wrapper for the REST API for Azure Cache Management Service
@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// potential downtime) an existing cache
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -68,8 +67,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// potential downtime) an existing cache
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -92,8 +90,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Deletes a redis cache. This operation takes a while to complete.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -118,8 +115,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Deletes a redis cache. This operation takes a while to complete.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -140,8 +136,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Gets a redis cache (resource description).
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -165,8 +160,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Gets a redis cache (resource description).
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -187,8 +181,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// all in subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -210,8 +203,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// all in subscription.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -229,8 +221,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -255,8 +246,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -276,8 +266,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Gets all redis caches using next link.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -299,8 +288,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Gets all redis caches using next link.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='nextLink'>
         /// Required. NextLink from the previous successful call to List
@@ -319,8 +307,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -349,8 +336,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.RedisCache.IRedisOperations.
+        /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.

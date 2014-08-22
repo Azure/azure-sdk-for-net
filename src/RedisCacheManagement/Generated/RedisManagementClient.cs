@@ -22,16 +22,16 @@
 using System;
 using System.Linq;
 using System.Net.Http;
-using Microsoft.Azure.Management.RedisCache;
+using Microsoft.Azure.Management.Redis;
 using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 
-namespace Microsoft.Azure.Management.RedisCache
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
     /// .Net client wrapper for the REST API for Azure Cache Management Service
     /// </summary>
-    public partial class RedisCacheManagementClient : ServiceClient<RedisCacheManagementClient>, IRedisCacheManagementClient
+    public partial class RedisManagementClient : ServiceClient<RedisManagementClient>, IRedisManagementClient
     {
         private Uri _baseUri;
         
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
-        private RedisCacheManagementClient()
+        private RedisManagementClient()
             : base()
         {
             this._redis = new RedisOperations(this);
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets or sets subscription credentials which uniquely
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// Required. Gets or sets the URI used as the base for all cloud
         /// service requests.
         /// </param>
-        public RedisCacheManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+        public RedisManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
         {
             if (credentials == null)
@@ -130,14 +130,14 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets or sets subscription credentials which uniquely
         /// identify Microsoft Azure subscription. The subscription ID forms
         /// part of the URI for every service call.
         /// </param>
-        public RedisCacheManagementClient(SubscriptionCloudCredentials credentials)
+        public RedisManagementClient(SubscriptionCloudCredentials credentials)
             : this()
         {
             if (credentials == null)
@@ -151,12 +151,12 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        private RedisCacheManagementClient(HttpClient httpClient)
+        private RedisManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
             this._redis = new RedisOperations(this);
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets or sets subscription credentials which uniquely
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RedisCacheManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+        public RedisManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
             : this(httpClient)
         {
             if (credentials == null)
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.RedisCache
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisCacheManagementClient class.
+        /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Gets or sets subscription credentials which uniquely
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.RedisCache
         /// <param name='httpClient'>
         /// The Http client
         /// </param>
-        public RedisCacheManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+        public RedisManagementClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
             : this(httpClient)
         {
             if (credentials == null)

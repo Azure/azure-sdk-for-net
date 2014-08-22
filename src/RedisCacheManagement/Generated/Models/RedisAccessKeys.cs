@@ -22,12 +22,12 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// Redis cache access keys.
     /// </summary>
-    public partial class RedisKeys
+    public partial class RedisAccessKeys
     {
         private string _primaryKey;
         
@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.RedisCache.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisKeys class.
+        /// Initializes a new instance of the RedisAccessKeys class.
         /// </summary>
-        public RedisKeys()
+        public RedisAccessKeys()
         {
         }
     }

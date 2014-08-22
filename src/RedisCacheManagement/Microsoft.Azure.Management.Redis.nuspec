@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Azure.Management.Redis</id>
-    <title>Microsoft Azure Redis Cache Management Library</title>
+    <title>Microsoft Azure Redis Management Library</title>
     <releaseNotes>__BASELINE_RELEASE_NOTES__</releaseNotes>
     <version>$version$</version>
     <authors>Microsoft</authors>
@@ -28,7 +28,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="RedisManagement\**\*.cs" target="src" />
+    <file src="RedisCacheManagement\**\*.cs" target="src" />
     <file src="..\binaries\Microsoft.Azure.Management.Redis.dll" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.Azure.Management.Redis.pdb" target="lib\portable-net45+sl50+wp80+win" />
     <file src="..\binaries\Microsoft.Azure.Management.Redis.xml" target="lib\portable-net45+sl50+wp80+win" />

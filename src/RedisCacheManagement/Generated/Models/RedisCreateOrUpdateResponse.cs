@@ -21,25 +21,69 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response to a CreateOrUpdate redis operation.
     /// </summary>
     public partial class RedisCreateOrUpdateResponse : OperationResponse
     {
-        private RedisWithAccessKeys _value;
+        private string _id;
         
         /// <summary>
-        /// Optional. Results of the CreateOrUpdate operation
+        /// Optional. The id of the created resource.
         /// </summary>
-        public RedisWithAccessKeys Value
+        public string Id
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Optional. The resource's geographic location.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Name of the cache.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private RedisProperties _properties;
+        
+        /// <summary>
+        /// Optional. properties
+        /// </summary>
+        public RedisProperties Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private string _type;
+        
+        /// <summary>
+        /// Optional. Resource's type.
+        /// </summary>
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>

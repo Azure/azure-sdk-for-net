@@ -21,9 +21,9 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// Parameters describing a redis instance

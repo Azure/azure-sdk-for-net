@@ -21,31 +21,13 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
-    /// A redis item in a response to CreateOrUpdate Operation.
+    /// .Net client wrapper for the REST API for Azure Cache Management Service
     /// </summary>
-    public partial class RedisWithAccessKeys : RedisBasic
+    public static partial class RedisManagementClientExtensions
     {
-        private RedisProperties _properties;
-        
-        /// <summary>
-        /// Optional. properties
-        /// </summary>
-        public RedisProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the RedisWithAccessKeys class.
-        /// </summary>
-        public RedisWithAccessKeys()
-        {
-        }
     }
 }

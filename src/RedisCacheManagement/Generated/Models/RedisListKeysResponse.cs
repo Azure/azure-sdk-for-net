@@ -23,7 +23,7 @@ using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// Response to the redis list keys operation.

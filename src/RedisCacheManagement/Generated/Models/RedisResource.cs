@@ -21,16 +21,49 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// A redis item in a response to a GET operation or single redis item in
     /// LIST Operation.
     /// </summary>
-    public partial class Redis : RedisBasic
+    public partial class RedisResource
     {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. The id of the created resource.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Optional. The resource's geographic location.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Name of the cache.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
         private RedisReadableProperties _properties;
         
         /// <summary>
@@ -42,10 +75,21 @@ namespace Microsoft.Azure.Management.RedisCache.Models
             set { this._properties = value; }
         }
         
+        private string _type;
+        
         /// <summary>
-        /// Initializes a new instance of the Redis class.
+        /// Optional. Resource's type.
         /// </summary>
-        public Redis()
+        public string Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RedisResource class.
+        /// </summary>
+        public RedisResource()
         {
         }
     }

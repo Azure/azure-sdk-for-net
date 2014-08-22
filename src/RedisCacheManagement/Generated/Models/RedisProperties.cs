@@ -21,21 +21,21 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// Properties generated only in response to CreateOrUpdate redis operation.
     /// </summary>
     public partial class RedisProperties : RedisReadableProperties
     {
-        private RedisKeys _accessKeys;
+        private RedisAccessKeys _accessKeys;
         
         /// <summary>
         /// Optional. Redis cache access keys.
         /// </summary>
-        public RedisKeys AccessKeys
+        public RedisAccessKeys AccessKeys
         {
             get { return this._accessKeys; }
             set { this._accessKeys = value; }

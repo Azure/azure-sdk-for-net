@@ -21,63 +21,57 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Redis;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
-    /// Basic redis item in a response to a all operations.
+    /// .Net client wrapper for the REST API for Azure Cache Management Service
     /// </summary>
-    public partial class RedisBasic
+    public partial interface IRedisManagementClient : IDisposable
     {
-        private string _id;
-        
         /// <summary>
-        /// Optional. The id of the created resource.
+        /// Gets or sets the URI used as the base for all cloud service
+        /// requests.
         /// </summary>
-        public string Id
+        Uri BaseUri
         {
-            get { return this._id; }
-            set { this._id = value; }
-        }
-        
-        private string _location;
-        
-        /// <summary>
-        /// Optional. The resource's geographic location.
-        /// </summary>
-        public string Location
-        {
-            get { return this._location; }
-            set { this._location = value; }
-        }
-        
-        private string _name;
-        
-        /// <summary>
-        /// Optional. Name of the cache.
-        /// </summary>
-        public string Name
-        {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private string _type;
-        
-        /// <summary>
-        /// Optional. Resource's type.
-        /// </summary>
-        public string Type
-        {
-            get { return this._type; }
-            set { this._type = value; }
+            get; 
         }
         
         /// <summary>
-        /// Initializes a new instance of the RedisBasic class.
+        /// Gets or sets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </summary>
-        public RedisBasic()
+        SubscriptionCloudCredentials Credentials
         {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the redis cache.
+        /// </summary>
+        IRedisOperations Redis
+        {
+            get; 
         }
     }
 }

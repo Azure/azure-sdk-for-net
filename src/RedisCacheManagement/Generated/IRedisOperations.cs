@@ -23,10 +23,10 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache
+namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
     /// Operations for managing the redis cache.

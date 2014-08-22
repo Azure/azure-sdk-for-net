@@ -8,11 +8,11 @@ using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common;
 using Microsoft.WindowsAzure.Common.Internals;
 
-namespace Microsoft.Azure.Management.RedisCache
+namespace Microsoft.Azure.Management.Redis
 {
-    public partial class RedisCacheManagementClient
+    public partial class RedisManagementClient
     {
-        public static RedisCacheManagementClient Create(IDictionary<string, object> settings)
+        public static RedisManagementClient Create(IDictionary<string, object> settings)
         {
             if (settings == null)
             {
@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.RedisCache
             Uri baseUri = ConfigurationHelper.GetUri(settings, "BaseUri", false);
 
             return baseUri != null ?
-                new RedisCacheManagementClient(credentials, baseUri) :
-                new RedisCacheManagementClient(credentials);
+                new RedisManagementClient(credentials, baseUri) :
+                new RedisManagementClient(credentials);
         }
 
-        public override RedisCacheManagementClient WithHandler(DelegatingHandler handler)
+        public override RedisManagementClient WithHandler(DelegatingHandler handler)
         {
-            return (RedisCacheManagementClient)WithHandler(new RedisCacheManagementClient(), handler);
+            return (RedisManagementClient)WithHandler(new RedisManagementClient(), handler);
         }
     }
 }

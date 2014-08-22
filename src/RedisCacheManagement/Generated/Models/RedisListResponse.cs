@@ -22,10 +22,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.RedisCache.Models;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Management.RedisCache.Models
+namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
     /// The response to a list redis operation.
@@ -43,12 +43,12 @@ namespace Microsoft.Azure.Management.RedisCache.Models
             set { this._nextLink = value; }
         }
         
-        private IList<Redis> _value;
+        private IList<RedisResource> _value;
         
         /// <summary>
         /// Optional. Results of the list operation
         /// </summary>
-        public IList<Redis> Value
+        public IList<RedisResource> Value
         {
             get { return this._value; }
             set { this._value = value; }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.RedisCache.Models
         /// </summary>
         public RedisListResponse()
         {
-            this._value = new List<Redis>();
+            this._value = new List<RedisResource>();
         }
     }
 }

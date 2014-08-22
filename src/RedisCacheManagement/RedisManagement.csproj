@@ -31,30 +31,68 @@
     <Content Include="hydra.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Generated\IRedisCacheManagementClient.cs" />
-    <Compile Include="Generated\IRedisOperations.cs" />
-    <Compile Include="Generated\Models\Redis.cs" />
-    <Compile Include="Generated\Models\RedisBasic.cs" />
-    <Compile Include="Generated\Models\RedisCreateOrUpdateParameters.cs" />
-    <Compile Include="Generated\Models\RedisCreateOrUpdateResponse.cs" />
-    <Compile Include="Generated\Models\RedisGetResponse.cs" />
-    <Compile Include="Generated\Models\RedisKeys.cs" />
-    <Compile Include="Generated\Models\RedisKeyType.cs" />
-    <Compile Include="Generated\Models\RedisListKeysResponse.cs" />
-    <Compile Include="Generated\Models\RedisListResponse.cs" />
-    <Compile Include="Generated\Models\RedisProperties.cs" />
-    <Compile Include="Generated\Models\RedisReadableProperties.cs" />
-    <Compile Include="Generated\Models\RedisRegenerateKeyParameters.cs" />
-    <Compile Include="Generated\Models\RedisWithAccessKeys.cs" />
-    <Compile Include="Generated\Models\RedisWriteableProperties.cs" />
-    <Compile Include="Generated\Models\Size.cs" />
-    <Compile Include="Generated\Models\Sku.cs" />
-    <Compile Include="Generated\RedisCacheManagementClient.cs" />
-    <Compile Include="Generated\RedisCacheManagementClientExtensions.cs" />
-    <Compile Include="Generated\RedisOperations.cs" />
-    <Compile Include="Generated\RedisOperationsExtensions.cs" />
+    <Compile Include="Generated\IRedisManagementClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\IRedisOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisAccessKeys.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisCreateOrUpdateParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisCreateOrUpdateResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisGetResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisKeyType.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisListKeysResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisListResponse.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisReadableProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisRegenerateKeyParameters.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisResource.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\RedisWriteableProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\Size.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\Models\Sku.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\RedisManagementClient.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\RedisManagementClientExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\RedisOperations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Generated\RedisOperationsExtensions.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RedisCacheManagementClient.Customization.cs" />
+    <Compile Include="RedisManagementClient.Customization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' != 'portable' " />
@@ -65,8 +103,8 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Target Name="CopyMicrosoftAzureManagementRedisCacheSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.RedisCache.Specification.1.0.0.0-pre\tools\Microsoft.Azure.Management.RedisCache.Specification.dll" DestinationFolder="." />
+  <Target Name="CopyMicrosoftAzureManagementRedisSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Redis.Specification.1.0.0.0-pre\tools\Microsoft.Azure.Management.Redis.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5246.17388-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5246.17388-prerelease\build\Hydra.Generator.targets')" />
