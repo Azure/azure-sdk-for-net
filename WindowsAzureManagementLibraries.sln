@@ -74,7 +74,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement2", "src\SqlManagement2\SqlManagement2.csproj", "{04B53727-16E6-4EF0-9116-04C7F1C33842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisManagement", "src\RedisCacheManagement\RedisManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCacheManagement", "src\RedisCacheManagement\RedisCacheManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
