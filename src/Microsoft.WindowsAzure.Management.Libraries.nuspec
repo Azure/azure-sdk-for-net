@@ -10,18 +10,17 @@
     <projectUrl>https://github.com/WindowsAzure/azure-sdk-for-net</projectUrl>
     <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Microsoft Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Web Sites and core data center infrastructure management.</summary>
+    <summary>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support Microsoft Azure Virtual Machines, Hosted Services, Storage, Virtual Networks, Websites and core data center infrastructure management.</summary>
     <description>This set of packages open up a rich surface area of Microsoft Azure services, giving you the power to automate, deploy, and test cloud infrastructure with ease. These services support:
 - Microsoft Azure Virtual Machines
 - Hosted Services
-- Infrastructure services
+- Infrastructure Services
 - Scheduler
 - Storage Accounts
 - Subscription information
 - Networks
 - Web Sites
-
-Using the full .NET Framework is recommended during preview.
+- SQL Databases 
 
 Management operations require the X509Certificate2 type that is not present in the Portable Class Library API surface area. The Common.NetFramework library exposes this functionality. Microsoft Azure Active Directory integration is enabled for token-based authentication and requires a Microsoft.IdentityModel.Clients.ActiveDirectory package.
     </description>
