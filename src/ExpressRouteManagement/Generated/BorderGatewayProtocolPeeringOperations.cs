@@ -64,7 +64,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The New Dedicated Circuit operation creates a new dedicated circuit.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// Border Gateway Protocol Peering
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -74,7 +75,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the New Bgp Peering operation.
+        /// Required. Parameters supplied to the New Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -174,7 +176,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 requestDoc.Add(createBgpPeeringElement);
                 
                 XElement peerAsnElement = new XElement(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
-                peerAsnElement.Value = parameters.PeerAsn.ToString();
+                peerAsnElement.Value = parameters.PeerAutonomousSystemNumber.ToString();
                 createBgpPeeringElement.Add(peerAsnElement);
                 
                 XElement primaryPeerSubnetElement = new XElement(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
@@ -193,12 +195,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 XElement vlanIdElement = new XElement(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
-                vlanIdElement.Value = parameters.VlanId.ToString();
+                vlanIdElement.Value = parameters.VirtualLanId.ToString();
                 createBgpPeeringElement.Add(vlanIdElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -275,11 +277,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Remove Bgp Peering Route operation deletes an existing bgp
-        /// peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Required. Service Key representing the bgp peering to be deleted.
+        /// Required. Service Key representing the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -416,7 +419,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing bgp peering.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -426,7 +430,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -518,7 +523,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 requestDoc.Add(updateBgpPeeringElement);
                 
                 XElement peerAsnElement = new XElement(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
-                peerAsnElement.Value = parameters.PeerAsn.ToString();
+                peerAsnElement.Value = parameters.PeerAutonomousSystemNumber.ToString();
                 updateBgpPeeringElement.Add(peerAsnElement);
                 
                 if (parameters.PrimaryPeerSubnet != null)
@@ -543,12 +548,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 }
                 
                 XElement vlanIdElement = new XElement(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
-                vlanIdElement.Value = parameters.VlanId.ToString();
+                vlanIdElement.Value = parameters.VirtualLanId.ToString();
                 updateBgpPeeringElement.Add(vlanIdElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -625,8 +630,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Get Bgp Peering operation retrieves the bgp peering for the
-        /// dedicated circuit with the specified service key.
+        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
+        /// peering for the dedicated circuit with the specified service key.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The servicee key representing the dedicated circuit.
@@ -638,7 +643,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BorderGatewayProtocolPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken)
         {
@@ -724,66 +729,66 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     result = new BorderGatewayProtocolPeeringGetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement borderGatewayProtocolPeeringElement = responseDoc.Element(XName.Get("BorderGatewayProtocolPeering", "http://schemas.microsoft.com/windowsazure"));
-                    if (borderGatewayProtocolPeeringElement != null)
+                    XElement bgpPeeringElement = responseDoc.Element(XName.Get("BgpPeering", "http://schemas.microsoft.com/windowsazure"));
+                    if (bgpPeeringElement != null)
                     {
                         AzureBgpPeering bgpPeeringInstance = new AzureBgpPeering();
                         result.BgpPeering = bgpPeeringInstance;
                         
-                        XElement azureAsnElement = borderGatewayProtocolPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
+                        XElement azureAsnElement = bgpPeeringElement.Element(XName.Get("AzureAsn", "http://schemas.microsoft.com/windowsazure"));
                         if (azureAsnElement != null)
                         {
                             uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.AzureAsn = azureAsnInstance;
+                            bgpPeeringInstance.AzureAutonomousSystemNumber = azureAsnInstance;
                         }
                         
-                        XElement peerAsnElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
+                        XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                         if (peerAsnElement != null)
                         {
                             uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.PeerAsn = peerAsnInstance;
+                            bgpPeeringInstance.PeerAutonomousSystemNumber = peerAsnInstance;
                         }
                         
-                        XElement primaryAzurePortElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
+                        XElement primaryAzurePortElement = bgpPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
                         if (primaryAzurePortElement != null)
                         {
                             string primaryAzurePortInstance = primaryAzurePortElement.Value;
                             bgpPeeringInstance.PrimaryAzurePort = primaryAzurePortInstance;
                         }
                         
-                        XElement primaryPeerSubnetElement = borderGatewayProtocolPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
+                        XElement primaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("PrimaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
                         if (primaryPeerSubnetElement != null)
                         {
                             string primaryPeerSubnetInstance = primaryPeerSubnetElement.Value;
                             bgpPeeringInstance.PrimaryPeerSubnet = primaryPeerSubnetInstance;
                         }
                         
-                        XElement secondaryAzurePortElement = borderGatewayProtocolPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
+                        XElement secondaryAzurePortElement = bgpPeeringElement.Element(XName.Get("SecondaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
                         if (secondaryAzurePortElement != null)
                         {
                             string secondaryAzurePortInstance = secondaryAzurePortElement.Value;
                             bgpPeeringInstance.SecondaryAzurePort = secondaryAzurePortInstance;
                         }
                         
-                        XElement secondaryPeerSubnetElement = borderGatewayProtocolPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
+                        XElement secondaryPeerSubnetElement = bgpPeeringElement.Element(XName.Get("SecondaryPeerSubnet", "http://schemas.microsoft.com/windowsazure"));
                         if (secondaryPeerSubnetElement != null)
                         {
                             string secondaryPeerSubnetInstance = secondaryPeerSubnetElement.Value;
                             bgpPeeringInstance.SecondaryPeerSubnet = secondaryPeerSubnetInstance;
                         }
                         
-                        XElement stateElement = borderGatewayProtocolPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
+                        XElement stateElement = bgpPeeringElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
                             BgpPeeringState stateInstance = ((BgpPeeringState)Enum.Parse(typeof(BgpPeeringState), stateElement.Value, true));
                             bgpPeeringInstance.State = stateInstance;
                         }
                         
-                        XElement vlanIdElement = borderGatewayProtocolPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
+                        XElement vlanIdElement = bgpPeeringElement.Element(XName.Get("VlanId", "http://schemas.microsoft.com/windowsazure"));
                         if (vlanIdElement != null)
                         {
                             uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.VlanId = vlanIdInstance;
+                            bgpPeeringInstance.VirtualLanId = vlanIdInstance;
                         }
                     }
                     
@@ -817,8 +822,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The New Bgp Peering operation creates a new bgp peering associated
-        /// with the dedicated circuit specified by the service key provided.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// border gateway protocol peering associated with the dedicated
+        /// circuit specified by the service key provided.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -834,7 +840,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BorderGatewayProtocolPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken)
         {
@@ -873,7 +879,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 
                 if (result.Status == ExpressRouteOperationStatus.Failed)
                 {
-                    string exStr = "The BGP peering could not be created due to an internal server error.";
+                    string exStr = "The Border Gateway Protocol peering could not be created due to an internal server error.";
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();
@@ -895,10 +901,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Remove Bgp Peering operation deletes an existing bgp peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Required. Service key associated with the bgp peering to be deleted.
+        /// Required. Service key associated with the border gateway protocol
+        /// peering to be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Required. Whether the peering is private or public.
@@ -968,8 +976,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering or
-        /// creates a new one if one doesn't exist.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing border gateway protocol peering or creates a new one if
+        /// one doesn't exist.
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the relationship between
@@ -979,13 +988,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Update Bgp Peering operation.
+        /// Required. Parameters supplied to the Update Border Gateway Protocol
+        /// Peering operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.ExpressRoute.Models.BorderGatewayProtocolPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken)
         {
@@ -1024,7 +1034,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 
                 if (result.Status == ExpressRouteOperationStatus.Failed)
                 {
-                    string exStr = "The BGP peering could not be updated due to an internal server error.";
+                    string exStr = "The Border Gateway Protocol peering could not be updated due to an internal server error.";
                     throw new ArgumentException(exStr);
                 }
                 cancellationToken.ThrowIfCancellationRequested();

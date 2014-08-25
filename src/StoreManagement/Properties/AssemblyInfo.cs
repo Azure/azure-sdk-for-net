@@ -16,15 +16,15 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Windows Azure Store Management Library")]
-[assembly: AssemblyDescription("Provides Windows Azure Store management services.")]
+[assembly: AssemblyTitle("Microsoft Azure Store Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Store management services.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.1.0")]
+[assembly: AssemblyFileVersion("0.11.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

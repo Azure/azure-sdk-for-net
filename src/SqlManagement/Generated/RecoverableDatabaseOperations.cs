@@ -68,15 +68,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <summary>
         /// Returns information about a recoverable Azure SQL Database.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// database was hosted.
         /// </param>
-        /// <param name='sourceDatabaseName'>
+        /// <param name='databaseName'>
         /// Required. The name of the recoverable Azure SQL Database to be
         /// obtained.
         /// </param>
@@ -86,20 +82,16 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response to the Get Recoverable Database request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverableDatabaseGetResponse> GetAsync(string targetServerName, string sourceServerName, string sourceDatabaseName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverableDatabaseGetResponse> GetAsync(string serverName, string databaseName, CancellationToken cancellationToken)
         {
             // Validate
-            if (targetServerName == null)
+            if (serverName == null)
             {
-                throw new ArgumentNullException("targetServerName");
+                throw new ArgumentNullException("serverName");
             }
-            if (sourceServerName == null)
+            if (databaseName == null)
             {
-                throw new ArgumentNullException("sourceServerName");
-            }
-            if (sourceDatabaseName == null)
-            {
-                throw new ArgumentNullException("sourceDatabaseName");
+                throw new ArgumentNullException("databaseName");
             }
             
             // Tracing
@@ -109,14 +101,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("targetServerName", targetServerName);
-                tracingParameters.Add("sourceServerName", sourceServerName);
-                tracingParameters.Add("sourceDatabaseName", sourceDatabaseName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("databaseName", databaseName);
                 Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + targetServerName.Trim() + "/recoverabledatabases/" + sourceServerName.Trim() + "/" + sourceDatabaseName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/recoverabledatabases/" + databaseName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -268,11 +259,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Returns a collection of databases that can be recovered from a
         /// specified server.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
-        /// </param>
-        /// <param name='sourceServerName'>
+        /// <param name='serverName'>
         /// Required. The name of the Azure SQL Database Server on which the
         /// databases were hosted.
         /// </param>
@@ -282,16 +269,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <returns>
         /// Contains the response to the List Recoverable Databases request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverableDatabaseListResponse> ListAsync(string targetServerName, string sourceServerName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverableDatabaseListResponse> ListAsync(string serverName, CancellationToken cancellationToken)
         {
             // Validate
-            if (targetServerName == null)
+            if (serverName == null)
             {
-                throw new ArgumentNullException("targetServerName");
-            }
-            if (sourceServerName == null)
-            {
-                throw new ArgumentNullException("sourceServerName");
+                throw new ArgumentNullException("serverName");
             }
             
             // Tracing
@@ -301,13 +284,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("targetServerName", targetServerName);
-                tracingParameters.Add("sourceServerName", sourceServerName);
+                tracingParameters.Add("serverName", serverName);
                 Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + targetServerName.Trim() + "/recoverabledatabases/" + sourceServerName.Trim() + "?contentview=generic";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + serverName.Trim() + "/recoverabledatabases?contentview=generic";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')

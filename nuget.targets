@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!--
-  NuGet Targets - Windows Azure SDK for .NET
+  NuGet Targets - Microsoft Azure SDK for .NET
   -->
 
   <!--
@@ -17,7 +17,7 @@
 
   <!--
 
-  Windows Azure SDK for .NET - NuGet Package Guide
+  Microsoft Azure SDK for .NET - NuGet Package Guide
   - - -
 
   The NuGet Package ID is the Include="..." portion of the package
@@ -38,7 +38,7 @@
     Anything after a number indicates a PRE-RELEASE package 
     that is treated differently by NuGet.
 
-    Common suffixes then include -preview for Windows Azure.
+    Common suffixes then include -preview for Microsoft Azure.
 
     Nightly and one-off builds that may be published to an
     alternative NuGet server such as MyGet may override the

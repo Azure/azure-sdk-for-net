@@ -18,15 +18,15 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Traffic Manager Management Library")]
-[assembly: AssemblyDescription("Provides management functionality for Windows Azure Traffic Manager.")]
+[assembly: AssemblyTitle("Microsoft Azure Traffic Manager Management Library")]
+[assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Traffic Manager.")]
 
 [assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.10.2.0")]
+[assembly: AssemblyFileVersion("0.11.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

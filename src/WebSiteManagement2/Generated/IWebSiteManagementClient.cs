@@ -83,11 +83,21 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
-        /// Operations for managing the server farm in a resource group.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
+        /// Operations for managing the Web Hosting Plans in a resource group.
+        /// Web hosting plans (WHPs) represent a set of features and capacity
+        /// that you can share across your web sites. Web hosting plans
+        /// support the 4 Azure Web Sites pricing tiers (Free, Shared, Basic,
+        /// and Standard) where each tier has its own capabilities and
+        /// capacity. Sites in the same subscription, resource group, and
+        /// geographic location can share a web hosting plan. All the sites
+        /// sharing a web hosting plan can leverage all the capabilities and
+        /// features defined by the web hosting plan tier. All web sites
+        /// associated with a given web hosting plan run on the resources
+        /// defined by the web hosting plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
-        IServerFarmOperations ServerFarms
+        IWebHostingPlanOperations WebHostingPlans
         {
             get; 
         }

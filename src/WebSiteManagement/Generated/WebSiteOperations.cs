@@ -70,6 +70,375 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         }
         
         /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteBackupResponse> BackupAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (backupRequest == null)
+            {
+                throw new ArgumentNullException("backupRequest");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("backupRequest", backupRequest);
+                Tracing.Enter(invocationId, this, "BackupAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/backup";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement backupRequestElement = new XElement(XName.Get("BackupRequest", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(backupRequestElement);
+                
+                if (backupRequest.BackupSchedule != null)
+                {
+                    XElement backupScheduleElement = new XElement(XName.Get("BackupSchedule", "http://schemas.microsoft.com/windowsazure"));
+                    backupRequestElement.Add(backupScheduleElement);
+                    
+                    XElement frequencyIntervalElement = new XElement(XName.Get("FrequencyInterval", "http://schemas.microsoft.com/windowsazure"));
+                    frequencyIntervalElement.Value = backupRequest.BackupSchedule.FrequencyInterval.ToString();
+                    backupScheduleElement.Add(frequencyIntervalElement);
+                    
+                    XElement frequencyUnitElement = new XElement(XName.Get("FrequencyUnit", "http://schemas.microsoft.com/windowsazure"));
+                    frequencyUnitElement.Value = backupRequest.BackupSchedule.FrequencyUnit.ToString();
+                    backupScheduleElement.Add(frequencyUnitElement);
+                    
+                    XElement keepAtLeastOneBackupElement = new XElement(XName.Get("KeepAtLeastOneBackup", "http://schemas.microsoft.com/windowsazure"));
+                    keepAtLeastOneBackupElement.Value = backupRequest.BackupSchedule.KeepAtLeastOneBackup.ToString().ToLower();
+                    backupScheduleElement.Add(keepAtLeastOneBackupElement);
+                    
+                    if (backupRequest.BackupSchedule.LastExecutionTime != null)
+                    {
+                        XElement lastExecutionTimeElement = new XElement(XName.Get("LastExecutionTime", "http://schemas.microsoft.com/windowsazure"));
+                        lastExecutionTimeElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", backupRequest.BackupSchedule.LastExecutionTime.Value.ToUniversalTime());
+                        backupScheduleElement.Add(lastExecutionTimeElement);
+                    }
+                    
+                    XElement retentionPeriodInDaysElement = new XElement(XName.Get("RetentionPeriodInDays", "http://schemas.microsoft.com/windowsazure"));
+                    retentionPeriodInDaysElement.Value = backupRequest.BackupSchedule.RetentionPeriodInDays.ToString();
+                    backupScheduleElement.Add(retentionPeriodInDaysElement);
+                    
+                    if (backupRequest.BackupSchedule.StartTime != null)
+                    {
+                        XElement startTimeElement = new XElement(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                        startTimeElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", backupRequest.BackupSchedule.StartTime.Value.ToUniversalTime());
+                        backupScheduleElement.Add(startTimeElement);
+                    }
+                }
+                
+                if (backupRequest.Databases != null)
+                {
+                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    {
+                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                        databasesSequenceElement.Add(databaseBackupSettingElement);
+                        
+                        if (databasesItem.ConnectionString != null)
+                        {
+                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringElement.Value = databasesItem.ConnectionString;
+                            databaseBackupSettingElement.Add(connectionStringElement);
+                        }
+                        
+                        if (databasesItem.ConnectionStringName != null)
+                        {
+                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                            databaseBackupSettingElement.Add(connectionStringNameElement);
+                        }
+                        
+                        if (databasesItem.DatabaseType != null)
+                        {
+                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                            databaseTypeElement.Value = databasesItem.DatabaseType;
+                            databaseBackupSettingElement.Add(databaseTypeElement);
+                        }
+                        
+                        if (databasesItem.Name != null)
+                        {
+                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            nameElement.Value = databasesItem.Name;
+                            databaseBackupSettingElement.Add(nameElement);
+                        }
+                    }
+                    backupRequestElement.Add(databasesSequenceElement);
+                }
+                
+                if (backupRequest.Enabled != null)
+                {
+                    XElement enabledElement = new XElement(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                    enabledElement.Value = backupRequest.Enabled.ToString().ToLower();
+                    backupRequestElement.Add(enabledElement);
+                }
+                
+                if (backupRequest.Name != null)
+                {
+                    XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement2.Value = backupRequest.Name;
+                    backupRequestElement.Add(nameElement2);
+                }
+                
+                if (backupRequest.StorageAccountUrl != null)
+                {
+                    XElement storageAccountUrlElement = new XElement(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                    storageAccountUrlElement.Value = backupRequest.StorageAccountUrl;
+                    backupRequestElement.Add(storageAccountUrlElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteBackupResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteBackupResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement backupItemElement = responseDoc.Element(XName.Get("BackupItem", "http://schemas.microsoft.com/windowsazure"));
+                    if (backupItemElement != null)
+                    {
+                        BackupItem backupItemInstance = new BackupItem();
+                        result.BackupItem = backupItemInstance;
+                        
+                        XElement storageAccountUrlElement2 = backupItemElement.Element(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                        if (storageAccountUrlElement2 != null)
+                        {
+                            string storageAccountUrlInstance = storageAccountUrlElement2.Value;
+                            backupItemInstance.StorageAccountUrl = storageAccountUrlInstance;
+                        }
+                        
+                        XElement blobNameElement = backupItemElement.Element(XName.Get("BlobName", "http://schemas.microsoft.com/windowsazure"));
+                        if (blobNameElement != null)
+                        {
+                            string blobNameInstance = blobNameElement.Value;
+                            backupItemInstance.BlobName = blobNameInstance;
+                        }
+                        
+                        XElement nameElement3 = backupItemElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement3 != null)
+                        {
+                            string nameInstance = nameElement3.Value;
+                            backupItemInstance.Name = nameInstance;
+                        }
+                        
+                        XElement statusElement = backupItemElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        if (statusElement != null)
+                        {
+                            BackupItemStatus statusInstance = ((BackupItemStatus)Enum.Parse(typeof(BackupItemStatus), statusElement.Value, true));
+                            backupItemInstance.Status = statusInstance;
+                        }
+                        
+                        XElement sizeInBytesElement = backupItemElement.Element(XName.Get("SizeInBytes", "http://schemas.microsoft.com/windowsazure"));
+                        if (sizeInBytesElement != null)
+                        {
+                            long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
+                            backupItemInstance.SizeInBytes = sizeInBytesInstance;
+                        }
+                        
+                        XElement createdElement = backupItemElement.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
+                        if (createdElement != null && string.IsNullOrEmpty(createdElement.Value) == false)
+                        {
+                            DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                            backupItemInstance.Created = createdInstance;
+                        }
+                        
+                        XElement logElement = backupItemElement.Element(XName.Get("Log", "http://schemas.microsoft.com/windowsazure"));
+                        if (logElement != null)
+                        {
+                            string logInstance = logElement.Value;
+                            backupItemInstance.Log = logInstance;
+                        }
+                        
+                        XElement databasesSequenceElement2 = backupItemElement.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        if (databasesSequenceElement2 != null)
+                        {
+                            foreach (XElement databasesElement in databasesSequenceElement2.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
+                                backupItemInstance.Databases.Add(databaseBackupSettingInstance);
+                                
+                                XElement connectionStringElement2 = databasesElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringElement2 != null)
+                                {
+                                    string connectionStringInstance = connectionStringElement2.Value;
+                                    databaseBackupSettingInstance.ConnectionString = connectionStringInstance;
+                                }
+                                
+                                XElement connectionStringNameElement2 = databasesElement.Element(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringNameElement2 != null)
+                                {
+                                    string connectionStringNameInstance = connectionStringNameElement2.Value;
+                                    databaseBackupSettingInstance.ConnectionStringName = connectionStringNameInstance;
+                                }
+                                
+                                XElement databaseTypeElement2 = databasesElement.Element(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                if (databaseTypeElement2 != null)
+                                {
+                                    string databaseTypeInstance = databaseTypeElement2.Value;
+                                    databaseBackupSettingInstance.DatabaseType = databaseTypeInstance;
+                                }
+                                
+                                XElement nameElement4 = databasesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement4 != null)
+                                {
+                                    string nameInstance2 = nameElement4.Value;
+                                    databaseBackupSettingInstance.Name = nameInstance2;
+                                }
+                            }
+                        }
+                        
+                        XElement scheduledElement = backupItemElement.Element(XName.Get("Scheduled", "http://schemas.microsoft.com/windowsazure"));
+                        if (scheduledElement != null)
+                        {
+                            bool scheduledInstance = bool.Parse(scheduledElement.Value);
+                            backupItemInstance.Scheduled = scheduledInstance;
+                        }
+                        
+                        XElement lastRestoreTimeStampElement = backupItemElement.Element(XName.Get("LastRestoreTimeStamp", "http://schemas.microsoft.com/windowsazure"));
+                        if (lastRestoreTimeStampElement != null && string.IsNullOrEmpty(lastRestoreTimeStampElement.Value) == false)
+                        {
+                            DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture);
+                            backupItemInstance.LastRestoreTimeStamp = lastRestoreTimeStampInstance;
+                        }
+                        
+                        XElement finishedTimeStampElement = backupItemElement.Element(XName.Get("FinishedTimeStamp", "http://schemas.microsoft.com/windowsazure"));
+                        if (finishedTimeStampElement != null && string.IsNullOrEmpty(finishedTimeStampElement.Value) == false)
+                        {
+                            DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture);
+                            backupItemInstance.FinishedTimeStamp = finishedTimeStampInstance;
+                        }
+                        
+                        XElement correlationIdElement = backupItemElement.Element(XName.Get("CorrelationId", "http://schemas.microsoft.com/windowsazure"));
+                        if (correlationIdElement != null)
+                        {
+                            string correlationIdInstance = correlationIdElement.Value;
+                            backupItemInstance.CorrelationId = correlationIdInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='webSpaceName'>
@@ -96,7 +465,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName, CancellationToken cancellationToken)
         {
             // Validate
             if (webSpaceName == null)
@@ -127,7 +496,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 tracingParameters.Add("webSiteName", webSiteName);
                 tracingParameters.Add("sourceSlotName", sourceSlotName);
                 tracingParameters.Add("targetSlotName", targetSlotName);
-                Tracing.Enter(invocationId, this, "BeginSwapingSlotsAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginSwappingSlotsAsync", tracingParameters);
             }
             
             // Construct URL
@@ -156,7 +525,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -464,6 +833,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters.Name");
             }
+            if (parameters.ServerFarm == null)
+            {
+                throw new ArgumentNullException("parameters.ServerFarm");
+            }
             if (parameters.WebSpace != null)
             {
                 if (parameters.WebSpace.GeoRegion == null)
@@ -478,10 +851,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 {
                     throw new ArgumentNullException("parameters.WebSpace.Plan");
                 }
-            }
-            if (parameters.WebSpaceName == null)
-            {
-                throw new ArgumentNullException("parameters.WebSpaceName");
             }
             
             // Tracing
@@ -520,7 +889,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -533,46 +902,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 XElement siteElement = new XElement(XName.Get("Site", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(siteElement);
                 
-                if (parameters.HostNames != null)
-                {
-                    XElement hostNamesSequenceElement = new XElement(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string hostNamesItem in parameters.HostNames)
-                    {
-                        XElement hostNamesItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
-                        hostNamesItemElement.Value = hostNamesItem;
-                        hostNamesSequenceElement.Add(hostNamesItemElement);
-                    }
-                    siteElement.Add(hostNamesSequenceElement);
-                }
-                
                 XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                 nameElement.Value = parameters.Name;
                 siteElement.Add(nameElement);
                 
-                if (parameters.ComputeMode != null)
-                {
-                    XElement computeModeElement = new XElement(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                    computeModeElement.Value = parameters.ComputeMode.ToString();
-                    siteElement.Add(computeModeElement);
-                }
-                
-                if (parameters.ServerFarm != null)
-                {
-                    XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
-                    serverFarmElement.Value = parameters.ServerFarm;
-                    siteElement.Add(serverFarmElement);
-                }
-                
-                if (parameters.SiteMode != null)
-                {
-                    XElement siteModeElement = new XElement(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                    siteModeElement.Value = parameters.SiteMode.ToString();
-                    siteElement.Add(siteModeElement);
-                }
-                
-                XElement webSpaceElement = new XElement(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                webSpaceElement.Value = parameters.WebSpaceName;
-                siteElement.Add(webSpaceElement);
+                XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
+                serverFarmElement.Value = parameters.ServerFarm;
+                siteElement.Add(serverFarmElement);
                 
                 if (parameters.WebSpace != null)
                 {
@@ -594,7 +930,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -650,11 +986,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement computeModeElement2 = siteElement2.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (computeModeElement2 != null && string.IsNullOrEmpty(computeModeElement2.Value) == false)
+                        XElement skuElement = siteElement2.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                        if (skuElement != null)
                         {
-                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true));
-                            webSiteInstance.ComputeMode = computeModeInstance;
+                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
+                            webSiteInstance.Sku = skuInstance;
                         }
                         
                         XElement enabledElement = siteElement2.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
@@ -729,10 +1065,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                         }
                         
-                        XElement hostNamesSequenceElement2 = siteElement2.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                        if (hostNamesSequenceElement2 != null)
+                        XElement hostNamesSequenceElement = siteElement2.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
+                        if (hostNamesSequenceElement != null)
                         {
-                            foreach (XElement hostNamesElement in hostNamesSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
+                            foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.HostNames.Add(hostNamesElement.Value);
                             }
@@ -752,22 +1088,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.Name = nameInstance2;
                         }
                         
-                        XElement ownerElement = siteElement2.Element(XName.Get("Owner", "http://schemas.microsoft.com/windowsazure"));
-                        if (ownerElement != null)
-                        {
-                            bool isNil3 = false;
-                            XAttribute nilAttribute3 = ownerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute3 != null)
-                            {
-                                isNil3 = nilAttribute3.Value == "true";
-                            }
-                            if (isNil3 == false)
-                            {
-                                string ownerInstance = ownerElement.Value;
-                                webSiteInstance.Owner = ownerInstance;
-                            }
-                        }
-                        
                         XElement repositorySiteNameElement = siteElement2.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
                         if (repositorySiteNameElement != null)
                         {
@@ -782,248 +1102,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
-                        XElement sSLCertificatesSequenceElement = siteElement2.Element(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
-                        if (sSLCertificatesSequenceElement != null)
+                        XElement selfLinkElement = siteElement2.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                        if (selfLinkElement != null)
                         {
-                            bool isNil4 = false;
-                            XAttribute nilAttribute4 = sSLCertificatesSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute4 != null)
-                            {
-                                isNil4 = nilAttribute4.Value == "true";
-                            }
-                            if (isNil4 == false)
-                            {
-                                foreach (XElement sSLCertificatesElement in sSLCertificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                    webSiteInstance.SslCertificates.Add(certificateInstance);
-                                    
-                                    XElement expirationDateElement = sSLCertificatesElement.Element(XName.Get("ExpirationDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expirationDateElement != null && string.IsNullOrEmpty(expirationDateElement.Value) == false)
-                                    {
-                                        bool isNil5 = false;
-                                        XAttribute nilAttribute5 = expirationDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute5 != null)
-                                        {
-                                            isNil5 = nilAttribute5.Value == "true";
-                                        }
-                                        if (isNil5 == false)
-                                        {
-                                            DateTime expirationDateInstance = DateTime.Parse(expirationDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.ExpirationDate = expirationDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement friendlyNameElement = sSLCertificatesElement.Element(XName.Get("FriendlyName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (friendlyNameElement != null)
-                                    {
-                                        bool isNil6 = false;
-                                        XAttribute nilAttribute6 = friendlyNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute6 != null)
-                                        {
-                                            isNil6 = nilAttribute6.Value == "true";
-                                        }
-                                        if (isNil6 == false)
-                                        {
-                                            string friendlyNameInstance = friendlyNameElement.Value;
-                                            certificateInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement hostNamesSequenceElement3 = sSLCertificatesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                                    if (hostNamesSequenceElement3 != null)
-                                    {
-                                        bool isNil7 = false;
-                                        XAttribute nilAttribute7 = hostNamesSequenceElement3.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute7 != null)
-                                        {
-                                            isNil7 = nilAttribute7.Value == "true";
-                                        }
-                                        if (isNil7 == false)
-                                        {
-                                            foreach (XElement hostNamesElement2 in hostNamesSequenceElement3.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                            {
-                                                certificateInstance.HostNames.Add(hostNamesElement2.Value);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            certificateInstance.HostNames = null;
-                                        }
-                                    }
-                                    
-                                    XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issueDateElement != null && string.IsNullOrEmpty(issueDateElement.Value) == false)
-                                    {
-                                        bool isNil8 = false;
-                                        XAttribute nilAttribute8 = issueDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute8 != null)
-                                        {
-                                            isNil8 = nilAttribute8.Value == "true";
-                                        }
-                                        if (isNil8 == false)
-                                        {
-                                            DateTime issueDateInstance = DateTime.Parse(issueDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.IssueDate = issueDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement issuerElement = sSLCertificatesElement.Element(XName.Get("Issuer", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issuerElement != null)
-                                    {
-                                        bool isNil9 = false;
-                                        XAttribute nilAttribute9 = issuerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute9 != null)
-                                        {
-                                            isNil9 = nilAttribute9.Value == "true";
-                                        }
-                                        if (isNil9 == false)
-                                        {
-                                            string issuerInstance = issuerElement.Value;
-                                            certificateInstance.Issuer = issuerInstance;
-                                        }
-                                    }
-                                    
-                                    XElement passwordElement = sSLCertificatesElement.Element(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                                    if (passwordElement != null)
-                                    {
-                                        bool isNil10 = false;
-                                        XAttribute nilAttribute10 = passwordElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute10 != null)
-                                        {
-                                            isNil10 = nilAttribute10.Value == "true";
-                                        }
-                                        if (isNil10 == false)
-                                        {
-                                            string passwordInstance = passwordElement.Value;
-                                            certificateInstance.Password = passwordInstance;
-                                        }
-                                    }
-                                    
-                                    XElement pfxBlobElement = sSLCertificatesElement.Element(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
-                                    if (pfxBlobElement != null)
-                                    {
-                                        bool isNil11 = false;
-                                        XAttribute nilAttribute11 = pfxBlobElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute11 != null)
-                                        {
-                                            isNil11 = nilAttribute11.Value == "true";
-                                        }
-                                        if (isNil11 == false)
-                                        {
-                                            byte[] pfxBlobInstance = Convert.FromBase64String(pfxBlobElement.Value);
-                                            certificateInstance.PfxBlob = pfxBlobInstance;
-                                        }
-                                    }
-                                    
-                                    XElement selfLinkElement = sSLCertificatesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                                    if (selfLinkElement != null)
-                                    {
-                                        bool isNil12 = false;
-                                        XAttribute nilAttribute12 = selfLinkElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute12 != null)
-                                        {
-                                            isNil12 = nilAttribute12.Value == "true";
-                                        }
-                                        if (isNil12 == false)
-                                        {
-                                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                            certificateInstance.SelfLinkUri = selfLinkInstance;
-                                        }
-                                    }
-                                    
-                                    XElement siteNameElement = sSLCertificatesElement.Element(XName.Get("SiteName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (siteNameElement != null)
-                                    {
-                                        bool isNil13 = false;
-                                        XAttribute nilAttribute13 = siteNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute13 != null)
-                                        {
-                                            isNil13 = nilAttribute13.Value == "true";
-                                        }
-                                        if (isNil13 == false)
-                                        {
-                                            string siteNameInstance = siteNameElement.Value;
-                                            certificateInstance.SiteName = siteNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement subjectNameElement = sSLCertificatesElement.Element(XName.Get("SubjectName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subjectNameElement != null)
-                                    {
-                                        bool isNil14 = false;
-                                        XAttribute nilAttribute14 = subjectNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute14 != null)
-                                        {
-                                            isNil14 = nilAttribute14.Value == "true";
-                                        }
-                                        if (isNil14 == false)
-                                        {
-                                            string subjectNameInstance = subjectNameElement.Value;
-                                            certificateInstance.SubjectName = subjectNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement thumbprintElement2 = sSLCertificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement2 != null)
-                                    {
-                                        bool isNil15 = false;
-                                        XAttribute nilAttribute15 = thumbprintElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute15 != null)
-                                        {
-                                            isNil15 = nilAttribute15.Value == "true";
-                                        }
-                                        if (isNil15 == false)
-                                        {
-                                            string thumbprintInstance2 = thumbprintElement2.Value;
-                                            certificateInstance.Thumbprint = thumbprintInstance2;
-                                        }
-                                    }
-                                    
-                                    XElement toDeleteElement = sSLCertificatesElement.Element(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
-                                    if (toDeleteElement != null && string.IsNullOrEmpty(toDeleteElement.Value) == false)
-                                    {
-                                        bool isNil16 = false;
-                                        XAttribute nilAttribute16 = toDeleteElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute16 != null)
-                                        {
-                                            isNil16 = nilAttribute16.Value == "true";
-                                        }
-                                        if (isNil16 == false)
-                                        {
-                                            bool toDeleteInstance = bool.Parse(toDeleteElement.Value);
-                                            certificateInstance.IsToBeDeleted = toDeleteInstance;
-                                        }
-                                    }
-                                    
-                                    XElement validElement = sSLCertificatesElement.Element(XName.Get("Valid", "http://schemas.microsoft.com/windowsazure"));
-                                    if (validElement != null && string.IsNullOrEmpty(validElement.Value) == false)
-                                    {
-                                        bool isNil17 = false;
-                                        XAttribute nilAttribute17 = validElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute17 != null)
-                                        {
-                                            isNil17 = nilAttribute17.Value == "true";
-                                        }
-                                        if (isNil17 == false)
-                                        {
-                                            bool validInstance = bool.Parse(validElement.Value);
-                                            certificateInstance.IsValid = validInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                webSiteInstance.SslCertificates = null;
-                            }
-                        }
-                        
-                        XElement selfLinkElement2 = siteElement2.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (selfLinkElement2 != null)
-                        {
-                            Uri selfLinkInstance2 = TypeConversion.TryParseUri(selfLinkElement2.Value);
-                            webSiteInstance.Uri = selfLinkInstance2;
+                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                            webSiteInstance.Uri = selfLinkInstance;
                         }
                         
                         XElement serverFarmElement2 = siteElement2.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
@@ -1031,13 +1114,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             string serverFarmInstance = serverFarmElement2.Value;
                             webSiteInstance.ServerFarm = serverFarmInstance;
-                        }
-                        
-                        XElement siteModeElement2 = siteElement2.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (siteModeElement2 != null && string.IsNullOrEmpty(siteModeElement2.Value) == false)
-                        {
-                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true));
-                            webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
                         XElement sitePropertiesElement = siteElement2.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
@@ -1094,10 +1170,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.UsageState = usageStateInstance;
                         }
                         
-                        XElement webSpaceElement2 = siteElement2.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
-                        if (webSpaceElement2 != null)
+                        XElement webSpaceElement = siteElement2.Element(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure"));
+                        if (webSpaceElement != null)
                         {
-                            string webSpaceInstance = webSpaceElement2.Value;
+                            string webSpaceInstance = webSpaceElement.Value;
                             webSiteInstance.WebSpace = webSpaceInstance;
                         }
                     }
@@ -1200,7 +1276,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1344,7 +1420,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1476,7 +1552,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1520,6 +1596,302 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (anyURIElement != null)
                     {
                         result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRestoreDiscoverResponse> DiscoverAsync(string webSpaceName, string webSiteName, RestoreRequest restoreRequest, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (restoreRequest == null)
+            {
+                throw new ArgumentNullException("restoreRequest");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("restoreRequest", restoreRequest);
+                Tracing.Enter(invocationId, this, "DiscoverAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/restore/discover";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement restoreRequestElement = new XElement(XName.Get("RestoreRequest", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(restoreRequestElement);
+                
+                XElement adjustConnectionStringsElement = new XElement(XName.Get("AdjustConnectionStrings", "http://schemas.microsoft.com/windowsazure"));
+                adjustConnectionStringsElement.Value = restoreRequest.AdjustConnectionStrings.ToString().ToLower();
+                restoreRequestElement.Add(adjustConnectionStringsElement);
+                
+                if (restoreRequest.BlobName != null)
+                {
+                    XElement blobNameElement = new XElement(XName.Get("BlobName", "http://schemas.microsoft.com/windowsazure"));
+                    blobNameElement.Value = restoreRequest.BlobName;
+                    restoreRequestElement.Add(blobNameElement);
+                }
+                
+                if (restoreRequest.Databases != null)
+                {
+                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    {
+                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                        databasesSequenceElement.Add(databaseBackupSettingElement);
+                        
+                        if (databasesItem.ConnectionString != null)
+                        {
+                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringElement.Value = databasesItem.ConnectionString;
+                            databaseBackupSettingElement.Add(connectionStringElement);
+                        }
+                        
+                        if (databasesItem.ConnectionStringName != null)
+                        {
+                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                            databaseBackupSettingElement.Add(connectionStringNameElement);
+                        }
+                        
+                        if (databasesItem.DatabaseType != null)
+                        {
+                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                            databaseTypeElement.Value = databasesItem.DatabaseType;
+                            databaseBackupSettingElement.Add(databaseTypeElement);
+                        }
+                        
+                        if (databasesItem.Name != null)
+                        {
+                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            nameElement.Value = databasesItem.Name;
+                            databaseBackupSettingElement.Add(nameElement);
+                        }
+                    }
+                    restoreRequestElement.Add(databasesSequenceElement);
+                }
+                
+                XElement ignoreConflictingHostNamesElement = new XElement(XName.Get("IgnoreConflictingHostNames", "http://schemas.microsoft.com/windowsazure"));
+                ignoreConflictingHostNamesElement.Value = restoreRequest.IgnoreConflictingHostNames.ToString().ToLower();
+                restoreRequestElement.Add(ignoreConflictingHostNamesElement);
+                
+                XElement overwriteElement = new XElement(XName.Get("Overwrite", "http://schemas.microsoft.com/windowsazure"));
+                overwriteElement.Value = restoreRequest.Overwrite.ToString().ToLower();
+                restoreRequestElement.Add(overwriteElement);
+                
+                if (restoreRequest.StorageAccountUrl != null)
+                {
+                    XElement storageAccountUrlElement = new XElement(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                    storageAccountUrlElement.Value = restoreRequest.StorageAccountUrl;
+                    restoreRequestElement.Add(storageAccountUrlElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteRestoreDiscoverResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteRestoreDiscoverResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement restoreRequestElement2 = responseDoc.Element(XName.Get("RestoreRequest", "http://schemas.microsoft.com/windowsazure"));
+                    if (restoreRequestElement2 != null)
+                    {
+                        XElement storageAccountUrlElement2 = restoreRequestElement2.Element(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                        if (storageAccountUrlElement2 != null)
+                        {
+                            string storageAccountUrlInstance = storageAccountUrlElement2.Value;
+                            result.StorageAccountUrl = storageAccountUrlInstance;
+                        }
+                        
+                        XElement blobNameElement2 = restoreRequestElement2.Element(XName.Get("BlobName", "http://schemas.microsoft.com/windowsazure"));
+                        if (blobNameElement2 != null)
+                        {
+                            string blobNameInstance = blobNameElement2.Value;
+                            result.BlobName = blobNameInstance;
+                        }
+                        
+                        XElement overwriteElement2 = restoreRequestElement2.Element(XName.Get("Overwrite", "http://schemas.microsoft.com/windowsazure"));
+                        if (overwriteElement2 != null)
+                        {
+                            bool overwriteInstance = bool.Parse(overwriteElement2.Value);
+                            result.Overwrite = overwriteInstance;
+                        }
+                        
+                        XElement databasesSequenceElement2 = restoreRequestElement2.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        if (databasesSequenceElement2 != null)
+                        {
+                            foreach (XElement databasesElement in databasesSequenceElement2.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
+                                result.Databases.Add(databaseBackupSettingInstance);
+                                
+                                XElement connectionStringElement2 = databasesElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringElement2 != null)
+                                {
+                                    string connectionStringInstance = connectionStringElement2.Value;
+                                    databaseBackupSettingInstance.ConnectionString = connectionStringInstance;
+                                }
+                                
+                                XElement connectionStringNameElement2 = databasesElement.Element(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringNameElement2 != null)
+                                {
+                                    string connectionStringNameInstance = connectionStringNameElement2.Value;
+                                    databaseBackupSettingInstance.ConnectionStringName = connectionStringNameInstance;
+                                }
+                                
+                                XElement databaseTypeElement2 = databasesElement.Element(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                if (databaseTypeElement2 != null)
+                                {
+                                    string databaseTypeInstance = databaseTypeElement2.Value;
+                                    databaseBackupSettingInstance.DatabaseType = databaseTypeInstance;
+                                }
+                                
+                                XElement nameElement2 = databasesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
+                                {
+                                    string nameInstance = nameElement2.Value;
+                                    databaseBackupSettingInstance.Name = nameInstance;
+                                }
+                            }
+                        }
+                        
+                        XElement ignoreConflictingHostNamesElement2 = restoreRequestElement2.Element(XName.Get("IgnoreConflictingHostNames", "http://schemas.microsoft.com/windowsazure"));
+                        if (ignoreConflictingHostNamesElement2 != null)
+                        {
+                            bool ignoreConflictingHostNamesInstance = bool.Parse(ignoreConflictingHostNamesElement2.Value);
+                            result.IgnoreConflictingHostNames = ignoreConflictingHostNamesInstance;
+                        }
+                        
+                        XElement adjustConnectionStringsElement2 = restoreRequestElement2.Element(XName.Get("AdjustConnectionStrings", "http://schemas.microsoft.com/windowsazure"));
+                        if (adjustConnectionStringsElement2 != null)
+                        {
+                            bool adjustConnectionStringsInstance = bool.Parse(adjustConnectionStringsElement2.Value);
+                            result.AdjustConnectionStrings = adjustConnectionStringsInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -1623,7 +1995,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1761,7 +2133,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1821,11 +2193,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement computeModeElement = siteElement.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (computeModeElement != null && string.IsNullOrEmpty(computeModeElement.Value) == false)
+                        XElement skuElement = siteElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                        if (skuElement != null)
                         {
-                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement.Value, true));
-                            webSiteInstance.ComputeMode = computeModeInstance;
+                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
+                            webSiteInstance.Sku = skuInstance;
                         }
                         
                         XElement enabledElement = siteElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
@@ -1923,22 +2295,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.Name = nameInstance2;
                         }
                         
-                        XElement ownerElement = siteElement.Element(XName.Get("Owner", "http://schemas.microsoft.com/windowsazure"));
-                        if (ownerElement != null)
-                        {
-                            bool isNil3 = false;
-                            XAttribute nilAttribute3 = ownerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute3 != null)
-                            {
-                                isNil3 = nilAttribute3.Value == "true";
-                            }
-                            if (isNil3 == false)
-                            {
-                                string ownerInstance = ownerElement.Value;
-                                webSiteInstance.Owner = ownerInstance;
-                            }
-                        }
-                        
                         XElement repositorySiteNameElement = siteElement.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
                         if (repositorySiteNameElement != null)
                         {
@@ -1953,248 +2309,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
-                        XElement sSLCertificatesSequenceElement = siteElement.Element(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
-                        if (sSLCertificatesSequenceElement != null)
+                        XElement selfLinkElement = siteElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                        if (selfLinkElement != null)
                         {
-                            bool isNil4 = false;
-                            XAttribute nilAttribute4 = sSLCertificatesSequenceElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute4 != null)
-                            {
-                                isNil4 = nilAttribute4.Value == "true";
-                            }
-                            if (isNil4 == false)
-                            {
-                                foreach (XElement sSLCertificatesElement in sSLCertificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                    webSiteInstance.SslCertificates.Add(certificateInstance);
-                                    
-                                    XElement expirationDateElement = sSLCertificatesElement.Element(XName.Get("ExpirationDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expirationDateElement != null && string.IsNullOrEmpty(expirationDateElement.Value) == false)
-                                    {
-                                        bool isNil5 = false;
-                                        XAttribute nilAttribute5 = expirationDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute5 != null)
-                                        {
-                                            isNil5 = nilAttribute5.Value == "true";
-                                        }
-                                        if (isNil5 == false)
-                                        {
-                                            DateTime expirationDateInstance = DateTime.Parse(expirationDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.ExpirationDate = expirationDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement friendlyNameElement = sSLCertificatesElement.Element(XName.Get("FriendlyName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (friendlyNameElement != null)
-                                    {
-                                        bool isNil6 = false;
-                                        XAttribute nilAttribute6 = friendlyNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute6 != null)
-                                        {
-                                            isNil6 = nilAttribute6.Value == "true";
-                                        }
-                                        if (isNil6 == false)
-                                        {
-                                            string friendlyNameInstance = friendlyNameElement.Value;
-                                            certificateInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement hostNamesSequenceElement2 = sSLCertificatesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                                    if (hostNamesSequenceElement2 != null)
-                                    {
-                                        bool isNil7 = false;
-                                        XAttribute nilAttribute7 = hostNamesSequenceElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute7 != null)
-                                        {
-                                            isNil7 = nilAttribute7.Value == "true";
-                                        }
-                                        if (isNil7 == false)
-                                        {
-                                            foreach (XElement hostNamesElement2 in hostNamesSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                            {
-                                                certificateInstance.HostNames.Add(hostNamesElement2.Value);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            certificateInstance.HostNames = null;
-                                        }
-                                    }
-                                    
-                                    XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issueDateElement != null && string.IsNullOrEmpty(issueDateElement.Value) == false)
-                                    {
-                                        bool isNil8 = false;
-                                        XAttribute nilAttribute8 = issueDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute8 != null)
-                                        {
-                                            isNil8 = nilAttribute8.Value == "true";
-                                        }
-                                        if (isNil8 == false)
-                                        {
-                                            DateTime issueDateInstance = DateTime.Parse(issueDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.IssueDate = issueDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement issuerElement = sSLCertificatesElement.Element(XName.Get("Issuer", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issuerElement != null)
-                                    {
-                                        bool isNil9 = false;
-                                        XAttribute nilAttribute9 = issuerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute9 != null)
-                                        {
-                                            isNil9 = nilAttribute9.Value == "true";
-                                        }
-                                        if (isNil9 == false)
-                                        {
-                                            string issuerInstance = issuerElement.Value;
-                                            certificateInstance.Issuer = issuerInstance;
-                                        }
-                                    }
-                                    
-                                    XElement passwordElement = sSLCertificatesElement.Element(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                                    if (passwordElement != null)
-                                    {
-                                        bool isNil10 = false;
-                                        XAttribute nilAttribute10 = passwordElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute10 != null)
-                                        {
-                                            isNil10 = nilAttribute10.Value == "true";
-                                        }
-                                        if (isNil10 == false)
-                                        {
-                                            string passwordInstance = passwordElement.Value;
-                                            certificateInstance.Password = passwordInstance;
-                                        }
-                                    }
-                                    
-                                    XElement pfxBlobElement = sSLCertificatesElement.Element(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
-                                    if (pfxBlobElement != null)
-                                    {
-                                        bool isNil11 = false;
-                                        XAttribute nilAttribute11 = pfxBlobElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute11 != null)
-                                        {
-                                            isNil11 = nilAttribute11.Value == "true";
-                                        }
-                                        if (isNil11 == false)
-                                        {
-                                            byte[] pfxBlobInstance = Convert.FromBase64String(pfxBlobElement.Value);
-                                            certificateInstance.PfxBlob = pfxBlobInstance;
-                                        }
-                                    }
-                                    
-                                    XElement selfLinkElement = sSLCertificatesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                                    if (selfLinkElement != null)
-                                    {
-                                        bool isNil12 = false;
-                                        XAttribute nilAttribute12 = selfLinkElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute12 != null)
-                                        {
-                                            isNil12 = nilAttribute12.Value == "true";
-                                        }
-                                        if (isNil12 == false)
-                                        {
-                                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                            certificateInstance.SelfLinkUri = selfLinkInstance;
-                                        }
-                                    }
-                                    
-                                    XElement siteNameElement = sSLCertificatesElement.Element(XName.Get("SiteName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (siteNameElement != null)
-                                    {
-                                        bool isNil13 = false;
-                                        XAttribute nilAttribute13 = siteNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute13 != null)
-                                        {
-                                            isNil13 = nilAttribute13.Value == "true";
-                                        }
-                                        if (isNil13 == false)
-                                        {
-                                            string siteNameInstance = siteNameElement.Value;
-                                            certificateInstance.SiteName = siteNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement subjectNameElement = sSLCertificatesElement.Element(XName.Get("SubjectName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subjectNameElement != null)
-                                    {
-                                        bool isNil14 = false;
-                                        XAttribute nilAttribute14 = subjectNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute14 != null)
-                                        {
-                                            isNil14 = nilAttribute14.Value == "true";
-                                        }
-                                        if (isNil14 == false)
-                                        {
-                                            string subjectNameInstance = subjectNameElement.Value;
-                                            certificateInstance.SubjectName = subjectNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement thumbprintElement2 = sSLCertificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement2 != null)
-                                    {
-                                        bool isNil15 = false;
-                                        XAttribute nilAttribute15 = thumbprintElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute15 != null)
-                                        {
-                                            isNil15 = nilAttribute15.Value == "true";
-                                        }
-                                        if (isNil15 == false)
-                                        {
-                                            string thumbprintInstance2 = thumbprintElement2.Value;
-                                            certificateInstance.Thumbprint = thumbprintInstance2;
-                                        }
-                                    }
-                                    
-                                    XElement toDeleteElement = sSLCertificatesElement.Element(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
-                                    if (toDeleteElement != null && string.IsNullOrEmpty(toDeleteElement.Value) == false)
-                                    {
-                                        bool isNil16 = false;
-                                        XAttribute nilAttribute16 = toDeleteElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute16 != null)
-                                        {
-                                            isNil16 = nilAttribute16.Value == "true";
-                                        }
-                                        if (isNil16 == false)
-                                        {
-                                            bool toDeleteInstance = bool.Parse(toDeleteElement.Value);
-                                            certificateInstance.IsToBeDeleted = toDeleteInstance;
-                                        }
-                                    }
-                                    
-                                    XElement validElement = sSLCertificatesElement.Element(XName.Get("Valid", "http://schemas.microsoft.com/windowsazure"));
-                                    if (validElement != null && string.IsNullOrEmpty(validElement.Value) == false)
-                                    {
-                                        bool isNil17 = false;
-                                        XAttribute nilAttribute17 = validElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute17 != null)
-                                        {
-                                            isNil17 = nilAttribute17.Value == "true";
-                                        }
-                                        if (isNil17 == false)
-                                        {
-                                            bool validInstance = bool.Parse(validElement.Value);
-                                            certificateInstance.IsValid = validInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                webSiteInstance.SslCertificates = null;
-                            }
-                        }
-                        
-                        XElement selfLinkElement2 = siteElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (selfLinkElement2 != null)
-                        {
-                            Uri selfLinkInstance2 = TypeConversion.TryParseUri(selfLinkElement2.Value);
-                            webSiteInstance.Uri = selfLinkInstance2;
+                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                            webSiteInstance.Uri = selfLinkInstance;
                         }
                         
                         XElement serverFarmElement = siteElement.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
@@ -2202,13 +2321,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             string serverFarmInstance = serverFarmElement.Value;
                             webSiteInstance.ServerFarm = serverFarmInstance;
-                        }
-                        
-                        XElement siteModeElement = siteElement.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (siteModeElement != null && string.IsNullOrEmpty(siteModeElement.Value) == false)
-                        {
-                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement.Value, true));
-                            webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
                         XElement sitePropertiesElement = siteElement.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
@@ -2270,6 +2382,250 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             string webSpaceInstance = webSpaceElement.Value;
                             webSiteInstance.WebSpace = webSpaceInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetBackupConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/backup/config";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetBackupConfigurationResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteGetBackupConfigurationResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement backupRequestElement = responseDoc.Element(XName.Get("BackupRequest", "http://schemas.microsoft.com/windowsazure"));
+                    if (backupRequestElement != null)
+                    {
+                        XElement enabledElement = backupRequestElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (enabledElement != null && string.IsNullOrEmpty(enabledElement.Value) == false)
+                        {
+                            bool enabledInstance = bool.Parse(enabledElement.Value);
+                            result.Enabled = enabledInstance;
+                        }
+                        
+                        XElement nameElement = backupRequestElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            result.Name = nameInstance;
+                        }
+                        
+                        XElement backupScheduleElement = backupRequestElement.Element(XName.Get("BackupSchedule", "http://schemas.microsoft.com/windowsazure"));
+                        if (backupScheduleElement != null)
+                        {
+                            BackupSchedule backupScheduleInstance = new BackupSchedule();
+                            result.BackupSchedule = backupScheduleInstance;
+                            
+                            XElement frequencyIntervalElement = backupScheduleElement.Element(XName.Get("FrequencyInterval", "http://schemas.microsoft.com/windowsazure"));
+                            if (frequencyIntervalElement != null)
+                            {
+                                int frequencyIntervalInstance = int.Parse(frequencyIntervalElement.Value, CultureInfo.InvariantCulture);
+                                backupScheduleInstance.FrequencyInterval = frequencyIntervalInstance;
+                            }
+                            
+                            XElement frequencyUnitElement = backupScheduleElement.Element(XName.Get("FrequencyUnit", "http://schemas.microsoft.com/windowsazure"));
+                            if (frequencyUnitElement != null)
+                            {
+                                FrequencyUnit frequencyUnitInstance = ((FrequencyUnit)Enum.Parse(typeof(FrequencyUnit), frequencyUnitElement.Value, true));
+                                backupScheduleInstance.FrequencyUnit = frequencyUnitInstance;
+                            }
+                            
+                            XElement keepAtLeastOneBackupElement = backupScheduleElement.Element(XName.Get("KeepAtLeastOneBackup", "http://schemas.microsoft.com/windowsazure"));
+                            if (keepAtLeastOneBackupElement != null)
+                            {
+                                bool keepAtLeastOneBackupInstance = bool.Parse(keepAtLeastOneBackupElement.Value);
+                                backupScheduleInstance.KeepAtLeastOneBackup = keepAtLeastOneBackupInstance;
+                            }
+                            
+                            XElement lastExecutionTimeElement = backupScheduleElement.Element(XName.Get("LastExecutionTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (lastExecutionTimeElement != null && string.IsNullOrEmpty(lastExecutionTimeElement.Value) == false)
+                            {
+                                DateTime lastExecutionTimeInstance = DateTime.Parse(lastExecutionTimeElement.Value, CultureInfo.InvariantCulture);
+                                backupScheduleInstance.LastExecutionTime = lastExecutionTimeInstance;
+                            }
+                            
+                            XElement retentionPeriodInDaysElement = backupScheduleElement.Element(XName.Get("RetentionPeriodInDays", "http://schemas.microsoft.com/windowsazure"));
+                            if (retentionPeriodInDaysElement != null)
+                            {
+                                int retentionPeriodInDaysInstance = int.Parse(retentionPeriodInDaysElement.Value, CultureInfo.InvariantCulture);
+                                backupScheduleInstance.RetentionPeriodInDays = retentionPeriodInDaysInstance;
+                            }
+                            
+                            XElement startTimeElement = backupScheduleElement.Element(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                            if (startTimeElement != null && string.IsNullOrEmpty(startTimeElement.Value) == false)
+                            {
+                                DateTime startTimeInstance = DateTime.Parse(startTimeElement.Value, CultureInfo.InvariantCulture);
+                                backupScheduleInstance.StartTime = startTimeInstance;
+                            }
+                        }
+                        
+                        XElement databasesSequenceElement = backupRequestElement.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        if (databasesSequenceElement != null)
+                        {
+                            foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
+                                result.Databases.Add(databaseBackupSettingInstance);
+                                
+                                XElement connectionStringElement = databasesElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringElement != null)
+                                {
+                                    string connectionStringInstance = connectionStringElement.Value;
+                                    databaseBackupSettingInstance.ConnectionString = connectionStringInstance;
+                                }
+                                
+                                XElement connectionStringNameElement = databasesElement.Element(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                if (connectionStringNameElement != null)
+                                {
+                                    string connectionStringNameInstance = connectionStringNameElement.Value;
+                                    databaseBackupSettingInstance.ConnectionStringName = connectionStringNameInstance;
+                                }
+                                
+                                XElement databaseTypeElement = databasesElement.Element(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                if (databaseTypeElement != null)
+                                {
+                                    string databaseTypeInstance = databaseTypeElement.Value;
+                                    databaseBackupSettingInstance.DatabaseType = databaseTypeInstance;
+                                }
+                                
+                                XElement nameElement2 = databasesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
+                                {
+                                    string nameInstance2 = nameElement2.Value;
+                                    databaseBackupSettingInstance.Name = nameInstance2;
+                                }
+                            }
+                        }
+                        
+                        XElement storageAccountUrlElement = backupRequestElement.Element(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                        if (storageAccountUrlElement != null)
+                        {
+                            string storageAccountUrlInstance = storageAccountUrlElement.Value;
+                            result.StorageAccountUrl = storageAccountUrlInstance;
                         }
                     }
                     
@@ -2369,7 +2725,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 // Set Headers
                 httpRequest.Headers.Add("accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2451,7 +2807,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 JToken typeValue = connectionStringsValue["Type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    ConnectionStringType typeInstance = ((ConnectionStringType)Enum.Parse(typeof(ConnectionStringType), ((string)typeValue), true));
+                                    ConnectionStringType typeInstance = WebSiteManagementClient.ParseConnectionStringType(((string)typeValue));
                                     connectionStringInfoInstance.Type = typeInstance;
                                 }
                             }
@@ -2528,7 +2884,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken managedPipelineModeValue = responseDoc["ManagedPipelineMode"];
                         if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
                         {
-                            ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                            ManagedPipelineMode managedPipelineModeInstance = WebSiteManagementClient.ParseManagedPipelineMode(((string)managedPipelineModeValue));
                             result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
@@ -2625,6 +2981,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
                             result.WebSocketsEnabled = webSocketsEnabledInstance;
+                        }
+                        
+                        JToken alwaysOnValue = responseDoc["AlwaysOn"];
+                        if (alwaysOnValue != null && alwaysOnValue.Type != JTokenType.Null)
+                        {
+                            bool alwaysOnInstance = ((bool)alwaysOnValue);
+                            result.AlwaysOn = alwaysOnInstance;
                         }
                         
                         JToken routingRulesArray = responseDoc["RoutingRules"];
@@ -2792,6 +3155,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
             }
+            if (parameters.TimeGrain != null)
+            {
+                url = url + "&timeGrain=" + Uri.EscapeDataString(parameters.TimeGrain != null ? parameters.TimeGrain.Trim() : "");
+            }
+            url = url + "&details=" + Uri.EscapeDataString(parameters.IncludeInstanceBreakdown.ToString().ToLower());
+            url = url + "&slotView=" + Uri.EscapeDataString(parameters.SlotView.ToString().ToLower());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2814,7 +3183,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2861,7 +3230,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric metricResponseInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetric();
+                                HistoricalUsageMetric metricResponseInstance = new HistoricalUsageMetric();
                                 result.UsageMetrics.Add(metricResponseInstance);
                                 
                                 XElement codeElement = usageMetricsElement.Element(XName.Get("Code", "http://schemas.microsoft.com/windowsazure"));
@@ -2874,7 +3243,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement dataElement = usageMetricsElement.Element(XName.Get("Data", "http://schemas.microsoft.com/windowsazure"));
                                 if (dataElement != null)
                                 {
-                                    WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData dataInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricData();
+                                    HistoricalUsageMetricData dataInstance = new HistoricalUsageMetricData();
                                     metricResponseInstance.Data = dataInstance;
                                     
                                     XElement displayNameElement = dataElement.Element(XName.Get("DisplayName", "http://schemas.microsoft.com/windowsazure"));
@@ -2931,7 +3300,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     {
                                         foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
                                         {
-                                            WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample metricSampleInstance = new WebSiteGetHistoricalUsageMetricsResponse.HistoricalUsageMetricSample();
+                                            HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
                                             dataInstance.Values.Add(metricSampleInstance);
                                             
                                             XElement countElement = valuesElement.Element(XName.Get("Count", "http://schemas.microsoft.com/windowsazure"));
@@ -2985,6 +3354,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                             {
                                                 string totalInstance = totalElement.Value;
                                                 metricSampleInstance.Total = totalInstance;
+                                            }
+                                            
+                                            XElement instanceNameElement = valuesElement.Element(XName.Get("InstanceName", "http://schemas.microsoft.com/windowsazure"));
+                                            if (instanceNameElement != null)
+                                            {
+                                                string instanceNameInstance = instanceNameElement.Value;
+                                                metricSampleInstance.InstanceName = instanceNameInstance;
                                             }
                                         }
                                     }
@@ -3095,7 +3471,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3239,7 +3615,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3495,7 +3871,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3639,7 +4015,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3840,7 +4216,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3885,6 +4261,266 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         bool booleanInstance = bool.Parse(booleanElement.Value);
                         result.IsAvailable = booleanInstance;
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns list of all backups which are tracked by the system.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetBackupsResponse> ListBackupsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "ListBackupsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/restore";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteGetBackupsResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteGetBackupsResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement backupItemsElement = responseDoc.Element(XName.Get("BackupItems", "http://schemas.microsoft.com/windowsazure"));
+                    if (backupItemsElement != null)
+                    {
+                        if (backupItemsElement != null)
+                        {
+                            foreach (XElement backupItemsElement2 in backupItemsElement.Elements(XName.Get("BackupItem", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                BackupItem backupItemInstance = new BackupItem();
+                                result.BackupItems.Add(backupItemInstance);
+                                
+                                XElement storageAccountUrlElement = backupItemsElement2.Element(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                                if (storageAccountUrlElement != null)
+                                {
+                                    string storageAccountUrlInstance = storageAccountUrlElement.Value;
+                                    backupItemInstance.StorageAccountUrl = storageAccountUrlInstance;
+                                }
+                                
+                                XElement blobNameElement = backupItemsElement2.Element(XName.Get("BlobName", "http://schemas.microsoft.com/windowsazure"));
+                                if (blobNameElement != null)
+                                {
+                                    string blobNameInstance = blobNameElement.Value;
+                                    backupItemInstance.BlobName = blobNameInstance;
+                                }
+                                
+                                XElement nameElement = backupItemsElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement != null)
+                                {
+                                    string nameInstance = nameElement.Value;
+                                    backupItemInstance.Name = nameInstance;
+                                }
+                                
+                                XElement statusElement = backupItemsElement2.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                                if (statusElement != null)
+                                {
+                                    BackupItemStatus statusInstance = ((BackupItemStatus)Enum.Parse(typeof(BackupItemStatus), statusElement.Value, true));
+                                    backupItemInstance.Status = statusInstance;
+                                }
+                                
+                                XElement sizeInBytesElement = backupItemsElement2.Element(XName.Get("SizeInBytes", "http://schemas.microsoft.com/windowsazure"));
+                                if (sizeInBytesElement != null)
+                                {
+                                    long sizeInBytesInstance = long.Parse(sizeInBytesElement.Value, CultureInfo.InvariantCulture);
+                                    backupItemInstance.SizeInBytes = sizeInBytesInstance;
+                                }
+                                
+                                XElement createdElement = backupItemsElement2.Element(XName.Get("Created", "http://schemas.microsoft.com/windowsazure"));
+                                if (createdElement != null && string.IsNullOrEmpty(createdElement.Value) == false)
+                                {
+                                    DateTime createdInstance = DateTime.Parse(createdElement.Value, CultureInfo.InvariantCulture);
+                                    backupItemInstance.Created = createdInstance;
+                                }
+                                
+                                XElement logElement = backupItemsElement2.Element(XName.Get("Log", "http://schemas.microsoft.com/windowsazure"));
+                                if (logElement != null)
+                                {
+                                    string logInstance = logElement.Value;
+                                    backupItemInstance.Log = logInstance;
+                                }
+                                
+                                XElement databasesSequenceElement = backupItemsElement2.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                                if (databasesSequenceElement != null)
+                                {
+                                    foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
+                                        backupItemInstance.Databases.Add(databaseBackupSettingInstance);
+                                        
+                                        XElement connectionStringElement = databasesElement.Element(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                        if (connectionStringElement != null)
+                                        {
+                                            string connectionStringInstance = connectionStringElement.Value;
+                                            databaseBackupSettingInstance.ConnectionString = connectionStringInstance;
+                                        }
+                                        
+                                        XElement connectionStringNameElement = databasesElement.Element(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                        if (connectionStringNameElement != null)
+                                        {
+                                            string connectionStringNameInstance = connectionStringNameElement.Value;
+                                            databaseBackupSettingInstance.ConnectionStringName = connectionStringNameInstance;
+                                        }
+                                        
+                                        XElement databaseTypeElement = databasesElement.Element(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (databaseTypeElement != null)
+                                        {
+                                            string databaseTypeInstance = databaseTypeElement.Value;
+                                            databaseBackupSettingInstance.DatabaseType = databaseTypeInstance;
+                                        }
+                                        
+                                        XElement nameElement2 = databasesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement2 != null)
+                                        {
+                                            string nameInstance2 = nameElement2.Value;
+                                            databaseBackupSettingInstance.Name = nameInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                XElement scheduledElement = backupItemsElement2.Element(XName.Get("Scheduled", "http://schemas.microsoft.com/windowsazure"));
+                                if (scheduledElement != null)
+                                {
+                                    bool scheduledInstance = bool.Parse(scheduledElement.Value);
+                                    backupItemInstance.Scheduled = scheduledInstance;
+                                }
+                                
+                                XElement lastRestoreTimeStampElement = backupItemsElement2.Element(XName.Get("LastRestoreTimeStamp", "http://schemas.microsoft.com/windowsazure"));
+                                if (lastRestoreTimeStampElement != null && string.IsNullOrEmpty(lastRestoreTimeStampElement.Value) == false)
+                                {
+                                    DateTime lastRestoreTimeStampInstance = DateTime.Parse(lastRestoreTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                    backupItemInstance.LastRestoreTimeStamp = lastRestoreTimeStampInstance;
+                                }
+                                
+                                XElement finishedTimeStampElement = backupItemsElement2.Element(XName.Get("FinishedTimeStamp", "http://schemas.microsoft.com/windowsazure"));
+                                if (finishedTimeStampElement != null && string.IsNullOrEmpty(finishedTimeStampElement.Value) == false)
+                                {
+                                    DateTime finishedTimeStampInstance = DateTime.Parse(finishedTimeStampElement.Value, CultureInfo.InvariantCulture);
+                                    backupItemInstance.FinishedTimeStamp = finishedTimeStampInstance;
+                                }
+                                
+                                XElement correlationIdElement = backupItemsElement2.Element(XName.Get("CorrelationId", "http://schemas.microsoft.com/windowsazure"));
+                                if (correlationIdElement != null)
+                                {
+                                    string correlationIdInstance = correlationIdElement.Value;
+                                    backupItemInstance.CorrelationId = correlationIdInstance;
+                                }
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -3982,7 +4618,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4017,6 +4653,234 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     // Create Result
                     OperationResponse result = null;
                     result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRestoreResponse> RestoreAsync(string webSpaceName, string webSiteName, RestoreRequest restoreRequest, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (restoreRequest == null)
+            {
+                throw new ArgumentNullException("restoreRequest");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("restoreRequest", restoreRequest);
+                Tracing.Enter(invocationId, this, "RestoreAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/restore";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement restoreRequestElement = new XElement(XName.Get("RestoreRequest", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(restoreRequestElement);
+                
+                XElement adjustConnectionStringsElement = new XElement(XName.Get("AdjustConnectionStrings", "http://schemas.microsoft.com/windowsazure"));
+                adjustConnectionStringsElement.Value = restoreRequest.AdjustConnectionStrings.ToString().ToLower();
+                restoreRequestElement.Add(adjustConnectionStringsElement);
+                
+                if (restoreRequest.BlobName != null)
+                {
+                    XElement blobNameElement = new XElement(XName.Get("BlobName", "http://schemas.microsoft.com/windowsazure"));
+                    blobNameElement.Value = restoreRequest.BlobName;
+                    restoreRequestElement.Add(blobNameElement);
+                }
+                
+                if (restoreRequest.Databases != null)
+                {
+                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    {
+                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                        databasesSequenceElement.Add(databaseBackupSettingElement);
+                        
+                        if (databasesItem.ConnectionString != null)
+                        {
+                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringElement.Value = databasesItem.ConnectionString;
+                            databaseBackupSettingElement.Add(connectionStringElement);
+                        }
+                        
+                        if (databasesItem.ConnectionStringName != null)
+                        {
+                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                            databaseBackupSettingElement.Add(connectionStringNameElement);
+                        }
+                        
+                        if (databasesItem.DatabaseType != null)
+                        {
+                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                            databaseTypeElement.Value = databasesItem.DatabaseType;
+                            databaseBackupSettingElement.Add(databaseTypeElement);
+                        }
+                        
+                        if (databasesItem.Name != null)
+                        {
+                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            nameElement.Value = databasesItem.Name;
+                            databaseBackupSettingElement.Add(nameElement);
+                        }
+                    }
+                    restoreRequestElement.Add(databasesSequenceElement);
+                }
+                
+                XElement ignoreConflictingHostNamesElement = new XElement(XName.Get("IgnoreConflictingHostNames", "http://schemas.microsoft.com/windowsazure"));
+                ignoreConflictingHostNamesElement.Value = restoreRequest.IgnoreConflictingHostNames.ToString().ToLower();
+                restoreRequestElement.Add(ignoreConflictingHostNamesElement);
+                
+                XElement overwriteElement = new XElement(XName.Get("Overwrite", "http://schemas.microsoft.com/windowsazure"));
+                overwriteElement.Value = restoreRequest.Overwrite.ToString().ToLower();
+                restoreRequestElement.Add(overwriteElement);
+                
+                if (restoreRequest.StorageAccountUrl != null)
+                {
+                    XElement storageAccountUrlElement = new XElement(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                    storageAccountUrlElement.Value = restoreRequest.StorageAccountUrl;
+                    restoreRequestElement.Add(storageAccountUrlElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    WebSiteRestoreResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new WebSiteRestoreResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement restoreResponseElement = responseDoc.Element(XName.Get("RestoreResponse", "http://schemas.microsoft.com/windowsazure"));
+                    if (restoreResponseElement != null)
+                    {
+                        XElement operationIdElement = restoreResponseElement.Element(XName.Get("OperationId", "http://schemas.microsoft.com/windowsazure"));
+                        if (operationIdElement != null)
+                        {
+                            string operationIdInstance = operationIdElement.Value;
+                            result.OperationId = operationIdInstance;
+                        }
+                    }
+                    
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -4096,7 +4960,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                WebSiteOperationStatusResponse response = await client.WebSites.BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, cancellationToken).ConfigureAwait(false);
+                WebSiteOperationStatusResponse response = await client.WebSites.BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, cancellationToken).ConfigureAwait(false);
                 if (response.Status == WebSiteOperationStatus.Succeeded)
                 {
                     return response;
@@ -4230,7 +5094,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4330,6 +5194,20 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.HostNameSslStates != null)
+            {
+                foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesParameterItem in parameters.HostNameSslStates)
+                {
+                    if (hostNameSslStatesParameterItem.Name == null)
+                    {
+                        throw new ArgumentNullException("parameters.HostNameSslStates.Name");
+                    }
+                    if (hostNameSslStatesParameterItem.SslState == null)
+                    {
+                        throw new ArgumentNullException("parameters.HostNameSslStates.SslState");
+                    }
+                }
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -4368,7 +5246,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4381,27 +5259,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 XElement siteElement = new XElement(XName.Get("Site", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(siteElement);
                 
-                if (parameters.AvailabilityState != null)
-                {
-                    XElement availabilityStateElement = new XElement(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                    availabilityStateElement.Value = parameters.AvailabilityState.ToString();
-                    siteElement.Add(availabilityStateElement);
-                }
-                
-                if (parameters.ComputeMode != null)
-                {
-                    XElement computeModeElement = new XElement(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                    computeModeElement.Value = parameters.ComputeMode.ToString();
-                    siteElement.Add(computeModeElement);
-                }
-                
-                if (parameters.Enabled != null)
-                {
-                    XElement enabledElement = new XElement(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
-                    enabledElement.Value = parameters.Enabled.ToString().ToLower();
-                    siteElement.Add(enabledElement);
-                }
-                
                 if (parameters.HostNameSslStates != null)
                 {
                     XElement hostNameSslStatesSequenceElement = new XElement(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
@@ -4410,12 +5267,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement webSiteHostNameSslStateElement = new XElement(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure"));
                         hostNameSslStatesSequenceElement.Add(webSiteHostNameSslStateElement);
                         
-                        if (hostNameSslStatesItem.SslState != null)
-                        {
-                            XElement sslStateElement = new XElement(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
-                            sslStateElement.Value = hostNameSslStatesItem.SslState.ToString();
-                            webSiteHostNameSslStateElement.Add(sslStateElement);
-                        }
+                        XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        nameElement.Value = hostNameSslStatesItem.Name;
+                        webSiteHostNameSslStateElement.Add(nameElement);
+                        
+                        XElement sslStateElement = new XElement(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
+                        sslStateElement.Value = hostNameSslStatesItem.SslState.ToString();
+                        webSiteHostNameSslStateElement.Add(sslStateElement);
                         
                         if (hostNameSslStatesItem.Thumbprint != null)
                         {
@@ -4432,12 +5290,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteHostNameSslStateElement.Add(emptyElement);
                         }
                         
-                        if (hostNameSslStatesItem.ToUpdate != null)
-                        {
-                            XElement toUpdateElement = new XElement(XName.Get("ToUpdate", "http://schemas.microsoft.com/windowsazure"));
-                            toUpdateElement.Value = hostNameSslStatesItem.ToUpdate.ToString().ToLower();
-                            webSiteHostNameSslStateElement.Add(toUpdateElement);
-                        }
+                        XElement toUpdateElement = new XElement(XName.Get("ToUpdate", "http://schemas.microsoft.com/windowsazure"));
+                        toUpdateElement.Value = "true";
+                        webSiteHostNameSslStateElement.Add(toUpdateElement);
                     }
                     siteElement.Add(hostNameSslStatesSequenceElement);
                 }
@@ -4454,64 +5309,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteElement.Add(hostNamesSequenceElement);
                 }
                 
-                if (parameters.RuntimeAvailabilityState != null)
-                {
-                    XElement runtimeAvailabilityStateElement = new XElement(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                    runtimeAvailabilityStateElement.Value = parameters.RuntimeAvailabilityState.ToString();
-                    siteElement.Add(runtimeAvailabilityStateElement);
-                }
-                
-                if (parameters.SslCertificates != null)
-                {
-                    XElement sSLCertificatesSequenceElement = new XElement(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (WebSiteUpdateParameters.WebSiteSslCertificate sSLCertificatesItem in parameters.SslCertificates)
-                    {
-                        XElement certificateElement = new XElement(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure"));
-                        sSLCertificatesSequenceElement.Add(certificateElement);
-                        
-                        if (sSLCertificatesItem.Password != null)
-                        {
-                            XElement passwordElement = new XElement(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                            passwordElement.Value = sSLCertificatesItem.Password;
-                            certificateElement.Add(passwordElement);
-                        }
-                        
-                        if (sSLCertificatesItem.PfxBlob != null)
-                        {
-                            XElement pfxBlobElement = new XElement(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
-                            pfxBlobElement.Value = Convert.ToBase64String(sSLCertificatesItem.PfxBlob);
-                            certificateElement.Add(pfxBlobElement);
-                        }
-                        
-                        if (sSLCertificatesItem.Thumbprint != null)
-                        {
-                            XElement thumbprintElement2 = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            thumbprintElement2.Value = sSLCertificatesItem.Thumbprint;
-                            certificateElement.Add(thumbprintElement2);
-                        }
-                        
-                        if (sSLCertificatesItem.IsToBeDeleted != null)
-                        {
-                            XElement toDeleteElement = new XElement(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
-                            toDeleteElement.Value = sSLCertificatesItem.IsToBeDeleted.ToString().ToLower();
-                            certificateElement.Add(toDeleteElement);
-                        }
-                    }
-                    siteElement.Add(sSLCertificatesSequenceElement);
-                }
-                
                 if (parameters.ServerFarm != null)
                 {
                     XElement serverFarmElement = new XElement(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
                     serverFarmElement.Value = parameters.ServerFarm;
                     siteElement.Add(serverFarmElement);
-                }
-                
-                if (parameters.SiteMode != null)
-                {
-                    XElement siteModeElement = new XElement(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                    siteModeElement.Value = parameters.SiteMode.ToString();
-                    siteElement.Add(siteModeElement);
                 }
                 
                 if (parameters.State != null)
@@ -4523,7 +5325,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4572,24 +5374,24 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AdminEnabled = adminEnabledInstance;
                         }
                         
-                        XElement availabilityStateElement2 = siteElement2.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                        if (availabilityStateElement2 != null && string.IsNullOrEmpty(availabilityStateElement2.Value) == false)
+                        XElement availabilityStateElement = siteElement2.Element(XName.Get("AvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                        if (availabilityStateElement != null && string.IsNullOrEmpty(availabilityStateElement.Value) == false)
                         {
-                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement2.Value, true));
+                            WebSpaceAvailabilityState availabilityStateInstance = ((WebSpaceAvailabilityState)Enum.Parse(typeof(WebSpaceAvailabilityState), availabilityStateElement.Value, true));
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement computeModeElement2 = siteElement2.Element(XName.Get("ComputeMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (computeModeElement2 != null && string.IsNullOrEmpty(computeModeElement2.Value) == false)
+                        XElement skuElement = siteElement2.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
+                        if (skuElement != null)
                         {
-                            WebSiteComputeMode computeModeInstance = ((WebSiteComputeMode)Enum.Parse(typeof(WebSiteComputeMode), computeModeElement2.Value, true));
-                            webSiteInstance.ComputeMode = computeModeInstance;
+                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
+                            webSiteInstance.Sku = skuInstance;
                         }
                         
-                        XElement enabledElement2 = siteElement2.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
-                        if (enabledElement2 != null && string.IsNullOrEmpty(enabledElement2.Value) == false)
+                        XElement enabledElement = siteElement2.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                        if (enabledElement != null && string.IsNullOrEmpty(enabledElement.Value) == false)
                         {
-                            bool enabledInstance = bool.Parse(enabledElement2.Value);
+                            bool enabledInstance = bool.Parse(enabledElement.Value);
                             webSiteInstance.Enabled = enabledInstance;
                         }
                         
@@ -4610,10 +5412,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
                                 webSiteInstance.HostNameSslStates.Add(hostNameSslStateInstance);
                                 
-                                XElement nameElement = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement != null)
+                                XElement nameElement2 = hostNameSslStatesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
                                 {
-                                    string nameInstance = nameElement.Value;
+                                    string nameInstance = nameElement2.Value;
                                     hostNameSslStateInstance.Name = nameInstance;
                                 }
                                 
@@ -4624,18 +5426,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     hostNameSslStateInstance.SslState = sslStateInstance;
                                 }
                                 
-                                XElement thumbprintElement3 = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                if (thumbprintElement3 != null)
+                                XElement thumbprintElement2 = hostNameSslStatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                if (thumbprintElement2 != null)
                                 {
                                     bool isNil = false;
-                                    XAttribute nilAttribute2 = thumbprintElement3.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
+                                    XAttribute nilAttribute2 = thumbprintElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
                                     if (nilAttribute2 != null)
                                     {
                                         isNil = nilAttribute2.Value == "true";
                                     }
                                     if (isNil == false)
                                     {
-                                        string thumbprintInstance = thumbprintElement3.Value;
+                                        string thumbprintInstance = thumbprintElement2.Value;
                                         hostNameSslStateInstance.Thumbprint = thumbprintInstance;
                                     }
                                 }
@@ -4674,27 +5476,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.LastModifiedTimeUtc = lastModifiedTimeUtcInstance;
                         }
                         
-                        XElement nameElement2 = siteElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement2 != null)
+                        XElement nameElement3 = siteElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement3 != null)
                         {
-                            string nameInstance2 = nameElement2.Value;
+                            string nameInstance2 = nameElement3.Value;
                             webSiteInstance.Name = nameInstance2;
-                        }
-                        
-                        XElement ownerElement = siteElement2.Element(XName.Get("Owner", "http://schemas.microsoft.com/windowsazure"));
-                        if (ownerElement != null)
-                        {
-                            bool isNil3 = false;
-                            XAttribute nilAttribute4 = ownerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute4 != null)
-                            {
-                                isNil3 = nilAttribute4.Value == "true";
-                            }
-                            if (isNil3 == false)
-                            {
-                                string ownerInstance = ownerElement.Value;
-                                webSiteInstance.Owner = ownerInstance;
-                            }
                         }
                         
                         XElement repositorySiteNameElement = siteElement2.Element(XName.Get("RepositorySiteName", "http://schemas.microsoft.com/windowsazure"));
@@ -4704,255 +5490,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.RepositorySiteName = repositorySiteNameInstance;
                         }
                         
-                        XElement runtimeAvailabilityStateElement2 = siteElement2.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
-                        if (runtimeAvailabilityStateElement2 != null && string.IsNullOrEmpty(runtimeAvailabilityStateElement2.Value) == false)
+                        XElement runtimeAvailabilityStateElement = siteElement2.Element(XName.Get("RuntimeAvailabilityState", "http://schemas.microsoft.com/windowsazure"));
+                        if (runtimeAvailabilityStateElement != null && string.IsNullOrEmpty(runtimeAvailabilityStateElement.Value) == false)
                         {
-                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement2.Value, true));
+                            WebSiteRuntimeAvailabilityState runtimeAvailabilityStateInstance = ((WebSiteRuntimeAvailabilityState)Enum.Parse(typeof(WebSiteRuntimeAvailabilityState), runtimeAvailabilityStateElement.Value, true));
                             webSiteInstance.RuntimeAvailabilityState = runtimeAvailabilityStateInstance;
                         }
                         
-                        XElement sSLCertificatesSequenceElement2 = siteElement2.Element(XName.Get("SSLCertificates", "http://schemas.microsoft.com/windowsazure"));
-                        if (sSLCertificatesSequenceElement2 != null)
+                        XElement selfLinkElement = siteElement2.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
+                        if (selfLinkElement != null)
                         {
-                            bool isNil4 = false;
-                            XAttribute nilAttribute5 = sSLCertificatesSequenceElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                            if (nilAttribute5 != null)
-                            {
-                                isNil4 = nilAttribute5.Value == "true";
-                            }
-                            if (isNil4 == false)
-                            {
-                                foreach (XElement sSLCertificatesElement in sSLCertificatesSequenceElement2.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
-                                {
-                                    WebSite.WebSiteSslCertificate certificateInstance = new WebSite.WebSiteSslCertificate();
-                                    webSiteInstance.SslCertificates.Add(certificateInstance);
-                                    
-                                    XElement expirationDateElement = sSLCertificatesElement.Element(XName.Get("ExpirationDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (expirationDateElement != null && string.IsNullOrEmpty(expirationDateElement.Value) == false)
-                                    {
-                                        bool isNil5 = false;
-                                        XAttribute nilAttribute6 = expirationDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute6 != null)
-                                        {
-                                            isNil5 = nilAttribute6.Value == "true";
-                                        }
-                                        if (isNil5 == false)
-                                        {
-                                            DateTime expirationDateInstance = DateTime.Parse(expirationDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.ExpirationDate = expirationDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement friendlyNameElement = sSLCertificatesElement.Element(XName.Get("FriendlyName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (friendlyNameElement != null)
-                                    {
-                                        bool isNil6 = false;
-                                        XAttribute nilAttribute7 = friendlyNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute7 != null)
-                                        {
-                                            isNil6 = nilAttribute7.Value == "true";
-                                        }
-                                        if (isNil6 == false)
-                                        {
-                                            string friendlyNameInstance = friendlyNameElement.Value;
-                                            certificateInstance.FriendlyName = friendlyNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement hostNamesSequenceElement3 = sSLCertificatesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                                    if (hostNamesSequenceElement3 != null)
-                                    {
-                                        bool isNil7 = false;
-                                        XAttribute nilAttribute8 = hostNamesSequenceElement3.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute8 != null)
-                                        {
-                                            isNil7 = nilAttribute8.Value == "true";
-                                        }
-                                        if (isNil7 == false)
-                                        {
-                                            foreach (XElement hostNamesElement2 in hostNamesSequenceElement3.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
-                                            {
-                                                certificateInstance.HostNames.Add(hostNamesElement2.Value);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            certificateInstance.HostNames = null;
-                                        }
-                                    }
-                                    
-                                    XElement issueDateElement = sSLCertificatesElement.Element(XName.Get("IssueDate", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issueDateElement != null && string.IsNullOrEmpty(issueDateElement.Value) == false)
-                                    {
-                                        bool isNil8 = false;
-                                        XAttribute nilAttribute9 = issueDateElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute9 != null)
-                                        {
-                                            isNil8 = nilAttribute9.Value == "true";
-                                        }
-                                        if (isNil8 == false)
-                                        {
-                                            DateTime issueDateInstance = DateTime.Parse(issueDateElement.Value, CultureInfo.InvariantCulture);
-                                            certificateInstance.IssueDate = issueDateInstance;
-                                        }
-                                    }
-                                    
-                                    XElement issuerElement = sSLCertificatesElement.Element(XName.Get("Issuer", "http://schemas.microsoft.com/windowsazure"));
-                                    if (issuerElement != null)
-                                    {
-                                        bool isNil9 = false;
-                                        XAttribute nilAttribute10 = issuerElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute10 != null)
-                                        {
-                                            isNil9 = nilAttribute10.Value == "true";
-                                        }
-                                        if (isNil9 == false)
-                                        {
-                                            string issuerInstance = issuerElement.Value;
-                                            certificateInstance.Issuer = issuerInstance;
-                                        }
-                                    }
-                                    
-                                    XElement passwordElement2 = sSLCertificatesElement.Element(XName.Get("Password", "http://schemas.microsoft.com/windowsazure"));
-                                    if (passwordElement2 != null)
-                                    {
-                                        bool isNil10 = false;
-                                        XAttribute nilAttribute11 = passwordElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute11 != null)
-                                        {
-                                            isNil10 = nilAttribute11.Value == "true";
-                                        }
-                                        if (isNil10 == false)
-                                        {
-                                            string passwordInstance = passwordElement2.Value;
-                                            certificateInstance.Password = passwordInstance;
-                                        }
-                                    }
-                                    
-                                    XElement pfxBlobElement2 = sSLCertificatesElement.Element(XName.Get("PfxBlob", "http://schemas.microsoft.com/windowsazure"));
-                                    if (pfxBlobElement2 != null)
-                                    {
-                                        bool isNil11 = false;
-                                        XAttribute nilAttribute12 = pfxBlobElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute12 != null)
-                                        {
-                                            isNil11 = nilAttribute12.Value == "true";
-                                        }
-                                        if (isNil11 == false)
-                                        {
-                                            byte[] pfxBlobInstance = Convert.FromBase64String(pfxBlobElement2.Value);
-                                            certificateInstance.PfxBlob = pfxBlobInstance;
-                                        }
-                                    }
-                                    
-                                    XElement selfLinkElement = sSLCertificatesElement.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                                    if (selfLinkElement != null)
-                                    {
-                                        bool isNil12 = false;
-                                        XAttribute nilAttribute13 = selfLinkElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute13 != null)
-                                        {
-                                            isNil12 = nilAttribute13.Value == "true";
-                                        }
-                                        if (isNil12 == false)
-                                        {
-                                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
-                                            certificateInstance.SelfLinkUri = selfLinkInstance;
-                                        }
-                                    }
-                                    
-                                    XElement siteNameElement = sSLCertificatesElement.Element(XName.Get("SiteName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (siteNameElement != null)
-                                    {
-                                        bool isNil13 = false;
-                                        XAttribute nilAttribute14 = siteNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute14 != null)
-                                        {
-                                            isNil13 = nilAttribute14.Value == "true";
-                                        }
-                                        if (isNil13 == false)
-                                        {
-                                            string siteNameInstance = siteNameElement.Value;
-                                            certificateInstance.SiteName = siteNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement subjectNameElement = sSLCertificatesElement.Element(XName.Get("SubjectName", "http://schemas.microsoft.com/windowsazure"));
-                                    if (subjectNameElement != null)
-                                    {
-                                        bool isNil14 = false;
-                                        XAttribute nilAttribute15 = subjectNameElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute15 != null)
-                                        {
-                                            isNil14 = nilAttribute15.Value == "true";
-                                        }
-                                        if (isNil14 == false)
-                                        {
-                                            string subjectNameInstance = subjectNameElement.Value;
-                                            certificateInstance.SubjectName = subjectNameInstance;
-                                        }
-                                    }
-                                    
-                                    XElement thumbprintElement4 = sSLCertificatesElement.Element(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                                    if (thumbprintElement4 != null)
-                                    {
-                                        bool isNil15 = false;
-                                        XAttribute nilAttribute16 = thumbprintElement4.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute16 != null)
-                                        {
-                                            isNil15 = nilAttribute16.Value == "true";
-                                        }
-                                        if (isNil15 == false)
-                                        {
-                                            string thumbprintInstance2 = thumbprintElement4.Value;
-                                            certificateInstance.Thumbprint = thumbprintInstance2;
-                                        }
-                                    }
-                                    
-                                    XElement toDeleteElement2 = sSLCertificatesElement.Element(XName.Get("ToDelete", "http://schemas.microsoft.com/windowsazure"));
-                                    if (toDeleteElement2 != null && string.IsNullOrEmpty(toDeleteElement2.Value) == false)
-                                    {
-                                        bool isNil16 = false;
-                                        XAttribute nilAttribute17 = toDeleteElement2.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute17 != null)
-                                        {
-                                            isNil16 = nilAttribute17.Value == "true";
-                                        }
-                                        if (isNil16 == false)
-                                        {
-                                            bool toDeleteInstance = bool.Parse(toDeleteElement2.Value);
-                                            certificateInstance.IsToBeDeleted = toDeleteInstance;
-                                        }
-                                    }
-                                    
-                                    XElement validElement = sSLCertificatesElement.Element(XName.Get("Valid", "http://schemas.microsoft.com/windowsazure"));
-                                    if (validElement != null && string.IsNullOrEmpty(validElement.Value) == false)
-                                    {
-                                        bool isNil17 = false;
-                                        XAttribute nilAttribute18 = validElement.Attribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"));
-                                        if (nilAttribute18 != null)
-                                        {
-                                            isNil17 = nilAttribute18.Value == "true";
-                                        }
-                                        if (isNil17 == false)
-                                        {
-                                            bool validInstance = bool.Parse(validElement.Value);
-                                            certificateInstance.IsValid = validInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                webSiteInstance.SslCertificates = null;
-                            }
-                        }
-                        
-                        XElement selfLinkElement2 = siteElement2.Element(XName.Get("SelfLink", "http://schemas.microsoft.com/windowsazure"));
-                        if (selfLinkElement2 != null)
-                        {
-                            Uri selfLinkInstance2 = TypeConversion.TryParseUri(selfLinkElement2.Value);
-                            webSiteInstance.Uri = selfLinkInstance2;
+                            Uri selfLinkInstance = TypeConversion.TryParseUri(selfLinkElement.Value);
+                            webSiteInstance.Uri = selfLinkInstance;
                         }
                         
                         XElement serverFarmElement2 = siteElement2.Element(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure"));
@@ -4960,13 +5509,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         {
                             string serverFarmInstance = serverFarmElement2.Value;
                             webSiteInstance.ServerFarm = serverFarmInstance;
-                        }
-                        
-                        XElement siteModeElement2 = siteElement2.Element(XName.Get("SiteMode", "http://schemas.microsoft.com/windowsazure"));
-                        if (siteModeElement2 != null && string.IsNullOrEmpty(siteModeElement2.Value) == false)
-                        {
-                            WebSiteMode siteModeInstance = ((WebSiteMode)Enum.Parse(typeof(WebSiteMode), siteModeElement2.Value, true));
-                            webSiteInstance.SiteMode = siteModeInstance;
                         }
                         
                         XElement sitePropertiesElement = siteElement2.Element(XName.Get("SiteProperties", "http://schemas.microsoft.com/windowsazure"));
@@ -5031,6 +5573,249 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup schedule specification.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateBackupConfigurationAsync(string webSpaceName, string webSiteName, BackupRequest backupRequest, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (backupRequest == null)
+            {
+                throw new ArgumentNullException("backupRequest");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("backupRequest", backupRequest);
+                Tracing.Enter(invocationId, this, "UpdateBackupConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/backup/config";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                XDocument requestDoc = new XDocument();
+                
+                XElement backupRequestElement = new XElement(XName.Get("BackupRequest", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(backupRequestElement);
+                
+                if (backupRequest.BackupSchedule != null)
+                {
+                    XElement backupScheduleElement = new XElement(XName.Get("BackupSchedule", "http://schemas.microsoft.com/windowsazure"));
+                    backupRequestElement.Add(backupScheduleElement);
+                    
+                    XElement frequencyIntervalElement = new XElement(XName.Get("FrequencyInterval", "http://schemas.microsoft.com/windowsazure"));
+                    frequencyIntervalElement.Value = backupRequest.BackupSchedule.FrequencyInterval.ToString();
+                    backupScheduleElement.Add(frequencyIntervalElement);
+                    
+                    XElement frequencyUnitElement = new XElement(XName.Get("FrequencyUnit", "http://schemas.microsoft.com/windowsazure"));
+                    frequencyUnitElement.Value = backupRequest.BackupSchedule.FrequencyUnit.ToString();
+                    backupScheduleElement.Add(frequencyUnitElement);
+                    
+                    XElement keepAtLeastOneBackupElement = new XElement(XName.Get("KeepAtLeastOneBackup", "http://schemas.microsoft.com/windowsazure"));
+                    keepAtLeastOneBackupElement.Value = backupRequest.BackupSchedule.KeepAtLeastOneBackup.ToString().ToLower();
+                    backupScheduleElement.Add(keepAtLeastOneBackupElement);
+                    
+                    if (backupRequest.BackupSchedule.LastExecutionTime != null)
+                    {
+                        XElement lastExecutionTimeElement = new XElement(XName.Get("LastExecutionTime", "http://schemas.microsoft.com/windowsazure"));
+                        lastExecutionTimeElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", backupRequest.BackupSchedule.LastExecutionTime.Value.ToUniversalTime());
+                        backupScheduleElement.Add(lastExecutionTimeElement);
+                    }
+                    
+                    XElement retentionPeriodInDaysElement = new XElement(XName.Get("RetentionPeriodInDays", "http://schemas.microsoft.com/windowsazure"));
+                    retentionPeriodInDaysElement.Value = backupRequest.BackupSchedule.RetentionPeriodInDays.ToString();
+                    backupScheduleElement.Add(retentionPeriodInDaysElement);
+                    
+                    if (backupRequest.BackupSchedule.StartTime != null)
+                    {
+                        XElement startTimeElement = new XElement(XName.Get("StartTime", "http://schemas.microsoft.com/windowsazure"));
+                        startTimeElement.Value = string.Format(CultureInfo.InvariantCulture, "{0:O}", backupRequest.BackupSchedule.StartTime.Value.ToUniversalTime());
+                        backupScheduleElement.Add(startTimeElement);
+                    }
+                }
+                
+                if (backupRequest.Databases != null)
+                {
+                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    {
+                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                        databasesSequenceElement.Add(databaseBackupSettingElement);
+                        
+                        if (databasesItem.ConnectionString != null)
+                        {
+                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringElement.Value = databasesItem.ConnectionString;
+                            databaseBackupSettingElement.Add(connectionStringElement);
+                        }
+                        
+                        if (databasesItem.ConnectionStringName != null)
+                        {
+                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                            databaseBackupSettingElement.Add(connectionStringNameElement);
+                        }
+                        
+                        if (databasesItem.DatabaseType != null)
+                        {
+                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                            databaseTypeElement.Value = databasesItem.DatabaseType;
+                            databaseBackupSettingElement.Add(databaseTypeElement);
+                        }
+                        
+                        if (databasesItem.Name != null)
+                        {
+                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            nameElement.Value = databasesItem.Name;
+                            databaseBackupSettingElement.Add(nameElement);
+                        }
+                    }
+                    backupRequestElement.Add(databasesSequenceElement);
+                }
+                
+                if (backupRequest.Enabled != null)
+                {
+                    XElement enabledElement = new XElement(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
+                    enabledElement.Value = backupRequest.Enabled.ToString().ToLower();
+                    backupRequestElement.Add(enabledElement);
+                }
+                
+                if (backupRequest.Name != null)
+                {
+                    XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement2.Value = backupRequest.Name;
+                    backupRequestElement.Add(nameElement2);
+                }
+                
+                if (backupRequest.StorageAccountUrl != null)
+                {
+                    XElement storageAccountUrlElement = new XElement(XName.Get("StorageAccountUrl", "http://schemas.microsoft.com/windowsazure"));
+                    storageAccountUrlElement.Value = backupRequest.StorageAccountUrl;
+                    backupRequestElement.Add(storageAccountUrlElement);
+                }
+                
+                requestContent = requestDoc.ToString();
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -5137,7 +5922,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/json");
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5183,7 +5968,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             connectionStringInfoValue["Name"] = connectionStringsItem.Name;
                         }
                         
-                        connectionStringInfoValue["Type"] = connectionStringsItem.Type.ToString();
+                        connectionStringInfoValue["Type"] = WebSiteManagementClient.ConnectionStringTypeToString(connectionStringsItem.Type);
                     }
                     webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                 }
@@ -5246,7 +6031,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = parameters.ManagedPipelineMode.ToString();
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode);
                 }
                 
                 JArray metadataDictionary = new JArray();
@@ -5279,16 +6064,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     webSiteUpdateConfigurationParametersValue["PhpVersion"] = parameters.PhpVersion;
                 }
                 
-                if (parameters.PublishingPassword != null)
-                {
-                    webSiteUpdateConfigurationParametersValue["PublishingPassword"] = parameters.PublishingPassword;
-                }
-                
-                if (parameters.PublishingUserName != null)
-                {
-                    webSiteUpdateConfigurationParametersValue["PublishingUsername"] = parameters.PublishingUserName;
-                }
-                
                 if (parameters.RemoteDebuggingEnabled != null)
                 {
                     webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled;
@@ -5319,6 +6094,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 if (parameters.WebSocketsEnabled != null)
                 {
                     webSiteUpdateConfigurationParametersValue["WebSocketsEnabled"] = parameters.WebSocketsEnabled;
+                }
+                
+                if (parameters.AlwaysOn != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["AlwaysOn"] = parameters.AlwaysOn;
                 }
                 
                 if (parameters.RoutingRules != null)
@@ -5376,7 +6156,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

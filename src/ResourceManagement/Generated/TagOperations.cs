@@ -204,6 +204,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valuesArray = responseDoc["values"];
                         if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                         {
+                            tagInstance.Values = new List<TagValue>();
                             foreach (JToken valuesValue in ((JArray)valuesArray))
                             {
                                 TagValue tagValueInstance = new TagValue();
@@ -797,6 +798,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Tags = new List<TagDetails>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 TagDetails tagDetailsInstance = new TagDetails();
@@ -840,6 +842,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken valuesArray = valueValue["values"];
                                 if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                 {
+                                    tagDetailsInstance.Values = new List<TagValue>();
                                     foreach (JToken valuesValue in ((JArray)valuesArray))
                                     {
                                         TagValue tagValueInstance = new TagValue();
@@ -1013,6 +1016,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Tags = new List<TagDetails>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 TagDetails tagDetailsInstance = new TagDetails();
@@ -1056,6 +1060,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken valuesArray = valueValue["values"];
                                 if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                 {
+                                    tagDetailsInstance.Values = new List<TagValue>();
                                     foreach (JToken valuesValue in ((JArray)valuesArray))
                                     {
                                         TagValue tagValueInstance = new TagValue();

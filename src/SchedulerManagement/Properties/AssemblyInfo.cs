@@ -17,15 +17,15 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Windows Azure Scheduler Management Library")]
-[assembly: AssemblyDescription("Provides Windows Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.")]
+[assembly: AssemblyTitle("Microsoft Azure Scheduler Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Scheduler management operations including the ability to create, update and delete scheduled jobs and get job status and history.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.1.0.0")]
+[assembly: AssemblyFileVersion("2.2.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Windows Azure .NET SDK")]
+[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

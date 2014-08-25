@@ -74,6 +74,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public partial class ResourceExtension
         {
+            private string _companyName;
+            
+            /// <summary>
+            /// Optional. String property containing the name of the
+            /// company/organization who publishes the extension.
+            /// </summary>
+            public string CompanyName
+            {
+                get { return this._companyName; }
+                set { this._companyName = value; }
+            }
+            
             private string _description;
             
             /// <summary>
@@ -210,6 +222,20 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._publicConfigurationSchema = value; }
             }
             
+            private System.DateTime? _publishedDate;
+            
+            /// <summary>
+            /// Optional. Publisher can set it to any arbitrary date, and this
+            /// is only for display purpose. If not specified by publisher,
+            /// Azure will automatically assign the UTC time when the
+            /// extension request was received.
+            /// </summary>
+            public System.DateTime? PublishedDate
+            {
+                get { return this._publishedDate; }
+                set { this._publishedDate = value; }
+            }
+            
             private string _publisher;
             
             /// <summary>
@@ -249,6 +275,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._sampleConfig; }
                 set { this._sampleConfig = value; }
+            }
+            
+            private string _supportedOS;
+            
+            /// <summary>
+            /// Optional. String property indicating the OS which the extension
+            /// supports. Current values are 'Windows' or 'Linux'.
+            /// </summary>
+            public string SupportedOS
+            {
+                get { return this._supportedOS; }
+                set { this._supportedOS = value; }
             }
             
             private string _version;

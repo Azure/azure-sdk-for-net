@@ -1692,7 +1692,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the alert rule.
+        /// Optional. The resource uri of the target of the alert rule.
         /// </param>
         /// <returns>
         /// The List Rules operation response.
@@ -1717,7 +1717,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the alert rule.
+        /// Optional. The resource uri of the target of the alert rule.
         /// </param>
         /// <returns>
         /// The List Rules operation response.
@@ -2095,7 +2095,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2634,7 +2634,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the alert rule.
+        /// Optional. The resource uri of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -3205,7 +3205,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

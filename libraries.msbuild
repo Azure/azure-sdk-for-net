@@ -4,7 +4,7 @@
   <PropertyGroup>
     <CommonSolution>WindowsAzureCommonLibraries.sln</CommonSolution>
     <ManagementLibrariesSolution>WindowsAzureManagementLibraries.sln</ManagementLibrariesSolution>
-    <ProductFriendlyName>Windows Azure Management Libraries</ProductFriendlyName>
+    <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
 
   <!--
-  Windows Azure Management Libraries SDK Builder Guide
+  Microsoft Azure Management Libraries SDK Builder Guide
   - - -
 
   Available Targets:
@@ -271,8 +271,8 @@
     </ItemGroup>
 
     <CodeSigningTask
-        Description="Windows Azure SDK"
-        Keywords="Windows Azure .NET SDK"
+        Description="Microsoft Azure SDK"
+        Keywords="Microsoft Azure .NET SDK"
         UnsignedFiles="@(AssembliesToBuild)"
         DestinationPath="binaries\"
         SigningLogPath="binaries\signing.log"
@@ -281,8 +281,8 @@
 
     <Message Text="Signing .NET Framework 4.0 assemblies..." />
     <CodeSigningTask
-      Description="Windows Azure SDK"
-      Keywords="Windows Azure .NET SDK"
+      Description="Microsoft Azure SDK"
+      Keywords="Microsoft Azure .NET SDK"
       UnsignedFiles="@(Net40AssembliesToBuild)"
       DestinationPath="binaries\net40\"
       SigningLogPath="binaries\net40\signing.log"

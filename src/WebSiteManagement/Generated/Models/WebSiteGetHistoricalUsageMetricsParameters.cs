@@ -43,6 +43,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._endTime = value; }
         }
         
+        private bool _includeInstanceBreakdown;
+        
+        /// <summary>
+        /// Optional. Flag which specifies if the metrics for each machine
+        /// instance should be included. For sites that run on more than one
+        /// machine this could be useful to identify a bad machine.
+        /// </summary>
+        public bool IncludeInstanceBreakdown
+        {
+            get { return this._includeInstanceBreakdown; }
+            set { this._includeInstanceBreakdown = value; }
+        }
+        
         private IList<string> _metricNames;
         
         /// <summary>
@@ -56,6 +69,25 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._metricNames = value; }
         }
         
+        private bool _slotView;
+        
+        /// <summary>
+        /// Optional. Flag which specifies if the metrics returned should
+        /// reflect slot swaps. Let's take for example following case: if
+        /// production slot has hostname www.contos.com and take traffic for
+        /// 12 hours and later is swapped with staging slot. Getting metrics
+        /// with SlotView=false will reflect the swap - e.g. there will be a
+        /// increase on the staging slot metrics after it goes to
+        /// production.If SlotView=true is used it will show the metrics for
+        /// the www.contoso.com regardless which slot was serving at the
+        /// moment.
+        /// </summary>
+        public bool SlotView
+        {
+            get { return this._slotView; }
+            set { this._slotView = value; }
+        }
+        
         private System.DateTime? _startTime;
         
         /// <summary>
@@ -67,6 +99,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._startTime; }
             set { this._startTime = value; }
+        }
+        
+        private string _timeGrain;
+        
+        /// <summary>
+        /// Optional. The grain at which the metrics are returned. Supported
+        /// values are PT1M (minute), PT1H (hour), P1D (day).
+        /// </summary>
+        public string TimeGrain
+        {
+            get { return this._timeGrain; }
+            set { this._timeGrain = value; }
         }
         
         /// <summary>

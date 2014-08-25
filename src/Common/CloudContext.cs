@@ -24,7 +24,7 @@ namespace Microsoft.WindowsAzure
 
     /// <summary>
     /// The CloudContext class is your primary entry point for getting started
-    /// with Windows Azure client libraries.  CloudContext.Clients contains
+    /// with Microsoft Azure client libraries.  CloudContext.Clients contains
     /// helpful methods to create any of the clients currently referenced in
     /// your project (be sure to import the Microsoft.WindowsAzure namespace so
     /// you import its extension methods).  CloudContext.Configuration allows

@@ -190,6 +190,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken resourceTypesArray = responseDoc["resourceTypes"];
                         if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                         {
+                            providerInstance.ResourceTypes = new List<ProviderResourceType>();
                             foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                             {
                                 ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -205,6 +206,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken locationsArray = resourceTypesValue["locations"];
                                 if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                 {
+                                    providerResourceTypeInstance.Locations = new List<string>();
                                     foreach (JToken locationsValue in ((JArray)locationsArray))
                                     {
                                         providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -348,6 +350,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Providers = new List<Provider>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Provider providerInstance = new Provider();
@@ -377,6 +380,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken resourceTypesArray = valueValue["resourceTypes"];
                                 if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                 {
+                                    providerInstance.ResourceTypes = new List<ProviderResourceType>();
                                     foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                     {
                                         ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -392,6 +396,7 @@ namespace Microsoft.Azure.Management.Resources
                                         JToken locationsArray = resourceTypesValue["locations"];
                                         if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                         {
+                                            providerResourceTypeInstance.Locations = new List<string>();
                                             foreach (JToken locationsValue in ((JArray)locationsArray))
                                             {
                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -531,6 +536,7 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Providers = new List<Provider>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Provider providerInstance = new Provider();
@@ -560,6 +566,7 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken resourceTypesArray = valueValue["resourceTypes"];
                                 if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                 {
+                                    providerInstance.ResourceTypes = new List<ProviderResourceType>();
                                     foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                     {
                                         ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -575,6 +582,7 @@ namespace Microsoft.Azure.Management.Resources
                                         JToken locationsArray = resourceTypesValue["locations"];
                                         if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                         {
+                                            providerResourceTypeInstance.Locations = new List<string>();
                                             foreach (JToken locationsValue in ((JArray)locationsArray))
                                             {
                                                 providerResourceTypeInstance.Locations.Add(((string)locationsValue));

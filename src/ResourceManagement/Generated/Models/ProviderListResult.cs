@@ -50,6 +50,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<Provider> Providers
         {
+            get
+            {
+                if (this._providers == null)
+                {
+                    this._providers = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.Provider>();
+                }
+                return this._providers;
+            }
+            set { this._providers = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of resource providers.
+        /// </summary>
+        public IList<Provider> ProvidersValue
+        {
             get { return this._providers; }
             set { this._providers = value; }
         }
@@ -59,7 +75,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ProviderListResult()
         {
-            this.Providers = new List<Provider>();
         }
     }
 }

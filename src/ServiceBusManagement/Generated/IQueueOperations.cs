@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus
@@ -54,6 +55,27 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A response to a request for a particular queue.
         /// </returns>
         Task<ServiceBusQueueResponse> CreateAsync(string namespaceName, ServiceBusQueueCreateParameters queue, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes an existing queue. This operation will also remove all
+        /// associated state including messages in the queue.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780747.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='queueName'>
+        /// The queue name.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string namespaceName, string queueName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The queue description is an XML AtomPub document that defines the

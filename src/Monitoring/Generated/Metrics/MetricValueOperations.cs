@@ -71,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
         /// Required. The names of the metrics.
         /// </param>
         /// <param name='metricNamespace'>
-        /// Required. The namespace of the metrics.
+        /// Optional. The namespace of the metrics.
         /// </param>
         /// <param name='timeGrain'>
         /// Required. The time grain of the metrics.

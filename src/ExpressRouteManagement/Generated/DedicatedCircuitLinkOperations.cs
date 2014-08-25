@@ -510,7 +510,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// key.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Required.
+        /// Optional.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -705,6 +705,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     string exStr = "A new dedicated circuit link could not be created due to an internal server error.";
                     throw new ArgumentException(exStr);
                 }
+                cancellationToken.ThrowIfCancellationRequested();
+                await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 DedicatedCircuitLinkGetResponse getResult = await client.DedicatedCircuitLinks.GetAsync(serviceKey, vnetName, cancellationToken).ConfigureAwait(false);
                 if (shouldTrace)

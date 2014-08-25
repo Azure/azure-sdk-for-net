@@ -556,7 +556,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='skipToken'>
-        /// Required. The skip token.
+        /// Optional. The skip token.
         /// </param>
         /// <returns>
         /// The response model for the list runbook operation.
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.Automation
         /// Required. The automation account name.
         /// </param>
         /// <param name='skipToken'>
-        /// Required. The skip token.
+        /// Optional. The skip token.
         /// </param>
         /// <returns>
         /// The response model for the list runbook operation.
