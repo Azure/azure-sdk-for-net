@@ -42,6 +42,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionEndpointConfiguration.InputEndpoint> InputEndpoints
         {
+            get
+            {
+                if (this._inputEndpoints == null)
+                {
+                    this._inputEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionEndpointConfiguration.InputEndpoint>();
+                }
+                return this._inputEndpoints;
+            }
+            set { this._inputEndpoints = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. A list of input endpoints required by this
+        /// extension. Supported on WebRole or WorkerRole, but ignored on
+        /// VmRole. Each input endpoint will be automatically added to the
+        /// service definition of the deployment utilizing this extension.
+        /// </summary>
+        public IList<ExtensionEndpointConfiguration.InputEndpoint> InputEndpointsValue
+        {
             get { return this._inputEndpoints; }
             set { this._inputEndpoints = value; }
         }
@@ -56,6 +75,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionEndpointConfiguration.InternalEndpoint> InternalEndpoints
         {
+            get
+            {
+                if (this._internalEndpoints == null)
+                {
+                    this._internalEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionEndpointConfiguration.InternalEndpoint>();
+                }
+                return this._internalEndpoints;
+            }
+            set { this._internalEndpoints = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. A list of internal endpoints required by this
+        /// extension. Supported on WebRole or WorkerRole, but ignored on
+        /// VmRole. Each internal endpoint will be automatically added to the
+        /// service definition of the deployment utilizing this extension.
+        /// </summary>
+        public IList<ExtensionEndpointConfiguration.InternalEndpoint> InternalEndpointsValue
+        {
             get { return this._internalEndpoints; }
             set { this._internalEndpoints = value; }
         }
@@ -66,8 +104,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionEndpointConfiguration()
         {
-            this.InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
-            this.InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
         }
         
         /// <summary>

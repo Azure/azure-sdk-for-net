@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<DataDiskConfigurationUpdateParameters> DataDiskConfigurations
         {
+            get
+            {
+                if (this._dataDiskConfigurations == null)
+                {
+                    this._dataDiskConfigurations = new List<DataDiskConfigurationUpdateParameters>();
+                }
+                return this._dataDiskConfigurations;
+            }
+            set { this._dataDiskConfigurations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. The Data Disk Configurations.
+        /// </summary>
+        public IList<DataDiskConfigurationUpdateParameters> DataDiskConfigurationsValue
+        {
             get { return this._dataDiskConfigurations; }
             set { this._dataDiskConfigurations = value; }
         }
@@ -190,7 +206,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageUpdateParameters()
         {
-            this.DataDiskConfigurations = new List<DataDiskConfigurationUpdateParameters>();
         }
         
         /// <summary>

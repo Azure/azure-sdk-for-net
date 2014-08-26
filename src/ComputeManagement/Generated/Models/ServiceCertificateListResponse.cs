@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ServiceCertificateListResponse.Certificate> Certificates
         {
+            get
+            {
+                if (this._certificates == null)
+                {
+                    this._certificates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ServiceCertificateListResponse.Certificate>();
+                }
+                return this._certificates;
+            }
+            set { this._certificates = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The service certificates that are valid for your
+        /// subscription.
+        /// </summary>
+        public IList<ServiceCertificateListResponse.Certificate> CertificatesValue
+        {
             get { return this._certificates; }
             set { this._certificates = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ServiceCertificateListResponse()
         {
-            this.Certificates = new List<ServiceCertificateListResponse.Certificate>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<ServiceCertificateListResponse.Certificate> GetEnumerator()
         {
-            return this.Certificates.GetEnumerator();
+            return this.CertificatesValue.GetEnumerator();
         }
         
         /// <summary>

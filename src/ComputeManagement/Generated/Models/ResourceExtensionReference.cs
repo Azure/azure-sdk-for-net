@@ -77,6 +77,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ResourceExtensionParameterValue> ResourceExtensionParameterValues
         {
+            get
+            {
+                if (this._resourceExtensionParameterValues == null)
+                {
+                    this._resourceExtensionParameterValues = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionParameterValue>();
+                }
+                return this._resourceExtensionParameterValues;
+            }
+            set { this._resourceExtensionParameterValues = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains a collection of parameters that are passed to
+        /// the resource extension when it is installed.
+        /// </summary>
+        public IList<ResourceExtensionParameterValue> ResourceExtensionParameterValuesValue
+        {
             get { return this._resourceExtensionParameterValues; }
             set { this._resourceExtensionParameterValues = value; }
         }
@@ -111,7 +128,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionReference()
         {
-            this.ResourceExtensionParameterValues = new List<ResourceExtensionParameterValue>();
         }
     }
 }

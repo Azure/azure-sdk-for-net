@@ -387,8 +387,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Begin Deleting All Hosted Service operation deletes the
-        /// specified cloud service from Azure.  (see
+        /// The Delete All Hosted Service operation deletes the specified cloud
+        /// service and its disks from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -908,10 +908,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     createHostedServiceElement.Add(affinityGroupElement);
                 }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -1123,7 +1123,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service from Azure.  (see
+        /// service and its disks from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -1510,6 +1510,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement extendedPropertiesSequenceElement = hostedServicePropertiesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (extendedPropertiesSequenceElement != null)
                             {
+                                hostedServicePropertiesInstance.ExtendedProperties = new Dictionary<string, string>();
                                 foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1535,6 +1536,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                             if (virtualMachinesRoleSizesSequenceElement != null)
                             {
+                                computeCapabilitiesInstance.VirtualMachinesRoleSizes = new List<string>();
                                 foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
@@ -1544,6 +1546,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                             if (webWorkerRoleSizesSequenceElement != null)
                             {
+                                computeCapabilitiesInstance.WebWorkerRoleSizes = new List<string>();
                                 foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
@@ -1689,6 +1692,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement deploymentsSequenceElement = hostedServiceElement.Element(XName.Get("Deployments", "http://schemas.microsoft.com/windowsazure"));
                         if (deploymentsSequenceElement != null)
                         {
+                            result.Deployments = new List<HostedServiceGetDetailedResponse.Deployment>();
                             foreach (XElement deploymentsElement in deploymentsSequenceElement.Elements(XName.Get("Deployment", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 HostedServiceGetDetailedResponse.Deployment deploymentInstance = new HostedServiceGetDetailedResponse.Deployment();
@@ -1746,6 +1750,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement roleInstanceListSequenceElement = deploymentsElement.Element(XName.Get("RoleInstanceList", "http://schemas.microsoft.com/windowsazure"));
                                 if (roleInstanceListSequenceElement != null)
                                 {
+                                    deploymentInstance.RoleInstances = new List<RoleInstance>();
                                     foreach (XElement roleInstanceListElement in roleInstanceListSequenceElement.Elements(XName.Get("RoleInstance", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         RoleInstance roleInstanceInstance = new RoleInstance();
@@ -1817,6 +1822,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement instanceEndpointsSequenceElement = roleInstanceListElement.Element(XName.Get("InstanceEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                         if (instanceEndpointsSequenceElement != null)
                                         {
+                                            roleInstanceInstance.InstanceEndpoints = new List<InstanceEndpoint>();
                                             foreach (XElement instanceEndpointsElement in instanceEndpointsSequenceElement.Elements(XName.Get("InstanceEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 InstanceEndpoint instanceEndpointInstance = new InstanceEndpoint();
@@ -1923,6 +1929,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement paramListSequenceElement = messageElement.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                 if (paramListSequenceElement != null)
                                                 {
+                                                    messageInstance.ParamList = new List<string>();
                                                     foreach (XElement paramListElement in paramListSequenceElement.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         messageInstance.ParamList.Add(paramListElement.Value);
@@ -1955,6 +1962,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement resourceExtensionStatusListSequenceElement = roleInstanceListElement.Element(XName.Get("ResourceExtensionStatusList", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionStatusListSequenceElement != null)
                                         {
+                                            roleInstanceInstance.ResourceExtensionStatusList = new List<ResourceExtensionStatus>();
                                             foreach (XElement resourceExtensionStatusListElement in resourceExtensionStatusListSequenceElement.Elements(XName.Get("ResourceExtensionStatus", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ResourceExtensionStatus resourceExtensionStatusInstance = new ResourceExtensionStatus();
@@ -2004,6 +2012,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement paramListSequenceElement2 = messageElement3.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                     if (paramListSequenceElement2 != null)
                                                     {
+                                                        messageInstance3.ParamList = new List<string>();
                                                         foreach (XElement paramListElement2 in paramListSequenceElement2.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             messageInstance3.ParamList.Add(paramListElement2.Value);
@@ -2096,6 +2105,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         XElement paramListSequenceElement3 = messageElement5.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                         if (paramListSequenceElement3 != null)
                                                         {
+                                                            messageInstance5.ParamList = new List<string>();
                                                             foreach (XElement paramListElement3 in paramListSequenceElement3.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                             {
                                                                 messageInstance5.ParamList.Add(paramListElement3.Value);
@@ -2127,6 +2137,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement subStatusListSequenceElement = extensionSettingStatusElement.Element(XName.Get("SubStatusList", "http://schemas.microsoft.com/windowsazure"));
                                                     if (subStatusListSequenceElement != null)
                                                     {
+                                                        extensionSettingStatusInstance.SubStatusList = new List<ResourceExtensionSubStatus>();
                                                         foreach (XElement subStatusListElement in subStatusListSequenceElement.Elements(XName.Get("SubStatus", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             ResourceExtensionSubStatus subStatusInstance = new ResourceExtensionSubStatus();
@@ -2169,6 +2180,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                                 XElement paramListSequenceElement4 = messageElement7.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                                 if (paramListSequenceElement4 != null)
                                                                 {
+                                                                    messageInstance7.ParamList = new List<string>();
                                                                     foreach (XElement paramListElement4 in paramListSequenceElement4.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                                     {
                                                                         messageInstance7.ParamList.Add(paramListElement4.Value);
@@ -2226,6 +2238,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement publicIPsSequenceElement = roleInstanceListElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                         if (publicIPsSequenceElement != null)
                                         {
+                                            roleInstanceInstance.PublicIPs = new List<RoleInstance.PublicIP>();
                                             foreach (XElement publicIPsElement in publicIPsSequenceElement.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 RoleInstance.PublicIP publicIPInstance = new RoleInstance.PublicIP();
@@ -2294,6 +2307,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement roleListSequenceElement = deploymentsElement.Element(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
                                 if (roleListSequenceElement != null)
                                 {
+                                    deploymentInstance.Roles = new List<Role>();
                                     foreach (XElement roleListElement in roleListSequenceElement.Elements(XName.Get("Role", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         Role roleInstance = new Role();
@@ -2323,6 +2337,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement configurationSetsSequenceElement = roleListElement.Element(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
                                         if (configurationSetsSequenceElement != null)
                                         {
+                                            roleInstance.ConfigurationSets = new List<ConfigurationSet>();
                                             foreach (XElement configurationSetsElement in configurationSetsSequenceElement.Elements(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ConfigurationSet configurationSetInstance = new ConfigurationSet();
@@ -2338,6 +2353,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement inputEndpointsSequenceElement = configurationSetsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                                 if (inputEndpointsSequenceElement != null)
                                                 {
+                                                    configurationSetInstance.InputEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InputEndpoint>();
                                                     foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         InputEndpoint inputEndpointInstance = new InputEndpoint();
@@ -2450,6 +2466,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                             XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                             if (rulesSequenceElement != null)
                                                             {
+                                                                endpointAclInstance.Rules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.AccessControlListRule>();
                                                                 foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                                 {
                                                                     AccessControlListRule ruleInstance = new AccessControlListRule();
@@ -2498,6 +2515,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement subnetNamesSequenceElement = configurationSetsElement.Element(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
                                                 if (subnetNamesSequenceElement != null)
                                                 {
+                                                    configurationSetInstance.SubnetNames = new System.Collections.Generic.List<string>();
                                                     foreach (XElement subnetNamesElement in subnetNamesSequenceElement.Elements(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
@@ -2514,6 +2532,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement publicIPsSequenceElement2 = configurationSetsElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                                 if (publicIPsSequenceElement2 != null)
                                                 {
+                                                    configurationSetInstance.PublicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet.PublicIP>();
                                                     foreach (XElement publicIPsElement2 in publicIPsSequenceElement2.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         ConfigurationSet.PublicIP publicIPInstance2 = new ConfigurationSet.PublicIP();
@@ -2636,6 +2655,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement storedCertificateSettingsSequenceElement = configurationSetsElement.Element(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
                                                 if (storedCertificateSettingsSequenceElement != null)
                                                 {
+                                                    configurationSetInstance.StoredCertificateSettings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.StoredCertificateSettings>();
                                                     foreach (XElement storedCertificateSettingsElement in storedCertificateSettingsSequenceElement.Elements(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         StoredCertificateSettings certificateSettingInstance = new StoredCertificateSettings();
@@ -2671,6 +2691,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement listenersSequenceElement = winRMElement.Element(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
                                                     if (listenersSequenceElement != null)
                                                     {
+                                                        winRMInstance.Listeners = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.WindowsRemoteManagementListener>();
                                                         foreach (XElement listenersElement in listenersSequenceElement.Elements(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             WindowsRemoteManagementListener listenerInstance = new WindowsRemoteManagementListener();
@@ -2737,6 +2758,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement publicKeysSequenceElement = sSHElement.Element(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
                                                     if (publicKeysSequenceElement != null)
                                                     {
+                                                        sSHInstance.PublicKeys = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingPublicKey>();
                                                         foreach (XElement publicKeysElement in publicKeysSequenceElement.Elements(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
@@ -2761,6 +2783,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement keyPairsSequenceElement = sSHElement.Element(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
                                                     if (keyPairsSequenceElement != null)
                                                     {
+                                                        sSHInstance.KeyPairs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingKeyPair>();
                                                         foreach (XElement keyPairsElement in keyPairsSequenceElement.Elements(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
@@ -2795,6 +2818,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement resourceExtensionReferencesSequenceElement = roleListElement.Element(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionReferencesSequenceElement != null)
                                         {
+                                            roleInstance.ResourceExtensionReferences = new List<ResourceExtensionReference>();
                                             foreach (XElement resourceExtensionReferencesElement in resourceExtensionReferencesSequenceElement.Elements(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ResourceExtensionReference resourceExtensionReferenceInstance = new ResourceExtensionReference();
@@ -2831,6 +2855,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                                 if (resourceExtensionParameterValuesSequenceElement != null)
                                                 {
+                                                    resourceExtensionReferenceInstance.ResourceExtensionParameterValues = new List<ResourceExtensionParameterValue>();
                                                     foreach (XElement resourceExtensionParameterValuesElement in resourceExtensionParameterValuesSequenceElement.Elements(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         ResourceExtensionParameterValue resourceExtensionParameterValueInstance = new ResourceExtensionParameterValue();
@@ -2892,6 +2917,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement dataVirtualHardDisksSequenceElement = roleListElement.Element(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
                                         if (dataVirtualHardDisksSequenceElement != null)
                                         {
+                                            roleInstance.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
                                             foreach (XElement dataVirtualHardDisksElement in dataVirtualHardDisksSequenceElement.Elements(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 DataVirtualHardDisk dataVirtualHardDiskInstance = new DataVirtualHardDisk();
@@ -3072,6 +3098,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement extendedPropertiesSequenceElement = deploymentsElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                                 if (extendedPropertiesSequenceElement != null)
                                 {
+                                    deploymentInstance.ExtendedProperties = new Dictionary<string, string>();
                                     foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -3111,6 +3138,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement virtualIPsSequenceElement = deploymentsElement.Element(XName.Get("VirtualIPs", "http://schemas.microsoft.com/windowsazure"));
                                 if (virtualIPsSequenceElement != null)
                                 {
+                                    deploymentInstance.VirtualIPAddresses = new List<VirtualIPAddress>();
                                     foreach (XElement virtualIPsElement in virtualIPsSequenceElement.Elements(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         VirtualIPAddress virtualIPInstance = new VirtualIPAddress();
@@ -3148,6 +3176,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
                                     if (dnsServersSequenceElement != null)
                                     {
+                                        dnsInstance.DnsServers = new List<DnsServer>();
                                         foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             DnsServer dnsServerInstance = new DnsServer();
@@ -3244,6 +3273,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement extendedPropertiesSequenceElement2 = hostedServicePropertiesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (extendedPropertiesSequenceElement2 != null)
                             {
+                                hostedServicePropertiesInstance.ExtendedProperties = new Dictionary<string, string>();
                                 foreach (XElement extendedPropertiesElement2 in extendedPropertiesSequenceElement2.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string extendedPropertiesKey2 = extendedPropertiesElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -3269,6 +3299,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                             if (virtualMachinesRoleSizesSequenceElement != null)
                             {
+                                computeCapabilitiesInstance.VirtualMachinesRoleSizes = new List<string>();
                                 foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
@@ -3278,6 +3309,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                             if (webWorkerRoleSizesSequenceElement != null)
                             {
+                                computeCapabilitiesInstance.WebWorkerRoleSizes = new List<string>();
                                 foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
@@ -3598,6 +3630,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement hostedServicesSequenceElement = responseDoc.Element(XName.Get("HostedServices", "http://schemas.microsoft.com/windowsazure"));
                     if (hostedServicesSequenceElement != null)
                     {
+                        result.HostedServices = new List<HostedServiceListResponse.HostedService>();
                         foreach (XElement hostedServicesElement in hostedServicesSequenceElement.Elements(XName.Get("HostedService", "http://schemas.microsoft.com/windowsazure")))
                         {
                             HostedServiceListResponse.HostedService hostedServiceInstance = new HostedServiceListResponse.HostedService();
@@ -3675,6 +3708,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement extendedPropertiesSequenceElement = hostedServicePropertiesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                                 if (extendedPropertiesSequenceElement != null)
                                 {
+                                    hostedServicePropertiesInstance.ExtendedProperties = new Dictionary<string, string>();
                                     foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -3700,6 +3734,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                                 if (virtualMachinesRoleSizesSequenceElement != null)
                                 {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes = new List<string>();
                                     foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
@@ -3709,6 +3744,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                                 if (webWorkerRoleSizesSequenceElement != null)
                                 {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes = new List<string>();
                                     foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);
@@ -3843,6 +3879,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionImagesSequenceElement = responseDoc.Element(XName.Get("ExtensionImages", "http://schemas.microsoft.com/windowsazure"));
                     if (extensionImagesSequenceElement != null)
                     {
+                        result.ExtensionImages = new List<ExtensionImage>();
                         foreach (XElement extensionImagesElement in extensionImagesSequenceElement.Elements(XName.Get("ExtensionImage", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ExtensionImage extensionImageInstance = new ExtensionImage();
@@ -3934,6 +3971,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement inputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (inputEndpointsSequenceElement != null)
                                 {
+                                    endpointsInstance.InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
                                     foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ExtensionEndpointConfiguration.InputEndpoint inputEndpointInstance = new ExtensionEndpointConfiguration.InputEndpoint();
@@ -3972,6 +4010,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement internalEndpointsSequenceElement = endpointsElement.Element(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (internalEndpointsSequenceElement != null)
                                 {
+                                    endpointsInstance.InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
                                     foreach (XElement internalEndpointsElement in internalEndpointsSequenceElement.Elements(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ExtensionEndpointConfiguration.InternalEndpoint internalEndpointInstance = new ExtensionEndpointConfiguration.InternalEndpoint();
@@ -4039,6 +4078,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement localResourcesSequenceElement = extensionImagesElement.Element(XName.Get("LocalResources", "http://schemas.microsoft.com/windowsazure"));
                             if (localResourcesSequenceElement != null)
                             {
+                                extensionImageInstance.LocalResources = new List<ExtensionLocalResourceConfiguration>();
                                 foreach (XElement localResourcesElement in localResourcesSequenceElement.Elements(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
@@ -4270,6 +4310,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionsSequenceElement = responseDoc.Element(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
                     if (extensionsSequenceElement != null)
                     {
+                        result.Extensions = new List<HostedServiceListExtensionsResponse.Extension>();
                         foreach (XElement extensionsElement in extensionsSequenceElement.Elements(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure")))
                         {
                             HostedServiceListExtensionsResponse.Extension extensionInstance = new HostedServiceListExtensionsResponse.Extension();
@@ -4467,6 +4508,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionImagesSequenceElement = responseDoc.Element(XName.Get("ExtensionImages", "http://schemas.microsoft.com/windowsazure"));
                     if (extensionImagesSequenceElement != null)
                     {
+                        result.ExtensionImages = new List<ExtensionImage>();
                         foreach (XElement extensionImagesElement in extensionImagesSequenceElement.Elements(XName.Get("ExtensionImage", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ExtensionImage extensionImageInstance = new ExtensionImage();
@@ -4558,6 +4600,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement inputEndpointsSequenceElement = endpointsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (inputEndpointsSequenceElement != null)
                                 {
+                                    endpointsInstance.InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
                                     foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ExtensionEndpointConfiguration.InputEndpoint inputEndpointInstance = new ExtensionEndpointConfiguration.InputEndpoint();
@@ -4596,6 +4639,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement internalEndpointsSequenceElement = endpointsElement.Element(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (internalEndpointsSequenceElement != null)
                                 {
+                                    endpointsInstance.InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
                                     foreach (XElement internalEndpointsElement in internalEndpointsSequenceElement.Elements(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ExtensionEndpointConfiguration.InternalEndpoint internalEndpointInstance = new ExtensionEndpointConfiguration.InternalEndpoint();
@@ -4663,6 +4707,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement localResourcesSequenceElement = extensionImagesElement.Element(XName.Get("LocalResources", "http://schemas.microsoft.com/windowsazure"));
                             if (localResourcesSequenceElement != null)
                             {
+                                extensionImageInstance.LocalResources = new List<ExtensionLocalResourceConfiguration>();
                                 foreach (XElement localResourcesElement in localResourcesSequenceElement.Elements(XName.Get("LocalResource", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionLocalResourceConfiguration localResourceInstance = new ExtensionLocalResourceConfiguration();
@@ -4828,10 +4873,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentOutOfRangeException("parameters.Description");
             }
-            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.ExtendedProperties != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
+            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.ExtendedPropertiesValue != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
             if (minimumUpdateCount < 1)
             {
-                throw new ArgumentException("Expected at least one of parameters.Description, parameters.ExtendedProperties, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
+                throw new ArgumentException("Expected at least one of parameters.Description, parameters.ExtendedPropertiesValue, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
             }
             
             // Tracing
@@ -4904,10 +4949,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     updateHostedServiceElement.Add(reverseDnsFqdnElement);
                 }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;

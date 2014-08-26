@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<OperatingSystemListFamiliesResponse.OperatingSystemFamily> OperatingSystemFamilies
         {
+            get
+            {
+                if (this._operatingSystemFamilies == null)
+                {
+                    this._operatingSystemFamilies = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
+                }
+                return this._operatingSystemFamilies;
+            }
+            set { this._operatingSystemFamilies = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The operating system families that are valid for your
+        /// subscription.
+        /// </summary>
+        public IList<OperatingSystemListFamiliesResponse.OperatingSystemFamily> OperatingSystemFamiliesValue
+        {
             get { return this._operatingSystemFamilies; }
             set { this._operatingSystemFamilies = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListFamiliesResponse()
         {
-            this.OperatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<OperatingSystemListFamiliesResponse.OperatingSystemFamily> GetEnumerator()
         {
-            return this.OperatingSystemFamilies.GetEnumerator();
+            return this.OperatingSystemFamiliesValue.GetEnumerator();
         }
         
         /// <summary>
@@ -190,6 +206,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public IList<OperatingSystemListFamiliesResponse.OperatingSystem> OperatingSystems
             {
+                get
+                {
+                    if (this._operatingSystems == null)
+                    {
+                        this._operatingSystems = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListFamiliesResponse.OperatingSystem>();
+                    }
+                    return this._operatingSystems;
+                }
+                set { this._operatingSystems = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The available operating systems in your subscription
+            /// belonging to this family.
+            /// </summary>
+            public IList<OperatingSystemListFamiliesResponse.OperatingSystem> OperatingSystemsValue
+            {
                 get { return this._operatingSystems; }
                 set { this._operatingSystems = value; }
             }
@@ -199,7 +232,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public OperatingSystemFamily()
             {
-                this.OperatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
             }
         }
     }

@@ -72,6 +72,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> DataDiskConfigurations
         {
+            get
+            {
+                if (this._dataDiskConfigurations == null)
+                {
+                    this._dataDiskConfigurations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+                }
+                return this._dataDiskConfigurations;
+            }
+            set { this._dataDiskConfigurations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The data disk configurations.
+        /// </summary>
+        public IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> DataDiskConfigurationsValue
+        {
             get { return this._dataDiskConfigurations; }
             set { this._dataDiskConfigurations = value; }
         }
@@ -299,6 +315,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement> ReplicationProgress
         {
+            get
+            {
+                if (this._replicationProgress == null)
+                {
+                    this._replicationProgress = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
+                }
+                return this._replicationProgress;
+            }
+            set { this._replicationProgress = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The replication progress information of VM images.
+        /// </summary>
+        public IList<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement> ReplicationProgressValue
+        {
             get { return this._replicationProgress; }
             set { this._replicationProgress = value; }
         }
@@ -365,8 +397,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageGetDetailsResponse()
         {
-            this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
-            this.ReplicationProgress = new List<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>

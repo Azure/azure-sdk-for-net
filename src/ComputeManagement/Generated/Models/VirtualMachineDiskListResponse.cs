@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineDiskListResponse.VirtualMachineDisk> Disks
         {
+            get
+            {
+                if (this._disks == null)
+                {
+                    this._disks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineDiskListResponse.VirtualMachineDisk>();
+                }
+                return this._disks;
+            }
+            set { this._disks = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The virtual machine disks associated with your
+        /// subscription.
+        /// </summary>
+        public IList<VirtualMachineDiskListResponse.VirtualMachineDisk> DisksValue
+        {
             get { return this._disks; }
             set { this._disks = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineDiskListResponse()
         {
-            this.Disks = new List<VirtualMachineDiskListResponse.VirtualMachineDisk>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<VirtualMachineDiskListResponse.VirtualMachineDisk> GetEnumerator()
         {
-            return this.Disks.GetEnumerator();
+            return this.DisksValue.GetEnumerator();
         }
         
         /// <summary>
