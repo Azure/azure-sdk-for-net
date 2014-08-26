@@ -55,6 +55,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ConfigurationSet> ConfigurationSets
         {
+            get
+            {
+                if (this._configurationSets == null)
+                {
+                    this._configurationSets = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet>();
+                }
+                return this._configurationSets;
+            }
+            set { this._configurationSets = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains the collection of configuration sets that
+        /// contain system and application configuration settings.
+        /// </summary>
+        public IList<ConfigurationSet> ConfigurationSetsValue
+        {
             get { return this._configurationSets; }
             set { this._configurationSets = value; }
         }
@@ -66,6 +83,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// disk for the virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
+        {
+            get
+            {
+                if (this._dataVirtualHardDisks == null)
+                {
+                    this._dataVirtualHardDisks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DataVirtualHardDisk>();
+                }
+                return this._dataVirtualHardDisks;
+            }
+            set { this._dataVirtualHardDisks = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains the parameters Azure used to create the data
+        /// disk for the virtual machine.
+        /// </summary>
+        public IList<DataVirtualHardDisk> DataVirtualHardDisksValue
         {
             get { return this._dataVirtualHardDisks; }
             set { this._dataVirtualHardDisks = value; }
@@ -147,8 +181,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineGetResponse()
         {
-            this.ConfigurationSets = new List<ConfigurationSet>();
-            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
         }
     }
 }

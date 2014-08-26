@@ -158,6 +158,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<InputEndpoint> InputEndpoints
         {
+            get
+            {
+                if (this._inputEndpoints == null)
+                {
+                    this._inputEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InputEndpoint>();
+                }
+                return this._inputEndpoints;
+            }
+            set { this._inputEndpoints = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains a collection of external endpoints for the
+        /// virtual machine. This element is only used with the
+        /// NetworkConfigurationSet type.
+        /// </summary>
+        public IList<InputEndpoint> InputEndpointsValue
+        {
             get { return this._inputEndpoints; }
             set { this._inputEndpoints = value; }
         }
@@ -171,6 +189,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// deployment.
         /// </summary>
         public IList<ConfigurationSet.PublicIP> PublicIPs
+        {
+            get
+            {
+                if (this._publicIPs == null)
+                {
+                    this._publicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet.PublicIP>();
+                }
+                return this._publicIPs;
+            }
+            set { this._publicIPs = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. A set of public IPs. Currently, only one
+        /// additional public IP per role is supported in an IaaS deployment.
+        /// The IP address is in addition to the default VIP for the
+        /// deployment.
+        /// </summary>
+        public IList<ConfigurationSet.PublicIP> PublicIPsValue
         {
             get { return this._publicIPs; }
             set { this._publicIPs = value; }
@@ -222,6 +259,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<StoredCertificateSettings> StoredCertificateSettings
         {
+            get
+            {
+                if (this._storedCertificateSettings == null)
+                {
+                    this._storedCertificateSettings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.StoredCertificateSettings>();
+                }
+                return this._storedCertificateSettings;
+            }
+            set { this._storedCertificateSettings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains a list of service certificates with which to
+        /// provision to the new role. This element is only used with the
+        /// WindowsProvisioningConfiguration set.
+        /// </summary>
+        public IList<StoredCertificateSettings> StoredCertificateSettingsValue
+        {
             get { return this._storedCertificateSettings; }
             set { this._storedCertificateSettings = value; }
         }
@@ -234,6 +289,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// NetworkConfigurationSet type.
         /// </summary>
         public IList<string> SubnetNames
+        {
+            get
+            {
+                if (this._subnetNames == null)
+                {
+                    this._subnetNames = new System.Collections.Generic.List<string>();
+                }
+                return this._subnetNames;
+            }
+            set { this._subnetNames = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of Virtual Network subnet names that the
+        /// deployment belongs to. This element is only used with the
+        /// NetworkConfigurationSet type.
+        /// </summary>
+        public IList<string> SubnetNamesValue
         {
             get { return this._subnetNames; }
             set { this._subnetNames = value; }
@@ -303,10 +376,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ConfigurationSet()
         {
-            this.InputEndpoints = new List<InputEndpoint>();
-            this.PublicIPs = new List<ConfigurationSet.PublicIP>();
-            this.StoredCertificateSettings = new List<StoredCertificateSettings>();
-            this.SubnetNames = new List<string>();
         }
         
         /// <summary>

@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<AccessControlListRule> Rules
         {
+            get
+            {
+                if (this._rules == null)
+                {
+                    this._rules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.AccessControlListRule>();
+                }
+                return this._rules;
+            }
+            set { this._rules = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The set of access control rules for the endpoint.
+        /// </summary>
+        public IList<AccessControlListRule> RulesValue
+        {
             get { return this._rules; }
             set { this._rules = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public EndpointAcl()
         {
-            this.Rules = new List<AccessControlListRule>();
         }
     }
 }

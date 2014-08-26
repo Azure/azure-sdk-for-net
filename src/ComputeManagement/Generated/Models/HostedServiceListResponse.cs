@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<HostedServiceListResponse.HostedService> HostedServices
         {
+            get
+            {
+                if (this._hostedServices == null)
+                {
+                    this._hostedServices = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListResponse.HostedService>();
+                }
+                return this._hostedServices;
+            }
+            set { this._hostedServices = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The hosted services associated with your subscription.
+        /// </summary>
+        public IList<HostedServiceListResponse.HostedService> HostedServicesValue
+        {
             get { return this._hostedServices; }
             set { this._hostedServices = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListResponse()
         {
-            this.HostedServices = new List<HostedServiceListResponse.HostedService>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<HostedServiceListResponse.HostedService> GetEnumerator()
         {
-            return this.HostedServices.GetEnumerator();
+            return this.HostedServicesValue.GetEnumerator();
         }
         
         /// <summary>

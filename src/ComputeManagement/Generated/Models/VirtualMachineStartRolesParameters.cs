@@ -37,6 +37,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<string> Roles
         {
+            get
+            {
+                if (this._roles == null)
+                {
+                    this._roles = new List<string>();
+                }
+                return this._roles;
+            }
+            set { this._roles = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The set of roles to shut down.
+        /// </summary>
+        public IList<string> RolesValue
+        {
             get { return this._roles; }
             set { this._roles = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineStartRolesParameters()
         {
-            this.Roles = new List<string>();
         }
     }
 }

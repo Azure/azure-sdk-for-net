@@ -1611,6 +1611,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement disksSequenceElement = responseDoc.Element(XName.Get("Disks", "http://schemas.microsoft.com/windowsazure"));
                     if (disksSequenceElement != null)
                     {
+                        result.Disks = new List<VirtualMachineDiskListResponse.VirtualMachineDisk>();
                         foreach (XElement disksElement in disksSequenceElement.Elements(XName.Get("Disk", "http://schemas.microsoft.com/windowsazure")))
                         {
                             VirtualMachineDiskListResponse.VirtualMachineDisk diskInstance = new VirtualMachineDiskListResponse.VirtualMachineDisk();

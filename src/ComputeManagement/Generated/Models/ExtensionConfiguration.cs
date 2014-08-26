@@ -39,6 +39,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionConfiguration.Extension> AllRoles
         {
+            get
+            {
+                if (this._allRoles == null)
+                {
+                    this._allRoles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionConfiguration.Extension>();
+                }
+                return this._allRoles;
+            }
+            set { this._allRoles = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies a list of extensions that are applied to all
+        /// roles in a deployment.
+        /// </summary>
+        public IList<ExtensionConfiguration.Extension> AllRolesValue
+        {
             get { return this._allRoles; }
             set { this._allRoles = value; }
         }
@@ -51,6 +68,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionConfiguration.NamedRole> NamedRoles
         {
+            get
+            {
+                if (this._namedRoles == null)
+                {
+                    this._namedRoles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionConfiguration.NamedRole>();
+                }
+                return this._namedRoles;
+            }
+            set { this._namedRoles = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies a list of extensions that are applied to
+        /// specific roles in a deployment.
+        /// </summary>
+        public IList<ExtensionConfiguration.NamedRole> NamedRolesValue
+        {
             get { return this._namedRoles; }
             set { this._namedRoles = value; }
         }
@@ -60,8 +94,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionConfiguration()
         {
-            this.AllRoles = new List<ExtensionConfiguration.Extension>();
-            this.NamedRoles = new List<ExtensionConfiguration.NamedRole>();
         }
         
         /// <summary>
@@ -120,6 +152,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public IList<ExtensionConfiguration.Extension> Extensions
             {
+                get
+                {
+                    if (this._extensions == null)
+                    {
+                        this._extensions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionConfiguration.Extension>();
+                    }
+                    return this._extensions;
+                }
+                set { this._extensions = value; }
+            }
+            
+            /// <summary>
+            /// Required. Represents an extension that is to be deployed to a
+            /// role in a cloud service.
+            /// </summary>
+            public IList<ExtensionConfiguration.Extension> ExtensionsValue
+            {
                 get { return this._extensions; }
                 set { this._extensions = value; }
             }
@@ -140,7 +189,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public NamedRole()
             {
-                this.Extensions = new List<ExtensionConfiguration.Extension>();
             }
             
             /// <summary>
@@ -159,7 +207,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                     throw new ArgumentNullException("extensions");
                 }
                 this.RoleName = roleName;
-                this.Extensions = extensions;
+                this.ExtensionsValue = extensions;
             }
         }
     }

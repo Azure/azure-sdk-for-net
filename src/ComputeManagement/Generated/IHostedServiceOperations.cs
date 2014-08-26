@@ -94,8 +94,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Begin Deleting All Hosted Service operation deletes the
-        /// specified cloud service from Azure.  (see
+        /// The Delete All Hosted Service operation deletes the specified cloud
+        /// service and its disks from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>
@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
         
         /// <summary>
         /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service from Azure.  (see
+        /// service and its disks from Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
         /// for more information)
         /// </summary>

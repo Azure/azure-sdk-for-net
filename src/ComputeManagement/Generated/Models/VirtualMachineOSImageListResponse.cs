@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> Images
         {
+            get
+            {
+                if (this._images == null)
+                {
+                    this._images = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
+                }
+                return this._images;
+            }
+            set { this._images = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The virtual machine images associated with your
+        /// subscription.
+        /// </summary>
+        public IList<VirtualMachineOSImageListResponse.VirtualMachineOSImage> ImagesValue
+        {
             get { return this._images; }
             set { this._images = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageListResponse()
         {
-            this.Images = new List<VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<VirtualMachineOSImageListResponse.VirtualMachineOSImage> GetEnumerator()
         {
-            return this.Images.GetEnumerator();
+            return this.ImagesValue.GetEnumerator();
         }
         
         /// <summary>

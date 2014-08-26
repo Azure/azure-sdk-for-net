@@ -120,6 +120,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ResourceExtensionSubStatus> SubStatusList
         {
+            get
+            {
+                if (this._subStatusList == null)
+                {
+                    this._subStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionSubStatus>();
+                }
+                return this._subStatusList;
+            }
+            set { this._subStatusList = value; }
+        }
+        
+        /// <summary>
+        /// Optional. List of substatus objects which contain additional status
+        /// information reported by the Resource Extension.
+        /// </summary>
+        public IList<ResourceExtensionSubStatus> SubStatusListValue
+        {
             get { return this._subStatusList; }
             set { this._subStatusList = value; }
         }
@@ -141,7 +158,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ResourceExtensionConfigurationStatus()
         {
-            this.SubStatusList = new List<ResourceExtensionSubStatus>();
         }
     }
 }
