@@ -59,5 +59,24 @@ namespace Microsoft.Azure.Management.Redis.Models
         public RedisCreateOrUpdateParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RedisCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public RedisCreateOrUpdateParameters(string location, RedisProperties properties)
+            : this()
+        {
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Location = location;
+            this.Properties = properties;
+        }
     }
 }

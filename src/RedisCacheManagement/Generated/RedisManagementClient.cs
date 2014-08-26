@@ -33,11 +33,20 @@ namespace Microsoft.Azure.Management.Redis
     /// </summary>
     public partial class RedisManagementClient : ServiceClient<RedisManagementClient>, IRedisManagementClient
     {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
         private Uri _baseUri;
         
         /// <summary>
-        /// Gets or sets the URI used as the base for all cloud service
-        /// requests.
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         public Uri BaseUri
         {
@@ -47,9 +56,9 @@ namespace Microsoft.Azure.Management.Redis
         private SubscriptionCloudCredentials _credentials;
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Microsoft Azure subscription. The subscription ID forms part of
-        /// the URI for every service call.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         public SubscriptionCloudCredentials Credentials
         {
@@ -95,6 +104,7 @@ namespace Microsoft.Azure.Management.Redis
             : base()
         {
             this._redis = new RedisOperations(this);
+            this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -104,13 +114,13 @@ namespace Microsoft.Azure.Management.Redis
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets or sets the URI used as the base for all cloud
-        /// service requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         public RedisManagementClient(SubscriptionCloudCredentials credentials, Uri baseUri)
             : this()
@@ -133,9 +143,9 @@ namespace Microsoft.Azure.Management.Redis
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         public RedisManagementClient(SubscriptionCloudCredentials credentials)
             : this()
@@ -160,6 +170,7 @@ namespace Microsoft.Azure.Management.Redis
             : base(httpClient)
         {
             this._redis = new RedisOperations(this);
+            this._apiVersion = "2014-04-01-preview";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -169,13 +180,13 @@ namespace Microsoft.Azure.Management.Redis
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets or sets the URI used as the base for all cloud
-        /// service requests.
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -201,9 +212,9 @@ namespace Microsoft.Azure.Management.Redis
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets or sets subscription credentials which uniquely
-        /// identify Microsoft Azure subscription. The subscription ID forms
-        /// part of the URI for every service call.
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
         /// </param>
         /// <param name='httpClient'>
         /// The Http client
@@ -219,6 +230,31 @@ namespace Microsoft.Azure.Management.Redis
             this._baseUri = new Uri("https://management.azure.com");
             
             this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another
+        /// RedisManagementClient instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of RedisManagementClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<RedisManagementClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is RedisManagementClient)
+            {
+                RedisManagementClient clonedClient = ((RedisManagementClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
         }
     }
 }

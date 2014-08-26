@@ -91,5 +91,29 @@ namespace Microsoft.Azure.Management.Redis.Models
         public RedisReadableProperties()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RedisReadableProperties class
+        /// with required arguments.
+        /// </summary>
+        public RedisReadableProperties(string redisVersion, string sku, string size)
+            : this()
+        {
+            if (redisVersion == null)
+            {
+                throw new ArgumentNullException("redisVersion");
+            }
+            if (sku == null)
+            {
+                throw new ArgumentNullException("sku");
+            }
+            if (size == null)
+            {
+                throw new ArgumentNullException("size");
+            }
+            this.RedisVersion = redisVersion;
+            this.Sku = sku;
+            this.Size = size;
+        }
     }
 }

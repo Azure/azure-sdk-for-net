@@ -48,5 +48,15 @@ namespace Microsoft.Azure.Management.Redis.Models
         public RedisRegenerateKeyParameters()
         {
         }
+        
+        /// <summary>
+        /// Initializes a new instance of the RedisRegenerateKeyParameters
+        /// class with required arguments.
+        /// </summary>
+        public RedisRegenerateKeyParameters(RedisKeyType keyType)
+            : this()
+        {
+            this.KeyType = keyType;
+        }
     }
 }

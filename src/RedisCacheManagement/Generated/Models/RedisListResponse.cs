@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public RedisListResponse()
         {
-            this._value = new List<RedisResource>();
+            this.Value = new List<RedisResource>();
         }
     }
 }

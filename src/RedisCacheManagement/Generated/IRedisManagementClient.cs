@@ -32,8 +32,15 @@ namespace Microsoft.Azure.Management.Redis
     public partial interface IRedisManagementClient : IDisposable
     {
         /// <summary>
-        /// Gets or sets the URI used as the base for all cloud service
-        /// requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -41,9 +48,9 @@ namespace Microsoft.Azure.Management.Redis
         }
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Microsoft Azure subscription. The subscription ID forms part of
-        /// the URI for every service call.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
