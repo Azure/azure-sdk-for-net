@@ -171,7 +171,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="hydra.xml" />
-    <Content Include="readme.txt" />
     <Content Include="websites.hydra.xml" />
     <Content Include="websitesextensions.hydra.xml" />
   </ItemGroup>
