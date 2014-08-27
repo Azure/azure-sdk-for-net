@@ -32,6 +32,7 @@
     <Compile Include="Generated\IRedisOperations.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\MaxMemoryPolicy.cs" />
     <Compile Include="Generated\Models\RedisAccessKeys.cs">
       <SubType>Code</SubType>
     </Compile>
