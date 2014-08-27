@@ -199,6 +199,7 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.JobStreamItems = new List<JobStreamItem>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 JobStreamItem jobStreamItemInstance = new JobStreamItem();

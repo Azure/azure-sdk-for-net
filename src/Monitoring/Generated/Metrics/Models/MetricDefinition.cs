@@ -62,6 +62,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
         {
+            get
+            {
+                if (this._metricAvailabilities == null)
+                {
+                    this._metricAvailabilities = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricAvailability>();
+                }
+                return this._metricAvailabilities;
+            }
+            set { this._metricAvailabilities = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Metric availability specifies the time grain (aggregation
+        /// interval) and the retention period for the metric in a timegrain.
+        /// </summary>
+        public IList<MetricAvailability> MetricAvailabilitiesValue
+        {
             get { return this._metricAvailabilities; }
             set { this._metricAvailabilities = value; }
         }
@@ -141,7 +158,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
         }
     }
 }

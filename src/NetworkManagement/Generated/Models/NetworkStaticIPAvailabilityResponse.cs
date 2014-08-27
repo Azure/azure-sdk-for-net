@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<string> AvailableAddresses
         {
+            get
+            {
+                if (this._availableAddresses == null)
+                {
+                    this._availableAddresses = new System.Collections.Generic.List<string>();
+                }
+                return this._availableAddresses;
+            }
+            set { this._availableAddresses = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of the available IP addresses.
+        /// </summary>
+        public IList<string> AvailableAddressesValue
+        {
             get { return this._availableAddresses; }
             set { this._availableAddresses = value; }
         }
@@ -60,7 +76,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkStaticIPAvailabilityResponse()
         {
-            this.AvailableAddresses = new List<string>();
         }
     }
 }

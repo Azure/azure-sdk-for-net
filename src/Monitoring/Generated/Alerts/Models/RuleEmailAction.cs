@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<string> CustomEmails
         {
+            get
+            {
+                if (this._customEmails == null)
+                {
+                    this._customEmails = new System.Collections.Generic.List<string>();
+                }
+                return this._customEmails;
+            }
+            set { this._customEmails = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The email address of an adminstrative user.
+        /// </summary>
+        public IList<string> CustomEmailsValue
+        {
             get { return this._customEmails; }
             set { this._customEmails = value; }
         }
@@ -59,7 +75,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this.CustomEmails = new List<string>();
         }
     }
 }

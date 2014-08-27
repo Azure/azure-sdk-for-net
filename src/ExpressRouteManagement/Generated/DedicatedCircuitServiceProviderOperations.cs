@@ -152,6 +152,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement dedicatedCircuitServiceProvidersSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuitServiceProviders", "http://schemas.microsoft.com/windowsazure"));
                     if (dedicatedCircuitServiceProvidersSequenceElement != null)
                     {
+                        result.DedicatedCircuitServiceProviders = new List<AzureDedicatedCircuitServiceProvider>();
                         foreach (XElement dedicatedCircuitServiceProvidersElement in dedicatedCircuitServiceProvidersSequenceElement.Elements(XName.Get("DedicatedCircuitServiceProvider", "http://schemas.microsoft.com/windowsazure")))
                         {
                             AzureDedicatedCircuitServiceProvider dedicatedCircuitServiceProviderInstance = new AzureDedicatedCircuitServiceProvider();
@@ -181,6 +182,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             XElement dedicatedCircuitBandwidthsSequenceElement = dedicatedCircuitServiceProvidersElement.Element(XName.Get("DedicatedCircuitBandwidths", "http://schemas.microsoft.com/windowsazure"));
                             if (dedicatedCircuitBandwidthsSequenceElement != null)
                             {
+                                dedicatedCircuitServiceProviderInstance.DedicatedCircuitBandwidths = new List<DedicatedCircuitBandwidth>();
                                 foreach (XElement dedicatedCircuitBandwidthsElement in dedicatedCircuitBandwidthsSequenceElement.Elements(XName.Get("DedicatedCircuitBandwidth", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DedicatedCircuitBandwidth dedicatedCircuitBandwidthInstance = new DedicatedCircuitBandwidth();

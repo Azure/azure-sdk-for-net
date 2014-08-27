@@ -159,6 +159,7 @@ namespace Microsoft.WindowsAzure.Management
                     XElement locationsSequenceElement = responseDoc.Element(XName.Get("Locations", "http://schemas.microsoft.com/windowsazure"));
                     if (locationsSequenceElement != null)
                     {
+                        result.Locations = new List<LocationsListResponse.Location>();
                         foreach (XElement locationsElement in locationsSequenceElement.Elements(XName.Get("Location", "http://schemas.microsoft.com/windowsazure")))
                         {
                             LocationsListResponse.Location locationInstance = new LocationsListResponse.Location();
@@ -181,6 +182,7 @@ namespace Microsoft.WindowsAzure.Management
                             XElement availableServicesSequenceElement = locationsElement.Element(XName.Get("AvailableServices", "http://schemas.microsoft.com/windowsazure"));
                             if (availableServicesSequenceElement != null)
                             {
+                                locationInstance.AvailableServices = new List<string>();
                                 foreach (XElement availableServicesElement in availableServicesSequenceElement.Elements(XName.Get("AvailableService", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     locationInstance.AvailableServices.Add(availableServicesElement.Value);
@@ -196,6 +198,7 @@ namespace Microsoft.WindowsAzure.Management
                                 XElement virtualMachinesRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("VirtualMachinesRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                                 if (virtualMachinesRoleSizesSequenceElement != null)
                                 {
+                                    computeCapabilitiesInstance.VirtualMachinesRoleSizes = new List<string>();
                                     foreach (XElement virtualMachinesRoleSizesElement in virtualMachinesRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         computeCapabilitiesInstance.VirtualMachinesRoleSizes.Add(virtualMachinesRoleSizesElement.Value);
@@ -205,6 +208,7 @@ namespace Microsoft.WindowsAzure.Management
                                 XElement webWorkerRoleSizesSequenceElement = computeCapabilitiesElement.Element(XName.Get("WebWorkerRoleSizes", "http://schemas.microsoft.com/windowsazure"));
                                 if (webWorkerRoleSizesSequenceElement != null)
                                 {
+                                    computeCapabilitiesInstance.WebWorkerRoleSizes = new List<string>();
                                     foreach (XElement webWorkerRoleSizesElement in webWorkerRoleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         computeCapabilitiesInstance.WebWorkerRoleSizes.Add(webWorkerRoleSizesElement.Value);

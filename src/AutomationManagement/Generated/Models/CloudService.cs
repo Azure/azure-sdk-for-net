@@ -84,6 +84,23 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<AutomationResource> Resources
         {
+            get
+            {
+                if (this._resources == null)
+                {
+                    this._resources = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.AutomationResource>();
+                }
+                return this._resources;
+            }
+            set { this._resources = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A list of existing resources installed into a cloud
+        /// service region.
+        /// </summary>
+        public IList<AutomationResource> ResourcesValue
+        {
             get { return this._resources; }
             set { this._resources = value; }
         }
@@ -93,7 +110,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public CloudService()
         {
-            this.Resources = new List<AutomationResource>();
         }
     }
 }

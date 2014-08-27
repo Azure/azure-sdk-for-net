@@ -51,6 +51,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<NameConfig> AvailableLocations
         {
+            get
+            {
+                if (this._availableLocations == null)
+                {
+                    this._availableLocations = new List<NameConfig>();
+                }
+                return this._availableLocations;
+            }
+            set { this._availableLocations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The locations from which the Urls can be monitored.
+        /// </summary>
+        public IList<NameConfig> AvailableLocationsValue
+        {
             get { return this._availableLocations; }
             set { this._availableLocations = value; }
         }
@@ -63,6 +79,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<EndpointConfig> Endpoints
         {
+            get
+            {
+                if (this._endpoints == null)
+                {
+                    this._endpoints = new List<EndpointConfig>();
+                }
+                return this._endpoints;
+            }
+            set { this._endpoints = value; }
+        }
+        
+        /// <summary>
+        /// Required. The configuration for Urls to be monitored using endpoint
+        /// monitoiring.
+        /// </summary>
+        public IList<EndpointConfig> EndpointsValue
+        {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
@@ -73,8 +106,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this.AvailableLocations = new List<NameConfig>();
-            this.Endpoints = new List<EndpointConfig>();
         }
         
         /// <summary>
@@ -88,7 +119,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             {
                 throw new ArgumentNullException("endpoints");
             }
-            this.Endpoints = endpoints;
+            this.EndpointsValue = endpoints;
         }
     }
     
@@ -162,6 +193,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<string> MetricNames
         {
+            get
+            {
+                if (this._metricNames == null)
+                {
+                    this._metricNames = new List<string>();
+                }
+                return this._metricNames;
+            }
+            set { this._metricNames = value; }
+        }
+        
+        /// <summary>
+        /// Required. The names of the metrics.
+        /// </summary>
+        public IList<string> MetricNamesValue
+        {
             get { return this._metricNames; }
             set { this._metricNames = value; }
         }
@@ -183,7 +230,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricDefinitionParameters()
         {
-            this.MetricNames = new List<string>();
         }
         
         /// <summary>
@@ -202,7 +248,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
                 throw new ArgumentNullException("metricNames");
             }
             this.ResourceId = resourceId;
-            this.MetricNames = metricNames;
+            this.MetricNamesValue = metricNames;
         }
     }
     
@@ -228,6 +274,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// Required. The names of the metrics.
         /// </summary>
         public IList<string> MetricNames
+        {
+            get
+            {
+                if (this._metricNames == null)
+                {
+                    this._metricNames = new List<string>();
+                }
+                return this._metricNames;
+            }
+            set { this._metricNames = value; }
+        }
+        
+        /// <summary>
+        /// Required. The names of the metrics.
+        /// </summary>
+        public IList<string> MetricNamesValue
         {
             get { return this._metricNames; }
             set { this._metricNames = value; }
@@ -271,7 +333,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public ListMetricParameters()
         {
-            this.MetricNames = new List<string>();
         }
     }
     
@@ -348,6 +409,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// interval) and the retention period for the metric in a timegrain.
         /// </summary>
         public IList<MetricAvailability> MetricAvailabilities
+        {
+            get
+            {
+                if (this._metricAvailabilities == null)
+                {
+                    this._metricAvailabilities = new List<MetricAvailability>();
+                }
+                return this._metricAvailabilities;
+            }
+            set { this._metricAvailabilities = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Metric availability specifies the time grain (aggregation
+        /// interval) and the retention period for the metric in a timegrain.
+        /// </summary>
+        public IList<MetricAvailability> MetricAvailabilitiesValue
         {
             get { return this._metricAvailabilities; }
             set { this._metricAvailabilities = value; }
@@ -428,7 +506,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
         }
     }
     
@@ -444,6 +521,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricDefinition> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<MetricDefinition>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The values for the metric definitions.
+        /// </summary>
+        public IList<MetricDefinition> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -453,7 +546,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
-            this.Value = new List<MetricDefinition>();
         }
     }
     
@@ -560,6 +652,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricSetting> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<MetricSetting>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The collection.
+        /// </summary>
+        public IList<MetricSetting> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -569,7 +677,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricSettingCollection()
         {
-            this.Value = new List<MetricSetting>();
         }
     }
     
@@ -798,6 +905,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricValue> MetricValues
         {
+            get
+            {
+                if (this._metricValues == null)
+                {
+                    this._metricValues = new List<MetricValue>();
+                }
+                return this._metricValues;
+            }
+            set { this._metricValues = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Metric values.
+        /// </summary>
+        public IList<MetricValue> MetricValuesValue
+        {
             get { return this._metricValues; }
             set { this._metricValues = value; }
         }
@@ -874,7 +997,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSet()
         {
-            this.MetricValues = new List<MetricValue>();
         }
     }
     
@@ -890,6 +1012,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricValueSet> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<MetricValueSet>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The collection.
+        /// </summary>
+        public IList<MetricValueSet> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -899,7 +1037,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricValueSetCollection()
         {
-            this.Value = new List<MetricValueSet>();
         }
     }
     
@@ -1416,9 +1553,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.MetricNames == null)
+            if (parameters.MetricNamesValue == null)
             {
-                throw new ArgumentNullException("parameters.MetricNames");
+                throw new ArgumentNullException("parameters.MetricNamesValue");
             }
             if (parameters.ResourceId == null)
             {
@@ -1515,6 +1652,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            metricDefinitionCollectionInstance.Value = new List<MetricDefinition>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
@@ -1565,6 +1703,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 JToken metricAvailabilitiesArray = valueValue["MetricAvailabilities"];
                                 if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                 {
+                                    metricDefinitionInstance.MetricAvailabilities = new List<MetricAvailability>();
                                     foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();
@@ -1886,10 +2025,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                     AvailabilityMetricSettingValue derived = ((AvailabilityMetricSettingValue)parameters.MetricSetting.Value);
                     
-                    if (derived.AvailableLocations != null)
+                    if (derived.AvailableLocationsValue != null)
                     {
                         JArray availableLocationsArray = new JArray();
-                        foreach (NameConfig availableLocationsItem in derived.AvailableLocations)
+                        foreach (NameConfig availableLocationsItem in derived.AvailableLocationsValue)
                         {
                             JObject nameConfigValue = new JObject();
                             availableLocationsArray.Add(nameConfigValue);
@@ -1907,10 +2046,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         valueValue["AvailableLocations"] = availableLocationsArray;
                     }
                     
-                    if (derived.Endpoints != null)
+                    if (derived.EndpointsValue != null)
                     {
                         JArray endpointsArray = new JArray();
-                        foreach (EndpointConfig endpointsItem in derived.Endpoints)
+                        foreach (EndpointConfig endpointsItem in derived.EndpointsValue)
                         {
                             JObject endpointConfigValue = new JObject();
                             endpointsArray.Add(endpointConfigValue);
@@ -2120,6 +2259,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            metricSettingCollectionInstance.Value = new List<MetricSetting>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
@@ -2150,6 +2290,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken availableLocationsArray = valueValue2["AvailableLocations"];
                                         if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
                                         {
+                                            availabilityMetricSettingValueInstance.AvailableLocations = new List<NameConfig>();
                                             foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
@@ -2174,6 +2315,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken endpointsArray = valueValue2["Endpoints"];
                                         if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                         {
+                                            availabilityMetricSettingValueInstance.Endpoints = new List<EndpointConfig>();
                                             foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();
@@ -2349,13 +2491,13 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.MetricNames == null)
+            if (parameters.MetricNamesValue == null)
             {
-                throw new ArgumentNullException("parameters.MetricNames");
+                throw new ArgumentNullException("parameters.MetricNamesValue");
             }
-            if (parameters.MetricNames.Count <= 0)
+            if (parameters.MetricNamesValue.Count <= 0)
             {
-                throw new ArgumentException("parameters.MetricNames cannot be empty.");
+                throw new ArgumentException("parameters.MetricNamesValue cannot be empty.");
             }
             if (parameters.ResourceId == null)
             {
@@ -2455,6 +2597,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            metricValueSetCollectionInstance.Value = new List<MetricValueSet>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricValueSet metricValueSetInstance = new MetricValueSet();
@@ -2519,6 +2662,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 JToken metricValuesArray = valueValue["MetricValues"];
                                 if (metricValuesArray != null && metricValuesArray.Type != JTokenType.Null)
                                 {
+                                    metricValueSetInstance.MetricValues = new List<MetricValue>();
                                     foreach (JToken metricValuesValue in ((JArray)metricValuesArray))
                                     {
                                         MetricValue metricValueInstance = new MetricValue();

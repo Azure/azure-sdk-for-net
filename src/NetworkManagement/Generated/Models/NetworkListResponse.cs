@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<NetworkListResponse.VirtualNetworkSite> VirtualNetworkSites
         {
+            get
+            {
+                if (this._virtualNetworkSites == null)
+                {
+                    this._virtualNetworkSites = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse.VirtualNetworkSite>();
+                }
+                return this._virtualNetworkSites;
+            }
+            set { this._virtualNetworkSites = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<NetworkListResponse.VirtualNetworkSite> VirtualNetworkSitesValue
+        {
             get { return this._virtualNetworkSites; }
             set { this._virtualNetworkSites = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkListResponse()
         {
-            this.VirtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IEnumerator<NetworkListResponse.VirtualNetworkSite> GetEnumerator()
         {
-            return this.VirtualNetworkSites.GetEnumerator();
+            return this.VirtualNetworkSitesValue.GetEnumerator();
         }
         
         /// <summary>
@@ -76,6 +91,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<string> AddressPrefixes
             {
+                get
+                {
+                    if (this._addressPrefixes == null)
+                    {
+                        this._addressPrefixes = new System.Collections.Generic.List<string>();
+                    }
+                    return this._addressPrefixes;
+                }
+                set { this._addressPrefixes = value; }
+            }
+            
+            /// <summary>
+            /// Optional. Address spaces, in CIDR format in the virtual network.
+            /// </summary>
+            public IList<string> AddressPrefixesValue
+            {
                 get { return this._addressPrefixes; }
                 set { this._addressPrefixes = value; }
             }
@@ -85,7 +116,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public AddressSpace()
             {
-                this.AddressPrefixes = new List<string>();
             }
         }
         
@@ -172,6 +202,23 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<NetworkListResponse.LocalNetworkSite> Sites
             {
+                get
+                {
+                    if (this._sites == null)
+                    {
+                        this._sites = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse.LocalNetworkSite>();
+                    }
+                    return this._sites;
+                }
+                set { this._sites = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The list of local network sites that the virtual
+            /// network can connect to.
+            /// </summary>
+            public IList<NetworkListResponse.LocalNetworkSite> SitesValue
+            {
                 get { return this._sites; }
                 set { this._sites = value; }
             }
@@ -194,7 +241,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Gateway()
             {
-                this.Sites = new List<NetworkListResponse.LocalNetworkSite>();
             }
         }
         
@@ -221,6 +267,23 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// network site.
             /// </summary>
             public IList<NetworkListResponse.Connection> Connections
+            {
+                get
+                {
+                    if (this._connections == null)
+                    {
+                        this._connections = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse.Connection>();
+                    }
+                    return this._connections;
+                }
+                set { this._connections = value; }
+            }
+            
+            /// <summary>
+            /// Optional. Specifies the types of connections to the local
+            /// network site.
+            /// </summary>
+            public IList<NetworkListResponse.Connection> ConnectionsValue
             {
                 get { return this._connections; }
                 set { this._connections = value; }
@@ -253,7 +316,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public LocalNetworkSite()
             {
-                this.Connections = new List<NetworkListResponse.Connection>();
             }
         }
         
@@ -330,6 +392,23 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<NetworkListResponse.DnsServer> DnsServers
             {
+                get
+                {
+                    if (this._dnsServers == null)
+                    {
+                        this._dnsServers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse.DnsServer>();
+                    }
+                    return this._dnsServers;
+                }
+                set { this._dnsServers = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The list of available DNS Servers associated with the
+            /// virtual network site.
+            /// </summary>
+            public IList<NetworkListResponse.DnsServer> DnsServersValue
+            {
                 get { return this._dnsServers; }
                 set { this._dnsServers = value; }
             }
@@ -402,6 +481,24 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<NetworkListResponse.Subnet> Subnets
             {
+                get
+                {
+                    if (this._subnets == null)
+                    {
+                        this._subnets = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkListResponse.Subnet>();
+                    }
+                    return this._subnets;
+                }
+                set { this._subnets = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The list of network subnets for a virtual network
+            /// site. All network subnets must be contained within the overall
+            /// virtual network address spaces.
+            /// </summary>
+            public IList<NetworkListResponse.Subnet> SubnetsValue
+            {
                 get { return this._subnets; }
                 set { this._subnets = value; }
             }
@@ -411,8 +508,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VirtualNetworkSite()
             {
-                this.DnsServers = new List<NetworkListResponse.DnsServer>();
-                this.Subnets = new List<NetworkListResponse.Subnet>();
             }
         }
         
@@ -430,6 +525,23 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<string> AddressPrefixes
             {
+                get
+                {
+                    if (this._addressPrefixes == null)
+                    {
+                        this._addressPrefixes = new System.Collections.Generic.List<string>();
+                    }
+                    return this._addressPrefixes;
+                }
+                set { this._addressPrefixes = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The CIDR identifiers that identify addresses in the
+            /// pool.
+            /// </summary>
+            public IList<string> AddressPrefixesValue
+            {
                 get { return this._addressPrefixes; }
                 set { this._addressPrefixes = value; }
             }
@@ -439,7 +551,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public VPNClientAddressPool()
             {
-                this.AddressPrefixes = new List<string>();
             }
         }
     }

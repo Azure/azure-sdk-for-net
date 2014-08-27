@@ -42,6 +42,25 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<string> Capabilities
         {
+            get
+            {
+                if (this._capabilities == null)
+                {
+                    this._capabilities = new System.Collections.Generic.List<string>();
+                }
+                return this._capabilities;
+            }
+            set { this._capabilities = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Indicates if the virtual machine-related operations can
+        /// be performed in this affinity group. If so, the string
+        /// PersistentVMRole will be returned by this element. Otherwise, this
+        /// element will not be present.
+        /// </summary>
+        public IList<string> CapabilitiesValue
+        {
             get { return this._capabilities; }
             set { this._capabilities = value; }
         }
@@ -85,6 +104,22 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// Optional. The hosted services associated with this affinity group.
         /// </summary>
         public IList<AffinityGroupGetResponse.HostedServiceReference> HostedServices
+        {
+            get
+            {
+                if (this._hostedServices == null)
+                {
+                    this._hostedServices = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.AffinityGroupGetResponse.HostedServiceReference>();
+                }
+                return this._hostedServices;
+            }
+            set { this._hostedServices = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The hosted services associated with this affinity group.
+        /// </summary>
+        public IList<AffinityGroupGetResponse.HostedServiceReference> HostedServicesValue
         {
             get { return this._hostedServices; }
             set { this._hostedServices = value; }
@@ -132,6 +167,22 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<AffinityGroupGetResponse.StorageServiceReference> StorageServices
         {
+            get
+            {
+                if (this._storageServices == null)
+                {
+                    this._storageServices = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.AffinityGroupGetResponse.StorageServiceReference>();
+                }
+                return this._storageServices;
+            }
+            set { this._storageServices = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The storage services associated with this affinity group.
+        /// </summary>
+        public IList<AffinityGroupGetResponse.StorageServiceReference> StorageServicesValue
+        {
             get { return this._storageServices; }
             set { this._storageServices = value; }
         }
@@ -141,9 +192,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupGetResponse()
         {
-            this.Capabilities = new List<string>();
-            this.HostedServices = new List<AffinityGroupGetResponse.HostedServiceReference>();
-            this.StorageServices = new List<AffinityGroupGetResponse.StorageServiceReference>();
         }
         
         /// <summary>

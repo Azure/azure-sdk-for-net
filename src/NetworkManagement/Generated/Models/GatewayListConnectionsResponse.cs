@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<GatewayListConnectionsResponse.GatewayConnection> Connections
         {
+            get
+            {
+                if (this._connections == null)
+                {
+                    this._connections = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.GatewayListConnectionsResponse.GatewayConnection>();
+                }
+                return this._connections;
+            }
+            set { this._connections = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of connections.
+        /// </summary>
+        public IList<GatewayListConnectionsResponse.GatewayConnection> ConnectionsValue
+        {
             get { return this._connections; }
             set { this._connections = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListConnectionsResponse()
         {
-            this.Connections = new List<GatewayListConnectionsResponse.GatewayConnection>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IEnumerator<GatewayListConnectionsResponse.GatewayConnection> GetEnumerator()
         {
-            return this.Connections.GetEnumerator();
+            return this.ConnectionsValue.GetEnumerator();
         }
         
         /// <summary>
@@ -79,6 +94,25 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// currently connected VPN clients.
             /// </summary>
             public IList<string> AllocatedIPAddresses
+            {
+                get
+                {
+                    if (this._allocatedIPAddresses == null)
+                    {
+                        this._allocatedIPAddresses = new System.Collections.Generic.List<string>();
+                    }
+                    return this._allocatedIPAddresses;
+                }
+                set { this._allocatedIPAddresses = value; }
+            }
+            
+            /// <summary>
+            /// Optional. If LocalNetworkSiteName is defined as
+            /// VPNClientConnection, this element contains a list of IP
+            /// addresses (represented as strings) that are assigned to
+            /// currently connected VPN clients.
+            /// </summary>
+            public IList<string> AllocatedIPAddressesValue
             {
                 get { return this._allocatedIPAddresses; }
                 set { this._allocatedIPAddresses = value; }
@@ -160,7 +194,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public GatewayConnection()
             {
-                this.AllocatedIPAddresses = new List<string>();
             }
         }
     }

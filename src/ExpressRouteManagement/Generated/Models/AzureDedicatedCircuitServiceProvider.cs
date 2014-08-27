@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IList<DedicatedCircuitBandwidth> DedicatedCircuitBandwidths
         {
+            get
+            {
+                if (this._dedicatedCircuitBandwidths == null)
+                {
+                    this._dedicatedCircuitBandwidths = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ExpressRoute.Models.DedicatedCircuitBandwidth>();
+                }
+                return this._dedicatedCircuitBandwidths;
+            }
+            set { this._dedicatedCircuitBandwidths = value; }
+        }
+        
+        /// <summary>
+        /// Required. Bandwidths available to create dedicated circuits.
+        /// </summary>
+        public IList<DedicatedCircuitBandwidth> DedicatedCircuitBandwidthsValue
+        {
             get { return this._dedicatedCircuitBandwidths; }
             set { this._dedicatedCircuitBandwidths = value; }
         }
@@ -82,7 +98,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public AzureDedicatedCircuitServiceProvider()
         {
-            this.DedicatedCircuitBandwidths = new List<DedicatedCircuitBandwidth>();
         }
     }
 }

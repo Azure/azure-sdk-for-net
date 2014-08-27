@@ -39,6 +39,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<WebSite> WebSites
         {
+            get
+            {
+                if (this._webSites == null)
+                {
+                    this._webSites = new System.Collections.Generic.List<Microsoft.Azure.Management.WebSites.Models.WebSite>();
+                }
+                return this._webSites;
+            }
+            set { this._webSites = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of websites.
+        /// </summary>
+        public IList<WebSite> WebSitesValue
+        {
             get { return this._webSites; }
             set { this._webSites = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteListResponse()
         {
-            this.WebSites = new List<WebSite>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSite> GetEnumerator()
         {
-            return this.WebSites.GetEnumerator();
+            return this.WebSitesValue.GetEnumerator();
         }
         
         /// <summary>

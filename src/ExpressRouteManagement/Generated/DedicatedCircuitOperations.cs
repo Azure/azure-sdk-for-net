@@ -648,6 +648,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement dedicatedCircuitsSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuits", "http://schemas.microsoft.com/windowsazure"));
                     if (dedicatedCircuitsSequenceElement != null)
                     {
+                        result.DedicatedCircuits = new List<AzureDedicatedCircuit>();
                         foreach (XElement dedicatedCircuitsElement in dedicatedCircuitsSequenceElement.Elements(XName.Get("DedicatedCircuit", "http://schemas.microsoft.com/windowsazure")))
                         {
                             AzureDedicatedCircuit dedicatedCircuitInstance = new AzureDedicatedCircuit();

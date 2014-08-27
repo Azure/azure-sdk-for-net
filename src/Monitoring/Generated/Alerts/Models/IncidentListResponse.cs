@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<Incident> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Incident>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Incident collection.
+        /// </summary>
+        public IList<Incident> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this.Value = new List<Incident>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IEnumerator<Incident> GetEnumerator()
         {
-            return this.Value.GetEnumerator();
+            return this.ValueValue.GetEnumerator();
         }
         
         /// <summary>

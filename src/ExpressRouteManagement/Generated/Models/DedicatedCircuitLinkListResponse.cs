@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IList<AzureDedicatedCircuitLink> DedicatedCircuitLinks
         {
+            get
+            {
+                if (this._dedicatedCircuitLinks == null)
+                {
+                    this._dedicatedCircuitLinks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ExpressRoute.Models.AzureDedicatedCircuitLink>();
+                }
+                return this._dedicatedCircuitLinks;
+            }
+            set { this._dedicatedCircuitLinks = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<AzureDedicatedCircuitLink> DedicatedCircuitLinksValue
+        {
             get { return this._dedicatedCircuitLinks; }
             set { this._dedicatedCircuitLinks = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitLinkListResponse()
         {
-            this.DedicatedCircuitLinks = new List<AzureDedicatedCircuitLink>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IEnumerator<AzureDedicatedCircuitLink> GetEnumerator()
         {
-            return this.DedicatedCircuitLinks.GetEnumerator();
+            return this.DedicatedCircuitLinksValue.GetEnumerator();
         }
         
         /// <summary>

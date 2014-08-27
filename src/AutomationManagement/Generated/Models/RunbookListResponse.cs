@@ -38,6 +38,22 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<Runbook> Runbooks
         {
+            get
+            {
+                if (this._runbooks == null)
+                {
+                    this._runbooks = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Runbook>();
+                }
+                return this._runbooks;
+            }
+            set { this._runbooks = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A list of runbooks.
+        /// </summary>
+        public IList<Runbook> RunbooksValue
+        {
             get { return this._runbooks; }
             set { this._runbooks = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookListResponse()
         {
-            this.Runbooks = new List<Runbook>();
         }
     }
 }
