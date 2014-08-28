@@ -94,9 +94,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> BeginAddingExtensionAsync(string serviceName, HostedServiceAddExtensionParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service and its disks from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
@@ -187,9 +189,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationResponse> DeleteAsync(string serviceName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service and its disks from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
