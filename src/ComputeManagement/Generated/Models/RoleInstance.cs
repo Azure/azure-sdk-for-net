@@ -62,6 +62,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<InstanceEndpoint> InstanceEndpoints
         {
+            get
+            {
+                if (this._instanceEndpoints == null)
+                {
+                    this._instanceEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InstanceEndpoint>();
+                }
+                return this._instanceEndpoints;
+            }
+            set { this._instanceEndpoints = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of instance endpoints for the role.
+        /// </summary>
+        public IList<InstanceEndpoint> InstanceEndpointsValue
+        {
             get { return this._instanceEndpoints; }
             set { this._instanceEndpoints = value; }
         }
@@ -184,6 +200,25 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<RoleInstance.PublicIP> PublicIPs
         {
+            get
+            {
+                if (this._publicIPs == null)
+                {
+                    this._publicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.RoleInstance.PublicIP>();
+                }
+                return this._publicIPs;
+            }
+            set { this._publicIPs = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. A set of public IPs. Currently, only one
+        /// additional public IP per role is supported in an IaaS deployment.
+        /// The IP address is in addition to the default VIP for the
+        /// deployment.
+        /// </summary>
+        public IList<RoleInstance.PublicIP> PublicIPsValue
+        {
             get { return this._publicIPs; }
             set { this._publicIPs = value; }
         }
@@ -208,6 +243,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ResourceExtensionStatus> ResourceExtensionStatusList
         {
+            get
+            {
+                if (this._resourceExtensionStatusList == null)
+                {
+                    this._resourceExtensionStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionStatus>();
+                }
+                return this._resourceExtensionStatusList;
+            }
+            set { this._resourceExtensionStatusList = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Resource Extension Status List.
+        /// </summary>
+        public IList<ResourceExtensionStatus> ResourceExtensionStatusListValue
+        {
             get { return this._resourceExtensionStatusList; }
             set { this._resourceExtensionStatusList = value; }
         }
@@ -228,9 +279,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public RoleInstance()
         {
-            this.InstanceEndpoints = new List<InstanceEndpoint>();
-            this.PublicIPs = new List<RoleInstance.PublicIP>();
-            this.ResourceExtensionStatusList = new List<ResourceExtensionStatus>();
         }
         
         /// <summary>

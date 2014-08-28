@@ -35,8 +35,15 @@ namespace Microsoft.Azure.Management.Sql
     public partial interface ISqlManagementClient : IDisposable
     {
         /// <summary>
-        /// Gets or sets the URI used as the base for all cloud service
-        /// requests.
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
         /// </summary>
         Uri BaseUri
         {
@@ -44,9 +51,9 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Gets or sets subscription credentials which uniquely identify
-        /// Microsoft Azure subscription. The subscription ID forms part of
-        /// the URI for every service call.
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
         /// </summary>
         SubscriptionCloudCredentials Credentials
         {
@@ -86,6 +93,16 @@ namespace Microsoft.Azure.Management.Sql
         /// Update, and Delete firewall rules.
         /// </summary>
         IFirewallRuleOperations FirewallRules
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
+        /// security policy.  Contains operations to: Retrieve and Update
+        /// security policy
+        /// </summary>
+        ISecurityOperations DatabaseSecurity
         {
             get; 
         }

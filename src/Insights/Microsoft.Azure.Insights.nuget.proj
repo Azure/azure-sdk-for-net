@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.Azure.Monitoring
+    Microsoft.Azure.Insights
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Insights">
-      <PackageVersion>2.0.2-preview</PackageVersion>
+      <PackageVersion>2.2.0-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

@@ -94,6 +94,32 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
+            get
+            {
+                if (this._extendedProperties == null)
+                {
+                    this._extendedProperties = new System.Collections.Generic.Dictionary<string, string>();
+                }
+                return this._extendedProperties;
+            }
+            set { this._extendedProperties = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Represents the name of an extended cloud service
+        /// property. Each extended property must have a defined name and a
+        /// value. You can have a maximum of 50 extended property name and
+        /// value pairs.  The maximum length of the name element is 64
+        /// characters, only alphanumeric characters and underscores are valid
+        /// in the name, and it must start with a letter. Attempting to use
+        /// other characters, starting with a non-letter character, or
+        /// entering a name that is identical to that of another extended
+        /// property owned by the same service will result in a status code
+        /// 400 (Bad Request) error. Each extended property value has a
+        /// maximum length of 255 characters.
+        /// </summary>
+        public IDictionary<string, string> ExtendedPropertiesValue
+        {
             get { return this._extendedProperties; }
             set { this._extendedProperties = value; }
         }
@@ -141,6 +167,24 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// is assigned in the list here.
         /// </summary>
         public IList<LoadBalancer> LoadBalancers
+        {
+            get
+            {
+                if (this._loadBalancers == null)
+                {
+                    this._loadBalancers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.LoadBalancer>();
+                }
+                return this._loadBalancers;
+            }
+            set { this._loadBalancers = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Optional. A list of internal load balancers that each
+        /// provide load balancing on a private VIP. It's created when a name
+        /// is assigned in the list here.
+        /// </summary>
+        public IList<LoadBalancer> LoadBalancersValue
         {
             get { return this._loadBalancers; }
             set { this._loadBalancers = value; }
@@ -212,6 +256,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<RoleInstance> RoleInstances
         {
+            get
+            {
+                if (this._roleInstances == null)
+                {
+                    this._roleInstances = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.RoleInstance>();
+                }
+                return this._roleInstances;
+            }
+            set { this._roleInstances = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of role instances in the deployment.
+        /// </summary>
+        public IList<RoleInstance> RoleInstancesValue
+        {
             get { return this._roleInstances; }
             set { this._roleInstances = value; }
         }
@@ -222,6 +282,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// Optional. The list of roles in the deployment.
         /// </summary>
         public IList<Role> Roles
+        {
+            get
+            {
+                if (this._roles == null)
+                {
+                    this._roles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.Role>();
+                }
+                return this._roles;
+            }
+            set { this._roles = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of roles in the deployment.
+        /// </summary>
+        public IList<Role> RolesValue
         {
             get { return this._roles; }
             set { this._roles = value; }
@@ -308,6 +384,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualIPAddress> VirtualIPAddresses
         {
+            get
+            {
+                if (this._virtualIPAddresses == null)
+                {
+                    this._virtualIPAddresses = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualIPAddress>();
+                }
+                return this._virtualIPAddresses;
+            }
+            set { this._virtualIPAddresses = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The virtual IP addresses that are specified for the
+        /// deployment.
+        /// </summary>
+        public IList<VirtualIPAddress> VirtualIPAddressesValue
+        {
             get { return this._virtualIPAddresses; }
             set { this._virtualIPAddresses = value; }
         }
@@ -329,11 +422,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentGetResponse()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
-            this.LoadBalancers = new List<LoadBalancer>();
-            this.RoleInstances = new List<RoleInstance>();
-            this.Roles = new List<Role>();
-            this.VirtualIPAddresses = new List<VirtualIPAddress>();
         }
     }
 }

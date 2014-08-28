@@ -30,6 +30,20 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountCreateParameters
     {
+        private string _accountType;
+        
+        /// <summary>
+        /// Optional. Specifies whether the account supports locally-redundant
+        /// storage, geo-redundant storage, zone-redundant storage, or read
+        /// access geo-redundant storage. Possible values are:'Standard_LRS',
+        /// 'Standard_ZRS', 'Standard_GRS', and 'Standard_RAGRS'.
+        /// </summary>
+        public string AccountType
+        {
+            get { return this._accountType; }
+            set { this._accountType = value; }
+        }
+        
         private string _affinityGroup;
         
         /// <summary>
@@ -74,24 +88,34 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
-            get { return this._extendedProperties; }
+            get
+            {
+                if (this._extendedProperties == null)
+                {
+                    this._extendedProperties = new Dictionary<string, string>();
+                }
+                return this._extendedProperties;
+            }
             set { this._extendedProperties = value; }
         }
         
-        private bool _geoReplicationEnabled;
-        
         /// <summary>
-        /// Optional. Specifies whether the storage account is created with
-        /// geo-replication enabled. If the element is not included in the
-        /// request body, the default value is true. If set to true, the data
-        /// in the storage account is replicated across more than one
-        /// geographic location to enable resilience in the face of
-        /// catastrophic service loss.
+        /// Optional. Represents the name of an extended storage account
+        /// property. Each extended property must have a defined name and a
+        /// value. You can have a maximum of 50 extended property name/value
+        /// pairs. The maximum length of the Name element is 64 characters,
+        /// only alphanumeric characters and underscores are valid in the
+        /// Name, and the name must start with a letter. Attempting to use
+        /// other characters, starting the Name with a non-letter character,
+        /// or entering a name that is identical to that of another extended
+        /// property owned by the same storage account will result in a status
+        /// code 400 (Bad Request) error. Each extended property value has a
+        /// maximum length of 255 characters.
         /// </summary>
-        public bool GeoReplicationEnabled
+        public IDictionary<string, string> ExtendedPropertiesValue
         {
-            get { return this._geoReplicationEnabled; }
-            set { this._geoReplicationEnabled = value; }
+            get { return this._extendedProperties; }
+            set { this._extendedProperties = value; }
         }
         
         private string _label;
@@ -155,7 +179,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountCreateParameters()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
         }
         
         /// <summary>

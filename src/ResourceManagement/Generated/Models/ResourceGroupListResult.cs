@@ -50,6 +50,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<ResourceGroup> ResourceGroups
         {
+            get
+            {
+                if (this._resourceGroups == null)
+                {
+                    this._resourceGroups = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ResourceGroup>();
+                }
+                return this._resourceGroups;
+            }
+            set { this._resourceGroups = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of resource groups.
+        /// </summary>
+        public IList<ResourceGroup> ResourceGroupsValue
+        {
             get { return this._resourceGroups; }
             set { this._resourceGroups = value; }
         }
@@ -59,7 +75,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ResourceGroupListResult()
         {
-            this.ResourceGroups = new List<ResourceGroup>();
         }
         
         /// <summary>

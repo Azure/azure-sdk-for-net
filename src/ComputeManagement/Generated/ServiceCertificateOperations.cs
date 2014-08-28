@@ -173,7 +173,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -847,6 +847,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement certificatesSequenceElement = responseDoc.Element(XName.Get("Certificates", "http://schemas.microsoft.com/windowsazure"));
                     if (certificatesSequenceElement != null)
                     {
+                        result.Certificates = new List<ServiceCertificateListResponse.Certificate>();
                         foreach (XElement certificatesElement in certificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ServiceCertificateListResponse.Certificate certificateInstance = new ServiceCertificateListResponse.Certificate();

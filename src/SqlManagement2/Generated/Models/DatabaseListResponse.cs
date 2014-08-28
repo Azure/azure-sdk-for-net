@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
-            this._databases = new List<Database>();
+            this.Databases = new List<Database>();
         }
         
         /// <summary>

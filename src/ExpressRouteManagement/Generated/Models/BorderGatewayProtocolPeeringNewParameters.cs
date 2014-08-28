@@ -25,21 +25,21 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The New Bgp Peering parameters.
+    /// The New Border Gateway Protocol Peering parameters.
     /// </summary>
     public partial class BorderGatewayProtocolPeeringNewParameters
     {
-        private uint _peerAsn;
+        private uint _peerAutonomousSystemNumber;
         
         /// <summary>
         /// Required. Specifies the numeric identifier of the public autonomous
         /// system (AS) in which the device of the service provider is
         /// configured.
         /// </summary>
-        public uint PeerAsn
+        public uint PeerAutonomousSystemNumber
         {
-            get { return this._peerAsn; }
-            set { this._peerAsn = value; }
+            get { return this._peerAutonomousSystemNumber; }
+            set { this._peerAutonomousSystemNumber = value; }
         }
         
         private string _primaryPeerSubnet;
@@ -78,16 +78,16 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._sharedKey = value; }
         }
         
-        private uint _vlanId;
+        private uint _virtualLanId;
         
         /// <summary>
         /// Required. Specifies the identifier that is used to identify the
         /// customer.
         /// </summary>
-        public uint VlanId
+        public uint VirtualLanId
         {
-            get { return this._vlanId; }
-            set { this._vlanId = value; }
+            get { return this._virtualLanId; }
+            set { this._virtualLanId = value; }
         }
         
         /// <summary>

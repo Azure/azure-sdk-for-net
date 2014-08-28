@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public ResourceBase()
         {
-            this._tags = new Dictionary<string, string>();
+            this.Tags = new Dictionary<string, string>();
         }
     }
 }

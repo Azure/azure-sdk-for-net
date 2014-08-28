@@ -38,6 +38,1821 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Management.Insights
 {
+    public enum ConditionOperator
+    {
+        GreaterThan = 0,
+        
+        GreaterThanOrEqual = 1,
+        
+        LessThan = 2,
+        
+        LessThanOrEqual = 3,
+    }
+    
+    /// <summary>
+    /// An alert incident indicates the activation status of an alert rule.
+    /// </summary>
+    public partial class Incident
+    {
+        private DateTime _activatedTime;
+        
+        /// <summary>
+        /// Optional. The time at which the incident got activated.
+        /// </summary>
+        public DateTime ActivatedTime
+        {
+            get { return this._activatedTime; }
+            set { this._activatedTime = value; }
+        }
+        
+        private bool _isActive;
+        
+        /// <summary>
+        /// Optional. A boolean to indicate whether the incident is active or
+        /// resolved.
+        /// </summary>
+        public bool IsActive
+        {
+            get { return this._isActive; }
+            set { this._isActive = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Incident name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private System.DateTime? _resolvedTime;
+        
+        /// <summary>
+        /// Optional. The time at which the incident got resolved. If null, it
+        /// means the incident is still active.
+        /// </summary>
+        public System.DateTime? ResolvedTime
+        {
+            get { return this._resolvedTime; }
+            set { this._resolvedTime = value; }
+        }
+        
+        private string _ruleName;
+        
+        /// <summary>
+        /// Optional. Rule name that is associated with the incident.
+        /// </summary>
+        public string RuleName
+        {
+            get { return this._ruleName; }
+            set { this._ruleName = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Incident class.
+        /// </summary>
+        public Incident()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The Get Incident operation response.
+    /// </summary>
+    public partial class IncidentGetResponse : OperationResponse
+    {
+        private Incident _incident;
+        
+        /// <summary>
+        /// Optional. The retrieved incident.
+        /// </summary>
+        public Incident Incident
+        {
+            get { return this._incident; }
+            set { this._incident = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the IncidentGetResponse class.
+        /// </summary>
+        public IncidentGetResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// The List incidents operation response.
+    /// </summary>
+    public partial class IncidentListResponse : OperationResponse, IEnumerable<Incident>
+    {
+        private IList<Incident> _value;
+        
+        /// <summary>
+        /// Optional. Incident collection.
+        /// </summary>
+        public IList<Incident> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the IncidentListResponse class.
+        /// </summary>
+        public IncidentListResponse()
+        {
+            this.Value = new List<Incident>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        public IEnumerator<Incident> GetEnumerator()
+        {
+            return this.Value.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of Value.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
+    }
+    
+    /// <summary>
+    /// A location threshold rule condition.
+    /// </summary>
+    public partial class LocationThresholdRuleCondition : RuleCondition
+    {
+        private RuleDataSource _dataSource;
+        
+        /// <summary>
+        /// Optional. Condition data source.
+        /// </summary>
+        public RuleDataSource DataSource
+        {
+            get { return this._dataSource; }
+            set { this._dataSource = value; }
+        }
+        
+        private int _failedLocationCount;
+        
+        /// <summary>
+        /// Optional. Failed location count.
+        /// </summary>
+        public int FailedLocationCount
+        {
+            get { return this._failedLocationCount; }
+            set { this._failedLocationCount = value; }
+        }
+        
+        private TimeSpan _windowSize;
+        
+        /// <summary>
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// Condition window size depends on the metric.
+        /// </summary>
+        public TimeSpan WindowSize
+        {
+            get { return this._windowSize; }
+            set { this._windowSize = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the LocationThresholdRuleCondition
+        /// class.
+        /// </summary>
+        public LocationThresholdRuleCondition()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// An alert rule.
+    /// </summary>
+    public partial class Rule
+    {
+        private RuleAction _action;
+        
+        /// <summary>
+        /// Optional. Rule action.
+        /// </summary>
+        public RuleAction Action
+        {
+            get { return this._action; }
+            set { this._action = value; }
+        }
+        
+        private RuleCondition _condition;
+        
+        /// <summary>
+        /// Optional. Rule condition.
+        /// </summary>
+        public RuleCondition Condition
+        {
+            get { return this._condition; }
+            set { this._condition = value; }
+        }
+        
+        private string _description;
+        
+        /// <summary>
+        /// Optional. Rule description.
+        /// </summary>
+        public string Description
+        {
+            get { return this._description; }
+            set { this._description = value; }
+        }
+        
+        private bool _isEnabled;
+        
+        /// <summary>
+        /// Optional. A flag that determines whether the rule is enabled or
+        /// disabled.
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return this._isEnabled; }
+            set { this._isEnabled = value; }
+        }
+        
+        private DateTime _lastUpdatedTime;
+        
+        /// <summary>
+        /// Optional. Rule last updated time.
+        /// </summary>
+        public DateTime LastUpdatedTime
+        {
+            get { return this._lastUpdatedTime; }
+            set { this._lastUpdatedTime = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. Rule name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Rule class.
+        /// </summary>
+        public Rule()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A rule action.
+    /// </summary>
+    public abstract partial class RuleAction
+    {
+        /// <summary>
+        /// Initializes a new instance of the RuleAction class.
+        /// </summary>
+        public RuleAction()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A rule condition.
+    /// </summary>
+    public abstract partial class RuleCondition
+    {
+        /// <summary>
+        /// Initializes a new instance of the RuleCondition class.
+        /// </summary>
+        public RuleCondition()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Parameters supplied to the Create or Update Rule operation.
+    /// </summary>
+    public partial class RuleCreateOrUpdateParameters
+    {
+        private string _location;
+        
+        /// <summary>
+        /// Optional. The location of the rule.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private Rule _properties;
+        
+        /// <summary>
+        /// Optional. The rule to create or update.
+        /// </summary>
+        public Rule Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private IDictionary<string, string> _tags;
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleCreateOrUpdateParameters
+        /// class.
+        /// </summary>
+        public RuleCreateOrUpdateParameters()
+        {
+            this.Tags = new Dictionary<string, string>();
+        }
+    }
+    
+    /// <summary>
+    /// A rule data source.
+    /// </summary>
+    public abstract partial class RuleDataSource
+    {
+        /// <summary>
+        /// Initializes a new instance of the RuleDataSource class.
+        /// </summary>
+        public RuleDataSource()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// Specifies the action to send email when the rule condition is evaluated.
+    /// </summary>
+    public partial class RuleEmailAction : RuleAction
+    {
+        private IList<string> _customEmails;
+        
+        /// <summary>
+        /// Optional. The email address of an adminstrative user.
+        /// </summary>
+        public IList<string> CustomEmails
+        {
+            get { return this._customEmails; }
+            set { this._customEmails = value; }
+        }
+        
+        private bool _sendToServiceOwners;
+        
+        /// <summary>
+        /// Optional. This indicates if email is sent to sevice adminstrator
+        /// and co-administrators.
+        /// </summary>
+        public bool SendToServiceOwners
+        {
+            get { return this._sendToServiceOwners; }
+            set { this._sendToServiceOwners = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleEmailAction class.
+        /// </summary>
+        public RuleEmailAction()
+        {
+            this.CustomEmails = new List<string>();
+        }
+    }
+    
+    /// <summary>
+    /// The Get Rule operation response.
+    /// </summary>
+    public partial class RuleGetResponse : OperationResponse
+    {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. The resource id of the rule.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Optional. The location of the rule.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. The name of the rule.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private Rule _properties;
+        
+        /// <summary>
+        /// Optional. The retrieved rule.
+        /// </summary>
+        public Rule Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private IDictionary<string, string> _tags;
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleGetResponse class.
+        /// </summary>
+        public RuleGetResponse()
+        {
+            this.Tags = new Dictionary<string, string>();
+        }
+    }
+    
+    /// <summary>
+    /// The List Rules operation response.
+    /// </summary>
+    public partial class RuleListResponse : OperationResponse
+    {
+        private RuleResourceCollection _ruleResourceCollection;
+        
+        /// <summary>
+        /// Optional. Alert rules collection.
+        /// </summary>
+        public RuleResourceCollection RuleResourceCollection
+        {
+            get { return this._ruleResourceCollection; }
+            set { this._ruleResourceCollection = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleListResponse class.
+        /// </summary>
+        public RuleListResponse()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// A rule metric data source.
+    /// </summary>
+    public partial class RuleMetricDataSource : RuleDataSource
+    {
+        private string _metricName;
+        
+        /// <summary>
+        /// Optional. Metric name.
+        /// </summary>
+        public string MetricName
+        {
+            get { return this._metricName; }
+            set { this._metricName = value; }
+        }
+        
+        private string _metricNamespace;
+        
+        /// <summary>
+        /// Optional. Metric namespace. When creating a rule on endpoint
+        /// monitoring metrics, WindowsAzure.Availability namespace is
+        /// required.
+        /// </summary>
+        public string MetricNamespace
+        {
+            get { return this._metricNamespace; }
+            set { this._metricNamespace = value; }
+        }
+        
+        private string _resourceUri;
+        
+        /// <summary>
+        /// Optional. Metric resource uri.
+        /// </summary>
+        public string ResourceUri
+        {
+            get { return this._resourceUri; }
+            set { this._resourceUri = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleMetricDataSource class.
+        /// </summary>
+        public RuleMetricDataSource()
+        {
+        }
+    }
+    
+    /// <summary>
+    /// An alert rule resource.
+    /// </summary>
+    public partial class RuleResource
+    {
+        private string _id;
+        
+        /// <summary>
+        /// Optional. The resource id of the rule.
+        /// </summary>
+        public string Id
+        {
+            get { return this._id; }
+            set { this._id = value; }
+        }
+        
+        private string _location;
+        
+        /// <summary>
+        /// Optional. The location of the rule.
+        /// </summary>
+        public string Location
+        {
+            get { return this._location; }
+            set { this._location = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Optional. The name of the rule.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private Rule _properties;
+        
+        /// <summary>
+        /// Optional. The retrieved rule.
+        /// </summary>
+        public Rule Properties
+        {
+            get { return this._properties; }
+            set { this._properties = value; }
+        }
+        
+        private IDictionary<string, string> _tags;
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> Tags
+        {
+            get { return this._tags; }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleResource class.
+        /// </summary>
+        public RuleResource()
+        {
+            this.Tags = new Dictionary<string, string>();
+        }
+    }
+    
+    /// <summary>
+    /// Represents collection of alert rule resources.
+    /// </summary>
+    public partial class RuleResourceCollection
+    {
+        private IList<RuleResource> _value;
+        
+        /// <summary>
+        /// Optional. The values for the alert rule resources.
+        /// </summary>
+        public IList<RuleResource> Value
+        {
+            get { return this._value; }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the RuleResourceCollection class.
+        /// </summary>
+        public RuleResourceCollection()
+        {
+            this.Value = new List<RuleResource>();
+        }
+    }
+    
+    /// <summary>
+    /// A threshold rule condition.
+    /// </summary>
+    public partial class ThresholdRuleCondition : RuleCondition
+    {
+        private RuleDataSource _dataSource;
+        
+        /// <summary>
+        /// Optional. Condition data source.
+        /// </summary>
+        public RuleDataSource DataSource
+        {
+            get { return this._dataSource; }
+            set { this._dataSource = value; }
+        }
+        
+        private ConditionOperator _operator;
+        
+        /// <summary>
+        /// Optional. Condition operator.
+        /// </summary>
+        public ConditionOperator Operator
+        {
+            get { return this._operator; }
+            set { this._operator = value; }
+        }
+        
+        private double _threshold;
+        
+        /// <summary>
+        /// Optional. Condition threshold.
+        /// </summary>
+        public double Threshold
+        {
+            get { return this._threshold; }
+            set { this._threshold = value; }
+        }
+        
+        private TimeSpan _windowSize;
+        
+        /// <summary>
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// Condition window size depends on the metric.
+        /// </summary>
+        public TimeSpan WindowSize
+        {
+            get { return this._windowSize; }
+            set { this._windowSize = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the ThresholdRuleCondition class.
+        /// </summary>
+        public ThresholdRuleCondition()
+        {
+        }
+    }
+}
+
+namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
+{
+    public static partial class AlertsClientExtensions
+    {
+    }
+    
+    public partial interface IAlertsClient : IDisposable
+    {
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        string ApiVersion
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
+        /// </summary>
+        Uri BaseUri
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        SubscriptionCloudCredentials Credentials
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationInitialTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        int LongRunningOperationRetryTimeout
+        {
+            get; set; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the alert incidents.
+        /// </summary>
+        IIncidentOperations Incidents
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing the alert rules.
+        /// </summary>
+        IRuleOperations Rules
+        {
+            get; 
+        }
+    }
+    
+    public partial class AlertsClient : ServiceClient<AlertsClient>, IAlertsClient
+    {
+        private string _apiVersion;
+        
+        /// <summary>
+        /// Gets the API version.
+        /// </summary>
+        public string ApiVersion
+        {
+            get { return this._apiVersion; }
+        }
+        
+        private Uri _baseUri;
+        
+        /// <summary>
+        /// Gets the URI used as the base for all cloud service requests.
+        /// </summary>
+        public Uri BaseUri
+        {
+            get { return this._baseUri; }
+        }
+        
+        private SubscriptionCloudCredentials _credentials;
+        
+        /// <summary>
+        /// Gets subscription credentials which uniquely identify Microsoft
+        /// Azure subscription. The subscription ID forms part of the URI for
+        /// every service call.
+        /// </summary>
+        public SubscriptionCloudCredentials Credentials
+        {
+            get { return this._credentials; }
+        }
+        
+        private int _longRunningOperationInitialTimeout;
+        
+        /// <summary>
+        /// Gets or sets the initial timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationInitialTimeout
+        {
+            get { return this._longRunningOperationInitialTimeout; }
+            set { this._longRunningOperationInitialTimeout = value; }
+        }
+        
+        private int _longRunningOperationRetryTimeout;
+        
+        /// <summary>
+        /// Gets or sets the retry timeout for Long Running Operations.
+        /// </summary>
+        public int LongRunningOperationRetryTimeout
+        {
+            get { return this._longRunningOperationRetryTimeout; }
+            set { this._longRunningOperationRetryTimeout = value; }
+        }
+        
+        private IIncidentOperations _incidents;
+        
+        /// <summary>
+        /// Operations for managing the alert incidents.
+        /// </summary>
+        public virtual IIncidentOperations Incidents
+        {
+            get { return this._incidents; }
+        }
+        
+        private IRuleOperations _rules;
+        
+        /// <summary>
+        /// Operations for managing the alert rules.
+        /// </summary>
+        public virtual IRuleOperations Rules
+        {
+            get { return this._rules; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        private AlertsClient()
+            : base()
+        {
+            this._incidents = new IncidentOperations(this);
+            this._rules = new RuleOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, Uri baseUri)
+            : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials)
+            : this()
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        private AlertsClient(HttpClient httpClient)
+            : base(httpClient)
+        {
+            this._incidents = new IncidentOperations(this);
+            this._rules = new RuleOperations(this);
+            this._apiVersion = "2014-04";
+            this._longRunningOperationInitialTimeout = -1;
+            this._longRunningOperationRetryTimeout = -1;
+            this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='baseUri'>
+        /// Required. Gets the URI used as the base for all cloud service
+        /// requests.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, Uri baseUri, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            if (baseUri == null)
+            {
+                throw new ArgumentNullException("baseUri");
+            }
+            this._credentials = credentials;
+            this._baseUri = baseUri;
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the AlertsClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Gets subscription credentials which uniquely identify
+        /// Microsoft Azure subscription. The subscription ID forms part of
+        /// the URI for every service call.
+        /// </param>
+        /// <param name='httpClient'>
+        /// The Http client
+        /// </param>
+        public AlertsClient(SubscriptionCloudCredentials credentials, HttpClient httpClient)
+            : this(httpClient)
+        {
+            if (credentials == null)
+            {
+                throw new ArgumentNullException("credentials");
+            }
+            this._credentials = credentials;
+            this._baseUri = new Uri("https://management.core.windows.net");
+            
+            this.Credentials.InitializeServiceClient(this);
+        }
+        
+        /// <summary>
+        /// Clones properties from current instance to another AlertsClient
+        /// instance
+        /// </summary>
+        /// <param name='client'>
+        /// Instance of AlertsClient to clone to
+        /// </param>
+        protected override void Clone(ServiceClient<AlertsClient> client)
+        {
+            base.Clone(client);
+            
+            if (client is AlertsClient)
+            {
+                AlertsClient clonedClient = ((AlertsClient)client);
+                
+                clonedClient._credentials = this._credentials;
+                clonedClient._baseUri = this._baseUri;
+                clonedClient._apiVersion = this._apiVersion;
+                clonedClient._longRunningOperationInitialTimeout = this._longRunningOperationInitialTimeout;
+                clonedClient._longRunningOperationRetryTimeout = this._longRunningOperationRetryTimeout;
+                
+                clonedClient.Credentials.InitializeServiceClient(clonedClient);
+            }
+        }
+    }
+    
+    public static partial class IncidentOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// Required. The name of the incident to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        public static IncidentGetResponse Get(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).GetAsync(resourceGroupName, ruleName, incidentName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// Required. The name of the incident to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        public static Task<IncidentGetResponse> GetAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName, string incidentName)
+        {
+            return operations.GetAsync(resourceGroupName, ruleName, incidentName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        public static IncidentListResponse ListForRule(this IIncidentOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IIncidentOperations)s).ListForRuleAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IIncidentOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        public static Task<IncidentListResponse> ListForRuleAsync(this IIncidentOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.ListForRuleAsync(resourceGroupName, ruleName, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Operations for managing the alert incidents.
+    /// </summary>
+    public partial interface IIncidentOperations
+    {
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// The name of the incident to retrieve.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        Task<IncidentGetResponse> GetAsync(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The name of the rule.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        Task<IncidentListResponse> ListForRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken);
+    }
+    
+    /// <summary>
+    /// Operations for managing the alert incidents.
+    /// </summary>
+    internal partial class IncidentOperations : IServiceOperations<AlertsClient>, IIncidentOperations
+    {
+        /// <summary>
+        /// Initializes a new instance of the IncidentOperations class.
+        /// </summary>
+        /// <param name='client'>
+        /// Reference to the service client.
+        /// </param>
+        internal IncidentOperations(AlertsClient client)
+        {
+            this._client = client;
+        }
+        
+        private AlertsClient _client;
+        
+        /// <summary>
+        /// Gets a reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.AlertsClient.
+        /// </summary>
+        public AlertsClient Client
+        {
+            get { return this._client; }
+        }
+        
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='incidentName'>
+        /// Required. The name of the incident to retrieve.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Incident operation response.
+        /// </returns>
+        public async Task<IncidentGetResponse> GetAsync(string resourceGroupName, string ruleName, string incidentName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+            if (incidentName == null)
+            {
+                throw new ArgumentNullException("incidentName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("ruleName", ruleName);
+                tracingParameters.Add("incidentName", incidentName);
+                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents/" + incidentName.Trim() + "?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    IncidentGetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new IncidentGetResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        Incident incidentInstance = new Incident();
+                        result.Incident = incidentInstance;
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            incidentInstance.Name = nameInstance;
+                        }
+                        
+                        JToken ruleNameValue = responseDoc["ruleName"];
+                        if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
+                        {
+                            string ruleNameInstance = ((string)ruleNameValue);
+                            incidentInstance.RuleName = ruleNameInstance;
+                        }
+                        
+                        JToken isActiveValue = responseDoc["isActive"];
+                        if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                        {
+                            bool isActiveInstance = ((bool)isActiveValue);
+                            incidentInstance.IsActive = isActiveInstance;
+                        }
+                        
+                        JToken activatedTimeValue = responseDoc["activatedTime"];
+                        if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                            incidentInstance.ActivatedTime = activatedTimeInstance;
+                        }
+                        
+                        JToken resolvedTimeValue = responseDoc["resolvedTime"];
+                        if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                        {
+                            DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                            incidentInstance.ResolvedTime = resolvedTimeInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List incidents operation response.
+        /// </returns>
+        public async Task<IncidentListResponse> ListForRuleAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (ruleName == null)
+            {
+                throw new ArgumentNullException("ruleName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("ruleName", ruleName);
+                Tracing.Enter(invocationId, this, "ListForRuleAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "/providers/microsoft.insights/alertrules/" + ruleName.Trim() + "/incidents?";
+            url = url + "api-version=2014-04";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    IncidentListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new IncidentListResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken valueValue in ((JArray)valueArray))
+                            {
+                                Incident incidentInstance = new Incident();
+                                result.Value.Add(incidentInstance);
+                                
+                                JToken nameValue = valueValue["name"];
+                                if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                {
+                                    string nameInstance = ((string)nameValue);
+                                    incidentInstance.Name = nameInstance;
+                                }
+                                
+                                JToken ruleNameValue = valueValue["ruleName"];
+                                if (ruleNameValue != null && ruleNameValue.Type != JTokenType.Null)
+                                {
+                                    string ruleNameInstance = ((string)ruleNameValue);
+                                    incidentInstance.RuleName = ruleNameInstance;
+                                }
+                                
+                                JToken isActiveValue = valueValue["isActive"];
+                                if (isActiveValue != null && isActiveValue.Type != JTokenType.Null)
+                                {
+                                    bool isActiveInstance = ((bool)isActiveValue);
+                                    incidentInstance.IsActive = isActiveInstance;
+                                }
+                                
+                                JToken activatedTimeValue = valueValue["activatedTime"];
+                                if (activatedTimeValue != null && activatedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime activatedTimeInstance = ((DateTime)activatedTimeValue);
+                                    incidentInstance.ActivatedTime = activatedTimeInstance;
+                                }
+                                
+                                JToken resolvedTimeValue = valueValue["resolvedTime"];
+                                if (resolvedTimeValue != null && resolvedTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime resolvedTimeInstance = ((DateTime)resolvedTimeValue);
+                                    incidentInstance.ResolvedTime = resolvedTimeInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+    }
+    
+    public static partial class RuleOperationsExtensions
+    {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to create or update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse CreateOrUpdate(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to create or update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> CreateOrUpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to delete.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).DeleteAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to delete.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.DeleteAsync(resourceGroupName, ruleName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Rule operation response.
+        /// </returns>
+        public static RuleGetResponse Get(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).GetAsync(resourceGroupName, ruleName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// Required. The name of the rule to retrieve.
+        /// </param>
+        /// <returns>
+        /// The Get Rule operation response.
+        /// </returns>
+        public static Task<RuleGetResponse> GetAsync(this IRuleOperations operations, string resourceGroupName, string ruleName)
+        {
+            return operations.GetAsync(resourceGroupName, ruleName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// List the alert rules within a resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Optional. The resource uri of the target of the alert rule.
+        /// </param>
+        /// <returns>
+        /// The List Rules operation response.
+        /// </returns>
+        public static RuleListResponse List(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).ListAsync(resourceGroupName, targetResourceUri);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// List the alert rules within a resource group.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// Optional. The resource uri of the target of the alert rule.
+        /// </param>
+        /// <returns>
+        /// The List Rules operation response.
+        /// </returns>
+        public static Task<RuleListResponse> ListAsync(this IRuleOperations operations, string resourceGroupName, string targetResourceUri)
+        {
+            return operations.ListAsync(resourceGroupName, targetResourceUri, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Update(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRuleOperations)s).UpdateAsync(resourceGroupName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Monitoring.Alerts.IRuleOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The rule to update.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateAsync(this IRuleOperations operations, string resourceGroupName, RuleCreateOrUpdateParameters parameters)
+        {
+            return operations.UpdateAsync(resourceGroupName, parameters, CancellationToken.None);
+        }
+    }
+    
+    /// <summary>
+    /// Operations for managing the alert rules.
+    /// </summary>
+    public partial interface IRuleOperations
+    {
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// The rule to create or update.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> CreateOrUpdateAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The name of the rule to delete.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='ruleName'>
+        /// The name of the rule to retrieve.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Rule operation response.
+        /// </returns>
+        Task<RuleGetResponse> GetAsync(string resourceGroupName, string ruleName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// List the alert rules within a resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='targetResourceUri'>
+        /// The resource uri of the target of the alert rule.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Rules operation response.
+        /// </returns>
+        Task<RuleListResponse> ListAsync(string resourceGroupName, string targetResourceUri, CancellationToken cancellationToken);
+        
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='parameters'>
+        /// The rule to update.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateAsync(string resourceGroupName, RuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+    }
+    
+>>>>>>> 302238087ecbd390c8d49be913d58b2471678556:src/Monitoring2/Generated/AlertsClient.cs
     /// <summary>
     /// Operations for managing the alert rules and incidents.
     /// </summary>
@@ -285,7 +2100,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1196,7 +3011,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the alert rule.
+        /// Optional. The resource uri of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1778,7 +3593,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

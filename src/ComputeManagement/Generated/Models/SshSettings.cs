@@ -40,6 +40,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<SshSettingKeyPair> KeyPairs
         {
+            get
+            {
+                if (this._keyPairs == null)
+                {
+                    this._keyPairs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingKeyPair>();
+                }
+                return this._keyPairs;
+            }
+            set { this._keyPairs = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies the collection of SSH key pairs.
+        /// </summary>
+        public IList<SshSettingKeyPair> KeyPairsValue
+        {
             get { return this._keyPairs; }
             set { this._keyPairs = value; }
         }
@@ -51,6 +67,22 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<SshSettingPublicKey> PublicKeys
         {
+            get
+            {
+                if (this._publicKeys == null)
+                {
+                    this._publicKeys = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingPublicKey>();
+                }
+                return this._publicKeys;
+            }
+            set { this._publicKeys = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies the collection of SSH public keys.
+        /// </summary>
+        public IList<SshSettingPublicKey> PublicKeysValue
+        {
             get { return this._publicKeys; }
             set { this._publicKeys = value; }
         }
@@ -60,8 +92,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public SshSettings()
         {
-            this.KeyPairs = new List<SshSettingKeyPair>();
-            this.PublicKeys = new List<SshSettingPublicKey>();
         }
     }
 }

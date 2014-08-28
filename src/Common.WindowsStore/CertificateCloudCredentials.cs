@@ -25,11 +25,11 @@ namespace Microsoft.WindowsAzure
     public sealed class CertificateCloudCredentials
         : SubscriptionCloudCredentials
     {
-        // The Windows Azure Subscription ID.
+        // The Microsoft Azure Subscription ID.
         private readonly string _subscriptionId = null;
 
         /// <summary>
-        /// Gets subscription ID which uniquely identifies Windows Azure 
+        /// Gets subscription ID which uniquely identifies Microsoft Azure 
         /// subscription. The subscription ID forms part of the URI for 
         /// every call that you make to the Service Management API.
         /// </summary>

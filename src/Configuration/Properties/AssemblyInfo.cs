@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 using System.Resources;
 
 [assembly: AssemblyTitle("Microsoft.WindowsAzure.Configuration")]
-[assembly: AssemblyDescription("Configuration API for Windows Azure services.")]
+[assembly: AssemblyDescription("Configuration API for Microsoft Azure services.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft.WindowsAzure.Configuration")]

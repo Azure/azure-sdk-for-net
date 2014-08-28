@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Sql.Models;
 
@@ -47,6 +48,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public DatabaseCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the DatabaseCreateOrUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public DatabaseCreateOrUpdateParameters(DatabaseCreateOrUpdateProperties properties, string location, IDictionary<string, string> tags)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            if (location == null)
+            {
+                throw new ArgumentNullException("location");
+            }
+            if (tags == null)
+            {
+                throw new ArgumentNullException("tags");
+            }
+            this.Properties = properties;
+            this.Location = location;
+            this.Tags = tags;
         }
     }
 }

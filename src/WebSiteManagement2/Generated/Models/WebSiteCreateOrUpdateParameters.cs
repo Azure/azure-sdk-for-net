@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.WebSites.Models;
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// Create or update Server Farm parameters.
+    /// Create or update website parameters.
     /// </summary>
     public partial class WebSiteCreateOrUpdateParameters
     {

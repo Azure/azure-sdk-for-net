@@ -742,6 +742,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement dataDiskConfigurationsSequenceElement = vMImageDetailsElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
                         if (dataDiskConfigurationsSequenceElement != null)
                         {
+                            result.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
                             foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 VirtualMachineVMImageListResponse.DataDiskConfiguration dataDiskConfigurationInstance = new VirtualMachineVMImageListResponse.DataDiskConfiguration();
@@ -941,6 +942,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement replicationProgressSequenceElement = vMImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
                         if (replicationProgressSequenceElement != null)
                         {
+                            result.ReplicationProgress = new List<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
                             foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement();
@@ -1083,6 +1085,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement vMImagesSequenceElement = responseDoc.Element(XName.Get("VMImages", "http://schemas.microsoft.com/windowsazure"));
                     if (vMImagesSequenceElement != null)
                     {
+                        result.VMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
                         foreach (XElement vMImagesElement in vMImagesSequenceElement.Elements(XName.Get("VMImage", "http://schemas.microsoft.com/windowsazure")))
                         {
                             VirtualMachineVMImageListResponse.VirtualMachineVMImage vMImageInstance = new VirtualMachineVMImageListResponse.VirtualMachineVMImage();
@@ -1168,6 +1171,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement dataDiskConfigurationsSequenceElement = vMImagesElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
                             if (dataDiskConfigurationsSequenceElement != null)
                             {
+                                vMImageInstance.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
                                 foreach (XElement dataDiskConfigurationsElement in dataDiskConfigurationsSequenceElement.Elements(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     VirtualMachineVMImageListResponse.DataDiskConfiguration dataDiskConfigurationInstance = new VirtualMachineVMImageListResponse.DataDiskConfiguration();
@@ -1453,10 +1457,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 XElement replicationInputElement = new XElement(XName.Get("ReplicationInput", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(replicationInputElement);
                 
-                if (parameters.TargetLocations != null)
+                if (parameters.TargetLocationsValue != null)
                 {
                     XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    foreach (string targetLocationsItem in parameters.TargetLocationsValue)
                     {
                         XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
                         targetLocationsItemElement.Value = targetLocationsItem;
@@ -1467,7 +1471,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1856,10 +1860,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     }
                 }
                 
-                if (parameters.DataDiskConfigurations != null)
+                if (parameters.DataDiskConfigurationsValue != null)
                 {
                     XElement dataDiskConfigurationsSequenceElement = new XElement(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DataDiskConfigurationUpdateParameters dataDiskConfigurationsItem in parameters.DataDiskConfigurations)
+                    foreach (DataDiskConfigurationUpdateParameters dataDiskConfigurationsItem in parameters.DataDiskConfigurationsValue)
                     {
                         XElement dataDiskConfigurationElement = new XElement(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
                         dataDiskConfigurationsSequenceElement.Add(dataDiskConfigurationElement);
@@ -1960,7 +1964,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

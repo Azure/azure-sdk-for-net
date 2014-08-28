@@ -254,48 +254,6 @@ namespace Microsoft.Azure.Management.Resources
         }
         
         /// <summary>
-        /// Gets a resource group permissions.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Resources.IResourceGroupOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Name of the resource group to get the permissions for.The
-        /// name is case insensitive.
-        /// </param>
-        /// <returns>
-        /// Resource group permissions information.
-        /// </returns>
-        public static PermissionGetResult GetPermissions(this IResourceGroupOperations operations, string resourceGroupName)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IResourceGroupOperations)s).GetPermissionsAsync(resourceGroupName);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Gets a resource group permissions.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.Resources.IResourceGroupOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Name of the resource group to get the permissions for.The
-        /// name is case insensitive.
-        /// </param>
-        /// <returns>
-        /// Resource group permissions information.
-        /// </returns>
-        public static Task<PermissionGetResult> GetPermissionsAsync(this IResourceGroupOperations operations, string resourceGroupName)
-        {
-            return operations.GetPermissionsAsync(resourceGroupName, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Gets a collection of resource groups.
         /// </summary>
         /// <param name='operations'>

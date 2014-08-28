@@ -151,46 +151,46 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 if (parameters.ProvisioningConfiguration.SshSettings != null)
                 {
-                    if (parameters.ProvisioningConfiguration.SshSettings.KeyPairs != null)
+                    if (parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue != null)
                     {
-                        foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
+                        foreach (SshSettingKeyPair keyPairsParameterItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue)
                         {
                             if (keyPairsParameterItem.Fingerprint == null)
                             {
-                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Fingerprint");
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue.Fingerprint");
                             }
                             if (keyPairsParameterItem.Path == null)
                             {
-                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairs.Path");
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue.Path");
                             }
                         }
                     }
-                    if (parameters.ProvisioningConfiguration.SshSettings.PublicKeys != null)
+                    if (parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue != null)
                     {
-                        foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
+                        foreach (SshSettingPublicKey publicKeysParameterItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue)
                         {
                             if (publicKeysParameterItem.Fingerprint == null)
                             {
-                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Fingerprint");
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue.Fingerprint");
                             }
                             if (publicKeysParameterItem.Path == null)
                             {
-                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeys.Path");
+                                throw new ArgumentNullException("parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue.Path");
                             }
                         }
                     }
                 }
-                if (parameters.ProvisioningConfiguration.StoredCertificateSettings != null)
+                if (parameters.ProvisioningConfiguration.StoredCertificateSettingsValue != null)
                 {
-                    foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
+                    foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in parameters.ProvisioningConfiguration.StoredCertificateSettingsValue)
                     {
                         if (storedCertificateSettingsParameterItem.StoreName == null)
                         {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.StoreName");
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettingsValue.StoreName");
                         }
                         if (storedCertificateSettingsParameterItem.Thumbprint == null)
                         {
-                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettings.Thumbprint");
+                            throw new ArgumentNullException("parameters.ProvisioningConfiguration.StoredCertificateSettingsValue.Thumbprint");
                         }
                     }
                 }
@@ -291,10 +291,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         provisioningConfigurationElement.Add(configurationSetTypeElement);
                     }
                     
-                    if (parameters.ProvisioningConfiguration.InputEndpoints != null)
+                    if (parameters.ProvisioningConfiguration.InputEndpointsValue != null)
                     {
                         XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (InputEndpoint inputEndpointsItem in parameters.ProvisioningConfiguration.InputEndpoints)
+                        foreach (InputEndpoint inputEndpointsItem in parameters.ProvisioningConfiguration.InputEndpointsValue)
                         {
                             XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
                             inputEndpointsSequenceElement.Add(inputEndpointElement);
@@ -395,10 +395,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                                 inputEndpointElement.Add(endpointAclElement);
                                 
-                                if (inputEndpointsItem.EndpointAcl.Rules != null)
+                                if (inputEndpointsItem.EndpointAcl.RulesValue != null)
                                 {
                                     XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
+                                    foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.RulesValue)
                                     {
                                         XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                         rulesSequenceElement.Add(ruleElement);
@@ -445,10 +445,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         provisioningConfigurationElement.Add(inputEndpointsSequenceElement);
                     }
                     
-                    if (parameters.ProvisioningConfiguration.SubnetNames != null)
+                    if (parameters.ProvisioningConfiguration.SubnetNamesValue != null)
                     {
                         XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (string subnetNamesItem in parameters.ProvisioningConfiguration.SubnetNames)
+                        foreach (string subnetNamesItem in parameters.ProvisioningConfiguration.SubnetNamesValue)
                         {
                             XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
                             subnetNamesItemElement.Value = subnetNamesItem;
@@ -464,10 +464,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         provisioningConfigurationElement.Add(staticVirtualNetworkIPAddressElement);
                     }
                     
-                    if (parameters.ProvisioningConfiguration.PublicIPs != null)
+                    if (parameters.ProvisioningConfiguration.PublicIPsValue != null)
                     {
                         XElement publicIPsSequenceElement = new XElement(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ConfigurationSet.PublicIP publicIPsItem in parameters.ProvisioningConfiguration.PublicIPs)
+                        foreach (ConfigurationSet.PublicIP publicIPsItem in parameters.ProvisioningConfiguration.PublicIPsValue)
                         {
                             XElement publicIPElement = new XElement(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure"));
                             publicIPsSequenceElement.Add(publicIPElement);
@@ -578,10 +578,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                     }
                     
-                    if (parameters.ProvisioningConfiguration.StoredCertificateSettings != null)
+                    if (parameters.ProvisioningConfiguration.StoredCertificateSettingsValue != null)
                     {
                         XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (StoredCertificateSettings storedCertificateSettingsItem in parameters.ProvisioningConfiguration.StoredCertificateSettings)
+                        foreach (StoredCertificateSettings storedCertificateSettingsItem in parameters.ProvisioningConfiguration.StoredCertificateSettingsValue)
                         {
                             XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
                             storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
@@ -606,10 +606,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
                         provisioningConfigurationElement.Add(winRMElement);
                         
-                        if (parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners != null)
+                        if (parameters.ProvisioningConfiguration.WindowsRemoteManagement.ListenersValue != null)
                         {
                             XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (WindowsRemoteManagementListener listenersItem in parameters.ProvisioningConfiguration.WindowsRemoteManagement.Listeners)
+                            foreach (WindowsRemoteManagementListener listenersItem in parameters.ProvisioningConfiguration.WindowsRemoteManagement.ListenersValue)
                             {
                                 XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                 listenersSequenceElement.Add(listenerElement);
@@ -669,10 +669,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
                         provisioningConfigurationElement.Add(sSHElement);
                         
-                        if (parameters.ProvisioningConfiguration.SshSettings.PublicKeys != null)
+                        if (parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue != null)
                         {
                             XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (SshSettingPublicKey publicKeysItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeys)
+                            foreach (SshSettingPublicKey publicKeysItem in parameters.ProvisioningConfiguration.SshSettings.PublicKeysValue)
                             {
                                 XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                 publicKeysSequenceElement.Add(publicKeyElement);
@@ -688,10 +688,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             sSHElement.Add(publicKeysSequenceElement);
                         }
                         
-                        if (parameters.ProvisioningConfiguration.SshSettings.KeyPairs != null)
+                        if (parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue != null)
                         {
                             XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (SshSettingKeyPair keyPairsItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairs)
+                            foreach (SshSettingKeyPair keyPairsItem in parameters.ProvisioningConfiguration.SshSettings.KeyPairsValue)
                             {
                                 XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                 keyPairsSequenceElement.Add(keyPairElement);
@@ -726,7 +726,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -907,7 +907,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1016,9 +1016,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ConfigurationSets != null)
+            if (parameters.ConfigurationSetsValue != null)
             {
-                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
+                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSetsValue)
                 {
                     if (configurationSetsParameterItem.DomainJoin != null)
                     {
@@ -1026,82 +1026,82 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         {
                             if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.DomainJoin.Credentials.Password");
                             }
                             if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.DomainJoin.Credentials.UserName");
                             }
                         }
                     }
                     if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.HostName");
                     }
                     if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.HostName");
                     }
                     if (configurationSetsParameterItem.SshSettings != null)
                     {
-                        if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
+                        if (configurationSetsParameterItem.SshSettings.KeyPairsValue != null)
                         {
-                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairsValue)
                             {
                                 if (keyPairsParameterItem.Fingerprint == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.KeyPairsValue.Fingerprint");
                                 }
                                 if (keyPairsParameterItem.Path == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.KeyPairsValue.Path");
                                 }
                             }
                         }
-                        if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
+                        if (configurationSetsParameterItem.SshSettings.PublicKeysValue != null)
                         {
-                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeysValue)
                             {
                                 if (publicKeysParameterItem.Fingerprint == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.PublicKeysValue.Fingerprint");
                                 }
                                 if (publicKeysParameterItem.Path == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.PublicKeysValue.Path");
                                 }
                             }
                         }
                     }
-                    if (configurationSetsParameterItem.StoredCertificateSettings != null)
+                    if (configurationSetsParameterItem.StoredCertificateSettingsValue != null)
                     {
-                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
+                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettingsValue)
                         {
                             if (storedCertificateSettingsParameterItem.StoreName == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.StoredCertificateSettingsValue.StoreName");
                             }
                             if (storedCertificateSettingsParameterItem.Thumbprint == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.StoredCertificateSettingsValue.Thumbprint");
                             }
                         }
                     }
                     if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserName");
                     }
                     if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserName");
                     }
                     if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserPassword");
                     }
                     if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserPassword");
                     }
                 }
             }
@@ -1168,10 +1168,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 roleTypeElement.Value = "PersistentVMRole";
                 persistentVMRoleElement.Add(roleTypeElement);
                 
-                if (parameters.ConfigurationSets != null)
+                if (parameters.ConfigurationSetsValue != null)
                 {
                     XElement configurationSetsSequenceElement = new XElement(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (ConfigurationSet configurationSetsItem in parameters.ConfigurationSets)
+                    foreach (ConfigurationSet configurationSetsItem in parameters.ConfigurationSetsValue)
                     {
                         XElement configurationSetElement = new XElement(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure"));
                         configurationSetsSequenceElement.Add(configurationSetElement);
@@ -1183,10 +1183,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(configurationSetTypeElement);
                         }
                         
-                        if (configurationSetsItem.InputEndpoints != null)
+                        if (configurationSetsItem.InputEndpointsValue != null)
                         {
                             XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpoints)
+                            foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpointsValue)
                             {
                                 XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
                                 inputEndpointsSequenceElement.Add(inputEndpointElement);
@@ -1287,10 +1287,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                                     inputEndpointElement.Add(endpointAclElement);
                                     
-                                    if (inputEndpointsItem.EndpointAcl.Rules != null)
+                                    if (inputEndpointsItem.EndpointAcl.RulesValue != null)
                                     {
                                         XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
+                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.RulesValue)
                                         {
                                             XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                             rulesSequenceElement.Add(ruleElement);
@@ -1337,10 +1337,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(inputEndpointsSequenceElement);
                         }
                         
-                        if (configurationSetsItem.SubnetNames != null)
+                        if (configurationSetsItem.SubnetNamesValue != null)
                         {
                             XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (string subnetNamesItem in configurationSetsItem.SubnetNames)
+                            foreach (string subnetNamesItem in configurationSetsItem.SubnetNamesValue)
                             {
                                 XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
                                 subnetNamesItemElement.Value = subnetNamesItem;
@@ -1356,10 +1356,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
                         }
                         
-                        if (configurationSetsItem.PublicIPs != null)
+                        if (configurationSetsItem.PublicIPsValue != null)
                         {
                             XElement publicIPsSequenceElement = new XElement(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPs)
+                            foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPsValue)
                             {
                                 XElement publicIPElement = new XElement(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure"));
                                 publicIPsSequenceElement.Add(publicIPElement);
@@ -1470,10 +1470,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                         }
                         
-                        if (configurationSetsItem.StoredCertificateSettings != null)
+                        if (configurationSetsItem.StoredCertificateSettingsValue != null)
                         {
                             XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettings)
+                            foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettingsValue)
                             {
                                 XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
                                 storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
@@ -1498,10 +1498,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
                             configurationSetElement.Add(winRMElement);
                             
-                            if (configurationSetsItem.WindowsRemoteManagement.Listeners != null)
+                            if (configurationSetsItem.WindowsRemoteManagement.ListenersValue != null)
                             {
                                 XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.Listeners)
+                                foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.ListenersValue)
                                 {
                                     XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                     listenersSequenceElement.Add(listenerElement);
@@ -1561,10 +1561,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
                             configurationSetElement.Add(sSHElement);
                             
-                            if (configurationSetsItem.SshSettings.PublicKeys != null)
+                            if (configurationSetsItem.SshSettings.PublicKeysValue != null)
                             {
                                 XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeys)
+                                foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeysValue)
                                 {
                                     XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                     publicKeysSequenceElement.Add(publicKeyElement);
@@ -1580,10 +1580,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 sSHElement.Add(publicKeysSequenceElement);
                             }
                             
-                            if (configurationSetsItem.SshSettings.KeyPairs != null)
+                            if (configurationSetsItem.SshSettings.KeyPairsValue != null)
                             {
                                 XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairs)
+                                foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairsValue)
                                 {
                                     XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                     keyPairsSequenceElement.Add(keyPairElement);
@@ -1610,10 +1610,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(configurationSetsSequenceElement);
                 }
                 
-                if (parameters.ResourceExtensionReferences != null)
+                if (parameters.ResourceExtensionReferencesValue != null)
                 {
                     XElement resourceExtensionReferencesSequenceElement = new XElement(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (ResourceExtensionReference resourceExtensionReferencesItem in parameters.ResourceExtensionReferences)
+                    foreach (ResourceExtensionReference resourceExtensionReferencesItem in parameters.ResourceExtensionReferencesValue)
                     {
                         XElement resourceExtensionReferenceElement = new XElement(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure"));
                         resourceExtensionReferencesSequenceElement.Add(resourceExtensionReferenceElement);
@@ -1646,10 +1646,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             resourceExtensionReferenceElement.Add(versionElement);
                         }
                         
-                        if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
+                        if (resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue != null)
                         {
                             XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValues)
+                            foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue)
                             {
                                 XElement resourceExtensionParameterValueElement = new XElement(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure"));
                                 resourceExtensionParameterValuesSequenceElement.Add(resourceExtensionParameterValueElement);
@@ -1709,10 +1709,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(availabilitySetNameElement);
                 }
                 
-                if (parameters.DataVirtualHardDisks != null)
+                if (parameters.DataVirtualHardDisksValue != null)
                 {
                     XElement dataVirtualHardDisksSequenceElement = new XElement(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DataVirtualHardDisk dataVirtualHardDisksItem in parameters.DataVirtualHardDisks)
+                    foreach (DataVirtualHardDisk dataVirtualHardDisksItem in parameters.DataVirtualHardDisksValue)
                     {
                         XElement dataVirtualHardDiskElement = new XElement(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
                         dataVirtualHardDisksSequenceElement.Add(dataVirtualHardDiskElement);
@@ -1833,7 +1833,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1942,17 +1942,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters.Name");
             }
-            if (parameters.Roles == null)
+            if (parameters.RolesValue == null)
             {
-                throw new ArgumentNullException("parameters.Roles");
+                throw new ArgumentNullException("parameters.RolesValue");
             }
-            if (parameters.Roles != null)
+            if (parameters.RolesValue != null)
             {
-                foreach (Role rolesParameterItem in parameters.Roles)
+                foreach (Role rolesParameterItem in parameters.RolesValue)
                 {
-                    if (rolesParameterItem.ConfigurationSets != null)
+                    if (rolesParameterItem.ConfigurationSetsValue != null)
                     {
-                        foreach (ConfigurationSet configurationSetsParameterItem in rolesParameterItem.ConfigurationSets)
+                        foreach (ConfigurationSet configurationSetsParameterItem in rolesParameterItem.ConfigurationSetsValue)
                         {
                             if (configurationSetsParameterItem.DomainJoin != null)
                             {
@@ -1960,82 +1960,82 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 {
                                     if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
                                     {
-                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.Password");
+                                        throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.DomainJoin.Credentials.Password");
                                     }
                                     if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
                                     {
-                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.DomainJoin.Credentials.UserName");
+                                        throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.DomainJoin.Credentials.UserName");
                                     }
                                 }
                             }
                             if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.HostName");
                             }
                             if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.HostName");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.HostName");
                             }
                             if (configurationSetsParameterItem.SshSettings != null)
                             {
-                                if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
+                                if (configurationSetsParameterItem.SshSettings.KeyPairsValue != null)
                                 {
-                                    foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                                    foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairsValue)
                                     {
                                         if (keyPairsParameterItem.Fingerprint == null)
                                         {
-                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                            throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.SshSettings.KeyPairsValue.Fingerprint");
                                         }
                                         if (keyPairsParameterItem.Path == null)
                                         {
-                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                            throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.SshSettings.KeyPairsValue.Path");
                                         }
                                     }
                                 }
-                                if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
+                                if (configurationSetsParameterItem.SshSettings.PublicKeysValue != null)
                                 {
-                                    foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                                    foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeysValue)
                                     {
                                         if (publicKeysParameterItem.Fingerprint == null)
                                         {
-                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                            throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.SshSettings.PublicKeysValue.Fingerprint");
                                         }
                                         if (publicKeysParameterItem.Path == null)
                                         {
-                                            throw new ArgumentNullException("parameters.Roles.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                            throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.SshSettings.PublicKeysValue.Path");
                                         }
                                     }
                                 }
                             }
-                            if (configurationSetsParameterItem.StoredCertificateSettings != null)
+                            if (configurationSetsParameterItem.StoredCertificateSettingsValue != null)
                             {
-                                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
+                                foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettingsValue)
                                 {
                                     if (storedCertificateSettingsParameterItem.StoreName == null)
                                     {
-                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.StoreName");
+                                        throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.StoredCertificateSettingsValue.StoreName");
                                     }
                                     if (storedCertificateSettingsParameterItem.Thumbprint == null)
                                     {
-                                        throw new ArgumentNullException("parameters.Roles.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                                        throw new ArgumentNullException("parameters.RolesValue.ConfigurationSetsValue.StoredCertificateSettingsValue.Thumbprint");
                                     }
                                 }
                             }
                             if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.UserName");
                             }
                             if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserName");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.UserName");
                             }
                             if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.UserPassword");
                             }
                             if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
                             {
-                                throw new ArgumentOutOfRangeException("parameters.Roles.ConfigurationSets.UserPassword");
+                                throw new ArgumentOutOfRangeException("parameters.RolesValue.ConfigurationSetsValue.UserPassword");
                             }
                         }
                     }
@@ -2100,11 +2100,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 deploymentElement.Add(deploymentSlotElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 deploymentElement.Add(labelElement);
                 
                 XElement roleListSequenceElement = new XElement(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
-                foreach (Role roleListItem in parameters.Roles)
+                foreach (Role roleListItem in parameters.RolesValue)
                 {
                     XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                     roleListSequenceElement.Add(roleElement);
@@ -2130,10 +2130,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         roleElement.Add(roleTypeElement);
                     }
                     
-                    if (roleListItem.ConfigurationSets != null)
+                    if (roleListItem.ConfigurationSetsValue != null)
                     {
                         XElement configurationSetsSequenceElement = new XElement(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ConfigurationSet configurationSetsItem in roleListItem.ConfigurationSets)
+                        foreach (ConfigurationSet configurationSetsItem in roleListItem.ConfigurationSetsValue)
                         {
                             XElement configurationSetElement = new XElement(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure"));
                             configurationSetsSequenceElement.Add(configurationSetElement);
@@ -2145,10 +2145,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 configurationSetElement.Add(configurationSetTypeElement);
                             }
                             
-                            if (configurationSetsItem.InputEndpoints != null)
+                            if (configurationSetsItem.InputEndpointsValue != null)
                             {
                                 XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpoints)
+                                foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpointsValue)
                                 {
                                     XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
                                     inputEndpointsSequenceElement.Add(inputEndpointElement);
@@ -2249,10 +2249,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                                         inputEndpointElement.Add(endpointAclElement);
                                         
-                                        if (inputEndpointsItem.EndpointAcl.Rules != null)
+                                        if (inputEndpointsItem.EndpointAcl.RulesValue != null)
                                         {
                                             XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                            foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
+                                            foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.RulesValue)
                                             {
                                                 XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                                 rulesSequenceElement.Add(ruleElement);
@@ -2299,10 +2299,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 configurationSetElement.Add(inputEndpointsSequenceElement);
                             }
                             
-                            if (configurationSetsItem.SubnetNames != null)
+                            if (configurationSetsItem.SubnetNamesValue != null)
                             {
                                 XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (string subnetNamesItem in configurationSetsItem.SubnetNames)
+                                foreach (string subnetNamesItem in configurationSetsItem.SubnetNamesValue)
                                 {
                                     XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
                                     subnetNamesItemElement.Value = subnetNamesItem;
@@ -2318,10 +2318,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
                             }
                             
-                            if (configurationSetsItem.PublicIPs != null)
+                            if (configurationSetsItem.PublicIPsValue != null)
                             {
                                 XElement publicIPsSequenceElement = new XElement(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPs)
+                                foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPsValue)
                                 {
                                     XElement publicIPElement = new XElement(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure"));
                                     publicIPsSequenceElement.Add(publicIPElement);
@@ -2432,10 +2432,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
-                            if (configurationSetsItem.StoredCertificateSettings != null)
+                            if (configurationSetsItem.StoredCertificateSettingsValue != null)
                             {
                                 XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettings)
+                                foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettingsValue)
                                 {
                                     XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
                                     storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
@@ -2460,10 +2460,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
                                 configurationSetElement.Add(winRMElement);
                                 
-                                if (configurationSetsItem.WindowsRemoteManagement.Listeners != null)
+                                if (configurationSetsItem.WindowsRemoteManagement.ListenersValue != null)
                                 {
                                     XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.Listeners)
+                                    foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.ListenersValue)
                                     {
                                         XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                         listenersSequenceElement.Add(listenerElement);
@@ -2523,10 +2523,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
                                 configurationSetElement.Add(sSHElement);
                                 
-                                if (configurationSetsItem.SshSettings.PublicKeys != null)
+                                if (configurationSetsItem.SshSettings.PublicKeysValue != null)
                                 {
                                     XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeys)
+                                    foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeysValue)
                                     {
                                         XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                         publicKeysSequenceElement.Add(publicKeyElement);
@@ -2542,10 +2542,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     sSHElement.Add(publicKeysSequenceElement);
                                 }
                                 
-                                if (configurationSetsItem.SshSettings.KeyPairs != null)
+                                if (configurationSetsItem.SshSettings.KeyPairsValue != null)
                                 {
                                     XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
-                                    foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairs)
+                                    foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairsValue)
                                     {
                                         XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                         keyPairsSequenceElement.Add(keyPairElement);
@@ -2572,10 +2572,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         roleElement.Add(configurationSetsSequenceElement);
                     }
                     
-                    if (roleListItem.ResourceExtensionReferences != null)
+                    if (roleListItem.ResourceExtensionReferencesValue != null)
                     {
                         XElement resourceExtensionReferencesSequenceElement = new XElement(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ResourceExtensionReference resourceExtensionReferencesItem in roleListItem.ResourceExtensionReferences)
+                        foreach (ResourceExtensionReference resourceExtensionReferencesItem in roleListItem.ResourceExtensionReferencesValue)
                         {
                             XElement resourceExtensionReferenceElement = new XElement(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure"));
                             resourceExtensionReferencesSequenceElement.Add(resourceExtensionReferenceElement);
@@ -2608,10 +2608,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 resourceExtensionReferenceElement.Add(versionElement);
                             }
                             
-                            if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
+                            if (resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue != null)
                             {
                                 XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValues)
+                                foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue)
                                 {
                                     XElement resourceExtensionParameterValueElement = new XElement(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure"));
                                     resourceExtensionParameterValuesSequenceElement.Add(resourceExtensionParameterValueElement);
@@ -2671,10 +2671,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         roleElement.Add(availabilitySetNameElement);
                     }
                     
-                    if (roleListItem.DataVirtualHardDisks != null)
+                    if (roleListItem.DataVirtualHardDisksValue != null)
                     {
                         XElement dataVirtualHardDisksSequenceElement = new XElement(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (DataVirtualHardDisk dataVirtualHardDisksItem in roleListItem.DataVirtualHardDisks)
+                        foreach (DataVirtualHardDisk dataVirtualHardDisksItem in roleListItem.DataVirtualHardDisksValue)
                         {
                             XElement dataVirtualHardDiskElement = new XElement(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
                             dataVirtualHardDisksSequenceElement.Add(dataVirtualHardDiskElement);
@@ -2821,10 +2821,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement dnsElement = new XElement(XName.Get("Dns", "http://schemas.microsoft.com/windowsazure"));
                     deploymentElement.Add(dnsElement);
                     
-                    if (parameters.DnsSettings.DnsServers != null)
+                    if (parameters.DnsSettings.DnsServersValue != null)
                     {
                         XElement dnsServersSequenceElement = new XElement(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (DnsServer dnsServersItem in parameters.DnsSettings.DnsServers)
+                        foreach (DnsServer dnsServersItem in parameters.DnsSettings.DnsServersValue)
                         {
                             XElement dnsServerElement = new XElement(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure"));
                             dnsServersSequenceElement.Add(dnsServerElement);
@@ -2854,10 +2854,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     deploymentElement.Add(reservedIPNameElement);
                 }
                 
-                if (parameters.LoadBalancers != null)
+                if (parameters.LoadBalancersValue != null)
                 {
                     XElement loadBalancersSequenceElement = new XElement(XName.Get("LoadBalancers", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (LoadBalancer loadBalancersItem in parameters.LoadBalancers)
+                    foreach (LoadBalancer loadBalancersItem in parameters.LoadBalancersValue)
                     {
                         XElement loadBalancerElement = new XElement(XName.Get("LoadBalancer", "http://schemas.microsoft.com/windowsazure"));
                         loadBalancersSequenceElement.Add(loadBalancerElement);
@@ -2901,7 +2901,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3193,7 +3193,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<RestartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>RestartRoleOperation</OperationType></RestartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3359,7 +3359,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3512,10 +3512,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 operationTypeElement.Value = "ShutdownRolesOperation";
                 shutdownRolesOperationElement.Add(operationTypeElement);
                 
-                if (parameters.Roles != null)
+                if (parameters.RolesValue != null)
                 {
                     XElement rolesSequenceElement = new XElement(XName.Get("Roles", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string rolesItem in parameters.Roles)
+                    foreach (string rolesItem in parameters.RolesValue)
                     {
                         XElement rolesItemElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         rolesItemElement.Value = rolesItem;
@@ -3533,7 +3533,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3677,7 +3677,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<StartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>StartRoleOperation</OperationType></StartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3829,10 +3829,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 operationTypeElement.Value = "StartRolesOperation";
                 startRolesOperationElement.Add(operationTypeElement);
                 
-                if (parameters.Roles != null)
+                if (parameters.RolesValue != null)
                 {
                     XElement rolesSequenceElement = new XElement(XName.Get("Roles", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string rolesItem in parameters.Roles)
+                    foreach (string rolesItem in parameters.RolesValue)
                     {
                         XElement rolesItemElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         rolesItemElement.Value = rolesItem;
@@ -3843,7 +3843,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3948,9 +3948,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.ConfigurationSets != null)
+            if (parameters.ConfigurationSetsValue != null)
             {
-                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSets)
+                foreach (ConfigurationSet configurationSetsParameterItem in parameters.ConfigurationSetsValue)
                 {
                     if (configurationSetsParameterItem.DomainJoin != null)
                     {
@@ -3958,82 +3958,82 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         {
                             if (configurationSetsParameterItem.DomainJoin.Credentials.Password == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.Password");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.DomainJoin.Credentials.Password");
                             }
                             if (configurationSetsParameterItem.DomainJoin.Credentials.UserName == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.DomainJoin.Credentials.UserName");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.DomainJoin.Credentials.UserName");
                             }
                         }
                     }
                     if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length < 1)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.HostName");
                     }
                     if (configurationSetsParameterItem.HostName != null && configurationSetsParameterItem.HostName.Length > 64)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.HostName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.HostName");
                     }
                     if (configurationSetsParameterItem.SshSettings != null)
                     {
-                        if (configurationSetsParameterItem.SshSettings.KeyPairs != null)
+                        if (configurationSetsParameterItem.SshSettings.KeyPairsValue != null)
                         {
-                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairs)
+                            foreach (SshSettingKeyPair keyPairsParameterItem in configurationSetsParameterItem.SshSettings.KeyPairsValue)
                             {
                                 if (keyPairsParameterItem.Fingerprint == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Fingerprint");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.KeyPairsValue.Fingerprint");
                                 }
                                 if (keyPairsParameterItem.Path == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.KeyPairs.Path");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.KeyPairsValue.Path");
                                 }
                             }
                         }
-                        if (configurationSetsParameterItem.SshSettings.PublicKeys != null)
+                        if (configurationSetsParameterItem.SshSettings.PublicKeysValue != null)
                         {
-                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeys)
+                            foreach (SshSettingPublicKey publicKeysParameterItem in configurationSetsParameterItem.SshSettings.PublicKeysValue)
                             {
                                 if (publicKeysParameterItem.Fingerprint == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Fingerprint");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.PublicKeysValue.Fingerprint");
                                 }
                                 if (publicKeysParameterItem.Path == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ConfigurationSets.SshSettings.PublicKeys.Path");
+                                    throw new ArgumentNullException("parameters.ConfigurationSetsValue.SshSettings.PublicKeysValue.Path");
                                 }
                             }
                         }
                     }
-                    if (configurationSetsParameterItem.StoredCertificateSettings != null)
+                    if (configurationSetsParameterItem.StoredCertificateSettingsValue != null)
                     {
-                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettings)
+                        foreach (StoredCertificateSettings storedCertificateSettingsParameterItem in configurationSetsParameterItem.StoredCertificateSettingsValue)
                         {
                             if (storedCertificateSettingsParameterItem.StoreName == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.StoreName");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.StoredCertificateSettingsValue.StoreName");
                             }
                             if (storedCertificateSettingsParameterItem.Thumbprint == null)
                             {
-                                throw new ArgumentNullException("parameters.ConfigurationSets.StoredCertificateSettings.Thumbprint");
+                                throw new ArgumentNullException("parameters.ConfigurationSetsValue.StoredCertificateSettingsValue.Thumbprint");
                             }
                         }
                     }
                     if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length < 1)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserName");
                     }
                     if (configurationSetsParameterItem.UserName != null && configurationSetsParameterItem.UserName.Length > 32)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserName");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserName");
                     }
                     if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length < 6 && (configurationSetsParameterItem.DisableSshPasswordAuthentication == false || configurationSetsParameterItem.UserPassword.Length != 0))
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserPassword");
                     }
                     if (configurationSetsParameterItem.UserPassword != null && configurationSetsParameterItem.UserPassword.Length > 72)
                     {
-                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSets.UserPassword");
+                        throw new ArgumentOutOfRangeException("parameters.ConfigurationSetsValue.UserPassword");
                     }
                 }
             }
@@ -4105,10 +4105,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 roleTypeElement.Value = "PersistentVMRole";
                 persistentVMRoleElement.Add(roleTypeElement);
                 
-                if (parameters.ConfigurationSets != null)
+                if (parameters.ConfigurationSetsValue != null)
                 {
                     XElement configurationSetsSequenceElement = new XElement(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (ConfigurationSet configurationSetsItem in parameters.ConfigurationSets)
+                    foreach (ConfigurationSet configurationSetsItem in parameters.ConfigurationSetsValue)
                     {
                         XElement configurationSetElement = new XElement(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure"));
                         configurationSetsSequenceElement.Add(configurationSetElement);
@@ -4120,10 +4120,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(configurationSetTypeElement);
                         }
                         
-                        if (configurationSetsItem.InputEndpoints != null)
+                        if (configurationSetsItem.InputEndpointsValue != null)
                         {
                             XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpoints)
+                            foreach (InputEndpoint inputEndpointsItem in configurationSetsItem.InputEndpointsValue)
                             {
                                 XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
                                 inputEndpointsSequenceElement.Add(inputEndpointElement);
@@ -4224,10 +4224,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                                     inputEndpointElement.Add(endpointAclElement);
                                     
-                                    if (inputEndpointsItem.EndpointAcl.Rules != null)
+                                    if (inputEndpointsItem.EndpointAcl.RulesValue != null)
                                     {
                                         XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.Rules)
+                                        foreach (AccessControlListRule rulesItem in inputEndpointsItem.EndpointAcl.RulesValue)
                                         {
                                             XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                             rulesSequenceElement.Add(ruleElement);
@@ -4274,10 +4274,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(inputEndpointsSequenceElement);
                         }
                         
-                        if (configurationSetsItem.SubnetNames != null)
+                        if (configurationSetsItem.SubnetNamesValue != null)
                         {
                             XElement subnetNamesSequenceElement = new XElement(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (string subnetNamesItem in configurationSetsItem.SubnetNames)
+                            foreach (string subnetNamesItem in configurationSetsItem.SubnetNamesValue)
                             {
                                 XElement subnetNamesItemElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
                                 subnetNamesItemElement.Value = subnetNamesItem;
@@ -4293,10 +4293,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             configurationSetElement.Add(staticVirtualNetworkIPAddressElement);
                         }
                         
-                        if (configurationSetsItem.PublicIPs != null)
+                        if (configurationSetsItem.PublicIPsValue != null)
                         {
                             XElement publicIPsSequenceElement = new XElement(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPs)
+                            foreach (ConfigurationSet.PublicIP publicIPsItem in configurationSetsItem.PublicIPsValue)
                             {
                                 XElement publicIPElement = new XElement(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure"));
                                 publicIPsSequenceElement.Add(publicIPElement);
@@ -4407,10 +4407,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             }
                         }
                         
-                        if (configurationSetsItem.StoredCertificateSettings != null)
+                        if (configurationSetsItem.StoredCertificateSettingsValue != null)
                         {
                             XElement storedCertificateSettingsSequenceElement = new XElement(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettings)
+                            foreach (StoredCertificateSettings storedCertificateSettingsItem in configurationSetsItem.StoredCertificateSettingsValue)
                             {
                                 XElement certificateSettingElement = new XElement(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure"));
                                 storedCertificateSettingsSequenceElement.Add(certificateSettingElement);
@@ -4435,10 +4435,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement winRMElement = new XElement(XName.Get("WinRM", "http://schemas.microsoft.com/windowsazure"));
                             configurationSetElement.Add(winRMElement);
                             
-                            if (configurationSetsItem.WindowsRemoteManagement.Listeners != null)
+                            if (configurationSetsItem.WindowsRemoteManagement.ListenersValue != null)
                             {
                                 XElement listenersSequenceElement = new XElement(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.Listeners)
+                                foreach (WindowsRemoteManagementListener listenersItem in configurationSetsItem.WindowsRemoteManagement.ListenersValue)
                                 {
                                     XElement listenerElement = new XElement(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure"));
                                     listenersSequenceElement.Add(listenerElement);
@@ -4498,10 +4498,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement sSHElement = new XElement(XName.Get("SSH", "http://schemas.microsoft.com/windowsazure"));
                             configurationSetElement.Add(sSHElement);
                             
-                            if (configurationSetsItem.SshSettings.PublicKeys != null)
+                            if (configurationSetsItem.SshSettings.PublicKeysValue != null)
                             {
                                 XElement publicKeysSequenceElement = new XElement(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeys)
+                                foreach (SshSettingPublicKey publicKeysItem in configurationSetsItem.SshSettings.PublicKeysValue)
                                 {
                                     XElement publicKeyElement = new XElement(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure"));
                                     publicKeysSequenceElement.Add(publicKeyElement);
@@ -4517,10 +4517,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 sSHElement.Add(publicKeysSequenceElement);
                             }
                             
-                            if (configurationSetsItem.SshSettings.KeyPairs != null)
+                            if (configurationSetsItem.SshSettings.KeyPairsValue != null)
                             {
                                 XElement keyPairsSequenceElement = new XElement(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
-                                foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairs)
+                                foreach (SshSettingKeyPair keyPairsItem in configurationSetsItem.SshSettings.KeyPairsValue)
                                 {
                                     XElement keyPairElement = new XElement(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure"));
                                     keyPairsSequenceElement.Add(keyPairElement);
@@ -4547,10 +4547,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(configurationSetsSequenceElement);
                 }
                 
-                if (parameters.ResourceExtensionReferences != null)
+                if (parameters.ResourceExtensionReferencesValue != null)
                 {
                     XElement resourceExtensionReferencesSequenceElement = new XElement(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (ResourceExtensionReference resourceExtensionReferencesItem in parameters.ResourceExtensionReferences)
+                    foreach (ResourceExtensionReference resourceExtensionReferencesItem in parameters.ResourceExtensionReferencesValue)
                     {
                         XElement resourceExtensionReferenceElement = new XElement(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure"));
                         resourceExtensionReferencesSequenceElement.Add(resourceExtensionReferenceElement);
@@ -4583,10 +4583,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             resourceExtensionReferenceElement.Add(versionElement);
                         }
                         
-                        if (resourceExtensionReferencesItem.ResourceExtensionParameterValues != null)
+                        if (resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue != null)
                         {
                             XElement resourceExtensionParameterValuesSequenceElement = new XElement(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValues)
+                            foreach (ResourceExtensionParameterValue resourceExtensionParameterValuesItem in resourceExtensionReferencesItem.ResourceExtensionParameterValuesValue)
                             {
                                 XElement resourceExtensionParameterValueElement = new XElement(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure"));
                                 resourceExtensionParameterValuesSequenceElement.Add(resourceExtensionParameterValueElement);
@@ -4632,10 +4632,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(availabilitySetNameElement);
                 }
                 
-                if (parameters.DataVirtualHardDisks != null)
+                if (parameters.DataVirtualHardDisksValue != null)
                 {
                     XElement dataVirtualHardDisksSequenceElement = new XElement(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DataVirtualHardDisk dataVirtualHardDisksItem in parameters.DataVirtualHardDisks)
+                    foreach (DataVirtualHardDisk dataVirtualHardDisksItem in parameters.DataVirtualHardDisksValue)
                     {
                         XElement dataVirtualHardDiskElement = new XElement(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure"));
                         dataVirtualHardDisksSequenceElement.Add(dataVirtualHardDiskElement);
@@ -4753,7 +4753,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4853,13 +4853,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.LoadBalancedEndpoints != null)
+            if (parameters.LoadBalancedEndpointsValue != null)
             {
-                foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsParameterItem in parameters.LoadBalancedEndpoints)
+                foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsParameterItem in parameters.LoadBalancedEndpointsValue)
                 {
                     if (loadBalancedEndpointsParameterItem.LoadBalancedEndpointSetName == null)
                     {
-                        throw new ArgumentNullException("parameters.LoadBalancedEndpoints.LoadBalancedEndpointSetName");
+                        throw new ArgumentNullException("parameters.LoadBalancedEndpointsValue.LoadBalancedEndpointSetName");
                     }
                 }
             }
@@ -4914,9 +4914,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 XElement loadBalancedEndpointListElement = new XElement(XName.Get("LoadBalancedEndpointList", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(loadBalancedEndpointListElement);
                 
-                if (parameters.LoadBalancedEndpoints != null)
+                if (parameters.LoadBalancedEndpointsValue != null)
                 {
-                    foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsItem in parameters.LoadBalancedEndpoints)
+                    foreach (VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint loadBalancedEndpointsItem in parameters.LoadBalancedEndpointsValue)
                     {
                         XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
                         loadBalancedEndpointListElement.Add(inputEndpointElement);
@@ -5005,10 +5005,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement endpointAclElement = new XElement(XName.Get("EndpointAcl", "http://schemas.microsoft.com/windowsazure"));
                         inputEndpointElement.Add(endpointAclElement);
                         
-                        if (loadBalancedEndpointsItem.Rules != null)
+                        if (loadBalancedEndpointsItem.RulesValue != null)
                         {
                             XElement rulesSequenceElement = new XElement(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (AccessControlListRule rulesItem in loadBalancedEndpointsItem.Rules)
+                            foreach (AccessControlListRule rulesItem in loadBalancedEndpointsItem.RulesValue)
                             {
                                 XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
                                 rulesSequenceElement.Add(ruleElement);
@@ -5062,7 +5062,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -5883,6 +5883,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement configurationSetsSequenceElement = persistentVMRoleElement.Element(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
                         if (configurationSetsSequenceElement != null)
                         {
+                            result.ConfigurationSets = new List<ConfigurationSet>();
                             foreach (XElement configurationSetsElement in configurationSetsSequenceElement.Elements(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 ConfigurationSet configurationSetInstance = new ConfigurationSet();
@@ -5898,6 +5899,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement inputEndpointsSequenceElement = configurationSetsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (inputEndpointsSequenceElement != null)
                                 {
+                                    configurationSetInstance.InputEndpoints = new List<InputEndpoint>();
                                     foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         InputEndpoint inputEndpointInstance = new InputEndpoint();
@@ -6010,6 +6012,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                             if (rulesSequenceElement != null)
                                             {
+                                                endpointAclInstance.Rules = new List<AccessControlListRule>();
                                                 foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     AccessControlListRule ruleInstance = new AccessControlListRule();
@@ -6058,6 +6061,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement subnetNamesSequenceElement = configurationSetsElement.Element(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
                                 if (subnetNamesSequenceElement != null)
                                 {
+                                    configurationSetInstance.SubnetNames = new List<string>();
                                     foreach (XElement subnetNamesElement in subnetNamesSequenceElement.Elements(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
@@ -6074,6 +6078,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publicIPsSequenceElement = configurationSetsElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                 if (publicIPsSequenceElement != null)
                                 {
+                                    configurationSetInstance.PublicIPs = new List<ConfigurationSet.PublicIP>();
                                     foreach (XElement publicIPsElement in publicIPsSequenceElement.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ConfigurationSet.PublicIP publicIPInstance = new ConfigurationSet.PublicIP();
@@ -6196,6 +6201,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement storedCertificateSettingsSequenceElement = configurationSetsElement.Element(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
                                 if (storedCertificateSettingsSequenceElement != null)
                                 {
+                                    configurationSetInstance.StoredCertificateSettings = new List<StoredCertificateSettings>();
                                     foreach (XElement storedCertificateSettingsElement in storedCertificateSettingsSequenceElement.Elements(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         StoredCertificateSettings certificateSettingInstance = new StoredCertificateSettings();
@@ -6231,6 +6237,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement listenersSequenceElement = winRMElement.Element(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
                                     if (listenersSequenceElement != null)
                                     {
+                                        winRMInstance.Listeners = new List<WindowsRemoteManagementListener>();
                                         foreach (XElement listenersElement in listenersSequenceElement.Elements(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             WindowsRemoteManagementListener listenerInstance = new WindowsRemoteManagementListener();
@@ -6297,6 +6304,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement publicKeysSequenceElement = sSHElement.Element(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
                                     if (publicKeysSequenceElement != null)
                                     {
+                                        sSHInstance.PublicKeys = new List<SshSettingPublicKey>();
                                         foreach (XElement publicKeysElement in publicKeysSequenceElement.Elements(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
@@ -6321,6 +6329,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement keyPairsSequenceElement = sSHElement.Element(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
                                     if (keyPairsSequenceElement != null)
                                     {
+                                        sSHInstance.KeyPairs = new List<SshSettingKeyPair>();
                                         foreach (XElement keyPairsElement in keyPairsSequenceElement.Elements(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
@@ -6355,6 +6364,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement dataVirtualHardDisksSequenceElement = persistentVMRoleElement.Element(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
                         if (dataVirtualHardDisksSequenceElement != null)
                         {
+                            result.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
                             foreach (XElement dataVirtualHardDisksElement in dataVirtualHardDisksSequenceElement.Elements(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DataVirtualHardDisk dataVirtualHardDiskInstance = new DataVirtualHardDisk();

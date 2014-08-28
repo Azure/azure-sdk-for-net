@@ -34,8 +34,8 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         private RestorableDroppedDatabase _database;
         
         /// <summary>
-        /// Optional. Gets the restorable dropped database that has been
-        /// returned from a Get Restorable Dropped Database request.
+        /// Optional. Gets or sets the restorable dropped database that has
+        /// been returned from a Get Restorable Dropped Database request.
         /// </summary>
         public RestorableDroppedDatabase Database
         {

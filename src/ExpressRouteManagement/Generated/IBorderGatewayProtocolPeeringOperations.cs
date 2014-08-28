@@ -30,7 +30,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
     public partial interface IBorderGatewayProtocolPeeringOperations
     {
         /// <summary>
-        /// The New Dedicated Circuit operation creates a new dedicated circuit.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// Border Gateway Protocol Peering
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the relationship between Azure and the
@@ -40,7 +41,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the New Bgp Peering operation.
+        /// Parameters supplied to the New Border Gateway Protocol Peering
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -52,11 +54,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginNewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Remove Bgp Peering Route operation deletes an existing bgp
-        /// peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service Key representing the bgp peering to be deleted.
+        /// Service Key representing the border gateway protocol peering to be
+        /// deleted.
         /// </param>
         /// <param name='accessType'>
         /// Whether the peering is private or public.
@@ -71,7 +74,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginRemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing bgp peering.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the relationship between Azure and the
@@ -81,7 +85,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Parameters supplied to the Update Border Gateway Protocol Peering
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -93,8 +98,8 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationResponse> BeginUpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Get Bgp Peering operation retrieves the bgp peering for the
-        /// dedicated circuit with the specified service key.
+        /// The Get Border Gateway Protocol Peering operation retrieves the bgp
+        /// peering for the dedicated circuit with the specified service key.
         /// </summary>
         /// <param name='serviceKey'>
         /// The servicee key representing the dedicated circuit.
@@ -106,13 +111,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         Task<BorderGatewayProtocolPeeringGetResponse> GetAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The New Bgp Peering operation creates a new bgp peering associated
-        /// with the dedicated circuit specified by the service key provided.
+        /// The New Border Gateway Protocol Peering operation creates a new
+        /// border gateway protocol peering associated with the dedicated
+        /// circuit specified by the service key provided.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the relationship between Azure and the
@@ -128,15 +134,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         Task<BorderGatewayProtocolPeeringGetResponse> NewAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Remove Bgp Peering operation deletes an existing bgp peering.
+        /// The Remove Border Gateway Protocol Peering operation deletes an
+        /// existing border gateway protocol peering.
         /// </summary>
         /// <param name='serviceKey'>
-        /// Service key associated with the bgp peering to be deleted.
+        /// Service key associated with the border gateway protocol peering to
+        /// be deleted.
         /// </param>
         /// <param name='accessType'>
         /// Whether the peering is private or public.
@@ -158,8 +166,9 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         Task<ExpressRouteOperationStatusResponse> RemoveAsync(string serviceKey, BgpPeeringAccessType accessType, CancellationToken cancellationToken);
         
         /// <summary>
-        /// The Update Bgp Peering operation updates an existing bgp peering or
-        /// creates a new one if one doesn't exist.
+        /// The Update Border Gateway Protocol Peering operation updates an
+        /// existing border gateway protocol peering or creates a new one if
+        /// one doesn't exist.
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the relationship between Azure and the
@@ -169,13 +178,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Whether the peering is private or public.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Update Bgp Peering operation.
+        /// Parameters supplied to the Update Border Gateway Protocol Peering
+        /// operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Bgp Peering Operation Response.
+        /// The Get Border Gateway Protocol Peering Operation Response.
         /// </returns>
         Task<BorderGatewayProtocolPeeringGetResponse> UpdateAsync(string serviceKey, BgpPeeringAccessType accessType, BorderGatewayProtocolPeeringUpdateParameters parameters, CancellationToken cancellationToken);
     }

@@ -100,16 +100,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
-        private IServerFarmOperations _serverFarms;
+        private IWebHostingPlanOperations _webHostingPlans;
         
         /// <summary>
-        /// Operations for managing the server farm in a web space.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn194277.aspx
-        /// for more information)
+        /// Operations for managing web hosting plans beneath your subscription.
         /// </summary>
-        public virtual IServerFarmOperations ServerFarms
+        public virtual IWebHostingPlanOperations WebHostingPlans
         {
-            get { return this._serverFarms; }
+            get { return this._webHostingPlans; }
         }
         
         private IWebSiteOperations _webSites;
@@ -140,10 +138,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private WebSiteManagementClient()
             : base()
         {
-            this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
-            this._apiVersion = "2013-08-01";
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -208,10 +206,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         private WebSiteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
-            this._serverFarms = new ServerFarmOperations(this);
+            this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
             this._webSpaces = new WebSpaceOperations(this);
-            this._apiVersion = "2013-08-01";
+            this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -382,7 +380,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -706,7 +704,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -820,7 +818,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2013-08-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -882,6 +880,110 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     httpRequest.Dispose();
                 }
             }
+        }
+        
+        /// <summary>
+        /// Parse enum values for type ConnectionStringType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static ConnectionStringType ParseConnectionStringType(string value)
+        {
+            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.MySql;
+            }
+            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.SqlServer;
+            }
+            if ("2".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.SqlAzure;
+            }
+            if ("3".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ConnectionStringType.Custom;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type ConnectionStringType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ConnectionStringTypeToString(ConnectionStringType value)
+        {
+            if (value == ConnectionStringType.MySql)
+            {
+                return "0";
+            }
+            if (value == ConnectionStringType.SqlServer)
+            {
+                return "1";
+            }
+            if (value == ConnectionStringType.SqlAzure)
+            {
+                return "2";
+            }
+            if (value == ConnectionStringType.Custom)
+            {
+                return "3";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type ManagedPipelineMode.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static ManagedPipelineMode ParseManagedPipelineMode(string value)
+        {
+            if ("0".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ManagedPipelineMode.Integrated;
+            }
+            if ("1".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return ManagedPipelineMode.Classic;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type ManagedPipelineMode to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string ManagedPipelineModeToString(ManagedPipelineMode value)
+        {
+            if (value == ManagedPipelineMode.Integrated)
+            {
+                return "0";
+            }
+            if (value == ManagedPipelineMode.Classic)
+            {
+                return "1";
+            }
+            throw new ArgumentOutOfRangeException("value");
         }
     }
 }

@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus
@@ -54,6 +55,27 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
         /// A response to a request for a particular topic.
         /// </returns>
         Task<ServiceBusTopicResponse> CreateAsync(string namespaceName, ServiceBusTopic topic, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes an existing topic. This operation will also remove all
+        /// associated state including associated subscriptions.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780721.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// The topic.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string namespaceName, string topicName, CancellationToken cancellationToken);
         
         /// <summary>
         /// The topic description is an XML AtomPub document that defines the

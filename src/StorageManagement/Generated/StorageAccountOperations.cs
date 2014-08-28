@@ -165,7 +165,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -182,10 +182,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 serviceNameElement.Value = parameters.Name;
                 createStorageServiceInputElement.Add(serviceNameElement);
                 
-                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
-                createStorageServiceInputElement.Add(labelElement);
-                
                 if (parameters.Description != null)
                 {
                     XElement descriptionElement = new XElement(XName.Get("Description", "http://schemas.microsoft.com/windowsazure"));
@@ -201,12 +197,9 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     createStorageServiceInputElement.Add(emptyElement);
                 }
                 
-                if (parameters.Location != null)
-                {
-                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                    locationElement.Value = parameters.Location;
-                    createStorageServiceInputElement.Add(locationElement);
-                }
+                XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                createStorageServiceInputElement.Add(labelElement);
                 
                 if (parameters.AffinityGroup != null)
                 {
@@ -215,14 +208,17 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     createStorageServiceInputElement.Add(affinityGroupElement);
                 }
                 
-                XElement geoReplicationEnabledElement = new XElement(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                geoReplicationEnabledElement.Value = parameters.GeoReplicationEnabled.ToString().ToLower();
-                createStorageServiceInputElement.Add(geoReplicationEnabledElement);
+                if (parameters.Location != null)
+                {
+                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                    locationElement.Value = parameters.Location;
+                    createStorageServiceInputElement.Add(locationElement);
+                }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -240,9 +236,16 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     createStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
+                if (parameters.AccountType != null)
+                {
+                    XElement accountTypeElement = new XElement(XName.Get("AccountType", "http://schemas.microsoft.com/windowsazure"));
+                    accountTypeElement.Value = parameters.AccountType;
+                    createStorageServiceInputElement.Add(accountTypeElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -361,7 +364,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -621,7 +624,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -743,7 +746,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -856,17 +859,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                             if (endpointsSequenceElement != null)
                             {
+                                storageServicePropertiesInstance.Endpoints = new List<Uri>();
                                 foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     storageServicePropertiesInstance.Endpoints.Add(TypeConversion.TryParseUri(endpointsElement.Value));
                                 }
-                            }
-                            
-                            XElement geoReplicationEnabledElement = storageServicePropertiesElement.Element(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                            if (geoReplicationEnabledElement != null)
-                            {
-                                bool geoReplicationEnabledInstance = bool.Parse(geoReplicationEnabledElement.Value);
-                                storageServicePropertiesInstance.GeoReplicationEnabled = geoReplicationEnabledInstance;
                             }
                             
                             XElement geoPrimaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoPrimaryRegion", "http://schemas.microsoft.com/windowsazure"));
@@ -903,11 +900,19 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                 storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
                             }
+                            
+                            XElement accountTypeElement = storageServicePropertiesElement.Element(XName.Get("AccountType", "http://schemas.microsoft.com/windowsazure"));
+                            if (accountTypeElement != null)
+                            {
+                                string accountTypeInstance = accountTypeElement.Value;
+                                storageServicePropertiesInstance.AccountType = accountTypeInstance;
+                            }
                         }
                         
                         XElement extendedPropertiesSequenceElement = storageServiceElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (extendedPropertiesSequenceElement != null)
                         {
+                            storageServiceInstance.ExtendedProperties = new Dictionary<string, string>();
                             foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1004,7 +1009,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1152,7 +1157,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1195,6 +1200,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
                     if (storageServicesSequenceElement != null)
                     {
+                        result.StorageAccounts = new List<StorageAccount>();
                         foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                         {
                             StorageAccount storageServiceInstance = new StorageAccount();
@@ -1267,17 +1273,11 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (endpointsSequenceElement != null)
                                 {
+                                    storageServicePropertiesInstance.Endpoints = new List<Uri>();
                                     foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         storageServicePropertiesInstance.Endpoints.Add(TypeConversion.TryParseUri(endpointsElement.Value));
                                     }
-                                }
-                                
-                                XElement geoReplicationEnabledElement = storageServicePropertiesElement.Element(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                                if (geoReplicationEnabledElement != null)
-                                {
-                                    bool geoReplicationEnabledInstance = bool.Parse(geoReplicationEnabledElement.Value);
-                                    storageServicePropertiesInstance.GeoReplicationEnabled = geoReplicationEnabledInstance;
                                 }
                                 
                                 XElement geoPrimaryRegionElement = storageServicePropertiesElement.Element(XName.Get("GeoPrimaryRegion", "http://schemas.microsoft.com/windowsazure"));
@@ -1314,11 +1314,19 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                     GeoRegionStatus statusOfSecondaryInstance = ((GeoRegionStatus)Enum.Parse(typeof(GeoRegionStatus), statusOfSecondaryElement.Value, true));
                                     storageServicePropertiesInstance.StatusOfGeoSecondaryRegion = statusOfSecondaryInstance;
                                 }
+                                
+                                XElement accountTypeElement = storageServicePropertiesElement.Element(XName.Get("AccountType", "http://schemas.microsoft.com/windowsazure"));
+                                if (accountTypeElement != null)
+                                {
+                                    string accountTypeInstance = accountTypeElement.Value;
+                                    storageServicePropertiesInstance.AccountType = accountTypeInstance;
+                                }
                             }
                             
                             XElement extendedPropertiesSequenceElement = storageServicesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (extendedPropertiesSequenceElement != null)
                             {
+                                storageServiceInstance.ExtendedProperties = new Dictionary<string, string>();
                                 foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1420,7 +1428,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1439,7 +1447,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1622,7 +1630,7 @@ namespace Microsoft.WindowsAzure.Management.Storage
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1657,17 +1665,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     updateStorageServiceInputElement.Add(labelElement);
                 }
                 
-                if (parameters.GeoReplicationEnabled != null)
-                {
-                    XElement geoReplicationEnabledElement = new XElement(XName.Get("GeoReplicationEnabled", "http://schemas.microsoft.com/windowsazure"));
-                    geoReplicationEnabledElement.Value = parameters.GeoReplicationEnabled.ToString().ToLower();
-                    updateStorageServiceInputElement.Add(geoReplicationEnabledElement);
-                }
-                
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -1685,9 +1686,16 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     updateStorageServiceInputElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
+                if (parameters.AccountType != null)
+                {
+                    XElement accountTypeElement = new XElement(XName.Get("AccountType", "http://schemas.microsoft.com/windowsazure"));
+                    accountTypeElement.Value = parameters.AccountType;
+                    updateStorageServiceInputElement.Add(accountTypeElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

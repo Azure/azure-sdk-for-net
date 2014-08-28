@@ -50,6 +50,22 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<DeploymentOperation> Operations
         {
+            get
+            {
+                if (this._operations == null)
+                {
+                    this._operations = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.DeploymentOperation>();
+                }
+                return this._operations;
+            }
+            set { this._operations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of deployments.
+        /// </summary>
+        public IList<DeploymentOperation> OperationsValue
+        {
             get { return this._operations; }
             set { this._operations = value; }
         }
@@ -60,7 +76,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentOperationsListResult()
         {
-            this.Operations = new List<DeploymentOperation>();
         }
     }
 }

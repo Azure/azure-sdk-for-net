@@ -5,7 +5,7 @@
     Microsoft.WindowsAzure.Management.Sql
     -->
     <SdkNuGetPackage Include="Microsoft.WindowsAzure.Management.Sql">
-      <PackageVersion>1.2.0</PackageVersion>
+      <PackageVersion>2.0.0</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>
