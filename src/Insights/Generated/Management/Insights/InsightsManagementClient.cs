@@ -84,6 +84,16 @@ namespace Microsoft.Azure.Management.Insights
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IAgentDiagnosticSettingsOperations _agentDiagnosticSettingsOperations;
+        
+        /// <summary>
+        /// Operations for managing agent diagnostic settings.
+        /// </summary>
+        public virtual IAgentDiagnosticSettingsOperations AgentDiagnosticSettingsOperations
+        {
+            get { return this._agentDiagnosticSettingsOperations; }
+        }
+        
         private IAlertOperations _alertOperations;
         
         /// <summary>
@@ -114,15 +124,38 @@ namespace Microsoft.Azure.Management.Insights
             get { return this._monitoringConfigurationOperations; }
         }
         
+        private IServiceDiagnosticSettingsOperations _serviceDiagnosticSettingsOperations;
+        
+        /// <summary>
+        /// Operations for managing service diagnostic settings.
+        /// </summary>
+        public virtual IServiceDiagnosticSettingsOperations ServiceDiagnosticSettingsOperations
+        {
+            get { return this._serviceDiagnosticSettingsOperations; }
+        }
+        
+        private IStorageDiagnosticSettingsOperations _storageDiagnosticSettingsOperations;
+        
+        /// <summary>
+        /// Operations for managing storage diagnostic settings.
+        /// </summary>
+        public virtual IStorageDiagnosticSettingsOperations StorageDiagnosticSettingsOperations
+        {
+            get { return this._storageDiagnosticSettingsOperations; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the InsightsManagementClient class.
         /// </summary>
         private InsightsManagementClient()
             : base()
         {
+            this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);
             this._alertOperations = new AlertOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
+            this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
+            this._storageDiagnosticSettingsOperations = new StorageDiagnosticSettingsOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
@@ -188,9 +221,12 @@ namespace Microsoft.Azure.Management.Insights
         private InsightsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._agentDiagnosticSettingsOperations = new AgentDiagnosticSettingsOperations(this);
             this._alertOperations = new AlertOperations(this);
             this._autoscaleOperations = new AutoscaleOperations(this);
             this._monitoringConfigurationOperations = new MonitoringConfigurationOperations(this);
+            this._serviceDiagnosticSettingsOperations = new ServiceDiagnosticSettingsOperations(this);
+            this._storageDiagnosticSettingsOperations = new StorageDiagnosticSettingsOperations(this);
             this._apiVersion = "2014-04-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights
     public partial interface IMonitoringConfigurationOperations
     {
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Insights
         Task<OperationResponse> CreateOrUpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Insights
         Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Insights
         Task<MonitoringConfigurationGetResponse> GetConfigurationAsync(string resourceUri, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Insights
         Task<StorageConfigurationGetResponse> GetStorageConfigurationAsync(string resourceUri, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Insights
         Task<OperationResponse> UpdateConfigurationAsync(string resourceUri, MonitoringConfigurationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <param name='resourceUri'>
-        /// The resource uri.
+        /// The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the operation.

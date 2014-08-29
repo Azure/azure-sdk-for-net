@@ -22,32 +22,33 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.Azure.Management.Insights.Models;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of usage metrics.
+    /// Represents a metric collection configuration.
     /// </summary>
-    public partial class UsageMetricCollection
+    public partial class StorageMetricDiagnosticSettings
     {
-        private IList<UsageMetric> _value;
+        private IList<StorageMetricAggregation> _metricAggregations;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// Optional. the list of aggregations to generate.
         /// </summary>
-        public IList<UsageMetric> Value
+        public IList<StorageMetricAggregation> MetricAggregations
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._metricAggregations; }
+            set { this._metricAggregations = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UsageMetricCollection class.
+        /// Initializes a new instance of the StorageMetricDiagnosticSettings
+        /// class.
         /// </summary>
-        public UsageMetricCollection()
+        public StorageMetricDiagnosticSettings()
         {
-            this.Value = new List<UsageMetric>();
+            this.MetricAggregations = new List<StorageMetricAggregation>();
         }
     }
 }

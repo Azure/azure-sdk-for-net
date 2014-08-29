@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.

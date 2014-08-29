@@ -20,34 +20,21 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of usage metrics.
+    /// Generic empty response. We only pass it to ensure json error handling
     /// </summary>
-    public partial class UsageMetricCollection
+    public partial class EmptyResponse : OperationResponse
     {
-        private IList<UsageMetric> _value;
-        
         /// <summary>
-        /// Optional. The usage values.
+        /// Initializes a new instance of the EmptyResponse class.
         /// </summary>
-        public IList<UsageMetric> Value
+        public EmptyResponse()
         {
-            get { return this._value; }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the UsageMetricCollection class.
-        /// </summary>
-        public UsageMetricCollection()
-        {
-            this.Value = new List<UsageMetric>();
         }
     }
 }

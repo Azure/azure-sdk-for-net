@@ -20,34 +20,33 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
+using Microsoft.Azure.Management.Insights.Models;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of usage metrics.
+    /// Parameters supplied to the Create or Update service configuration.
     /// </summary>
-    public partial class UsageMetricCollection
+    public partial class ServiceDiagnosticSettingsPutParameters
     {
-        private IList<UsageMetric> _value;
+        private ServiceDiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The usage values.
+        /// Optional. The public configuration settings.
         /// </summary>
-        public IList<UsageMetric> Value
+        public ServiceDiagnosticSettings Properties
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UsageMetricCollection class.
+        /// Initializes a new instance of the
+        /// ServiceDiagnosticSettingsPutParameters class.
         /// </summary>
-        public UsageMetricCollection()
+        public ServiceDiagnosticSettingsPutParameters()
         {
-            this.Value = new List<UsageMetric>();
         }
     }
 }

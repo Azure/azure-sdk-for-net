@@ -275,6 +275,11 @@ namespace Microsoft.Azure.Management.Insights
                             conditionValue["threshold"] = derived.Threshold;
                             
                             conditionValue["windowSize"] = TypeConversion.To8601String(derived.WindowSize);
+                            
+                            if (derived.TimeAggregation != null)
+                            {
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                            }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {
@@ -1183,6 +1188,13 @@ namespace Microsoft.Azure.Management.Insights
                                         TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
                                         thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
                                     }
+                                    
+                                    JToken timeAggregationValue = conditionValue["timeAggregation"];
+                                    if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
+                                    {
+                                        TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
+                                        thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
+                                    }
                                     propertiesInstance.Condition = thresholdRuleConditionInstance;
                                 }
                                 if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
@@ -2036,6 +2048,13 @@ namespace Microsoft.Azure.Management.Insights
                                                 TimeSpan windowSizeInstance = TypeConversion.From8601TimeSpan(((string)windowSizeValue));
                                                 thresholdRuleConditionInstance.WindowSize = windowSizeInstance;
                                             }
+                                            
+                                            JToken timeAggregationValue = conditionValue["timeAggregation"];
+                                            if (timeAggregationValue != null && timeAggregationValue.Type != JTokenType.Null)
+                                            {
+                                                TimeAggregationOperator timeAggregationInstance = ((TimeAggregationOperator)Enum.Parse(typeof(TimeAggregationOperator), ((string)timeAggregationValue), true));
+                                                thresholdRuleConditionInstance.TimeAggregation = timeAggregationInstance;
+                                            }
                                             propertiesInstance.Condition = thresholdRuleConditionInstance;
                                         }
                                         if (typeName == "Microsoft.Azure.Management.Insights.Models.LocationThresholdRuleCondition")
@@ -2597,6 +2616,11 @@ namespace Microsoft.Azure.Management.Insights
                             conditionValue["threshold"] = derived.Threshold;
                             
                             conditionValue["windowSize"] = TypeConversion.To8601String(derived.WindowSize);
+                            
+                            if (derived.TimeAggregation != null)
+                            {
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                            }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
                         {

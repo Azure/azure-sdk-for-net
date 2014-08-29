@@ -20,34 +20,28 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of usage metrics.
+    /// The status of the diagnostic settings being applied.
     /// </summary>
-    public partial class UsageMetricCollection
+    public enum DiagnosticSettingsStatus
     {
-        private IList<UsageMetric> _value;
+        /// <summary>
+        /// The configuration has been successfully applied and is active.
+        /// </summary>
+        Succeeded = 0,
         
         /// <summary>
-        /// Optional. The usage values.
+        /// The configuration was accepted and is being applied.
         /// </summary>
-        public IList<UsageMetric> Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
+        Accepted = 1,
         
         /// <summary>
-        /// Initializes a new instance of the UsageMetricCollection class.
+        /// The configuration was not successfully applied.
         /// </summary>
-        public UsageMetricCollection()
-        {
-            this.Value = new List<UsageMetric>();
-        }
+        Failed = 2,
     }
 }
