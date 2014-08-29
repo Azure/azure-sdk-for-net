@@ -69,6 +69,44 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventCountSummaryListResponse ListEventCountSummaryItems(this IEventOperations operations, string filterString)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListEventCountSummaryItemsAsync(filterString);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventCountSummaryListResponse> ListEventCountSummaryItemsAsync(this IEventOperations operations, string filterString)
+        {
+            return operations.ListEventCountSummaryItemsAsync(filterString, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='operations'>
