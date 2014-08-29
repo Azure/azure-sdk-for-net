@@ -67,12 +67,11 @@
     <Compile Include="Generated\Models\RedisResource.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Generated\Models\Size.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Generated\Models\Sku.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generated\Models\SkuFamily.cs" />
+    <Compile Include="Generated\Models\SkuName.cs" />
     <Compile Include="Generated\RedisManagementClient.cs">
       <SubType>Code</SubType>
     </Compile>

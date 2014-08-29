@@ -63,17 +63,6 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._provisioningState = value; }
         }
         
-        private string _runtimeVersion;
-        
-        /// <summary>
-        /// Optional. The detailed version of Redis deploy.
-        /// </summary>
-        public string RuntimeVersion
-        {
-            get { return this._runtimeVersion; }
-            set { this._runtimeVersion = value; }
-        }
-        
         private int _sslPort;
         
         /// <summary>
@@ -96,7 +85,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisReadableProperties class
         /// with required arguments.
         /// </summary>
-        public RedisReadableProperties(string redisVersion, string sku, string size)
+        public RedisReadableProperties(string redisVersion, Sku sku)
             : this()
         {
             if (redisVersion == null)
@@ -107,13 +96,8 @@ namespace Microsoft.Azure.Management.Redis.Models
             {
                 throw new ArgumentNullException("sku");
             }
-            if (size == null)
-            {
-                throw new ArgumentNullException("size");
-            }
             this.RedisVersion = redisVersion;
             this.Sku = sku;
-            this.Size = size;
         }
     }
 }

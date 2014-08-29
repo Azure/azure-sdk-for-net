@@ -25,43 +25,18 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Know Size values for cache.
+    /// Known Sku name values.
     /// </summary>
-    public static partial class Size
+    public static partial class SkuName
     {
         /// <summary>
-        /// 250MB Cache.
+        /// Basic (one node) sku.
         /// </summary>
-        public const string C0 = "C0";
+        public const string Basic = "Basic";
         
         /// <summary>
-        /// 1GB Cache.
+        /// Standard (two node) sku.
         /// </summary>
-        public const string C1 = "C1";
-        
-        /// <summary>
-        /// 2.5GB Cache.
-        /// </summary>
-        public const string C2 = "C2";
-        
-        /// <summary>
-        /// 6GB Cache.
-        /// </summary>
-        public const string C3 = "C3";
-        
-        /// <summary>
-        /// 13GB Cache.
-        /// </summary>
-        public const string C4 = "C4";
-        
-        /// <summary>
-        /// 26GB Cache.
-        /// </summary>
-        public const string C5 = "C5";
-        
-        /// <summary>
-        /// 53GB Cache.
-        /// </summary>
-        public const string C6 = "C6";
+        public const string Standard = "Standard";
     }
 }

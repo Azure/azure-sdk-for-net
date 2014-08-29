@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Redis.Models;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
@@ -33,8 +34,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         
         /// <summary>
         /// Optional. what is maxMemoryPolicy of redis cache. Valid values:
-        /// (volatile-lru, allkeys-lru, volatile-random, allkeys-random,
-        /// volatile-ttl, noeviction)
+        /// (VolatileLRU, AllKeysLRU, VolatileRandom, AllKeysRandom,
+        /// VolatileTTL, NoEviction)
         /// </summary>
         public string MaxMemoryPolicy
         {
@@ -54,25 +55,12 @@ namespace Microsoft.Azure.Management.Redis.Models
             set { this._redisVersion = value; }
         }
         
-        private string _size;
+        private Sku _sku;
         
         /// <summary>
-        /// Required. What size of redis cache to deploy. Valid values: (C0,
-        /// C1, C2, C3, C4, C5, C6)
+        /// Required. What sku of redis cache to deploy.
         /// </summary>
-        public string Size
-        {
-            get { return this._size; }
-            set { this._size = value; }
-        }
-        
-        private string _sku;
-        
-        /// <summary>
-        /// Required. What size of redis cache to deploy. Valid values: (Basic,
-        /// Standard)
-        /// </summary>
-        public string Sku
+        public Sku Sku
         {
             get { return this._sku; }
             set { this._sku = value; }
@@ -89,7 +77,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// Initializes a new instance of the RedisProperties class with
         /// required arguments.
         /// </summary>
-        public RedisProperties(string redisVersion, string sku, string size)
+        public RedisProperties(string redisVersion, Sku sku)
             : this()
         {
             if (redisVersion == null)
@@ -100,13 +88,8 @@ namespace Microsoft.Azure.Management.Redis.Models
             {
                 throw new ArgumentNullException("sku");
             }
-            if (size == null)
-            {
-                throw new ArgumentNullException("size");
-            }
             this.RedisVersion = redisVersion;
             this.Sku = sku;
-            this.Size = size;
         }
     }
 }

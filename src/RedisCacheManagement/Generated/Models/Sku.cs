@@ -25,18 +25,69 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Know Sku values.
+    /// Sku parameters supplied to the create redis operation.
     /// </summary>
-    public static partial class Sku
+    public partial class Sku
     {
-        /// <summary>
-        /// Basic (one node) sku.
-        /// </summary>
-        public const string Basic = "Basic";
+        private int _capacity;
         
         /// <summary>
-        /// Standard (two node) sku.
+        /// Required. What size of redis cache to deploy. Valid values: (0, 1,
+        /// 2, 3, 4, 5, 6)
         /// </summary>
-        public const string Standard = "Standard";
+        public int Capacity
+        {
+            get { return this._capacity; }
+            set { this._capacity = value; }
+        }
+        
+        private string _family;
+        
+        /// <summary>
+        /// Required. Which family we are using. Valid values: (C)
+        /// </summary>
+        public string Family
+        {
+            get { return this._family; }
+            set { this._family = value; }
+        }
+        
+        private string _name;
+        
+        /// <summary>
+        /// Required. What type of redis cache to deploy. Valid values: (Basic,
+        /// Standard)
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Sku class.
+        /// </summary>
+        public Sku()
+        {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the Sku class with required arguments.
+        /// </summary>
+        public Sku(string name, string family, int capacity)
+            : this()
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            if (family == null)
+            {
+                throw new ArgumentNullException("family");
+            }
+            this.Name = name;
+            this.Family = family;
+            this.Capacity = capacity;
+        }
     }
 }

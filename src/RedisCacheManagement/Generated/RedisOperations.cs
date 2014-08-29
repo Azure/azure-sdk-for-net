@@ -111,13 +111,17 @@ namespace Microsoft.Azure.Management.Redis
             {
                 throw new ArgumentNullException("parameters.Properties.RedisVersion");
             }
-            if (parameters.Properties.Size == null)
-            {
-                throw new ArgumentNullException("parameters.Properties.Size");
-            }
             if (parameters.Properties.Sku == null)
             {
                 throw new ArgumentNullException("parameters.Properties.Sku");
+            }
+            if (parameters.Properties.Sku.Family == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.Sku.Family");
+            }
+            if (parameters.Properties.Sku.Name == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.Sku.Name");
             }
             
             // Tracing
@@ -175,11 +179,16 @@ namespace Microsoft.Azure.Management.Redis
                 JObject propertiesValue = new JObject();
                 redisCreateOrUpdateParametersValue["properties"] = propertiesValue;
                 
-                propertiesValue["version"] = parameters.Properties.RedisVersion;
+                propertiesValue["redisVersion"] = parameters.Properties.RedisVersion;
                 
-                propertiesValue["sku"] = parameters.Properties.Sku;
+                JObject skuValue = new JObject();
+                propertiesValue["sku"] = skuValue;
                 
-                propertiesValue["size"] = parameters.Properties.Size;
+                skuValue["name"] = parameters.Properties.Sku.Name;
+                
+                skuValue["family"] = parameters.Properties.Sku.Family;
+                
+                skuValue["capacity"] = parameters.Properties.Sku.Capacity;
                 
                 if (parameters.Properties.MaxMemoryPolicy != null)
                 {
@@ -313,32 +322,39 @@ namespace Microsoft.Azure.Management.Redis
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
-                            JToken runtimeVersionValue = propertiesValue2["runtimeVersion"];
-                            if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                            JToken redisVersionValue = propertiesValue2["redisVersion"];
+                            if (redisVersionValue != null && redisVersionValue.Type != JTokenType.Null)
                             {
-                                string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                propertiesInstance.RuntimeVersion = runtimeVersionInstance;
+                                string redisVersionInstance = ((string)redisVersionValue);
+                                propertiesInstance.RedisVersion = redisVersionInstance;
                             }
                             
-                            JToken versionValue = propertiesValue2["version"];
-                            if (versionValue != null && versionValue.Type != JTokenType.Null)
+                            JToken skuValue2 = propertiesValue2["sku"];
+                            if (skuValue2 != null && skuValue2.Type != JTokenType.Null)
                             {
-                                string versionInstance = ((string)versionValue);
-                                propertiesInstance.RedisVersion = versionInstance;
-                            }
-                            
-                            JToken skuValue = propertiesValue2["sku"];
-                            if (skuValue != null && skuValue.Type != JTokenType.Null)
-                            {
-                                string skuInstance = ((string)skuValue);
+                                Sku skuInstance = new Sku();
                                 propertiesInstance.Sku = skuInstance;
-                            }
-                            
-                            JToken sizeValue = propertiesValue2["size"];
-                            if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                            {
-                                string sizeInstance = ((string)sizeValue);
-                                propertiesInstance.Size = sizeInstance;
+                                
+                                JToken nameValue2 = skuValue2["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    skuInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken familyValue = skuValue2["family"];
+                                if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                {
+                                    string familyInstance = ((string)familyValue);
+                                    skuInstance.Family = familyInstance;
+                                }
+                                
+                                JToken capacityValue = skuValue2["capacity"];
+                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                {
+                                    int capacityInstance = ((int)capacityValue);
+                                    skuInstance.Capacity = capacityInstance;
+                                }
                             }
                             
                             JToken maxMemoryPolicyValue = propertiesValue2["maxMemoryPolicy"];
@@ -678,32 +694,39 @@ namespace Microsoft.Azure.Management.Redis
                                 propertiesInstance.SslPort = sslPortInstance;
                             }
                             
-                            JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                            if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                            JToken redisVersionValue = propertiesValue["redisVersion"];
+                            if (redisVersionValue != null && redisVersionValue.Type != JTokenType.Null)
                             {
-                                string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                            }
-                            
-                            JToken versionValue = propertiesValue["version"];
-                            if (versionValue != null && versionValue.Type != JTokenType.Null)
-                            {
-                                string versionInstance = ((string)versionValue);
-                                propertiesInstance.RedisVersion = versionInstance;
+                                string redisVersionInstance = ((string)redisVersionValue);
+                                propertiesInstance.RedisVersion = redisVersionInstance;
                             }
                             
                             JToken skuValue = propertiesValue["sku"];
                             if (skuValue != null && skuValue.Type != JTokenType.Null)
                             {
-                                string skuInstance = ((string)skuValue);
+                                Sku skuInstance = new Sku();
                                 propertiesInstance.Sku = skuInstance;
-                            }
-                            
-                            JToken sizeValue = propertiesValue["size"];
-                            if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                            {
-                                string sizeInstance = ((string)sizeValue);
-                                propertiesInstance.Size = sizeInstance;
+                                
+                                JToken nameValue2 = skuValue["name"];
+                                if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                {
+                                    string nameInstance2 = ((string)nameValue2);
+                                    skuInstance.Name = nameInstance2;
+                                }
+                                
+                                JToken familyValue = skuValue["family"];
+                                if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                {
+                                    string familyInstance = ((string)familyValue);
+                                    skuInstance.Family = familyInstance;
+                                }
+                                
+                                JToken capacityValue = skuValue["capacity"];
+                                if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                {
+                                    int capacityInstance = ((int)capacityValue);
+                                    skuInstance.Capacity = capacityInstance;
+                                }
                             }
                             
                             JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
@@ -917,32 +940,39 @@ namespace Microsoft.Azure.Management.Redis
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
-                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    JToken redisVersionValue = propertiesValue["redisVersion"];
+                                    if (redisVersionValue != null && redisVersionValue.Type != JTokenType.Null)
                                     {
-                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                                    }
-                                    
-                                    JToken versionValue = propertiesValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        string versionInstance = ((string)versionValue);
-                                        propertiesInstance.RedisVersion = versionInstance;
+                                        string redisVersionInstance = ((string)redisVersionValue);
+                                        propertiesInstance.RedisVersion = redisVersionInstance;
                                     }
                                     
                                     JToken skuValue = propertiesValue["sku"];
                                     if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
-                                        string skuInstance = ((string)skuValue);
+                                        Sku skuInstance = new Sku();
                                         propertiesInstance.Sku = skuInstance;
-                                    }
-                                    
-                                    JToken sizeValue = propertiesValue["size"];
-                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                    {
-                                        string sizeInstance = ((string)sizeValue);
-                                        propertiesInstance.Size = sizeInstance;
+                                        
+                                        JToken nameValue2 = skuValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            skuInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken familyValue = skuValue["family"];
+                                        if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                        {
+                                            string familyInstance = ((string)familyValue);
+                                            skuInstance.Family = familyInstance;
+                                        }
+                                        
+                                        JToken capacityValue = skuValue["capacity"];
+                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                        {
+                                            int capacityInstance = ((int)capacityValue);
+                                            skuInstance.Capacity = capacityInstance;
+                                        }
                                     }
                                     
                                     JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
@@ -1305,32 +1335,39 @@ namespace Microsoft.Azure.Management.Redis
                                         propertiesInstance.SslPort = sslPortInstance;
                                     }
                                     
-                                    JToken runtimeVersionValue = propertiesValue["runtimeVersion"];
-                                    if (runtimeVersionValue != null && runtimeVersionValue.Type != JTokenType.Null)
+                                    JToken redisVersionValue = propertiesValue["redisVersion"];
+                                    if (redisVersionValue != null && redisVersionValue.Type != JTokenType.Null)
                                     {
-                                        string runtimeVersionInstance = ((string)runtimeVersionValue);
-                                        propertiesInstance.RuntimeVersion = runtimeVersionInstance;
-                                    }
-                                    
-                                    JToken versionValue = propertiesValue["version"];
-                                    if (versionValue != null && versionValue.Type != JTokenType.Null)
-                                    {
-                                        string versionInstance = ((string)versionValue);
-                                        propertiesInstance.RedisVersion = versionInstance;
+                                        string redisVersionInstance = ((string)redisVersionValue);
+                                        propertiesInstance.RedisVersion = redisVersionInstance;
                                     }
                                     
                                     JToken skuValue = propertiesValue["sku"];
                                     if (skuValue != null && skuValue.Type != JTokenType.Null)
                                     {
-                                        string skuInstance = ((string)skuValue);
+                                        Sku skuInstance = new Sku();
                                         propertiesInstance.Sku = skuInstance;
-                                    }
-                                    
-                                    JToken sizeValue = propertiesValue["size"];
-                                    if (sizeValue != null && sizeValue.Type != JTokenType.Null)
-                                    {
-                                        string sizeInstance = ((string)sizeValue);
-                                        propertiesInstance.Size = sizeInstance;
+                                        
+                                        JToken nameValue2 = skuValue["name"];
+                                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                                        {
+                                            string nameInstance2 = ((string)nameValue2);
+                                            skuInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        JToken familyValue = skuValue["family"];
+                                        if (familyValue != null && familyValue.Type != JTokenType.Null)
+                                        {
+                                            string familyInstance = ((string)familyValue);
+                                            skuInstance.Family = familyInstance;
+                                        }
+                                        
+                                        JToken capacityValue = skuValue["capacity"];
+                                        if (capacityValue != null && capacityValue.Type != JTokenType.Null)
+                                        {
+                                            int capacityInstance = ((int)capacityValue);
+                                            skuInstance.Capacity = capacityInstance;
+                                        }
                                     }
                                     
                                     JToken maxMemoryPolicyValue = propertiesValue["maxMemoryPolicy"];
