@@ -262,6 +262,187 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The count of events in a subscription.
+        /// </summary>
+        /// <param name='filterString'>
+        /// Required. The filter string.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public async Task<EventCountSummaryListResponse> ListEventCountSummaryItemsAsync(string filterString, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (filterString == null)
+            {
+                throw new ArgumentNullException("filterString");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("filterString", filterString);
+                Tracing.Enter(invocationId, this, "ListEventCountSummaryItemsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/providers/microsoft.insights/eventtypes/management/summaryItems?";
+            url = url + "api-version=2014-04-01";
+            url = url + "&$filter=" + Uri.EscapeDataString(filterString.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("Accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    EventCountSummaryListResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new EventCountSummaryListResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        EventCountSummaryItemCollection eventCountSummaryItemCollectionInstance = new EventCountSummaryItemCollection();
+                        result.EventCountSummaryItemCollection = eventCountSummaryItemCollectionInstance;
+                        
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken valueValue in ((JArray)valueArray))
+                            {
+                                EventCountSummaryItem eventCountSummaryItemInstance = new EventCountSummaryItem();
+                                eventCountSummaryItemCollectionInstance.Value.Add(eventCountSummaryItemInstance);
+                                
+                                JToken idValue = valueValue["id"];
+                                if (idValue != null && idValue.Type != JTokenType.Null)
+                                {
+                                    string idInstance = ((string)idValue);
+                                    eventCountSummaryItemInstance.Id = idInstance;
+                                }
+                                
+                                JToken timeGrainValue = valueValue["timeGrain"];
+                                if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
+                                {
+                                    TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
+                                    eventCountSummaryItemInstance.TimeGrain = timeGrainInstance;
+                                }
+                                
+                                JToken eventTimeValue = valueValue["eventTime"];
+                                if (eventTimeValue != null && eventTimeValue.Type != JTokenType.Null)
+                                {
+                                    DateTime eventTimeInstance = ((DateTime)eventTimeValue);
+                                    eventCountSummaryItemInstance.EventTime = eventTimeInstance;
+                                }
+                                
+                                JToken totalEventsCountValue = valueValue["totalEventsCount"];
+                                if (totalEventsCountValue != null && totalEventsCountValue.Type != JTokenType.Null)
+                                {
+                                    int totalEventsCountInstance = ((int)totalEventsCountValue);
+                                    eventCountSummaryItemInstance.TotalEventsCount = totalEventsCountInstance;
+                                }
+                                
+                                JToken failedEventsCountValue = valueValue["failedEventsCount"];
+                                if (failedEventsCountValue != null && failedEventsCountValue.Type != JTokenType.Null)
+                                {
+                                    int failedEventsCountInstance = ((int)failedEventsCountValue);
+                                    eventCountSummaryItemInstance.FailedEventsCount = failedEventsCountInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
