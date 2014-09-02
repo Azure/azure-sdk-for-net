@@ -1,10 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//
+// Copyright (c) Microsoft.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//   http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Azure.Insights.Models;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -13,6 +23,11 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     partial class EventCountSummaryListResponse
     {
+        /// <summary>
+        /// Count summary is at 1 day granularity.
+        /// </summary>
+        private static readonly TimeSpan SupportedTimeGrain = TimeSpan.FromDays(1);
+
         /// <summary>
         /// Create the event count summary response
         /// </summary>
@@ -27,7 +42,38 @@ namespace Microsoft.Azure.Insights.Models
             string propertyName,
             string propertyValue)
         {
-            var response = new EventCountSummaryResponse()
+            int expectedNumberOfItems = (int)((endTime - startTime).Ticks / SupportedTimeGrain.Ticks) + 1;
+
+            // Aggregate the summary items
+            var listOfItems = new CountSummaryItem[expectedNumberOfItems];
+            foreach (var summaryItem in this.EventCountSummaryItemCollection.Value)
+            {
+                int position = GetPosition(startTime, SupportedTimeGrain, expectedNumberOfItems, summaryItem.EventTime);
+
+                CountSummaryItem item = listOfItems[position];
+                if (item == null)
+                {
+                    item = new CountSummaryItem() { EventTime = summaryItem.EventTime };
+                    listOfItems[position] = item;
+                }
+
+                item.FailedEventsCount += summaryItem.FailedEventsCount;
+                item.TotalEventsCount += summaryItem.TotalEventsCount;
+            }
+
+            // Fill in the gaps
+            DateTime currentTime = startTime;
+            for (int i = expectedNumberOfItems - 1; i >= 0; i--)
+            {
+                if (listOfItems[i] == null)
+                {
+                    listOfItems[i] = new CountSummaryItem() { EventTime = currentTime.ToUniversalTime() };
+                }
+
+                currentTime += SupportedTimeGrain;
+            }
+
+            return new EventCountSummaryResponse()
             {
                 StartTime = startTime,
                 EndTime = endTime.ToUniversalTime().ToString(CultureInfo.InvariantCulture),
@@ -35,68 +81,18 @@ namespace Microsoft.Azure.Insights.Models
                 EventPropertyValue = propertyValue,
                 RequestId = this.RequestId,
                 StatusCode = this.StatusCode,
-                SummaryItems = new List<CountSummaryItem>()
+                SummaryItems = listOfItems
             };
-
-            // Build summary items
-            if ((this.EventCountSummaryItemCollection != null) &&
-                (this.EventCountSummaryItemCollection.Value != null) &&
-                (this.EventCountSummaryItemCollection.Value.Any()))
-            {
-                ILookup<DateTime, EventCountSummaryItem> summaryItemsByTime = this
-                    .EventCountSummaryItemCollection.Value.ToLookup(item => item.EventTime);
-
-                var listOfItems = new SortedList<DateTime, CountSummaryItem>(new DescendingDateTimeComparer());
-                foreach (var summaryItems in summaryItemsByTime)
-                {
-                    listOfItems.Add(
-                        key: summaryItems.Key,
-                        value: new CountSummaryItem()
-                        {
-                            EventTime = summaryItems.Key,
-                            FailedEventsCount = summaryItems.Sum(item => item.FailedEventsCount),
-                            TotalEventsCount = summaryItems.Sum(item => item.TotalEventsCount),
-                        });
-                }
-
-                // fill in the missing items
-                var currentTime = startTime;
-                var timeGrain = this.EventCountSummaryItemCollection.Value.First().TimeGrain;
-                while (currentTime <= endTime)
-                {
-                    if (listOfItems.All(item => item.Key != currentTime))
-                    {
-                        listOfItems.Add(
-                            key: currentTime, 
-                            value: new CountSummaryItem()
-                            {
-                                EventTime = currentTime
-                            });
-                    }
-
-                    currentTime += timeGrain;
-                }
-
-                response.SummaryItems = listOfItems.Values;
-            }
-
-            return response;
         }
 
-        /// <summary>
-        /// Decensing order comparer of date time items.
-        /// </summary>
-        private class DescendingDateTimeComparer : IComparer<DateTime>
+        private static int GetPosition(
+            DateTime startTime, 
+            TimeSpan timeGrain, 
+            int expectedNumberOfItems,
+            DateTime eventTime)
         {
-            public int Compare(DateTime x, DateTime y)
-            {
-                if (x == y)
-                {
-                    return 0;
-                }
-
-                return (x < y) ? 1 : -1;
-            }
+            TimeSpan eventTimeOffSet = eventTime - startTime;
+            return expectedNumberOfItems - 1 - (int) (eventTimeOffSet.Ticks/timeGrain.Ticks);
         }
     }
 }
