@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IList<AzureCrossConnection> CrossConnections
         {
+            get
+            {
+                if (this._crossConnections == null)
+                {
+                    this._crossConnections = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ExpressRoute.Models.AzureCrossConnection>();
+                }
+                return this._crossConnections;
+            }
+            set { this._crossConnections = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<AzureCrossConnection> CrossConnectionsValue
+        {
             get { return this._crossConnections; }
             set { this._crossConnections = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public CrossConnectionListResponse()
         {
-            this.CrossConnections = new List<AzureCrossConnection>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IEnumerator<AzureCrossConnection> GetEnumerator()
         {
-            return this.CrossConnections.GetEnumerator();
+            return this.CrossConnectionsValue.GetEnumerator();
         }
         
         /// <summary>

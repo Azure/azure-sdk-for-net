@@ -157,10 +157,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                     valueValue["odata.type"] = parameters.MetricSetting.Value.GetType().FullName;
                     AvailabilityMetricSettingValue derived = ((AvailabilityMetricSettingValue)parameters.MetricSetting.Value);
                     
-                    if (derived.AvailableLocations != null)
+                    if (derived.AvailableLocationsValue != null)
                     {
                         JArray availableLocationsArray = new JArray();
-                        foreach (NameConfig availableLocationsItem in derived.AvailableLocations)
+                        foreach (NameConfig availableLocationsItem in derived.AvailableLocationsValue)
                         {
                             JObject nameConfigValue = new JObject();
                             availableLocationsArray.Add(nameConfigValue);
@@ -178,10 +178,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         valueValue["AvailableLocations"] = availableLocationsArray;
                     }
                     
-                    if (derived.Endpoints != null)
+                    if (derived.EndpointsValue != null)
                     {
                         JArray endpointsArray = new JArray();
-                        foreach (EndpointConfig endpointsItem in derived.Endpoints)
+                        foreach (EndpointConfig endpointsItem in derived.EndpointsValue)
                         {
                             JObject endpointConfigValue = new JObject();
                             endpointsArray.Add(endpointConfigValue);
@@ -391,6 +391,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            metricSettingCollectionInstance.Value = new List<MetricSetting>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricSetting metricSettingInstance = new MetricSetting();
@@ -421,6 +422,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken availableLocationsArray = valueValue2["AvailableLocations"];
                                         if (availableLocationsArray != null && availableLocationsArray.Type != JTokenType.Null)
                                         {
+                                            availabilityMetricSettingValueInstance.AvailableLocations = new List<NameConfig>();
                                             foreach (JToken availableLocationsValue in ((JArray)availableLocationsArray))
                                             {
                                                 NameConfig nameConfigInstance = new NameConfig();
@@ -445,6 +447,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                         JToken endpointsArray = valueValue2["Endpoints"];
                                         if (endpointsArray != null && endpointsArray.Type != JTokenType.Null)
                                         {
+                                            availabilityMetricSettingValueInstance.Endpoints = new List<EndpointConfig>();
                                             foreach (JToken endpointsValue in ((JArray)endpointsArray))
                                             {
                                                 EndpointConfig endpointConfigInstance = new EndpointConfig();

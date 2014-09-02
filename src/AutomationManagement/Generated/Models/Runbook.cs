@@ -195,6 +195,22 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<Schedule> Schedules
         {
+            get
+            {
+                if (this._schedules == null)
+                {
+                    this._schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
+                }
+                return this._schedules;
+            }
+            set { this._schedules = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A list of schedules.
+        /// </summary>
+        public IList<Schedule> SchedulesValue
+        {
             get { return this._schedules; }
             set { this._schedules = value; }
         }
@@ -215,7 +231,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public Runbook()
         {
-            this.Schedules = new List<Schedule>();
         }
     }
 }

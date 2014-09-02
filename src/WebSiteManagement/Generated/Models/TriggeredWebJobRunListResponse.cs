@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IList<TriggeredWebJobRun> TriggeredWebJobRuns
         {
+            get
+            {
+                if (this._triggeredWebJobRuns == null)
+                {
+                    this._triggeredWebJobRuns = new System.Collections.Generic.List<Microsoft.WindowsAzure.WebSitesExtensions.Models.TriggeredWebJobRun>();
+                }
+                return this._triggeredWebJobRuns;
+            }
+            set { this._triggeredWebJobRuns = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of job runs.
+        /// </summary>
+        public IList<TriggeredWebJobRun> TriggeredWebJobRunsValue
+        {
             get { return this._triggeredWebJobRuns; }
             set { this._triggeredWebJobRuns = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public TriggeredWebJobRunListResponse()
         {
-            this.TriggeredWebJobRuns = new List<TriggeredWebJobRun>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IEnumerator<TriggeredWebJobRun> GetEnumerator()
         {
-            return this.TriggeredWebJobRuns.GetEnumerator();
+            return this.TriggeredWebJobRunsValue.GetEnumerator();
         }
         
         /// <summary>

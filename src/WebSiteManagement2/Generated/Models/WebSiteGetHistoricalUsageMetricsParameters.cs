@@ -64,6 +64,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<string> MetricNames
         {
+            get
+            {
+                if (this._metricNames == null)
+                {
+                    this._metricNames = new List<string>();
+                }
+                return this._metricNames;
+            }
+            set { this._metricNames = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies a comma-separated list of the names of the
+        /// metrics to return. If the names parameter is not specified, then
+        /// all available metrics are returned.
+        /// </summary>
+        public IList<string> MetricNamesValue
+        {
             get { return this._metricNames; }
             set { this._metricNames = value; }
         }
@@ -118,7 +136,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsParameters()
         {
-            this.MetricNames = new List<string>();
         }
     }
 }

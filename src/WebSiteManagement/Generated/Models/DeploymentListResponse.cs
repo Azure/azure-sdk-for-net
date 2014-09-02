@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IList<Deployment> Deployments
         {
+            get
+            {
+                if (this._deployments == null)
+                {
+                    this._deployments = new System.Collections.Generic.List<Microsoft.WindowsAzure.WebSitesExtensions.Models.Deployment>();
+                }
+                return this._deployments;
+            }
+            set { this._deployments = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of deployments.
+        /// </summary>
+        public IList<Deployment> DeploymentsValue
+        {
             get { return this._deployments; }
             set { this._deployments = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListResponse()
         {
-            this.Deployments = new List<Deployment>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IEnumerator<Deployment> GetEnumerator()
         {
-            return this.Deployments.GetEnumerator();
+            return this.DeploymentsValue.GetEnumerator();
         }
         
         /// <summary>

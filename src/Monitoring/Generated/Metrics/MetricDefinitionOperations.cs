@@ -188,6 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            metricDefinitionCollectionInstance.Value = new List<MetricDefinition>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 MetricDefinition metricDefinitionInstance = new MetricDefinition();
@@ -238,6 +239,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics
                                 JToken metricAvailabilitiesArray = valueValue["MetricAvailabilities"];
                                 if (metricAvailabilitiesArray != null && metricAvailabilitiesArray.Type != JTokenType.Null)
                                 {
+                                    metricDefinitionInstance.MetricAvailabilities = new List<MetricAvailability>();
                                     foreach (JToken metricAvailabilitiesValue in ((JArray)metricAvailabilitiesArray))
                                     {
                                         MetricAvailability metricAvailabilityInstance = new MetricAvailability();

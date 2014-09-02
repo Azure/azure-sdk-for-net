@@ -86,6 +86,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public Dictionary<string, string> Claims
         {
+            get
+            {
+                if (this._claims == null)
+                {
+                    this._claims = new Dictionary<string, string>();
+                }
+                return this._claims;
+            }
+            set { this._claims = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the claims
+        /// </summary>
+        public Dictionary<string, string> ClaimsValue
+        {
             get { return this._claims; }
             set { this._claims = value; }
         }
@@ -218,6 +234,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public Dictionary<string, string> Properties
         {
+            get
+            {
+                if (this._properties == null)
+                {
+                    this._properties = new Dictionary<string, string>();
+                }
+                return this._properties;
+            }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the property bag
+        /// </summary>
+        public Dictionary<string, string> PropertiesValue
+        {
             get { return this._properties; }
             set { this._properties = value; }
         }
@@ -304,8 +336,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public EventData()
         {
-            this.Claims = new Dictionary<string, string>();
-            this.Properties = new Dictionary<string, string>();
         }
     }
     
@@ -332,6 +362,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public IList<EventData> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<EventData>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of events.
+        /// </summary>
+        public IList<EventData> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -341,7 +387,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events.Models
         /// </summary>
         public EventDataCollection()
         {
-            this.Value = new List<EventData>();
         }
     }
     
@@ -1570,6 +1615,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -1620,6 +1666,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -1799,6 +1846,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);
@@ -2035,6 +2083,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -2085,6 +2134,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -2264,6 +2314,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);
@@ -2500,6 +2551,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -2550,6 +2602,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -2729,6 +2782,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);
@@ -2965,6 +3019,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -3015,6 +3070,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -3194,6 +3250,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);
@@ -3430,6 +3487,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -3480,6 +3538,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -3659,6 +3718,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);
@@ -3895,6 +3955,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            eventDataCollectionInstance.Value = new List<EventData>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 EventData eventDataInstance = new EventData();
@@ -3945,6 +4006,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken claimsSequenceElement = ((JToken)valueValue["claims"]);
                                 if (claimsSequenceElement != null && claimsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Claims = new Dictionary<string, string>();
                                     foreach (JProperty property in claimsSequenceElement)
                                     {
                                         string claimsKey = ((string)property.Name);
@@ -4124,6 +4186,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Events
                                 JToken propertiesSequenceElement = ((JToken)valueValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    eventDataInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property2 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property2.Name);

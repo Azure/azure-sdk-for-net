@@ -38,6 +38,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<BackupItem> Properties
         {
+            get
+            {
+                if (this._properties == null)
+                {
+                    this._properties = new System.Collections.Generic.List<Microsoft.Azure.Management.WebSites.Models.BackupItem>();
+                }
+                return this._properties;
+            }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Backups for a web site.
+        /// </summary>
+        public IList<BackupItem> PropertiesValue
+        {
             get { return this._properties; }
             set { this._properties = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public BackupItemsEnvelope()
         {
-            this.Properties = new List<BackupItem>();
         }
         
         /// <summary>

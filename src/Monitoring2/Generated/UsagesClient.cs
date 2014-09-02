@@ -137,6 +137,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         /// </summary>
         public IList<UsageMetric> Properties
         {
+            get
+            {
+                if (this._properties == null)
+                {
+                    this._properties = new List<UsageMetric>();
+                }
+                return this._properties;
+            }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The usage values.
+        /// </summary>
+        public IList<UsageMetric> PropertiesValue
+        {
             get { return this._properties; }
             set { this._properties = value; }
         }
@@ -148,6 +164,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         /// </summary>
         public IList<UsageMetric> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<UsageMetric>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The usage values.
+        /// </summary>
+        public IList<UsageMetric> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -157,8 +189,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages.Models
         /// </summary>
         public UsageMetricCollection()
         {
-            this.Properties = new List<UsageMetric>();
-            this.Value = new List<UsageMetric>();
         }
     }
     
@@ -672,6 +702,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            usageMetricCollectionInstance.Value = new List<UsageMetric>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 UsageMetric usageMetricInstance = new UsageMetric();
@@ -731,6 +762,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Usages
                         JToken propertiesArray = responseDoc["properties"];
                         if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
+                            usageMetricCollectionInstance.Properties = new List<UsageMetric>();
                             foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 UsageMetric usageMetricInstance2 = new UsageMetric();

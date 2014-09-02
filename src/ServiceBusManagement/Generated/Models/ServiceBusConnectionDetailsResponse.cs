@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusConnectionDetail> ConnectionDetails
         {
+            get
+            {
+                if (this._connectionDetails == null)
+                {
+                    this._connectionDetails = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetail>();
+                }
+                return this._connectionDetails;
+            }
+            set { this._connectionDetails = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The set of connection details for a service bus entitiy.
+        /// </summary>
+        public IList<ServiceBusConnectionDetail> ConnectionDetailsValue
+        {
             get { return this._connectionDetails; }
             set { this._connectionDetails = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusConnectionDetailsResponse()
         {
-            this.ConnectionDetails = new List<ServiceBusConnectionDetail>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusConnectionDetail> GetEnumerator()
         {
-            return this.ConnectionDetails.GetEnumerator();
+            return this.ConnectionDetailsValue.GetEnumerator();
         }
         
         /// <summary>

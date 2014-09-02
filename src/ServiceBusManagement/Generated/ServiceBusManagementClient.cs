@@ -601,6 +601,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     {
                         if (feedElement != null)
                         {
+                            result.Regions = new List<ServiceBusLocation>();
                             foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                             {
                                 ServiceBusLocation entryInstance = new ServiceBusLocation();

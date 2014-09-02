@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<Definition> Definitions
         {
+            get
+            {
+                if (this._definitions == null)
+                {
+                    this._definitions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.TrafficManager.Models.Definition>();
+                }
+                return this._definitions;
+            }
+            set { this._definitions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. All definitions of a profile.
+        /// </summary>
+        public IList<Definition> DefinitionsValue
+        {
             get { return this._definitions; }
             set { this._definitions = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionsListResponse()
         {
-            this.Definitions = new List<Definition>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IEnumerator<Definition> GetEnumerator()
         {
-            return this.Definitions.GetEnumerator();
+            return this.DefinitionsValue.GetEnumerator();
         }
         
         /// <summary>

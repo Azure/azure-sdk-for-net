@@ -45,6 +45,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public IDictionary<string, string> Tags
         {
+            get
+            {
+                if (this._tags == null)
+                {
+                    this._tags = new Dictionary<string, string>();
+                }
+                return this._tags;
+            }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Required. Gets or sets the tags associated with the request.
+        /// </summary>
+        public IDictionary<string, string> TagsValue
+        {
             get { return this._tags; }
             set { this._tags = value; }
         }
@@ -54,7 +70,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public CreateUpdateBase()
         {
-            this.Tags = new Dictionary<string, string>();
         }
         
         /// <summary>
@@ -73,7 +88,7 @@ namespace Microsoft.Azure.Management.Sql.Models
                 throw new ArgumentNullException("tags");
             }
             this.Location = location;
-            this.Tags = tags;
+            this.TagsValue = tags;
         }
     }
 }

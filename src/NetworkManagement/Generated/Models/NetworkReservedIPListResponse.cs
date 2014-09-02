@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<NetworkReservedIPListResponse.ReservedIP> ReservedIPs
         {
+            get
+            {
+                if (this._reservedIPs == null)
+                {
+                    this._reservedIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.NetworkReservedIPListResponse.ReservedIP>();
+                }
+                return this._reservedIPs;
+            }
+            set { this._reservedIPs = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<NetworkReservedIPListResponse.ReservedIP> ReservedIPsValue
+        {
             get { return this._reservedIPs; }
             set { this._reservedIPs = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public NetworkReservedIPListResponse()
         {
-            this.ReservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IEnumerator<NetworkReservedIPListResponse.ReservedIP> GetEnumerator()
         {
-            return this.ReservedIPs.GetEnumerator();
+            return this.ReservedIPsValue.GetEnumerator();
         }
         
         /// <summary>

@@ -55,6 +55,23 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<SubscriptionListOperationsResponse.SubscriptionOperation> SubscriptionOperations
         {
+            get
+            {
+                if (this._subscriptionOperations == null)
+                {
+                    this._subscriptionOperations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.SubscriptionListOperationsResponse.SubscriptionOperation>();
+                }
+                return this._subscriptionOperations;
+            }
+            set { this._subscriptionOperations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of operations that have been performed on the
+        /// subscription during the specified timeframe.
+        /// </summary>
+        public IList<SubscriptionListOperationsResponse.SubscriptionOperation> SubscriptionOperationsValue
+        {
             get { return this._subscriptionOperations; }
             set { this._subscriptionOperations = value; }
         }
@@ -65,7 +82,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public SubscriptionListOperationsResponse()
         {
-            this.SubscriptionOperations = new List<SubscriptionListOperationsResponse.SubscriptionOperation>();
         }
         
         /// <summary>
@@ -208,6 +224,23 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public IDictionary<string, string> OperationParameters
             {
+                get
+                {
+                    if (this._operationParameters == null)
+                    {
+                        this._operationParameters = new System.Collections.Generic.Dictionary<string, string>();
+                    }
+                    return this._operationParameters;
+                }
+                set { this._operationParameters = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The collection of parameters for the performed
+            /// operation.
+            /// </summary>
+            public IDictionary<string, string> OperationParametersValue
+            {
                 get { return this._operationParameters; }
                 set { this._operationParameters = value; }
             }
@@ -246,7 +279,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public SubscriptionOperation()
             {
-                this.OperationParameters = new Dictionary<string, string>();
             }
         }
     }

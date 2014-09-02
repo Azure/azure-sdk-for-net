@@ -434,6 +434,7 @@ namespace Microsoft.WindowsAzure.Management
                         XElement subscriptionOperationsSequenceElement = subscriptionOperationCollectionElement.Element(XName.Get("SubscriptionOperations", "http://schemas.microsoft.com/windowsazure"));
                         if (subscriptionOperationsSequenceElement != null)
                         {
+                            result.SubscriptionOperations = new List<SubscriptionListOperationsResponse.SubscriptionOperation>();
                             foreach (XElement subscriptionOperationsElement in subscriptionOperationsSequenceElement.Elements(XName.Get("SubscriptionOperation", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 SubscriptionListOperationsResponse.SubscriptionOperation subscriptionOperationInstance = new SubscriptionListOperationsResponse.SubscriptionOperation();
@@ -463,6 +464,7 @@ namespace Microsoft.WindowsAzure.Management
                                 XElement operationParametersSequenceElement = subscriptionOperationsElement.Element(XName.Get("OperationParameters", "http://schemas.microsoft.com/windowsazure"));
                                 if (operationParametersSequenceElement != null)
                                 {
+                                    subscriptionOperationInstance.OperationParameters = new Dictionary<string, string>();
                                     foreach (XElement operationParametersElement in operationParametersSequenceElement.Elements(XName.Get("OperationParameter", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string operationParametersKey = operationParametersElement.Element(XName.Get("Name", "http://schemas.datacontract.org/2004/07/Microsoft.WindowsAzure.ServiceManagement")).Value;

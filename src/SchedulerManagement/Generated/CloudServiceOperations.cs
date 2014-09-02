@@ -681,6 +681,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                         XElement resourcesSequenceElement = cloudServiceElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
                         if (resourcesSequenceElement != null)
                         {
+                            result.Resources = new List<CloudServiceGetResponse.Resource>();
                             foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 CloudServiceGetResponse.Resource resourceInstance = new CloudServiceGetResponse.Resource();
@@ -731,6 +732,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                 XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
                                 if (outputItemsSequenceElement != null)
                                 {
+                                    resourceInstance.OutputItems = new Dictionary<string, string>();
                                     foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -879,6 +881,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
                     if (cloudServicesSequenceElement != null)
                     {
+                        result.CloudServices = new List<CloudServiceListResponse.CloudService>();
                         foreach (XElement cloudServicesElement in cloudServicesSequenceElement.Elements(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure")))
                         {
                             CloudServiceListResponse.CloudService cloudServiceInstance = new CloudServiceListResponse.CloudService();
@@ -915,6 +918,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                             XElement resourcesSequenceElement = cloudServicesElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
                             if (resourcesSequenceElement != null)
                             {
+                                cloudServiceInstance.Resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
                                 foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     CloudServiceListResponse.CloudService.AddOnResource resourceInstance = new CloudServiceListResponse.CloudService.AddOnResource();
@@ -972,6 +976,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                     XElement usageMetersSequenceElement = resourcesElement.Element(XName.Get("UsageMeters", "http://schemas.microsoft.com/windowsazure"));
                                     if (usageMetersSequenceElement != null)
                                     {
+                                        resourceInstance.UsageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
                                         foreach (XElement usageMetersElement in usageMetersSequenceElement.Elements(XName.Get("UsageMeter", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             CloudServiceListResponse.CloudService.AddOnResource.UsageLimit usageMeterInstance = new CloudServiceListResponse.CloudService.AddOnResource.UsageLimit();
@@ -1010,6 +1015,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                                     XElement outputItemsSequenceElement = resourcesElement.Element(XName.Get("OutputItems", "http://schemas.microsoft.com/windowsazure"));
                                     if (outputItemsSequenceElement != null)
                                     {
+                                        resourceInstance.OutputItems = new Dictionary<string, string>();
                                         foreach (XElement outputItemsElement in outputItemsSequenceElement.Elements(XName.Get("OutputItem", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             string outputItemsKey = outputItemsElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;

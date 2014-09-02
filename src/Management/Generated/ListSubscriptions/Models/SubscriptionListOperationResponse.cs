@@ -40,6 +40,22 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         /// </summary>
         public IList<SubscriptionListOperationResponse.Subscription> Subscriptions
         {
+            get
+            {
+                if (this._subscriptions == null)
+                {
+                    this._subscriptions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Subscriptions.Models.SubscriptionListOperationResponse.Subscription>();
+                }
+                return this._subscriptions;
+            }
+            set { this._subscriptions = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<SubscriptionListOperationResponse.Subscription> SubscriptionsValue
+        {
             get { return this._subscriptions; }
             set { this._subscriptions = value; }
         }
@@ -50,7 +66,6 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         /// </summary>
         public SubscriptionListOperationResponse()
         {
-            this.Subscriptions = new List<SubscriptionListOperationResponse.Subscription>();
         }
         
         /// <summary>
@@ -58,7 +73,7 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         /// </summary>
         public IEnumerator<SubscriptionListOperationResponse.Subscription> GetEnumerator()
         {
-            return this.Subscriptions.GetEnumerator();
+            return this.SubscriptionsValue.GetEnumerator();
         }
         
         /// <summary>

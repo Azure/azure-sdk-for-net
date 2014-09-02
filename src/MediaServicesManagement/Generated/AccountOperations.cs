@@ -714,6 +714,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.Accounts = new List<MediaServicesAccountListResponse.MediaServiceAccount>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             MediaServicesAccountListResponse.MediaServiceAccount serviceResourceInstance = new MediaServicesAccountListResponse.MediaServiceAccount();

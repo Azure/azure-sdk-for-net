@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -278,6 +278,7 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            firewallRuleInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -628,6 +629,7 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            firewallRuleInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -780,6 +782,7 @@ namespace Microsoft.Azure.Management.Sql
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.FirewallRules = new List<FirewallRule>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 FirewallRule firewallRuleInstance = new FirewallRule();
@@ -837,6 +840,7 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    firewallRuleInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
