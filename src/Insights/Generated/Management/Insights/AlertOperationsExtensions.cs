@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource identifier of the target of the alert rule.
+        /// Optional. The resource identifier of the target of the alert rule.
         /// </param>
         /// <returns>
         /// The List Rules operation response.
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource identifier of the target of the alert rule.
+        /// Optional. The resource identifier of the target of the alert rule.
         /// </param>
         /// <returns>
         /// The List Rules operation response.

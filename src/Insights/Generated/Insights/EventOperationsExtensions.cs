@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Insights
         /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
+        /// Optional. The list of property names to be returned. You can save
         /// bandwidth by selecting only the properties you need.Here is an
         /// example:string selectedProperties = "EventDataId, EventTimestamp,
         /// ResourceUri"
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Insights
         /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
-        /// Required. The list of property names to be returned. You can save
+        /// Optional. The list of property names to be returned. You can save
         /// bandwidth by selecting only the properties you need.Here is an
         /// example:string selectedProperties = "EventDataId, EventTimestamp,
         /// ResourceUri"

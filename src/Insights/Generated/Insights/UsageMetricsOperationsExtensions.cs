@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Insights
         /// usages for.
         /// </param>
         /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
+        /// Optional. An OData $filter expression that supports querying by the
         /// name of the usage. For example, "name.value eq 'Percentage CPU'".
         /// Name is optional, meaning the expression may be "".
         /// </param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Insights
         /// usages for.
         /// </param>
         /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
+        /// Optional. An OData $filter expression that supports querying by the
         /// name of the usage. For example, "name.value eq 'Percentage CPU'".
         /// Name is optional, meaning the expression may be "".
         /// </param>

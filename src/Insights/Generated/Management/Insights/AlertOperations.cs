@@ -511,7 +511,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1733,7 +1733,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource identifier of the target of the alert rule.
+        /// Optional. The resource identifier of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2852,7 +2852,7 @@ namespace Microsoft.Azure.Management.Insights
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

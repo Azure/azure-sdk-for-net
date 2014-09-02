@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Insights
         /// metrics for.
         /// </param>
         /// <param name='filterString'>
-        /// Required. An OData $filter expression that supports querying by the
+        /// Optional. An OData $filter expression that supports querying by the
         /// name, startTime, endTime and timeGrain of the metric value sets.
         /// For example, "(name.value eq 'Percentage CPU') and startTime eq
         /// 2014-07-02T01:00Z and endTime eq 2014-08-21T01:00:00Z and
