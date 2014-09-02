@@ -96,5 +96,6 @@
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementTrafficManagerSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.TrafficManager.Specification.1.0.5352.5319-prerelease\tools\Microsoft.WindowsAzure.Management.TrafficManager.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.TrafficManager.Specification.1.0.5353.16242-prerelease\tools\Microsoft.WindowsAzure.Management.TrafficManager.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
