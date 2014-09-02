@@ -226,7 +226,4 @@
   <Target Name="CopyMicrosoftAzureInsightsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Insights.Specification.1.0.5352.40953-prerelease\tools\Microsoft.Azure.Insights.Specification.dll" DestinationFolder="." />
   </Target>
-  <PropertyGroup>
-    <GenerateHydraSpecs>true</GenerateHydraSpecs>
-  </PropertyGroup>
 </Project>
