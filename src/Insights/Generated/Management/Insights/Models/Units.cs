@@ -27,32 +27,32 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum Units
     {
         /// <summary>
-        /// represents a count.
+        /// Count (how many).
         /// </summary>
         Count = 0,
         
         /// <summary>
-        /// represents bytes.
+        /// Unit in bytes.
         /// </summary>
         Bytes = 1,
         
         /// <summary>
-        /// represents seconds.
+        /// Unit in seconds.
         /// </summary>
         Seconds = 2,
         
         /// <summary>
-        /// represents a percentage.
+        /// Unit as a percentage.
         /// </summary>
         Percent = 3,
         
         /// <summary>
-        /// represents a count per second.
+        /// How many per second.
         /// </summary>
         CountPerSecond = 4,
         
         /// <summary>
-        /// represents a bytes per second.
+        /// How many bytes per second.
         /// </summary>
         BytesPerSecond = 5,
     }

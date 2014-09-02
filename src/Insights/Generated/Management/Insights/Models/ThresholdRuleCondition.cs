@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A threshold rule condition.
+    /// A rule condition based on a metric crossing a threshold.
     /// </summary>
     public partial class ThresholdRuleCondition : RuleCondition
     {
         private RuleDataSource _dataSource;
         
         /// <summary>
-        /// Optional. Condition data source.
+        /// Optional. The resource from which the rule collects its data.
         /// </summary>
         public RuleDataSource DataSource
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ConditionOperator _operator;
         
         /// <summary>
-        /// Optional. Condition operator.
+        /// Optional. The operator used to compare the data and the threshold.
         /// </summary>
         public ConditionOperator Operator
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private double _threshold;
         
         /// <summary>
-        /// Optional. Condition threshold.
+        /// Optional. The threshold value that activates the alert.
         /// </summary>
         public double Threshold
         {
@@ -66,7 +66,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? _timeAggregation;
         
         /// <summary>
-        /// Optional. Time aggregation operator.
+        /// Optional. How the data that is collected should be combined over
+        /// time. The default value is the PrimaryAggregationType of the
+        /// Metric.
         /// </summary>
         public Microsoft.Azure.Management.Insights.Models.TimeAggregationOperator? TimeAggregation
         {
@@ -77,8 +79,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeSpan _windowSize;
         
         /// <summary>
-        /// Optional. The time period over which the alert rule is evaluated.
-        /// Condition window size depends on the metric.
+        /// Optional. The period of time that is used to monitor alert activity
+        /// based on the threshold. Must be between 5 minutes and 1 day.
         /// </summary>
         public TimeSpan WindowSize
         {

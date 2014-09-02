@@ -171,7 +171,8 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The resource name.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the autoscale setting.
+        /// Required. The resource identifier of the target of the autoscale
+        /// setting.
         /// </param>
         /// <returns>
         /// The List Autoscale settings operation response.
@@ -193,7 +194,8 @@ namespace Microsoft.Azure.Management.Insights
         /// Required. The resource name.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// Required. The resource uri of the target of the autoscale setting.
+        /// Required. The resource identifier of the target of the autoscale
+        /// setting.
         /// </param>
         /// <returns>
         /// The List Autoscale settings operation response.

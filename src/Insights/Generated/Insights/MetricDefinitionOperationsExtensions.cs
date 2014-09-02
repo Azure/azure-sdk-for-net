@@ -39,11 +39,14 @@ namespace Microsoft.Azure.Insights
         /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get metrics for.
+        /// Required. The resource identifier of the target resource to get
+        /// metrics for.
         /// </param>
         /// <param name='filterString'>
         /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// name of the metric definition. For example, "name.value eq
+        /// 'Percentage CPU'". Name is optional, meaning the expression may be
+        /// "".
         /// </param>
         /// <returns>
         /// The List Metric Definitions operation response.
@@ -66,11 +69,14 @@ namespace Microsoft.Azure.Insights
         /// Microsoft.Azure.Insights.IMetricDefinitionOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get metrics for.
+        /// Required. The resource identifier of the target resource to get
+        /// metrics for.
         /// </param>
         /// <param name='filterString'>
         /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// name of the metric definition. For example, "name.value eq
+        /// 'Percentage CPU'". Name is optional, meaning the expression may be
+        /// "".
         /// </param>
         /// <returns>
         /// The List Metric Definitions operation response.

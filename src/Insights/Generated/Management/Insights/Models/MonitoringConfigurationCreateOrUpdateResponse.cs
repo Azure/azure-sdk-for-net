@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
     /// The create or update monitoring setting response. It's marked as empty.
-    /// We only pass it to ensure json error handling
+    /// We only pass it to ensure json error handling.
     /// </summary>
     public partial class MonitoringConfigurationCreateOrUpdateResponse : OperationResponse
     {

@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
-        /// Operations for managing the alert rules and incidents.
+        /// Operations for managing alert rules and incidents.
         /// </summary>
         IAlertOperations AlertOperations
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
-        /// Operations for managing the autoscale.
+        /// Operations for managing autoscale.
         /// </summary>
         IAutoscaleOperations AutoscaleOperations
         {
@@ -87,7 +87,8 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
-        /// Operations for managing monitoring configuration.
+        /// Operations for managing the collection of diagonstics and
+        /// monitoring data.
         /// </summary>
         IMonitoringConfigurationOperations MonitoringConfigurationOperations
         {

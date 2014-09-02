@@ -27,32 +27,33 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum TimeAggregationType
     {
         /// <summary>
-        /// Average aggregation.
+        /// Average value in the time range.
         /// </summary>
         Average = 0,
         
         /// <summary>
-        /// Minimum aggregation.
+        /// Least value in the time range.
         /// </summary>
         Minimum = 1,
         
         /// <summary>
-        /// Maximum aggregation.
+        /// Greatest value in the time range.
         /// </summary>
         Maximum = 2,
         
         /// <summary>
-        /// Last aggregation.
+        /// Last sample in the time range.
         /// </summary>
         Last = 3,
         
         /// <summary>
-        /// Total aggregation.
+        /// Sum of all of the values in the time range.
         /// </summary>
         Total = 4,
         
         /// <summary>
-        /// Count aggregation.
+        /// The number of samples in the time range. Can be used to determine
+        /// the number of values that contributed to the average value.
         /// </summary>
         Count = 5,
     }

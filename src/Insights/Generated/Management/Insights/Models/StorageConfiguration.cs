@@ -26,14 +26,17 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The public diagnostics configuration.
+    /// The public diagnostics settings for Storage account services.
     /// </summary>
     public partial class StorageConfiguration
     {
         private StorageLoggingConfiguration _loggingConfiguration;
         
         /// <summary>
-        /// Optional. Specify the properties for logging.
+        /// Optional. Settings for logging successful and failed requests to a
+        /// storage service. This information can be used to monitor
+        /// individual requests and to diagnose issues with a storage service.
+        /// Requests are logged on a best-effort basis.
         /// </summary>
         public StorageLoggingConfiguration LoggingConfiguration
         {
@@ -44,7 +47,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageMetricConfiguration _metricConfiguration;
         
         /// <summary>
-        /// Optional. The metrics specifications.
+        /// Optional. Settings for metrics that include aggregated transaction
+        /// statistics and capacity data about requests to a storage service.
         /// </summary>
         public StorageMetricConfiguration MetricConfiguration
         {

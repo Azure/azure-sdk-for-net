@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents the configuration for collecting etw events.
+    /// Represents the configuration for collecting ETW events.
     /// </summary>
     public partial class EtwEventConfiguration
     {
         private string _destination;
         
         /// <summary>
-        /// Optional. destination to write event.
+        /// Optional. The name of the table to store the events in.
         /// </summary>
         public string Destination
         {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private int _eventId;
         
         /// <summary>
-        /// Optional. etw event id.
+        /// Optional. The id of the event.
         /// </summary>
         public int EventId
         {

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DiagnosticSettings _properties;
         
         /// <summary>
-        /// Optional. The retrieved configuration.
+        /// Optional. The retrieved configuration properties.
         /// </summary>
         public DiagnosticSettings Properties
         {

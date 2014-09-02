@@ -21,7 +21,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -37,7 +36,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Insights
 {
     /// <summary>
-    /// Operations for event data.
+    /// Microsoft Azure event logs and summaries can be retrieved using these
+    /// operations
     /// </summary>
     internal partial class EventOperations : IServiceOperations<InsightsClient>, IEventOperations
     {
@@ -66,7 +66,11 @@ namespace Microsoft.Azure.Insights
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='filterString'>
-        /// Required. The filter string.
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -189,14 +193,14 @@ namespace Microsoft.Azure.Insights
                         JToken endTimeValue = responseDoc["endTime"];
                         if (endTimeValue != null && endTimeValue.Type != JTokenType.Null)
                         {
-                            string endTimeInstance = ((string)endTimeValue);
+                            DateTime endTimeInstance = ((DateTime)endTimeValue);
                             result.EndTime = endTimeInstance;
                         }
                         
-                        JToken timeGrainValue = responseDoc["TimeGrain"];
+                        JToken timeGrainValue = responseDoc["timeGrain"];
                         if (timeGrainValue != null && timeGrainValue.Type != JTokenType.Null)
                         {
-                            TimeSpan timeGrainInstance = TimeSpan.Parse(((string)timeGrainValue), CultureInfo.InvariantCulture);
+                            TimeSpan timeGrainInstance = TypeConversion.From8601TimeSpan(((string)timeGrainValue));
                             result.TimeGrain = timeGrainInstance;
                         }
                         
@@ -265,11 +269,17 @@ namespace Microsoft.Azure.Insights
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
-        /// Required. The filter string
+        /// Required. The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
         /// Required. The list of property names to be returned. You can save
-        /// bandwith by selecting only the properties you need.
+        /// bandwidth by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -722,7 +732,9 @@ namespace Microsoft.Azure.Insights
         /// The List Event Next operation lists the next set of events.
         /// </summary>
         /// <param name='nextLink'>
-        /// Required. The next link
+        /// Required. The next link works as a continuation token when all of
+        /// the events are not returned in the response and a second call is
+        /// required
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

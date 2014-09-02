@@ -24,26 +24,28 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
-    public enum ScaleType
+    /// <summary>
+    /// The claims for a rule management event data source.
+    /// </summary>
+    public partial class RuleManagementEventClaimsDataSource
     {
-        /// <summary>
-        /// Not available. Change the instance size.
-        /// </summary>
-        ChangeSize = 0,
+        private string _emailAddress;
         
         /// <summary>
-        /// Change the instance count.
+        /// Optional. The email address.
         /// </summary>
-        ChangeCount = 1,
+        public string EmailAddress
+        {
+            get { return this._emailAddress; }
+            set { this._emailAddress = value; }
+        }
         
         /// <summary>
-        /// Not available. Change the instance count by a percentage.
+        /// Initializes a new instance of the
+        /// RuleManagementEventClaimsDataSource class.
         /// </summary>
-        PercentChangeCount = 2,
-        
-        /// <summary>
-        /// Not available. Set the exact count of instances.
-        /// </summary>
-        ExactCount = 3,
+        public RuleManagementEventClaimsDataSource()
+        {
+        }
     }
 }

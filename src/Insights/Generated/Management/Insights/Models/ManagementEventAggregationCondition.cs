@@ -20,34 +20,55 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a collection of alert rule resources.
+    /// A management event aggregation condition.
     /// </summary>
-    public partial class RuleResourceCollection
+    public partial class ManagementEventAggregationCondition
     {
-        private IList<RuleResource> _value;
+        private ConditionOperator _operator;
         
         /// <summary>
-        /// Optional. The values for the alert rule resources.
+        /// Optional. Condition operator.
         /// </summary>
-        public IList<RuleResource> Value
+        public ConditionOperator Operator
         {
-            get { return this._value; }
-            set { this._value = value; }
+            get { return this._operator; }
+            set { this._operator = value; }
+        }
+        
+        private double _threshold;
+        
+        /// <summary>
+        /// Optional. Condition threshold.
+        /// </summary>
+        public double Threshold
+        {
+            get { return this._threshold; }
+            set { this._threshold = value; }
+        }
+        
+        private TimeSpan _windowSize;
+        
+        /// <summary>
+        /// Optional. The time period over which the alert rule is evaluated.
+        /// </summary>
+        public TimeSpan WindowSize
+        {
+            get { return this._windowSize; }
+            set { this._windowSize = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the RuleResourceCollection class.
+        /// Initializes a new instance of the
+        /// ManagementEventAggregationCondition class.
         /// </summary>
-        public RuleResourceCollection()
+        public ManagementEventAggregationCondition()
         {
-            this.Value = new List<RuleResource>();
         }
     }
 }

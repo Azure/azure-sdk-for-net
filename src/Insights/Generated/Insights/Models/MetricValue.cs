@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _average;
         
         /// <summary>
-        /// Optional. Specifies the average value in the time interval.
+        /// Optional. Specifies the average value in the time range.
         /// </summary>
         public double? Average
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Insights.Models
         private long? _count;
         
         /// <summary>
-        /// Optional. Specifies the sample count in the time interval. Can be
+        /// Optional. Specifies the number of samples in the time range. Can be
         /// used to determine the number of values that contributed to the
         /// average value.
         /// </summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _last;
         
         /// <summary>
-        /// Optional. Specifies the last sample in the time interval.
+        /// Optional. Specifies the last sample in the time range.
         /// </summary>
         public double? Last
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _maximum;
         
         /// <summary>
-        /// Optional. Specifies the maximum value in the time interval.
+        /// Optional. Specifies the greatest value in the time range.
         /// </summary>
         public double? Maximum
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _minimum;
         
         /// <summary>
-        /// Optional. Specifies the minimum value in the time interval.
+        /// Optional. Specifies the least value in the time range.
         /// </summary>
         public double? Minimum
         {
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Insights.Models
         private Dictionary<string, string> _properties;
         
         /// <summary>
-        /// Optional. The extendable properties.
+        /// Optional. Collection of extended properties.
         /// </summary>
         public Dictionary<string, string> Properties
         {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Insights.Models
         private double? _total;
         
         /// <summary>
-        /// Optional. Specifies the total value in the time interval.
+        /// Optional. Specifies the sum of all of the values in the time range.
         /// </summary>
         public double? Total
         {

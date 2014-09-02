@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// An alert rule resource.
+    /// The alert rule resource.
     /// </summary>
     public partial class RuleResource
     {
         private string _id;
         
         /// <summary>
-        /// Optional. The resource id of the rule.
+        /// Optional. The resource identifier of the rule.
         /// </summary>
         public string Id
         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _name;
         
         /// <summary>
-        /// Optional. The name of the rule.
+        /// Optional. The name of the alert rule.
         /// </summary>
         public string Name
         {

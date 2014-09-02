@@ -26,7 +26,7 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents the diagnosticSettings.
+    /// Represents the settings for agents to collect diagnostics information.
     /// </summary>
     public partial class DiagnosticSettings
     {

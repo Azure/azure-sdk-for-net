@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<DirectoryConfiguration> _dataSources;
         
         /// <summary>
-        /// Optional. the list of data sources.
+        /// Optional. A list of directories to monitor.
         /// </summary>
         public IList<DirectoryConfiguration> DataSources
         {
@@ -45,7 +45,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _failedRequestLogs;
         
         /// <summary>
-        /// Optional. container to receive the failed request logs.
+        /// Optional. Including this element in the configuration enables
+        /// collection of logs about failed requests to an IIS site or
+        /// application. You must also enable tracing options under
+        /// system.WebServer in Web.config.
         /// </summary>
         public string FailedRequestLogs
         {
@@ -56,7 +59,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _iISLogs;
         
         /// <summary>
-        /// Optional. container to receive the iis logs.
+        /// Optional. Including this element in the configuration enables the
+        /// collection of IIS logs.
         /// </summary>
         public string IISLogs
         {

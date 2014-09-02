@@ -27,7 +27,7 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// represents a collection or performance counters and their shared
+    /// Represents a collection or performance counters and their shared
     /// configuration.
     /// </summary>
     public partial class PerformanceCounters : BasicConfiguration
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<PerformanceCounterConfiguration> _counters;
         
         /// <summary>
-        /// Optional. list of performance counters.
+        /// Optional. List of performance counters.
         /// </summary>
         public IList<PerformanceCounterConfiguration> Counters
         {

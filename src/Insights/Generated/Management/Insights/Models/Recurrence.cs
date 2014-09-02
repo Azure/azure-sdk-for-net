@@ -26,15 +26,17 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// This describes a recurrence pattern to be used when scheduling
-    /// activities.
+    /// The repeating times at which this profile begins. This element is not
+    /// used if the FixedDate element is used.
     /// </summary>
     public partial class Recurrence
     {
         private RecurrenceFrequency _frequency;
         
         /// <summary>
-        /// Optional.
+        /// Optional. How often the schedule profile should take effect. This
+        /// value must be Week, meaning each week will have the same set of
+        /// profiles.
         /// </summary>
         public RecurrenceFrequency Frequency
         {
@@ -45,7 +47,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private RecurrentSchedule _schedule;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The scheduling constraints for when the profile begins.
         /// </summary>
         public RecurrentSchedule Schedule
         {

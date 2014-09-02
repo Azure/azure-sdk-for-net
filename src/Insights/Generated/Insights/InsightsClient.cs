@@ -87,7 +87,8 @@ namespace Microsoft.Azure.Insights
         private IEventOperations _eventOperations;
         
         /// <summary>
-        /// Operations for event data.
+        /// Microsoft Azure event logs and summaries can be retrieved using
+        /// these operations
         /// </summary>
         public virtual IEventOperations EventOperations
         {

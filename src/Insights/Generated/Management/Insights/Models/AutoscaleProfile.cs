@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private ScaleCapacity _capacity;
         
         /// <summary>
-        /// Optional. The number of instances that can be used in the scaling
-        /// action.
+        /// Optional. The number of instances that can be used during this
+        /// profile.
         /// </summary>
         public ScaleCapacity Capacity
         {
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private TimeWindow _fixedDate;
         
         /// <summary>
-        /// Optional. A specific date for the scaling action. This element is
-        /// not used if the Recurrence element is used.
+        /// Optional. A specific date for the profile. This element is not used
+        /// if the Recurrence element is used.
         /// </summary>
         public TimeWindow FixedDate
         {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private Recurrence _recurrence;
         
         /// <summary>
-        /// Optional. The frequency and schedule for the scaling action. This
+        /// Optional. The repeating times at which this profile begins. This
         /// element is not used if the FixedDate element is used.
         /// </summary>
         public Recurrence Recurrence
@@ -81,8 +81,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<ScaleRule> _rules;
         
         /// <summary>
-        /// Optional. A collection of rules that provide the triggers and
-        /// parameters for the scaling action.
+        /// Optional. Contains a collection of rules that provide the triggers
+        /// and parameters for the scaling action. A maximum of 10 rules can
+        /// be specified.
         /// </summary>
         public IList<ScaleRule> Rules
         {

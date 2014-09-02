@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -38,11 +37,13 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get usages for.
+        /// Required. The resource identifier of the target resource to get
+        /// usages for.
         /// </param>
         /// <param name='filterString'>
         /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// name of the usage. For example, "name.value eq 'Percentage CPU'".
+        /// Name is optional, meaning the expression may be "".
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
@@ -63,11 +64,13 @@ namespace Microsoft.Azure.Insights
         /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get usages for.
+        /// Required. The resource identifier of the target resource to get
+        /// usages for.
         /// </param>
         /// <param name='filterString'>
         /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// name of the usage. For example, "name.value eq 'Percentage CPU'".
+        /// Name is optional, meaning the expression may be "".
         /// </param>
         /// <returns>
         /// The List Usage Metric operation response.
@@ -75,50 +78,6 @@ namespace Microsoft.Azure.Insights
         public static Task<UsageMetricListResponse> ListAsync(this IUsageMetricsOperations operations, string resourceUri, string filterString)
         {
             return operations.ListAsync(resourceUri, filterString, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get usages for.
-        /// </param>
-        /// <param name='metricNames'>
-        /// Required. metric names to return.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static UsageMetricListResponseDeprecated ListDeprecated(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IUsageMetricsOperations)s).ListDeprecatedAsync(resourceUri, metricNames);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// The List operation lists the usage metrics for the resource.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the Microsoft.Azure.Insights.IUsageMetricsOperations.
-        /// </param>
-        /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get usages for.
-        /// </param>
-        /// <param name='metricNames'>
-        /// Required. metric names to return.
-        /// </param>
-        /// <returns>
-        /// The List Usage Metric operation response.
-        /// </returns>
-        public static Task<UsageMetricListResponseDeprecated> ListDeprecatedAsync(this IUsageMetricsOperations operations, string resourceUri, IList<string> metricNames)
-        {
-            return operations.ListDeprecatedAsync(resourceUri, metricNames, CancellationToken.None);
         }
     }
 }

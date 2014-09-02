@@ -28,7 +28,8 @@ using Microsoft.Azure.Insights.Models;
 namespace Microsoft.Azure.Insights
 {
     /// <summary>
-    /// Operations for event data.
+    /// Microsoft Azure event logs and summaries can be retrieved using these
+    /// operations
     /// </summary>
     public partial interface IEventOperations
     {
@@ -36,7 +37,11 @@ namespace Microsoft.Azure.Insights
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='filterString'>
-        /// The filter string.
+        /// The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -50,11 +55,17 @@ namespace Microsoft.Azure.Insights
         /// The List Event Values operation lists the events.
         /// </summary>
         /// <param name='filterString'>
-        /// The filter string
+        /// The filter string should be generated using
+        /// Microsoft.WindowsAzure.Common.OData.FilterStringHere is an
+        /// example:var filterString =
+        /// FilterString.Generate<GetCountSummaryParameters> (p =>
+        /// (p.StartTime == startTime) && p.EndTime == endTime);
         /// </param>
         /// <param name='selectedProperties'>
-        /// The list of property names to be returned. You can save bandwith by
-        /// selecting only the properties you need.
+        /// The list of property names to be returned. You can save bandwidth
+        /// by selecting only the properties you need.Here is an
+        /// example:string selectedProperties = "EventDataId, EventTimestamp,
+        /// ResourceUri"
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -68,7 +79,8 @@ namespace Microsoft.Azure.Insights
         /// The List Event Next operation lists the next set of events.
         /// </summary>
         /// <param name='nextLink'>
-        /// The next link
+        /// The next link works as a continuation token when all of the events
+        /// are not returned in the response and a second call is required
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

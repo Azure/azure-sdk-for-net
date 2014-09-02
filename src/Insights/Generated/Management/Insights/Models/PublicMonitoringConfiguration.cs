@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DiagnosticMonitorConfiguration _diagnosticMonitorConfiguration;
         
         /// <summary>
-        /// Optional. The diagnostic and monitoring configuration settings.
+        /// Optional. Configuration settings for the telemetry data to be
+        /// collected.
         /// </summary>
         public DiagnosticMonitorConfiguration DiagnosticMonitorConfiguration
         {
@@ -44,7 +45,9 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DirectoryAbsolute _localResourceDirectory;
         
         /// <summary>
-        /// Optional. The local resource directory settings.
+        /// Optional. The directory on the virtual machine to be used by the
+        /// Monitoring Agent to store event data. If not set the default
+        /// directory will be used.
         /// </summary>
         public DirectoryAbsolute LocalResourceDirectory
         {
@@ -55,7 +58,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _storageAccount;
         
         /// <summary>
-        /// Optional. The name of the storage account.
+        /// Optional. The name of the Azure Storage account to store the data
+        /// in.
         /// </summary>
         public string StorageAccount
         {

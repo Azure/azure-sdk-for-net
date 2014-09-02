@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. The resource id of the setting.
+        /// Optional. The resource identifier of the setting.
         /// </summary>
         public string Id
         {

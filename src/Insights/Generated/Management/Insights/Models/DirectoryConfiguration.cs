@@ -26,15 +26,16 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a directory configuration, maps a directory path to a
-    /// storage container.
+    /// Enable the collection of the contents of a directory, IIS failed access
+    /// request logs and/or IIS logs.
     /// </summary>
     public partial class DirectoryConfiguration
     {
         private string _containerName;
         
         /// <summary>
-        /// Optional. container to use.
+        /// Optional. The name of the blob container in your Azure Storage
+        /// account that will be used to store the log files.
         /// </summary>
         public string ContainerName
         {
@@ -45,7 +46,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DirectoryPath _path;
         
         /// <summary>
-        /// Optional. path to directory.
+        /// Optional. The path of the resource to monitor.
         /// </summary>
         public DirectoryPath Path
         {

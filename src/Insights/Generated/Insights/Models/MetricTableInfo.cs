@@ -25,15 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Contains the Table information for N-day Tables, each table is used for
-    /// a specific date range.
+    /// Contains the details of the tables that metric data is stored in. A new
+    /// table is created every 10 days for storing metrics.
     /// </summary>
     public partial class MetricTableInfo
     {
         private DateTime _endTime;
         
         /// <summary>
-        /// Optional. Gets or sets the end time of the range for this table.
+        /// Optional. The last data that will this table.
         /// </summary>
         public DateTime EndTime
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _sasToken;
         
         /// <summary>
-        /// Optional. Gets or sets the SAS Key for accessing Table Storage.
+        /// Optional. SAS Key for accessing the table.
         /// </summary>
         public string SasToken
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _sasTokenExpirationTime;
         
         /// <summary>
-        /// Optional. Gets or sets the expiration time of the SAS token (UTC).
+        /// Optional. When the SAS Key will expire.
         /// </summary>
         public DateTime SasTokenExpirationTime
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Insights.Models
         private DateTime _startTime;
         
         /// <summary>
-        /// Optional. Gets or sets the start time of the range for this table.
+        /// Optional. The first data will appear in the data.
         /// </summary>
         public DateTime StartTime
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Insights.Models
         private string _tableName;
         
         /// <summary>
-        /// Optional. Gets or sets the table name.
+        /// Optional. The name of the table.
         /// </summary>
         public string TableName
         {

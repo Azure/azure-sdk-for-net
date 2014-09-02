@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// A rule data source.
+    /// The resource from which the rule collects its data.
     /// </summary>
     public abstract partial class RuleDataSource
     {

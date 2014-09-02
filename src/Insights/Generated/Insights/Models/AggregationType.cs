@@ -35,27 +35,27 @@ namespace Microsoft.Azure.Insights.Models
         None = 0,
         
         /// <summary>
-        /// Average aggregation.
+        /// Average value in the time range.
         /// </summary>
         Average = 1,
         
         /// <summary>
-        /// Minimum aggregation.
+        /// Least value in the time range.
         /// </summary>
         Minimum = 2,
         
         /// <summary>
-        /// Maximum aggregation.
+        /// Greatest value in the time range.
         /// </summary>
         Maximum = 3,
         
         /// <summary>
-        /// Total aggregation.
+        /// Sum of all of the values in the time range.
         /// </summary>
         Total = 4,
         
         /// <summary>
-        /// Get the last value for the time range.
+        /// Last sample in the time range.
         /// </summary>
         Last = 5,
     }

@@ -39,7 +39,8 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.Azure.Management.Insights
 {
     /// <summary>
-    /// Operations for managing monitoring configuration.
+    /// Operations for managing the collection of diagonstics and monitoring
+    /// data.
     /// </summary>
     internal partial class MonitoringConfigurationOperations : IServiceOperations<InsightsManagementClient>, IMonitoringConfigurationOperations
     {
@@ -67,7 +68,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -570,7 +571,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -580,7 +581,7 @@ namespace Microsoft.Azure.Management.Insights
         /// </param>
         /// <returns>
         /// The create or update monitoring setting response. It's marked as
-        /// empty. We only pass it to ensure json error handling
+        /// empty. We only pass it to ensure json error handling.
         /// </returns>
         public async Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters, CancellationToken cancellationToken)
         {
@@ -750,7 +751,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1383,7 +1384,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1607,7 +1608,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier for the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -2110,7 +2111,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.

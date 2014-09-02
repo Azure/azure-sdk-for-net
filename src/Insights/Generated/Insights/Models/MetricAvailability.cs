@@ -26,15 +26,15 @@ using Microsoft.Azure.Insights.Models;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// Metric availability specifies the time grain (aggregation interval) and
-    /// the retention period for that timegrain.
+    /// Metric availability specifies the time grain (aggregation interval or
+    /// frequency) and the retention period for that time grain.
     /// </summary>
     public partial class MetricAvailability
     {
         private MetricLocation _location;
         
         /// <summary>
-        /// Optional. The location info for this availability
+        /// Optional. Where the data for this metric availability is stored.
         /// </summary>
         public MetricLocation Location
         {

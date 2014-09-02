@@ -26,14 +26,15 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents an absolute directory path.
+    /// The absolute path to the directory to monitor.
     /// </summary>
     public partial class DirectoryAbsolute : DirectoryPath
     {
         private bool _expandEnvironment;
         
         /// <summary>
-        /// Optional. expand any environment variables.
+        /// Optional. Configures whether or not environment variables in Path
+        /// will be expanded.
         /// </summary>
         public bool ExpandEnvironment
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _path;
         
         /// <summary>
-        /// Optional. the absolute path to the directory.
+        /// Optional. The absolute path to the directory to monitor.
         /// </summary>
         public string Path
         {

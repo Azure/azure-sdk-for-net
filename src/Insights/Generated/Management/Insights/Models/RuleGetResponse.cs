@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _id;
         
         /// <summary>
-        /// Optional. The resource id of the rule.
+        /// Optional. The resource identifier of the rule.
         /// </summary>
         public string Id
         {

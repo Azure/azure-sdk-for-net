@@ -25,7 +25,8 @@ using System.Linq;
 namespace Microsoft.Azure.Insights.Models
 {
     /// <summary>
-    /// The event channel.
+    /// The event channel.At the moment, most of the Azure event logs flow
+    /// through the Operation channel.
     /// </summary>
     [Flags]
     public enum EventChannels

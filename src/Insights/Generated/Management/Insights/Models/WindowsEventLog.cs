@@ -34,7 +34,10 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<string> _dataSources;
         
         /// <summary>
-        /// Optional. list of data sources to collect.
+        /// Optional. The Windows Event logs to collect. A list of XPath
+        /// queries describing the windows events to be collected. For
+        /// example: "System!*[System[(Level &lt;=3)]]". To collect all events
+        /// specify "*".
         /// </summary>
         public IList<string> DataSources
         {

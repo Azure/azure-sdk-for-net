@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -78,14 +78,14 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// The create or update monitoring setting response. It's marked as
-        /// empty. We only pass it to ensure json error handling
+        /// empty. We only pass it to ensure json error handling.
         /// </returns>
         public static MonitoringConfigurationCreateOrUpdateResponse CreateOrUpdateStorageConfiguration(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
         {
@@ -101,14 +101,14 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
         /// </param>
         /// <returns>
         /// The create or update monitoring setting response. It's marked as
-        /// empty. We only pass it to ensure json error handling
+        /// empty. We only pass it to ensure json error handling.
         /// </returns>
         public static Task<MonitoringConfigurationCreateOrUpdateResponse> CreateOrUpdateStorageConfigurationAsync(this IMonitoringConfigurationOperations operations, string resourceUri, CreateOrUpdateStorageConfigurationParameters parameters)
         {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier for the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier for the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Microsoft.Azure.Management.Insights.IMonitoringConfigurationOperations.
         /// </param>
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.

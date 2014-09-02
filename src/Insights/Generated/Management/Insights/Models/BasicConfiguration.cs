@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// shared basic configuration elements.
+    /// Shared basic configuration elements.
     /// </summary>
     public partial class BasicConfiguration
     {
         private TimeSpan _scheduledTransferPeriod;
         
         /// <summary>
-        /// Optional. scheduled transfer period.
+        /// Optional. The interval between scheduled transfers to storage
+        /// rounded up to the nearest minute.
         /// </summary>
         public TimeSpan ScheduledTransferPeriod
         {

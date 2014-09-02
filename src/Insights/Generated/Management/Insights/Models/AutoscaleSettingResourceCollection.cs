@@ -27,14 +27,14 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents collection of autoscale settings.
+    /// Represents a collection of autoscale setting resources.
     /// </summary>
     public partial class AutoscaleSettingResourceCollection
     {
         private IList<AutoscaleSettingResource> _value;
         
         /// <summary>
-        /// Optional. The values for the autoscale settings.
+        /// Optional. The values for the autoscale setting resources.
         /// </summary>
         public IList<AutoscaleSettingResource> Value
         {

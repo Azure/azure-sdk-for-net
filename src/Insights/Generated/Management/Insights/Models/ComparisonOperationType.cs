@@ -27,32 +27,34 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum ComparisonOperationType
     {
         /// <summary>
-        /// Equals comparison.
+        /// Trigger if the aggregated metric data equals the threshold.
         /// </summary>
         Equals = 0,
         
         /// <summary>
-        /// NotEquals comparison.
+        /// Trigger if the aggregated metric data does not equal the threshold.
         /// </summary>
         NotEquals = 1,
         
         /// <summary>
-        /// GreaterThan comparison.
+        /// Trigger if the aggregated metric data is greater than the threshold.
         /// </summary>
         GreaterThan = 2,
         
         /// <summary>
-        /// GreaterThanOrEqual comparison.
+        /// Trigger if the aggregated metric data is greater than or equal to
+        /// the threshold.
         /// </summary>
         GreaterThanOrEqual = 3,
         
         /// <summary>
-        /// LessThan comparison.
+        /// Trigger if the aggregated metric data is less than the threshold.
         /// </summary>
         LessThan = 4,
         
         /// <summary>
-        /// LessThanOrEqual comparison.
+        /// Trigger if the aggregated metric data is less than or equal to the
+        /// threshold.
         /// </summary>
         LessThanOrEqual = 5,
     }

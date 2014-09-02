@@ -32,12 +32,12 @@ namespace Microsoft.Azure.Insights.Models
     /// </summary>
     public partial class EventCountSummaryResponse : OperationResponse
     {
-        private string _endTime;
+        private DateTime _endTime;
         
         /// <summary>
         /// Optional. The event summary end time.
         /// </summary>
-        public string EndTime
+        public DateTime EndTime
         {
             get { return this._endTime; }
             set { this._endTime = value; }

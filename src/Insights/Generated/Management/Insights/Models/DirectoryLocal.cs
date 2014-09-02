@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Insights.Models;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// Represents a local relative directory path.
+    /// The path relative to a local resource to monitor.
     /// </summary>
     public partial class DirectoryLocal : DirectoryPath
     {
         private string _name;
         
         /// <summary>
-        /// Optional. name of path.
+        /// Optional. The local resource that contains the directory to monitor.
         /// </summary>
         public string Name
         {
@@ -44,7 +44,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _relativePath;
         
         /// <summary>
-        /// Optional. relative directory path.
+        /// Optional. The path relative to Name that contains the directory to
+        /// monitor.
         /// </summary>
         public string RelativePath
         {

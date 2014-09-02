@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Insights.Models
         private int _failedEventsCount;
         
         /// <summary>
-        /// Optional. The total number of failed events.
+        /// Optional. The total number of events with Status == Failed.
         /// </summary>
         public int FailedEventsCount
         {

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private StorageConfiguration _properties;
         
         /// <summary>
-        /// Optional. The retrieved configuration.
+        /// Optional. The retrieved configuration properties.
         /// </summary>
         public StorageConfiguration Properties
         {

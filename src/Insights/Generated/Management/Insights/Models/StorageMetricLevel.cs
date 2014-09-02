@@ -27,17 +27,22 @@ namespace Microsoft.Azure.Management.Insights.Models
     public enum StorageMetricLevel
     {
         /// <summary>
-        /// No metrics level.
+        /// No metrics are enabled.
         /// </summary>
         None = 0,
         
         /// <summary>
-        /// Metrics for service operations.
+        /// Metrics are enabled for service-level summary data which includes
+        /// aggregates for a service. If read-access geo-redundant replication
+        /// is enabled, both primary and secondary metrics are collected.
         /// </summary>
         Service = 1,
         
         /// <summary>
-        /// Metrics for both service and api operations.
+        /// Metrics are enabled for service-level summary data and API-level
+        /// summary data which includes data for specific APIs. If read-access
+        /// geo-redundant replication is enabled, both primary and secondary
+        /// metrics are collected.
         /// </summary>
         ServiceAndApi = 2,
     }

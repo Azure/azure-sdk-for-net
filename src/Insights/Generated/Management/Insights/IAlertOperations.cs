@@ -29,7 +29,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Insights
 {
     /// <summary>
-    /// Operations for managing the alert rules and incidents.
+    /// Operations for managing alert rules and incidents.
     /// </summary>
     public partial interface IAlertOperations
     {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Insights
         /// The name of the resource group.
         /// </param>
         /// <param name='targetResourceUri'>
-        /// The resource uri of the target of the alert rule.
+        /// The resource identifier of the target of the alert rule.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

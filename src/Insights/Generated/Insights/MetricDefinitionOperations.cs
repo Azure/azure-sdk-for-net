@@ -66,11 +66,14 @@ namespace Microsoft.Azure.Insights
         /// for the resource.
         /// </summary>
         /// <param name='resourceUri'>
-        /// Required. The uri of the target resource to get metrics for.
+        /// Required. The resource identifier of the target resource to get
+        /// metrics for.
         /// </param>
         /// <param name='filterString'>
         /// Required. An OData $filter expression that supports querying by the
-        /// name of the metric definition.
+        /// name of the metric definition. For example, "name.value eq
+        /// 'Percentage CPU'". Name is optional, meaning the expression may be
+        /// "".
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

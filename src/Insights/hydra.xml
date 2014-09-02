@@ -7,14 +7,18 @@
     <Type>Microsoft.Azure.Management.Insights.InsightsManagementClient</Type>
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>InsightsManagementClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
   <Specification>
     <Type>Microsoft.Azure.Insights.InsightsClient</Type>
     <Platform>
       <Flavor>CSharp.Azure</Flavor>
-      <OutputPath>InsightsClient.cs</OutputPath>
+      <OutputDirectory></OutputDirectory>
+      <BaseNamespace>Microsoft.Azure</BaseNamespace>
+      <Split>Namespace</Split>
     </Platform>
   </Specification>
 

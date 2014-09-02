@@ -25,12 +25,15 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
+    /// <summary>
+    /// The scheduling constraints for when the profile begins.
+    /// </summary>
     public partial class RecurrentSchedule
     {
         private IList<string> _days;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of days that the profile takes effect on.
         /// </summary>
         public IList<string> Days
         {
@@ -41,7 +44,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _hours;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of hours at which the profile takes effect
+        /// at.
         /// </summary>
         public IList<int> Hours
         {
@@ -52,7 +56,8 @@ namespace Microsoft.Azure.Management.Insights.Models
         private IList<int> _minutes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. A collection of minutes at which the profile takes effect
+        /// at.
         /// </summary>
         public IList<int> Minutes
         {
@@ -63,7 +68,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The time zone for the hours of the profile.
         /// </summary>
         public string TimeZone
         {

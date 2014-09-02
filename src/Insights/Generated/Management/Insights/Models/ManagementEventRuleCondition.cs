@@ -21,32 +21,42 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure.Management.Insights.Models;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The List Usage Metric operation response.
+    /// A management event rule condition.
     /// </summary>
-    public partial class UsageMetricListResponseDeprecated : OperationResponse
+    public partial class ManagementEventRuleCondition : RuleCondition
     {
-        private UsageMetricCollectionDeprecated _usageMetricCollection;
+        private ManagementEventAggregationCondition _aggregation;
         
         /// <summary>
-        /// Optional. The list of usage metrics.
+        /// Optional. Aggregation condition.
         /// </summary>
-        public UsageMetricCollectionDeprecated UsageMetricCollection
+        public ManagementEventAggregationCondition Aggregation
         {
-            get { return this._usageMetricCollection; }
-            set { this._usageMetricCollection = value; }
+            get { return this._aggregation; }
+            set { this._aggregation = value; }
+        }
+        
+        private RuleDataSource _dataSource;
+        
+        /// <summary>
+        /// Optional. Condition data source.
+        /// </summary>
+        public RuleDataSource DataSource
+        {
+            get { return this._dataSource; }
+            set { this._dataSource = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the UsageMetricListResponseDeprecated
+        /// Initializes a new instance of the ManagementEventRuleCondition
         /// class.
         /// </summary>
-        public UsageMetricListResponseDeprecated()
+        public ManagementEventRuleCondition()
         {
         }
     }

@@ -33,8 +33,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private MetricTrigger _metricTrigger;
         
         /// <summary>
-        /// Optional. The metrics that are used to determine when a scaling
-        /// action occurs.
+        /// Optional. The trigger that results in a scaling action.
         /// </summary>
         public MetricTrigger MetricTrigger
         {

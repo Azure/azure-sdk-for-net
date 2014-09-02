@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Insights.Models
         BytesPerSecond = 4,
         
         /// <summary>
-        /// Percentage.
+        /// Unit as a percentage.
         /// </summary>
         Percent = 5,
     }

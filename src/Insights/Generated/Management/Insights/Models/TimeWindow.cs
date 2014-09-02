@@ -25,14 +25,15 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Insights.Models
 {
     /// <summary>
-    /// The action for scaling.
+    /// A specific date for the profile. This element is not used if the
+    /// Recurrence element is used.
     /// </summary>
     public partial class TimeWindow
     {
         private DateTime _end;
         
         /// <summary>
-        /// Optional. The end of the time window.
+        /// Optional. The end time for the profile.
         /// </summary>
         public DateTime End
         {
@@ -43,7 +44,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private DateTime _start;
         
         /// <summary>
-        /// Optional. The start of the time window.
+        /// Optional. The start time for the profile.
         /// </summary>
         public DateTime Start
         {
@@ -54,7 +55,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         private string _timeZone;
         
         /// <summary>
-        /// Optional. The time zone information.
+        /// Optional. The time zone of the start and end times for the profile.
         /// </summary>
         public string TimeZone
         {
