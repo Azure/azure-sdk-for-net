@@ -20,34 +20,18 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Insights.Models;
 
-namespace Microsoft.Azure.Insights.Models
+namespace Microsoft.Azure.Management.Insights.Models
 {
-    /// <summary>
-    /// Represents collection of usage metrics.
-    /// </summary>
-    public partial class UsageMetricCollection
+    public enum TimeAggregationOperator
     {
-        private IList<UsageMetric> _value;
+        Average = 0,
         
-        /// <summary>
-        /// Optional. The usage values.
-        /// </summary>
-        public IList<UsageMetric> Value
-        {
-            get { return this._value; }
-            set { this._value = value; }
-        }
+        Minimum = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the UsageMetricCollection class.
-        /// </summary>
-        public UsageMetricCollection()
-        {
-            this.Value = new List<UsageMetric>();
-        }
+        Maximum = 2,
+        
+        Total = 3,
     }
 }
