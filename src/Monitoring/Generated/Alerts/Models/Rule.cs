@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<RuleAction> Actions
         {
+            get
+            {
+                if (this._actions == null)
+                {
+                    this._actions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleAction>();
+                }
+                return this._actions;
+            }
+            set { this._actions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Rule actions.
+        /// </summary>
+        public IList<RuleAction> ActionsValue
+        {
             get { return this._actions; }
             set { this._actions = value; }
         }
@@ -114,7 +130,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public Rule()
         {
-            this.Actions = new List<RuleAction>();
         }
     }
 }

@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<NameConfig> AvailableLocations
         {
+            get
+            {
+                if (this._availableLocations == null)
+                {
+                    this._availableLocations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.NameConfig>();
+                }
+                return this._availableLocations;
+            }
+            set { this._availableLocations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The locations from which the Urls can be monitored.
+        /// </summary>
+        public IList<NameConfig> AvailableLocationsValue
+        {
             get { return this._availableLocations; }
             set { this._availableLocations = value; }
         }
@@ -50,6 +66,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<EndpointConfig> Endpoints
         {
+            get
+            {
+                if (this._endpoints == null)
+                {
+                    this._endpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.EndpointConfig>();
+                }
+                return this._endpoints;
+            }
+            set { this._endpoints = value; }
+        }
+        
+        /// <summary>
+        /// Required. The configuration for Urls to be monitored using endpoint
+        /// monitoiring.
+        /// </summary>
+        public IList<EndpointConfig> EndpointsValue
+        {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
@@ -60,8 +93,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public AvailabilityMetricSettingValue()
         {
-            this.AvailableLocations = new List<NameConfig>();
-            this.Endpoints = new List<EndpointConfig>();
         }
         
         /// <summary>
@@ -75,7 +106,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
             {
                 throw new ArgumentNullException("endpoints");
             }
-            this.Endpoints = endpoints;
+            this.EndpointsValue = endpoints;
         }
     }
 }

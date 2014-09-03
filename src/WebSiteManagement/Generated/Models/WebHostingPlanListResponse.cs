@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebHostingPlan> WebHostingPlans
         {
+            get
+            {
+                if (this._webHostingPlans == null)
+                {
+                    this._webHostingPlans = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebHostingPlan>();
+                }
+                return this._webHostingPlans;
+            }
+            set { this._webHostingPlans = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The web spaces associated with the specified subscription.
+        /// </summary>
+        public IList<WebHostingPlan> WebHostingPlansValue
+        {
             get { return this._webHostingPlans; }
             set { this._webHostingPlans = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebHostingPlanListResponse()
         {
-            this.WebHostingPlans = new List<WebHostingPlan>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebHostingPlan> GetEnumerator()
         {
-            return this.WebHostingPlans.GetEnumerator();
+            return this.WebHostingPlansValue.GetEnumerator();
         }
         
         /// <summary>

@@ -34,6 +34,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public IList<string> Days
         {
+            get
+            {
+                if (this._days == null)
+                {
+                    this._days = new System.Collections.Generic.List<string>();
+                }
+                return this._days;
+            }
+            set { this._days = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<string> DaysValue
+        {
             get { return this._days; }
             set { this._days = value; }
         }
@@ -45,6 +61,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public IList<int> Hours
         {
+            get
+            {
+                if (this._hours == null)
+                {
+                    this._hours = new System.Collections.Generic.List<int>();
+                }
+                return this._hours;
+            }
+            set { this._hours = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<int> HoursValue
+        {
             get { return this._hours; }
             set { this._hours = value; }
         }
@@ -55,6 +87,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// Optional.
         /// </summary>
         public IList<int> Minutes
+        {
+            get
+            {
+                if (this._minutes == null)
+                {
+                    this._minutes = new System.Collections.Generic.List<int>();
+                }
+                return this._minutes;
+            }
+            set { this._minutes = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<int> MinutesValue
         {
             get { return this._minutes; }
             set { this._minutes = value; }
@@ -76,9 +124,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public RecurrentSchedule()
         {
-            this.Days = new List<string>();
-            this.Hours = new List<int>();
-            this.Minutes = new List<int>();
         }
     }
 }

@@ -38,6 +38,22 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<JobStreamItem> JobStreamItems
         {
+            get
+            {
+                if (this._jobStreamItems == null)
+                {
+                    this._jobStreamItems = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.JobStreamItem>();
+                }
+                return this._jobStreamItems;
+            }
+            set { this._jobStreamItems = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A list of job stream items.
+        /// </summary>
+        public IList<JobStreamItem> JobStreamItemsValue
+        {
             get { return this._jobStreamItems; }
             set { this._jobStreamItems = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobStreamListStreamItemsResponse()
         {
-            this.JobStreamItems = new List<JobStreamItem>();
         }
     }
 }

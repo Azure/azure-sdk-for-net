@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<LocationsListResponse.Location> Locations
         {
+            get
+            {
+                if (this._locations == null)
+                {
+                    this._locations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.LocationsListResponse.Location>();
+                }
+                return this._locations;
+            }
+            set { this._locations = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The data center locations that are valid for your
+        /// subscription.
+        /// </summary>
+        public IList<LocationsListResponse.Location> LocationsValue
+        {
             get { return this._locations; }
             set { this._locations = value; }
         }
@@ -49,7 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public LocationsListResponse()
         {
-            this.Locations = new List<LocationsListResponse.Location>();
         }
         
         /// <summary>
@@ -57,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IEnumerator<LocationsListResponse.Location> GetEnumerator()
         {
-            return this.Locations.GetEnumerator();
+            return this.LocationsValue.GetEnumerator();
         }
         
         /// <summary>
@@ -79,6 +95,22 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// Optional. Indicates the services available at a location.
             /// </summary>
             public IList<string> AvailableServices
+            {
+                get
+                {
+                    if (this._availableServices == null)
+                    {
+                        this._availableServices = new System.Collections.Generic.List<string>();
+                    }
+                    return this._availableServices;
+                }
+                set { this._availableServices = value; }
+            }
+            
+            /// <summary>
+            /// Optional. Indicates the services available at a location.
+            /// </summary>
+            public IList<string> AvailableServicesValue
             {
                 get { return this._availableServices; }
                 set { this._availableServices = value; }
@@ -123,7 +155,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public Location()
             {
-                this.AvailableServices = new List<string>();
             }
         }
     }

@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusLocation> Regions
         {
+            get
+            {
+                if (this._regions == null)
+                {
+                    this._regions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusLocation>();
+                }
+                return this._regions;
+            }
+            set { this._regions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The available regions.
+        /// </summary>
+        public IList<ServiceBusLocation> RegionsValue
+        {
             get { return this._regions; }
             set { this._regions = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusRegionsResponse()
         {
-            this.Regions = new List<ServiceBusLocation>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusLocation> GetEnumerator()
         {
-            return this.Regions.GetEnumerator();
+            return this.RegionsValue.GetEnumerator();
         }
         
         /// <summary>

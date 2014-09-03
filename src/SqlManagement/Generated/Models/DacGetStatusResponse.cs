@@ -41,6 +41,23 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<StatusInfo> StatusInfoList
         {
+            get
+            {
+                if (this._statusInfoList == null)
+                {
+                    this._statusInfoList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.StatusInfo>();
+                }
+                return this._statusInfoList;
+            }
+            set { this._statusInfoList = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets a collection of statuses relevant to this import or
+        /// export request.
+        /// </summary>
+        public IList<StatusInfo> StatusInfoListValue
+        {
             get { return this._statusInfoList; }
             set { this._statusInfoList = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DacGetStatusResponse()
         {
-            this.StatusInfoList = new List<StatusInfo>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<StatusInfo> GetEnumerator()
         {
-            return this.StatusInfoList.GetEnumerator();
+            return this.StatusInfoListValue.GetEnumerator();
         }
         
         /// <summary>

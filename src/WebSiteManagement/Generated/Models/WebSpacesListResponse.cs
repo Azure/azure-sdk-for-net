@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSpacesListResponse.WebSpace> WebSpaces
         {
+            get
+            {
+                if (this._webSpaces == null)
+                {
+                    this._webSpaces = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListResponse.WebSpace>();
+                }
+                return this._webSpaces;
+            }
+            set { this._webSpaces = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The web spaces associated with the specified subscription.
+        /// </summary>
+        public IList<WebSpacesListResponse.WebSpace> WebSpacesValue
+        {
             get { return this._webSpaces; }
             set { this._webSpaces = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListResponse()
         {
-            this.WebSpaces = new List<WebSpacesListResponse.WebSpace>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSpacesListResponse.WebSpace> GetEnumerator()
         {
-            return this.WebSpaces.GetEnumerator();
+            return this.WebSpacesValue.GetEnumerator();
         }
         
         /// <summary>

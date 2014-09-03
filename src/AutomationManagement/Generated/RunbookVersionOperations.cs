@@ -353,6 +353,7 @@ namespace Microsoft.Azure.Management.Automation
                             JToken schedulesArray = runbookValue["Schedules"];
                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                             {
+                                runbookInstance.Schedules = new List<Schedule>();
                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                 {
                                     Schedule scheduleInstance = new Schedule();
@@ -756,6 +757,7 @@ namespace Microsoft.Azure.Management.Automation
                             JToken schedulesArray = runbookValue["Schedules"];
                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                             {
+                                runbookInstance.Schedules = new List<Schedule>();
                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                 {
                                     Schedule scheduleInstance = new Schedule();
@@ -1144,6 +1146,7 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.RunbookVersions = new List<RunbookVersion>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RunbookVersion runbookVersionInstance = new RunbookVersion();
@@ -1312,6 +1315,7 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken schedulesArray = runbookValue["Schedules"];
                                     if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                     {
+                                        runbookInstance.Schedules = new List<Schedule>();
                                         foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
                                             Schedule scheduleInstance = new Schedule();
@@ -1563,6 +1567,7 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.RunbookVersions = new List<RunbookVersion>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RunbookVersion runbookVersionInstance = new RunbookVersion();
@@ -1731,6 +1736,7 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken schedulesArray = runbookValue["Schedules"];
                                     if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                     {
+                                        runbookInstance.Schedules = new List<Schedule>();
                                         foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
                                             Schedule scheduleInstance = new Schedule();

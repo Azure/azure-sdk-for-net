@@ -41,6 +41,24 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<RestorableDroppedDatabase> Databases
         {
+            get
+            {
+                if (this._databases == null)
+                {
+                    this._databases = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.RestorableDroppedDatabase>();
+                }
+                return this._databases;
+            }
+            set { this._databases = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the collection of restorable dropped
+        /// databases that has been returned from a List Restorable Dropped
+        /// Databases request.
+        /// </summary>
+        public IList<RestorableDroppedDatabase> DatabasesValue
+        {
             get { return this._databases; }
             set { this._databases = value; }
         }
@@ -51,7 +69,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public RestorableDroppedDatabaseListResponse()
         {
-            this.Databases = new List<RestorableDroppedDatabase>();
         }
         
         /// <summary>
@@ -59,7 +76,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<RestorableDroppedDatabase> GetEnumerator()
         {
-            return this.Databases.GetEnumerator();
+            return this.DatabasesValue.GetEnumerator();
         }
         
         /// <summary>

@@ -686,6 +686,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.FirewallRules = new List<FirewallRule>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             FirewallRule serviceResourceInstance = new FirewallRule();

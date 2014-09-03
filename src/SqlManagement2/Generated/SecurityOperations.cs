@@ -356,6 +356,7 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            databaseSecurityPolicyInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);

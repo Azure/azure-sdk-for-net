@@ -627,6 +627,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken continuousWebJobsArray = responseDoc;
                         if (continuousWebJobsArray != null && continuousWebJobsArray.Type != JTokenType.Null)
                         {
+                            result.ContinuousWebJobs = new List<ContinuousWebJob>();
                             foreach (JToken continuousWebJobsValue in ((JArray)continuousWebJobsArray))
                             {
                                 ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();
@@ -811,13 +812,13 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 if (settings.IsSingleton != null)
                 {
                     requestDoc = new JObject();
-                    requestDoc["IsSingleton"] = settings.IsSingleton;
+                    requestDoc["IsSingleton"] = settings.IsSingleton.Value;
                 }
                 
                 if (settings.ShutdownGraceTimeInSeconds != null)
                 {
                     requestDoc = new JObject();
-                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds;
+                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

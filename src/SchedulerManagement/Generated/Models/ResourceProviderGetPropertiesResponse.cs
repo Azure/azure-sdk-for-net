@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public IDictionary<string, string> Properties
         {
+            get
+            {
+                if (this._properties == null)
+                {
+                    this._properties = new System.Collections.Generic.Dictionary<string, string>();
+                }
+                return this._properties;
+            }
+            set { this._properties = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IDictionary<string, string> PropertiesValue
+        {
             get { return this._properties; }
             set { this._properties = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public ResourceProviderGetPropertiesResponse()
         {
-            this.Properties = new Dictionary<string, string>();
         }
     }
 }

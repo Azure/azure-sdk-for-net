@@ -55,6 +55,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSiteOperationStatusResponse.Error> Errors
         {
+            get
+            {
+                if (this._errors == null)
+                {
+                    this._errors = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse.Error>();
+                }
+                return this._errors;
+            }
+            set { this._errors = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of errors that occurred during the operation.
+        /// </summary>
+        public IList<WebSiteOperationStatusResponse.Error> ErrorsValue
+        {
             get { return this._errors; }
             set { this._errors = value; }
         }
@@ -132,7 +148,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteOperationStatusResponse()
         {
-            this.Errors = new List<WebSiteOperationStatusResponse.Error>();
         }
         
         /// <summary>
@@ -202,6 +217,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public IList<string> Parameters
             {
+                get
+                {
+                    if (this._parameters == null)
+                    {
+                        this._parameters = new System.Collections.Generic.List<string>();
+                    }
+                    return this._parameters;
+                }
+                set { this._parameters = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The parameters for the message template.
+            /// </summary>
+            public IList<string> ParametersValue
+            {
                 get { return this._parameters; }
                 set { this._parameters = value; }
             }
@@ -211,7 +242,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public Error()
             {
-                this.Parameters = new List<string>();
             }
         }
     }

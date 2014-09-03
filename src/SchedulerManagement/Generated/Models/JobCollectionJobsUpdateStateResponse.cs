@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IList<Job> Jobs
         {
+            get
+            {
+                if (this._jobs == null)
+                {
+                    this._jobs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Scheduler.Models.Job>();
+                }
+                return this._jobs;
+            }
+            set { this._jobs = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The definitions of the updated jobs.
+        /// </summary>
+        public IList<Job> JobsValue
+        {
             get { return this._jobs; }
             set { this._jobs = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobCollectionJobsUpdateStateResponse()
         {
-            this.Jobs = new List<Job>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IEnumerator<Job> GetEnumerator()
         {
-            return this.Jobs.GetEnumerator();
+            return this.JobsValue.GetEnumerator();
         }
         
         /// <summary>

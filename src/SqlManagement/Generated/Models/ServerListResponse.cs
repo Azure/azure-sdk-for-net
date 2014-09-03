@@ -41,6 +41,23 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<Server> Servers
         {
+            get
+            {
+                if (this._servers == null)
+                {
+                    this._servers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.Server>();
+                }
+                return this._servers;
+            }
+            set { this._servers = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets the collection of Azure SQL Database Servers that
+        /// are valid for your subscription.
+        /// </summary>
+        public IList<Server> ServersValue
+        {
             get { return this._servers; }
             set { this._servers = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServerListResponse()
         {
-            this.Servers = new List<Server>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<Server> GetEnumerator()
         {
-            return this.Servers.GetEnumerator();
+            return this.ServersValue.GetEnumerator();
         }
         
         /// <summary>

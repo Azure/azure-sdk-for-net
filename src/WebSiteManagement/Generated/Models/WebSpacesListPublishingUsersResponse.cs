@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSpacesListPublishingUsersResponse.User> Users
         {
+            get
+            {
+                if (this._users == null)
+                {
+                    this._users = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListPublishingUsersResponse.User>();
+                }
+                return this._users;
+            }
+            set { this._users = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The publishing users.
+        /// </summary>
+        public IList<WebSpacesListPublishingUsersResponse.User> UsersValue
+        {
             get { return this._users; }
             set { this._users = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListPublishingUsersResponse()
         {
-            this.Users = new List<WebSpacesListPublishingUsersResponse.User>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSpacesListPublishingUsersResponse.User> GetEnumerator()
         {
-            return this.Users.GetEnumerator();
+            return this.UsersValue.GetEnumerator();
         }
         
         /// <summary>

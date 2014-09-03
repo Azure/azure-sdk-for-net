@@ -40,6 +40,23 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public IList<FirewallRule> FirewallRules
         {
+            get
+            {
+                if (this._firewallRules == null)
+                {
+                    this._firewallRules = new System.Collections.Generic.List<Microsoft.Azure.Management.Sql.Models.FirewallRule>();
+                }
+                return this._firewallRules;
+            }
+            set { this._firewallRules = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the list of Azure Sql Database Server
+        /// firewall rules for the server.
+        /// </summary>
+        public IList<FirewallRule> FirewallRulesValue
+        {
             get { return this._firewallRules; }
             set { this._firewallRules = value; }
         }
@@ -49,7 +66,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
-            this.FirewallRules = new List<FirewallRule>();
         }
         
         /// <summary>
@@ -57,7 +73,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         public IEnumerator<FirewallRule> GetEnumerator()
         {
-            return this.FirewallRules.GetEnumerator();
+            return this.FirewallRulesValue.GetEnumerator();
         }
         
         /// <summary>

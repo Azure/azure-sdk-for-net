@@ -194,10 +194,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         }
                     }
                     
-                    if (parameters.Rule.Actions != null)
+                    if (parameters.Rule.ActionsValue != null)
                     {
                         JArray actionsArray = new JArray();
-                        foreach (RuleAction actionsItem in parameters.Rule.Actions)
+                        foreach (RuleAction actionsItem in parameters.Rule.ActionsValue)
                         {
                             JObject ruleActionValue = new JObject();
                             actionsArray.Add(ruleActionValue);
@@ -208,10 +208,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 
                                 ruleActionValue["SendToServiceOwners"] = derived3.SendToServiceOwners;
                                 
-                                if (derived3.CustomEmails != null)
+                                if (derived3.CustomEmailsValue != null)
                                 {
                                     JArray customEmailsArray = new JArray();
-                                    foreach (string customEmailsItem in derived3.CustomEmails)
+                                    foreach (string customEmailsItem in derived3.CustomEmailsValue)
                                     {
                                         customEmailsArray.Add(customEmailsItem);
                                     }
@@ -602,6 +602,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken actionsArray = responseDoc["Actions"];
                         if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                         {
+                            ruleInstance.Actions = new List<RuleAction>();
                             foreach (JToken actionsValue in ((JArray)actionsArray))
                             {
                                 string typeName3 = ((string)actionsValue["odata.type"]);
@@ -619,6 +620,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     JToken customEmailsArray = actionsValue["CustomEmails"];
                                     if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                     {
+                                        ruleEmailActionInstance.CustomEmails = new List<string>();
                                         foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                         {
                                             ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
@@ -763,6 +765,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Value = new List<Rule>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Rule ruleInstance = new Rule();
@@ -863,6 +866,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken actionsArray = valueValue["Actions"];
                                 if (actionsArray != null && actionsArray.Type != JTokenType.Null)
                                 {
+                                    ruleInstance.Actions = new List<RuleAction>();
                                     foreach (JToken actionsValue in ((JArray)actionsArray))
                                     {
                                         string typeName3 = ((string)actionsValue["odata.type"]);
@@ -880,6 +884,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             JToken customEmailsArray = actionsValue["CustomEmails"];
                                             if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                             {
+                                                ruleEmailActionInstance.CustomEmails = new List<string>();
                                                 foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                                 {
                                                     ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));

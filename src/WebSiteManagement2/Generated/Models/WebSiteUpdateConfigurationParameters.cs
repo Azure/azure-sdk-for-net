@@ -51,6 +51,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IDictionary<string, string> AppSettings
         {
+            get
+            {
+                if (this._appSettings == null)
+                {
+                    this._appSettings = new Dictionary<string, string>();
+                }
+                return this._appSettings;
+            }
+            set { this._appSettings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A set of name/value pairs that contain application
+        /// settings for a site.
+        /// </summary>
+        public IDictionary<string, string> AppSettingsValue
+        {
             get { return this._appSettings; }
             set { this._appSettings = value; }
         }
@@ -62,6 +79,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// external resources.
         /// </summary>
         public IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> ConnectionStrings
+        {
+            get
+            {
+                if (this._connectionStrings == null)
+                {
+                    this._connectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
+                }
+                return this._connectionStrings;
+            }
+            set { this._connectionStrings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains connection strings for database and other
+        /// external resources.
+        /// </summary>
+        public IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> ConnectionStringsValue
         {
             get { return this._connectionStrings; }
             set { this._connectionStrings = value; }
@@ -78,6 +112,27 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// browser is pointed to http://www.contoso.com.
         /// </summary>
         public IList<string> DefaultDocuments
+        {
+            get
+            {
+                if (this._defaultDocuments == null)
+                {
+                    this._defaultDocuments = new List<string>();
+                }
+                return this._defaultDocuments;
+            }
+            set { this._defaultDocuments = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains one or more string elements that list, in order
+        /// of preference, the name of the file that a web site returns when
+        /// the web site's domain name is requested by itself. For example, if
+        /// the default document for http://contoso.com is default.htm, the
+        /// page http://www.contoso.com/default.htm is returned when the
+        /// browser is pointed to http://www.contoso.com.
+        /// </summary>
+        public IList<string> DefaultDocumentsValue
         {
             get { return this._defaultDocuments; }
             set { this._defaultDocuments = value; }
@@ -113,6 +168,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// requests for specific file name extensions.
         /// </summary>
         public IList<WebSiteUpdateConfigurationParameters.HandlerMapping> HandlerMappings
+        {
+            get
+            {
+                if (this._handlerMappings == null)
+                {
+                    this._handlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
+                }
+                return this._handlerMappings;
+            }
+            set { this._handlerMappings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies custom executable programs for handling
+        /// requests for specific file name extensions.
+        /// </summary>
+        public IList<WebSiteUpdateConfigurationParameters.HandlerMapping> HandlerMappingsValue
         {
             get { return this._handlerMappings; }
             set { this._handlerMappings = value; }
@@ -158,6 +230,23 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// information.
         /// </summary>
         public IDictionary<string, string> Metadata
+        {
+            get
+            {
+                if (this._metadata == null)
+                {
+                    this._metadata = new Dictionary<string, string>();
+                }
+                return this._metadata;
+            }
+            set { this._metadata = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Contains name/value pairs for source control or other
+        /// information.
+        /// </summary>
+        public IDictionary<string, string> MetadataValue
         {
             get { return this._metadata; }
             set { this._metadata = value; }
@@ -286,11 +375,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateConfigurationParameters()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteUpdateConfigurationParameters.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteUpdateConfigurationParameters.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
         }
         
         /// <summary>

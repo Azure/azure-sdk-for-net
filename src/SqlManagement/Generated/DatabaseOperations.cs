@@ -934,6 +934,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.EventLogs = new List<DatabaseEventLog>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             DatabaseEventLog serviceResourceInstance = new DatabaseEventLog();
@@ -1177,6 +1178,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.Databases = new List<Database>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             Database serviceResourceInstance = new Database();

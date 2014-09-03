@@ -50,6 +50,22 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public IList<CloudServiceGetResponse.Resource> Resources
         {
+            get
+            {
+                if (this._resources == null)
+                {
+                    this._resources = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Scheduler.Models.CloudServiceGetResponse.Resource>();
+                }
+                return this._resources;
+            }
+            set { this._resources = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A collection of resources.
+        /// </summary>
+        public IList<CloudServiceGetResponse.Resource> ResourcesValue
+        {
             get { return this._resources; }
             set { this._resources = value; }
         }
@@ -59,7 +75,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public CloudServiceGetResponse()
         {
-            this.Resources = new List<CloudServiceGetResponse.Resource>();
         }
         
         /// <summary>
@@ -108,6 +123,22 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             /// Optional.
             /// </summary>
             public IDictionary<string, string> OutputItems
+            {
+                get
+                {
+                    if (this._outputItems == null)
+                    {
+                        this._outputItems = new System.Collections.Generic.Dictionary<string, string>();
+                    }
+                    return this._outputItems;
+                }
+                set { this._outputItems = value; }
+            }
+            
+            /// <summary>
+            /// Optional.
+            /// </summary>
+            public IDictionary<string, string> OutputItemsValue
             {
                 get { return this._outputItems; }
                 set { this._outputItems = value; }
@@ -186,7 +217,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
             /// </summary>
             public Resource()
             {
-                this.OutputItems = new Dictionary<string, string>();
             }
         }
     }

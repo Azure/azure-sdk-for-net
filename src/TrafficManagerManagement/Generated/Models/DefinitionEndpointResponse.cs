@@ -53,6 +53,19 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
             set { this._location = value; }
         }
         
+        private int _minChildEndpoints;
+        
+        /// <summary>
+        /// Optional. Specifies the minimum amount of child endpoints in a
+        /// nested profile that has to be online for the endpoint to be
+        /// considered online.
+        /// </summary>
+        public int MinChildEndpoints
+        {
+            get { return this._minChildEndpoints; }
+            set { this._minChildEndpoints = value; }
+        }
+        
         private DefinitionEndpointMonitorStatus _monitorStatus;
         
         /// <summary>

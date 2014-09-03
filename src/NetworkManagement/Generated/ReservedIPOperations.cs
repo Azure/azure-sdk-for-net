@@ -852,6 +852,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement reservedIPsSequenceElement = responseDoc.Element(XName.Get("ReservedIPs", "http://schemas.microsoft.com/windowsazure"));
                     if (reservedIPsSequenceElement != null)
                     {
+                        result.ReservedIPs = new List<NetworkReservedIPListResponse.ReservedIP>();
                         foreach (XElement reservedIPsElement in reservedIPsSequenceElement.Elements(XName.Get("ReservedIP", "http://schemas.microsoft.com/windowsazure")))
                         {
                             NetworkReservedIPListResponse.ReservedIP reservedIPInstance = new NetworkReservedIPListResponse.ReservedIP();

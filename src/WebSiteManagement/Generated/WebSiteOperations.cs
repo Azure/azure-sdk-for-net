@@ -189,10 +189,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                 }
                 
-                if (backupRequest.Databases != null)
+                if (backupRequest.DatabasesValue != null)
                 {
                     XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    foreach (DatabaseBackupSetting databasesItem in backupRequest.DatabasesValue)
                     {
                         XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
                         databasesSequenceElement.Add(databaseBackupSettingElement);
@@ -345,6 +345,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement databasesSequenceElement2 = backupItemElement.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
                         if (databasesSequenceElement2 != null)
                         {
+                            backupItemInstance.Databases = new List<DatabaseBackupSetting>();
                             foreach (XElement databasesElement in databasesSequenceElement2.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -586,6 +587,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             if (isNil == false)
                             {
+                                result.Errors = new List<WebSiteOperationStatusResponse.Error>();
                                 foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("Error", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     WebSiteOperationStatusResponse.Error errorInstance = new WebSiteOperationStatusResponse.Error();
@@ -666,6 +668,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         }
                                         if (isNil6 == false)
                                         {
+                                            errorInstance.Parameters = new List<string>();
                                             foreach (XElement parametersElement in parametersSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                             {
                                                 errorInstance.Parameters.Add(parametersElement.Value);
@@ -1003,6 +1006,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement enabledHostNamesSequenceElement = siteElement2.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (enabledHostNamesSequenceElement != null)
                         {
+                            webSiteInstance.EnabledHostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
@@ -1012,6 +1016,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement = siteElement2.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement != null)
                         {
+                            webSiteInstance.HostNameSslStates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSite.WebSiteHostNameSslState>();
                             foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
@@ -1068,6 +1073,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNamesSequenceElement = siteElement2.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNamesSequenceElement != null)
                         {
+                            webSiteInstance.HostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.HostNames.Add(hostNamesElement.Value);
@@ -1125,6 +1131,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
                             if (appSettingsSequenceElement != null)
                             {
+                                sitePropertiesInstance.AppSettings = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1136,6 +1143,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
                             if (metadataSequenceElement != null)
                             {
+                                sitePropertiesInstance.Metadata = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1147,6 +1155,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
                             if (propertiesSequenceElement != null)
                             {
+                                sitePropertiesInstance.Properties = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1725,10 +1734,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     restoreRequestElement.Add(blobNameElement);
                 }
                 
-                if (restoreRequest.Databases != null)
+                if (restoreRequest.DatabasesValue != null)
                 {
                     XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.DatabasesValue)
                     {
                         XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
                         databasesSequenceElement.Add(databaseBackupSettingElement);
@@ -1844,6 +1853,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement databasesSequenceElement2 = restoreRequestElement2.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
                         if (databasesSequenceElement2 != null)
                         {
+                            result.Databases = new List<DatabaseBackupSetting>();
                             foreach (XElement databasesElement in databasesSequenceElement2.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -2210,6 +2220,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement enabledHostNamesSequenceElement = siteElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (enabledHostNamesSequenceElement != null)
                         {
+                            webSiteInstance.EnabledHostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
@@ -2219,6 +2230,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement = siteElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement != null)
                         {
+                            webSiteInstance.HostNameSslStates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSite.WebSiteHostNameSslState>();
                             foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
@@ -2275,6 +2287,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNamesSequenceElement = siteElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNamesSequenceElement != null)
                         {
+                            webSiteInstance.HostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.HostNames.Add(hostNamesElement.Value);
@@ -2332,6 +2345,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
                             if (appSettingsSequenceElement != null)
                             {
+                                sitePropertiesInstance.AppSettings = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -2343,6 +2357,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
                             if (metadataSequenceElement != null)
                             {
+                                sitePropertiesInstance.Metadata = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -2354,6 +2369,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
                             if (propertiesSequenceElement != null)
                             {
+                                sitePropertiesInstance.Properties = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -2586,6 +2602,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement databasesSequenceElement = backupRequestElement.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
                         if (databasesSequenceElement != null)
                         {
+                            result.Databases = new List<DatabaseBackupSetting>();
                             foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -2774,6 +2791,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken appSettingsSequenceElement = ((JToken)responseDoc["AppSettings"]);
                         if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
                         {
+                            result.AppSettings = new Dictionary<string, string>();
                             foreach (JToken appSettingsElement in ((JArray)appSettingsSequenceElement))
                             {
                                 string appSettingsKey = ((string)appSettingsElement["Name"]);
@@ -2785,6 +2803,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken connectionStringsArray = responseDoc["ConnectionStrings"];
                         if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
                         {
+                            result.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
                             foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
                             {
                                 WebSiteGetConfigurationResponse.ConnectionStringInfo connectionStringInfoInstance = new WebSiteGetConfigurationResponse.ConnectionStringInfo();
@@ -2816,6 +2835,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken defaultDocumentsArray = responseDoc["DefaultDocuments"];
                         if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
                         {
+                            result.DefaultDocuments = new List<string>();
                             foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
                             {
                                 result.DefaultDocuments.Add(((string)defaultDocumentsValue));
@@ -2839,6 +2859,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken handlerMappingsArray = responseDoc["HandlerMappings"];
                         if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
                         {
+                            result.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
                             foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
                             {
                                 WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
@@ -2891,6 +2912,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken metadataSequenceElement = ((JToken)responseDoc["Metadata"]);
                         if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                         {
+                            result.Metadata = new Dictionary<string, string>();
                             foreach (JToken metadataElement in ((JArray)metadataSequenceElement))
                             {
                                 string metadataKey = ((string)metadataElement["Name"]);
@@ -2993,6 +3015,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken routingRulesArray = responseDoc["RoutingRules"];
                         if (routingRulesArray != null && routingRulesArray.Type != JTokenType.Null)
                         {
+                            result.RoutingRules = new List<RoutingRule>();
                             foreach (JToken routingRulesValue in ((JArray)routingRulesArray))
                             {
                                 string typeName = ((string)routingRulesValue["__type"]);
@@ -3228,6 +3251,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         if (metricResponsesElement != null)
                         {
+                            result.UsageMetrics = new List<HistoricalUsageMetric>();
                             foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 HistoricalUsageMetric metricResponseInstance = new HistoricalUsageMetric();
@@ -3298,6 +3322,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement valuesSequenceElement = dataElement.Element(XName.Get("Values", "http://schemas.microsoft.com/windowsazure"));
                                     if (valuesSequenceElement != null)
                                     {
+                                        dataInstance.Values = new List<HistoricalUsageMetricSample>();
                                         foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
@@ -3514,6 +3539,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                     if (arrayOfstringSequenceElement != null)
                     {
+                        result.InstanceIds = new List<string>();
                         foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                         {
                             result.InstanceIds.Add(arrayOfstringElement.Value);
@@ -3660,6 +3686,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         if (publishDataElement != null)
                         {
+                            result.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
                             foreach (XElement publishProfilesElement in publishDataElement.Elements(XName.Get("publishProfile", "")))
                             {
                                 WebSiteGetPublishProfileResponse.PublishProfile publishProfileInstance = new WebSiteGetPublishProfileResponse.PublishProfile();
@@ -3740,6 +3767,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement databasesSequenceElement = publishProfilesElement.Element(XName.Get("databases", ""));
                                 if (databasesSequenceElement != null)
                                 {
+                                    publishProfileInstance.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
                                     foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("add", "")))
                                     {
                                         WebSiteGetPublishProfileResponse.Database addInstance = new WebSiteGetPublishProfileResponse.Database();
@@ -4060,6 +4088,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         if (usagesElement != null)
                         {
+                            result.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
                             foreach (XElement usageMetricsElement in usagesElement.Elements(XName.Get("Usage", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 WebSiteGetUsageMetricsResponse.UsageMetric usageInstance = new WebSiteGetUsageMetricsResponse.UsageMetric();
@@ -4400,6 +4429,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         if (backupItemsElement != null)
                         {
+                            result.BackupItems = new List<BackupItem>();
                             foreach (XElement backupItemsElement2 in backupItemsElement.Elements(XName.Get("BackupItem", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 BackupItem backupItemInstance = new BackupItem();
@@ -4457,6 +4487,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement databasesSequenceElement = backupItemsElement2.Element(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
                                 if (databasesSequenceElement != null)
                                 {
+                                    backupItemInstance.Databases = new List<DatabaseBackupSetting>();
                                     foreach (XElement databasesElement in databasesSequenceElement.Elements(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -4778,10 +4809,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     restoreRequestElement.Add(blobNameElement);
                 }
                 
-                if (restoreRequest.Databases != null)
+                if (restoreRequest.DatabasesValue != null)
                 {
                     XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.DatabasesValue)
                     {
                         XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
                         databasesSequenceElement.Add(databaseBackupSettingElement);
@@ -5194,17 +5225,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.HostNameSslStates != null)
+            if (parameters.HostNameSslStatesValue != null)
             {
-                foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesParameterItem in parameters.HostNameSslStates)
+                foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesParameterItem in parameters.HostNameSslStatesValue)
                 {
                     if (hostNameSslStatesParameterItem.Name == null)
                     {
-                        throw new ArgumentNullException("parameters.HostNameSslStates.Name");
+                        throw new ArgumentNullException("parameters.HostNameSslStatesValue.Name");
                     }
                     if (hostNameSslStatesParameterItem.SslState == null)
                     {
-                        throw new ArgumentNullException("parameters.HostNameSslStates.SslState");
+                        throw new ArgumentNullException("parameters.HostNameSslStatesValue.SslState");
                     }
                 }
             }
@@ -5259,10 +5290,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 XElement siteElement = new XElement(XName.Get("Site", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(siteElement);
                 
-                if (parameters.HostNameSslStates != null)
+                if (parameters.HostNameSslStatesValue != null)
                 {
                     XElement hostNameSslStatesSequenceElement = new XElement(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesItem in parameters.HostNameSslStates)
+                    foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesItem in parameters.HostNameSslStatesValue)
                     {
                         XElement webSiteHostNameSslStateElement = new XElement(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure"));
                         hostNameSslStatesSequenceElement.Add(webSiteHostNameSslStateElement);
@@ -5297,10 +5328,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     siteElement.Add(hostNameSslStatesSequenceElement);
                 }
                 
-                if (parameters.HostNames != null)
+                if (parameters.HostNamesValue != null)
                 {
                     XElement hostNamesSequenceElement = new XElement(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string hostNamesItem in parameters.HostNames)
+                    foreach (string hostNamesItem in parameters.HostNamesValue)
                     {
                         XElement hostNamesItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                         hostNamesItemElement.Value = hostNamesItem;
@@ -5398,6 +5429,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement enabledHostNamesSequenceElement = siteElement2.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (enabledHostNamesSequenceElement != null)
                         {
+                            webSiteInstance.EnabledHostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
@@ -5407,6 +5439,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNameSslStatesSequenceElement2 = siteElement2.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNameSslStatesSequenceElement2 != null)
                         {
+                            webSiteInstance.HostNameSslStates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSite.WebSiteHostNameSslState>();
                             foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement2.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
@@ -5463,6 +5496,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         XElement hostNamesSequenceElement2 = siteElement2.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
                         if (hostNamesSequenceElement2 != null)
                         {
+                            webSiteInstance.HostNames = new System.Collections.Generic.List<string>();
                             foreach (XElement hostNamesElement in hostNamesSequenceElement2.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                             {
                                 webSiteInstance.HostNames.Add(hostNamesElement.Value);
@@ -5520,6 +5554,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
                             if (appSettingsSequenceElement != null)
                             {
+                                sitePropertiesInstance.AppSettings = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -5531,6 +5566,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
                             if (metadataSequenceElement != null)
                             {
+                                sitePropertiesInstance.Metadata = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -5542,6 +5578,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
                             if (propertiesSequenceElement != null)
                             {
+                                sitePropertiesInstance.Properties = new System.Collections.Generic.Dictionary<string, string>();
                                 foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -5723,10 +5760,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     }
                 }
                 
-                if (backupRequest.Databases != null)
+                if (backupRequest.DatabasesValue != null)
                 {
                     XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    foreach (DatabaseBackupSetting databasesItem in backupRequest.DatabasesValue)
                     {
                         XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
                         databasesSequenceElement.Add(databaseBackupSettingElement);
@@ -5936,9 +5973,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 requestDoc = webSiteUpdateConfigurationParametersValue;
                 
                 JArray appSettingsDictionary = new JArray();
-                if (parameters.AppSettings != null)
+                if (parameters.AppSettingsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.AppSettings)
+                    foreach (KeyValuePair<string, string> pair in parameters.AppSettingsValue)
                     {
                         string appSettingsKey = pair.Key;
                         string appSettingsValue = pair.Value;
@@ -5950,10 +5987,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 }
                 webSiteUpdateConfigurationParametersValue["AppSettings"] = appSettingsDictionary;
                 
-                if (parameters.ConnectionStrings != null)
+                if (parameters.ConnectionStringsValue != null)
                 {
                     JArray connectionStringsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStrings)
+                    foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStringsValue)
                     {
                         JObject connectionStringInfoValue = new JObject();
                         connectionStringsArray.Add(connectionStringInfoValue);
@@ -5973,10 +6010,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                 }
                 
-                if (parameters.DefaultDocuments != null)
+                if (parameters.DefaultDocumentsValue != null)
                 {
                     JArray defaultDocumentsArray = new JArray();
-                    foreach (string defaultDocumentsItem in parameters.DefaultDocuments)
+                    foreach (string defaultDocumentsItem in parameters.DefaultDocumentsValue)
                     {
                         defaultDocumentsArray.Add(defaultDocumentsItem);
                     }
@@ -5985,7 +6022,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.DetailedErrorLoggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["DetailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["DetailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled.Value;
                 }
                 
                 if (parameters.DocumentRoot != null)
@@ -5993,10 +6030,10 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     webSiteUpdateConfigurationParametersValue["DocumentRoot"] = parameters.DocumentRoot;
                 }
                 
-                if (parameters.HandlerMappings != null)
+                if (parameters.HandlerMappingsValue != null)
                 {
                     JArray handlerMappingsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappings)
+                    foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappingsValue)
                     {
                         JObject handlerMappingValue = new JObject();
                         handlerMappingsArray.Add(handlerMappingValue);
@@ -6021,23 +6058,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.HttpLoggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["HttpLoggingEnabled"] = parameters.HttpLoggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["HttpLoggingEnabled"] = parameters.HttpLoggingEnabled.Value;
                 }
                 
                 if (parameters.LogsDirectorySizeLimit != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["LogsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit;
+                    webSiteUpdateConfigurationParametersValue["LogsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit.Value;
                 }
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode);
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode.Value);
                 }
                 
                 JArray metadataDictionary = new JArray();
-                if (parameters.Metadata != null)
+                if (parameters.MetadataValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair2 in parameters.Metadata)
+                    foreach (KeyValuePair<string, string> pair2 in parameters.MetadataValue)
                     {
                         string metadataKey = pair2.Key;
                         string metadataValue = pair2.Value;
@@ -6056,7 +6093,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.NumberOfWorkers != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["NumberOfWorkers"] = parameters.NumberOfWorkers;
+                    webSiteUpdateConfigurationParametersValue["NumberOfWorkers"] = parameters.NumberOfWorkers.Value;
                 }
                 
                 if (parameters.PhpVersion != null)
@@ -6066,19 +6103,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.RemoteDebuggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
                 }
                 
                 webSiteUpdateConfigurationParametersValue["RemoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
                 
                 if (parameters.RequestTracingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RequestTracingEnabled"] = parameters.RequestTracingEnabled;
+                    webSiteUpdateConfigurationParametersValue["RequestTracingEnabled"] = parameters.RequestTracingEnabled.Value;
                 }
                 
                 if (parameters.RequestTracingExpirationTime != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RequestTracingExpirationTime"] = parameters.RequestTracingExpirationTime;
+                    webSiteUpdateConfigurationParametersValue["RequestTracingExpirationTime"] = parameters.RequestTracingExpirationTime.Value;
                 }
                 
                 if (parameters.ScmType != null)
@@ -6088,23 +6125,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.Use32BitWorkerProcess != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["Use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess;
+                    webSiteUpdateConfigurationParametersValue["Use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess.Value;
                 }
                 
                 if (parameters.WebSocketsEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["WebSocketsEnabled"] = parameters.WebSocketsEnabled;
+                    webSiteUpdateConfigurationParametersValue["WebSocketsEnabled"] = parameters.WebSocketsEnabled.Value;
                 }
                 
                 if (parameters.AlwaysOn != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["AlwaysOn"] = parameters.AlwaysOn;
+                    webSiteUpdateConfigurationParametersValue["AlwaysOn"] = parameters.AlwaysOn.Value;
                 }
                 
-                if (parameters.RoutingRules != null)
+                if (parameters.RoutingRulesValue != null)
                 {
                     JArray routingRulesArray = new JArray();
-                    foreach (RoutingRule routingRulesItem in parameters.RoutingRules)
+                    foreach (RoutingRule routingRulesItem in parameters.RoutingRulesValue)
                     {
                         JObject routingRuleValue = new JObject();
                         routingRulesArray.Add(routingRuleValue);
@@ -6122,22 +6159,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             
                             if (derived.ChangeStep != null)
                             {
-                                routingRuleValue["ChangeStep"] = derived.ChangeStep;
+                                routingRuleValue["ChangeStep"] = derived.ChangeStep.Value;
                             }
                             
                             if (derived.ChangeIntervalInMinutes != null)
                             {
-                                routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes;
+                                routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes.Value;
                             }
                             
                             if (derived.MinReroutePercentage != null)
                             {
-                                routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage;
+                                routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage.Value;
                             }
                             
                             if (derived.MaxReroutePercentage != null)
                             {
-                                routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage;
+                                routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage.Value;
                             }
                             
                             if (derived.ChangeDecisionCallbackUrl != null)
