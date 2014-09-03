@@ -16,9 +16,6 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure Insights REST HTTP client windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
-        <reference file="Microsoft.Azure.Insights.dll" />
-      </group>
       <group targetFramework="net40">
         <reference file="Microsoft.Azure.Insights.dll" />
       </group>
@@ -32,8 +29,8 @@
     <file src="..\binaries\net40\Microsoft.Azure.Insights.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Insights.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Insights.xml" target="lib\net40" />
-    <file src="..\binaries\net45\Microsoft.Azure.Insights.dll" target="lib\net45" />
+    <!--<file src="..\binaries\net45\Microsoft.Azure.Insights.dll" target="lib\net45" />
     <file src="..\binaries\net45\Microsoft.Azure.Insights.pdb" target="lib\net45" />
-    <file src="..\binaries\net45\Microsoft.Azure.Insights.xml" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Insights.xml" target="lib\net45" />-->
   </files>
 </package>
