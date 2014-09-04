@@ -73,6 +73,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<DatabaseBackupSetting> Databases
         {
+            get
+            {
+                if (this._databases == null)
+                {
+                    this._databases = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.DatabaseBackupSetting>();
+                }
+                return this._databases;
+            }
+            set { this._databases = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Database settings for backup.
+        /// </summary>
+        public IList<DatabaseBackupSetting> DatabasesValue
+        {
             get { return this._databases; }
             set { this._databases = value; }
         }
@@ -175,7 +191,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public BackupItem()
         {
-            this.Databases = new List<DatabaseBackupSetting>();
         }
     }
 }

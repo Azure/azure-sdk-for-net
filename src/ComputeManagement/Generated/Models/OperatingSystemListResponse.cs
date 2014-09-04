@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<OperatingSystemListResponse.OperatingSystem> OperatingSystems
         {
+            get
+            {
+                if (this._operatingSystems == null)
+                {
+                    this._operatingSystems = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.OperatingSystemListResponse.OperatingSystem>();
+                }
+                return this._operatingSystems;
+            }
+            set { this._operatingSystems = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The operating systems that are valid for your
+        /// subscription.
+        /// </summary>
+        public IList<OperatingSystemListResponse.OperatingSystem> OperatingSystemsValue
+        {
             get { return this._operatingSystems; }
             set { this._operatingSystems = value; }
         }
@@ -49,7 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public OperatingSystemListResponse()
         {
-            this.OperatingSystems = new List<OperatingSystemListResponse.OperatingSystem>();
         }
         
         /// <summary>
@@ -57,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<OperatingSystemListResponse.OperatingSystem> GetEnumerator()
         {
-            return this.OperatingSystems.GetEnumerator();
+            return this.OperatingSystemsValue.GetEnumerator();
         }
         
         /// <summary>

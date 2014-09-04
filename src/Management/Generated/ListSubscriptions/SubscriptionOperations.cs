@@ -150,6 +150,7 @@ namespace Microsoft.WindowsAzure.Subscriptions
                     {
                         if (subscriptionsElement != null)
                         {
+                            result.Subscriptions = new List<SubscriptionListOperationResponse.Subscription>();
                             foreach (XElement subscriptionsElement2 in subscriptionsElement.Elements(XName.Get("Subscription", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 SubscriptionListOperationResponse.Subscription subscriptionInstance = new SubscriptionListOperationResponse.Subscription();

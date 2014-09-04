@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<Rule> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Rule>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Alert rules collection.
+        /// </summary>
+        public IList<Rule> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleListResponse()
         {
-            this.Value = new List<Rule>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IEnumerator<Rule> GetEnumerator()
         {
-            return this.Value.GetEnumerator();
+            return this.ValueValue.GetEnumerator();
         }
         
         /// <summary>

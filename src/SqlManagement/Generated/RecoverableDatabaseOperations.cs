@@ -355,6 +355,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.Databases = new List<RecoverableDatabase>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             RecoverableDatabase serviceResourceInstance = new RecoverableDatabase();

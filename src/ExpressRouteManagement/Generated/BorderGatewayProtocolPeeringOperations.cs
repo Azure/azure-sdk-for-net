@@ -739,14 +739,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         if (azureAsnElement != null)
                         {
                             uint azureAsnInstance = uint.Parse(azureAsnElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.AzureAutonomousSystemNumber = azureAsnInstance;
+                            bgpPeeringInstance.AzureAsn = azureAsnInstance;
                         }
                         
                         XElement peerAsnElement = bgpPeeringElement.Element(XName.Get("PeerAsn", "http://schemas.microsoft.com/windowsazure"));
                         if (peerAsnElement != null)
                         {
                             uint peerAsnInstance = uint.Parse(peerAsnElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.PeerAutonomousSystemNumber = peerAsnInstance;
+                            bgpPeeringInstance.PeerAsn = peerAsnInstance;
                         }
                         
                         XElement primaryAzurePortElement = bgpPeeringElement.Element(XName.Get("PrimaryAzurePort", "http://schemas.microsoft.com/windowsazure"));
@@ -788,7 +788,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                         if (vlanIdElement != null)
                         {
                             uint vlanIdInstance = uint.Parse(vlanIdElement.Value, CultureInfo.InvariantCulture);
-                            bgpPeeringInstance.VirtualLanId = vlanIdInstance;
+                            bgpPeeringInstance.VlanId = vlanIdInstance;
                         }
                     }
                     

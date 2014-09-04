@@ -172,21 +172,21 @@ namespace Microsoft.Azure.Management.WebSites
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime != null)
                         {
-                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime;
+                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime.Value;
                         }
                         
                         backupScheduleValue["retentionPeriodInDays"] = backupRequestEnvelope.Request.BackupSchedule.RetentionPeriodInDays;
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.StartTime != null)
                         {
-                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime;
+                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime.Value;
                         }
                     }
                     
-                    if (backupRequestEnvelope.Request.Databases != null)
+                    if (backupRequestEnvelope.Request.DatabasesValue != null)
                     {
                         JArray databasesArray = new JArray();
-                        foreach (DatabaseBackupSetting databasesItem in backupRequestEnvelope.Request.Databases)
+                        foreach (DatabaseBackupSetting databasesItem in backupRequestEnvelope.Request.DatabasesValue)
                         {
                             JObject databaseBackupSettingValue = new JObject();
                             databasesArray.Add(databaseBackupSettingValue);
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (backupRequestEnvelope.Request.Enabled != null)
                     {
-                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled;
+                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled.Value;
                     }
                     
                     if (backupRequestEnvelope.Request.Name != null)
@@ -359,6 +359,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken databasesArray2 = propertiesValue2["databases"];
                             if (databasesArray2 != null && databasesArray2.Type != JTokenType.Null)
                             {
+                                propertiesInstance.Databases = new List<DatabaseBackupSetting>();
                                 foreach (JToken databasesValue in ((JArray)databasesArray2))
                                 {
                                     DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -447,6 +448,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            backupItemInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -1220,10 +1222,10 @@ namespace Microsoft.Azure.Management.WebSites
                         propertiesValue["BlobName"] = restoreRequestEnvelope.Request.BlobName;
                     }
                     
-                    if (restoreRequestEnvelope.Request.Databases != null)
+                    if (restoreRequestEnvelope.Request.DatabasesValue != null)
                     {
                         JArray databasesArray = new JArray();
-                        foreach (DatabaseBackupSetting databasesItem in restoreRequestEnvelope.Request.Databases)
+                        foreach (DatabaseBackupSetting databasesItem in restoreRequestEnvelope.Request.DatabasesValue)
                         {
                             JObject databaseBackupSettingValue = new JObject();
                             databasesArray.Add(databaseBackupSettingValue);
@@ -1362,6 +1364,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken databasesArray2 = propertiesValue2["databases"];
                             if (databasesArray2 != null && databasesArray2.Type != JTokenType.Null)
                             {
+                                propertiesInstance.Databases = new List<DatabaseBackupSetting>();
                                 foreach (JToken databasesValue in ((JArray)databasesArray2))
                                 {
                                     DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -1436,6 +1439,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            envelopeInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -1763,6 +1767,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken enabledHostNamesArray = propertiesValue["enabledHostNames"];
                             if (enabledHostNamesArray != null && enabledHostNamesArray.Type != JTokenType.Null)
                             {
+                                propertiesInstance.EnabledHostNames = new List<string>();
                                 foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
                                 {
                                     propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
@@ -1772,6 +1777,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken hostNameSslStatesArray = propertiesValue["hostNameSslStates"];
                             if (hostNameSslStatesArray != null && hostNameSslStatesArray.Type != JTokenType.Null)
                             {
+                                propertiesInstance.HostNameSslStates = new List<WebSiteProperties.WebSiteHostNameSslState>();
                                 foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
                                 {
                                     WebSiteProperties.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSiteProperties.WebSiteHostNameSslState();
@@ -1831,6 +1837,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken hostNamesArray = propertiesValue["hostNames"];
                             if (hostNamesArray != null && hostNamesArray.Type != JTokenType.Null)
                             {
+                                propertiesInstance.HostNames = new List<string>();
                                 foreach (JToken hostNamesValue in ((JArray)hostNamesArray))
                                 {
                                     propertiesInstance.HostNames.Add(((string)hostNamesValue));
@@ -1861,6 +1868,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken trafficManagerHostNamesArray = propertiesValue["trafficManagerHostNames"];
                             if (trafficManagerHostNamesArray != null && trafficManagerHostNamesArray.Type != JTokenType.Null)
                             {
+                                propertiesInstance.TrafficManagerHostNames = new List<string>();
                                 foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
                                 {
                                     propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
@@ -1897,6 +1905,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
                                 if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    sitePropertiesInstance.AppSettings = new Dictionary<string, string>();
                                     foreach (JProperty property in appSettingsSequenceElement)
                                     {
                                         string appSettingsKey = ((string)property.Name);
@@ -1908,6 +1917,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken metadataSequenceElement = ((JToken)sitePropertiesValue["metadata"]);
                                 if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                                 {
+                                    sitePropertiesInstance.Metadata = new Dictionary<string, string>();
                                     foreach (JProperty property2 in metadataSequenceElement)
                                     {
                                         string metadataKey = ((string)property2.Name);
@@ -1919,6 +1929,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken propertiesSequenceElement = ((JToken)sitePropertiesValue["properties"]);
                                 if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                 {
+                                    sitePropertiesInstance.Properties = new Dictionary<string, string>();
                                     foreach (JProperty property3 in propertiesSequenceElement)
                                     {
                                         string propertiesKey = ((string)property3.Name);
@@ -1981,6 +1992,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            webSiteInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property4 in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property4.Name);
@@ -2211,6 +2223,7 @@ namespace Microsoft.Azure.Management.WebSites
                             JToken databasesArray = propertiesValue["databases"];
                             if (databasesArray != null && databasesArray.Type != JTokenType.Null)
                             {
+                                propertiesInstance.Databases = new List<DatabaseBackupSetting>();
                                 foreach (JToken databasesValue in ((JArray)databasesArray))
                                 {
                                     DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -2271,6 +2284,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            backupScheduleInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -2436,6 +2450,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken appSettingsSequenceElement = ((JToken)siteConfigValue["appSettings"]);
                         if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
                         {
+                            siteConfigInstance.AppSettings = new Dictionary<string, string>();
                             foreach (JProperty property in appSettingsSequenceElement)
                             {
                                 string appSettingsKey = ((string)property.Name);
@@ -2447,6 +2462,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken connectionStringsArray = siteConfigValue["connectionStrings"];
                         if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
                         {
+                            siteConfigInstance.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
                             foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
                             {
                                 WebSiteGetConfigurationResponse.ConnectionStringInfo connStringInfoInstance = new WebSiteGetConfigurationResponse.ConnectionStringInfo();
@@ -2478,6 +2494,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken defaultDocumentsArray = siteConfigValue["defaultDocuments"];
                         if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
                         {
+                            siteConfigInstance.DefaultDocuments = new List<string>();
                             foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
                             {
                                 siteConfigInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
@@ -2501,6 +2518,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken handlerMappingsArray = siteConfigValue["handlerMappings"];
                         if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
                         {
+                            siteConfigInstance.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
                             foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
                             {
                                 WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
@@ -2553,6 +2571,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken metadataSequenceElement = ((JToken)siteConfigValue["metadata"]);
                         if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                         {
+                            siteConfigInstance.Metadata = new Dictionary<string, string>();
                             foreach (JProperty property2 in metadataSequenceElement)
                             {
                                 string metadataKey = ((string)property2.Name);
@@ -2816,6 +2835,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken propertiesArray = responseDoc["properties"];
                         if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
+                            result.UsageMetrics = new List<HistoricalUsageMetric>();
                             foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 HistoricalUsageMetric historicalUsageMetricInstance = new HistoricalUsageMetric();
@@ -2886,6 +2906,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken valuesArray = dataValue["values"];
                                     if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                     {
+                                        dataInstance.Values = new List<HistoricalUsageMetricSample>();
                                         foreach (JToken valuesValue in ((JArray)valuesArray))
                                         {
                                             HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
@@ -3092,6 +3113,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken publishProfilesArray = publishDataValue;
                         if (publishProfilesArray != null && publishProfilesArray.Type != JTokenType.Null)
                         {
+                            publishDataInstance.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
                             foreach (JToken publishProfilesValue in ((JArray)publishProfilesArray))
                             {
                                 WebSiteGetPublishProfileResponse.PublishProfile publishProfileInstance = new WebSiteGetPublishProfileResponse.PublishProfile();
@@ -3184,6 +3206,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken databasesArray = publishProfilesValue["databases"];
                                 if (databasesArray != null && databasesArray.Type != JTokenType.Null)
                                 {
+                                    publishProfileInstance.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
                                     foreach (JToken databasesValue in ((JArray)databasesArray))
                                     {
                                         WebSiteGetPublishProfileResponse.Database addInstance = new WebSiteGetPublishProfileResponse.Database();
@@ -3525,6 +3548,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken usageMetricsArray = usagesValue;
                         if (usageMetricsArray != null && usageMetricsArray.Type != JTokenType.Null)
                         {
+                            usagesInstance.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
                             foreach (JToken usageMetricsValue in ((JArray)usageMetricsArray))
                             {
                                 WebSiteGetUsageMetricsResponse.UsageMetric usageInstance = new WebSiteGetUsageMetricsResponse.UsageMetric();
@@ -3723,6 +3747,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken webSitesArray = responseDoc;
                         if (webSitesArray != null && webSitesArray.Type != JTokenType.Null)
                         {
+                            result.WebSites = new List<WebSite>();
                             foreach (JToken webSitesValue in ((JArray)webSitesArray))
                             {
                                 WebSite webSiteInstance = new WebSite();
@@ -3758,6 +3783,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken enabledHostNamesArray = propertiesValue["enabledHostNames"];
                                     if (enabledHostNamesArray != null && enabledHostNamesArray.Type != JTokenType.Null)
                                     {
+                                        propertiesInstance.EnabledHostNames = new List<string>();
                                         foreach (JToken enabledHostNamesValue in ((JArray)enabledHostNamesArray))
                                         {
                                             propertiesInstance.EnabledHostNames.Add(((string)enabledHostNamesValue));
@@ -3767,6 +3793,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken hostNameSslStatesArray = propertiesValue["hostNameSslStates"];
                                     if (hostNameSslStatesArray != null && hostNameSslStatesArray.Type != JTokenType.Null)
                                     {
+                                        propertiesInstance.HostNameSslStates = new List<WebSiteProperties.WebSiteHostNameSslState>();
                                         foreach (JToken hostNameSslStatesValue in ((JArray)hostNameSslStatesArray))
                                         {
                                             WebSiteProperties.WebSiteHostNameSslState webSiteHostNameSslStateInstance = new WebSiteProperties.WebSiteHostNameSslState();
@@ -3826,6 +3853,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken hostNamesArray = propertiesValue["hostNames"];
                                     if (hostNamesArray != null && hostNamesArray.Type != JTokenType.Null)
                                     {
+                                        propertiesInstance.HostNames = new List<string>();
                                         foreach (JToken hostNamesValue in ((JArray)hostNamesArray))
                                         {
                                             propertiesInstance.HostNames.Add(((string)hostNamesValue));
@@ -3856,6 +3884,7 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken trafficManagerHostNamesArray = propertiesValue["trafficManagerHostNames"];
                                     if (trafficManagerHostNamesArray != null && trafficManagerHostNamesArray.Type != JTokenType.Null)
                                     {
+                                        propertiesInstance.TrafficManagerHostNames = new List<string>();
                                         foreach (JToken trafficManagerHostNamesValue in ((JArray)trafficManagerHostNamesArray))
                                         {
                                             propertiesInstance.TrafficManagerHostNames.Add(((string)trafficManagerHostNamesValue));
@@ -3892,6 +3921,7 @@ namespace Microsoft.Azure.Management.WebSites
                                         JToken appSettingsSequenceElement = ((JToken)sitePropertiesValue["appSettings"]);
                                         if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
                                         {
+                                            sitePropertiesInstance.AppSettings = new Dictionary<string, string>();
                                             foreach (JProperty property in appSettingsSequenceElement)
                                             {
                                                 string appSettingsKey = ((string)property.Name);
@@ -3903,6 +3933,7 @@ namespace Microsoft.Azure.Management.WebSites
                                         JToken metadataSequenceElement = ((JToken)sitePropertiesValue["metadata"]);
                                         if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
                                         {
+                                            sitePropertiesInstance.Metadata = new Dictionary<string, string>();
                                             foreach (JProperty property2 in metadataSequenceElement)
                                             {
                                                 string metadataKey = ((string)property2.Name);
@@ -3914,6 +3945,7 @@ namespace Microsoft.Azure.Management.WebSites
                                         JToken propertiesSequenceElement = ((JToken)sitePropertiesValue["properties"]);
                                         if (propertiesSequenceElement != null && propertiesSequenceElement.Type != JTokenType.Null)
                                         {
+                                            sitePropertiesInstance.Properties = new Dictionary<string, string>();
                                             foreach (JProperty property3 in propertiesSequenceElement)
                                             {
                                                 string propertiesKey = ((string)property3.Name);
@@ -3976,6 +4008,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken tagsSequenceElement = ((JToken)webSitesValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    webSiteInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property4 in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property4.Name);
@@ -4132,6 +4165,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken propertiesArray = responseDoc["properties"];
                         if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
+                            backupListInstance.Properties = new List<BackupItem>();
                             foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 BackupItem backupItemInstance = new BackupItem();
@@ -4189,6 +4223,7 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken databasesArray = propertiesValue["databases"];
                                 if (databasesArray != null && databasesArray.Type != JTokenType.Null)
                                 {
+                                    backupItemInstance.Databases = new List<DatabaseBackupSetting>();
                                     foreach (JToken databasesValue in ((JArray)databasesArray))
                                     {
                                         DatabaseBackupSetting databaseBackupSettingInstance = new DatabaseBackupSetting();
@@ -4278,6 +4313,7 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            backupListInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -4547,10 +4583,10 @@ namespace Microsoft.Azure.Management.WebSites
                         propertiesValue["BlobName"] = restoreRequestEnvelope.Request.BlobName;
                     }
                     
-                    if (restoreRequestEnvelope.Request.Databases != null)
+                    if (restoreRequestEnvelope.Request.DatabasesValue != null)
                     {
                         JArray databasesArray = new JArray();
-                        foreach (DatabaseBackupSetting databasesItem in restoreRequestEnvelope.Request.Databases)
+                        foreach (DatabaseBackupSetting databasesItem in restoreRequestEnvelope.Request.DatabasesValue)
                         {
                             JObject databaseBackupSettingValue = new JObject();
                             databasesArray.Add(databaseBackupSettingValue);
@@ -4804,21 +4840,21 @@ namespace Microsoft.Azure.Management.WebSites
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime != null)
                         {
-                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime;
+                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime.Value;
                         }
                         
                         backupScheduleValue["retentionPeriodInDays"] = backupRequestEnvelope.Request.BackupSchedule.RetentionPeriodInDays;
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.StartTime != null)
                         {
-                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime;
+                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime.Value;
                         }
                     }
                     
-                    if (backupRequestEnvelope.Request.Databases != null)
+                    if (backupRequestEnvelope.Request.DatabasesValue != null)
                     {
                         JArray databasesArray = new JArray();
-                        foreach (DatabaseBackupSetting databasesItem in backupRequestEnvelope.Request.Databases)
+                        foreach (DatabaseBackupSetting databasesItem in backupRequestEnvelope.Request.DatabasesValue)
                         {
                             JObject databaseBackupSettingValue = new JObject();
                             databasesArray.Add(databaseBackupSettingValue);
@@ -4848,7 +4884,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (backupRequestEnvelope.Request.Enabled != null)
                     {
-                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled;
+                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled.Value;
                     }
                     
                     if (backupRequestEnvelope.Request.Name != null)
@@ -5039,9 +5075,9 @@ namespace Microsoft.Azure.Management.WebSites
                 requestDoc["siteConfig"] = siteConfigValue;
                 
                 JObject appSettingsDictionary = new JObject();
-                if (parameters.AppSettings != null)
+                if (parameters.AppSettingsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.AppSettings)
+                    foreach (KeyValuePair<string, string> pair in parameters.AppSettingsValue)
                     {
                         string appSettingsKey = pair.Key;
                         string appSettingsValue = pair.Value;
@@ -5050,10 +5086,10 @@ namespace Microsoft.Azure.Management.WebSites
                 }
                 siteConfigValue["appSettings"] = appSettingsDictionary;
                 
-                if (parameters.ConnectionStrings != null)
+                if (parameters.ConnectionStringsValue != null)
                 {
                     JArray connectionStringsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStrings)
+                    foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStringsValue)
                     {
                         JObject connStringInfoValue = new JObject();
                         connectionStringsArray.Add(connStringInfoValue);
@@ -5076,10 +5112,10 @@ namespace Microsoft.Azure.Management.WebSites
                     siteConfigValue["connectionStrings"] = connectionStringsArray;
                 }
                 
-                if (parameters.DefaultDocuments != null)
+                if (parameters.DefaultDocumentsValue != null)
                 {
                     JArray defaultDocumentsArray = new JArray();
-                    foreach (string defaultDocumentsItem in parameters.DefaultDocuments)
+                    foreach (string defaultDocumentsItem in parameters.DefaultDocumentsValue)
                     {
                         defaultDocumentsArray.Add(defaultDocumentsItem);
                     }
@@ -5088,7 +5124,7 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.DetailedErrorLoggingEnabled != null)
                 {
-                    siteConfigValue["detailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled;
+                    siteConfigValue["detailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled.Value;
                 }
                 
                 if (parameters.DocumentRoot != null)
@@ -5096,10 +5132,10 @@ namespace Microsoft.Azure.Management.WebSites
                     siteConfigValue["documentRoot"] = parameters.DocumentRoot;
                 }
                 
-                if (parameters.HandlerMappings != null)
+                if (parameters.HandlerMappingsValue != null)
                 {
                     JArray handlerMappingsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappings)
+                    foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappingsValue)
                     {
                         JObject handlerMappingValue = new JObject();
                         handlerMappingsArray.Add(handlerMappingValue);
@@ -5124,23 +5160,23 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.HttpLoggingEnabled != null)
                 {
-                    siteConfigValue["httpLoggingEnabled"] = parameters.HttpLoggingEnabled;
+                    siteConfigValue["httpLoggingEnabled"] = parameters.HttpLoggingEnabled.Value;
                 }
                 
                 if (parameters.LogsDirectorySizeLimit != null)
                 {
-                    siteConfigValue["logsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit;
+                    siteConfigValue["logsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit.Value;
                 }
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    siteConfigValue["managedPipelineMode"] = parameters.ManagedPipelineMode.ToString();
+                    siteConfigValue["managedPipelineMode"] = parameters.ManagedPipelineMode.Value.ToString();
                 }
                 
                 JObject metadataDictionary = new JObject();
-                if (parameters.Metadata != null)
+                if (parameters.MetadataValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair2 in parameters.Metadata)
+                    foreach (KeyValuePair<string, string> pair2 in parameters.MetadataValue)
                     {
                         string metadataKey = pair2.Key;
                         string metadataValue = pair2.Value;
@@ -5156,7 +5192,7 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.NumberOfWorkers != null)
                 {
-                    siteConfigValue["numberOfWorkers"] = parameters.NumberOfWorkers;
+                    siteConfigValue["numberOfWorkers"] = parameters.NumberOfWorkers.Value;
                 }
                 
                 if (parameters.PhpVersion != null)
@@ -5166,19 +5202,19 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.RemoteDebuggingEnabled != null)
                 {
-                    siteConfigValue["remoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled;
+                    siteConfigValue["remoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
                 }
                 
                 siteConfigValue["remoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
                 
                 if (parameters.RequestTracingEnabled != null)
                 {
-                    siteConfigValue["requestTracingEnabled"] = parameters.RequestTracingEnabled;
+                    siteConfigValue["requestTracingEnabled"] = parameters.RequestTracingEnabled.Value;
                 }
                 
                 if (parameters.RequestTracingExpirationTime != null)
                 {
-                    siteConfigValue["requestTracingExpirationTime"] = parameters.RequestTracingExpirationTime;
+                    siteConfigValue["requestTracingExpirationTime"] = parameters.RequestTracingExpirationTime.Value;
                 }
                 
                 if (parameters.ScmType != null)
@@ -5188,17 +5224,17 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.Use32BitWorkerProcess != null)
                 {
-                    siteConfigValue["use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess;
+                    siteConfigValue["use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess.Value;
                 }
                 
                 if (parameters.WebSocketsEnabled != null)
                 {
-                    siteConfigValue["webSocketsEnabled"] = parameters.WebSocketsEnabled;
+                    siteConfigValue["webSocketsEnabled"] = parameters.WebSocketsEnabled.Value;
                 }
                 
                 if (parameters.AlwaysOn != null)
                 {
-                    siteConfigValue["alwaysOn"] = parameters.AlwaysOn;
+                    siteConfigValue["alwaysOn"] = parameters.AlwaysOn.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

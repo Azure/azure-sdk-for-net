@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<GatewayListSupportedDevicesResponse.Vendor> Vendors
         {
+            get
+            {
+                if (this._vendors == null)
+                {
+                    this._vendors = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.GatewayListSupportedDevicesResponse.Vendor>();
+                }
+                return this._vendors;
+            }
+            set { this._vendors = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The set of supported vendors.
+        /// </summary>
+        public IList<GatewayListSupportedDevicesResponse.Vendor> VendorsValue
+        {
             get { return this._vendors; }
             set { this._vendors = value; }
         }
@@ -60,7 +76,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public GatewayListSupportedDevicesResponse()
         {
-            this.Vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
         }
         
         public partial class OSFamily
@@ -107,6 +122,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.OSFamily> OSFamilies
             {
+                get
+                {
+                    if (this._oSFamilies == null)
+                    {
+                        this._oSFamilies = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.GatewayListSupportedDevicesResponse.OSFamily>();
+                    }
+                    return this._oSFamilies;
+                }
+                set { this._oSFamilies = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The supported OS families for this platform.
+            /// </summary>
+            public IList<GatewayListSupportedDevicesResponse.OSFamily> OSFamiliesValue
+            {
                 get { return this._oSFamilies; }
                 set { this._oSFamilies = value; }
             }
@@ -116,7 +147,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Platform()
             {
-                this.OSFamilies = new List<GatewayListSupportedDevicesResponse.OSFamily>();
             }
         }
         
@@ -143,6 +173,22 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public IList<GatewayListSupportedDevicesResponse.Platform> Platforms
             {
+                get
+                {
+                    if (this._platforms == null)
+                    {
+                        this._platforms = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.GatewayListSupportedDevicesResponse.Platform>();
+                    }
+                    return this._platforms;
+                }
+                set { this._platforms = value; }
+            }
+            
+            /// <summary>
+            /// Optional. The supported platforms for the vendor.
+            /// </summary>
+            public IList<GatewayListSupportedDevicesResponse.Platform> PlatformsValue
+            {
                 get { return this._platforms; }
                 set { this._platforms = value; }
             }
@@ -152,7 +198,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             /// </summary>
             public Vendor()
             {
-                this.Platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
             }
         }
     }

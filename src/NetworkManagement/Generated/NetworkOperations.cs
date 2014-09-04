@@ -412,6 +412,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement virtualNetworkSitesSequenceElement = responseDoc.Element(XName.Get("VirtualNetworkSites", "http://schemas.microsoft.com/windowsazure"));
                     if (virtualNetworkSitesSequenceElement != null)
                     {
+                        result.VirtualNetworkSites = new List<NetworkListResponse.VirtualNetworkSite>();
                         foreach (XElement virtualNetworkSitesElement in virtualNetworkSitesSequenceElement.Elements(XName.Get("VirtualNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                         {
                             NetworkListResponse.VirtualNetworkSite virtualNetworkSiteInstance = new NetworkListResponse.VirtualNetworkSite();
@@ -461,6 +462,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement addressPrefixesSequenceElement = addressSpaceElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
                                 if (addressPrefixesSequenceElement != null)
                                 {
+                                    addressSpaceInstance.AddressPrefixes = new List<string>();
                                     foreach (XElement addressPrefixesElement in addressPrefixesSequenceElement.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         addressSpaceInstance.AddressPrefixes.Add(addressPrefixesElement.Value);
@@ -471,6 +473,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                             XElement subnetsSequenceElement = virtualNetworkSitesElement.Element(XName.Get("Subnets", "http://schemas.microsoft.com/windowsazure"));
                             if (subnetsSequenceElement != null)
                             {
+                                virtualNetworkSiteInstance.Subnets = new List<NetworkListResponse.Subnet>();
                                 foreach (XElement subnetsElement in subnetsSequenceElement.Elements(XName.Get("Subnet", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     NetworkListResponse.Subnet subnetInstance = new NetworkListResponse.Subnet();
@@ -498,6 +501,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
                                 if (dnsServersSequenceElement != null)
                                 {
+                                    virtualNetworkSiteInstance.DnsServers = new List<NetworkListResponse.DnsServer>();
                                     foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         NetworkListResponse.DnsServer dnsServerInstance = new NetworkListResponse.DnsServer();
@@ -536,6 +540,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 XElement sitesSequenceElement = gatewayElement.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
                                 if (sitesSequenceElement != null)
                                 {
+                                    gatewayInstance.Sites = new List<NetworkListResponse.LocalNetworkSite>();
                                     foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("LocalNetworkSite", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         NetworkListResponse.LocalNetworkSite localNetworkSiteInstance = new NetworkListResponse.LocalNetworkSite();
@@ -564,6 +569,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                             XElement addressPrefixesSequenceElement2 = addressSpaceElement2.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
                                             if (addressPrefixesSequenceElement2 != null)
                                             {
+                                                addressSpaceInstance2.AddressPrefixes = new List<string>();
                                                 foreach (XElement addressPrefixesElement2 in addressPrefixesSequenceElement2.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     addressSpaceInstance2.AddressPrefixes.Add(addressPrefixesElement2.Value);
@@ -574,6 +580,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         XElement connectionsSequenceElement = sitesElement.Element(XName.Get("Connections", "http://schemas.microsoft.com/windowsazure"));
                                         if (connectionsSequenceElement != null)
                                         {
+                                            localNetworkSiteInstance.Connections = new List<NetworkListResponse.Connection>();
                                             foreach (XElement connectionsElement in connectionsSequenceElement.Elements(XName.Get("Connection", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 NetworkListResponse.Connection connectionInstance = new NetworkListResponse.Connection();
@@ -599,6 +606,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     XElement addressPrefixesSequenceElement3 = vPNClientAddressPoolElement.Element(XName.Get("AddressPrefixes", "http://schemas.microsoft.com/windowsazure"));
                                     if (addressPrefixesSequenceElement3 != null)
                                     {
+                                        vPNClientAddressPoolInstance.AddressPrefixes = new List<string>();
                                         foreach (XElement addressPrefixesElement3 in addressPrefixesSequenceElement3.Elements(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             vPNClientAddressPoolInstance.AddressPrefixes.Add(addressPrefixesElement3.Value);

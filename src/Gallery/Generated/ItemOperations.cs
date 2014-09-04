@@ -246,6 +246,7 @@ namespace Microsoft.Azure.Gallery
                             JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
                             if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
                             {
+                                definitionTemplatesInstance.DeploymentTemplateFileUrls = new Dictionary<string, string>();
                                 foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
                                 {
                                     string deploymentTemplateFileUrlsKey = ((string)property.Name);
@@ -258,6 +259,7 @@ namespace Microsoft.Azure.Gallery
                         JToken categoryIdsArray = responseDoc["categoryIds"];
                         if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
                         {
+                            itemInstance.CategoryIds = new List<string>();
                             foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
                             {
                                 itemInstance.CategoryIds.Add(((string)categoryIdsValue));
@@ -267,6 +269,7 @@ namespace Microsoft.Azure.Gallery
                         JToken screenshotUrlsArray = responseDoc["screenshotUrls"];
                         if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
                         {
+                            itemInstance.ScreenshotUrls = new List<string>();
                             foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
                             {
                                 itemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
@@ -276,6 +279,7 @@ namespace Microsoft.Azure.Gallery
                         JToken iconFileUrlsSequenceElement = ((JToken)responseDoc["iconFileUrls"]);
                         if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
                         {
+                            itemInstance.IconFileUrls = new Dictionary<string, string>();
                             foreach (JProperty property2 in iconFileUrlsSequenceElement)
                             {
                                 string iconFileUrlsKey = ((string)property2.Name);
@@ -424,6 +428,7 @@ namespace Microsoft.Azure.Gallery
                         JToken itemsArray = responseDoc;
                         if (itemsArray != null && itemsArray.Type != JTokenType.Null)
                         {
+                            result.Items = new List<GalleryItem>();
                             foreach (JToken itemsValue in ((JArray)itemsArray))
                             {
                                 GalleryItem galleryItemInstance = new GalleryItem();
@@ -515,6 +520,7 @@ namespace Microsoft.Azure.Gallery
                                     JToken deploymentTemplateFileUrlsSequenceElement = ((JToken)definitionTemplatesValue["deploymentTemplateFileUrls"]);
                                     if (deploymentTemplateFileUrlsSequenceElement != null && deploymentTemplateFileUrlsSequenceElement.Type != JTokenType.Null)
                                     {
+                                        definitionTemplatesInstance.DeploymentTemplateFileUrls = new Dictionary<string, string>();
                                         foreach (JProperty property in deploymentTemplateFileUrlsSequenceElement)
                                         {
                                             string deploymentTemplateFileUrlsKey = ((string)property.Name);
@@ -527,6 +533,7 @@ namespace Microsoft.Azure.Gallery
                                 JToken categoryIdsArray = itemsValue["categoryIds"];
                                 if (categoryIdsArray != null && categoryIdsArray.Type != JTokenType.Null)
                                 {
+                                    galleryItemInstance.CategoryIds = new List<string>();
                                     foreach (JToken categoryIdsValue in ((JArray)categoryIdsArray))
                                     {
                                         galleryItemInstance.CategoryIds.Add(((string)categoryIdsValue));
@@ -536,6 +543,7 @@ namespace Microsoft.Azure.Gallery
                                 JToken screenshotUrlsArray = itemsValue["screenshotUrls"];
                                 if (screenshotUrlsArray != null && screenshotUrlsArray.Type != JTokenType.Null)
                                 {
+                                    galleryItemInstance.ScreenshotUrls = new List<string>();
                                     foreach (JToken screenshotUrlsValue in ((JArray)screenshotUrlsArray))
                                     {
                                         galleryItemInstance.ScreenshotUrls.Add(((string)screenshotUrlsValue));
@@ -545,6 +553,7 @@ namespace Microsoft.Azure.Gallery
                                 JToken iconFileUrlsSequenceElement = ((JToken)itemsValue["iconFileUrls"]);
                                 if (iconFileUrlsSequenceElement != null && iconFileUrlsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    galleryItemInstance.IconFileUrls = new Dictionary<string, string>();
                                     foreach (JProperty property2 in iconFileUrlsSequenceElement)
                                     {
                                         string iconFileUrlsKey = ((string)property2.Name);

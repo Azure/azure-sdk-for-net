@@ -638,6 +638,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement crossConnectionsSequenceElement = responseDoc.Element(XName.Get("CrossConnections", "http://schemas.microsoft.com/windowsazure"));
                     if (crossConnectionsSequenceElement != null)
                     {
+                        result.CrossConnections = new List<AzureCrossConnection>();
                         foreach (XElement crossConnectionsElement in crossConnectionsSequenceElement.Elements(XName.Get("CrossConnection", "http://schemas.microsoft.com/windowsazure")))
                         {
                             AzureCrossConnection crossConnectionInstance = new AzureCrossConnection();

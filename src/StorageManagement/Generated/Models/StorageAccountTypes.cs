@@ -22,31 +22,22 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
+namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
-    public enum EndpointType
+    /// <summary>
+    /// Specifies whether the account supports locally-redundant storage,
+    /// geo-redundant storage, zone-redundant storage, or read access
+    /// geo-redundant storage. Possible values are:'Standard_LRS',
+    /// 'Standard_ZRS', 'Standard_GRS', and 'Standard_RAGRS'.
+    /// </summary>
+    public static partial class StorageAccountTypes
     {
-        /// <summary>
-        /// The type of Azure Cloud Services from the current subscription.
-        /// </summary>
-        CloudService = 0,
+        public const string StandardLRS = "Standard_LRS";
         
-        /// <summary>
-        /// The type of Azure Websites from the current subscription.
-        /// </summary>
-        AzureWebsite = 1,
+        public const string StandardZRS = "Standard_ZRS";
         
-        /// <summary>
-        /// The type of endpoints that can have any domain name (not
-        /// necessarily an Azure domain). Note that Azure Websites cannot be
-        /// entered as endpoints of type "Any".
-        /// </summary>
-        Any = 2,
+        public const string StandardGRS = "Standard_GRS";
         
-        /// <summary>
-        /// The type of endpoint that points to a Traffic Manager profile from
-        /// the current subscription.
-        /// </summary>
-        TrafficManager = 3,
+        public const string StandardRAGRS = "Standard_RAGRS";
     }
 }

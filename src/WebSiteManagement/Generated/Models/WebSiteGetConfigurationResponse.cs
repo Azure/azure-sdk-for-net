@@ -51,6 +51,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IDictionary<string, string> AppSettings
         {
+            get
+            {
+                if (this._appSettings == null)
+                {
+                    this._appSettings = new System.Collections.Generic.Dictionary<string, string>();
+                }
+                return this._appSettings;
+            }
+            set { this._appSettings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A set of name/value pairs that contain application
+        /// settings for a web site.
+        /// </summary>
+        public IDictionary<string, string> AppSettingsValue
+        {
             get { return this._appSettings; }
             set { this._appSettings = value; }
         }
@@ -62,6 +79,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// resources.
         /// </summary>
         public IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> ConnectionStrings
+        {
+            get
+            {
+                if (this._connectionStrings == null)
+                {
+                    this._connectionStrings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetConfigurationResponse.ConnectionStringInfo>();
+                }
+                return this._connectionStrings;
+            }
+            set { this._connectionStrings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The connection strings for database and other external
+        /// resources.
+        /// </summary>
+        public IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> ConnectionStringsValue
         {
             get { return this._connectionStrings; }
             set { this._connectionStrings = value; }
@@ -78,6 +112,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// pointed to http://www.contoso.com.
         /// </summary>
         public IList<string> DefaultDocuments
+        {
+            get
+            {
+                if (this._defaultDocuments == null)
+                {
+                    this._defaultDocuments = new System.Collections.Generic.List<string>();
+                }
+                return this._defaultDocuments;
+            }
+            set { this._defaultDocuments = value; }
+        }
+        
+        /// <summary>
+        /// Optional. One or more string elements that list, in order of
+        /// preference, the name of the file that a web site returns when the
+        /// web site's domain name is requested by itself. For example, if the
+        /// default document for http://contoso.com is default.htm, the page
+        /// http://www.contoso.com/default.htm is returned when the browser is
+        /// pointed to http://www.contoso.com.
+        /// </summary>
+        public IList<string> DefaultDocumentsValue
         {
             get { return this._defaultDocuments; }
             set { this._defaultDocuments = value; }
@@ -112,6 +167,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// requests for specific file name extensions.
         /// </summary>
         public IList<WebSiteGetConfigurationResponse.HandlerMapping> HandlerMappings
+        {
+            get
+            {
+                if (this._handlerMappings == null)
+                {
+                    this._handlerMappings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetConfigurationResponse.HandlerMapping>();
+                }
+                return this._handlerMappings;
+            }
+            set { this._handlerMappings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies custom executable programs for handling
+        /// requests for specific file name extensions.
+        /// </summary>
+        public IList<WebSiteGetConfigurationResponse.HandlerMapping> HandlerMappingsValue
         {
             get { return this._handlerMappings; }
             set { this._handlerMappings = value; }
@@ -156,6 +228,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// Optional. Name/value pairs for source control or other information.
         /// </summary>
         public IDictionary<string, string> Metadata
+        {
+            get
+            {
+                if (this._metadata == null)
+                {
+                    this._metadata = new System.Collections.Generic.Dictionary<string, string>();
+                }
+                return this._metadata;
+            }
+            set { this._metadata = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Name/value pairs for source control or other information.
+        /// </summary>
+        public IDictionary<string, string> MetadataValue
         {
             get { return this._metadata; }
             set { this._metadata = value; }
@@ -275,6 +363,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<RoutingRule> RoutingRules
         {
+            get
+            {
+                if (this._routingRules == null)
+                {
+                    this._routingRules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.RoutingRule>();
+                }
+                return this._routingRules;
+            }
+            set { this._routingRules = value; }
+        }
+        
+        /// <summary>
+        /// Optional. List of routing rules for the website.
+        /// </summary>
+        public IList<RoutingRule> RoutingRulesValue
+        {
             get { return this._routingRules; }
             set { this._routingRules = value; }
         }
@@ -320,12 +424,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetConfigurationResponse()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
-            this.RoutingRules = new List<RoutingRule>();
         }
         
         /// <summary>

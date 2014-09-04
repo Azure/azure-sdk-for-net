@@ -41,6 +41,23 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<ServiceObjective> ServiceObjectives
         {
+            get
+            {
+                if (this._serviceObjectives == null)
+                {
+                    this._serviceObjectives = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.ServiceObjective>();
+                }
+                return this._serviceObjectives;
+            }
+            set { this._serviceObjectives = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets list of all of the Service Objectives that
+        /// exist in an Azure SQL Database Server.
+        /// </summary>
+        public IList<ServiceObjective> ServiceObjectivesValue
+        {
             get { return this._serviceObjectives; }
             set { this._serviceObjectives = value; }
         }
@@ -51,7 +68,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjectiveListResponse()
         {
-            this.ServiceObjectives = new List<ServiceObjective>();
         }
         
         /// <summary>
@@ -59,7 +75,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<ServiceObjective> GetEnumerator()
         {
-            return this.ServiceObjectives.GetEnumerator();
+            return this.ServiceObjectivesValue.GetEnumerator();
         }
         
         /// <summary>

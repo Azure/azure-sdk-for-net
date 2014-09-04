@@ -39,6 +39,22 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<RunbookVersion> RunbookVersions
         {
+            get
+            {
+                if (this._runbookVersions == null)
+                {
+                    this._runbookVersions = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.RunbookVersion>();
+                }
+                return this._runbookVersions;
+            }
+            set { this._runbookVersions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A list of runbook versions.
+        /// </summary>
+        public IList<RunbookVersion> RunbookVersionsValue
+        {
             get { return this._runbookVersions; }
             set { this._runbookVersions = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookVersionListResponse()
         {
-            this.RunbookVersions = new List<RunbookVersion>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IEnumerator<RunbookVersion> GetEnumerator()
         {
-            return this.RunbookVersions.GetEnumerator();
+            return this.RunbookVersionsValue.GetEnumerator();
         }
         
         /// <summary>

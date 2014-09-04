@@ -38,6 +38,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<string> PropertiesToInclude
         {
+            get
+            {
+                if (this._propertiesToInclude == null)
+                {
+                    this._propertiesToInclude = new List<string>();
+                }
+                return this._propertiesToInclude;
+            }
+            set { this._propertiesToInclude = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies a list of the names of any additional
+        /// parameters to return.
+        /// </summary>
+        public IList<string> PropertiesToIncludeValue
+        {
             get { return this._propertiesToInclude; }
             set { this._propertiesToInclude = value; }
         }
@@ -47,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetParameters()
         {
-            this.PropertiesToInclude = new List<string>();
         }
     }
 }

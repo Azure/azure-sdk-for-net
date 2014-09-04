@@ -336,6 +336,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
+                        result.Quotas = new List<Quota>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             Quota serviceResourceInstance = new Quota();

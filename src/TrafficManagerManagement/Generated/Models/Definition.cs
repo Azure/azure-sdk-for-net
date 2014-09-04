@@ -49,6 +49,22 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<DefinitionMonitor> Monitors
         {
+            get
+            {
+                if (this._monitors == null)
+                {
+                    this._monitors = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.TrafficManager.Models.DefinitionMonitor>();
+                }
+                return this._monitors;
+            }
+            set { this._monitors = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The list of Endpoint monitoring configurations.
+        /// </summary>
+        public IList<DefinitionMonitor> MonitorsValue
+        {
             get { return this._monitors; }
             set { this._monitors = value; }
         }
@@ -93,7 +109,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public Definition()
         {
-            this.Monitors = new List<DefinitionMonitor>();
         }
     }
 }

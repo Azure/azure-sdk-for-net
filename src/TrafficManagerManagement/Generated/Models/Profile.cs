@@ -39,6 +39,23 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<DefinitionStatusAndVersion> Definitions
         {
+            get
+            {
+                if (this._definitions == null)
+                {
+                    this._definitions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.TrafficManager.Models.DefinitionStatusAndVersion>();
+                }
+                return this._definitions;
+            }
+            set { this._definitions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Specifies the definition for the specified profile, along
+        /// with the status. Only one definition version exists for a profile.
+        /// </summary>
+        public IList<DefinitionStatusAndVersion> DefinitionsValue
+        {
             get { return this._definitions; }
             set { this._definitions = value; }
         }
@@ -95,7 +112,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public Profile()
         {
-            this.Definitions = new List<DefinitionStatusAndVersion>();
         }
     }
 }

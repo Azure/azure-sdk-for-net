@@ -119,37 +119,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                if (parameters.ExtensionConfiguration.AllRoles != null)
+                if (parameters.ExtensionConfiguration.AllRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRolesValue)
                     {
                         if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRolesValue.Id");
                         }
                     }
                 }
-                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRolesValue)
                     {
-                        if (namedRolesParameterItem.Extensions == null)
+                        if (namedRolesParameterItem.ExtensionsValue == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue");
                         }
-                        if (namedRolesParameterItem.Extensions != null)
+                        if (namedRolesParameterItem.ExtensionsValue != null)
                         {
-                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.ExtensionsValue)
                             {
                                 if (extensionsParameterItem.Id == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue.Id");
                                 }
                             }
                         }
                         if (namedRolesParameterItem.RoleName == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.RoleName");
                         }
                     }
                 }
@@ -223,10 +223,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     changeConfigurationElement.Add(modeElement);
                 }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -249,10 +249,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionConfigurationElement = new XElement(XName.Get("ExtensionConfiguration", "http://schemas.microsoft.com/windowsazure"));
                     changeConfigurationElement.Add(extensionConfigurationElement);
                     
-                    if (parameters.ExtensionConfiguration.AllRoles != null)
+                    if (parameters.ExtensionConfiguration.AllRolesValue != null)
                     {
                         XElement allRolesSequenceElement = new XElement(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRoles)
+                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRolesValue)
                         {
                             XElement extensionElement = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                             allRolesSequenceElement.Add(extensionElement);
@@ -264,10 +264,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         extensionConfigurationElement.Add(allRolesSequenceElement);
                     }
                     
-                    if (parameters.ExtensionConfiguration.NamedRoles != null)
+                    if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                     {
                         XElement namedRolesSequenceElement = new XElement(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRoles)
+                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRolesValue)
                         {
                             XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                             namedRolesSequenceElement.Add(roleElement);
@@ -277,7 +277,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleNameElement);
                             
                             XElement extensionsSequenceElement = new XElement(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.ExtensionsValue)
                             {
                                 XElement extensionElement2 = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                                 extensionsSequenceElement.Add(extensionElement2);
@@ -401,37 +401,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                if (parameters.ExtensionConfiguration.AllRoles != null)
+                if (parameters.ExtensionConfiguration.AllRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRolesValue)
                     {
                         if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRolesValue.Id");
                         }
                     }
                 }
-                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRolesValue)
                     {
-                        if (namedRolesParameterItem.Extensions == null)
+                        if (namedRolesParameterItem.ExtensionsValue == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue");
                         }
-                        if (namedRolesParameterItem.Extensions != null)
+                        if (namedRolesParameterItem.ExtensionsValue != null)
                         {
-                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.ExtensionsValue)
                             {
                                 if (extensionsParameterItem.Id == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue.Id");
                                 }
                             }
                         }
                         if (namedRolesParameterItem.RoleName == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.RoleName");
                         }
                     }
                 }
@@ -505,10 +505,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     changeConfigurationElement.Add(modeElement);
                 }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -531,10 +531,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionConfigurationElement = new XElement(XName.Get("ExtensionConfiguration", "http://schemas.microsoft.com/windowsazure"));
                     changeConfigurationElement.Add(extensionConfigurationElement);
                     
-                    if (parameters.ExtensionConfiguration.AllRoles != null)
+                    if (parameters.ExtensionConfiguration.AllRolesValue != null)
                     {
                         XElement allRolesSequenceElement = new XElement(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRoles)
+                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRolesValue)
                         {
                             XElement extensionElement = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                             allRolesSequenceElement.Add(extensionElement);
@@ -546,10 +546,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         extensionConfigurationElement.Add(allRolesSequenceElement);
                     }
                     
-                    if (parameters.ExtensionConfiguration.NamedRoles != null)
+                    if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                     {
                         XElement namedRolesSequenceElement = new XElement(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRoles)
+                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRolesValue)
                         {
                             XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                             namedRolesSequenceElement.Add(roleElement);
@@ -559,7 +559,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleNameElement);
                             
                             XElement extensionsSequenceElement = new XElement(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.ExtensionsValue)
                             {
                                 XElement extensionElement2 = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                                 extensionsSequenceElement.Add(extensionElement2);
@@ -684,37 +684,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                if (parameters.ExtensionConfiguration.AllRoles != null)
+                if (parameters.ExtensionConfiguration.AllRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRolesValue)
                     {
                         if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRolesValue.Id");
                         }
                     }
                 }
-                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRolesValue)
                     {
-                        if (namedRolesParameterItem.Extensions == null)
+                        if (namedRolesParameterItem.ExtensionsValue == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue");
                         }
-                        if (namedRolesParameterItem.Extensions != null)
+                        if (namedRolesParameterItem.ExtensionsValue != null)
                         {
-                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.ExtensionsValue)
                             {
                                 if (extensionsParameterItem.Id == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue.Id");
                                 }
                             }
                         }
                         if (namedRolesParameterItem.RoleName == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.RoleName");
                         }
                     }
                 }
@@ -816,10 +816,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     createDeploymentElement.Add(treatWarningsAsErrorElement);
                 }
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -842,10 +842,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionConfigurationElement = new XElement(XName.Get("ExtensionConfiguration", "http://schemas.microsoft.com/windowsazure"));
                     createDeploymentElement.Add(extensionConfigurationElement);
                     
-                    if (parameters.ExtensionConfiguration.AllRoles != null)
+                    if (parameters.ExtensionConfiguration.AllRolesValue != null)
                     {
                         XElement allRolesSequenceElement = new XElement(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRoles)
+                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRolesValue)
                         {
                             XElement extensionElement = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                             allRolesSequenceElement.Add(extensionElement);
@@ -857,10 +857,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         extensionConfigurationElement.Add(allRolesSequenceElement);
                     }
                     
-                    if (parameters.ExtensionConfiguration.NamedRoles != null)
+                    if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                     {
                         XElement namedRolesSequenceElement = new XElement(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRoles)
+                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRolesValue)
                         {
                             XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                             namedRolesSequenceElement.Add(roleElement);
@@ -870,7 +870,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleNameElement);
                             
                             XElement extensionsSequenceElement = new XElement(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.ExtensionsValue)
                             {
                                 XElement extensionElement2 = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                                 extensionsSequenceElement.Add(extensionElement2);
@@ -1311,10 +1311,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                if (parameters.Name != null)
+                if (parameters.NameValue != null)
                 {
                     XElement roleInstancesSequenceElement = new XElement(XName.Get("RoleInstances", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string roleInstancesItem in parameters.Name)
+                    foreach (string roleInstancesItem in parameters.NameValue)
                     {
                         XElement roleInstancesItemElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         roleInstancesItemElement.Value = roleInstancesItem;
@@ -1470,10 +1470,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                if (parameters.Name != null)
+                if (parameters.NameValue != null)
                 {
                     XElement roleInstancesSequenceElement = new XElement(XName.Get("RoleInstances", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string roleInstancesItem in parameters.Name)
+                    foreach (string roleInstancesItem in parameters.NameValue)
                     {
                         XElement roleInstancesItemElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         roleInstancesItemElement.Value = roleInstancesItem;
@@ -2050,6 +2050,320 @@ namespace Microsoft.WindowsAzure.Management.Compute
             
             // Construct URL
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deploymentslots/" + deploymentSlot + "/roleinstances/" + roleInstanceName.Trim() + "?comp=reboot";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException("roleInstanceName");
+            }
+            if (resources == null)
+            {
+                throw new ArgumentNullException("resources");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "BeginRebuildingRoleInstanceByDeploymentNameAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roleinstances/" + roleInstanceName.Trim() + "?";
+            url = url + "comp=rebuild";
+            url = url + "&resources=" + Uri.EscapeDataString(resources.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentSlot == null)
+            {
+                throw new ArgumentNullException("deploymentSlot");
+            }
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException("roleInstanceName");
+            }
+            if (resources == null)
+            {
+                throw new ArgumentNullException("resources");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentSlot", deploymentSlot);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "BeginRebuildingRoleInstanceByDeploymentSlotAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deploymentslots/" + deploymentSlot.Trim() + "/roleinstances/" + roleInstanceName.Trim() + "?";
+            url = url + "comp=rebuild";
+            url = url + "&resources=" + Uri.EscapeDataString(resources.Trim());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -2989,37 +3303,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                if (parameters.ExtensionConfiguration.AllRoles != null)
+                if (parameters.ExtensionConfiguration.AllRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRolesValue)
                     {
                         if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRolesValue.Id");
                         }
                     }
                 }
-                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRolesValue)
                     {
-                        if (namedRolesParameterItem.Extensions == null)
+                        if (namedRolesParameterItem.ExtensionsValue == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue");
                         }
-                        if (namedRolesParameterItem.Extensions != null)
+                        if (namedRolesParameterItem.ExtensionsValue != null)
                         {
-                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.ExtensionsValue)
                             {
                                 if (extensionsParameterItem.Id == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue.Id");
                                 }
                             }
                         }
                         if (namedRolesParameterItem.RoleName == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.RoleName");
                         }
                     }
                 }
@@ -3114,10 +3428,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 forceElement.Value = parameters.Force.ToString().ToLower();
                 upgradeDeploymentElement.Add(forceElement);
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -3140,10 +3454,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionConfigurationElement = new XElement(XName.Get("ExtensionConfiguration", "http://schemas.microsoft.com/windowsazure"));
                     upgradeDeploymentElement.Add(extensionConfigurationElement);
                     
-                    if (parameters.ExtensionConfiguration.AllRoles != null)
+                    if (parameters.ExtensionConfiguration.AllRolesValue != null)
                     {
                         XElement allRolesSequenceElement = new XElement(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRoles)
+                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRolesValue)
                         {
                             XElement extensionElement = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                             allRolesSequenceElement.Add(extensionElement);
@@ -3155,10 +3469,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         extensionConfigurationElement.Add(allRolesSequenceElement);
                     }
                     
-                    if (parameters.ExtensionConfiguration.NamedRoles != null)
+                    if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                     {
                         XElement namedRolesSequenceElement = new XElement(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRoles)
+                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRolesValue)
                         {
                             XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                             namedRolesSequenceElement.Add(roleElement);
@@ -3168,7 +3482,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleNameElement);
                             
                             XElement extensionsSequenceElement = new XElement(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.ExtensionsValue)
                             {
                                 XElement extensionElement2 = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                                 extensionsSequenceElement.Add(extensionElement2);
@@ -3318,37 +3632,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
             }
             if (parameters.ExtensionConfiguration != null)
             {
-                if (parameters.ExtensionConfiguration.AllRoles != null)
+                if (parameters.ExtensionConfiguration.AllRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRoles)
+                    foreach (ExtensionConfiguration.Extension allRolesParameterItem in parameters.ExtensionConfiguration.AllRolesValue)
                     {
                         if (allRolesParameterItem.Id == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRoles.Id");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.AllRolesValue.Id");
                         }
                     }
                 }
-                if (parameters.ExtensionConfiguration.NamedRoles != null)
+                if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                 {
-                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRoles)
+                    foreach (ExtensionConfiguration.NamedRole namedRolesParameterItem in parameters.ExtensionConfiguration.NamedRolesValue)
                     {
-                        if (namedRolesParameterItem.Extensions == null)
+                        if (namedRolesParameterItem.ExtensionsValue == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue");
                         }
-                        if (namedRolesParameterItem.Extensions != null)
+                        if (namedRolesParameterItem.ExtensionsValue != null)
                         {
-                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsParameterItem in namedRolesParameterItem.ExtensionsValue)
                             {
                                 if (extensionsParameterItem.Id == null)
                                 {
-                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.Extensions.Id");
+                                    throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.ExtensionsValue.Id");
                                 }
                             }
                         }
                         if (namedRolesParameterItem.RoleName == null)
                         {
-                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRoles.RoleName");
+                            throw new ArgumentNullException("parameters.ExtensionConfiguration.NamedRolesValue.RoleName");
                         }
                     }
                 }
@@ -3443,10 +3757,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 forceElement.Value = parameters.Force.ToString().ToLower();
                 upgradeDeploymentElement.Add(forceElement);
                 
-                if (parameters.ExtendedProperties != null)
+                if (parameters.ExtendedPropertiesValue != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -3469,10 +3783,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement extensionConfigurationElement = new XElement(XName.Get("ExtensionConfiguration", "http://schemas.microsoft.com/windowsazure"));
                     upgradeDeploymentElement.Add(extensionConfigurationElement);
                     
-                    if (parameters.ExtensionConfiguration.AllRoles != null)
+                    if (parameters.ExtensionConfiguration.AllRolesValue != null)
                     {
                         XElement allRolesSequenceElement = new XElement(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRoles)
+                        foreach (ExtensionConfiguration.Extension allRolesItem in parameters.ExtensionConfiguration.AllRolesValue)
                         {
                             XElement extensionElement = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                             allRolesSequenceElement.Add(extensionElement);
@@ -3484,10 +3798,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         extensionConfigurationElement.Add(allRolesSequenceElement);
                     }
                     
-                    if (parameters.ExtensionConfiguration.NamedRoles != null)
+                    if (parameters.ExtensionConfiguration.NamedRolesValue != null)
                     {
                         XElement namedRolesSequenceElement = new XElement(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRoles)
+                        foreach (ExtensionConfiguration.NamedRole namedRolesItem in parameters.ExtensionConfiguration.NamedRolesValue)
                         {
                             XElement roleElement = new XElement(XName.Get("Role", "http://schemas.microsoft.com/windowsazure"));
                             namedRolesSequenceElement.Add(roleElement);
@@ -3497,7 +3811,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             roleElement.Add(roleNameElement);
                             
                             XElement extensionsSequenceElement = new XElement(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
-                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.Extensions)
+                            foreach (ExtensionConfiguration.Extension extensionsItem in namedRolesItem.ExtensionsValue)
                             {
                                 XElement extensionElement2 = new XElement(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure"));
                                 extensionsSequenceElement.Add(extensionElement2);
@@ -4691,11 +5005,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.Deployments.DeleteRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Deployments.BeginDeletingRoleInstanceByBeploymentSlotAsync(serviceName, deploymentSlot, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -4917,6 +5227,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleInstanceListSequenceElement = deploymentElement.Element(XName.Get("RoleInstanceList", "http://schemas.microsoft.com/windowsazure"));
                         if (roleInstanceListSequenceElement != null)
                         {
+                            result.RoleInstances = new List<RoleInstance>();
                             foreach (XElement roleInstanceListElement in roleInstanceListSequenceElement.Elements(XName.Get("RoleInstance", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 RoleInstance roleInstanceInstance = new RoleInstance();
@@ -4988,6 +5299,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement instanceEndpointsSequenceElement = roleInstanceListElement.Element(XName.Get("InstanceEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (instanceEndpointsSequenceElement != null)
                                 {
+                                    roleInstanceInstance.InstanceEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InstanceEndpoint>();
                                     foreach (XElement instanceEndpointsElement in instanceEndpointsSequenceElement.Elements(XName.Get("InstanceEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         InstanceEndpoint instanceEndpointInstance = new InstanceEndpoint();
@@ -5094,6 +5406,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement paramListSequenceElement = messageElement.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                         if (paramListSequenceElement != null)
                                         {
+                                            messageInstance.ParamList = new System.Collections.Generic.List<string>();
                                             foreach (XElement paramListElement in paramListSequenceElement.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 messageInstance.ParamList.Add(paramListElement.Value);
@@ -5126,6 +5439,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement resourceExtensionStatusListSequenceElement = roleInstanceListElement.Element(XName.Get("ResourceExtensionStatusList", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceExtensionStatusListSequenceElement != null)
                                 {
+                                    roleInstanceInstance.ResourceExtensionStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionStatus>();
                                     foreach (XElement resourceExtensionStatusListElement in resourceExtensionStatusListSequenceElement.Elements(XName.Get("ResourceExtensionStatus", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ResourceExtensionStatus resourceExtensionStatusInstance = new ResourceExtensionStatus();
@@ -5175,6 +5489,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement paramListSequenceElement2 = messageElement3.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                             if (paramListSequenceElement2 != null)
                                             {
+                                                messageInstance3.ParamList = new System.Collections.Generic.List<string>();
                                                 foreach (XElement paramListElement2 in paramListSequenceElement2.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     messageInstance3.ParamList.Add(paramListElement2.Value);
@@ -5267,6 +5582,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement paramListSequenceElement3 = messageElement5.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                 if (paramListSequenceElement3 != null)
                                                 {
+                                                    messageInstance5.ParamList = new System.Collections.Generic.List<string>();
                                                     foreach (XElement paramListElement3 in paramListSequenceElement3.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         messageInstance5.ParamList.Add(paramListElement3.Value);
@@ -5298,6 +5614,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement subStatusListSequenceElement = extensionSettingStatusElement.Element(XName.Get("SubStatusList", "http://schemas.microsoft.com/windowsazure"));
                                             if (subStatusListSequenceElement != null)
                                             {
+                                                extensionSettingStatusInstance.SubStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionSubStatus>();
                                                 foreach (XElement subStatusListElement in subStatusListSequenceElement.Elements(XName.Get("SubStatus", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     ResourceExtensionSubStatus subStatusInstance = new ResourceExtensionSubStatus();
@@ -5340,6 +5657,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         XElement paramListSequenceElement4 = messageElement7.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                         if (paramListSequenceElement4 != null)
                                                         {
+                                                            messageInstance7.ParamList = new System.Collections.Generic.List<string>();
                                                             foreach (XElement paramListElement4 in paramListSequenceElement4.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                             {
                                                                 messageInstance7.ParamList.Add(paramListElement4.Value);
@@ -5397,6 +5715,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publicIPsSequenceElement = roleInstanceListElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                 if (publicIPsSequenceElement != null)
                                 {
+                                    roleInstanceInstance.PublicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.RoleInstance.PublicIP>();
                                     foreach (XElement publicIPsElement in publicIPsSequenceElement.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         RoleInstance.PublicIP publicIPInstance = new RoleInstance.PublicIP();
@@ -5465,6 +5784,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleListSequenceElement = deploymentElement.Element(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
                         if (roleListSequenceElement != null)
                         {
+                            result.Roles = new List<Role>();
                             foreach (XElement roleListElement in roleListSequenceElement.Elements(XName.Get("Role", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 Role roleInstance = new Role();
@@ -5494,6 +5814,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement configurationSetsSequenceElement = roleListElement.Element(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
                                 if (configurationSetsSequenceElement != null)
                                 {
+                                    roleInstance.ConfigurationSets = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet>();
                                     foreach (XElement configurationSetsElement in configurationSetsSequenceElement.Elements(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ConfigurationSet configurationSetInstance = new ConfigurationSet();
@@ -5509,6 +5830,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement inputEndpointsSequenceElement = configurationSetsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                         if (inputEndpointsSequenceElement != null)
                                         {
+                                            configurationSetInstance.InputEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InputEndpoint>();
                                             foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 InputEndpoint inputEndpointInstance = new InputEndpoint();
@@ -5621,6 +5943,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                     if (rulesSequenceElement != null)
                                                     {
+                                                        endpointAclInstance.Rules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.AccessControlListRule>();
                                                         foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             AccessControlListRule ruleInstance = new AccessControlListRule();
@@ -5669,6 +5992,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement subnetNamesSequenceElement = configurationSetsElement.Element(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
                                         if (subnetNamesSequenceElement != null)
                                         {
+                                            configurationSetInstance.SubnetNames = new System.Collections.Generic.List<string>();
                                             foreach (XElement subnetNamesElement in subnetNamesSequenceElement.Elements(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
@@ -5685,6 +6009,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement publicIPsSequenceElement2 = configurationSetsElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                         if (publicIPsSequenceElement2 != null)
                                         {
+                                            configurationSetInstance.PublicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet.PublicIP>();
                                             foreach (XElement publicIPsElement2 in publicIPsSequenceElement2.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ConfigurationSet.PublicIP publicIPInstance2 = new ConfigurationSet.PublicIP();
@@ -5807,6 +6132,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement storedCertificateSettingsSequenceElement = configurationSetsElement.Element(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
                                         if (storedCertificateSettingsSequenceElement != null)
                                         {
+                                            configurationSetInstance.StoredCertificateSettings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.StoredCertificateSettings>();
                                             foreach (XElement storedCertificateSettingsElement in storedCertificateSettingsSequenceElement.Elements(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 StoredCertificateSettings certificateSettingInstance = new StoredCertificateSettings();
@@ -5842,6 +6168,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement listenersSequenceElement = winRMElement.Element(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
                                             if (listenersSequenceElement != null)
                                             {
+                                                winRMInstance.Listeners = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.WindowsRemoteManagementListener>();
                                                 foreach (XElement listenersElement in listenersSequenceElement.Elements(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     WindowsRemoteManagementListener listenerInstance = new WindowsRemoteManagementListener();
@@ -5908,6 +6235,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement publicKeysSequenceElement = sSHElement.Element(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
                                             if (publicKeysSequenceElement != null)
                                             {
+                                                sSHInstance.PublicKeys = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingPublicKey>();
                                                 foreach (XElement publicKeysElement in publicKeysSequenceElement.Elements(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
@@ -5932,6 +6260,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement keyPairsSequenceElement = sSHElement.Element(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
                                             if (keyPairsSequenceElement != null)
                                             {
+                                                sSHInstance.KeyPairs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingKeyPair>();
                                                 foreach (XElement keyPairsElement in keyPairsSequenceElement.Elements(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
@@ -5966,6 +6295,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement resourceExtensionReferencesSequenceElement = roleListElement.Element(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceExtensionReferencesSequenceElement != null)
                                 {
+                                    roleInstance.ResourceExtensionReferences = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionReference>();
                                     foreach (XElement resourceExtensionReferencesElement in resourceExtensionReferencesSequenceElement.Elements(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ResourceExtensionReference resourceExtensionReferenceInstance = new ResourceExtensionReference();
@@ -6002,6 +6332,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionParameterValuesSequenceElement != null)
                                         {
+                                            resourceExtensionReferenceInstance.ResourceExtensionParameterValues = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionParameterValue>();
                                             foreach (XElement resourceExtensionParameterValuesElement in resourceExtensionParameterValuesSequenceElement.Elements(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ResourceExtensionParameterValue resourceExtensionParameterValueInstance = new ResourceExtensionParameterValue();
@@ -6063,6 +6394,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dataVirtualHardDisksSequenceElement = roleListElement.Element(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
                                 if (dataVirtualHardDisksSequenceElement != null)
                                 {
+                                    roleInstance.DataVirtualHardDisks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DataVirtualHardDisk>();
                                     foreach (XElement dataVirtualHardDisksElement in dataVirtualHardDisksSequenceElement.Elements(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         DataVirtualHardDisk dataVirtualHardDiskInstance = new DataVirtualHardDisk();
@@ -6243,6 +6575,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement extendedPropertiesSequenceElement = deploymentElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (extendedPropertiesSequenceElement != null)
                         {
+                            result.ExtendedProperties = new Dictionary<string, string>();
                             foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -6260,6 +6593,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
                             if (dnsServersSequenceElement != null)
                             {
+                                dnsInstance.DnsServers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DnsServer>();
                                 foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DnsServer dnsServerInstance = new DnsServer();
@@ -6313,6 +6647,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement virtualIPsSequenceElement = deploymentElement.Element(XName.Get("VirtualIPs", "http://schemas.microsoft.com/windowsazure"));
                         if (virtualIPsSequenceElement != null)
                         {
+                            result.VirtualIPAddresses = new List<VirtualIPAddress>();
                             foreach (XElement virtualIPsElement in virtualIPsSequenceElement.Elements(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 VirtualIPAddress virtualIPInstance = new VirtualIPAddress();
@@ -6350,6 +6685,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement allRolesSequenceElement = extensionConfigurationElement.Element(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
                             if (allRolesSequenceElement != null)
                             {
+                                extensionConfigurationInstance.AllRoles = new List<ExtensionConfiguration.Extension>();
                                 foreach (XElement allRolesElement in allRolesSequenceElement.Elements(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionConfiguration.Extension extensionInstance = new ExtensionConfiguration.Extension();
@@ -6367,6 +6703,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement namedRolesSequenceElement = extensionConfigurationElement.Element(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
                             if (namedRolesSequenceElement != null)
                             {
+                                extensionConfigurationInstance.NamedRoles = new List<ExtensionConfiguration.NamedRole>();
                                 foreach (XElement namedRolesElement in namedRolesSequenceElement.Elements(XName.Get("Role", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionConfiguration.NamedRole roleInstance2 = new ExtensionConfiguration.NamedRole();
@@ -6382,6 +6719,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement extensionsSequenceElement = namedRolesElement.Element(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
                                     if (extensionsSequenceElement != null)
                                     {
+                                        roleInstance2.Extensions = new List<ExtensionConfiguration.Extension>();
                                         foreach (XElement extensionsElement in extensionsSequenceElement.Elements(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             ExtensionConfiguration.Extension extensionInstance2 = new ExtensionConfiguration.Extension();
@@ -6409,6 +6747,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement loadBalancersSequenceElement = deploymentElement.Element(XName.Get("LoadBalancers", "http://schemas.microsoft.com/windowsazure"));
                         if (loadBalancersSequenceElement != null)
                         {
+                            result.LoadBalancers = new List<LoadBalancer>();
                             foreach (XElement loadBalancersElement in loadBalancersSequenceElement.Elements(XName.Get("LoadBalancer", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 LoadBalancer loadBalancerInstance = new LoadBalancer();
@@ -6638,6 +6977,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleInstanceListSequenceElement = deploymentElement.Element(XName.Get("RoleInstanceList", "http://schemas.microsoft.com/windowsazure"));
                         if (roleInstanceListSequenceElement != null)
                         {
+                            result.RoleInstances = new List<RoleInstance>();
                             foreach (XElement roleInstanceListElement in roleInstanceListSequenceElement.Elements(XName.Get("RoleInstance", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 RoleInstance roleInstanceInstance = new RoleInstance();
@@ -6709,6 +7049,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement instanceEndpointsSequenceElement = roleInstanceListElement.Element(XName.Get("InstanceEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (instanceEndpointsSequenceElement != null)
                                 {
+                                    roleInstanceInstance.InstanceEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InstanceEndpoint>();
                                     foreach (XElement instanceEndpointsElement in instanceEndpointsSequenceElement.Elements(XName.Get("InstanceEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         InstanceEndpoint instanceEndpointInstance = new InstanceEndpoint();
@@ -6815,6 +7156,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement paramListSequenceElement = messageElement.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                         if (paramListSequenceElement != null)
                                         {
+                                            messageInstance.ParamList = new System.Collections.Generic.List<string>();
                                             foreach (XElement paramListElement in paramListSequenceElement.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 messageInstance.ParamList.Add(paramListElement.Value);
@@ -6847,6 +7189,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement resourceExtensionStatusListSequenceElement = roleInstanceListElement.Element(XName.Get("ResourceExtensionStatusList", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceExtensionStatusListSequenceElement != null)
                                 {
+                                    roleInstanceInstance.ResourceExtensionStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionStatus>();
                                     foreach (XElement resourceExtensionStatusListElement in resourceExtensionStatusListSequenceElement.Elements(XName.Get("ResourceExtensionStatus", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ResourceExtensionStatus resourceExtensionStatusInstance = new ResourceExtensionStatus();
@@ -6896,6 +7239,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement paramListSequenceElement2 = messageElement3.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                             if (paramListSequenceElement2 != null)
                                             {
+                                                messageInstance3.ParamList = new System.Collections.Generic.List<string>();
                                                 foreach (XElement paramListElement2 in paramListSequenceElement2.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     messageInstance3.ParamList.Add(paramListElement2.Value);
@@ -6988,6 +7332,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 XElement paramListSequenceElement3 = messageElement5.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                 if (paramListSequenceElement3 != null)
                                                 {
+                                                    messageInstance5.ParamList = new System.Collections.Generic.List<string>();
                                                     foreach (XElement paramListElement3 in paramListSequenceElement3.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                     {
                                                         messageInstance5.ParamList.Add(paramListElement3.Value);
@@ -7019,6 +7364,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement subStatusListSequenceElement = extensionSettingStatusElement.Element(XName.Get("SubStatusList", "http://schemas.microsoft.com/windowsazure"));
                                             if (subStatusListSequenceElement != null)
                                             {
+                                                extensionSettingStatusInstance.SubStatusList = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionSubStatus>();
                                                 foreach (XElement subStatusListElement in subStatusListSequenceElement.Elements(XName.Get("SubStatus", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     ResourceExtensionSubStatus subStatusInstance = new ResourceExtensionSubStatus();
@@ -7061,6 +7407,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         XElement paramListSequenceElement4 = messageElement7.Element(XName.Get("ParamList", "http://schemas.microsoft.com/windowsazure"));
                                                         if (paramListSequenceElement4 != null)
                                                         {
+                                                            messageInstance7.ParamList = new System.Collections.Generic.List<string>();
                                                             foreach (XElement paramListElement4 in paramListSequenceElement4.Elements(XName.Get("Param", "http://schemas.microsoft.com/windowsazure")))
                                                             {
                                                                 messageInstance7.ParamList.Add(paramListElement4.Value);
@@ -7118,6 +7465,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement publicIPsSequenceElement = roleInstanceListElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                 if (publicIPsSequenceElement != null)
                                 {
+                                    roleInstanceInstance.PublicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.RoleInstance.PublicIP>();
                                     foreach (XElement publicIPsElement in publicIPsSequenceElement.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         RoleInstance.PublicIP publicIPInstance = new RoleInstance.PublicIP();
@@ -7186,6 +7534,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement roleListSequenceElement = deploymentElement.Element(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
                         if (roleListSequenceElement != null)
                         {
+                            result.Roles = new List<Role>();
                             foreach (XElement roleListElement in roleListSequenceElement.Elements(XName.Get("Role", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 Role roleInstance = new Role();
@@ -7215,6 +7564,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement configurationSetsSequenceElement = roleListElement.Element(XName.Get("ConfigurationSets", "http://schemas.microsoft.com/windowsazure"));
                                 if (configurationSetsSequenceElement != null)
                                 {
+                                    roleInstance.ConfigurationSets = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet>();
                                     foreach (XElement configurationSetsElement in configurationSetsSequenceElement.Elements(XName.Get("ConfigurationSet", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ConfigurationSet configurationSetInstance = new ConfigurationSet();
@@ -7230,6 +7580,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement inputEndpointsSequenceElement = configurationSetsElement.Element(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
                                         if (inputEndpointsSequenceElement != null)
                                         {
+                                            configurationSetInstance.InputEndpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.InputEndpoint>();
                                             foreach (XElement inputEndpointsElement in inputEndpointsSequenceElement.Elements(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 InputEndpoint inputEndpointInstance = new InputEndpoint();
@@ -7342,6 +7693,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                     XElement rulesSequenceElement = endpointAclElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
                                                     if (rulesSequenceElement != null)
                                                     {
+                                                        endpointAclInstance.Rules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.AccessControlListRule>();
                                                         foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
                                                         {
                                                             AccessControlListRule ruleInstance = new AccessControlListRule();
@@ -7390,6 +7742,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement subnetNamesSequenceElement = configurationSetsElement.Element(XName.Get("SubnetNames", "http://schemas.microsoft.com/windowsazure"));
                                         if (subnetNamesSequenceElement != null)
                                         {
+                                            configurationSetInstance.SubnetNames = new System.Collections.Generic.List<string>();
                                             foreach (XElement subnetNamesElement in subnetNamesSequenceElement.Elements(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 configurationSetInstance.SubnetNames.Add(subnetNamesElement.Value);
@@ -7406,6 +7759,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement publicIPsSequenceElement2 = configurationSetsElement.Element(XName.Get("PublicIPs", "http://schemas.microsoft.com/windowsazure"));
                                         if (publicIPsSequenceElement2 != null)
                                         {
+                                            configurationSetInstance.PublicIPs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet.PublicIP>();
                                             foreach (XElement publicIPsElement2 in publicIPsSequenceElement2.Elements(XName.Get("PublicIP", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ConfigurationSet.PublicIP publicIPInstance2 = new ConfigurationSet.PublicIP();
@@ -7528,6 +7882,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement storedCertificateSettingsSequenceElement = configurationSetsElement.Element(XName.Get("StoredCertificateSettings", "http://schemas.microsoft.com/windowsazure"));
                                         if (storedCertificateSettingsSequenceElement != null)
                                         {
+                                            configurationSetInstance.StoredCertificateSettings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.StoredCertificateSettings>();
                                             foreach (XElement storedCertificateSettingsElement in storedCertificateSettingsSequenceElement.Elements(XName.Get("CertificateSetting", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 StoredCertificateSettings certificateSettingInstance = new StoredCertificateSettings();
@@ -7563,6 +7918,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement listenersSequenceElement = winRMElement.Element(XName.Get("Listeners", "http://schemas.microsoft.com/windowsazure"));
                                             if (listenersSequenceElement != null)
                                             {
+                                                winRMInstance.Listeners = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.WindowsRemoteManagementListener>();
                                                 foreach (XElement listenersElement in listenersSequenceElement.Elements(XName.Get("Listener", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     WindowsRemoteManagementListener listenerInstance = new WindowsRemoteManagementListener();
@@ -7629,6 +7985,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement publicKeysSequenceElement = sSHElement.Element(XName.Get("PublicKeys", "http://schemas.microsoft.com/windowsazure"));
                                             if (publicKeysSequenceElement != null)
                                             {
+                                                sSHInstance.PublicKeys = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingPublicKey>();
                                                 foreach (XElement publicKeysElement in publicKeysSequenceElement.Elements(XName.Get("PublicKey", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     SshSettingPublicKey publicKeyInstance = new SshSettingPublicKey();
@@ -7653,6 +8010,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             XElement keyPairsSequenceElement = sSHElement.Element(XName.Get("KeyPairs", "http://schemas.microsoft.com/windowsazure"));
                                             if (keyPairsSequenceElement != null)
                                             {
+                                                sSHInstance.KeyPairs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.SshSettingKeyPair>();
                                                 foreach (XElement keyPairsElement in keyPairsSequenceElement.Elements(XName.Get("KeyPair", "http://schemas.microsoft.com/windowsazure")))
                                                 {
                                                     SshSettingKeyPair keyPairInstance = new SshSettingKeyPair();
@@ -7687,6 +8045,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement resourceExtensionReferencesSequenceElement = roleListElement.Element(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
                                 if (resourceExtensionReferencesSequenceElement != null)
                                 {
+                                    roleInstance.ResourceExtensionReferences = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionReference>();
                                     foreach (XElement resourceExtensionReferencesElement in resourceExtensionReferencesSequenceElement.Elements(XName.Get("ResourceExtensionReference", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         ResourceExtensionReference resourceExtensionReferenceInstance = new ResourceExtensionReference();
@@ -7723,6 +8082,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement resourceExtensionParameterValuesSequenceElement = resourceExtensionReferencesElement.Element(XName.Get("ResourceExtensionParameterValues", "http://schemas.microsoft.com/windowsazure"));
                                         if (resourceExtensionParameterValuesSequenceElement != null)
                                         {
+                                            resourceExtensionReferenceInstance.ResourceExtensionParameterValues = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionParameterValue>();
                                             foreach (XElement resourceExtensionParameterValuesElement in resourceExtensionParameterValuesSequenceElement.Elements(XName.Get("ResourceExtensionParameterValue", "http://schemas.microsoft.com/windowsazure")))
                                             {
                                                 ResourceExtensionParameterValue resourceExtensionParameterValueInstance = new ResourceExtensionParameterValue();
@@ -7784,6 +8144,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement dataVirtualHardDisksSequenceElement = roleListElement.Element(XName.Get("DataVirtualHardDisks", "http://schemas.microsoft.com/windowsazure"));
                                 if (dataVirtualHardDisksSequenceElement != null)
                                 {
+                                    roleInstance.DataVirtualHardDisks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DataVirtualHardDisk>();
                                     foreach (XElement dataVirtualHardDisksElement in dataVirtualHardDisksSequenceElement.Elements(XName.Get("DataVirtualHardDisk", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         DataVirtualHardDisk dataVirtualHardDiskInstance = new DataVirtualHardDisk();
@@ -7964,6 +8325,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement extendedPropertiesSequenceElement = deploymentElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (extendedPropertiesSequenceElement != null)
                         {
+                            result.ExtendedProperties = new Dictionary<string, string>();
                             foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -7981,6 +8343,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement dnsServersSequenceElement = dnsElement.Element(XName.Get("DnsServers", "http://schemas.microsoft.com/windowsazure"));
                             if (dnsServersSequenceElement != null)
                             {
+                                dnsInstance.DnsServers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DnsServer>();
                                 foreach (XElement dnsServersElement in dnsServersSequenceElement.Elements(XName.Get("DnsServer", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DnsServer dnsServerInstance = new DnsServer();
@@ -8034,6 +8397,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement virtualIPsSequenceElement = deploymentElement.Element(XName.Get("VirtualIPs", "http://schemas.microsoft.com/windowsazure"));
                         if (virtualIPsSequenceElement != null)
                         {
+                            result.VirtualIPAddresses = new List<VirtualIPAddress>();
                             foreach (XElement virtualIPsElement in virtualIPsSequenceElement.Elements(XName.Get("VirtualIP", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 VirtualIPAddress virtualIPInstance = new VirtualIPAddress();
@@ -8071,6 +8435,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement allRolesSequenceElement = extensionConfigurationElement.Element(XName.Get("AllRoles", "http://schemas.microsoft.com/windowsazure"));
                             if (allRolesSequenceElement != null)
                             {
+                                extensionConfigurationInstance.AllRoles = new List<ExtensionConfiguration.Extension>();
                                 foreach (XElement allRolesElement in allRolesSequenceElement.Elements(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionConfiguration.Extension extensionInstance = new ExtensionConfiguration.Extension();
@@ -8088,6 +8453,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement namedRolesSequenceElement = extensionConfigurationElement.Element(XName.Get("NamedRoles", "http://schemas.microsoft.com/windowsazure"));
                             if (namedRolesSequenceElement != null)
                             {
+                                extensionConfigurationInstance.NamedRoles = new List<ExtensionConfiguration.NamedRole>();
                                 foreach (XElement namedRolesElement in namedRolesSequenceElement.Elements(XName.Get("Role", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ExtensionConfiguration.NamedRole roleInstance2 = new ExtensionConfiguration.NamedRole();
@@ -8103,6 +8469,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement extensionsSequenceElement = namedRolesElement.Element(XName.Get("Extensions", "http://schemas.microsoft.com/windowsazure"));
                                     if (extensionsSequenceElement != null)
                                     {
+                                        roleInstance2.Extensions = new List<ExtensionConfiguration.Extension>();
                                         foreach (XElement extensionsElement in extensionsSequenceElement.Elements(XName.Get("Extension", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             ExtensionConfiguration.Extension extensionInstance2 = new ExtensionConfiguration.Extension();
@@ -8130,6 +8497,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement loadBalancersSequenceElement = deploymentElement.Element(XName.Get("LoadBalancers", "http://schemas.microsoft.com/windowsazure"));
                         if (loadBalancersSequenceElement != null)
                         {
+                            result.LoadBalancers = new List<LoadBalancer>();
                             foreach (XElement loadBalancersElement in loadBalancersSequenceElement.Elements(XName.Get("LoadBalancer", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 LoadBalancer loadBalancerInstance = new LoadBalancer();
@@ -8614,6 +8982,254 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationResponse response = await client.Deployments.BeginRebootingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "RebuildRoleInstanceByDeploymentNameAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.Deployments.BeginRebuildingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentSlot", deploymentSlot);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "RebuildRoleInstanceByDeploymentSlotAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.Deployments.BeginRebuildingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;

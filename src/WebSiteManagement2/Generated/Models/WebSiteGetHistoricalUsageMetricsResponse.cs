@@ -39,6 +39,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<HistoricalUsageMetric> UsageMetrics
         {
+            get
+            {
+                if (this._usageMetrics == null)
+                {
+                    this._usageMetrics = new System.Collections.Generic.List<Microsoft.Azure.Management.WebSites.Models.HistoricalUsageMetric>();
+                }
+                return this._usageMetrics;
+            }
+            set { this._usageMetrics = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Historical metric snapshots for the web site.
+        /// </summary>
+        public IList<HistoricalUsageMetric> UsageMetricsValue
+        {
             get { return this._usageMetrics; }
             set { this._usageMetrics = value; }
         }
@@ -49,7 +65,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
         }
         
         /// <summary>
@@ -57,7 +72,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<HistoricalUsageMetric> GetEnumerator()
         {
-            return this.UsageMetrics.GetEnumerator();
+            return this.UsageMetricsValue.GetEnumerator();
         }
         
         /// <summary>

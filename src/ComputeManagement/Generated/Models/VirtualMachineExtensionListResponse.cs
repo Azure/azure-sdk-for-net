@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineExtensionListResponse.ResourceExtension> ResourceExtensions
         {
+            get
+            {
+                if (this._resourceExtensions == null)
+                {
+                    this._resourceExtensions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineExtensionListResponse.ResourceExtension>();
+                }
+                return this._resourceExtensions;
+            }
+            set { this._resourceExtensions = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The extensions that are available to add to your cloud
+        /// service.
+        /// </summary>
+        public IList<VirtualMachineExtensionListResponse.ResourceExtension> ResourceExtensionsValue
+        {
             get { return this._resourceExtensions; }
             set { this._resourceExtensions = value; }
         }
@@ -50,7 +67,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineExtensionListResponse()
         {
-            this.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
         }
         
         /// <summary>
@@ -58,7 +74,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<VirtualMachineExtensionListResponse.ResourceExtension> GetEnumerator()
         {
-            return this.ResourceExtensions.GetEnumerator();
+            return this.ResourceExtensionsValue.GetEnumerator();
         }
         
         /// <summary>

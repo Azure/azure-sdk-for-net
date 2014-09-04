@@ -5,7 +5,7 @@
     Microsoft.Azure.Gallery
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Gallery">
-      <PackageVersion>2.2.0-preview</PackageVersion>
+      <PackageVersion>2.2.1-preview</PackageVersion>
 
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

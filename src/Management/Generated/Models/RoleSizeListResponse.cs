@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<RoleSizeListResponse.RoleSize> RoleSizes
         {
+            get
+            {
+                if (this._roleSizes == null)
+                {
+                    this._roleSizes = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.RoleSizeListResponse.RoleSize>();
+                }
+                return this._roleSizes;
+            }
+            set { this._roleSizes = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The role sizes that are valid for your subscription.
+        /// </summary>
+        public IList<RoleSizeListResponse.RoleSize> RoleSizesValue
+        {
             get { return this._roleSizes; }
             set { this._roleSizes = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public RoleSizeListResponse()
         {
-            this.RoleSizes = new List<RoleSizeListResponse.RoleSize>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IEnumerator<RoleSizeListResponse.RoleSize> GetEnumerator()
         {
-            return this.RoleSizes.GetEnumerator();
+            return this.RoleSizesValue.GetEnumerator();
         }
         
         /// <summary>

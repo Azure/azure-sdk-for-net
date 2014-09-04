@@ -40,6 +40,23 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<Quota> Quotas
         {
+            get
+            {
+                if (this._quotas == null)
+                {
+                    this._quotas = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.Quota>();
+                }
+                return this._quotas;
+            }
+            set { this._quotas = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Gets or sets the collection of all the Quotas for the
+        /// server.
+        /// </summary>
+        public IList<Quota> QuotasValue
+        {
             get { return this._quotas; }
             set { this._quotas = value; }
         }
@@ -49,7 +66,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public QuotaListResponse()
         {
-            this.Quotas = new List<Quota>();
         }
         
         /// <summary>
@@ -57,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<Quota> GetEnumerator()
         {
-            return this.Quotas.GetEnumerator();
+            return this.QuotasValue.GetEnumerator();
         }
         
         /// <summary>

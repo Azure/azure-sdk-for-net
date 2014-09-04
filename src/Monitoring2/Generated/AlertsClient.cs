@@ -155,6 +155,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<Incident> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<Incident>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. Incident collection.
+        /// </summary>
+        public IList<Incident> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -164,7 +180,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IncidentListResponse()
         {
-            this.Value = new List<Incident>();
         }
         
         /// <summary>
@@ -172,7 +187,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IEnumerator<Incident> GetEnumerator()
         {
-            return this.Value.GetEnumerator();
+            return this.ValueValue.GetEnumerator();
         }
         
         /// <summary>
@@ -372,6 +387,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IDictionary<string, string> Tags
         {
+            get
+            {
+                if (this._tags == null)
+                {
+                    this._tags = new Dictionary<string, string>();
+                }
+                return this._tags;
+            }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> TagsValue
+        {
             get { return this._tags; }
             set { this._tags = value; }
         }
@@ -382,7 +413,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleCreateOrUpdateParameters()
         {
-            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -411,6 +441,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<string> CustomEmails
         {
+            get
+            {
+                if (this._customEmails == null)
+                {
+                    this._customEmails = new List<string>();
+                }
+                return this._customEmails;
+            }
+            set { this._customEmails = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The email address of an adminstrative user.
+        /// </summary>
+        public IList<string> CustomEmailsValue
+        {
             get { return this._customEmails; }
             set { this._customEmails = value; }
         }
@@ -432,7 +478,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this.CustomEmails = new List<string>();
         }
     }
     
@@ -492,6 +537,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IDictionary<string, string> Tags
         {
+            get
+            {
+                if (this._tags == null)
+                {
+                    this._tags = new Dictionary<string, string>();
+                }
+                return this._tags;
+            }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> TagsValue
+        {
             get { return this._tags; }
             set { this._tags = value; }
         }
@@ -501,7 +562,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleGetResponse()
         {
-            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -633,6 +693,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IDictionary<string, string> Tags
         {
+            get
+            {
+                if (this._tags == null)
+                {
+                    this._tags = new Dictionary<string, string>();
+                }
+                return this._tags;
+            }
+            set { this._tags = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The tags of the rule.
+        /// </summary>
+        public IDictionary<string, string> TagsValue
+        {
             get { return this._tags; }
             set { this._tags = value; }
         }
@@ -642,7 +718,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleResource()
         {
-            this.Tags = new Dictionary<string, string>();
         }
     }
     
@@ -658,6 +733,22 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public IList<RuleResource> Value
         {
+            get
+            {
+                if (this._value == null)
+                {
+                    this._value = new List<RuleResource>();
+                }
+                return this._value;
+            }
+            set { this._value = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The values for the alert rule resources.
+        /// </summary>
+        public IList<RuleResource> ValueValue
+        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -667,7 +758,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleResourceCollection()
         {
-            this.Value = new List<RuleResource>();
         }
     }
     
@@ -1482,6 +1572,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Value = new List<Incident>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();
@@ -1961,9 +2052,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.Tags != null)
+                if (parameters.TagsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -2078,10 +2169,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
                             
-                            if (derived5.CustomEmails != null)
+                            if (derived5.CustomEmailsValue != null)
                             {
                                 JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived5.CustomEmails)
+                                foreach (string customEmailsItem in derived5.CustomEmailsValue)
                                 {
                                     customEmailsArray.Add(customEmailsItem);
                                 }
@@ -2412,6 +2503,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
+                            result.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -2580,6 +2672,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                     JToken customEmailsArray = actionValue["customEmails"];
                                     if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                     {
+                                        ruleEmailActionInstance.CustomEmails = new List<string>();
                                         foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                         {
                                             ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
@@ -2743,6 +2836,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            ruleResourceCollectionInstance.Value = new List<RuleResource>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RuleResource ruleResourceInstance = new RuleResource();
@@ -2772,6 +2866,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
+                                    ruleResourceInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
@@ -2940,6 +3035,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                                             JToken customEmailsArray = actionValue["customEmails"];
                                             if (customEmailsArray != null && customEmailsArray.Type != JTokenType.Null)
                                             {
+                                                ruleEmailActionInstance.CustomEmails = new List<string>();
                                                 foreach (JToken customEmailsValue in ((JArray)customEmailsArray))
                                                 {
                                                     ruleEmailActionInstance.CustomEmails.Add(((string)customEmailsValue));
@@ -3071,9 +3167,9 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.Tags != null)
+                if (parameters.TagsValue != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -3188,10 +3284,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                             
                             actionValue["sendToServiceOwners"] = derived5.SendToServiceOwners;
                             
-                            if (derived5.CustomEmails != null)
+                            if (derived5.CustomEmailsValue != null)
                             {
                                 JArray customEmailsArray = new JArray();
-                                foreach (string customEmailsItem in derived5.CustomEmails)
+                                foreach (string customEmailsItem in derived5.CustomEmailsValue)
                                 {
                                     customEmailsArray.Add(customEmailsItem);
                                 }

@@ -35,6 +35,22 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusSharedAccessAuthorizationRule> AuthorizationRules
         {
+            get
+            {
+                if (this._authorizationRules == null)
+                {
+                    this._authorizationRules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusSharedAccessAuthorizationRule>();
+                }
+                return this._authorizationRules;
+            }
+            set { this._authorizationRules = value; }
+        }
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<ServiceBusSharedAccessAuthorizationRule> AuthorizationRulesValue
+        {
             get { return this._authorizationRules; }
             set { this._authorizationRules = value; }
         }
@@ -66,7 +82,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNotificationHub()
         {
-            this.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
         }
     }
 }

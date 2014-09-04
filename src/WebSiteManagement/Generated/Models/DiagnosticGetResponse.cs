@@ -38,6 +38,22 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IDictionary<string, string> Settings
         {
+            get
+            {
+                if (this._settings == null)
+                {
+                    this._settings = new System.Collections.Generic.Dictionary<string, string>();
+                }
+                return this._settings;
+            }
+            set { this._settings = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The diagnostics setting information.
+        /// </summary>
+        public IDictionary<string, string> SettingsValue
+        {
             get { return this._settings; }
             set { this._settings = value; }
         }
@@ -47,7 +63,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DiagnosticGetResponse()
         {
-            this.Settings = new Dictionary<string, string>();
         }
     }
 }

@@ -39,6 +39,22 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusQueue> Queues
         {
+            get
+            {
+                if (this._queues == null)
+                {
+                    this._queues = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusQueue>();
+                }
+                return this._queues;
+            }
+            set { this._queues = value; }
+        }
+        
+        /// <summary>
+        /// Optional. The listing of queues.
+        /// </summary>
+        public IList<ServiceBusQueue> QueuesValue
+        {
             get { return this._queues; }
             set { this._queues = value; }
         }
@@ -48,7 +64,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusQueuesResponse()
         {
-            this.Queues = new List<ServiceBusQueue>();
         }
         
         /// <summary>
@@ -56,7 +71,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusQueue> GetEnumerator()
         {
-            return this.Queues.GetEnumerator();
+            return this.QueuesValue.GetEnumerator();
         }
         
         /// <summary>

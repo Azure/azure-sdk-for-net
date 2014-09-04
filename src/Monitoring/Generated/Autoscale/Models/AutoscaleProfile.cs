@@ -86,6 +86,23 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public IList<ScaleRule> Rules
         {
+            get
+            {
+                if (this._rules == null)
+                {
+                    this._rules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models.ScaleRule>();
+                }
+                return this._rules;
+            }
+            set { this._rules = value; }
+        }
+        
+        /// <summary>
+        /// Optional. A collection of rules that provide the triggers and
+        /// parameters for the scaling action.
+        /// </summary>
+        public IList<ScaleRule> RulesValue
+        {
             get { return this._rules; }
             set { this._rules = value; }
         }
@@ -95,7 +112,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleProfile()
         {
-            this.Rules = new List<ScaleRule>();
         }
     }
 }

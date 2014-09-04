@@ -44,6 +44,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<string> HostNames
         {
+            get
+            {
+                if (this._hostNames == null)
+                {
+                    this._hostNames = new List<string>();
+                }
+                return this._hostNames;
+            }
+            set { this._hostNames = value; }
+        }
+        
+        /// <summary>
+        /// Optional. An array of strings that contains the public host names
+        /// for the web site, including custom domains. Important: When you
+        /// add a custom domain in a PUT operation, be sure to include every
+        /// host name that you want for the web site. To delete a custom
+        /// domain name in a PUT operation, include all of the host names for
+        /// the web site that you want to keep, but leave out the one that you
+        /// want to delete.
+        /// </summary>
+        public IList<string> HostNamesValue
+        {
             get { return this._hostNames; }
             set { this._hostNames = value; }
         }
@@ -54,6 +76,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// Optional. SSL states of host names bound to the web site.
         /// </summary>
         public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStates
+        {
+            get
+            {
+                if (this._hostNameSslStates == null)
+                {
+                    this._hostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
+                }
+                return this._hostNameSslStates;
+            }
+            set { this._hostNameSslStates = value; }
+        }
+        
+        /// <summary>
+        /// Optional. SSL states of host names bound to the web site.
+        /// </summary>
+        public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStatesValue
         {
             get { return this._hostNameSslStates; }
             set { this._hostNameSslStates = value; }
@@ -88,8 +126,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateParameters()
         {
-            this.HostNames = new List<string>();
-            this.HostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
         }
         
         /// <summary>
