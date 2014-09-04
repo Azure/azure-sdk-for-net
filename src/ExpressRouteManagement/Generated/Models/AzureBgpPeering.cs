@@ -30,29 +30,29 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
     /// </summary>
     public partial class AzureBgpPeering
     {
-        private uint _azureAutonomousSystemNumber;
+        private uint _azureAsn;
         
         /// <summary>
         /// Optional. Specifies the numeric identifier of the public autonomous
         /// system (AS) in which the device of Windows Azure is configured.
         /// </summary>
-        public uint AzureAutonomousSystemNumber
+        public uint AzureAsn
         {
-            get { return this._azureAutonomousSystemNumber; }
-            set { this._azureAutonomousSystemNumber = value; }
+            get { return this._azureAsn; }
+            set { this._azureAsn = value; }
         }
         
-        private uint _peerAutonomousSystemNumber;
+        private uint _peerAsn;
         
         /// <summary>
         /// Optional. Specifies the numeric identifier of the public autonomous
         /// system (AS) in which the device of the service provider is
         /// configured.
         /// </summary>
-        public uint PeerAutonomousSystemNumber
+        public uint PeerAsn
         {
-            get { return this._peerAutonomousSystemNumber; }
-            set { this._peerAutonomousSystemNumber = value; }
+            get { return this._peerAsn; }
+            set { this._peerAsn = value; }
         }
         
         private string _primaryAzurePort;
@@ -113,16 +113,16 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._state = value; }
         }
         
-        private uint _virtualLanId;
+        private uint _vlanId;
         
         /// <summary>
         /// Optional. Specifies the identifier that is used to identify the
         /// customer.
         /// </summary>
-        public uint VirtualLanId
+        public uint VlanId
         {
-            get { return this._virtualLanId; }
-            set { this._virtualLanId = value; }
+            get { return this._vlanId; }
+            set { this._vlanId = value; }
         }
         
         /// <summary>
