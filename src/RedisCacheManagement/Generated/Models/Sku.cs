@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _family;
         
         /// <summary>
-        /// Required. Which family we are using. Valid values: (C)
+        /// Required. Which family to use. Valid values: (C)
         /// </summary>
         public string Family
         {

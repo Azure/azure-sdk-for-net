@@ -30,7 +30,8 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
-    /// .Net client wrapper for the REST API for Azure Cache Management Service
+    /// .Net client wrapper for the REST API for Azure Redis Cache Management
+    /// Service
     /// </summary>
     public static partial class RedisOperationsExtensions
     {
@@ -48,10 +49,10 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create redis operation.
+        /// Required. Parameters supplied to the CreateOrUpdate redis operation.
         /// </param>
         /// <returns>
-        /// The response to a CreateOrUpdate redis operation.
+        /// The response of CreateOrUpdate redis operation.
         /// </returns>
         public static RedisCreateOrUpdateResponse CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
         {
@@ -76,10 +77,10 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the create redis operation.
+        /// Required. Parameters supplied to the CreateOrUpdate redis operation.
         /// </param>
         /// <returns>
-        /// The response to a CreateOrUpdate redis operation.
+        /// The response of CreateOrUpdate redis operation.
         /// </returns>
         public static Task<RedisCreateOrUpdateResponse> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
         {
@@ -145,7 +146,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// The response to a GET redis operation.
+        /// The response of GET redis operation.
         /// </returns>
         public static RedisGetResponse Get(this IRedisOperations operations, string resourceGroupName, string name)
         {
@@ -169,7 +170,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// The response to a GET redis operation.
+        /// The response of GET redis operation.
         /// </returns>
         public static Task<RedisGetResponse> GetAsync(this IRedisOperations operations, string resourceGroupName, string name)
         {
@@ -187,7 +188,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The response to a list redis operation.
+        /// The response of list redis operation.
         /// </returns>
         public static RedisListResponse List(this IRedisOperations operations, string resourceGroupName)
         {
@@ -209,7 +210,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the resource group.
         /// </param>
         /// <returns>
-        /// The response to a list redis operation.
+        /// The response of list redis operation.
         /// </returns>
         public static Task<RedisListResponse> ListAsync(this IRedisOperations operations, string resourceGroupName)
         {
@@ -230,7 +231,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// Response to the redis list keys operation.
+        /// The response of redis list keys operation.
         /// </returns>
         public static RedisListKeysResponse ListKeys(this IRedisOperations operations, string resourceGroupName, string name)
         {
@@ -255,7 +256,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Required. The name of the redis cache.
         /// </param>
         /// <returns>
-        /// Response to the redis list keys operation.
+        /// The response of redis list keys operation.
         /// </returns>
         public static Task<RedisListKeysResponse> ListKeysAsync(this IRedisOperations operations, string resourceGroupName, string name)
         {
@@ -273,7 +274,7 @@ namespace Microsoft.Azure.Management.Redis
         /// operation.
         /// </param>
         /// <returns>
-        /// The response to a list redis operation.
+        /// The response of list redis operation.
         /// </returns>
         public static RedisListResponse ListNext(this IRedisOperations operations, string nextLink)
         {
@@ -295,7 +296,7 @@ namespace Microsoft.Azure.Management.Redis
         /// operation.
         /// </param>
         /// <returns>
-        /// The response to a list redis operation.
+        /// The response of list redis operation.
         /// </returns>
         public static Task<RedisListResponse> ListNextAsync(this IRedisOperations operations, string nextLink)
         {
@@ -303,7 +304,7 @@ namespace Microsoft.Azure.Management.Redis
         }
         
         /// <summary>
-        /// Retrieve a redis cache's access keys. This operation requires write
+        /// Regenerate redis cache's access keys. This operation requires write
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>
@@ -332,7 +333,7 @@ namespace Microsoft.Azure.Management.Redis
         }
         
         /// <summary>
-        /// Retrieve a redis cache's access keys. This operation requires write
+        /// Regenerate redis cache's access keys. This operation requires write
         /// permission to the cache resource.
         /// </summary>
         /// <param name='operations'>

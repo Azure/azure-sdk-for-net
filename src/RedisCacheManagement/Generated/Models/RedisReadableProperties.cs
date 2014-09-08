@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _hostName;
         
         /// <summary>
-        /// Optional. The redis host name
+        /// Optional. Redis host name
         /// </summary>
         public string HostName
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private int _port;
         
         /// <summary>
-        /// Optional. The redis non-ssl port
+        /// Optional. Redis non-ssl port
         /// </summary>
         public int Port
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _provisioningState;
         
         /// <summary>
-        /// Optional. The redis instance provisioning status
+        /// Optional. Redis instance provisioning status
         /// </summary>
         public string ProvisioningState
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private int _sslPort;
         
         /// <summary>
-        /// Optional. The redis ssl port
+        /// Optional. Redis ssl port
         /// </summary>
         public int SslPort
         {

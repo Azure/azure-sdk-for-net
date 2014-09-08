@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _primaryKey;
         
         /// <summary>
-        /// Optional. The current primary password that clients can use to
-        /// authenticate with redis.
+        /// Optional. The current primary key that clients can use to
+        /// authenticate with redis cache.
         /// </summary>
         public string PrimaryKey
         {
@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _secondaryKey;
         
         /// <summary>
-        /// Optional. The current secondary password that clients can use to
-        /// authenticate with redis.
+        /// Optional. The current secondary key that clients can use to
+        /// authenticate with redis cache.
         /// </summary>
         public string SecondaryKey
         {

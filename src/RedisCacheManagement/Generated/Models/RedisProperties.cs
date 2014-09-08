@@ -26,14 +26,14 @@ using Microsoft.Azure.Management.Redis.Models;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Parameters supplied to the create redis operation.
+    /// Parameters supplied to CreateOrUpdate redis operation.
     /// </summary>
     public partial class RedisProperties
     {
         private string _maxMemoryPolicy;
         
         /// <summary>
-        /// Optional. what is maxMemoryPolicy of redis cache. Valid values:
+        /// Optional. What is maxMemoryPolicy of redis cache. Valid values:
         /// (VolatileLRU, AllKeysLRU, VolatileRandom, AllKeysRandom,
         /// VolatileTTL, NoEviction)
         /// </summary>
@@ -46,8 +46,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _redisVersion;
         
         /// <summary>
-        /// Required. The version of Redis to deploy, or 'latest'. Valid
-        /// values: (2.8)
+        /// Required. The version of Redis to deploy. Valid values: (2.8)
         /// </summary>
         public string RedisVersion
         {

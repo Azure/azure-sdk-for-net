@@ -26,15 +26,15 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Response to the redis list keys operation.
+    /// The response of redis list keys operation.
     /// </summary>
     public partial class RedisListKeysResponse : OperationResponse
     {
         private string _primaryKey;
         
         /// <summary>
-        /// Optional. The current primary password that clients can use to
-        /// authenticate with redis.
+        /// Optional. The current primary key that clients can use to
+        /// authenticate with redis cache.
         /// </summary>
         public string PrimaryKey
         {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _secondaryKey;
         
         /// <summary>
-        /// Optional. The current secondary password that clients can use to
-        /// authenticate with redis.
+        /// Optional. The current secondary key that clients can use to
+        /// authenticate with redis cache.
         /// </summary>
         public string SecondaryKey
         {

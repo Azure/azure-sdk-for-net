@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Known Sku name values.
+    /// Known sku name values.
     /// </summary>
     public static partial class SkuName
     {

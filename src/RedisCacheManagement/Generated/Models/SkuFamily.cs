@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// Know family values for cache.
+    /// Know sku family values for cache.
     /// </summary>
     public static partial class SkuFamily
     {

@@ -27,14 +27,14 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// The response to a CreateOrUpdate redis operation.
+    /// The response of CreateOrUpdate redis operation.
     /// </summary>
     public partial class RedisCreateOrUpdateResponse : OperationResponse
     {
         private string _id;
         
         /// <summary>
-        /// Optional. The id of the created resource.
+        /// Optional. The id of the created redis cache.
         /// </summary>
         public string Id
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _location;
         
         /// <summary>
-        /// Optional. The resource's geographic location.
+        /// Optional. Redis cache resource's geographic location.
         /// </summary>
         public string Location
         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Name of the cache.
+        /// Optional. Name of the redis cache.
         /// </summary>
         public string Name
         {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private RedisReadablePropertiesWithAccessKey _properties;
         
         /// <summary>
-        /// Optional. properties
+        /// Optional. Redis cache properties
         /// </summary>
         public RedisReadablePropertiesWithAccessKey Properties
         {
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _type;
         
         /// <summary>
-        /// Optional. Resource's type.
+        /// Optional. Redis cache resource's type.
         /// </summary>
         public string Type
         {

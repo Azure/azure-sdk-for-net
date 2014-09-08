@@ -28,7 +28,7 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Redis.Models
 {
     /// <summary>
-    /// The response to a list redis operation.
+    /// The response of list redis operation.
     /// </summary>
     public partial class RedisListResponse : OperationResponse
     {

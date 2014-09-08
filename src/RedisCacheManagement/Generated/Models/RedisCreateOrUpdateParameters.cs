@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private string _location;
         
         /// <summary>
-        /// Required. The resource data center location.
+        /// Required. Redis cache data center location.
         /// </summary>
         public string Location
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         private RedisProperties _properties;
         
         /// <summary>
-        /// Required. The resource properties.
+        /// Required. Redis cache properties.
         /// </summary>
         public RedisProperties Properties
         {

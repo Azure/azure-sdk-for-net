@@ -27,7 +27,8 @@ using Microsoft.WindowsAzure;
 namespace Microsoft.Azure.Management.Redis
 {
     /// <summary>
-    /// .Net client wrapper for the REST API for Azure Cache Management Service
+    /// .Net client wrapper for the REST API for Azure Redis Cache Management
+    /// Service
     /// </summary>
     public partial interface IRedisManagementClient : IDisposable
     {
