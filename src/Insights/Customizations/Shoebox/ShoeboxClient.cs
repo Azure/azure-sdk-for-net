@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Insights
             IEnumerable<CloudTable> tables = GetNdayTables(filter, location);
 
             // Generate a query for the partition key and time range
-            TableQuery query = GenerateMetricQuery(location.PartitionKey, filter.StartTime, filter.EndTime);
+            TableQuery query = GenerateMetricTimestampQuery(location.PartitionKey, filter.StartTime, filter.EndTime);
 
             // Get all the entities for the query
             IEnumerable<DynamicTableEntity> entities = await GetEntitiesAsync(tables, query, invocationId).ConfigureAwait(false);
@@ -185,12 +185,15 @@ namespace Microsoft.Azure.Insights
         // Note: The overall start and end times are used in each query since this reduces processing and the query will still work the same on each Nday table
         private static Dictionary<string, TableQuery> GenerateMetricNameQueries(IEnumerable<string> names, string partitionKey, DateTime startTime, DateTime endTime)
         {
-            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeKey(name) + "__")
-                .ToDictionary(kvp => kvp.Value, kvp =>GenerateMetricQuery(partitionKey, startTime, endTime));
+            return names.ToDictionary(name => ShoeboxHelper.TrimAndEscapeKey(name) + "__").ToDictionary(kvp => kvp.Value, kvp =>
+                GenerateMetricQuery(
+                partitionKey,
+                kvp.Key + (DateTime.MaxValue.Ticks - endTime.Ticks).ToString("D19"),
+                kvp.Key + (DateTime.MaxValue.Ticks - startTime.Ticks).ToString("D19")));
         }
 
         // Creates a TableQuery for getting metrics by timestamp
-        private static TableQuery GenerateMetricQuery(string partitionKey, DateTime startTime, DateTime endTime)
+        private static TableQuery GenerateMetricTimestampQuery(string partitionKey, DateTime startTime, DateTime endTime)
         {
             return GenerateMetricQuery(
                 partitionKey,
@@ -259,3 +262,4 @@ namespace Microsoft.Azure.Insights
         }
     }
 }
+
