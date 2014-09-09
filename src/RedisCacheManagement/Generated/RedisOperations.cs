@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Redis
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -772,7 +772,7 @@ namespace Microsoft.Azure.Management.Redis
         /// all in subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Optional. The name of the resource group.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -873,6 +873,7 @@ namespace Microsoft.Azure.Management.Redis
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Value = new List<RedisResource>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RedisResource redisResourceInstance = new RedisResource();
@@ -1268,6 +1269,7 @@ namespace Microsoft.Azure.Management.Redis
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
+                            result.Value = new List<RedisResource>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RedisResource redisResourceInstance = new RedisResource();
@@ -1507,7 +1509,7 @@ namespace Microsoft.Azure.Management.Redis
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

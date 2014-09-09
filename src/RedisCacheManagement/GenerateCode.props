@@ -7,7 +7,7 @@
      If this is a project that uses the spec from the same solution (for example, a test
      project) then set this property to blank (or just remove it completely)
   -->
-    <GetSpecFromNuGet></GetSpecFromNuGet>
+    <GetSpecFromNuGet>1</GetSpecFromNuGet>
   </PropertyGroup>
 
   <!-- User settable properties to control how specs are found in the same solution -->

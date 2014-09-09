@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Optional. The name of the resource group.
         /// </param>
         /// <returns>
         /// The response of list redis operation.
@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Management.Redis
         /// Reference to the Microsoft.Azure.Management.Redis.IRedisOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Optional. The name of the resource group.
         /// </param>
         /// <returns>
         /// The response of list redis operation.
