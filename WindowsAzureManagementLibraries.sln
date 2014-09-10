@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30626.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -75,6 +75,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCacheManagement", "src\RedisCacheManagement\RedisCacheManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insights", "src\Insights\Insights.csproj", "{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "src\Authorization\Authorization.csproj", "{896E03E5-5357-4753-8C78-621336C28AA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +246,14 @@ Global
 		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Any CPU.Build.0 = Release|Any CPU
 		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,6 +279,7 @@ Global
 		{04B53727-16E6-4EF0-9116-04C7F1C33842} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{896E03E5-5357-4753-8C78-621336C28AA8} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
