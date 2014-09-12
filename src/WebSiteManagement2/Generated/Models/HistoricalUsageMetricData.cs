@@ -118,22 +118,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<HistoricalUsageMetricSample> Values
         {
-            get
-            {
-                if (this._values == null)
-                {
-                    this._values = new System.Collections.Generic.List<Microsoft.Azure.Management.WebSites.Models.HistoricalUsageMetricSample>();
-                }
-                return this._values;
-            }
-            set { this._values = value; }
-        }
-        
-        /// <summary>
-        /// Optional. One or more MetricSample elements.
-        /// </summary>
-        public IList<HistoricalUsageMetricSample> ValuesValue
-        {
             get { return this._values; }
             set { this._values = value; }
         }
@@ -143,6 +127,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public HistoricalUsageMetricData()
         {
+            this.Values = new List<HistoricalUsageMetricSample>();
         }
     }
 }

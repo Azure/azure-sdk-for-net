@@ -436,7 +436,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     {
                         if (arrayOfStatusInfoElement != null)
                         {
-                            result.StatusInfoList = new List<StatusInfo>();
                             foreach (XElement statusInfoElement in arrayOfStatusInfoElement.Elements(XName.Get("StatusInfo", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes")))
                             {
                                 StatusInfo statusInfoInstance = new StatusInfo();
@@ -702,7 +701,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     {
                         if (arrayOfStatusInfoElement != null)
                         {
-                            result.StatusInfoList = new List<StatusInfo>();
                             foreach (XElement statusInfoElement in arrayOfStatusInfoElement.Elements(XName.Get("StatusInfo", "http://schemas.datacontract.org/2004/07/Microsoft.SqlServer.Management.Dac.ServiceTypes")))
                             {
                                 StatusInfo statusInfoInstance = new StatusInfo();

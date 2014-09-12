@@ -605,7 +605,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serversSequenceElement = responseDoc.Element(XName.Get("Servers", "http://schemas.microsoft.com/sqlazure/2010/12/"));
                     if (serversSequenceElement != null)
                     {
-                        result.Servers = new List<Server>();
                         foreach (XElement serversElement in serversSequenceElement.Elements(XName.Get("Server", "http://schemas.microsoft.com/sqlazure/2010/12/")))
                         {
                             Server serverInstance = new Server();

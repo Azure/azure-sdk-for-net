@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<DefinitionEndpointResponse> Endpoints
         {
-            get
-            {
-                if (this._endpoints == null)
-                {
-                    this._endpoints = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.TrafficManager.Models.DefinitionEndpointResponse>();
-                }
-                return this._endpoints;
-            }
-            set { this._endpoints = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of Endpoints being monitored
-        /// </summary>
-        public IList<DefinitionEndpointResponse> EndpointsValue
-        {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
@@ -87,6 +71,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionPolicyResponse()
         {
+            this.Endpoints = new List<DefinitionEndpointResponse>();
         }
         
         /// <summary>
@@ -94,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IEnumerator<DefinitionEndpointResponse> GetEnumerator()
         {
-            return this.EndpointsValue.GetEnumerator();
+            return this.Endpoints.GetEnumerator();
         }
         
         /// <summary>

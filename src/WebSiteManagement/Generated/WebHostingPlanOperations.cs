@@ -337,6 +337,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -707,7 +708,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     {
                         if (metricResponsesElement != null)
                         {
-                            result.UsageMetrics = new List<HistoricalUsageMetric>();
                             foreach (XElement usageMetricsElement in metricResponsesElement.Elements(XName.Get("MetricResponse", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 HistoricalUsageMetric metricResponseInstance = new HistoricalUsageMetric();
@@ -778,7 +778,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                     XElement valuesSequenceElement = dataElement.Element(XName.Get("Values", "http://schemas.microsoft.com/windowsazure"));
                                     if (valuesSequenceElement != null)
                                     {
-                                        dataInstance.Values = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.HistoricalUsageMetricSample>();
                                         foreach (XElement valuesElement in valuesSequenceElement.Elements(XName.Get("MetricSample", "http://schemas.microsoft.com/windowsazure")))
                                         {
                                             HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
@@ -987,7 +986,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement serverFarmsSequenceElement = responseDoc.Element(XName.Get("ServerFarms", "http://schemas.microsoft.com/windowsazure"));
                     if (serverFarmsSequenceElement != null)
                     {
-                        result.WebHostingPlans = new List<WebHostingPlan>();
                         foreach (XElement serverFarmsElement in serverFarmsSequenceElement.Elements(XName.Get("ServerFarm", "http://schemas.microsoft.com/windowsazure")))
                         {
                             WebHostingPlan serverFarmInstance = new WebHostingPlan();

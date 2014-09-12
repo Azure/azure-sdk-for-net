@@ -80,24 +80,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<string> EnabledHostNames
         {
-            get
-            {
-                if (this._enabledHostNames == null)
-                {
-                    this._enabledHostNames = new System.Collections.Generic.List<string>();
-                }
-                return this._enabledHostNames;
-            }
-            set { this._enabledHostNames = value; }
-        }
-        
-        /// <summary>
-        /// Optional. An array of strings that contains enabled host names for
-        /// the web site. By default, these are [SiteName].azurewebsites.net
-        /// and [SiteName].scm.azurewebsites.net.
-        /// </summary>
-        public IList<string> EnabledHostNamesValue
-        {
             get { return this._enabledHostNames; }
             set { this._enabledHostNames = value; }
         }
@@ -115,28 +97,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<string> HostNames
         {
-            get
-            {
-                if (this._hostNames == null)
-                {
-                    this._hostNames = new System.Collections.Generic.List<string>();
-                }
-                return this._hostNames;
-            }
-            set { this._hostNames = value; }
-        }
-        
-        /// <summary>
-        /// Optional. An array of strings that contains the public host names
-        /// for the web site, including custom domains. Important: When you
-        /// add a custom domain in a PUT operation, be sure to include every
-        /// host name that you want for the web site. To delete a custom
-        /// domain name in a PUT operation, include all of the host names for
-        /// the web site that you want to keep, but leave out the one that you
-        /// want to delete.
-        /// </summary>
-        public IList<string> HostNamesValue
-        {
             get { return this._hostNames; }
             set { this._hostNames = value; }
         }
@@ -147,22 +107,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// Optional. SSL states bound to the web site.
         /// </summary>
         public IList<WebSite.WebSiteHostNameSslState> HostNameSslStates
-        {
-            get
-            {
-                if (this._hostNameSslStates == null)
-                {
-                    this._hostNameSslStates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSite.WebSiteHostNameSslState>();
-                }
-                return this._hostNameSslStates;
-            }
-            set { this._hostNameSslStates = value; }
-        }
-        
-        /// <summary>
-        /// Optional. SSL states bound to the web site.
-        /// </summary>
-        public IList<WebSite.WebSiteHostNameSslState> HostNameSslStatesValue
         {
             get { return this._hostNameSslStates; }
             set { this._hostNameSslStates = value; }
@@ -309,6 +253,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSite()
         {
+            this.EnabledHostNames = new List<string>();
+            this.HostNames = new List<string>();
+            this.HostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
         }
         
         /// <summary>
@@ -381,23 +328,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public IDictionary<string, string> AppSettings
             {
-                get
-                {
-                    if (this._appSettings == null)
-                    {
-                        this._appSettings = new System.Collections.Generic.Dictionary<string, string>();
-                    }
-                    return this._appSettings;
-                }
-                set { this._appSettings = value; }
-            }
-            
-            /// <summary>
-            /// Optional. A set of name/value pairs that contain application
-            /// settings for a web site.
-            /// </summary>
-            public IDictionary<string, string> AppSettingsValue
-            {
                 get { return this._appSettings; }
                 set { this._appSettings = value; }
             }
@@ -409,23 +339,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// information for a web site.
             /// </summary>
             public IDictionary<string, string> Metadata
-            {
-                get
-                {
-                    if (this._metadata == null)
-                    {
-                        this._metadata = new System.Collections.Generic.Dictionary<string, string>();
-                    }
-                    return this._metadata;
-                }
-                set { this._metadata = value; }
-            }
-            
-            /// <summary>
-            /// Optional. A set of name/value pairs that contain metadata
-            /// information for a web site.
-            /// </summary>
-            public IDictionary<string, string> MetadataValue
             {
                 get { return this._metadata; }
                 set { this._metadata = value; }
@@ -439,23 +352,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public IDictionary<string, string> Properties
             {
-                get
-                {
-                    if (this._properties == null)
-                    {
-                        this._properties = new System.Collections.Generic.Dictionary<string, string>();
-                    }
-                    return this._properties;
-                }
-                set { this._properties = value; }
-            }
-            
-            /// <summary>
-            /// Optional. A set of name/value pairs that contain properties for
-            /// a web site.
-            /// </summary>
-            public IDictionary<string, string> PropertiesValue
-            {
                 get { return this._properties; }
                 set { this._properties = value; }
             }
@@ -465,6 +361,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSiteProperties()
             {
+                this.AppSettings = new Dictionary<string, string>();
+                this.Metadata = new Dictionary<string, string>();
+                this.Properties = new Dictionary<string, string>();
             }
         }
     }

@@ -311,7 +311,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            serverInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -658,7 +657,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            serverInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -802,7 +800,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Servers = new List<Server>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Server serverInstance = new Server();
@@ -874,7 +871,6 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    serverInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);

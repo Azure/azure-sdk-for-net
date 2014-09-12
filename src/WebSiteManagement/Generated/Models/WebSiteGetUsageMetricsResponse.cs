@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSiteGetUsageMetricsResponse.UsageMetric> UsageMetrics
         {
-            get
-            {
-                if (this._usageMetrics == null)
-                {
-                    this._usageMetrics = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetUsageMetricsResponse.UsageMetric>();
-                }
-                return this._usageMetrics;
-            }
-            set { this._usageMetrics = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The usage metrics for the web site.
-        /// </summary>
-        public IList<WebSiteGetUsageMetricsResponse.UsageMetric> UsageMetricsValue
-        {
             get { return this._usageMetrics; }
             set { this._usageMetrics = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetUsageMetricsResponse()
         {
+            this.UsageMetrics = new List<WebSiteGetUsageMetricsResponse.UsageMetric>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSiteGetUsageMetricsResponse.UsageMetric> GetEnumerator()
         {
-            return this.UsageMetricsValue.GetEnumerator();
+            return this.UsageMetrics.GetEnumerator();
         }
         
         /// <summary>

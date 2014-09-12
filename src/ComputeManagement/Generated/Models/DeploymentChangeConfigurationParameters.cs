@@ -58,31 +58,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IDictionary<string, string> ExtendedProperties
         {
-            get
-            {
-                if (this._extendedProperties == null)
-                {
-                    this._extendedProperties = new Dictionary<string, string>();
-                }
-                return this._extendedProperties;
-            }
-            set { this._extendedProperties = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Represents the name of an extended deployment property.
-        /// Each extended property must have a defined name and a value. You
-        /// can have a maximum of 25 extended property name/value pairs. The
-        /// maximum length of the name element is 64 characters, only
-        /// alphanumeric characters and underscores are valid in the name, and
-        /// the name must start with a letter. Attempting to use other
-        /// characters, starting the name with a non-letter character, or
-        /// entering a name that is identical to that of another extended
-        /// property owned by the same hosted service will result in a status
-        /// code 400 (Bad Request) error.
-        /// </summary>
-        public IDictionary<string, string> ExtendedPropertiesValue
-        {
             get { return this._extendedProperties; }
             set { this._extendedProperties = value; }
         }
@@ -138,6 +113,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentChangeConfigurationParameters()
         {
+            this.ExtendedProperties = new Dictionary<string, string>();
         }
         
         /// <summary>

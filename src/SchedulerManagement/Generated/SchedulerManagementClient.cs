@@ -535,7 +535,6 @@ namespace Microsoft.WindowsAzure.Management.Scheduler
                     XElement resourceProviderPropertiesSequenceElement = responseDoc.Element(XName.Get("ResourceProviderProperties", "http://schemas.microsoft.com/windowsazure"));
                     if (resourceProviderPropertiesSequenceElement != null)
                     {
-                        result.Properties = new Dictionary<string, string>();
                         foreach (XElement resourceProviderPropertiesElement in resourceProviderPropertiesSequenceElement.Elements(XName.Get("ResourceProviderProperty", "http://schemas.microsoft.com/windowsazure")))
                         {
                             string resourceProviderPropertiesKey = resourceProviderPropertiesElement.Element(XName.Get("Key", "http://schemas.microsoft.com/windowsazure")).Value;

@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IList<ClientRootCertificateListResponse.ClientRootCertificate> ClientRootCertificates
         {
-            get
-            {
-                if (this._clientRootCertificates == null)
-                {
-                    this._clientRootCertificates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Network.Models.ClientRootCertificateListResponse.ClientRootCertificate>();
-                }
-                return this._clientRootCertificates;
-            }
-            set { this._clientRootCertificates = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of client root certificates.
-        /// </summary>
-        public IList<ClientRootCertificateListResponse.ClientRootCertificate> ClientRootCertificatesValue
-        {
             get { return this._clientRootCertificates; }
             set { this._clientRootCertificates = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public ClientRootCertificateListResponse()
         {
+            this.ClientRootCertificates = new List<ClientRootCertificateListResponse.ClientRootCertificate>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
         /// </summary>
         public IEnumerator<ClientRootCertificateListResponse.ClientRootCertificate> GetEnumerator()
         {
-            return this.ClientRootCertificatesValue.GetEnumerator();
+            return this.ClientRootCertificates.GetEnumerator();
         }
         
         /// <summary>

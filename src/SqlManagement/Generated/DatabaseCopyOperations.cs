@@ -888,7 +888,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
-                        result.DatabaseCopies = new List<DatabaseCopy>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             DatabaseCopy serviceResourceInstance = new DatabaseCopy();

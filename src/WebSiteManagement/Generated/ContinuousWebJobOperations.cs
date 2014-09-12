@@ -627,7 +627,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken continuousWebJobsArray = responseDoc;
                         if (continuousWebJobsArray != null && continuousWebJobsArray.Type != JTokenType.Null)
                         {
-                            result.ContinuousWebJobs = new List<ContinuousWebJob>();
                             foreach (JToken continuousWebJobsValue in ((JArray)continuousWebJobsArray))
                             {
                                 ContinuousWebJob continuousWebJobInstance = new ContinuousWebJob();

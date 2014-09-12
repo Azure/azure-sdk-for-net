@@ -611,7 +611,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken deploymentsArray = responseDoc;
                         if (deploymentsArray != null && deploymentsArray.Type != JTokenType.Null)
                         {
-                            result.Deployments = new List<Deployment>();
                             foreach (JToken deploymentsValue in ((JArray)deploymentsArray))
                             {
                                 Deployment deploymentInstance = new Deployment();
@@ -897,7 +896,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken logsArray = responseDoc;
                         if (logsArray != null && logsArray.Type != JTokenType.Null)
                         {
-                            result.Logs = new List<DeploymentLog>();
                             foreach (JToken logsValue in ((JArray)logsArray))
                             {
                                 DeploymentLog deploymentLogInstance = new DeploymentLog();

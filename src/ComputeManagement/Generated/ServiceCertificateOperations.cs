@@ -847,7 +847,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement certificatesSequenceElement = responseDoc.Element(XName.Get("Certificates", "http://schemas.microsoft.com/windowsazure"));
                     if (certificatesSequenceElement != null)
                     {
-                        result.Certificates = new List<ServiceCertificateListResponse.Certificate>();
                         foreach (XElement certificatesElement in certificatesSequenceElement.Elements(XName.Get("Certificate", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ServiceCertificateListResponse.Certificate certificateInstance = new ServiceCertificateListResponse.Certificate();

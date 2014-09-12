@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusTopic> Topics
         {
-            get
-            {
-                if (this._topics == null)
-                {
-                    this._topics = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusTopic>();
-                }
-                return this._topics;
-            }
-            set { this._topics = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of topics.
-        /// </summary>
-        public IList<ServiceBusTopic> TopicsValue
-        {
             get { return this._topics; }
             set { this._topics = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopicsResponse()
         {
+            this.Topics = new List<ServiceBusTopic>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusTopic> GetEnumerator()
         {
-            return this.TopicsValue.GetEnumerator();
+            return this.Topics.GetEnumerator();
         }
         
         /// <summary>

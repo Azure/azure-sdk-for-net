@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IList<ContinuousWebJob> ContinuousWebJobs
         {
-            get
-            {
-                if (this._continuousWebJobs == null)
-                {
-                    this._continuousWebJobs = new System.Collections.Generic.List<Microsoft.WindowsAzure.WebSitesExtensions.Models.ContinuousWebJob>();
-                }
-                return this._continuousWebJobs;
-            }
-            set { this._continuousWebJobs = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of continuous WebJobs.
-        /// </summary>
-        public IList<ContinuousWebJob> ContinuousWebJobsValue
-        {
             get { return this._continuousWebJobs; }
             set { this._continuousWebJobs = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public ContinuousWebJobListResponse()
         {
+            this.ContinuousWebJobs = new List<ContinuousWebJob>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IEnumerator<ContinuousWebJob> GetEnumerator()
         {
-            return this.ContinuousWebJobsValue.GetEnumerator();
+            return this.ContinuousWebJobs.GetEnumerator();
         }
         
         /// <summary>

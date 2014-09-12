@@ -323,7 +323,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Value = new List<Incident>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();
@@ -505,7 +504,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                         JToken valueArray = responseDoc["Value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Value = new List<Incident>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Incident incidentInstance = new Incident();

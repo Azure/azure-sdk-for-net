@@ -447,7 +447,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken providersArray = propertiesValue2["providers"];
                             if (providersArray != null && providersArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Providers = new List<Provider>();
                                 foreach (JToken providersValue in ((JArray)providersArray))
                                 {
                                     Provider providerInstance = new Provider();
@@ -477,7 +476,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken resourceTypesArray = providersValue["resourceTypes"];
                                     if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                     {
-                                        providerInstance.ResourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
                                         foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                         {
                                             ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -493,7 +491,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken locationsArray = resourceTypesValue["locations"];
                                             if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                             {
-                                                providerResourceTypeInstance.Locations = new System.Collections.Generic.List<string>();
                                                 foreach (JToken locationsValue in ((JArray)locationsArray))
                                                 {
                                                     providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -507,7 +504,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken dependenciesArray = propertiesValue2["dependencies"];
                             if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Dependencies = new List<Dependency>();
                                 foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
                                 {
                                     Dependency dependencyInstance = new Dependency();
@@ -516,7 +512,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken dependsOnArray = dependenciesValue["dependsOn"];
                                     if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
                                     {
-                                        dependencyInstance.DependsOn = new List<BasicDependency>();
                                         foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
                                         {
                                             BasicDependency basicDependencyInstance = new BasicDependency();
@@ -834,7 +829,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken providersArray = propertiesValue["providers"];
                             if (providersArray != null && providersArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Providers = new List<Provider>();
                                 foreach (JToken providersValue in ((JArray)providersArray))
                                 {
                                     Provider providerInstance = new Provider();
@@ -864,7 +858,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken resourceTypesArray = providersValue["resourceTypes"];
                                     if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                     {
-                                        providerInstance.ResourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
                                         foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                         {
                                             ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -880,7 +873,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken locationsArray = resourceTypesValue["locations"];
                                             if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                             {
-                                                providerResourceTypeInstance.Locations = new System.Collections.Generic.List<string>();
                                                 foreach (JToken locationsValue in ((JArray)locationsArray))
                                                 {
                                                     providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -894,7 +886,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken dependenciesArray = propertiesValue["dependencies"];
                             if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Dependencies = new List<Dependency>();
                                 foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
                                 {
                                     Dependency dependencyInstance = new Dependency();
@@ -903,7 +894,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken dependsOnArray = dependenciesValue["dependsOn"];
                                     if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
                                     {
-                                        dependencyInstance.DependsOn = new List<BasicDependency>();
                                         foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
                                         {
                                             BasicDependency basicDependencyInstance = new BasicDependency();
@@ -1171,7 +1161,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Deployments = new List<Deployment>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Deployment deploymentInstance = new Deployment();
@@ -1228,7 +1217,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken providersArray = propertiesValue["providers"];
                                     if (providersArray != null && providersArray.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.Providers = new List<Provider>();
                                         foreach (JToken providersValue in ((JArray)providersArray))
                                         {
                                             Provider providerInstance = new Provider();
@@ -1258,7 +1246,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken resourceTypesArray = providersValue["resourceTypes"];
                                             if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                             {
-                                                providerInstance.ResourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
                                                 foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                                 {
                                                     ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -1274,7 +1261,6 @@ namespace Microsoft.Azure.Management.Resources
                                                     JToken locationsArray = resourceTypesValue["locations"];
                                                     if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                                     {
-                                                        providerResourceTypeInstance.Locations = new System.Collections.Generic.List<string>();
                                                         foreach (JToken locationsValue in ((JArray)locationsArray))
                                                         {
                                                             providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -1288,7 +1274,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken dependenciesArray = propertiesValue["dependencies"];
                                     if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.Dependencies = new List<Dependency>();
                                         foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
                                         {
                                             Dependency dependencyInstance = new Dependency();
@@ -1297,7 +1282,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken dependsOnArray = dependenciesValue["dependsOn"];
                                             if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
                                             {
-                                                dependencyInstance.DependsOn = new List<BasicDependency>();
                                                 foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
                                                 {
                                                     BasicDependency basicDependencyInstance = new BasicDependency();
@@ -1544,7 +1528,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Deployments = new List<Deployment>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Deployment deploymentInstance = new Deployment();
@@ -1601,7 +1584,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken providersArray = propertiesValue["providers"];
                                     if (providersArray != null && providersArray.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.Providers = new List<Provider>();
                                         foreach (JToken providersValue in ((JArray)providersArray))
                                         {
                                             Provider providerInstance = new Provider();
@@ -1631,7 +1613,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken resourceTypesArray = providersValue["resourceTypes"];
                                             if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                             {
-                                                providerInstance.ResourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
                                                 foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                                 {
                                                     ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -1647,7 +1628,6 @@ namespace Microsoft.Azure.Management.Resources
                                                     JToken locationsArray = resourceTypesValue["locations"];
                                                     if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                                     {
-                                                        providerResourceTypeInstance.Locations = new System.Collections.Generic.List<string>();
                                                         foreach (JToken locationsValue in ((JArray)locationsArray))
                                                         {
                                                             providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -1661,7 +1641,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken dependenciesArray = propertiesValue["dependencies"];
                                     if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
                                     {
-                                        propertiesInstance.Dependencies = new List<Dependency>();
                                         foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
                                         {
                                             Dependency dependencyInstance = new Dependency();
@@ -1670,7 +1649,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken dependsOnArray = dependenciesValue["dependsOn"];
                                             if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
                                             {
-                                                dependencyInstance.DependsOn = new List<BasicDependency>();
                                                 foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
                                                 {
                                                     BasicDependency basicDependencyInstance = new BasicDependency();
@@ -2024,7 +2002,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken detailsArray = errorValue["details"];
                             if (detailsArray != null && detailsArray.Type != JTokenType.Null)
                             {
-                                errorInstance.Details = new List<ResourceManagementError>();
                                 foreach (JToken detailsValue in ((JArray)detailsArray))
                                 {
                                     ResourceManagementError resourceManagementErrorInstance = new ResourceManagementError();
@@ -2112,7 +2089,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken providersArray = propertiesValue2["providers"];
                             if (providersArray != null && providersArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Providers = new List<Provider>();
                                 foreach (JToken providersValue in ((JArray)providersArray))
                                 {
                                     Provider providerInstance = new Provider();
@@ -2142,7 +2118,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken resourceTypesArray = providersValue["resourceTypes"];
                                     if (resourceTypesArray != null && resourceTypesArray.Type != JTokenType.Null)
                                     {
-                                        providerInstance.ResourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
                                         foreach (JToken resourceTypesValue in ((JArray)resourceTypesArray))
                                         {
                                             ProviderResourceType providerResourceTypeInstance = new ProviderResourceType();
@@ -2158,7 +2133,6 @@ namespace Microsoft.Azure.Management.Resources
                                             JToken locationsArray = resourceTypesValue["locations"];
                                             if (locationsArray != null && locationsArray.Type != JTokenType.Null)
                                             {
-                                                providerResourceTypeInstance.Locations = new System.Collections.Generic.List<string>();
                                                 foreach (JToken locationsValue in ((JArray)locationsArray))
                                                 {
                                                     providerResourceTypeInstance.Locations.Add(((string)locationsValue));
@@ -2172,7 +2146,6 @@ namespace Microsoft.Azure.Management.Resources
                             JToken dependenciesArray = propertiesValue2["dependencies"];
                             if (dependenciesArray != null && dependenciesArray.Type != JTokenType.Null)
                             {
-                                propertiesInstance.Dependencies = new List<Dependency>();
                                 foreach (JToken dependenciesValue in ((JArray)dependenciesArray))
                                 {
                                     Dependency dependencyInstance = new Dependency();
@@ -2181,7 +2154,6 @@ namespace Microsoft.Azure.Management.Resources
                                     JToken dependsOnArray = dependenciesValue["dependsOn"];
                                     if (dependsOnArray != null && dependsOnArray.Type != JTokenType.Null)
                                     {
-                                        dependencyInstance.DependsOn = new List<BasicDependency>();
                                         foreach (JToken dependsOnValue in ((JArray)dependsOnArray))
                                         {
                                             BasicDependency basicDependencyInstance = new BasicDependency();

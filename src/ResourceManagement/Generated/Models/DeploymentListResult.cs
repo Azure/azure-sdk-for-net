@@ -39,22 +39,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<Deployment> Deployments
         {
-            get
-            {
-                if (this._deployments == null)
-                {
-                    this._deployments = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.Deployment>();
-                }
-                return this._deployments;
-            }
-            set { this._deployments = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of deployments.
-        /// </summary>
-        public IList<Deployment> DeploymentsValue
-        {
             get { return this._deployments; }
             set { this._deployments = value; }
         }
@@ -75,6 +59,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentListResult()
         {
+            this.Deployments = new List<Deployment>();
         }
     }
 }

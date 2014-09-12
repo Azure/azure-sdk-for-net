@@ -873,7 +873,6 @@ namespace Microsoft.Azure.Management.Redis
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Value = new List<RedisResource>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RedisResource redisResourceInstance = new RedisResource();
@@ -1269,7 +1268,6 @@ namespace Microsoft.Azure.Management.Redis
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Value = new List<RedisResource>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RedisResource redisResourceInstance = new RedisResource();

@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSpacesListGeoRegionsResponse.GeoRegion> GeoRegions
         {
-            get
-            {
-                if (this._geoRegions == null)
-                {
-                    this._geoRegions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSpacesListGeoRegionsResponse.GeoRegion>();
-                }
-                return this._geoRegions;
-            }
-            set { this._geoRegions = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The available geo regions.
-        /// </summary>
-        public IList<WebSpacesListGeoRegionsResponse.GeoRegion> GeoRegionsValue
-        {
             get { return this._geoRegions; }
             set { this._geoRegions = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListGeoRegionsResponse()
         {
+            this.GeoRegions = new List<WebSpacesListGeoRegionsResponse.GeoRegion>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSpacesListGeoRegionsResponse.GeoRegion> GetEnumerator()
         {
-            return this.GeoRegionsValue.GetEnumerator();
+            return this.GeoRegions.GetEnumerator();
         }
         
         /// <summary>

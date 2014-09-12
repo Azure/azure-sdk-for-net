@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<BackupItem> BackupItems
         {
-            get
-            {
-                if (this._backupItems == null)
-                {
-                    this._backupItems = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.BackupItem>();
-                }
-                return this._backupItems;
-            }
-            set { this._backupItems = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Backups for a web site.
-        /// </summary>
-        public IList<BackupItem> BackupItemsValue
-        {
             get { return this._backupItems; }
             set { this._backupItems = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetBackupsResponse()
         {
+            this.BackupItems = new List<BackupItem>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<BackupItem> GetEnumerator()
         {
-            return this.BackupItemsValue.GetEnumerator();
+            return this.BackupItems.GetEnumerator();
         }
         
         /// <summary>

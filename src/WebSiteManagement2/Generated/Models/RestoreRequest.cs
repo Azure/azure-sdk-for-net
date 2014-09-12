@@ -63,22 +63,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public IList<DatabaseBackupSetting> Databases
         {
-            get
-            {
-                if (this._databases == null)
-                {
-                    this._databases = new List<DatabaseBackupSetting>();
-                }
-                return this._databases;
-            }
-            set { this._databases = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Database settings for backup.
-        /// </summary>
-        public IList<DatabaseBackupSetting> DatabasesValue
-        {
             get { return this._databases; }
             set { this._databases = value; }
         }
@@ -126,6 +110,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public RestoreRequest()
         {
+            this.Databases = new List<DatabaseBackupSetting>();
         }
     }
 }

@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<WindowsRemoteManagementListener> Listeners
         {
-            get
-            {
-                if (this._listeners == null)
-                {
-                    this._listeners = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.WindowsRemoteManagementListener>();
-                }
-                return this._listeners;
-            }
-            set { this._listeners = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Contains a collection of information for enabling remote
-        /// Windows PowerShell.
-        /// </summary>
-        public IList<WindowsRemoteManagementListener> ListenersValue
-        {
             get { return this._listeners; }
             set { this._listeners = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public WindowsRemoteManagementSettings()
         {
+            this.Listeners = new List<WindowsRemoteManagementListener>();
         }
     }
 }

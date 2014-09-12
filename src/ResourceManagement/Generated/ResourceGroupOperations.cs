@@ -442,9 +442,9 @@ namespace Microsoft.Azure.Management.Resources
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.TagsValue != null)
+                if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -547,7 +547,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -827,7 +826,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -997,7 +995,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.ResourceGroups = new List<ResourceGroup>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
@@ -1045,7 +1042,6 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    resourceGroupJsonFormatInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
@@ -1192,7 +1188,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.ResourceGroups = new List<ResourceGroup>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 ResourceGroup resourceGroupJsonFormatInstance = new ResourceGroup();
@@ -1240,7 +1235,6 @@ namespace Microsoft.Azure.Management.Resources
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    resourceGroupJsonFormatInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);
@@ -1396,9 +1390,9 @@ namespace Microsoft.Azure.Management.Resources
                 }
                 
                 JObject tagsDictionary = new JObject();
-                if (parameters.TagsValue != null)
+                if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.TagsValue)
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
@@ -1501,7 +1495,6 @@ namespace Microsoft.Azure.Management.Resources
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            resourceGroupInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);

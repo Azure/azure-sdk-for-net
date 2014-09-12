@@ -171,7 +171,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     {
                         if (feedElement != null)
                         {
-                            result.ConnectionDetails = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetail>();
                             foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                             {
                                 ServiceBusConnectionDetail entryInstance = new ServiceBusConnectionDetail();
@@ -207,7 +206,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement rightsSequenceElement = connectionDetailElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (rightsSequenceElement != null)
                                         {
-                                            entryInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                             foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 entryInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));

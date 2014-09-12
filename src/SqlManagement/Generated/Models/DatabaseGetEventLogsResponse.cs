@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<DatabaseEventLog> EventLogs
         {
-            get
-            {
-                if (this._eventLogs == null)
-                {
-                    this._eventLogs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseEventLog>();
-                }
-                return this._eventLogs;
-            }
-            set { this._eventLogs = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of Azure SQL Database event
-        /// logs.
-        /// </summary>
-        public IList<DatabaseEventLog> EventLogsValue
-        {
             get { return this._eventLogs; }
             set { this._eventLogs = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseGetEventLogsResponse()
         {
+            this.EventLogs = new List<DatabaseEventLog>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<DatabaseEventLog> GetEnumerator()
         {
-            return this.EventLogsValue.GetEnumerator();
+            return this.EventLogs.GetEnumerator();
         }
         
         /// <summary>

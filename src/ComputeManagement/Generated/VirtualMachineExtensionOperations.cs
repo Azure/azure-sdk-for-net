@@ -164,7 +164,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement resourceExtensionsSequenceElement = responseDoc.Element(XName.Get("ResourceExtensions", "http://schemas.microsoft.com/windowsazure"));
                     if (resourceExtensionsSequenceElement != null)
                     {
-                        result.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
                         foreach (XElement resourceExtensionsElement in resourceExtensionsSequenceElement.Elements(XName.Get("ResourceExtension", "http://schemas.microsoft.com/windowsazure")))
                         {
                             VirtualMachineExtensionListResponse.ResourceExtension resourceExtensionInstance = new VirtualMachineExtensionListResponse.ResourceExtension();
@@ -440,7 +439,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement resourceExtensionsSequenceElement = responseDoc.Element(XName.Get("ResourceExtensions", "http://schemas.microsoft.com/windowsazure"));
                     if (resourceExtensionsSequenceElement != null)
                     {
-                        result.ResourceExtensions = new List<VirtualMachineExtensionListResponse.ResourceExtension>();
                         foreach (XElement resourceExtensionsElement in resourceExtensionsSequenceElement.Elements(XName.Get("ResourceExtension", "http://schemas.microsoft.com/windowsazure")))
                         {
                             VirtualMachineExtensionListResponse.ResourceExtension resourceExtensionInstance = new VirtualMachineExtensionListResponse.ResourceExtension();

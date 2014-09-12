@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
                                 {
-                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB.Value;
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
                                     {
-                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
@@ -364,7 +364,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                             {
-                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
                                             }
                                             
                                             if (eventSourceProvidersItem.Provider != null)
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
                                             {
-                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
+                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter.Value;
                                             }
                                             
                                             if (eventSourceProvidersItem.Events != null)
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                             {
-                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
                                             }
                                             
                                             if (manifestProvidersItem.Provider != null)
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
                                             {
-                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
+                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter.Value;
                                             }
                                             
                                             if (manifestProvidersItem.Events != null)
@@ -462,12 +462,12 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
                                     {
-                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage.Value;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
                                     {
-                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.Value.ToString();
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)
@@ -1713,7 +1713,7 @@ namespace Microsoft.Azure.Management.Insights
                                 
                                 if (derived.DiagnosticMonitorConfiguration.OverallQuotaInMB != null)
                                 {
-                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB;
+                                    diagnosticMonitorConfigurationValue["overallQuotaInMB"] = derived.DiagnosticMonitorConfiguration.OverallQuotaInMB.Value;
                                 }
                                 
                                 if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs != null)
@@ -1723,7 +1723,7 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter != null)
                                     {
-                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.ToString();
+                                        diagnosticInfrastructureLogsValue["scheduledTransferLogLevelFilter"] = derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferLogLevelFilter.Value.ToString();
                                     }
                                     
                                     diagnosticInfrastructureLogsValue["scheduledTransferPeriod"] = TypeConversion.To8601String(derived.DiagnosticMonitorConfiguration.DiagnosticInfrastructureLogs.ScheduledTransferPeriod);
@@ -1904,7 +1904,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (eventSourceProvidersItem.ScheduledTransferLogLevelFilter != null)
                                             {
-                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                                etwProviderValue["scheduledTransferLogLevelFilter"] = eventSourceProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
                                             }
                                             
                                             if (eventSourceProvidersItem.Provider != null)
@@ -1914,7 +1914,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (eventSourceProvidersItem.ScheduledTransferKeywordFilter != null)
                                             {
-                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter;
+                                                etwProviderValue["scheduledTransferKeywordFilter"] = eventSourceProvidersItem.ScheduledTransferKeywordFilter.Value;
                                             }
                                             
                                             if (eventSourceProvidersItem.Events != null)
@@ -1955,7 +1955,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (manifestProvidersItem.ScheduledTransferLogLevelFilter != null)
                                             {
-                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.ToString();
+                                                etwProviderValue2["scheduledTransferLogLevelFilter"] = manifestProvidersItem.ScheduledTransferLogLevelFilter.Value.ToString();
                                             }
                                             
                                             if (manifestProvidersItem.Provider != null)
@@ -1965,7 +1965,7 @@ namespace Microsoft.Azure.Management.Insights
                                             
                                             if (manifestProvidersItem.ScheduledTransferKeywordFilter != null)
                                             {
-                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter;
+                                                etwProviderValue2["scheduledTransferKeywordFilter"] = manifestProvidersItem.ScheduledTransferKeywordFilter.Value;
                                             }
                                             
                                             if (manifestProvidersItem.Events != null)
@@ -2002,12 +2002,12 @@ namespace Microsoft.Azure.Management.Insights
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage != null)
                                     {
-                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage;
+                                        crashDumpsValue["directoryQuotaPercentage"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DirectoryQuotaPercentage.Value;
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType != null)
                                     {
-                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.ToString();
+                                        crashDumpsValue["dumpType"] = derived.DiagnosticMonitorConfiguration.CrashDumps.DumpType.Value.ToString();
                                     }
                                     
                                     if (derived.DiagnosticMonitorConfiguration.CrashDumps.ContainerName != null)

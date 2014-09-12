@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint> LoadBalancedEndpoints
         {
-            get
-            {
-                if (this._loadBalancedEndpoints == null)
-                {
-                    this._loadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
-                }
-                return this._loadBalancedEndpoints;
-            }
-            set { this._loadBalancedEndpoints = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of load balanced InputEndpoints to update.
-        /// </summary>
-        public IList<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint> LoadBalancedEndpointsValue
-        {
             get { return this._loadBalancedEndpoints; }
             set { this._loadBalancedEndpoints = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateLoadBalancedSetParameters()
         {
+            this.LoadBalancedEndpoints = new List<VirtualMachineUpdateLoadBalancedSetParameters.InputEndpoint>();
         }
         
         /// <summary>
@@ -205,26 +190,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public IList<AccessControlListRule> Rules
             {
-                get
-                {
-                    if (this._rules == null)
-                    {
-                        this._rules = new List<AccessControlListRule>();
-                    }
-                    return this._rules;
-                }
-                set { this._rules = value; }
-            }
-            
-            /// <summary>
-            /// Optional. A collection of access control rules which control
-            /// the external network traffic reaching to this endpoint. NOTES:
-            /// (1) To remove the ACLs from a load-balanced endpoint just omit
-            /// this element. (2) ACLs are set as specified. There is no merge
-            /// done with existing ACLs.
-            /// </summary>
-            public IList<AccessControlListRule> RulesValue
-            {
                 get { return this._rules; }
                 set { this._rules = value; }
             }
@@ -245,6 +210,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public InputEndpoint()
             {
+                this.Rules = new List<AccessControlListRule>();
             }
             
             /// <summary>

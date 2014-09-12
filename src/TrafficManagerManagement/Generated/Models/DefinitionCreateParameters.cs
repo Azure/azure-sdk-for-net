@@ -49,22 +49,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<DefinitionMonitor> Monitors
         {
-            get
-            {
-                if (this._monitors == null)
-                {
-                    this._monitors = new List<DefinitionMonitor>();
-                }
-                return this._monitors;
-            }
-            set { this._monitors = value; }
-        }
-        
-        /// <summary>
-        /// Required.
-        /// </summary>
-        public IList<DefinitionMonitor> MonitorsValue
-        {
             get { return this._monitors; }
             set { this._monitors = value; }
         }
@@ -85,6 +69,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionCreateParameters()
         {
+            this.Monitors = new List<DefinitionMonitor>();
         }
         
         /// <summary>
@@ -107,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
                 throw new ArgumentNullException("policy");
             }
             this.DnsOptions = dnsOptions;
-            this.MonitorsValue = monitors;
+            this.Monitors = monitors;
             this.Policy = policy;
         }
     }

@@ -39,23 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<string> InstanceIds
         {
-            get
-            {
-                if (this._instanceIds == null)
-                {
-                    this._instanceIds = new System.Collections.Generic.List<string>();
-                }
-                return this._instanceIds;
-            }
-            set { this._instanceIds = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The identifiers of the currently running instances of the
-        /// web site.
-        /// </summary>
-        public IList<string> InstanceIdsValue
-        {
             get { return this._instanceIds; }
             set { this._instanceIds = value; }
         }
@@ -65,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteInstanceIdsResponse()
         {
+            this.InstanceIds = new List<string>();
         }
         
         /// <summary>
@@ -72,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<string> GetEnumerator()
         {
-            return this.InstanceIdsValue.GetEnumerator();
+            return this.InstanceIds.GetEnumerator();
         }
         
         /// <summary>

@@ -246,9 +246,9 @@ namespace Microsoft.WindowsAzure.Scheduler
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
                         JObject headersDictionary = new JObject();
-                        if (parameters.Action.ErrorAction.Request.HeadersValue != null)
+                        if (parameters.Action.ErrorAction.Request.Headers != null)
                         {
-                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.HeadersValue)
+                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
                             {
                                 string headersKey = pair.Key;
                                 string headersValue = pair.Value;
@@ -288,9 +288,9 @@ namespace Microsoft.WindowsAzure.Scheduler
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
                     JObject headersDictionary2 = new JObject();
-                    if (parameters.Action.Request.HeadersValue != null)
+                    if (parameters.Action.Request.Headers != null)
                     {
-                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.HeadersValue)
+                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
                         {
                             string headersKey2 = pair2.Key;
                             string headersValue2 = pair2.Value;
@@ -346,60 +346,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject scheduleValue = new JObject();
                         recurrenceValue["schedule"] = scheduleValue;
                         
-                        if (parameters.Recurrence.Schedule.MinutesValue != null)
+                        if (parameters.Recurrence.Schedule.Minutes != null)
                         {
                             JArray minutesArray = new JArray();
-                            foreach (int minutesItem in parameters.Recurrence.Schedule.MinutesValue)
+                            foreach (int minutesItem in parameters.Recurrence.Schedule.Minutes)
                             {
                                 minutesArray.Add(minutesItem);
                             }
                             scheduleValue["minutes"] = minutesArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.HoursValue != null)
+                        if (parameters.Recurrence.Schedule.Hours != null)
                         {
                             JArray hoursArray = new JArray();
-                            foreach (int hoursItem in parameters.Recurrence.Schedule.HoursValue)
+                            foreach (int hoursItem in parameters.Recurrence.Schedule.Hours)
                             {
                                 hoursArray.Add(hoursItem);
                             }
                             scheduleValue["hours"] = hoursArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.DaysValue != null)
+                        if (parameters.Recurrence.Schedule.Days != null)
                         {
                             JArray weekDaysArray = new JArray();
-                            foreach (JobScheduleDay weekDaysItem in parameters.Recurrence.Schedule.DaysValue)
+                            foreach (JobScheduleDay weekDaysItem in parameters.Recurrence.Schedule.Days)
                             {
                                 weekDaysArray.Add(SchedulerClient.JobScheduleDayToString(weekDaysItem));
                             }
                             scheduleValue["weekDays"] = weekDaysArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthsValue != null)
+                        if (parameters.Recurrence.Schedule.Months != null)
                         {
                             JArray monthsArray = new JArray();
-                            foreach (int monthsItem in parameters.Recurrence.Schedule.MonthsValue)
+                            foreach (int monthsItem in parameters.Recurrence.Schedule.Months)
                             {
                                 monthsArray.Add(monthsItem);
                             }
                             scheduleValue["months"] = monthsArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthDaysValue != null)
+                        if (parameters.Recurrence.Schedule.MonthDays != null)
                         {
                             JArray monthDaysArray = new JArray();
-                            foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDaysValue)
+                            foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDays)
                             {
                                 monthDaysArray.Add(monthDaysItem);
                             }
                             scheduleValue["monthDays"] = monthDaysArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthlyOccurrencesValue != null)
+                        if (parameters.Recurrence.Schedule.MonthlyOccurrences != null)
                         {
                             JArray monthlyOccurrencesArray = new JArray();
-                            foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrencesValue)
+                            foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrences)
                             {
                                 JObject jobScheduleMonthlyOccurrenceValue = new JObject();
                                 monthlyOccurrencesArray.Add(jobScheduleMonthlyOccurrenceValue);
@@ -554,7 +554,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
                                     if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                     {
-                                        requestInstance.Headers = new Dictionary<string, string>();
                                         foreach (JProperty property in headersSequenceElement)
                                         {
                                             string headersKey3 = ((string)property.Name);
@@ -630,7 +629,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
                                 if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    requestInstance2.Headers = new Dictionary<string, string>();
                                     foreach (JProperty property2 in headersSequenceElement2)
                                     {
                                         string headersKey4 = ((string)property2.Name);
@@ -1070,9 +1068,9 @@ namespace Microsoft.WindowsAzure.Scheduler
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
                         JObject headersDictionary = new JObject();
-                        if (parameters.Action.ErrorAction.Request.HeadersValue != null)
+                        if (parameters.Action.ErrorAction.Request.Headers != null)
                         {
-                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.HeadersValue)
+                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
                             {
                                 string headersKey = pair.Key;
                                 string headersValue = pair.Value;
@@ -1112,9 +1110,9 @@ namespace Microsoft.WindowsAzure.Scheduler
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
                     JObject headersDictionary2 = new JObject();
-                    if (parameters.Action.Request.HeadersValue != null)
+                    if (parameters.Action.Request.Headers != null)
                     {
-                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.HeadersValue)
+                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
                         {
                             string headersKey2 = pair2.Key;
                             string headersValue2 = pair2.Value;
@@ -1170,60 +1168,60 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JObject scheduleValue = new JObject();
                         recurrenceValue["schedule"] = scheduleValue;
                         
-                        if (parameters.Recurrence.Schedule.MinutesValue != null)
+                        if (parameters.Recurrence.Schedule.Minutes != null)
                         {
                             JArray minutesArray = new JArray();
-                            foreach (int minutesItem in parameters.Recurrence.Schedule.MinutesValue)
+                            foreach (int minutesItem in parameters.Recurrence.Schedule.Minutes)
                             {
                                 minutesArray.Add(minutesItem);
                             }
                             scheduleValue["minutes"] = minutesArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.HoursValue != null)
+                        if (parameters.Recurrence.Schedule.Hours != null)
                         {
                             JArray hoursArray = new JArray();
-                            foreach (int hoursItem in parameters.Recurrence.Schedule.HoursValue)
+                            foreach (int hoursItem in parameters.Recurrence.Schedule.Hours)
                             {
                                 hoursArray.Add(hoursItem);
                             }
                             scheduleValue["hours"] = hoursArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.DaysValue != null)
+                        if (parameters.Recurrence.Schedule.Days != null)
                         {
                             JArray weekDaysArray = new JArray();
-                            foreach (JobScheduleDay weekDaysItem in parameters.Recurrence.Schedule.DaysValue)
+                            foreach (JobScheduleDay weekDaysItem in parameters.Recurrence.Schedule.Days)
                             {
                                 weekDaysArray.Add(SchedulerClient.JobScheduleDayToString(weekDaysItem));
                             }
                             scheduleValue["weekDays"] = weekDaysArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthsValue != null)
+                        if (parameters.Recurrence.Schedule.Months != null)
                         {
                             JArray monthsArray = new JArray();
-                            foreach (int monthsItem in parameters.Recurrence.Schedule.MonthsValue)
+                            foreach (int monthsItem in parameters.Recurrence.Schedule.Months)
                             {
                                 monthsArray.Add(monthsItem);
                             }
                             scheduleValue["months"] = monthsArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthDaysValue != null)
+                        if (parameters.Recurrence.Schedule.MonthDays != null)
                         {
                             JArray monthDaysArray = new JArray();
-                            foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDaysValue)
+                            foreach (int monthDaysItem in parameters.Recurrence.Schedule.MonthDays)
                             {
                                 monthDaysArray.Add(monthDaysItem);
                             }
                             scheduleValue["monthDays"] = monthDaysArray;
                         }
                         
-                        if (parameters.Recurrence.Schedule.MonthlyOccurrencesValue != null)
+                        if (parameters.Recurrence.Schedule.MonthlyOccurrences != null)
                         {
                             JArray monthlyOccurrencesArray = new JArray();
-                            foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrencesValue)
+                            foreach (JobScheduleMonthlyOccurrence monthlyOccurrencesItem in parameters.Recurrence.Schedule.MonthlyOccurrences)
                             {
                                 JObject jobScheduleMonthlyOccurrenceValue = new JObject();
                                 monthlyOccurrencesArray.Add(jobScheduleMonthlyOccurrenceValue);
@@ -1378,7 +1376,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement = ((JToken)requestValue3["headers"]);
                                     if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                     {
-                                        requestInstance.Headers = new Dictionary<string, string>();
                                         foreach (JProperty property in headersSequenceElement)
                                         {
                                             string headersKey3 = ((string)property.Name);
@@ -1454,7 +1451,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken headersSequenceElement2 = ((JToken)requestValue4["headers"]);
                                 if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    requestInstance2.Headers = new Dictionary<string, string>();
                                     foreach (JProperty property2 in headersSequenceElement2)
                                     {
                                         string headersKey4 = ((string)property2.Name);
@@ -2020,7 +2016,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement = ((JToken)requestValue["headers"]);
                                     if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                     {
-                                        requestInstance.Headers = new Dictionary<string, string>();
                                         foreach (JProperty property in headersSequenceElement)
                                         {
                                             string headersKey = ((string)property.Name);
@@ -2096,7 +2091,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                 if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    requestInstance2.Headers = new Dictionary<string, string>();
                                     foreach (JProperty property2 in headersSequenceElement2)
                                     {
                                         string headersKey2 = ((string)property2.Name);
@@ -2466,7 +2460,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken jobHistoryArray = responseDoc;
                         if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                         {
-                            result.JobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
                             foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
                             {
                                 JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
@@ -2697,7 +2690,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken jobHistoryArray = responseDoc;
                         if (jobHistoryArray != null && jobHistoryArray.Type != JTokenType.Null)
                         {
-                            result.JobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
                             foreach (JToken jobHistoryValue in ((JArray)jobHistoryArray))
                             {
                                 JobGetHistoryResponse.JobHistoryEntry jobHistoryEntryInstance = new JobGetHistoryResponse.JobHistoryEntry();
@@ -2918,7 +2910,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 Job jobInstance = new Job();
@@ -3015,7 +3006,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement = ((JToken)requestValue["headers"]);
                                             if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                             {
-                                                requestInstance.Headers = new Dictionary<string, string>();
                                                 foreach (JProperty property in headersSequenceElement)
                                                 {
                                                     string headersKey = ((string)property.Name);
@@ -3091,7 +3081,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                         if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            requestInstance2.Headers = new Dictionary<string, string>();
                                             foreach (JProperty property2 in headersSequenceElement2)
                                             {
                                                 string headersKey2 = ((string)property2.Name);
@@ -3458,7 +3447,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 Job jobInstance = new Job();
@@ -3555,7 +3543,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement = ((JToken)requestValue["headers"]);
                                             if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                             {
-                                                requestInstance.Headers = new Dictionary<string, string>();
                                                 foreach (JProperty property in headersSequenceElement)
                                                 {
                                                     string headersKey = ((string)property.Name);
@@ -3631,7 +3618,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                         if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            requestInstance2.Headers = new Dictionary<string, string>();
                                             foreach (JProperty property2 in headersSequenceElement2)
                                             {
                                                 string headersKey2 = ((string)property2.Name);
@@ -4002,7 +3988,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                         JToken jobsArray = responseDoc;
                         if (jobsArray != null && jobsArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken jobsValue in ((JArray)jobsArray))
                             {
                                 Job jobInstance = new Job();
@@ -4099,7 +4084,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                             JToken headersSequenceElement = ((JToken)requestValue["headers"]);
                                             if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                             {
-                                                requestInstance.Headers = new Dictionary<string, string>();
                                                 foreach (JProperty property in headersSequenceElement)
                                                 {
                                                     string headersKey = ((string)property.Name);
@@ -4175,7 +4159,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                         if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                         {
-                                            requestInstance2.Headers = new Dictionary<string, string>();
                                             foreach (JProperty property2 in headersSequenceElement2)
                                             {
                                                 string headersKey2 = ((string)property2.Name);
@@ -4648,7 +4631,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                     JToken headersSequenceElement = ((JToken)requestValue["headers"]);
                                     if (headersSequenceElement != null && headersSequenceElement.Type != JTokenType.Null)
                                     {
-                                        requestInstance.Headers = new Dictionary<string, string>();
                                         foreach (JProperty property in headersSequenceElement)
                                         {
                                             string headersKey = ((string)property.Name);
@@ -4724,7 +4706,6 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 JToken headersSequenceElement2 = ((JToken)requestValue2["headers"]);
                                 if (headersSequenceElement2 != null && headersSequenceElement2.Type != JTokenType.Null)
                                 {
-                                    requestInstance2.Headers = new Dictionary<string, string>();
                                     foreach (JProperty property2 in headersSequenceElement2)
                                     {
                                         string headersKey2 = ((string)property2.Name);

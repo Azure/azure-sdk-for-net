@@ -867,7 +867,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken triggeredWebJobsArray = responseDoc;
                         if (triggeredWebJobsArray != null && triggeredWebJobsArray.Type != JTokenType.Null)
                         {
-                            result.TriggeredWebJobs = new List<TriggeredWebJob>();
                             foreach (JToken triggeredWebJobsValue in ((JArray)triggeredWebJobsArray))
                             {
                                 TriggeredWebJob triggeredWebJobInstance = new TriggeredWebJob();
@@ -1127,7 +1126,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken runsArray = responseDoc["runs"];
                         if (runsArray != null && runsArray.Type != JTokenType.Null)
                         {
-                            result.TriggeredWebJobRuns = new List<TriggeredWebJobRun>();
                             foreach (JToken runsValue in ((JArray)runsArray))
                             {
                                 TriggeredWebJobRun triggeredWebJobRunInstance = new TriggeredWebJobRun();

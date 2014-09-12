@@ -143,10 +143,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                 
                 if (parameters.Setting != null)
                 {
-                    if (parameters.Setting.ProfilesValue != null)
+                    if (parameters.Setting.Profiles != null)
                     {
                         JArray profilesArray = new JArray();
-                        foreach (AutoscaleProfile profilesItem in parameters.Setting.ProfilesValue)
+                        foreach (AutoscaleProfile profilesItem in parameters.Setting.Profiles)
                         {
                             JObject autoscaleProfileValue = new JObject();
                             profilesArray.Add(autoscaleProfileValue);
@@ -177,10 +177,10 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 }
                             }
                             
-                            if (profilesItem.RulesValue != null)
+                            if (profilesItem.Rules != null)
                             {
                                 JArray rulesArray = new JArray();
-                                foreach (ScaleRule rulesItem in profilesItem.RulesValue)
+                                foreach (ScaleRule rulesItem in profilesItem.Rules)
                                 {
                                     JObject scaleRuleValue = new JObject();
                                     rulesArray.Add(scaleRuleValue);
@@ -270,30 +270,30 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         scheduleValue["TimeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
                                     }
                                     
-                                    if (profilesItem.Recurrence.Schedule.DaysValue != null)
+                                    if (profilesItem.Recurrence.Schedule.Days != null)
                                     {
                                         JArray daysArray = new JArray();
-                                        foreach (string daysItem in profilesItem.Recurrence.Schedule.DaysValue)
+                                        foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
                                         {
                                             daysArray.Add(daysItem);
                                         }
                                         scheduleValue["Days"] = daysArray;
                                     }
                                     
-                                    if (profilesItem.Recurrence.Schedule.HoursValue != null)
+                                    if (profilesItem.Recurrence.Schedule.Hours != null)
                                     {
                                         JArray hoursArray = new JArray();
-                                        foreach (int hoursItem in profilesItem.Recurrence.Schedule.HoursValue)
+                                        foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
                                         {
                                             hoursArray.Add(hoursItem);
                                         }
                                         scheduleValue["Hours"] = hoursArray;
                                     }
                                     
-                                    if (profilesItem.Recurrence.Schedule.MinutesValue != null)
+                                    if (profilesItem.Recurrence.Schedule.Minutes != null)
                                     {
                                         JArray minutesArray = new JArray();
-                                        foreach (int minutesItem in profilesItem.Recurrence.Schedule.MinutesValue)
+                                        foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
                                         {
                                             minutesArray.Add(minutesItem);
                                         }
@@ -596,7 +596,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                         JToken profilesArray = responseDoc["Profiles"];
                         if (profilesArray != null && profilesArray.Type != JTokenType.Null)
                         {
-                            settingInstance.Profiles = new List<AutoscaleProfile>();
                             foreach (JToken profilesValue in ((JArray)profilesArray))
                             {
                                 AutoscaleProfile autoscaleProfileInstance = new AutoscaleProfile();
@@ -640,7 +639,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                 JToken rulesArray = profilesValue["Rules"];
                                 if (rulesArray != null && rulesArray.Type != JTokenType.Null)
                                 {
-                                    autoscaleProfileInstance.Rules = new List<ScaleRule>();
                                     foreach (JToken rulesValue in ((JArray)rulesArray))
                                     {
                                         ScaleRule scaleRuleInstance = new ScaleRule();
@@ -810,7 +808,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         JToken daysArray = scheduleValue["Days"];
                                         if (daysArray != null && daysArray.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Days = new List<string>();
                                             foreach (JToken daysValue in ((JArray)daysArray))
                                             {
                                                 scheduleInstance.Days.Add(((string)daysValue));
@@ -820,7 +817,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         JToken hoursArray = scheduleValue["Hours"];
                                         if (hoursArray != null && hoursArray.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Hours = new List<int>();
                                             foreach (JToken hoursValue in ((JArray)hoursArray))
                                             {
                                                 scheduleInstance.Hours.Add(((int)hoursValue));
@@ -830,7 +826,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale
                                         JToken minutesArray = scheduleValue["Minutes"];
                                         if (minutesArray != null && minutesArray.Type != JTokenType.Null)
                                         {
-                                            scheduleInstance.Minutes = new List<int>();
                                             foreach (JToken minutesValue in ((JArray)minutesArray))
                                             {
                                                 scheduleInstance.Minutes.Add(((int)minutesValue));

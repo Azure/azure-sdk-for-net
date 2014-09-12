@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived.TimeAggregation != null)
                             {
-                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.Value.ToString();
                             }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)
@@ -2619,7 +2619,7 @@ namespace Microsoft.Azure.Management.Insights
                             
                             if (derived.TimeAggregation != null)
                             {
-                                conditionValue["timeAggregation"] = derived.TimeAggregation.ToString();
+                                conditionValue["timeAggregation"] = derived.TimeAggregation.Value.ToString();
                             }
                         }
                         if (parameters.Properties.Condition is LocationThresholdRuleCondition)

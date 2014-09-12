@@ -45,22 +45,6 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public IDictionary<string, string> DeploymentTemplateFileUrls
         {
-            get
-            {
-                if (this._deploymentTemplateFileUrls == null)
-                {
-                    this._deploymentTemplateFileUrls = new System.Collections.Generic.Dictionary<string, string>();
-                }
-                return this._deploymentTemplateFileUrls;
-            }
-            set { this._deploymentTemplateFileUrls = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets deployment template file Url.
-        /// </summary>
-        public IDictionary<string, string> DeploymentTemplateFileUrlsValue
-        {
             get { return this._deploymentTemplateFileUrls; }
             set { this._deploymentTemplateFileUrls = value; }
         }
@@ -81,6 +65,7 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public DefinitionTemplates()
         {
+            this.DeploymentTemplateFileUrls = new Dictionary<string, string>();
         }
     }
 }

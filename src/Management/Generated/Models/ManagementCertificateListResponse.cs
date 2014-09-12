@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<ManagementCertificateListResponse.SubscriptionCertificate> SubscriptionCertificates
         {
-            get
-            {
-                if (this._subscriptionCertificates == null)
-                {
-                    this._subscriptionCertificates = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.ManagementCertificateListResponse.SubscriptionCertificate>();
-                }
-                return this._subscriptionCertificates;
-            }
-            set { this._subscriptionCertificates = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The management certificates that are valid for your
-        /// subscription.
-        /// </summary>
-        public IList<ManagementCertificateListResponse.SubscriptionCertificate> SubscriptionCertificatesValue
-        {
             get { return this._subscriptionCertificates; }
             set { this._subscriptionCertificates = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ManagementCertificateListResponse()
         {
+            this.SubscriptionCertificates = new List<ManagementCertificateListResponse.SubscriptionCertificate>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IEnumerator<ManagementCertificateListResponse.SubscriptionCertificate> GetEnumerator()
         {
-            return this.SubscriptionCertificatesValue.GetEnumerator();
+            return this.SubscriptionCertificates.GetEnumerator();
         }
         
         /// <summary>

@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<Profile> Profiles
         {
-            get
-            {
-                if (this._profiles == null)
-                {
-                    this._profiles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.TrafficManager.Models.Profile>();
-                }
-                return this._profiles;
-            }
-            set { this._profiles = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The profiles associated with the specified subscription.
-        /// </summary>
-        public IList<Profile> ProfilesValue
-        {
             get { return this._profiles; }
             set { this._profiles = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public ProfilesListResponse()
         {
+            this.Profiles = new List<Profile>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IEnumerator<Profile> GetEnumerator()
         {
-            return this.ProfilesValue.GetEnumerator();
+            return this.Profiles.GetEnumerator();
         }
         
         /// <summary>

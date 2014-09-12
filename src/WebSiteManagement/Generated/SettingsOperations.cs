@@ -412,7 +412,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                         JToken settingsSequenceElement = ((JToken)responseDoc);
                         if (settingsSequenceElement != null && settingsSequenceElement.Type != JTokenType.Null)
                         {
-                            result.Settings = new Dictionary<string, string>();
                             foreach (JProperty property in settingsSequenceElement)
                             {
                                 string settingsKey = ((string)property.Name);
@@ -517,9 +516,9 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 JToken requestDoc = null;
                 
                 JObject settingsDictionary = new JObject();
-                if (parameters.SettingsValue != null)
+                if (parameters.Settings != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.SettingsValue)
+                    foreach (KeyValuePair<string, string> pair in parameters.Settings)
                     {
                         string settingsKey = pair.Key;
                         string settingsValue = pair.Value;

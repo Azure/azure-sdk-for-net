@@ -467,7 +467,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken schedulesArray = runbookValue["Schedules"];
                                     if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                     {
-                                        runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                         foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                         {
                                             Schedule scheduleInstance = new Schedule();
@@ -655,7 +654,6 @@ namespace Microsoft.Azure.Management.Automation
                             JToken jobParametersArray = jobContextValue["JobParameters"];
                             if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                             {
-                                jobContextInstance.JobParameters = new List<JobParameter>();
                                 foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                 {
                                     JobParameter jobParameterInstance = new JobParameter();
@@ -849,7 +847,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -1135,7 +1132,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -1323,7 +1319,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -1533,7 +1528,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -1819,7 +1813,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -2007,7 +2000,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -2220,7 +2212,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -2506,7 +2497,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -2694,7 +2684,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -2907,7 +2896,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -3193,7 +3181,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -3381,7 +3368,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -3598,7 +3584,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -3884,7 +3869,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -4072,7 +4056,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -4278,7 +4261,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -4564,7 +4546,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -4752,7 +4733,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -4958,7 +4938,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -5244,7 +5223,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -5432,7 +5410,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();
@@ -5651,7 +5628,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Jobs = new List<Job>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Job jobInstance = new Job();
@@ -5937,7 +5913,6 @@ namespace Microsoft.Azure.Management.Automation
                                             JToken schedulesArray = runbookValue["Schedules"];
                                             if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                             {
-                                                runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                                 foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                                 {
                                                     Schedule scheduleInstance = new Schedule();
@@ -6125,7 +6100,6 @@ namespace Microsoft.Azure.Management.Automation
                                     JToken jobParametersArray = jobContextValue["JobParameters"];
                                     if (jobParametersArray != null && jobParametersArray.Type != JTokenType.Null)
                                     {
-                                        jobContextInstance.JobParameters = new List<JobParameter>();
                                         foreach (JToken jobParametersValue in ((JArray)jobParametersArray))
                                         {
                                             JobParameter jobParameterInstance = new JobParameter();

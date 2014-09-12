@@ -159,10 +159,10 @@ namespace Microsoft.Azure.Management.Automation
                 JObject runbookCreateScheduleLinkParametersValue = new JObject();
                 requestDoc = runbookCreateScheduleLinkParametersValue;
                 
-                if (parameters.ParametersValue != null)
+                if (parameters.Parameters != null)
                 {
                     JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.ParametersValue)
+                    foreach (NameValuePair parametersItem in parameters.Parameters)
                     {
                         JObject nameValuePairValue = new JObject();
                         parametersArray.Add(nameValuePairValue);
@@ -918,7 +918,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken schedulesArray = responseDoc["Schedules"];
                         if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                         {
-                            runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                             foreach (JToken schedulesValue in ((JArray)schedulesArray))
                             {
                                 Schedule scheduleInstance = new Schedule();
@@ -1267,7 +1266,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken schedulesArray = responseDoc["Schedules"];
                         if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                         {
-                            runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                             foreach (JToken schedulesValue in ((JArray)schedulesArray))
                             {
                                 Schedule scheduleInstance = new Schedule();
@@ -1510,7 +1508,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Runbooks = new List<Runbook>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Runbook runbookInstance = new Runbook();
@@ -1624,7 +1621,6 @@ namespace Microsoft.Azure.Management.Automation
                                 JToken schedulesArray = valueValue["Schedules"];
                                 if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                 {
-                                    runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                     foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                     {
                                         Schedule scheduleInstance = new Schedule();
@@ -1877,7 +1873,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Runbooks = new List<Runbook>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Runbook runbookInstance = new Runbook();
@@ -1991,7 +1986,6 @@ namespace Microsoft.Azure.Management.Automation
                                 JToken schedulesArray = valueValue["Schedules"];
                                 if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                 {
-                                    runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                     foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                     {
                                         Schedule scheduleInstance = new Schedule();
@@ -2252,7 +2246,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Runbooks = new List<Runbook>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Runbook runbookInstance = new Runbook();
@@ -2366,7 +2359,6 @@ namespace Microsoft.Azure.Management.Automation
                                 JToken schedulesArray = valueValue["Schedules"];
                                 if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                 {
-                                    runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                     foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                     {
                                         Schedule scheduleInstance = new Schedule();
@@ -2628,7 +2620,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Runbooks = new List<Runbook>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Runbook runbookInstance = new Runbook();
@@ -2742,7 +2733,6 @@ namespace Microsoft.Azure.Management.Automation
                                 JToken schedulesArray = valueValue["Schedules"];
                                 if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                 {
-                                    runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                     foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                     {
                                         Schedule scheduleInstance = new Schedule();
@@ -2992,7 +2982,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Runbooks = new List<Runbook>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Runbook runbookInstance = new Runbook();
@@ -3106,7 +3095,6 @@ namespace Microsoft.Azure.Management.Automation
                                 JToken schedulesArray = valueValue["Schedules"];
                                 if (schedulesArray != null && schedulesArray.Type != JTokenType.Null)
                                 {
-                                    runbookInstance.Schedules = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Schedule>();
                                     foreach (JToken schedulesValue in ((JArray)schedulesArray))
                                     {
                                         Schedule scheduleInstance = new Schedule();
@@ -3484,10 +3472,10 @@ namespace Microsoft.Azure.Management.Automation
                 JObject runbookStartParametersValue = new JObject();
                 requestDoc = runbookStartParametersValue;
                 
-                if (parameters.ParametersValue != null)
+                if (parameters.Parameters != null)
                 {
                     JArray parametersArray = new JArray();
-                    foreach (NameValuePair parametersItem in parameters.ParametersValue)
+                    foreach (NameValuePair parametersItem in parameters.Parameters)
                     {
                         JObject nameValuePairValue = new JObject();
                         parametersArray.Add(nameValuePairValue);
@@ -3727,10 +3715,10 @@ namespace Microsoft.Azure.Management.Automation
                 
                 runbookUpdateParametersValue["LogProgress"] = parameters.Runbook.LogProgress;
                 
-                if (parameters.Runbook.SchedulesValue != null)
+                if (parameters.Runbook.Schedules != null)
                 {
                     JArray schedulesArray = new JArray();
-                    foreach (Schedule schedulesItem in parameters.Runbook.SchedulesValue)
+                    foreach (Schedule schedulesItem in parameters.Runbook.Schedules)
                     {
                         JObject scheduleValue = new JObject();
                         schedulesArray.Add(scheduleValue);

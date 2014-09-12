@@ -615,7 +615,6 @@ namespace Microsoft.WindowsAzure.Management
                     XElement subscriptionCertificatesSequenceElement = responseDoc.Element(XName.Get("SubscriptionCertificates", "http://schemas.microsoft.com/windowsazure"));
                     if (subscriptionCertificatesSequenceElement != null)
                     {
-                        result.SubscriptionCertificates = new List<ManagementCertificateListResponse.SubscriptionCertificate>();
                         foreach (XElement subscriptionCertificatesElement in subscriptionCertificatesSequenceElement.Elements(XName.Get("SubscriptionCertificate", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ManagementCertificateListResponse.SubscriptionCertificate subscriptionCertificateInstance = new ManagementCertificateListResponse.SubscriptionCertificate();

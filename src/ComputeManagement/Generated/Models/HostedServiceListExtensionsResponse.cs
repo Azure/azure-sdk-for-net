@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<HostedServiceListExtensionsResponse.Extension> Extensions
         {
-            get
-            {
-                if (this._extensions == null)
-                {
-                    this._extensions = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceListExtensionsResponse.Extension>();
-                }
-                return this._extensions;
-            }
-            set { this._extensions = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The extensions that were added to a cloud service.
-        /// </summary>
-        public IList<HostedServiceListExtensionsResponse.Extension> ExtensionsValue
-        {
             get { return this._extensions; }
             set { this._extensions = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListExtensionsResponse()
         {
+            this.Extensions = new List<HostedServiceListExtensionsResponse.Extension>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<HostedServiceListExtensionsResponse.Extension> GetEnumerator()
         {
-            return this.ExtensionsValue.GetEnumerator();
+            return this.Extensions.GetEnumerator();
         }
         
         /// <summary>

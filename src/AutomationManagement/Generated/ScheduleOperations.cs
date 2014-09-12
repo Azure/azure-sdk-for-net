@@ -841,7 +841,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Schedules = new List<Schedule>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Schedule scheduleInstance = new Schedule();
@@ -1091,7 +1090,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Schedules = new List<Schedule>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Schedule scheduleInstance = new Schedule();

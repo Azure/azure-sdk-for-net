@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         /// </summary>
         public IList<CloudServiceListResponse.CloudService> CloudServices
         {
-            get
-            {
-                if (this._cloudServices == null)
-                {
-                    this._cloudServices = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Store.Models.CloudServiceListResponse.CloudService>();
-                }
-                return this._cloudServices;
-            }
-            set { this._cloudServices = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of cloud service locations for this subscription.
-        /// </summary>
-        public IList<CloudServiceListResponse.CloudService> CloudServicesValue
-        {
             get { return this._cloudServices; }
             set { this._cloudServices = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         /// </summary>
         public CloudServiceListResponse()
         {
+            this.CloudServices = new List<CloudServiceListResponse.CloudService>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         /// </summary>
         public IEnumerator<CloudServiceListResponse.CloudService> GetEnumerator()
         {
-            return this.CloudServicesValue.GetEnumerator();
+            return this.CloudServices.GetEnumerator();
         }
         
         /// <summary>
@@ -141,23 +126,6 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             /// </summary>
             public IList<CloudServiceListResponse.CloudService.AddOnResource> Resources
             {
-                get
-                {
-                    if (this._resources == null)
-                    {
-                        this._resources = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Store.Models.CloudServiceListResponse.CloudService.AddOnResource>();
-                    }
-                    return this._resources;
-                }
-                set { this._resources = value; }
-            }
-            
-            /// <summary>
-            /// Optional. A list of existing store resources installed into a
-            /// cloud service region.
-            /// </summary>
-            public IList<CloudServiceListResponse.CloudService.AddOnResource> ResourcesValue
-            {
                 get { return this._resources; }
                 set { this._resources = value; }
             }
@@ -167,6 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             /// </summary>
             public CloudService()
             {
+                this.Resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
             }
             
             /// <summary>
@@ -214,23 +183,6 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 /// resource.
                 /// </summary>
                 public IDictionary<string, string> OutputItems
-                {
-                    get
-                    {
-                        if (this._outputItems == null)
-                        {
-                            this._outputItems = new System.Collections.Generic.Dictionary<string, string>();
-                        }
-                        return this._outputItems;
-                    }
-                    set { this._outputItems = value; }
-                }
-                
-                /// <summary>
-                /// Optional. Output items associated with an individual store
-                /// resource.
-                /// </summary>
-                public IDictionary<string, string> OutputItemsValue
                 {
                     get { return this._outputItems; }
                     set { this._outputItems = value; }
@@ -301,23 +253,6 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 /// </summary>
                 public IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> UsageLimits
                 {
-                    get
-                    {
-                        if (this._usageLimits == null)
-                        {
-                            this._usageLimits = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Store.Models.CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
-                        }
-                        return this._usageLimits;
-                    }
-                    set { this._usageLimits = value; }
-                }
-                
-                /// <summary>
-                /// Optional. Usage meters associated with an individual store
-                /// resource.
-                /// </summary>
-                public IList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit> UsageLimitsValue
-                {
                     get { return this._usageLimits; }
                     set { this._usageLimits = value; }
                 }
@@ -327,6 +262,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 /// </summary>
                 public AddOnResource()
                 {
+                    this.OutputItems = new Dictionary<string, string>();
+                    this.UsageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
                 }
                 
                 /// <summary>

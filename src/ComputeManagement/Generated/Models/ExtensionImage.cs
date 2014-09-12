@@ -206,23 +206,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionLocalResourceConfiguration> LocalResources
         {
-            get
-            {
-                if (this._localResources == null)
-                {
-                    this._localResources = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionLocalResourceConfiguration>();
-                }
-                return this._localResources;
-            }
-            set { this._localResources = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Declared local resources used inside guest VM by the
-        /// extension. Optional.
-        /// </summary>
-        public IList<ExtensionLocalResourceConfiguration> LocalResourcesValue
-        {
             get { return this._localResources; }
             set { this._localResources = value; }
         }
@@ -394,6 +377,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionImage()
         {
+            this.LocalResources = new List<ExtensionLocalResourceConfiguration>();
         }
         
         /// <summary>
