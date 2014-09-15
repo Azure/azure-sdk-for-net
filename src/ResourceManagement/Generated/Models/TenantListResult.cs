@@ -39,22 +39,6 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public IList<TenantIdDescription> TenantIds
         {
-            get
-            {
-                if (this._tenantIds == null)
-                {
-                    this._tenantIds = new System.Collections.Generic.List<Microsoft.Azure.Subscriptions.Models.TenantIdDescription>();
-                }
-                return this._tenantIds;
-            }
-            set { this._tenantIds = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets tenant Ids.
-        /// </summary>
-        public IList<TenantIdDescription> TenantIdsValue
-        {
             get { return this._tenantIds; }
             set { this._tenantIds = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public TenantListResult()
         {
+            this.TenantIds = new List<TenantIdDescription>();
         }
     }
 }

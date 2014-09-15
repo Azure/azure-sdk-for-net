@@ -213,7 +213,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         XElement dimensionSettingsSequenceElement = serviceResourceElement.Element(XName.Get("DimensionSettings", "http://schemas.microsoft.com/windowsazure"));
                         if (dimensionSettingsSequenceElement != null)
                         {
-                            serviceResourceInstance.DimensionSettings = new List<ServiceObjective.DimensionSettingResponse>();
                             foreach (XElement dimensionSettingsElement in dimensionSettingsSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 ServiceObjective.DimensionSettingResponse serviceResourceInstance2 = new ServiceObjective.DimensionSettingResponse();
@@ -421,7 +420,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                     XElement serviceResourcesSequenceElement = responseDoc.Element(XName.Get("ServiceResources", "http://schemas.microsoft.com/windowsazure"));
                     if (serviceResourcesSequenceElement != null)
                     {
-                        result.ServiceObjectives = new List<ServiceObjective>();
                         foreach (XElement serviceResourcesElement in serviceResourcesSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ServiceObjective serviceResourceInstance = new ServiceObjective();
@@ -465,7 +463,6 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             XElement dimensionSettingsSequenceElement = serviceResourcesElement.Element(XName.Get("DimensionSettings", "http://schemas.microsoft.com/windowsazure"));
                             if (dimensionSettingsSequenceElement != null)
                             {
-                                serviceResourceInstance.DimensionSettings = new List<ServiceObjective.DimensionSettingResponse>();
                                 foreach (XElement dimensionSettingsElement in dimensionSettingsSequenceElement.Elements(XName.Get("ServiceResource", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     ServiceObjective.DimensionSettingResponse serviceResourceInstance2 = new ServiceObjective.DimensionSettingResponse();

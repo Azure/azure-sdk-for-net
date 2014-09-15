@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSite> WebSites
         {
-            get
-            {
-                if (this._webSites == null)
-                {
-                    this._webSites = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSite>();
-                }
-                return this._webSites;
-            }
-            set { this._webSites = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The web sites associated with the specified web space.
-        /// </summary>
-        public IList<WebSite> WebSitesValue
-        {
             get { return this._webSites; }
             set { this._webSites = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSpacesListWebSitesResponse()
         {
+            this.WebSites = new List<WebSite>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSite> GetEnumerator()
         {
-            return this.WebSitesValue.GetEnumerator();
+            return this.WebSites.GetEnumerator();
         }
         
         /// <summary>

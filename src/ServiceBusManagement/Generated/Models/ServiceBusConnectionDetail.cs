@@ -73,23 +73,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<AccessRight> Rights
         {
-            get
-            {
-                if (this._rights == null)
-                {
-                    this._rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
-                }
-                return this._rights;
-            }
-            set { this._rights = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The rights connections to the entity via the connection
-        /// string will have.
-        /// </summary>
-        public IList<AccessRight> RightsValue
-        {
             get { return this._rights; }
             set { this._rights = value; }
         }
@@ -99,6 +82,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusConnectionDetail()
         {
+            this.Rights = new List<AccessRight>();
         }
     }
 }

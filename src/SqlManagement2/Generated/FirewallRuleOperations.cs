@@ -278,7 +278,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            firewallRuleInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -629,7 +628,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            firewallRuleInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -782,7 +780,6 @@ namespace Microsoft.Azure.Management.Sql
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.FirewallRules = new List<FirewallRule>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 FirewallRule firewallRuleInstance = new FirewallRule();
@@ -840,7 +837,6 @@ namespace Microsoft.Azure.Management.Sql
                                 JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    firewallRuleInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);

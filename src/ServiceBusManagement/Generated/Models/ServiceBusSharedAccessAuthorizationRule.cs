@@ -115,22 +115,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<AccessRight> Rights
         {
-            get
-            {
-                if (this._rights == null)
-                {
-                    this._rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
-                }
-                return this._rights;
-            }
-            set { this._rights = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The rights associated with the rule.
-        /// </summary>
-        public IList<AccessRight> RightsValue
-        {
             get { return this._rights; }
             set { this._rights = value; }
         }
@@ -152,6 +136,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusSharedAccessAuthorizationRule()
         {
+            this.Rights = new List<AccessRight>();
         }
     }
 }

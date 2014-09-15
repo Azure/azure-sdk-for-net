@@ -49,23 +49,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IDictionary<string, string> Headers
         {
-            get
-            {
-                if (this._headers == null)
-                {
-                    this._headers = new System.Collections.Generic.Dictionary<string, string>();
-                }
-                return this._headers;
-            }
-            set { this._headers = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Header name value pairs to supply with the http/https
-        /// action.
-        /// </summary>
-        public IDictionary<string, string> HeadersValue
-        {
             get { return this._headers; }
             set { this._headers = value; }
         }
@@ -97,6 +80,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobHttpRequest()
         {
+            this.Headers = new Dictionary<string, string>();
         }
         
         /// <summary>

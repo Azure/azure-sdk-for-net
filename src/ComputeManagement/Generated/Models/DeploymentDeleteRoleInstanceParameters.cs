@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<string> Name
         {
-            get
-            {
-                if (this._name == null)
-                {
-                    this._name = new List<string>();
-                }
-                return this._name;
-            }
-            set { this._name = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The names of role instances to delete from the deployment
-        /// </summary>
-        public IList<string> NameValue
-        {
             get { return this._name; }
             set { this._name = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentDeleteRoleInstanceParameters()
         {
+            this.Name = new List<string>();
         }
     }
 }

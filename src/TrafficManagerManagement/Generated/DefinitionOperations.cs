@@ -99,17 +99,17 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.DnsOptions");
             }
-            if (parameters.MonitorsValue == null)
+            if (parameters.Monitors == null)
             {
-                throw new ArgumentNullException("parameters.MonitorsValue");
+                throw new ArgumentNullException("parameters.Monitors");
             }
-            if (parameters.MonitorsValue != null)
+            if (parameters.Monitors != null)
             {
-                foreach (DefinitionMonitor monitorsParameterItem in parameters.MonitorsValue)
+                foreach (DefinitionMonitor monitorsParameterItem in parameters.Monitors)
                 {
                     if (monitorsParameterItem.HttpOptions == null)
                     {
-                        throw new ArgumentNullException("parameters.MonitorsValue.HttpOptions");
+                        throw new ArgumentNullException("parameters.Monitors.HttpOptions");
                     }
                 }
             }
@@ -117,17 +117,17 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
             {
                 throw new ArgumentNullException("parameters.Policy");
             }
-            if (parameters.Policy.EndpointsValue == null)
+            if (parameters.Policy.Endpoints == null)
             {
-                throw new ArgumentNullException("parameters.Policy.EndpointsValue");
+                throw new ArgumentNullException("parameters.Policy.Endpoints");
             }
-            if (parameters.Policy.EndpointsValue != null)
+            if (parameters.Policy.Endpoints != null)
             {
-                foreach (DefinitionEndpointCreateParameters endpointsParameterItem in parameters.Policy.EndpointsValue)
+                foreach (DefinitionEndpointCreateParameters endpointsParameterItem in parameters.Policy.Endpoints)
                 {
                     if (endpointsParameterItem.DomainName == null)
                     {
-                        throw new ArgumentNullException("parameters.Policy.EndpointsValue.DomainName");
+                        throw new ArgumentNullException("parameters.Policy.Endpoints.DomainName");
                     }
                 }
             }
@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 dnsOptionsElement.Add(timeToLiveInSecondsElement);
                 
                 XElement monitorsSequenceElement = new XElement(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
-                foreach (DefinitionMonitor monitorsItem in parameters.MonitorsValue)
+                foreach (DefinitionMonitor monitorsItem in parameters.Monitors)
                 {
                     XElement monitorElement = new XElement(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure"));
                     monitorsSequenceElement.Add(monitorElement);
@@ -245,7 +245,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 policyElement.Add(loadBalancingMethodElement);
                 
                 XElement endpointsSequenceElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                foreach (DefinitionEndpointCreateParameters endpointsItem in parameters.Policy.EndpointsValue)
+                foreach (DefinitionEndpointCreateParameters endpointsItem in parameters.Policy.Endpoints)
                 {
                     XElement endpointElement = new XElement(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure"));
                     endpointsSequenceElement.Add(endpointElement);
@@ -481,7 +481,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         XElement monitorsSequenceElement = definitionElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
                         if (monitorsSequenceElement != null)
                         {
-                            definitionInstance.Monitors = new List<DefinitionMonitor>();
                             foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DefinitionMonitor monitorInstance = new DefinitionMonitor();
@@ -568,7 +567,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                             if (endpointsSequenceElement != null)
                             {
-                                policyInstance.Endpoints = new List<DefinitionEndpointResponse>();
                                 foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DefinitionEndpointResponse endpointInstance = new DefinitionEndpointResponse();
@@ -763,7 +761,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XElement definitionsSequenceElement = responseDoc.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
                     if (definitionsSequenceElement != null)
                     {
-                        result.Definitions = new List<Definition>();
                         foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                         {
                             Definition definitionInstance = new Definition();
@@ -800,7 +797,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             XElement monitorsSequenceElement = definitionsElement.Element(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
                             if (monitorsSequenceElement != null)
                             {
-                                definitionInstance.Monitors = new List<DefinitionMonitor>();
                                 foreach (XElement monitorsElement in monitorsSequenceElement.Elements(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DefinitionMonitor monitorInstance = new DefinitionMonitor();
@@ -887,7 +883,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                 XElement endpointsSequenceElement = policyElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (endpointsSequenceElement != null)
                                 {
-                                    policyInstance.Endpoints = new List<DefinitionEndpointResponse>();
                                     foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         DefinitionEndpointResponse endpointInstance = new DefinitionEndpointResponse();

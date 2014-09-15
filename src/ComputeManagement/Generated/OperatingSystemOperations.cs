@@ -165,7 +165,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement operatingSystemsSequenceElement = responseDoc.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
                     if (operatingSystemsSequenceElement != null)
                     {
-                        result.OperatingSystems = new List<OperatingSystemListResponse.OperatingSystem>();
                         foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
                         {
                             OperatingSystemListResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListResponse.OperatingSystem();
@@ -342,7 +341,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement operatingSystemFamiliesSequenceElement = responseDoc.Element(XName.Get("OperatingSystemFamilies", "http://schemas.microsoft.com/windowsazure"));
                     if (operatingSystemFamiliesSequenceElement != null)
                     {
-                        result.OperatingSystemFamilies = new List<OperatingSystemListFamiliesResponse.OperatingSystemFamily>();
                         foreach (XElement operatingSystemFamiliesElement in operatingSystemFamiliesSequenceElement.Elements(XName.Get("OperatingSystemFamily", "http://schemas.microsoft.com/windowsazure")))
                         {
                             OperatingSystemListFamiliesResponse.OperatingSystemFamily operatingSystemFamilyInstance = new OperatingSystemListFamiliesResponse.OperatingSystemFamily();
@@ -365,7 +363,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement operatingSystemsSequenceElement = operatingSystemFamiliesElement.Element(XName.Get("OperatingSystems", "http://schemas.microsoft.com/windowsazure"));
                             if (operatingSystemsSequenceElement != null)
                             {
-                                operatingSystemFamilyInstance.OperatingSystems = new List<OperatingSystemListFamiliesResponse.OperatingSystem>();
                                 foreach (XElement operatingSystemsElement in operatingSystemsSequenceElement.Elements(XName.Get("OperatingSystem", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     OperatingSystemListFamiliesResponse.OperatingSystem operatingSystemInstance = new OperatingSystemListFamiliesResponse.OperatingSystem();

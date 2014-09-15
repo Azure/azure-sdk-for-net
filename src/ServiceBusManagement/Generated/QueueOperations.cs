@@ -216,10 +216,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 isAnonymousAccessibleElement.Value = queue.IsAnonymousAccessible.ToString().ToLower();
                 queueDescriptionElement.Add(isAnonymousAccessibleElement);
                 
-                if (queue.AuthorizationRulesValue != null)
+                if (queue.AuthorizationRules != null)
                 {
                     XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in queue.AuthorizationRulesValue)
+                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in queue.AuthorizationRules)
                     {
                         XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                         authorizationRulesSequenceElement.Add(authorizationRuleElement);
@@ -242,10 +242,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                             authorizationRuleElement.Add(claimValueElement);
                         }
                         
-                        if (authorizationRulesItem.RightsValue != null)
+                        if (authorizationRulesItem.Rights != null)
                         {
                             XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            foreach (AccessRight rightsItem in authorizationRulesItem.RightsValue)
+                            foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
                             {
                                 XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                 rightsItemElement.Value = rightsItem.ToString();
@@ -479,7 +479,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 XElement authorizationRulesSequenceElement2 = queueDescriptionElement2.Element(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                 if (authorizationRulesSequenceElement2 != null)
                                 {
-                                    queueDescriptionInstance.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
                                     foreach (XElement authorizationRulesElement in authorizationRulesSequenceElement2.Elements(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                     {
                                         ServiceBusSharedAccessAuthorizationRule authorizationRuleInstance = new ServiceBusSharedAccessAuthorizationRule();
@@ -502,7 +501,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement rightsSequenceElement2 = authorizationRulesElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (rightsSequenceElement2 != null)
                                         {
-                                            authorizationRuleInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                             foreach (XElement rightsElement in rightsSequenceElement2.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
@@ -1012,7 +1010,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 XElement authorizationRulesSequenceElement = queueDescriptionElement.Element(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                 if (authorizationRulesSequenceElement != null)
                                 {
-                                    queueDescriptionInstance.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
                                     foreach (XElement authorizationRulesElement in authorizationRulesSequenceElement.Elements(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                     {
                                         ServiceBusSharedAccessAuthorizationRule authorizationRuleInstance = new ServiceBusSharedAccessAuthorizationRule();
@@ -1035,7 +1032,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement rightsSequenceElement = authorizationRulesElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (rightsSequenceElement != null)
                                         {
-                                            authorizationRuleInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                             foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
@@ -1310,7 +1306,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     {
                         if (feedElement != null)
                         {
-                            result.ConnectionDetails = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusConnectionDetail>();
                             foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                             {
                                 ServiceBusConnectionDetail entryInstance = new ServiceBusConnectionDetail();
@@ -1346,7 +1341,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement rightsSequenceElement = connectionDetailElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (rightsSequenceElement != null)
                                         {
-                                            entryInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                             foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 entryInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
@@ -1493,7 +1487,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     {
                         if (feedElement != null)
                         {
-                            result.Queues = new List<ServiceBusQueue>();
                             foreach (XElement entriesElement in feedElement.Elements(XName.Get("entry", "http://www.w3.org/2005/Atom")))
                             {
                                 ServiceBusQueue entryInstance = new ServiceBusQueue();
@@ -1599,7 +1592,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement authorizationRulesSequenceElement = queueDescriptionElement.Element(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (authorizationRulesSequenceElement != null)
                                         {
-                                            entryInstance.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
                                             foreach (XElement authorizationRulesElement in authorizationRulesSequenceElement.Elements(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 ServiceBusSharedAccessAuthorizationRule authorizationRuleInstance = new ServiceBusSharedAccessAuthorizationRule();
@@ -1622,7 +1614,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                                 XElement rightsSequenceElement = authorizationRulesElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                                 if (rightsSequenceElement != null)
                                                 {
-                                                    authorizationRuleInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                                     foreach (XElement rightsElement in rightsSequenceElement.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                                     {
                                                         authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));
@@ -1936,10 +1927,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 isAnonymousAccessibleElement.Value = queue.IsAnonymousAccessible.ToString().ToLower();
                 queueDescriptionElement.Add(isAnonymousAccessibleElement);
                 
-                if (queue.AuthorizationRulesValue != null)
+                if (queue.AuthorizationRules != null)
                 {
                     XElement authorizationRulesSequenceElement = new XElement(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in queue.AuthorizationRulesValue)
+                    foreach (ServiceBusSharedAccessAuthorizationRule authorizationRulesItem in queue.AuthorizationRules)
                     {
                         XElement authorizationRuleElement = new XElement(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                         authorizationRulesSequenceElement.Add(authorizationRuleElement);
@@ -1962,10 +1953,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                             authorizationRuleElement.Add(claimValueElement);
                         }
                         
-                        if (authorizationRulesItem.RightsValue != null)
+                        if (authorizationRulesItem.Rights != null)
                         {
                             XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            foreach (AccessRight rightsItem in authorizationRulesItem.RightsValue)
+                            foreach (AccessRight rightsItem in authorizationRulesItem.Rights)
                             {
                                 XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                 rightsItemElement.Value = rightsItem.ToString();
@@ -2199,7 +2190,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                 XElement authorizationRulesSequenceElement2 = queueDescriptionElement2.Element(XName.Get("AuthorizationRules", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                 if (authorizationRulesSequenceElement2 != null)
                                 {
-                                    queueDescriptionInstance.AuthorizationRules = new List<ServiceBusSharedAccessAuthorizationRule>();
                                     foreach (XElement authorizationRulesElement in authorizationRulesSequenceElement2.Elements(XName.Get("AuthorizationRule", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                     {
                                         ServiceBusSharedAccessAuthorizationRule authorizationRuleInstance = new ServiceBusSharedAccessAuthorizationRule();
@@ -2222,7 +2212,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                                         XElement rightsSequenceElement2 = authorizationRulesElement.Element(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
                                         if (rightsSequenceElement2 != null)
                                         {
-                                            authorizationRuleInstance.Rights = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.AccessRight>();
                                             foreach (XElement rightsElement in rightsSequenceElement2.Elements(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect")))
                                             {
                                                 authorizationRuleInstance.Rights.Add(((AccessRight)Enum.Parse(typeof(AccessRight), rightsElement.Value, true)));

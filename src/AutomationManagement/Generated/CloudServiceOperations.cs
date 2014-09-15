@@ -159,7 +159,6 @@ namespace Microsoft.Azure.Management.Automation
                     XElement cloudServicesSequenceElement = responseDoc.Element(XName.Get("CloudServices", "http://schemas.microsoft.com/windowsazure"));
                     if (cloudServicesSequenceElement != null)
                     {
-                        result.CloudServices = new List<CloudService>();
                         foreach (XElement cloudServicesElement in cloudServicesSequenceElement.Elements(XName.Get("CloudService", "http://schemas.microsoft.com/windowsazure")))
                         {
                             CloudService cloudServiceInstance = new CloudService();
@@ -196,7 +195,6 @@ namespace Microsoft.Azure.Management.Automation
                             XElement resourcesSequenceElement = cloudServicesElement.Element(XName.Get("Resources", "http://schemas.microsoft.com/windowsazure"));
                             if (resourcesSequenceElement != null)
                             {
-                                cloudServiceInstance.Resources = new List<AutomationResource>();
                                 foreach (XElement resourcesElement in resourcesSequenceElement.Elements(XName.Get("Resource", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     AutomationResource resourceInstance = new AutomationResource();

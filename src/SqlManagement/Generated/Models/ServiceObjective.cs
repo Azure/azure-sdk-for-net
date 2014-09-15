@@ -49,22 +49,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<ServiceObjective.DimensionSettingResponse> DimensionSettings
         {
-            get
-            {
-                if (this._dimensionSettings == null)
-                {
-                    this._dimensionSettings = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.ServiceObjective.DimensionSettingResponse>();
-                }
-                return this._dimensionSettings;
-            }
-            set { this._dimensionSettings = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the service objective dimension settings.
-        /// </summary>
-        public IList<ServiceObjective.DimensionSettingResponse> DimensionSettingsValue
-        {
             get { return this._dimensionSettings; }
             set { this._dimensionSettings = value; }
         }
@@ -121,6 +105,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public ServiceObjective()
         {
+            this.DimensionSettings = new List<ServiceObjective.DimensionSettingResponse>();
         }
         
         /// <summary>

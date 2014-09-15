@@ -40,22 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<DatabaseCopy> DatabaseCopies
         {
-            get
-            {
-                if (this._databaseCopies == null)
-                {
-                    this._databaseCopies = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseCopy>();
-                }
-                return this._databaseCopies;
-            }
-            set { this._databaseCopies = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the matching SQL Server database copies.
-        /// </summary>
-        public IList<DatabaseCopy> DatabaseCopiesValue
-        {
             get { return this._databaseCopies; }
             set { this._databaseCopies = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseCopyListResponse()
         {
+            this.DatabaseCopies = new List<DatabaseCopy>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<DatabaseCopy> GetEnumerator()
         {
-            return this.DatabaseCopiesValue.GetEnumerator();
+            return this.DatabaseCopies.GetEnumerator();
         }
         
         /// <summary>

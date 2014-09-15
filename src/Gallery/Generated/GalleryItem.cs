@@ -35,22 +35,6 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public IList<string> CategoryIds
         {
-            get
-            {
-                if (this._categoryIds == null)
-                {
-                    this._categoryIds = new System.Collections.Generic.List<string>();
-                }
-                return this._categoryIds;
-            }
-            set { this._categoryIds = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets gallery item category Ids.
-        /// </summary>
-        public IList<string> CategoryIdsValue
-        {
             get { return this._categoryIds; }
             set { this._categoryIds = value; }
         }
@@ -94,22 +78,6 @@ namespace Microsoft.Azure.Gallery
         /// Optional. Gets or sets gallery item screenshot Urls
         /// </summary>
         public IDictionary<string, string> IconFileUrls
-        {
-            get
-            {
-                if (this._iconFileUrls == null)
-                {
-                    this._iconFileUrls = new System.Collections.Generic.Dictionary<string, string>();
-                }
-                return this._iconFileUrls;
-            }
-            set { this._iconFileUrls = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets gallery item screenshot Urls
-        /// </summary>
-        public IDictionary<string, string> IconFileUrlsValue
         {
             get { return this._iconFileUrls; }
             set { this._iconFileUrls = value; }
@@ -177,22 +145,6 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public IList<string> ScreenshotUrls
         {
-            get
-            {
-                if (this._screenshotUrls == null)
-                {
-                    this._screenshotUrls = new System.Collections.Generic.List<string>();
-                }
-                return this._screenshotUrls;
-            }
-            set { this._screenshotUrls = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets gallery item screenshot Urls
-        /// </summary>
-        public IList<string> ScreenshotUrlsValue
-        {
             get { return this._screenshotUrls; }
             set { this._screenshotUrls = value; }
         }
@@ -224,6 +176,9 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public GalleryItem()
         {
+            this.CategoryIds = new List<string>();
+            this.IconFileUrls = new Dictionary<string, string>();
+            this.ScreenshotUrls = new List<string>();
         }
     }
 }

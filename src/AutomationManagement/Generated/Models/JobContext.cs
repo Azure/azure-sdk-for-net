@@ -60,22 +60,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<JobParameter> JobParameters
         {
-            get
-            {
-                if (this._jobParameters == null)
-                {
-                    this._jobParameters = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.JobParameter>();
-                }
-                return this._jobParameters;
-            }
-            set { this._jobParameters = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of job parameters.
-        /// </summary>
-        public IList<JobParameter> JobParametersValue
-        {
             get { return this._jobParameters; }
             set { this._jobParameters = value; }
         }
@@ -129,6 +113,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobContext()
         {
+            this.JobParameters = new List<JobParameter>();
         }
     }
 }

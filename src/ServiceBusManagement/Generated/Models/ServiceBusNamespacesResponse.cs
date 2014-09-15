@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusNamespace> Namespaces
         {
-            get
-            {
-                if (this._namespaces == null)
-                {
-                    this._namespaces = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNamespace>();
-                }
-                return this._namespaces;
-            }
-            set { this._namespaces = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of namespaces.
-        /// </summary>
-        public IList<ServiceBusNamespace> NamespacesValue
-        {
             get { return this._namespaces; }
             set { this._namespaces = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNamespacesResponse()
         {
+            this.Namespaces = new List<ServiceBusNamespace>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusNamespace> GetEnumerator()
         {
-            return this.NamespacesValue.GetEnumerator();
+            return this.Namespaces.GetEnumerator();
         }
         
         /// <summary>

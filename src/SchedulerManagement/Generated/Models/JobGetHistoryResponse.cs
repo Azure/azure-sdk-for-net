@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IList<JobGetHistoryResponse.JobHistoryEntry> JobHistory
         {
-            get
-            {
-                if (this._jobHistory == null)
-                {
-                    this._jobHistory = new System.Collections.Generic.List<Microsoft.WindowsAzure.Scheduler.Models.JobGetHistoryResponse.JobHistoryEntry>();
-                }
-                return this._jobHistory;
-            }
-            set { this._jobHistory = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The job history entries.
-        /// </summary>
-        public IList<JobGetHistoryResponse.JobHistoryEntry> JobHistoryValue
-        {
             get { return this._jobHistory; }
             set { this._jobHistory = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobGetHistoryResponse()
         {
+            this.JobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IEnumerator<JobGetHistoryResponse.JobHistoryEntry> GetEnumerator()
         {
-            return this.JobHistoryValue.GetEnumerator();
+            return this.JobHistory.GetEnumerator();
         }
         
         /// <summary>

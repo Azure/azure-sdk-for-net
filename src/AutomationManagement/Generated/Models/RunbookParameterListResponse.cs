@@ -39,22 +39,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<RunbookParameter> RunbookParameters
         {
-            get
-            {
-                if (this._runbookParameters == null)
-                {
-                    this._runbookParameters = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.RunbookParameter>();
-                }
-                return this._runbookParameters;
-            }
-            set { this._runbookParameters = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of runbook parameters.
-        /// </summary>
-        public IList<RunbookParameter> RunbookParametersValue
-        {
             get { return this._runbookParameters; }
             set { this._runbookParameters = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookParameterListResponse()
         {
+            this.RunbookParameters = new List<RunbookParameter>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IEnumerator<RunbookParameter> GetEnumerator()
         {
-            return this.RunbookParametersValue.GetEnumerator();
+            return this.RunbookParameters.GetEnumerator();
         }
         
         /// <summary>

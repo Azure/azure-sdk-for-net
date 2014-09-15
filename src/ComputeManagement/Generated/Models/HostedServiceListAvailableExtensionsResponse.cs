@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ExtensionImage> ExtensionImages
         {
-            get
-            {
-                if (this._extensionImages == null)
-                {
-                    this._extensionImages = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ExtensionImage>();
-                }
-                return this._extensionImages;
-            }
-            set { this._extensionImages = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The extensions that are available to add to your cloud
-        /// service.
-        /// </summary>
-        public IList<ExtensionImage> ExtensionImagesValue
-        {
             get { return this._extensionImages; }
             set { this._extensionImages = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListAvailableExtensionsResponse()
         {
+            this.ExtensionImages = new List<ExtensionImage>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<ExtensionImage> GetEnumerator()
         {
-            return this.ExtensionImagesValue.GetEnumerator();
+            return this.ExtensionImages.GetEnumerator();
         }
         
         /// <summary>

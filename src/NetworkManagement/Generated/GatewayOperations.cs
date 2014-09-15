@@ -2858,7 +2858,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement connectionsSequenceElement = responseDoc.Element(XName.Get("Connections", "http://schemas.microsoft.com/windowsazure"));
                     if (connectionsSequenceElement != null)
                     {
-                        result.Connections = new List<GatewayListConnectionsResponse.GatewayConnection>();
                         foreach (XElement connectionsElement in connectionsSequenceElement.Elements(XName.Get("Connection", "http://schemas.microsoft.com/windowsazure")))
                         {
                             GatewayListConnectionsResponse.GatewayConnection connectionInstance = new GatewayListConnectionsResponse.GatewayConnection();
@@ -2937,7 +2936,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                             XElement allocatedIPAddressesSequenceElement = connectionsElement.Element(XName.Get("AllocatedIPAddresses", "http://schemas.microsoft.com/windowsazure"));
                             if (allocatedIPAddressesSequenceElement != null)
                             {
-                                connectionInstance.AllocatedIPAddresses = new List<string>();
                                 foreach (XElement allocatedIPAddressesElement in allocatedIPAddressesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     connectionInstance.AllocatedIPAddresses.Add(allocatedIPAddressesElement.Value);
@@ -3077,7 +3075,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                         
                         if (vpnDeviceListElement != null)
                         {
-                            result.Vendors = new List<GatewayListSupportedDevicesResponse.Vendor>();
                             foreach (XElement vendorsElement in vpnDeviceListElement.Elements(XName.Get("Vendor", "")))
                             {
                                 GatewayListSupportedDevicesResponse.Vendor vendorInstance = new GatewayListSupportedDevicesResponse.Vendor();
@@ -3091,7 +3088,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 
                                 if (vendorsElement != null)
                                 {
-                                    vendorInstance.Platforms = new List<GatewayListSupportedDevicesResponse.Platform>();
                                     foreach (XElement platformsElement in vendorsElement.Elements(XName.Get("Platform", "")))
                                     {
                                         GatewayListSupportedDevicesResponse.Platform platformInstance = new GatewayListSupportedDevicesResponse.Platform();
@@ -3105,7 +3101,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                                         
                                         if (platformsElement != null)
                                         {
-                                            platformInstance.OSFamilies = new List<GatewayListSupportedDevicesResponse.OSFamily>();
                                             foreach (XElement oSFamiliesElement in platformsElement.Elements(XName.Get("OSFamily", "")))
                                             {
                                                 GatewayListSupportedDevicesResponse.OSFamily oSFamilyInstance = new GatewayListSupportedDevicesResponse.OSFamily();

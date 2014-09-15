@@ -441,7 +441,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             }
                             if (isNil == false)
                             {
-                                result.Errors = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteOperationStatusResponse.Error>();
                                 foreach (XElement errorsElement in errorsSequenceElement.Elements(XName.Get("Error", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     WebSiteOperationStatusResponse.Error errorInstance = new WebSiteOperationStatusResponse.Error();
@@ -522,7 +521,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                         }
                                         if (isNil6 == false)
                                         {
-                                            errorInstance.Parameters = new System.Collections.Generic.List<string>();
                                             foreach (XElement parametersElement in parametersSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                             {
                                                 errorInstance.Parameters.Add(parametersElement.Value);

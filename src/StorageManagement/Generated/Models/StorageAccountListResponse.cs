@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public IList<StorageAccount> StorageAccounts
         {
-            get
-            {
-                if (this._storageAccounts == null)
-                {
-                    this._storageAccounts = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Storage.Models.StorageAccount>();
-                }
-                return this._storageAccounts;
-            }
-            set { this._storageAccounts = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The requested storage accounts.
-        /// </summary>
-        public IList<StorageAccount> StorageAccountsValue
-        {
             get { return this._storageAccounts; }
             set { this._storageAccounts = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountListResponse()
         {
+            this.StorageAccounts = new List<StorageAccount>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public IEnumerator<StorageAccount> GetEnumerator()
         {
-            return this.StorageAccountsValue.GetEnumerator();
+            return this.StorageAccounts.GetEnumerator();
         }
         
         /// <summary>

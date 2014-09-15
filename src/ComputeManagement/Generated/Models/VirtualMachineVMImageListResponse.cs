@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> VMImages
         {
-            get
-            {
-                if (this._vMImages == null)
-                {
-                    this._vMImages = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
-                }
-                return this._vMImages;
-            }
-            set { this._vMImages = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The virtual machine images associated with your
-        /// subscription.
-        /// </summary>
-        public IList<VirtualMachineVMImageListResponse.VirtualMachineVMImage> VMImagesValue
-        {
             get { return this._vMImages; }
             set { this._vMImages = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageListResponse()
         {
+            this.VMImages = new List<VirtualMachineVMImageListResponse.VirtualMachineVMImage>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IEnumerator<VirtualMachineVMImageListResponse.VirtualMachineVMImage> GetEnumerator()
         {
-            return this.VMImagesValue.GetEnumerator();
+            return this.VMImages.GetEnumerator();
         }
         
         /// <summary>
@@ -297,22 +281,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// Optional. The data disk configurations.
             /// </summary>
             public IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> DataDiskConfigurations
-            {
-                get
-                {
-                    if (this._dataDiskConfigurations == null)
-                    {
-                        this._dataDiskConfigurations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineVMImageListResponse.DataDiskConfiguration>();
-                    }
-                    return this._dataDiskConfigurations;
-                }
-                set { this._dataDiskConfigurations = value; }
-            }
-            
-            /// <summary>
-            /// Optional. The data disk configurations.
-            /// </summary>
-            public IList<VirtualMachineVMImageListResponse.DataDiskConfiguration> DataDiskConfigurationsValue
             {
                 get { return this._dataDiskConfigurations; }
                 set { this._dataDiskConfigurations = value; }
@@ -562,6 +530,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public VirtualMachineVMImage()
             {
+                this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
             }
         }
     }

@@ -611,7 +611,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                     XElement clientRootCertificatesSequenceElement = responseDoc.Element(XName.Get("ClientRootCertificates", "http://schemas.microsoft.com/windowsazure"));
                     if (clientRootCertificatesSequenceElement != null)
                     {
-                        result.ClientRootCertificates = new List<ClientRootCertificateListResponse.ClientRootCertificate>();
                         foreach (XElement clientRootCertificatesElement in clientRootCertificatesSequenceElement.Elements(XName.Get("ClientRootCertificate", "http://schemas.microsoft.com/windowsazure")))
                         {
                             ClientRootCertificateListResponse.ClientRootCertificate clientRootCertificateInstance = new ClientRootCertificateListResponse.ClientRootCertificate();

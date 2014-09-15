@@ -38,22 +38,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<NameValuePair> Parameters
         {
-            get
-            {
-                if (this._parameters == null)
-                {
-                    this._parameters = new List<NameValuePair>();
-                }
-                return this._parameters;
-            }
-            set { this._parameters = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of name value pairs.
-        /// </summary>
-        public IList<NameValuePair> ParametersValue
-        {
             get { return this._parameters; }
             set { this._parameters = value; }
         }
@@ -86,6 +70,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public RunbookCreateScheduleLinkParameters()
         {
+            this.Parameters = new List<NameValuePair>();
         }
         
         /// <summary>

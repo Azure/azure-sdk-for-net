@@ -40,22 +40,6 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IList<ServiceBusNotificationHub> NotificationHubs
         {
-            get
-            {
-                if (this._notificationHubs == null)
-                {
-                    this._notificationHubs = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ServiceBus.Models.ServiceBusNotificationHub>();
-                }
-                return this._notificationHubs;
-            }
-            set { this._notificationHubs = value; }
-        }
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public IList<ServiceBusNotificationHub> NotificationHubsValue
-        {
             get { return this._notificationHubs; }
             set { this._notificationHubs = value; }
         }
@@ -66,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusNotificationHubsResponse()
         {
+            this.NotificationHubs = new List<ServiceBusNotificationHub>();
         }
         
         /// <summary>
@@ -73,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public IEnumerator<ServiceBusNotificationHub> GetEnumerator()
         {
-            return this.NotificationHubsValue.GetEnumerator();
+            return this.NotificationHubs.GetEnumerator();
         }
         
         /// <summary>

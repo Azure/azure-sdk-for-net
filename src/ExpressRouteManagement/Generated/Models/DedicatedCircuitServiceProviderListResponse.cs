@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IList<AzureDedicatedCircuitServiceProvider> DedicatedCircuitServiceProviders
         {
-            get
-            {
-                if (this._dedicatedCircuitServiceProviders == null)
-                {
-                    this._dedicatedCircuitServiceProviders = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.ExpressRoute.Models.AzureDedicatedCircuitServiceProvider>();
-                }
-                return this._dedicatedCircuitServiceProviders;
-            }
-            set { this._dedicatedCircuitServiceProviders = value; }
-        }
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public IList<AzureDedicatedCircuitServiceProvider> DedicatedCircuitServiceProvidersValue
-        {
             get { return this._dedicatedCircuitServiceProviders; }
             set { this._dedicatedCircuitServiceProviders = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitServiceProviderListResponse()
         {
+            this.DedicatedCircuitServiceProviders = new List<AzureDedicatedCircuitServiceProvider>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public IEnumerator<AzureDedicatedCircuitServiceProvider> GetEnumerator()
         {
-            return this.DedicatedCircuitServiceProvidersValue.GetEnumerator();
+            return this.DedicatedCircuitServiceProviders.GetEnumerator();
         }
         
         /// <summary>

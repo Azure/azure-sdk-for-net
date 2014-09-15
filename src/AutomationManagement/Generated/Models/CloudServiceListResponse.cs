@@ -39,22 +39,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<CloudService> CloudServices
         {
-            get
-            {
-                if (this._cloudServices == null)
-                {
-                    this._cloudServices = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.CloudService>();
-                }
-                return this._cloudServices;
-            }
-            set { this._cloudServices = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of cloud service locations for this subscription.
-        /// </summary>
-        public IList<CloudService> CloudServicesValue
-        {
             get { return this._cloudServices; }
             set { this._cloudServices = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public CloudServiceListResponse()
         {
+            this.CloudServices = new List<CloudService>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IEnumerator<CloudService> GetEnumerator()
         {
-            return this.CloudServicesValue.GetEnumerator();
+            return this.CloudServices.GetEnumerator();
         }
         
         /// <summary>

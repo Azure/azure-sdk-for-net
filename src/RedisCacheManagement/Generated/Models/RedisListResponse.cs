@@ -50,22 +50,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public IList<RedisResource> Value
         {
-            get
-            {
-                if (this._value == null)
-                {
-                    this._value = new System.Collections.Generic.List<Microsoft.Azure.Management.Redis.Models.RedisResource>();
-                }
-                return this._value;
-            }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Results of the list operation
-        /// </summary>
-        public IList<RedisResource> ValueValue
-        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -75,6 +59,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public RedisListResponse()
         {
+            this.Value = new List<RedisResource>();
         }
     }
 }

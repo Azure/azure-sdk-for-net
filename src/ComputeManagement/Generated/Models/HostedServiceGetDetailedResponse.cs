@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<HostedServiceGetDetailedResponse.Deployment> Deployments
         {
-            get
-            {
-                if (this._deployments == null)
-                {
-                    this._deployments = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.HostedServiceGetDetailedResponse.Deployment>();
-                }
-                return this._deployments;
-            }
-            set { this._deployments = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The deployments that exist in the cloud service.
-        /// </summary>
-        public IList<HostedServiceGetDetailedResponse.Deployment> DeploymentsValue
-        {
             get { return this._deployments; }
             set { this._deployments = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceGetDetailedResponse()
         {
+            this.Deployments = new List<HostedServiceGetDetailedResponse.Deployment>();
         }
         
         /// <summary>
@@ -133,32 +118,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// value has a maximum length of 255 characters.
             /// </summary>
             public IDictionary<string, string> ExtendedProperties
-            {
-                get
-                {
-                    if (this._extendedProperties == null)
-                    {
-                        this._extendedProperties = new System.Collections.Generic.Dictionary<string, string>();
-                    }
-                    return this._extendedProperties;
-                }
-                set { this._extendedProperties = value; }
-            }
-            
-            /// <summary>
-            /// Optional. Represents the name of an extended cloud service
-            /// property. Each extended property must have a defined name and
-            /// a value. You can have a maximum of 50 extended property name
-            /// and value pairs. The maximum length of the name element is 64
-            /// characters, only alphanumeric characters and underscores are
-            /// valid in the name, and it must start with a letter. Attempting
-            /// to use other characters, starting with a non-letter character,
-            /// or entering a name that is identical to that of another
-            /// extended property owned by the same service will result in a
-            /// status code 400 (Bad Request) error. Each extended property
-            /// value has a maximum length of 255 characters.
-            /// </summary>
-            public IDictionary<string, string> ExtendedPropertiesValue
             {
                 get { return this._extendedProperties; }
                 set { this._extendedProperties = value; }
@@ -241,22 +200,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public IList<RoleInstance> RoleInstances
             {
-                get
-                {
-                    if (this._roleInstances == null)
-                    {
-                        this._roleInstances = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.RoleInstance>();
-                    }
-                    return this._roleInstances;
-                }
-                set { this._roleInstances = value; }
-            }
-            
-            /// <summary>
-            /// Optional. The list of role instances in the deployment.
-            /// </summary>
-            public IList<RoleInstance> RoleInstancesValue
-            {
                 get { return this._roleInstances; }
                 set { this._roleInstances = value; }
             }
@@ -267,22 +210,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// Optional. The list of roles in the deployment.
             /// </summary>
             public IList<Role> Roles
-            {
-                get
-                {
-                    if (this._roles == null)
-                    {
-                        this._roles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.Role>();
-                    }
-                    return this._roles;
-                }
-                set { this._roles = value; }
-            }
-            
-            /// <summary>
-            /// Optional. The list of roles in the deployment.
-            /// </summary>
-            public IList<Role> RolesValue
             {
                 get { return this._roles; }
                 set { this._roles = value; }
@@ -370,23 +297,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public IList<VirtualIPAddress> VirtualIPAddresses
             {
-                get
-                {
-                    if (this._virtualIPAddresses == null)
-                    {
-                        this._virtualIPAddresses = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualIPAddress>();
-                    }
-                    return this._virtualIPAddresses;
-                }
-                set { this._virtualIPAddresses = value; }
-            }
-            
-            /// <summary>
-            /// Optional. The virtual IP addresses that are specified for the
-            /// deployment.
-            /// </summary>
-            public IList<VirtualIPAddress> VirtualIPAddressesValue
-            {
                 get { return this._virtualIPAddresses; }
                 set { this._virtualIPAddresses = value; }
             }
@@ -408,6 +318,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             /// </summary>
             public Deployment()
             {
+                this.ExtendedProperties = new Dictionary<string, string>();
+                this.RoleInstances = new List<RoleInstance>();
+                this.Roles = new List<Role>();
+                this.VirtualIPAddresses = new List<VirtualIPAddress>();
             }
         }
     }

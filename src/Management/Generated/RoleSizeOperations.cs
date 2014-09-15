@@ -155,7 +155,6 @@ namespace Microsoft.WindowsAzure.Management
                     XElement roleSizesSequenceElement = responseDoc.Element(XName.Get("RoleSizes", "http://schemas.microsoft.com/windowsazure"));
                     if (roleSizesSequenceElement != null)
                     {
-                        result.RoleSizes = new List<RoleSizeListResponse.RoleSize>();
                         foreach (XElement roleSizesElement in roleSizesSequenceElement.Elements(XName.Get("RoleSize", "http://schemas.microsoft.com/windowsazure")))
                         {
                             RoleSizeListResponse.RoleSize roleSizeInstance = new RoleSizeListResponse.RoleSize();

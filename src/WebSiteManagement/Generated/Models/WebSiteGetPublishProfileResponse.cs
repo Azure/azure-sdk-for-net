@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IList<WebSiteGetPublishProfileResponse.PublishProfile> PublishProfiles
         {
-            get
-            {
-                if (this._publishProfiles == null)
-                {
-                    this._publishProfiles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetPublishProfileResponse.PublishProfile>();
-                }
-                return this._publishProfiles;
-            }
-            set { this._publishProfiles = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The web site publish profiles.
-        /// </summary>
-        public IList<WebSiteGetPublishProfileResponse.PublishProfile> PublishProfilesValue
-        {
             get { return this._publishProfiles; }
             set { this._publishProfiles = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetPublishProfileResponse()
         {
+            this.PublishProfiles = new List<WebSiteGetPublishProfileResponse.PublishProfile>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public IEnumerator<WebSiteGetPublishProfileResponse.PublishProfile> GetEnumerator()
         {
-            return this.PublishProfilesValue.GetEnumerator();
+            return this.PublishProfiles.GetEnumerator();
         }
         
         /// <summary>
@@ -165,23 +150,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// web site application.
             /// </summary>
             public IList<WebSiteGetPublishProfileResponse.Database> Databases
-            {
-                get
-                {
-                    if (this._databases == null)
-                    {
-                        this._databases = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteGetPublishProfileResponse.Database>();
-                    }
-                    return this._databases;
-                }
-                set { this._databases = value; }
-            }
-            
-            /// <summary>
-            /// Optional. Connection information for the databases used by the
-            /// web site application.
-            /// </summary>
-            public IList<WebSiteGetPublishProfileResponse.Database> DatabasesValue
             {
                 get { return this._databases; }
                 set { this._databases = value; }
@@ -320,6 +288,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public PublishProfile()
             {
+                this.Databases = new List<WebSiteGetPublishProfileResponse.Database>();
             }
         }
     }

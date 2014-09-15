@@ -1220,7 +1220,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement replicationProgressSequenceElement = oSImageDetailsElement.Element(XName.Get("ReplicationProgress", "http://schemas.microsoft.com/windowsazure"));
                         if (replicationProgressSequenceElement != null)
                         {
-                            result.ReplicationProgress = new List<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
                             foreach (XElement replicationProgressElement in replicationProgressSequenceElement.Elements(XName.Get("ReplicationProgressElement", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement replicationProgressElementInstance = new VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement();
@@ -1505,7 +1504,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement imagesSequenceElement = responseDoc.Element(XName.Get("Images", "http://schemas.microsoft.com/windowsazure"));
                     if (imagesSequenceElement != null)
                     {
-                        result.Images = new List<VirtualMachineOSImageListResponse.VirtualMachineOSImage>();
                         foreach (XElement imagesElement in imagesSequenceElement.Elements(XName.Get("OSImage", "http://schemas.microsoft.com/windowsazure")))
                         {
                             VirtualMachineOSImageListResponse.VirtualMachineOSImage oSImageInstance = new VirtualMachineOSImageListResponse.VirtualMachineOSImage();
@@ -1754,10 +1752,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 XElement replicationInputElement = new XElement(XName.Get("ReplicationInput", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(replicationInputElement);
                 
-                if (parameters.TargetLocationsValue != null)
+                if (parameters.TargetLocations != null)
                 {
                     XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocationsValue)
+                    foreach (string targetLocationsItem in parameters.TargetLocations)
                     {
                         XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
                         targetLocationsItemElement.Value = targetLocationsItem;

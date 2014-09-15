@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IList<JobScheduleDay> Days
         {
-            get
-            {
-                if (this._days == null)
-                {
-                    this._days = new System.Collections.Generic.List<Microsoft.WindowsAzure.Scheduler.Models.JobScheduleDay>();
-                }
-                return this._days;
-            }
-            set { this._days = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Days of the week that the job should execute on.
-        /// </summary>
-        public IList<JobScheduleDay> DaysValue
-        {
             get { return this._days; }
             set { this._days = value; }
         }
@@ -65,22 +49,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IList<int> Hours
         {
-            get
-            {
-                if (this._hours == null)
-                {
-                    this._hours = new System.Collections.Generic.List<int>();
-                }
-                return this._hours;
-            }
-            set { this._hours = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Hours of the day that the job should execute at.
-        /// </summary>
-        public IList<int> HoursValue
-        {
             get { return this._hours; }
             set { this._hours = value; }
         }
@@ -91,22 +59,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// Optional. Minutes of the hour that the job should execute at.
         /// </summary>
         public IList<int> Minutes
-        {
-            get
-            {
-                if (this._minutes == null)
-                {
-                    this._minutes = new System.Collections.Generic.List<int>();
-                }
-                return this._minutes;
-            }
-            set { this._minutes = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Minutes of the hour that the job should execute at.
-        /// </summary>
-        public IList<int> MinutesValue
         {
             get { return this._minutes; }
             set { this._minutes = value; }
@@ -120,23 +72,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public IList<int> MonthDays
         {
-            get
-            {
-                if (this._monthDays == null)
-                {
-                    this._monthDays = new System.Collections.Generic.List<int>();
-                }
-                return this._monthDays;
-            }
-            set { this._monthDays = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Days of the month that the job should execute on.  Must
-        /// be between 1 and 31.
-        /// </summary>
-        public IList<int> MonthDaysValue
-        {
             get { return this._monthDays; }
             set { this._monthDays = value; }
         }
@@ -147,22 +82,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// Optional. Occurrences of days within a month.
         /// </summary>
         public IList<JobScheduleMonthlyOccurrence> MonthlyOccurrences
-        {
-            get
-            {
-                if (this._monthlyOccurrences == null)
-                {
-                    this._monthlyOccurrences = new System.Collections.Generic.List<Microsoft.WindowsAzure.Scheduler.Models.JobScheduleMonthlyOccurrence>();
-                }
-                return this._monthlyOccurrences;
-            }
-            set { this._monthlyOccurrences = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Occurrences of days within a month.
-        /// </summary>
-        public IList<JobScheduleMonthlyOccurrence> MonthlyOccurrencesValue
         {
             get { return this._monthlyOccurrences; }
             set { this._monthlyOccurrences = value; }
@@ -175,23 +94,6 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// and 12.
         /// </summary>
         public IList<int> Months
-        {
-            get
-            {
-                if (this._months == null)
-                {
-                    this._months = new System.Collections.Generic.List<int>();
-                }
-                return this._months;
-            }
-            set { this._months = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Months that the job should execute in.  Must be between 1
-        /// and 12.
-        /// </summary>
-        public IList<int> MonthsValue
         {
             get { return this._months; }
             set { this._months = value; }

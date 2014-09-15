@@ -77,23 +77,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<LoadBalancer> LoadBalancers
         {
-            get
-            {
-                if (this._loadBalancers == null)
-                {
-                    this._loadBalancers = new List<LoadBalancer>();
-                }
-                return this._loadBalancers;
-            }
-            set { this._loadBalancers = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of internal load balancers that each provide load
-        /// balancing on a private VIP.
-        /// </summary>
-        public IList<LoadBalancer> LoadBalancersValue
-        {
             get { return this._loadBalancers; }
             set { this._loadBalancers = value; }
         }
@@ -131,23 +114,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<Role> Roles
         {
-            get
-            {
-                if (this._roles == null)
-                {
-                    this._roles = new List<Role>();
-                }
-                return this._roles;
-            }
-            set { this._roles = value; }
-        }
-        
-        /// <summary>
-        /// Required. Contains the provisioning details for the new virtual
-        /// machine deployment.
-        /// </summary>
-        public IList<Role> RolesValue
-        {
             get { return this._roles; }
             set { this._roles = value; }
         }
@@ -171,6 +137,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineCreateDeploymentParameters()
         {
+            this.LoadBalancers = new List<LoadBalancer>();
+            this.Roles = new List<Role>();
         }
     }
 }

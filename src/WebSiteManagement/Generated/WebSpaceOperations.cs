@@ -702,7 +702,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement webSpacesSequenceElement = responseDoc.Element(XName.Get("WebSpaces", "http://schemas.microsoft.com/windowsazure"));
                     if (webSpacesSequenceElement != null)
                     {
-                        result.WebSpaces = new List<WebSpacesListResponse.WebSpace>();
                         foreach (XElement webSpacesElement in webSpacesSequenceElement.Elements(XName.Get("WebSpace", "http://schemas.microsoft.com/windowsazure")))
                         {
                             WebSpacesListResponse.WebSpace webSpaceInstance = new WebSpacesListResponse.WebSpace();
@@ -917,7 +916,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement geoRegionsSequenceElement = responseDoc.Element(XName.Get("GeoRegions", "http://schemas.microsoft.com/windowsazure"));
                     if (geoRegionsSequenceElement != null)
                     {
-                        result.GeoRegions = new List<WebSpacesListGeoRegionsResponse.GeoRegion>();
                         foreach (XElement geoRegionsElement in geoRegionsSequenceElement.Elements(XName.Get("GeoRegion", "http://schemas.microsoft.com/windowsazure")))
                         {
                             WebSpacesListGeoRegionsResponse.GeoRegion geoRegionInstance = new WebSpacesListGeoRegionsResponse.GeoRegion();
@@ -1074,7 +1072,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement arrayOfstringSequenceElement = responseDoc.Element(XName.Get("ArrayOfstring", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
                     if (arrayOfstringSequenceElement != null)
                     {
-                        result.Users = new List<WebSpacesListPublishingUsersResponse.User>();
                         foreach (XElement arrayOfstringElement in arrayOfstringSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                         {
                             WebSpacesListPublishingUsersResponse.User stringInstance = new WebSpacesListPublishingUsersResponse.User();
@@ -1223,7 +1220,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement sitesSequenceElement = responseDoc.Element(XName.Get("Sites", "http://schemas.microsoft.com/windowsazure"));
                     if (sitesSequenceElement != null)
                     {
-                        result.WebSites = new List<WebSite>();
                         foreach (XElement sitesElement in sitesSequenceElement.Elements(XName.Get("Site", "http://schemas.microsoft.com/windowsazure")))
                         {
                             WebSite siteInstance = new WebSite();
@@ -1260,7 +1256,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement enabledHostNamesSequenceElement = sitesElement.Element(XName.Get("EnabledHostNames", "http://schemas.microsoft.com/windowsazure"));
                             if (enabledHostNamesSequenceElement != null)
                             {
-                                siteInstance.EnabledHostNames = new List<string>();
                                 foreach (XElement enabledHostNamesElement in enabledHostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
                                     siteInstance.EnabledHostNames.Add(enabledHostNamesElement.Value);
@@ -1270,7 +1265,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement hostNameSslStatesSequenceElement = sitesElement.Element(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                             if (hostNameSslStatesSequenceElement != null)
                             {
-                                siteInstance.HostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
                                 foreach (XElement hostNameSslStatesElement in hostNameSslStatesSequenceElement.Elements(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     WebSite.WebSiteHostNameSslState hostNameSslStateInstance = new WebSite.WebSiteHostNameSslState();
@@ -1327,7 +1321,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             XElement hostNamesSequenceElement = sitesElement.Element(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
                             if (hostNamesSequenceElement != null)
                             {
-                                siteInstance.HostNames = new List<string>();
                                 foreach (XElement hostNamesElement in hostNamesSequenceElement.Elements(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays")))
                                 {
                                     siteInstance.HostNames.Add(hostNamesElement.Value);
@@ -1385,7 +1378,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement appSettingsSequenceElement = sitePropertiesElement.Element(XName.Get("AppSettings", "http://schemas.microsoft.com/windowsazure"));
                                 if (appSettingsSequenceElement != null)
                                 {
-                                    sitePropertiesInstance.AppSettings = new Dictionary<string, string>();
                                     foreach (XElement appSettingsElement in appSettingsSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string appSettingsKey = appSettingsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1397,7 +1389,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement metadataSequenceElement = sitePropertiesElement.Element(XName.Get("Metadata", "http://schemas.microsoft.com/windowsazure"));
                                 if (metadataSequenceElement != null)
                                 {
-                                    sitePropertiesInstance.Metadata = new Dictionary<string, string>();
                                     foreach (XElement metadataElement in metadataSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string metadataKey = metadataElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1409,7 +1400,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 XElement propertiesSequenceElement = sitePropertiesElement.Element(XName.Get("Properties", "http://schemas.microsoft.com/windowsazure"));
                                 if (propertiesSequenceElement != null)
                                 {
-                                    sitePropertiesInstance.Properties = new Dictionary<string, string>();
                                     foreach (XElement propertiesElement in propertiesSequenceElement.Elements(XName.Get("NameValuePair", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         string propertiesKey = propertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;

@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IList<TriggeredWebJob> TriggeredWebJobs
         {
-            get
-            {
-                if (this._triggeredWebJobs == null)
-                {
-                    this._triggeredWebJobs = new System.Collections.Generic.List<Microsoft.WindowsAzure.WebSitesExtensions.Models.TriggeredWebJob>();
-                }
-                return this._triggeredWebJobs;
-            }
-            set { this._triggeredWebJobs = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of triggered WebJobs.
-        /// </summary>
-        public IList<TriggeredWebJob> TriggeredWebJobsValue
-        {
             get { return this._triggeredWebJobs; }
             set { this._triggeredWebJobs = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public TriggeredWebJobListResponse()
         {
+            this.TriggeredWebJobs = new List<TriggeredWebJob>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IEnumerator<TriggeredWebJob> GetEnumerator()
         {
-            return this.TriggeredWebJobsValue.GetEnumerator();
+            return this.TriggeredWebJobs.GetEnumerator();
         }
         
         /// <summary>

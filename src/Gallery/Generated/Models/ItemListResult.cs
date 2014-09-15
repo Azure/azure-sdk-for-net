@@ -39,22 +39,6 @@ namespace Microsoft.Azure.Gallery.Models
         /// </summary>
         public IList<GalleryItem> Items
         {
-            get
-            {
-                if (this._items == null)
-                {
-                    this._items = new System.Collections.Generic.List<GalleryItem>();
-                }
-                return this._items;
-            }
-            set { this._items = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the list of gallery items.
-        /// </summary>
-        public IList<GalleryItem> ItemsValue
-        {
             get { return this._items; }
             set { this._items = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.Azure.Gallery.Models
         /// </summary>
         public ItemListResult()
         {
+            this.Items = new List<GalleryItem>();
         }
     }
 }

@@ -628,7 +628,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         XElement definitionsSequenceElement = profileElement.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
                         if (definitionsSequenceElement != null)
                         {
-                            profileInstance.Definitions = new List<DefinitionStatusAndVersion>();
                             foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 DefinitionStatusAndVersion definitionInstance = new DefinitionStatusAndVersion();
@@ -772,7 +771,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                     XElement profilesSequenceElement = responseDoc.Element(XName.Get("Profiles", "http://schemas.microsoft.com/windowsazure"));
                     if (profilesSequenceElement != null)
                     {
-                        result.Profiles = new List<Profile>();
                         foreach (XElement profilesElement in profilesSequenceElement.Elements(XName.Get("Profile", "http://schemas.microsoft.com/windowsazure")))
                         {
                             Profile profileInstance = new Profile();
@@ -816,7 +814,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                             XElement definitionsSequenceElement = profilesElement.Element(XName.Get("Definitions", "http://schemas.microsoft.com/windowsazure"));
                             if (definitionsSequenceElement != null)
                             {
-                                profileInstance.Definitions = new List<DefinitionStatusAndVersion>();
                                 foreach (XElement definitionsElement in definitionsSequenceElement.Elements(XName.Get("Definition", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     DefinitionStatusAndVersion definitionInstance = new DefinitionStatusAndVersion();

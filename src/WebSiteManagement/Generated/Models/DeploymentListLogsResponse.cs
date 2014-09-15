@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IList<DeploymentLog> Logs
         {
-            get
-            {
-                if (this._logs == null)
-                {
-                    this._logs = new System.Collections.Generic.List<Microsoft.WindowsAzure.WebSitesExtensions.Models.DeploymentLog>();
-                }
-                return this._logs;
-            }
-            set { this._logs = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The list of logs.
-        /// </summary>
-        public IList<DeploymentLog> LogsValue
-        {
             get { return this._logs; }
             set { this._logs = value; }
         }
@@ -64,6 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public DeploymentListLogsResponse()
         {
+            this.Logs = new List<DeploymentLog>();
         }
         
         /// <summary>
@@ -71,7 +56,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public IEnumerator<DeploymentLog> GetEnumerator()
         {
-            return this.LogsValue.GetEnumerator();
+            return this.Logs.GetEnumerator();
         }
         
         /// <summary>

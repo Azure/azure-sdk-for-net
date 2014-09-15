@@ -185,7 +185,6 @@ namespace Microsoft.Azure.Management.Automation
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.RunbookParameters = new List<RunbookParameter>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 RunbookParameter runbookParameterInstance = new RunbookParameter();

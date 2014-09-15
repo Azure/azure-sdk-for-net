@@ -600,7 +600,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                     XElement dedicatedCircuitLinksSequenceElement = responseDoc.Element(XName.Get("DedicatedCircuitLinks", "http://schemas.microsoft.com/windowsazure"));
                     if (dedicatedCircuitLinksSequenceElement != null)
                     {
-                        result.DedicatedCircuitLinks = new List<AzureDedicatedCircuitLink>();
                         foreach (XElement dedicatedCircuitLinksElement in dedicatedCircuitLinksSequenceElement.Elements(XName.Get("DedicatedCircuitLink", "http://schemas.microsoft.com/windowsazure")))
                         {
                             AzureDedicatedCircuitLink dedicatedCircuitLinkInstance = new AzureDedicatedCircuitLink();

@@ -38,22 +38,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public IList<MetricDefinition> Value
         {
-            get
-            {
-                if (this._value == null)
-                {
-                    this._value = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models.MetricDefinition>();
-                }
-                return this._value;
-            }
-            set { this._value = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The values for the metric definitions.
-        /// </summary>
-        public IList<MetricDefinition> ValueValue
-        {
             get { return this._value; }
             set { this._value = value; }
         }
@@ -63,6 +47,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Metrics.Models
         /// </summary>
         public MetricDefinitionCollection()
         {
+            this.Value = new List<MetricDefinition>();
         }
     }
 }

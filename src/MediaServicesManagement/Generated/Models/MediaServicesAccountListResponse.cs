@@ -39,22 +39,6 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         /// </summary>
         public IList<MediaServicesAccountListResponse.MediaServiceAccount> Accounts
         {
-            get
-            {
-                if (this._accounts == null)
-                {
-                    this._accounts = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.MediaServices.Models.MediaServicesAccountListResponse.MediaServiceAccount>();
-                }
-                return this._accounts;
-            }
-            set { this._accounts = value; }
-        }
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public IList<MediaServicesAccountListResponse.MediaServiceAccount> AccountsValue
-        {
             get { return this._accounts; }
             set { this._accounts = value; }
         }
@@ -65,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         /// </summary>
         public MediaServicesAccountListResponse()
         {
+            this.Accounts = new List<MediaServicesAccountListResponse.MediaServiceAccount>();
         }
         
         /// <summary>
@@ -72,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.MediaServices.Models
         /// </summary>
         public IEnumerator<MediaServicesAccountListResponse.MediaServiceAccount> GetEnumerator()
         {
-            return this.AccountsValue.GetEnumerator();
+            return this.Accounts.GetEnumerator();
         }
         
         /// <summary>

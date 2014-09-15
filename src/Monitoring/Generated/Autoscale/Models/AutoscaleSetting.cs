@@ -49,22 +49,6 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public IList<AutoscaleProfile> Profiles
         {
-            get
-            {
-                if (this._profiles == null)
-                {
-                    this._profiles = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models.AutoscaleProfile>();
-                }
-                return this._profiles;
-            }
-            set { this._profiles = value; }
-        }
-        
-        /// <summary>
-        /// Optional.
-        /// </summary>
-        public IList<AutoscaleProfile> ProfilesValue
-        {
             get { return this._profiles; }
             set { this._profiles = value; }
         }
@@ -74,6 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Autoscale.Models
         /// </summary>
         public AutoscaleSetting()
         {
+            this.Profiles = new List<AutoscaleProfile>();
         }
     }
 }

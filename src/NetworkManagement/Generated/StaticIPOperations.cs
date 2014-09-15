@@ -183,7 +183,6 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement availableAddressesSequenceElement = addressAvailabilityResponseElement.Element(XName.Get("AvailableAddresses", "http://schemas.microsoft.com/windowsazure"));
                         if (availableAddressesSequenceElement != null)
                         {
-                            result.AvailableAddresses = new List<string>();
                             foreach (XElement availableAddressesElement in availableAddressesSequenceElement.Elements(XName.Get("AvailableAddress", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 result.AvailableAddresses.Add(availableAddressesElement.Value);

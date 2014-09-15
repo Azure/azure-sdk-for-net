@@ -42,27 +42,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<string> TargetLocations
         {
-            get
-            {
-                if (this._targetLocations == null)
-                {
-                    this._targetLocations = new List<string>();
-                }
-                return this._targetLocations;
-            }
-            set { this._targetLocations = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The replication target regional locations.Note: The
-        /// regions in the request body are not additive. If an OS Image has
-        /// already been replicated to Regions A, B, and C, and a request is
-        /// made to replicate to Regions A and D, the VM Image will remain in
-        /// Region A, will be replicated in Region D, and will be unreplicated
-        /// from Regions B and C.
-        /// </summary>
-        public IList<string> TargetLocationsValue
-        {
             get { return this._targetLocations; }
             set { this._targetLocations = value; }
         }
@@ -73,6 +52,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageReplicateParameters()
         {
+            this.TargetLocations = new List<string>();
         }
     }
 }

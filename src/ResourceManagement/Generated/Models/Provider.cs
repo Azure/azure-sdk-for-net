@@ -71,22 +71,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<ProviderResourceType> ResourceTypes
         {
-            get
-            {
-                if (this._resourceTypes == null)
-                {
-                    this._resourceTypes = new System.Collections.Generic.List<Microsoft.Azure.Management.Resources.Models.ProviderResourceType>();
-                }
-                return this._resourceTypes;
-            }
-            set { this._resourceTypes = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of provider resource types.
-        /// </summary>
-        public IList<ProviderResourceType> ResourceTypesValue
-        {
             get { return this._resourceTypes; }
             set { this._resourceTypes = value; }
         }
@@ -96,6 +80,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public Provider()
         {
+            this.ResourceTypes = new List<ProviderResourceType>();
         }
     }
 }

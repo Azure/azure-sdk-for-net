@@ -37,22 +37,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<string> VirtualMachinesRoleSizes
         {
-            get
-            {
-                if (this._virtualMachinesRoleSizes == null)
-                {
-                    this._virtualMachinesRoleSizes = new System.Collections.Generic.List<string>();
-                }
-                return this._virtualMachinesRoleSizes;
-            }
-            set { this._virtualMachinesRoleSizes = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Role sizes support for IaaS deployments.
-        /// </summary>
-        public IList<string> VirtualMachinesRoleSizesValue
-        {
             get { return this._virtualMachinesRoleSizes; }
             set { this._virtualMachinesRoleSizes = value; }
         }
@@ -64,22 +48,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<string> WebWorkerRoleSizes
         {
-            get
-            {
-                if (this._webWorkerRoleSizes == null)
-                {
-                    this._webWorkerRoleSizes = new System.Collections.Generic.List<string>();
-                }
-                return this._webWorkerRoleSizes;
-            }
-            set { this._webWorkerRoleSizes = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Role sizes support for PaaS deployments.
-        /// </summary>
-        public IList<string> WebWorkerRoleSizesValue
-        {
             get { return this._webWorkerRoleSizes; }
             set { this._webWorkerRoleSizes = value; }
         }
@@ -89,6 +57,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ComputeCapabilities()
         {
+            this.VirtualMachinesRoleSizes = new List<string>();
+            this.WebWorkerRoleSizes = new List<string>();
         }
     }
 }

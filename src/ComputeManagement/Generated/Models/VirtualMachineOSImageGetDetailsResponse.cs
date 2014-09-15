@@ -49,22 +49,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement> ReplicationProgress
         {
-            get
-            {
-                if (this._replicationProgress == null)
-                {
-                    this._replicationProgress = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
-                }
-                return this._replicationProgress;
-            }
-            set { this._replicationProgress = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The replication progress information of VM images.
-        /// </summary>
-        public IList<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement> ReplicationProgressValue
-        {
             get { return this._replicationProgress; }
             set { this._replicationProgress = value; }
         }
@@ -75,6 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineOSImageGetDetailsResponse()
         {
+            this.ReplicationProgress = new List<VirtualMachineOSImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>

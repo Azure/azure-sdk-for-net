@@ -300,7 +300,6 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)serverFarmValue["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            webHostingPlanInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey2 = ((string)property.Name);
@@ -635,7 +634,6 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
                         if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                         {
-                            webHostingPlanInstance.Tags = new Dictionary<string, string>();
                             foreach (JProperty property in tagsSequenceElement)
                             {
                                 string tagsKey = ((string)property.Name);
@@ -817,7 +815,6 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken propertiesArray = responseDoc["properties"];
                         if (propertiesArray != null && propertiesArray.Type != JTokenType.Null)
                         {
-                            result.UsageMetrics = new List<HistoricalUsageMetric>();
                             foreach (JToken propertiesValue in ((JArray)propertiesArray))
                             {
                                 HistoricalUsageMetric historicalUsageMetricInstance = new HistoricalUsageMetric();
@@ -888,7 +885,6 @@ namespace Microsoft.Azure.Management.WebSites
                                     JToken valuesArray = dataValue["values"];
                                     if (valuesArray != null && valuesArray.Type != JTokenType.Null)
                                     {
-                                        dataInstance.Values = new System.Collections.Generic.List<Microsoft.Azure.Management.WebSites.Models.HistoricalUsageMetricSample>();
                                         foreach (JToken valuesValue in ((JArray)valuesArray))
                                         {
                                             HistoricalUsageMetricSample metricSampleInstance = new HistoricalUsageMetricSample();
@@ -1085,7 +1081,6 @@ namespace Microsoft.Azure.Management.WebSites
                         JToken webHostingPlansArray = responseDoc;
                         if (webHostingPlansArray != null && webHostingPlansArray.Type != JTokenType.Null)
                         {
-                            result.WebHostingPlans = new List<WebHostingPlan>();
                             foreach (JToken webHostingPlansValue in ((JArray)webHostingPlansArray))
                             {
                                 WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
@@ -1143,7 +1138,6 @@ namespace Microsoft.Azure.Management.WebSites
                                 JToken tagsSequenceElement = ((JToken)webHostingPlansValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
-                                    webHostingPlanInstance.Tags = new Dictionary<string, string>();
                                     foreach (JProperty property in tagsSequenceElement)
                                     {
                                         string tagsKey = ((string)property.Name);

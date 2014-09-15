@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<RecoverableDatabase> Databases
         {
-            get
-            {
-                if (this._databases == null)
-                {
-                    this._databases = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.RecoverableDatabase>();
-                }
-                return this._databases;
-            }
-            set { this._databases = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of databases that were hosted
-        /// on the server.
-        /// </summary>
-        public IList<RecoverableDatabase> DatabasesValue
-        {
             get { return this._databases; }
             set { this._databases = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public RecoverableDatabaseListResponse()
         {
+            this.Databases = new List<RecoverableDatabase>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<RecoverableDatabase> GetEnumerator()
         {
-            return this.DatabasesValue.GetEnumerator();
+            return this.Databases.GetEnumerator();
         }
         
         /// <summary>

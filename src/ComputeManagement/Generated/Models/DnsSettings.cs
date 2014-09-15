@@ -39,23 +39,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<DnsServer> DnsServers
         {
-            get
-            {
-                if (this._dnsServers == null)
-                {
-                    this._dnsServers = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DnsServer>();
-                }
-                return this._dnsServers;
-            }
-            set { this._dnsServers = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Contains a collection of objects that define the DNS
-        /// server settings.
-        /// </summary>
-        public IList<DnsServer> DnsServersValue
-        {
             get { return this._dnsServers; }
             set { this._dnsServers = value; }
         }
@@ -65,6 +48,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DnsSettings()
         {
+            this.DnsServers = new List<DnsServer>();
         }
     }
 }

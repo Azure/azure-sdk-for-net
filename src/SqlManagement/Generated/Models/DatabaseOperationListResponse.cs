@@ -41,23 +41,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<DatabaseOperation> DatabaseOperations
         {
-            get
-            {
-                if (this._databaseOperations == null)
-                {
-                    this._databaseOperations = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.DatabaseOperation>();
-                }
-                return this._databaseOperations;
-            }
-            set { this._databaseOperations = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of database operations
-        /// returned from a call to List Database Operations.
-        /// </summary>
-        public IList<DatabaseOperation> DatabaseOperationsValue
-        {
             get { return this._databaseOperations; }
             set { this._databaseOperations = value; }
         }
@@ -68,6 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseOperationListResponse()
         {
+            this.DatabaseOperations = new List<DatabaseOperation>();
         }
         
         /// <summary>
@@ -75,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<DatabaseOperation> GetEnumerator()
         {
-            return this.DatabaseOperationsValue.GetEnumerator();
+            return this.DatabaseOperations.GetEnumerator();
         }
         
         /// <summary>

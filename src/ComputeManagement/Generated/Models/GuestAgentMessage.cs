@@ -48,22 +48,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<string> ParamList
         {
-            get
-            {
-                if (this._paramList == null)
-                {
-                    this._paramList = new System.Collections.Generic.List<string>();
-                }
-                return this._paramList;
-            }
-            set { this._paramList = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The guest agent message parameter list.
-        /// </summary>
-        public IList<string> ParamListValue
-        {
             get { return this._paramList; }
             set { this._paramList = value; }
         }
@@ -73,6 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public GuestAgentMessage()
         {
+            this.ParamList = new List<string>();
         }
     }
 }

@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<FirewallRule> FirewallRules
         {
-            get
-            {
-                if (this._firewallRules == null)
-                {
-                    this._firewallRules = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.FirewallRule>();
-                }
-                return this._firewallRules;
-            }
-            set { this._firewallRules = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets the collection of firewall rules returned from the
-        /// List Firewall Rules operation.
-        /// </summary>
-        public IList<FirewallRule> FirewallRulesValue
-        {
             get { return this._firewallRules; }
             set { this._firewallRules = value; }
         }
@@ -66,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public FirewallRuleListResponse()
         {
+            this.FirewallRules = new List<FirewallRule>();
         }
         
         /// <summary>
@@ -73,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<FirewallRule> GetEnumerator()
         {
-            return this.FirewallRulesValue.GetEnumerator();
+            return this.FirewallRules.GetEnumerator();
         }
         
         /// <summary>

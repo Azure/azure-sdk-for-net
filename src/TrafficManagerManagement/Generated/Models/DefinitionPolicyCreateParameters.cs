@@ -42,26 +42,6 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public IList<DefinitionEndpointCreateParameters> Endpoints
         {
-            get
-            {
-                if (this._endpoints == null)
-                {
-                    this._endpoints = new List<DefinitionEndpointCreateParameters>();
-                }
-                return this._endpoints;
-            }
-            set { this._endpoints = value; }
-        }
-        
-        /// <summary>
-        /// Required. Encapsulates the list of Windows Azure Traffic Manager
-        /// endpoints. You can define up to 100 endpoints in the list. If the
-        /// load balancing method is set to Failover, traffic to the endpoints
-        /// is load balanced in the sequential order in which the endpoints
-        /// are defined.
-        /// </summary>
-        public IList<DefinitionEndpointCreateParameters> EndpointsValue
-        {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
@@ -84,6 +64,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionPolicyCreateParameters()
         {
+            this.Endpoints = new List<DefinitionEndpointCreateParameters>();
         }
         
         /// <summary>
@@ -98,7 +79,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
                 throw new ArgumentNullException("endpoints");
             }
             this.LoadBalancingMethod = loadBalancingMethod;
-            this.EndpointsValue = endpoints;
+            this.Endpoints = endpoints;
         }
     }
 }

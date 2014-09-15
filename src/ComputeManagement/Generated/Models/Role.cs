@@ -50,23 +50,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ConfigurationSet> ConfigurationSets
         {
-            get
-            {
-                if (this._configurationSets == null)
-                {
-                    this._configurationSets = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ConfigurationSet>();
-                }
-                return this._configurationSets;
-            }
-            set { this._configurationSets = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A collection of values that represents system or
-        /// application configuration settings.
-        /// </summary>
-        public IList<ConfigurationSet> ConfigurationSetsValue
-        {
             get { return this._configurationSets; }
             set { this._configurationSets = value; }
         }
@@ -78,23 +61,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// for a virtual machine.
         /// </summary>
         public IList<DataVirtualHardDisk> DataVirtualHardDisks
-        {
-            get
-            {
-                if (this._dataVirtualHardDisks == null)
-                {
-                    this._dataVirtualHardDisks = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.DataVirtualHardDisk>();
-                }
-                return this._dataVirtualHardDisks;
-            }
-            set { this._dataVirtualHardDisks = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Contains the parameters Azure uses to create a data disk
-        /// for a virtual machine.
-        /// </summary>
-        public IList<DataVirtualHardDisk> DataVirtualHardDisksValue
         {
             get { return this._dataVirtualHardDisks; }
             set { this._dataVirtualHardDisks = value; }
@@ -181,24 +147,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public IList<ResourceExtensionReference> ResourceExtensionReferences
         {
-            get
-            {
-                if (this._resourceExtensionReferences == null)
-                {
-                    this._resourceExtensionReferences = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Compute.Models.ResourceExtensionReference>();
-                }
-                return this._resourceExtensionReferences;
-            }
-            set { this._resourceExtensionReferences = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Contains a collection of resource extensions that are to
-        /// be installed on the Virtual Machine. This element is used if
-        /// ProvisionGuestAgent is set to true.
-        /// </summary>
-        public IList<ResourceExtensionReference> ResourceExtensionReferencesValue
-        {
             get { return this._resourceExtensionReferences; }
             set { this._resourceExtensionReferences = value; }
         }
@@ -259,6 +207,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public Role()
         {
+            this.ConfigurationSets = new List<ConfigurationSet>();
+            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
         }
     }
 }

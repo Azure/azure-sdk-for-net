@@ -76,23 +76,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public IList<Uri> Endpoints
         {
-            get
-            {
-                if (this._endpoints == null)
-                {
-                    this._endpoints = new System.Collections.Generic.List<System.Uri>();
-                }
-                return this._endpoints;
-            }
-            set { this._endpoints = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The URLs that are used to perform a retrieval of a public
-        /// blob, queue, or table object.
-        /// </summary>
-        public IList<Uri> EndpointsValue
-        {
             get { return this._endpoints; }
             set { this._endpoints = value; }
         }
@@ -205,6 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountProperties()
         {
+            this.Endpoints = new List<Uri>();
         }
     }
 }

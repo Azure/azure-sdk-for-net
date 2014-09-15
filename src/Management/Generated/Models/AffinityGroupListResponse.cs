@@ -40,23 +40,6 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IList<AffinityGroupListResponse.AffinityGroup> AffinityGroups
         {
-            get
-            {
-                if (this._affinityGroups == null)
-                {
-                    this._affinityGroups = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Models.AffinityGroupListResponse.AffinityGroup>();
-                }
-                return this._affinityGroups;
-            }
-            set { this._affinityGroups = value; }
-        }
-        
-        /// <summary>
-        /// Optional. The affinity groups associated with the specified
-        /// subscription.
-        /// </summary>
-        public IList<AffinityGroupListResponse.AffinityGroup> AffinityGroupsValue
-        {
             get { return this._affinityGroups; }
             set { this._affinityGroups = value; }
         }
@@ -66,6 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupListResponse()
         {
+            this.AffinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
         }
         
         /// <summary>
@@ -73,7 +57,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public IEnumerator<AffinityGroupListResponse.AffinityGroup> GetEnumerator()
         {
-            return this.AffinityGroupsValue.GetEnumerator();
+            return this.AffinityGroups.GetEnumerator();
         }
         
         /// <summary>
@@ -98,25 +82,6 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// this element will not be present.
             /// </summary>
             public IList<string> Capabilities
-            {
-                get
-                {
-                    if (this._capabilities == null)
-                    {
-                        this._capabilities = new System.Collections.Generic.List<string>();
-                    }
-                    return this._capabilities;
-                }
-                set { this._capabilities = value; }
-            }
-            
-            /// <summary>
-            /// Optional. Indicates if the affinity group is able to perform
-            /// virtual machine-related operations. If so, the string
-            /// PersistentVMRole will be returned by this element. Otherwise,
-            /// this element will not be present.
-            /// </summary>
-            public IList<string> CapabilitiesValue
             {
                 get { return this._capabilities; }
                 set { this._capabilities = value; }
@@ -195,6 +160,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public AffinityGroup()
             {
+                this.Capabilities = new List<string>();
             }
         }
     }

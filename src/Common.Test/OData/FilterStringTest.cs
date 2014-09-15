@@ -26,11 +26,12 @@ namespace Microsoft.WindowsAzure.Common.Test.OData
         public void DefaultODataQueryTest()
         {
             var date = new DateTime(2013, 11, 5);
+            var date2 = new DateTime(2004, 11, 5);
 
             var result = FilterString.Generate<Param1>(p => p.Foo == "foo" || p.Val < 20 || p.Foo == "bar" && p.Val == null &&
-                p.Date > new DateTime(2004, 11, 5) && p.Date < date && p.Values.Contains("x"));
-            Assert.Equal("foo eq 'foo' or Val lt 20 or foo eq 'bar' and Val eq null and d gt '2004-11-05T08:00:00Z' " +
-                "and d lt '2013-11-05T08:00:00Z' and vals/any(c: c eq 'x')", result);
+                p.Date > date2 && p.Date < date && p.Values.Contains("x"));
+            Assert.Equal(String.Format("foo eq 'foo' or Val lt 20 or foo eq 'bar' and Val eq null and d gt '{0}' " +
+                "and d lt '{1}' and vals/any(c: c eq 'x')", date2.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ"), date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ")), result);
         }
 
         [Fact]

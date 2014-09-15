@@ -215,10 +215,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     createStorageServiceInputElement.Add(locationElement);
                 }
                 
-                if (parameters.ExtendedPropertiesValue != null)
+                if (parameters.ExtendedProperties != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;
@@ -859,7 +859,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                             if (endpointsSequenceElement != null)
                             {
-                                storageServicePropertiesInstance.Endpoints = new List<Uri>();
                                 foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     storageServicePropertiesInstance.Endpoints.Add(TypeConversion.TryParseUri(endpointsElement.Value));
@@ -912,7 +911,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                         XElement extendedPropertiesSequenceElement = storageServiceElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                         if (extendedPropertiesSequenceElement != null)
                         {
-                            storageServiceInstance.ExtendedProperties = new Dictionary<string, string>();
                             foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                             {
                                 string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1200,7 +1198,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     XElement storageServicesSequenceElement = responseDoc.Element(XName.Get("StorageServices", "http://schemas.microsoft.com/windowsazure"));
                     if (storageServicesSequenceElement != null)
                     {
-                        result.StorageAccounts = new List<StorageAccount>();
                         foreach (XElement storageServicesElement in storageServicesSequenceElement.Elements(XName.Get("StorageService", "http://schemas.microsoft.com/windowsazure")))
                         {
                             StorageAccount storageServiceInstance = new StorageAccount();
@@ -1273,7 +1270,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                                 XElement endpointsSequenceElement = storageServicePropertiesElement.Element(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
                                 if (endpointsSequenceElement != null)
                                 {
-                                    storageServicePropertiesInstance.Endpoints = new List<Uri>();
                                     foreach (XElement endpointsElement in endpointsSequenceElement.Elements(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure")))
                                     {
                                         storageServicePropertiesInstance.Endpoints.Add(TypeConversion.TryParseUri(endpointsElement.Value));
@@ -1326,7 +1322,6 @@ namespace Microsoft.WindowsAzure.Management.Storage
                             XElement extendedPropertiesSequenceElement = storageServicesElement.Element(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
                             if (extendedPropertiesSequenceElement != null)
                             {
-                                storageServiceInstance.ExtendedProperties = new Dictionary<string, string>();
                                 foreach (XElement extendedPropertiesElement in extendedPropertiesSequenceElement.Elements(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure")))
                                 {
                                     string extendedPropertiesKey = extendedPropertiesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure")).Value;
@@ -1665,10 +1660,10 @@ namespace Microsoft.WindowsAzure.Management.Storage
                     updateStorageServiceInputElement.Add(labelElement);
                 }
                 
-                if (parameters.ExtendedPropertiesValue != null)
+                if (parameters.ExtendedProperties != null)
                 {
                     XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedPropertiesValue)
+                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
                     {
                         string extendedPropertiesKey = pair.Key;
                         string extendedPropertiesValue = pair.Value;

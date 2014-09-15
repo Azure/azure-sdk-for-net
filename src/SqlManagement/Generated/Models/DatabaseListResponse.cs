@@ -41,23 +41,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IList<Database> Databases
         {
-            get
-            {
-                if (this._databases == null)
-                {
-                    this._databases = new System.Collections.Generic.List<Microsoft.WindowsAzure.Management.Sql.Models.Database>();
-                }
-                return this._databases;
-            }
-            set { this._databases = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of databases that are hosted
-        /// on the Azure SQL Database Server.
-        /// </summary>
-        public IList<Database> DatabasesValue
-        {
             get { return this._databases; }
             set { this._databases = value; }
         }
@@ -67,6 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public DatabaseListResponse()
         {
+            this.Databases = new List<Database>();
         }
         
         /// <summary>
@@ -74,7 +58,7 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         /// </summary>
         public IEnumerator<Database> GetEnumerator()
         {
-            return this.DatabasesValue.GetEnumerator();
+            return this.Databases.GetEnumerator();
         }
         
         /// <summary>

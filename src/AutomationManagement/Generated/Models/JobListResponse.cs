@@ -38,22 +38,6 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public IList<Job> Jobs
         {
-            get
-            {
-                if (this._jobs == null)
-                {
-                    this._jobs = new System.Collections.Generic.List<Microsoft.Azure.Management.Automation.Models.Job>();
-                }
-                return this._jobs;
-            }
-            set { this._jobs = value; }
-        }
-        
-        /// <summary>
-        /// Optional. A list of jobs.
-        /// </summary>
-        public IList<Job> JobsValue
-        {
             get { return this._jobs; }
             set { this._jobs = value; }
         }
@@ -63,6 +47,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         public JobListResponse()
         {
+            this.Jobs = new List<Job>();
         }
     }
 }

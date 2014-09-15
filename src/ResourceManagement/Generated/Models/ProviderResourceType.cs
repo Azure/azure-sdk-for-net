@@ -38,23 +38,6 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public IList<string> Locations
         {
-            get
-            {
-                if (this._locations == null)
-                {
-                    this._locations = new System.Collections.Generic.List<string>();
-                }
-                return this._locations;
-            }
-            set { this._locations = value; }
-        }
-        
-        /// <summary>
-        /// Optional. Gets or sets the collection of locations where this
-        /// resource type can be created in.
-        /// </summary>
-        public IList<string> LocationsValue
-        {
             get { return this._locations; }
             set { this._locations = value; }
         }
@@ -75,6 +58,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public ProviderResourceType()
         {
+            this.Locations = new List<string>();
         }
     }
 }
