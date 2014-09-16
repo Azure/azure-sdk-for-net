@@ -46,6 +46,9 @@
     <Compile Include="Internals\ParserHelper.cs" />
     <Compile Include="Internals\TypeConversion.cs" />
     <Compile Include="Internals\UriHelper.cs" />
+    <Compile Include="Models\ILazyProperty.cs" />
+    <Compile Include="Models\LazyDictionary.cs" />
+    <Compile Include="Models\LazyList.cs" />
     <Compile Include="Models\OperationResponse.cs" />
     <Compile Include="Models\OperationStatus.cs" />
     <Compile Include="Models\OperationStatusResponse.cs" />
