@@ -13,15 +13,12 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Common.Models
 {
-    public class LazyDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ILazyProperty
+    public class LazyDictionary<TKey, TValue> : IDictionary<TKey, TValue>, ILazyCollection
     {
         private IDictionary<TKey, TValue> _internalDictionary;
         private IDictionary<TKey, TValue> InternalDictionary

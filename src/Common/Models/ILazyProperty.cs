@@ -13,14 +13,9 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Common.Models
 {
-    internal interface ILazyProperty
+    internal interface ILazyCollection
     {
         bool IsInitialized { get; }
     }

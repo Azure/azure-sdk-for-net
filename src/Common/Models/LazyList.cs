@@ -13,16 +13,12 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 
-namespace Microsoft.WindowsAzure
+namespace Microsoft.WindowsAzure.Common.Models
 {
-    public class LazyList<T> : IList<T>, ILazyProperty
+    public class LazyList<T> : IList<T>, ILazyCollection
     {
         private IList<T> _internalList;
         private IList<T> InternalList
