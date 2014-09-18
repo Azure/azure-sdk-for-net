@@ -14,9 +14,9 @@
     <summary>Provides Microsoft Azure infrastructure and data center management operations, including the ability to create and manage affinity groups and manage basic subscription information.</summary>
     <description>Provides Microsoft Azure infrastructure and data center management operations, including the ability to create and manage affinity groups and manage basic subscription information.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
-    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common windowsazureofficial</tags>
+    <tags>Microsoft "Microsoft Azure" Azure cloud management "service management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net45+sl50+wp81+wpa81+win">
         <reference file="Microsoft.WindowsAzure.Management.dll" />
       </group>
       <group targetFramework="net40">
@@ -24,14 +24,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.1.1,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.3.0,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="Management\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.dll" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.pdb" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.xml" target="lib\portable-net45+sl50+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.xml" target="lib\net40" />

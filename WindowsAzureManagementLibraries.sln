@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30626.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement", "src\WebSiteManagement\WebSiteManagement.csproj", "{2A2C36DB-A965-4A4B-9E06-5A86B6B9B5DB}"
@@ -62,18 +64,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gallery", "src\Gallery\Gall
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResourceManagement", "src\ResourceManagement\ResourceManagement.csproj", "{165EF660-235B-45AF-83CB-0D32BEF4C1A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring2", "src\Monitoring2\Monitoring2.csproj", "{55558FC1-8E63-4D16-934B-7979AB40567E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutomationManagement", "src\AutomationManagement\AutomationManagement.csproj", "{F9515973-831E-4447-924C-1578DF384D0F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrafficManagerManagement", "src\TrafficManagerManagement\TrafficManagerManagement.csproj", "{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebSiteManagement2", "src\WebSiteManagement2\WebSiteManagement2.csproj", "{F455DFDB-0869-43EE-9CD1-E040752BD033}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlManagement2", "src\SqlManagement2\SqlManagement2.csproj", "{04B53727-16E6-4EF0-9116-04C7F1C33842}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisCacheManagement", "src\RedisCacheManagement\RedisCacheManagement.csproj", "{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Insights", "src\Insights\Insights.csproj", "{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "src\Authorization\Authorization.csproj", "{896E03E5-5357-4753-8C78-621336C28AA8}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = WindowsAzureLibraries.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -193,14 +198,6 @@ Global
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{55558FC1-8E63-4D16-934B-7979AB40567E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F9515973-831E-4447-924C-1578DF384D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F9515973-831E-4447-924C-1578DF384D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9515973-831E-4447-924C-1578DF384D0F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -225,6 +222,38 @@ Global
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F455DFDB-0869-43EE-9CD1-E040752BD033}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{04B53727-16E6-4EF0-9116-04C7F1C33842}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{896E03E5-5357-4753-8C78-621336C28AA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -244,9 +273,15 @@ Global
 		{F3C850A1-D315-44FC-AD77-54758B62E824} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{A1A9A2BF-500F-40B8-ACA2-5849887A65D7} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{165EF660-235B-45AF-83CB-0D32BEF4C1A2} = {868850B4-1073-41A1-ABA8-A3B465880148}
-		{55558FC1-8E63-4D16-934B-7979AB40567E} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{F9515973-831E-4447-924C-1578DF384D0F} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{7B0B141D-483E-4F32-AF9B-EEE20A3C4B2C} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{F455DFDB-0869-43EE-9CD1-E040752BD033} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{04B53727-16E6-4EF0-9116-04C7F1C33842} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{8043DDAA-52F3-4808-B5CF-9E50E1DDAA83} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{792D3D25-C7AB-42CA-A565-AD32E0EF7D07} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{896E03E5-5357-4753-8C78-621336C28AA8} = {868850B4-1073-41A1-ABA8-A3B465880148}
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = WindowsAzureLibraries.vsmdi
 	EndGlobalSection
 EndGlobal

@@ -140,7 +140,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 // Serialize Request
                 string requestContent = parameters.Configuration;
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

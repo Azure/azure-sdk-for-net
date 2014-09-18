@@ -30,6 +30,20 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountUpdateParameters
     {
+        private string _accountType;
+        
+        /// <summary>
+        /// Optional. Specifies whether the account supports locally-redundant
+        /// storage, geo-redundant storage, zone-redundant storage, or read
+        /// access geo-redundant storage. Possible values are:'Standard_LRS',
+        /// 'Standard_ZRS', 'Standard_GRS', and 'Standard_RAGRS'.
+        /// </summary>
+        public string AccountType
+        {
+            get { return this._accountType; }
+            set { this._accountType = value; }
+        }
+        
         private string _description;
         
         /// <summary>
@@ -61,30 +75,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._extendedProperties; }
             set { this._extendedProperties = value; }
-        }
-        
-        private bool? _geoReplicationEnabled;
-        
-        /// <summary>
-        /// Optional. Indicates whether geo-replication is enabled on the
-        /// specified storage account. If set to true, the data in the storage
-        /// account is replicated across more than one geographic location so
-        /// as to enable resiliency in the face of catastrophic service loss.
-        /// If the element is not included in the request body, the current
-        /// value is left unchanged. Important: If you have enabled
-        /// geo-replication, you can elect to disable it by setting this
-        /// element to false. When disabled, your data is no longer replicated
-        /// to a secondary data center and any data in the secondary location
-        /// will be removed. Enabling geo-replication once it has been
-        /// disabled will result in the storage account being billed for
-        /// replicating the current copy of data to the secondary data center.
-        /// After the existing copy of the data is replicated to the secondary
-        /// data center, updates are geo-replicated at no additional charge.
-        /// </summary>
-        public bool? GeoReplicationEnabled
-        {
-            get { return this._geoReplicationEnabled; }
-            set { this._geoReplicationEnabled = value; }
         }
         
         private string _label;

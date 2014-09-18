@@ -20,9 +20,7 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Azure.Management.WebSites.Models;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
@@ -31,39 +29,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteBaseProperties
     {
-        private Microsoft.Azure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
-        
-        /// <summary>
-        /// Optional. This value should be Shared for the Free or Paid Shared
-        /// offerings, or Dedicated for the Standard offering. The default
-        /// value is Shared. If you set ComputeMode to Dedicated, you must
-        /// specify a value for the ServerFarm element.
-        /// </summary>
-        public Microsoft.Azure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
-        {
-            get { return this._computeMode; }
-            set { this._computeMode = value; }
-        }
-        
-        private IList<string> _hostNames;
-        
-        /// <summary>
-        /// Required. The fully qualified domain name for website. Only one
-        /// hostname can be specified in the azurewebsites.net domain. The
-        /// hostname should match the name of the website. Custom domains can
-        /// only be specified for Shared or Standard websites.
-        /// </summary>
-        public IList<string> HostNames
-        {
-            get { return this._hostNames; }
-            set { this._hostNames = value; }
-        }
-        
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. The name of the Server Farm associated with this website.
-        /// This is a required value for Standard mode.
+        /// Required. The name of the Server Farm (Web Hosting Plan) associated
+        /// with this website.
         /// </summary>
         public string ServerFarm
         {
@@ -71,122 +41,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._serverFarm = value; }
         }
         
-        private Microsoft.Azure.Management.WebSites.Models.WebSiteMode? _siteMode;
-        
-        /// <summary>
-        /// Optional. This value is limited for the Free offering Basic for the
-        /// Paid Shared offering. The default value is Limited. Note: Standard
-        /// mode does not use the SiteMode setting; it uses the ComputeMode
-        /// setting. For more information, see Upgrade or Downgrade a Web Site.
-        /// </summary>
-        public Microsoft.Azure.Management.WebSites.Models.WebSiteMode? SiteMode
-        {
-            get { return this._siteMode; }
-            set { this._siteMode = value; }
-        }
-        
-        private WebSiteBaseProperties.WebSpaceDetails _webSpace;
-        
-        /// <summary>
-        /// Optional. Information about the web space to create.
-        /// </summary>
-        public WebSiteBaseProperties.WebSpaceDetails WebSpace
-        {
-            get { return this._webSpace; }
-            set { this._webSpace = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the WebSiteBaseProperties class.
         /// </summary>
         public WebSiteBaseProperties()
         {
-            this.HostNames = new List<string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the WebSiteBaseProperties class with
         /// required arguments.
         /// </summary>
-        public WebSiteBaseProperties(List<string> hostNames)
+        public WebSiteBaseProperties(string serverFarm)
             : this()
         {
-            if (hostNames == null)
+            if (serverFarm == null)
             {
-                throw new ArgumentNullException("hostNames");
+                throw new ArgumentNullException("serverFarm");
             }
-            this.HostNames = hostNames;
-        }
-        
-        /// <summary>
-        /// Information about the web space to create.
-        /// </summary>
-        public partial class WebSpaceDetails
-        {
-            private string _geoRegion;
-            
-            /// <summary>
-            /// Required. The geographical region of the webspace that will be
-            /// created.
-            /// </summary>
-            public string GeoRegion
-            {
-                get { return this._geoRegion; }
-                set { this._geoRegion = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Required. The name of the webspace.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _plan;
-            
-            /// <summary>
-            /// Required. This value must be VirtualDedicatedPlan.
-            /// </summary>
-            public string Plan
-            {
-                get { return this._plan; }
-                set { this._plan = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the WebSpaceDetails class.
-            /// </summary>
-            public WebSpaceDetails()
-            {
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the WebSpaceDetails class with
-            /// required arguments.
-            /// </summary>
-            public WebSpaceDetails(string geoRegion, string name, string plan)
-                : this()
-            {
-                if (geoRegion == null)
-                {
-                    throw new ArgumentNullException("geoRegion");
-                }
-                if (name == null)
-                {
-                    throw new ArgumentNullException("name");
-                }
-                if (plan == null)
-                {
-                    throw new ArgumentNullException("plan");
-                }
-                this.GeoRegion = geoRegion;
-                this.Name = name;
-                this.Plan = plan;
-            }
+            this.ServerFarm = serverFarm;
         }
     }
 }

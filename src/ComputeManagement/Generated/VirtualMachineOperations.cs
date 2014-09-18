@@ -258,7 +258,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -434,6 +434,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     endpointAclElement.Add(rulesSequenceElement);
                                 }
                             }
+                            
+                            if (inputEndpointsItem.IdleTimeoutInMinutes != null)
+                            {
+                                XElement idleTimeoutInMinutesElement = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                idleTimeoutInMinutesElement.Value = inputEndpointsItem.IdleTimeoutInMinutes.ToString();
+                                inputEndpointElement.Add(idleTimeoutInMinutesElement);
+                            }
                         }
                         provisioningConfigurationElement.Add(inputEndpointsSequenceElement);
                     }
@@ -470,6 +477,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 nameElement2.Value = publicIPsItem.Name;
                                 publicIPElement.Add(nameElement2);
+                            }
+                            
+                            if (publicIPsItem.IdleTimeoutInMinutes != null)
+                            {
+                                XElement idleTimeoutInMinutesElement2 = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                idleTimeoutInMinutesElement2.Value = publicIPsItem.IdleTimeoutInMinutes.ToString();
+                                publicIPElement.Add(idleTimeoutInMinutesElement2);
                             }
                         }
                         provisioningConfigurationElement.Add(publicIPsSequenceElement);
@@ -712,7 +726,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -853,7 +867,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -893,7 +907,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1133,7 +1147,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1312,6 +1326,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         endpointAclElement.Add(rulesSequenceElement);
                                     }
                                 }
+                                
+                                if (inputEndpointsItem.IdleTimeoutInMinutes != null)
+                                {
+                                    XElement idleTimeoutInMinutesElement = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                    idleTimeoutInMinutesElement.Value = inputEndpointsItem.IdleTimeoutInMinutes.ToString();
+                                    inputEndpointElement.Add(idleTimeoutInMinutesElement);
+                                }
                             }
                             configurationSetElement.Add(inputEndpointsSequenceElement);
                         }
@@ -1348,6 +1369,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                     nameElement2.Value = publicIPsItem.Name;
                                     publicIPElement.Add(nameElement2);
+                                }
+                                
+                                if (publicIPsItem.IdleTimeoutInMinutes != null)
+                                {
+                                    XElement idleTimeoutInMinutesElement2 = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                    idleTimeoutInMinutesElement2.Value = publicIPsItem.IdleTimeoutInMinutes.ToString();
+                                    publicIPElement.Add(idleTimeoutInMinutesElement2);
                                 }
                             }
                             configurationSetElement.Add(publicIPsSequenceElement);
@@ -1805,7 +1833,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2050,7 +2078,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2072,7 +2100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 deploymentElement.Add(deploymentSlotElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 deploymentElement.Add(labelElement);
                 
                 XElement roleListSequenceElement = new XElement(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
@@ -2260,6 +2288,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             endpointAclElement.Add(rulesSequenceElement);
                                         }
                                     }
+                                    
+                                    if (inputEndpointsItem.IdleTimeoutInMinutes != null)
+                                    {
+                                        XElement idleTimeoutInMinutesElement = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                        idleTimeoutInMinutesElement.Value = inputEndpointsItem.IdleTimeoutInMinutes.ToString();
+                                        inputEndpointElement.Add(idleTimeoutInMinutesElement);
+                                    }
                                 }
                                 configurationSetElement.Add(inputEndpointsSequenceElement);
                             }
@@ -2296,6 +2331,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                         nameElement3.Value = publicIPsItem.Name;
                                         publicIPElement.Add(nameElement3);
+                                    }
+                                    
+                                    if (publicIPsItem.IdleTimeoutInMinutes != null)
+                                    {
+                                        XElement idleTimeoutInMinutesElement2 = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                        idleTimeoutInMinutesElement2.Value = publicIPsItem.IdleTimeoutInMinutes.ToString();
+                                        publicIPElement.Add(idleTimeoutInMinutesElement2);
                                     }
                                 }
                                 configurationSetElement.Add(publicIPsSequenceElement);
@@ -2859,7 +2901,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3003,7 +3045,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3142,7 +3184,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3151,7 +3193,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<RestartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>RestartRoleOperation</OperationType></RestartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3294,7 +3336,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3317,7 +3359,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3453,7 +3495,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3491,7 +3533,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3626,7 +3668,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3635,7 +3677,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<StartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>StartRoleOperation</OperationType></StartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3770,7 +3812,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3801,7 +3843,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4042,7 +4084,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4221,6 +4263,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         endpointAclElement.Add(rulesSequenceElement);
                                     }
                                 }
+                                
+                                if (inputEndpointsItem.IdleTimeoutInMinutes != null)
+                                {
+                                    XElement idleTimeoutInMinutesElement = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                    idleTimeoutInMinutesElement.Value = inputEndpointsItem.IdleTimeoutInMinutes.ToString();
+                                    inputEndpointElement.Add(idleTimeoutInMinutesElement);
+                                }
                             }
                             configurationSetElement.Add(inputEndpointsSequenceElement);
                         }
@@ -4257,6 +4306,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                     nameElement2.Value = publicIPsItem.Name;
                                     publicIPElement.Add(nameElement2);
+                                }
+                                
+                                if (publicIPsItem.IdleTimeoutInMinutes != null)
+                                {
+                                    XElement idleTimeoutInMinutesElement2 = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                    idleTimeoutInMinutesElement2.Value = publicIPsItem.IdleTimeoutInMinutes.ToString();
+                                    publicIPElement.Add(idleTimeoutInMinutesElement2);
                                 }
                             }
                             configurationSetElement.Add(publicIPsSequenceElement);
@@ -4491,13 +4547,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     persistentVMRoleElement.Add(configurationSetsSequenceElement);
                 }
                 
-                if (parameters.AvailabilitySetName != null)
-                {
-                    XElement availabilitySetNameElement = new XElement(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
-                    availabilitySetNameElement.Value = parameters.AvailabilitySetName;
-                    persistentVMRoleElement.Add(availabilitySetNameElement);
-                }
-                
                 if (parameters.ResourceExtensionReferences != null)
                 {
                     XElement resourceExtensionReferencesSequenceElement = new XElement(XName.Get("ResourceExtensionReferences", "http://schemas.microsoft.com/windowsazure"));
@@ -4574,6 +4623,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                     }
                     persistentVMRoleElement.Add(resourceExtensionReferencesSequenceElement);
+                }
+                
+                if (parameters.AvailabilitySetName != null)
+                {
+                    XElement availabilitySetNameElement = new XElement(XName.Get("AvailabilitySetName", "http://schemas.microsoft.com/windowsazure"));
+                    availabilitySetNameElement.Value = parameters.AvailabilitySetName;
+                    persistentVMRoleElement.Add(availabilitySetNameElement);
                 }
                 
                 if (parameters.DataVirtualHardDisks != null)
@@ -4697,7 +4753,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4845,7 +4901,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4994,12 +5050,19 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             loadBalancerNameElement.Value = loadBalancedEndpointsItem.LoadBalancerName;
                             inputEndpointElement.Add(loadBalancerNameElement);
                         }
+                        
+                        if (loadBalancedEndpointsItem.IdleTimeoutInMinutes != null)
+                        {
+                            XElement idleTimeoutInMinutesElement = new XElement(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                            idleTimeoutInMinutesElement.Value = loadBalancedEndpointsItem.IdleTimeoutInMinutes.ToString();
+                            inputEndpointElement.Add(idleTimeoutInMinutesElement);
+                        }
                     }
                 }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -5732,7 +5795,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5982,6 +6045,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                 }
                                             }
                                         }
+                                        
+                                        XElement idleTimeoutInMinutesElement = inputEndpointsElement.Element(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                        if (idleTimeoutInMinutesElement != null && string.IsNullOrEmpty(idleTimeoutInMinutesElement.Value) == false)
+                                        {
+                                            int idleTimeoutInMinutesInstance = int.Parse(idleTimeoutInMinutesElement.Value, CultureInfo.InvariantCulture);
+                                            inputEndpointInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance;
+                                        }
                                     }
                                 }
                                 
@@ -6014,6 +6084,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         {
                                             string nameInstance2 = nameElement2.Value;
                                             publicIPInstance.Name = nameInstance2;
+                                        }
+                                        
+                                        XElement idleTimeoutInMinutesElement2 = publicIPsElement.Element(XName.Get("IdleTimeoutInMinutes", "http://schemas.microsoft.com/windowsazure"));
+                                        if (idleTimeoutInMinutesElement2 != null && string.IsNullOrEmpty(idleTimeoutInMinutesElement2.Value) == false)
+                                        {
+                                            int idleTimeoutInMinutesInstance2 = int.Parse(idleTimeoutInMinutesElement2.Value, CultureInfo.InvariantCulture);
+                                            publicIPInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance2;
                                         }
                                     }
                                 }
@@ -6488,7 +6565,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

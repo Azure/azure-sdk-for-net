@@ -40,6 +40,58 @@ namespace Microsoft.WindowsAzure
     public static partial class WebSiteOperationsExtensions
     {
         /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup specification.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        public static WebSiteBackupResponse Backup(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).BackupAsync(webSpaceName, webSiteName, backupRequest);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Backups a site on-demand.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup specification.
+        /// </param>
+        /// <returns>
+        /// The backup record created based on the backup request.
+        /// </returns>
+        public static Task<WebSiteBackupResponse> BackupAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        {
+            return operations.BackupAsync(webSpaceName, webSiteName, backupRequest, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can swap a web site from one slot to another slot.
         /// </summary>
         /// <param name='operations'>
@@ -67,11 +119,11 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static WebSiteOperationStatusResponse BeginSwapingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
+        public static WebSiteOperationStatusResponse BeginSwappingSlots(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
+                return ((IWebSiteOperations)s).BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -104,9 +156,9 @@ namespace Microsoft.WindowsAzure
         /// operation itself. If the long-running operation failed, the
         /// response body includes error information regarding the failure.
         /// </returns>
-        public static Task<WebSiteOperationStatusResponse> BeginSwapingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
+        public static Task<WebSiteOperationStatusResponse> BeginSwappingSlotsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string sourceSlotName, string targetSlotName)
         {
-            return operations.BeginSwapingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
+            return operations.BeginSwappingSlotsAsync(webSpaceName, webSiteName, sourceSlotName, targetSlotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -342,6 +394,64 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        public static WebSiteRestoreDiscoverResponse Discover(this IWebSiteOperations operations, string webSpaceName, string webSiteName, RestoreRequest restoreRequest)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).DiscoverAsync(webSpaceName, webSiteName, restoreRequest);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Scans a backup in a storage account and returns database
+        /// information etc. Should be called before calling Restore to
+        /// discover what parameters are needed for the restore operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <returns>
+        /// The information gathered about a backup storaged in a storage
+        /// account.
+        /// </returns>
+        public static Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, RestoreRequest restoreRequest)
+        {
+            return operations.DiscoverAsync(webSpaceName, webSiteName, restoreRequest, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can generate a new random password for publishing a site by
         /// issuing an HTTP POST request. Tip: If you want to verify that the
         /// publish password has changed, issue an HTTP GET on /publishxml
@@ -461,6 +571,52 @@ namespace Microsoft.WindowsAzure
         public static Task<WebSiteGetResponse> GetAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteGetParameters parameters)
         {
             return operations.GetAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        public static WebSiteGetBackupConfigurationResponse GetBackupConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetBackupConfigurationAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets a schedule configuration for site backups.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// Scheduled backup definition.
+        /// </returns>
+        public static Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.GetBackupConfigurationAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
@@ -834,6 +990,52 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Returns list of all backups which are tracked by the system.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        public static WebSiteGetBackupsResponse ListBackups(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ListBackupsAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns list of all backups which are tracked by the system.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// List of backups for the website.
+        /// </returns>
+        public static Task<WebSiteGetBackupsResponse> ListBackupsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.ListBackupsAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
         /// for more information)
@@ -883,6 +1085,60 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.RestartAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        public static WebSiteRestoreResponse Restore(this IWebSiteOperations operations, string webSpaceName, string webSiteName, RestoreRequest restoreRequest)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).RestoreAsync(webSpaceName, webSiteName, restoreRequest);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restores a site to either a new site or existing site (Overwrite
+        /// flag has to be set to true for that).
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='restoreRequest'>
+        /// Required. A restore request.
+        /// </param>
+        /// <returns>
+        /// Restore operation information.
+        /// </returns>
+        public static Task<WebSiteRestoreResponse> RestoreAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, RestoreRequest restoreRequest)
+        {
+            return operations.RestoreAsync(webSpaceName, webSiteName, restoreRequest, CancellationToken.None);
         }
         
         /// <summary>
@@ -1069,6 +1325,60 @@ namespace Microsoft.WindowsAzure
         public static Task<WebSiteUpdateResponse> UpdateAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, WebSiteUpdateParameters parameters)
         {
             return operations.UpdateAsync(webSpaceName, webSiteName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup schedule specification.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateBackupConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateBackupConfigurationAsync(webSpaceName, webSiteName, backupRequest);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Updates a backup schedule for a site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='backupRequest'>
+        /// Required. A backup schedule specification.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateBackupConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, BackupRequest backupRequest)
+        {
+            return operations.UpdateBackupConfigurationAsync(webSpaceName, webSiteName, backupRequest, CancellationToken.None);
         }
         
         /// <summary>

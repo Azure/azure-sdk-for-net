@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.ServiceBus;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
@@ -90,6 +91,60 @@ namespace Microsoft.WindowsAzure
         public static Task<ServiceBusTopicResponse> CreateAsync(this ITopicOperations operations, string namespaceName, ServiceBusTopic topic)
         {
             return operations.CreateAsync(namespaceName, topic, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Deletes an existing topic. This operation will also remove all
+        /// associated state including associated subscriptions.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780721.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// Required. The topic.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Delete(this ITopicOperations operations, string namespaceName, string topicName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ITopicOperations)s).DeleteAsync(namespaceName, topicName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Deletes an existing topic. This operation will also remove all
+        /// associated state including associated subscriptions.  (see
+        /// http://msdn.microsoft.com/en-us/library/hh780721.aspx for more
+        /// information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.ServiceBus.ITopicOperations.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// Required. The namespace name.
+        /// </param>
+        /// <param name='topicName'>
+        /// Required. The topic.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> DeleteAsync(this ITopicOperations operations, string namespaceName, string topicName)
+        {
+            return operations.DeleteAsync(namespaceName, topicName, CancellationToken.None);
         }
         
         /// <summary>

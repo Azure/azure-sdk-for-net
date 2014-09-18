@@ -87,6 +87,30 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._isLocalDatabaseReplicationTarget = value; }
         }
         
+        private bool _isOfflineSecondary;
+        
+        /// <summary>
+        /// Optional. Gets a value indicating whether it is an offline
+        /// secondary copy.
+        /// </summary>
+        public bool IsOfflineSecondary
+        {
+            get { return this._isOfflineSecondary; }
+            set { this._isOfflineSecondary = value; }
+        }
+        
+        private bool _isTerminationAllowed;
+        
+        /// <summary>
+        /// Optional. Gets a value indicating whether forced termination of
+        /// this continuous copy is allowed.
+        /// </summary>
+        public bool IsTerminationAllowed
+        {
+            get { return this._isTerminationAllowed; }
+            set { this._isTerminationAllowed = value; }
+        }
+        
         private int _localDatabaseId;
         
         /// <summary>

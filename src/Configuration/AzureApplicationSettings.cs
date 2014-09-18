@@ -25,7 +25,7 @@ using System.Reflection;
 namespace Microsoft.WindowsAzure
 {
     /// <summary>
-    /// Windows Azure settings.
+    /// Microsoft Azure settings.
     /// </summary>
     internal class AzureApplicationSettings
     {
@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure
 
             if (value != null)
             {
-                message = string.Format(CultureInfo.InvariantCulture, "PASS ({0})", value);
+                message = "PASS";
             }
             else
             {

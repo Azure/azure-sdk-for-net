@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -335,7 +335,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -619,7 +619,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 // Serialize Request
                 string requestContent = "<?xml version=\"1.0\" encoding=\"utf-8\"?><UpdateGateway xmlns=\"http://schemas.microsoft.com/windowsazure\"><UpdateGatewayOperation>Failover</UpdateGatewayOperation></UpdateGateway>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -783,7 +783,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -956,7 +956,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1132,7 +1132,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1324,7 +1324,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2386,11 +2386,15 @@ namespace Microsoft.WindowsAzure.Management.Network
                         XElement stateElement = gatewayPublicDiagnosticsStatusElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                         if (stateElement != null)
                         {
+                            GatewayDiagnosticsState stateInstance = ((GatewayDiagnosticsState)Enum.Parse(typeof(GatewayDiagnosticsState), stateElement.Value, true));
+                            result.State = stateInstance;
                         }
                         
                         XElement publicDiagnosticsUrlElement = gatewayPublicDiagnosticsStatusElement.Element(XName.Get("PublicDiagnosticsUrl", "http://schemas.microsoft.com/windowsazure"));
                         if (publicDiagnosticsUrlElement != null)
                         {
+                            string publicDiagnosticsUrlInstance = publicDiagnosticsUrlElement.Value;
+                            result.DiagnosticsUrl = publicDiagnosticsUrlInstance;
                         }
                     }
                     
@@ -3375,8 +3379,8 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// The Create Virtual network Gateway operation creates a new network
-        /// gateway for the specified virtual network in Azure.  (see
+        /// The Update Diagnostics operation starts a diagnostics session for
+        /// the specified virtual network gateway in Azure.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/jj154119.aspx
         /// for more information)
         /// </summary>

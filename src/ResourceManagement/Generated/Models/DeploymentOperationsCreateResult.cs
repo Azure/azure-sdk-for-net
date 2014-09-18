@@ -31,37 +31,15 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentOperationsCreateResult : OperationResponse
     {
-        private string _name;
+        private Deployment _deployment;
         
         /// <summary>
-        /// Optional. Gets or sets the name of the template deployment.
+        /// Optional. Gets or sets the deployment.
         /// </summary>
-        public string Name
+        public Deployment Deployment
         {
-            get { return this._name; }
-            set { this._name = value; }
-        }
-        
-        private DeploymentProperties _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the template deployment properties.
-        /// </summary>
-        public DeploymentProperties Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _resourceGroup;
-        
-        /// <summary>
-        /// Optional. Gets or sets the resource group name of this deployment.
-        /// </summary>
-        public string ResourceGroup
-        {
-            get { return this._resourceGroup; }
-            set { this._resourceGroup = value; }
+            get { return this._deployment; }
+            set { this._deployment = value; }
         }
         
         /// <summary>

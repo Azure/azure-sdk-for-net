@@ -188,7 +188,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -267,8 +267,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -294,7 +294,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -317,7 +317,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -399,6 +399,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
+                }
+                
                 if (parameters.Eula != null)
                 {
                     XElement eulaElement = new XElement(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -434,9 +441,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
                 }
                 
+                if (parameters.SupportedOS != null)
+                {
+                    XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                    supportedOSElement.Value = parameters.SupportedOS;
+                    extensionImageElement.Add(supportedOSElement);
+                }
+                
+                if (parameters.CompanyName != null)
+                {
+                    XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                    companyNameElement.Value = parameters.CompanyName;
+                    extensionImageElement.Add(companyNameElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -580,7 +601,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -766,7 +787,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -845,8 +866,8 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtensionEndpoints != null)
                 {
-                    XElement extensionEndpointsElement = new XElement(XName.Get("ExtensionEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                    extensionImageElement.Add(extensionEndpointsElement);
+                    XElement endpointsElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    extensionImageElement.Add(endpointsElement);
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
@@ -872,7 +893,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
                             inputEndpointElement.Add(localPortElement);
                         }
-                        extensionEndpointsElement.Add(inputEndpointsSequenceElement);
+                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
@@ -895,7 +916,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             portElement2.Value = internalEndpointsItem.Port.ToString();
                             internalEndpointElement.Add(portElement2);
                         }
-                        extensionEndpointsElement.Add(internalEndpointsSequenceElement);
+                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -977,6 +998,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
+                }
+                
                 if (parameters.Eula != null)
                 {
                     XElement eulaElement = new XElement(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -1012,9 +1040,23 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(disallowMajorVersionUpgradeElement);
                 }
                 
+                if (parameters.SupportedOS != null)
+                {
+                    XElement supportedOSElement = new XElement(XName.Get("SupportedOS", "http://schemas.microsoft.com/windowsazure"));
+                    supportedOSElement.Value = parameters.SupportedOS;
+                    extensionImageElement.Add(supportedOSElement);
+                }
+                
+                if (parameters.CompanyName != null)
+                {
+                    XElement companyNameElement = new XElement(XName.Get("CompanyName", "http://schemas.microsoft.com/windowsazure"));
+                    companyNameElement.Value = parameters.CompanyName;
+                    extensionImageElement.Add(companyNameElement);
+                }
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

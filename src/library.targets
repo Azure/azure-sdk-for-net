@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <!-- 
-  Windows Azure SDK Targets  
+  Microsoft Azure SDK Targets  
   -->
   <!-- Developer-specific properties -->
   <Import Project="$(SolutionDir)\developer\$(USERNAME)\build.props" Condition="Exists('$(SolutionDir)\developer\$(USERNAME)\build.props')" />
@@ -44,6 +44,7 @@
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'net45' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.net45.props" />
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'windows8' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.windows8.props" />
   <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wp80' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.wp80.props" />
+  <Import Condition=" '$(WindowsAzureCurrentConfiguration)' == 'wpa81' And '$(BuildingInsideVisualStudio)' == 'true' " Project="references.wpa81.props" />
 
   <!--
   Defining defaults depending on development or official build:
@@ -69,7 +70,7 @@
   <Target Name="InformationAboutWindowsAzureBuild"
           BeforeTargets="BeforeBuild"
           Condition=" '$(LibraryPropertiesProjectIncluded)' == 'true' ">
-    <Message Text="This Windows Azure .NET library supports multiple target frameworks." Importance="high" />
+    <Message Text="This Microsoft Azure .NET library supports multiple target frameworks." Importance="high" />
     <Message Text="Library build set:             $(WindowsAzureLibraryProfileSet)" />
     <Message Text="Current build type:            $(WindowsAzureCurrentConfiguration)" />
 

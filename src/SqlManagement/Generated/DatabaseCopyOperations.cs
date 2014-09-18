@@ -172,9 +172,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 isContinuousElement.Value = parameters.IsContinuous.ToString().ToLower();
                 serviceResourceElement.Add(isContinuousElement);
                 
+                XElement isOfflineSecondaryElement = new XElement(XName.Get("IsOfflineSecondary", "http://schemas.microsoft.com/windowsazure"));
+                isOfflineSecondaryElement.Value = parameters.IsOfflineSecondary.ToString().ToLower();
+                serviceResourceElement.Add(isOfflineSecondaryElement);
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -305,6 +309,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             float percentCompleteInstance = float.Parse(percentCompleteElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.PercentComplete = percentCompleteInstance;
+                        }
+                        
+                        XElement isOfflineSecondaryElement2 = serviceResourceElement2.Element(XName.Get("IsOfflineSecondary", "http://schemas.microsoft.com/windowsazure"));
+                        if (isOfflineSecondaryElement2 != null)
+                        {
+                            bool isOfflineSecondaryInstance = bool.Parse(isOfflineSecondaryElement2.Value);
+                            serviceResourceInstance.IsOfflineSecondary = isOfflineSecondaryInstance;
+                        }
+                        
+                        XElement isTerminationAllowedElement = serviceResourceElement2.Element(XName.Get("IsTerminationAllowed", "http://schemas.microsoft.com/windowsazure"));
+                        if (isTerminationAllowedElement != null)
+                        {
+                            bool isTerminationAllowedInstance = bool.Parse(isTerminationAllowedElement.Value);
+                            serviceResourceInstance.IsTerminationAllowed = isTerminationAllowedInstance;
                         }
                         
                         XElement nameElement = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
@@ -698,6 +716,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.PercentComplete = percentCompleteInstance;
                         }
                         
+                        XElement isOfflineSecondaryElement = serviceResourceElement.Element(XName.Get("IsOfflineSecondary", "http://schemas.microsoft.com/windowsazure"));
+                        if (isOfflineSecondaryElement != null)
+                        {
+                            bool isOfflineSecondaryInstance = bool.Parse(isOfflineSecondaryElement.Value);
+                            serviceResourceInstance.IsOfflineSecondary = isOfflineSecondaryInstance;
+                        }
+                        
+                        XElement isTerminationAllowedElement = serviceResourceElement.Element(XName.Get("IsTerminationAllowed", "http://schemas.microsoft.com/windowsazure"));
+                        if (isTerminationAllowedElement != null)
+                        {
+                            bool isTerminationAllowedInstance = bool.Parse(isTerminationAllowedElement.Value);
+                            serviceResourceInstance.IsTerminationAllowed = isTerminationAllowedInstance;
+                        }
+                        
                         XElement nameElement = serviceResourceElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
@@ -952,6 +984,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                                 serviceResourceInstance.PercentComplete = percentCompleteInstance;
                             }
                             
+                            XElement isOfflineSecondaryElement = serviceResourcesElement.Element(XName.Get("IsOfflineSecondary", "http://schemas.microsoft.com/windowsazure"));
+                            if (isOfflineSecondaryElement != null)
+                            {
+                                bool isOfflineSecondaryInstance = bool.Parse(isOfflineSecondaryElement.Value);
+                                serviceResourceInstance.IsOfflineSecondary = isOfflineSecondaryInstance;
+                            }
+                            
+                            XElement isTerminationAllowedElement = serviceResourcesElement.Element(XName.Get("IsTerminationAllowed", "http://schemas.microsoft.com/windowsazure"));
+                            if (isTerminationAllowedElement != null)
+                            {
+                                bool isTerminationAllowedInstance = bool.Parse(isTerminationAllowedElement.Value);
+                                serviceResourceInstance.IsTerminationAllowed = isTerminationAllowedInstance;
+                            }
+                            
                             XElement nameElement = serviceResourcesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
@@ -1102,7 +1148,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1233,6 +1279,20 @@ namespace Microsoft.WindowsAzure.Management.Sql
                         {
                             float percentCompleteInstance = float.Parse(percentCompleteElement.Value, CultureInfo.InvariantCulture);
                             serviceResourceInstance.PercentComplete = percentCompleteInstance;
+                        }
+                        
+                        XElement isOfflineSecondaryElement = serviceResourceElement2.Element(XName.Get("IsOfflineSecondary", "http://schemas.microsoft.com/windowsazure"));
+                        if (isOfflineSecondaryElement != null)
+                        {
+                            bool isOfflineSecondaryInstance = bool.Parse(isOfflineSecondaryElement.Value);
+                            serviceResourceInstance.IsOfflineSecondary = isOfflineSecondaryInstance;
+                        }
+                        
+                        XElement isTerminationAllowedElement = serviceResourceElement2.Element(XName.Get("IsTerminationAllowed", "http://schemas.microsoft.com/windowsazure"));
+                        if (isTerminationAllowedElement != null)
+                        {
+                            bool isTerminationAllowedInstance = bool.Parse(isTerminationAllowedElement.Value);
+                            serviceResourceInstance.IsTerminationAllowed = isTerminationAllowedInstance;
                         }
                         
                         XElement nameElement = serviceResourceElement2.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));

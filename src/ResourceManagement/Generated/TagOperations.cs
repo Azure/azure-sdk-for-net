@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public async Task<TagCreateResult> CreateAsync(string tagName, CancellationToken cancellationToken)
+        public async Task<TagCreateResult> CreateOrUpdateAsync(string tagName, CancellationToken cancellationToken)
         {
             // Validate
             if (tagName == null)
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Resources
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("tagName", tagName);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreateOrUpdateAsync", tracingParameters);
             }
             
             // Construct URL
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Resources
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public async Task<TagCreateValueResult> CreateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken)
+        public async Task<TagCreateValueResult> CreateOrUpdateValueAsync(string tagName, string tagValue, CancellationToken cancellationToken)
         {
             // Validate
             if (tagName == null)
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Resources
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("tagName", tagName);
                 tracingParameters.Add("tagValue", tagValue);
-                Tracing.Enter(invocationId, this, "CreateValueAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreateOrUpdateValueAsync", tracingParameters);
             }
             
             // Construct URL
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.Resources
                         Tracing.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));

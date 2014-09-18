@@ -94,6 +94,38 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationStatusResponse> BeginDeletingAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> BeginUpdatingAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Add an internal load balancer to a an existing deployment. When
         /// used by an input endpoint, the internal load balancer will provide
         /// an additional private VIP that can be used for load balancing to
@@ -144,5 +176,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
         /// request ID.
         /// </returns>
         Task<OperationResponse> DeleteAsync(string serviceName, string deploymentName, string loadBalancerName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates an internal load balancer associated with an existing
+        /// deployment.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='loadBalancerName'>
+        /// The name of the loadBalancer.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Load Balancer operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        Task<OperationStatusResponse> UpdateAsync(string serviceName, string deploymentName, string loadBalancerName, LoadBalancerUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

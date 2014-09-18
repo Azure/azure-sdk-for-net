@@ -44,11 +44,11 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public static TagCreateResult Create(this ITagOperations operations, string tagName)
+        public static TagCreateResult CreateOrUpdate(this ITagOperations operations, string tagName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ITagOperations)s).CreateAsync(tagName);
+                return ((ITagOperations)s).CreateOrUpdateAsync(tagName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -66,9 +66,9 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public static Task<TagCreateResult> CreateAsync(this ITagOperations operations, string tagName)
+        public static Task<TagCreateResult> CreateOrUpdateAsync(this ITagOperations operations, string tagName)
         {
-            return operations.CreateAsync(tagName, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(tagName, CancellationToken.None);
         }
         
         /// <summary>
@@ -87,11 +87,11 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public static TagCreateValueResult CreateValue(this ITagOperations operations, string tagName, string tagValue)
+        public static TagCreateValueResult CreateOrUpdateValue(this ITagOperations operations, string tagName, string tagValue)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((ITagOperations)s).CreateValueAsync(tagName, tagValue);
+                return ((ITagOperations)s).CreateOrUpdateValueAsync(tagName, tagValue);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -112,9 +112,9 @@ namespace Microsoft.Azure.Management.Resources
         /// <returns>
         /// Tag information.
         /// </returns>
-        public static Task<TagCreateValueResult> CreateValueAsync(this ITagOperations operations, string tagName, string tagValue)
+        public static Task<TagCreateValueResult> CreateOrUpdateValueAsync(this ITagOperations operations, string tagName, string tagValue)
         {
-            return operations.CreateValueAsync(tagName, tagValue, CancellationToken.None);
+            return operations.CreateOrUpdateValueAsync(tagName, tagValue, CancellationToken.None);
         }
         
         /// <summary>

@@ -34,7 +34,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         private IList<string> _name;
         
         /// <summary>
-        /// Optional.
+        /// Optional. The names of role instances to delete from the deployment
         /// </summary>
         public IList<string> Name
         {

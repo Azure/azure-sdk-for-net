@@ -92,6 +92,15 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Compute Management API includes operations for managing the dns
+        /// servers for your subscription.
+        /// </summary>
+        IDNSServerOperations DnsServer
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// The Service Management API includes operations for managing the
         /// service and virtual machine extension images in your publisher
         /// subscription.

@@ -17,6 +17,9 @@ complete SDK, please see the [Microsoft Azure .NET Developer Center](http://www.
     - Query/Create/Read/Update/Delete Entities
   - Blobs
     - Create/Read/Update/Delete Blobs
+  - Files
+    - Create/Update/Delete Directories
+    - Create/Read/Update/Delete Files
   - Queues
     - Create/Delete Queues
     - Insert/Peek Queue Messages
@@ -84,7 +87,7 @@ For general suggestions about Azure please use our [UserVoice forum](http://www.
 
 # Storage Client Library
 
-To use storage services (blog, table, queue), the storage client library provides rich APIs for interacting with the storage service.
+To use Storage services (Blob, Table, Queue, File), the Storage Client Library provides rich APIs for interacting with the Storage service.
 
 The Storage Client Library ships with the Microsoft Azure SDK for .NET and also on NuGet. You'll find the latest version and hotfixes on NuGet via the `WindowsAzure.Storage` package.
 
