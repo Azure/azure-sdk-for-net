@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Sql
     public static partial class FirewallRuleOperationsExtensions
     {
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

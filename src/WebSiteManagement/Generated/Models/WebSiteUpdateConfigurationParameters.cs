@@ -31,6 +31,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteUpdateConfigurationParameters
     {
+        private bool? _alwaysOn;
+        
+        /// <summary>
+        /// Optional. Indicates if site's Always On feature enabled.
+        /// </summary>
+        public bool? AlwaysOn
+        {
+            get { return this._alwaysOn; }
+            set { this._alwaysOn = value; }
+        }
+        
         private IDictionary<string, string> _appSettings;
         
         /// <summary>
@@ -185,31 +196,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             get { return this._phpVersion; }
             set { this._phpVersion = value; }
-        }
-        
-        private string _publishingPassword;
-        
-        /// <summary>
-        /// Optional. Hash value of the password used for publishing the web
-        /// site.
-        /// </summary>
-        public string PublishingPassword
-        {
-            get { return this._publishingPassword; }
-            set { this._publishingPassword = value; }
-        }
-        
-        private string _publishingUserName;
-        
-        /// <summary>
-        /// Optional. The user name used for publishing the web site. This is
-        /// normally a dollar sign prepended to the web site name (for
-        /// example, "$contoso").
-        /// </summary>
-        public string PublishingUserName
-        {
-            get { return this._publishingUserName; }
-            set { this._publishingUserName = value; }
         }
         
         private bool? _remoteDebuggingEnabled;

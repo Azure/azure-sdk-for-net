@@ -30,30 +30,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebHostingPlan
     {
-        private int? _currentNumberOfWorkers;
-        
-        /// <summary>
-        /// Optional. The number of workers currently serving requests.
-        /// </summary>
-        public int? CurrentNumberOfWorkers
-        {
-            get { return this._currentNumberOfWorkers; }
-            set { this._currentNumberOfWorkers = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _currentWorkerSize;
-        
-        /// <summary>
-        /// Optional. The worker size of currently used workers. Possible
-        /// values are Small, Medium, and Large. For JSON, the equivalents are
-        /// 0 = Small, 1 = Medium, and 2 = Large.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? CurrentWorkerSize
-        {
-            get { return this._currentWorkerSize; }
-            set { this._currentWorkerSize = value; }
-        }
-        
         private string _name;
         
         /// <summary>
@@ -76,26 +52,15 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._numberOfWorkers = value; }
         }
         
-        private string _sKU;
+        private SkuOptions _sKU;
         
         /// <summary>
-        /// Optional. Name of the Web hosting plan.
+        /// Optional. SKU of the Web hosting plan.
         /// </summary>
-        public string SKU
+        public SkuOptions SKU
         {
             get { return this._sKU; }
             set { this._sKU = value; }
-        }
-        
-        private StatusOptions _status;
-        
-        /// <summary>
-        /// Optional. The status of the web hosting plan.
-        /// </summary>
-        public StatusOptions Status
-        {
-            get { return this._status; }
-            set { this._status = value; }
         }
         
         private Microsoft.WindowsAzure.Management.WebSites.Models.WorkerSizeOptions? _workerSize;

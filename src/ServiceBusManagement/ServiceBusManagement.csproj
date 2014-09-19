@@ -13,6 +13,7 @@
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <NuGetPackageImportStamp>55dcd0dc</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>2b51c3cb</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
@@ -89,6 +90,9 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementServiceBusSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.ServiceBus.Specification.1.0.5368.26118-prerelease\tools\Microsoft.WindowsAzure.Management.ServiceBus.Specification.dll" DestinationFolder="." />
+  </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

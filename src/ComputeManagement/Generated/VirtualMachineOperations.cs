@@ -726,8 +726,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -908,8 +907,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1835,8 +1833,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2103,7 +2100,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 deploymentElement.Add(deploymentSlotElement);
                 
                 XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                labelElement.Value = TypeConversion.ToBase64String(parameters.Label);
+                labelElement.Value = parameters.Label;
                 deploymentElement.Add(labelElement);
                 
                 XElement roleListSequenceElement = new XElement(XName.Get("RoleList", "http://schemas.microsoft.com/windowsazure"));
@@ -2904,8 +2901,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3197,8 +3193,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<RestartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>RestartRoleOperation</OperationType></RestartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3364,8 +3359,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3539,8 +3533,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3684,8 +3677,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 // Serialize Request
                 string requestContent = "<StartRoleOperation xmlns=\"http://schemas.microsoft.com/windowsazure\"><OperationType>StartRoleOperation</OperationType></StartRoleOperation>";
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3851,8 +3843,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4762,8 +4753,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -5072,8 +5062,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

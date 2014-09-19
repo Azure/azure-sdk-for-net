@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
@@ -181,8 +181,7 @@ namespace Microsoft.Azure.Management.Sql
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

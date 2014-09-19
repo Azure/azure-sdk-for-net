@@ -180,9 +180,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Begin Deleting All Hosted Service operation deletes the
-        /// specified cloud service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -206,9 +208,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Begin Deleting All Hosted Service operation deletes the
-        /// specified cloud service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -428,9 +432,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='operations'>
@@ -461,9 +467,11 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='operations'>

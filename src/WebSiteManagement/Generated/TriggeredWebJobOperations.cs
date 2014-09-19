@@ -1415,13 +1415,12 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 if (settings.ShutdownGraceTimeInSeconds != null)
                 {
                     requestDoc = new JObject();
-                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds;
+                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1562,7 +1561,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 // Serialize Request
                 Stream requestContent = jobContent;
                 httpRequest.Content = new StreamContent(requestContent);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
                 httpRequest.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
                 
                 // Send Request
@@ -1704,7 +1703,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 // Serialize Request
                 Stream requestContent = jobContent;
                 httpRequest.Content = new StreamContent(requestContent);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/zip");
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/zip");
                 httpRequest.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = fileName };
                 
                 // Send Request

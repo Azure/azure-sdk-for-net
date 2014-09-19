@@ -192,12 +192,12 @@ namespace Microsoft.Azure.Management.Sql
                 
                 if (parameters.Properties.MaxSizeBytes != null)
                 {
-                    propertiesValue["maxSizeBytes"] = parameters.Properties.MaxSizeBytes.ToString();
+                    propertiesValue["maxSizeBytes"] = parameters.Properties.MaxSizeBytes.Value.ToString();
                 }
                 
                 if (parameters.Properties.RequestedServiceObjectiveId != null)
                 {
-                    propertiesValue["requestedServiceObjectiveId"] = parameters.Properties.RequestedServiceObjectiveId.ToString();
+                    propertiesValue["requestedServiceObjectiveId"] = parameters.Properties.RequestedServiceObjectiveId.Value.ToString();
                 }
                 
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
@@ -216,8 +216,7 @@ namespace Microsoft.Azure.Management.Sql
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

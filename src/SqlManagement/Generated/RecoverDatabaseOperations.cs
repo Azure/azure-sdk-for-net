@@ -68,9 +68,9 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// <summary>
         /// Issues a recovery request for an Azure SQL Database.
         /// </summary>
-        /// <param name='targetServerName'>
-        /// Required. The name of the Azure SQL Database Server on which to
-        /// recover the source database.
+        /// <param name='sourceServerName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database was hosted.
         /// </param>
         /// <param name='parameters'>
         /// Required. Additional parameters for the Create Recover Database
@@ -83,12 +83,12 @@ namespace Microsoft.WindowsAzure.Management.Sql
         /// Contains the response to the Create Recover Database Operation
         /// request.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverDatabaseOperationCreateResponse> CreateAsync(string targetServerName, RecoverDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Sql.Models.RecoverDatabaseOperationCreateResponse> CreateAsync(string sourceServerName, RecoverDatabaseOperationCreateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (targetServerName == null)
+            if (sourceServerName == null)
             {
-                throw new ArgumentNullException("targetServerName");
+                throw new ArgumentNullException("sourceServerName");
             }
             if (parameters == null)
             {
@@ -106,13 +106,13 @@ namespace Microsoft.WindowsAzure.Management.Sql
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("targetServerName", targetServerName);
+                tracingParameters.Add("sourceServerName", sourceServerName);
                 tracingParameters.Add("parameters", parameters);
                 Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + targetServerName.Trim() + "/recoverdatabaseoperations";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/sqlservers/servers/" + sourceServerName.Trim() + "/recoverdatabaseoperations";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -152,11 +152,11 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 sourceDatabaseNameElement.Value = parameters.SourceDatabaseName;
                 serviceResourceElement.Add(sourceDatabaseNameElement);
                 
-                if (parameters.SourceServerName != null)
+                if (parameters.TargetServerName != null)
                 {
-                    XElement sourceServerNameElement = new XElement(XName.Get("SourceServerName", "http://schemas.microsoft.com/windowsazure"));
-                    sourceServerNameElement.Value = parameters.SourceServerName;
-                    serviceResourceElement.Add(sourceServerNameElement);
+                    XElement targetServerNameElement = new XElement(XName.Get("TargetServerName", "http://schemas.microsoft.com/windowsazure"));
+                    targetServerNameElement.Value = parameters.TargetServerName;
+                    serviceResourceElement.Add(targetServerNameElement);
                 }
                 
                 if (parameters.TargetDatabaseName != null)
@@ -168,8 +168,7 @@ namespace Microsoft.WindowsAzure.Management.Sql
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -218,18 +217,18 @@ namespace Microsoft.WindowsAzure.Management.Sql
                             serviceResourceInstance.Id = requestIDInstance;
                         }
                         
-                        XElement sourceServerNameElement2 = serviceResourceElement2.Element(XName.Get("SourceServerName", "http://schemas.microsoft.com/windowsazure"));
-                        if (sourceServerNameElement2 != null)
-                        {
-                            string sourceServerNameInstance = sourceServerNameElement2.Value;
-                            serviceResourceInstance.SourceServerName = sourceServerNameInstance;
-                        }
-                        
                         XElement sourceDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("SourceDatabaseName", "http://schemas.microsoft.com/windowsazure"));
                         if (sourceDatabaseNameElement2 != null)
                         {
                             string sourceDatabaseNameInstance = sourceDatabaseNameElement2.Value;
                             serviceResourceInstance.SourceDatabaseName = sourceDatabaseNameInstance;
+                        }
+                        
+                        XElement targetServerNameElement2 = serviceResourceElement2.Element(XName.Get("TargetServerName", "http://schemas.microsoft.com/windowsazure"));
+                        if (targetServerNameElement2 != null)
+                        {
+                            string targetServerNameInstance = targetServerNameElement2.Value;
+                            serviceResourceInstance.TargetServerName = targetServerNameInstance;
                         }
                         
                         XElement targetDatabaseNameElement2 = serviceResourceElement2.Element(XName.Get("TargetDatabaseName", "http://schemas.microsoft.com/windowsazure"));

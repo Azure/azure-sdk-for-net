@@ -31,6 +31,20 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
     /// </summary>
     public partial class StorageAccountProperties
     {
+        private string _accountType;
+        
+        /// <summary>
+        /// Optional. Specifies whether the account supports locally-redundant
+        /// storage, geo-redundant storage, zone-redundant storage, or read
+        /// access geo-redundant storage. Possible values are:'Standard_LRS',
+        /// 'Standard_ZRS', 'Standard_GRS', and 'Standard_RAGRS'.
+        /// </summary>
+        public string AccountType
+        {
+            get { return this._accountType; }
+            set { this._accountType = value; }
+        }
+        
         private string _affinityGroup;
         
         /// <summary>
@@ -76,20 +90,6 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         {
             get { return this._geoPrimaryRegion; }
             set { this._geoPrimaryRegion = value; }
-        }
-        
-        private bool _geoReplicationEnabled;
-        
-        /// <summary>
-        /// Optional. Indicates whether geo-replication is
-        /// enabled.Geo-replication means data in the storage account is
-        /// replicated across more than one geographic location so as to
-        /// enable resilience in the face of catastrophic service loss.
-        /// </summary>
-        public bool GeoReplicationEnabled
-        {
-            get { return this._geoReplicationEnabled; }
-            set { this._geoReplicationEnabled = value; }
         }
         
         private string _geoSecondaryRegion;

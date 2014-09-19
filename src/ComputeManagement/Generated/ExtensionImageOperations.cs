@@ -399,6 +399,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
+                }
+                
                 if (parameters.Eula != null)
                 {
                     XElement eulaElement = new XElement(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -450,8 +457,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -992,6 +998,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     extensionImageElement.Add(sampleConfigElement);
                 }
                 
+                if (parameters.ReplicationCompleted != null)
+                {
+                    XElement replicationCompletedElement = new XElement(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                    replicationCompletedElement.Value = parameters.ReplicationCompleted.ToString().ToLower();
+                    extensionImageElement.Add(replicationCompletedElement);
+                }
+                
                 if (parameters.Eula != null)
                 {
                     XElement eulaElement = new XElement(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
@@ -1043,8 +1056,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

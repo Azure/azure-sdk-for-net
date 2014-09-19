@@ -294,8 +294,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -577,8 +576,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -889,8 +887,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1328,8 +1325,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1488,8 +1484,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2142,6 +2137,320 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentName == null)
+            {
+                throw new ArgumentNullException("deploymentName");
+            }
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException("roleInstanceName");
+            }
+            if (resources == null)
+            {
+                throw new ArgumentNullException("resources");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "BeginRebuildingRoleInstanceByDeploymentNameAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deployments/" + deploymentName.Trim() + "/roleinstances/" + roleInstanceName.Trim() + "?";
+            url = url + "comp=rebuild";
+            url = url + "&resources=" + Uri.EscapeDataString(resources.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (serviceName == null)
+            {
+                throw new ArgumentNullException("serviceName");
+            }
+            if (deploymentSlot == null)
+            {
+                throw new ArgumentNullException("deploymentSlot");
+            }
+            if (roleInstanceName == null)
+            {
+                throw new ArgumentNullException("roleInstanceName");
+            }
+            if (resources == null)
+            {
+                throw new ArgumentNullException("resources");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentSlot", deploymentSlot);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "BeginRebuildingRoleInstanceByDeploymentSlotAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/hostedservices/" + serviceName.Trim() + "/deploymentslots/" + deploymentSlot.Trim() + "/roleinstances/" + roleInstanceName.Trim() + "?";
+            url = url + "comp=rebuild";
+            url = url + "&resources=" + Uri.EscapeDataString(resources.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Begin Reimaging Role Instance By Deployment Name operation
         /// requests a reimage of a role instance that is running in a
         /// deployment. This operation is an asynchronous operation. To
@@ -2535,8 +2844,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2699,8 +3007,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -2859,8 +3166,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3193,8 +3499,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3523,8 +3828,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3709,8 +4013,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -3891,8 +4194,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -4703,11 +5005,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.Deployments.DeleteRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Deployments.BeginDeletingRoleInstanceByBeploymentSlotAsync(serviceName, deploymentSlot, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -8687,6 +8985,254 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentNameAsync(string serviceName, string deploymentName, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentName", deploymentName);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "RebuildRoleInstanceByDeploymentNameAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.Deployments.BeginRebuildingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentSlotAsync(string serviceName, string deploymentSlot, string roleInstanceName, string resources, CancellationToken cancellationToken)
+        {
+            ComputeManagementClient client = this.Client;
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("serviceName", serviceName);
+                tracingParameters.Add("deploymentSlot", deploymentSlot);
+                tracingParameters.Add("roleInstanceName", roleInstanceName);
+                tracingParameters.Add("resources", resources);
+                Tracing.Enter(invocationId, this, "RebuildRoleInstanceByDeploymentSlotAsync", tracingParameters);
+            }
+            try
+            {
+                if (shouldTrace)
+                {
+                    client = this.Client.WithHandler(new ClientRequestTrackingHandler(invocationId));
+                }
+                
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationResponse response = await client.Deployments.BeginRebuildingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                int delayInSeconds = 30;
+                if (client.LongRunningOperationInitialTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationInitialTimeout;
+                }
+                while ((result.Status != OperationStatus.InProgress) == false)
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await TaskEx.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                    cancellationToken.ThrowIfCancellationRequested();
+                    result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
+                    delayInSeconds = 30;
+                    if (client.LongRunningOperationRetryTimeout >= 0)
+                    {
+                        delayInSeconds = client.LongRunningOperationRetryTimeout;
+                    }
+                }
+                
+                if (shouldTrace)
+                {
+                    Tracing.Exit(invocationId, result);
+                }
+                
+                if (result.Status != OperationStatus.Succeeded)
+                {
+                    if (result.Error != null)
+                    {
+                        CloudException ex = new CloudException(result.Error.Code + " : " + result.Error.Message);
+                        ex.ErrorCode = result.Error.Code;
+                        ex.ErrorMessage = result.Error.Message;
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    else
+                    {
+                        CloudException ex = new CloudException("");
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                }
+                
+                return result;
+            }
+            finally
+            {
+                if (client != null && shouldTrace)
+                {
+                    client.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// The Reimage Role Instance By Deployment Name operation requests a
         /// reimage of a role instance that is running in a deployment.This
         /// operation is an asynchronous operation. To determine whether the
@@ -9028,8 +9574,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -9191,8 +9736,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

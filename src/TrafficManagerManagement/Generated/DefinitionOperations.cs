@@ -275,13 +275,19 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                         weightElement.Value = endpointsItem.Weight.ToString();
                         endpointElement.Add(weightElement);
                     }
+                    
+                    if (endpointsItem.MinChildEndpoints != null)
+                    {
+                        XElement minChildEndpointsElement = new XElement(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                        minChildEndpointsElement.Value = endpointsItem.MinChildEndpoints.ToString();
+                        endpointElement.Add(minChildEndpointsElement);
+                    }
                 }
                 policyElement.Add(endpointsSequenceElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -607,6 +613,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                         int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                         endpointInstance.Weight = weightInstance;
                                     }
+                                    
+                                    XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                    if (minChildEndpointsElement != null)
+                                    {
+                                        int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
+                                        endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
+                                    }
                                 }
                             }
                             
@@ -915,6 +928,13 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                         {
                                             int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.Weight = weightInstance;
+                                        }
+                                        
+                                        XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                                        if (minChildEndpointsElement != null)
+                                        {
+                                            int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
+                                            endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
                                         }
                                     }
                                 }

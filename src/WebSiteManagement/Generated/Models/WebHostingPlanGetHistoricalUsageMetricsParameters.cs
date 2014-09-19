@@ -43,6 +43,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._endTime = value; }
         }
         
+        private bool _includeInstanceBreakdown;
+        
+        /// <summary>
+        /// Optional. Flag which specifies if the metrics for each machine
+        /// instance should be included. For sites that run on more than one
+        /// machine this could be useful to identify a bad machine.
+        /// </summary>
+        public bool IncludeInstanceBreakdown
+        {
+            get { return this._includeInstanceBreakdown; }
+            set { this._includeInstanceBreakdown = value; }
+        }
+        
         private IList<string> _metricNames;
         
         /// <summary>

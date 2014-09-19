@@ -42,5 +42,11 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// entered as endpoints of type "Any".
         /// </summary>
         Any = 2,
+        
+        /// <summary>
+        /// The type of endpoint that points to a Traffic Manager profile from
+        /// the current subscription.
+        /// </summary>
+        TrafficManager = 3,
     }
 }

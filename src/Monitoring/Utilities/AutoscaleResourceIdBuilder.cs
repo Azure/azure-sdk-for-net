@@ -63,14 +63,14 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
         /// <summary>
         /// Builds the resource id of the virtual machine resource.
         /// </summary>
-        /// <param name="virtualMachineName">The virtual machine name.</param>
+        /// <param name="cloudServiceName">The cloud service name.</param>
         /// <param name="availabilitySetName">The availability set name.</param>
         /// <returns>The resource id.</returns>
-        public static string BuildVirtualMachineResourceId(string virtualMachineName, string availabilitySetName)
+        public static string BuildVirtualMachineResourceId(string cloudServiceName, string availabilitySetName)
         {
-            if (string.IsNullOrWhiteSpace(virtualMachineName))
+            if (string.IsNullOrWhiteSpace(cloudServiceName))
             {
-                throw new ArgumentException("virtualMachineName");
+                throw new ArgumentException("cloudServiceName");
             }
 
             if (string.IsNullOrWhiteSpace(availabilitySetName))
@@ -78,7 +78,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Utilities
                 throw new ArgumentException("availabilitySetName");
             }
 
-            return string.Format(CultureInfo.InvariantCulture, "/virtualmachines/{0}/availabilitysets/{1}", virtualMachineName, availabilitySetName);
+            return string.Format(CultureInfo.InvariantCulture, "/virtualmachines/{0}/availabilitysets/{1}", cloudServiceName, availabilitySetName);
         }
 
         /// <summary>

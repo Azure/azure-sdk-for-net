@@ -20,7 +20,6 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
@@ -31,35 +30,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteCreateParameters
     {
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
-        
-        /// <summary>
-        /// Optional. The compute mode for the web site. This value should be
-        /// Shared for the Free or Paid Shared offerings or Dedicated for the
-        /// Standard offering. The default value is Shared. If you set
-        /// ComputeMode to Dedicated, you must specify a value for the
-        /// ServerFarm element.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
-        {
-            get { return this._computeMode; }
-            set { this._computeMode = value; }
-        }
-        
-        private IList<string> _hostNames;
-        
-        /// <summary>
-        /// Optional. The fully qualified domain name for web site. Only one
-        /// host name can be specified in the azurewebsites.net domain. The
-        /// host name should match the name of the web site. Custom domains
-        /// can only be specified for Shared or Standard web sites.
-        /// </summary>
-        public IList<string> HostNames
-        {
-            get { return this._hostNames; }
-            set { this._hostNames = value; }
-        }
-        
         private string _name;
         
         /// <summary>
@@ -75,28 +45,14 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. The name of the Server Farm associated with this web
-        /// site. This is a required value for Standard mode.
+        /// Required. The name of the Server Farm (Web Hosting Plan) associated
+        /// with this web site. This is a required value. Server Farm must
+        /// already exist.
         /// </summary>
         public string ServerFarm
         {
             get { return this._serverFarm; }
             set { this._serverFarm = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? _siteMode;
-        
-        /// <summary>
-        /// Optional. The web site mode. This value is Limited for the Free
-        /// offering and Basic for the Paid and Shared offerings. The default
-        /// value is Limited. Note: Standard mode does not use the SiteMode
-        /// setting; it uses the ComputeMode setting. For more information,
-        /// see Upgrade or Downgrade a Web Site.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
-        {
-            get { return this._siteMode; }
-            set { this._siteMode = value; }
         }
         
         private WebSiteCreateParameters.WebSpaceDetails _webSpace;
@@ -110,42 +66,30 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._webSpace = value; }
         }
         
-        private string _webSpaceName;
-        
-        /// <summary>
-        /// Required. The name of the web space.
-        /// </summary>
-        public string WebSpaceName
-        {
-            get { return this._webSpaceName; }
-            set { this._webSpaceName = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the WebSiteCreateParameters class.
         /// </summary>
         public WebSiteCreateParameters()
         {
-            this.HostNames = new List<string>();
         }
         
         /// <summary>
         /// Initializes a new instance of the WebSiteCreateParameters class
         /// with required arguments.
         /// </summary>
-        public WebSiteCreateParameters(string name, string webSpaceName)
+        public WebSiteCreateParameters(string name, string serverFarm)
             : this()
         {
             if (name == null)
             {
                 throw new ArgumentNullException("name");
             }
-            if (webSpaceName == null)
+            if (serverFarm == null)
             {
-                throw new ArgumentNullException("webSpaceName");
+                throw new ArgumentNullException("serverFarm");
             }
             this.Name = name;
-            this.WebSpaceName = webSpaceName;
+            this.ServerFarm = serverFarm;
         }
         
         /// <summary>

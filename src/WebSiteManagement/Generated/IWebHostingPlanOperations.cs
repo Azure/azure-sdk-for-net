@@ -23,6 +23,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites
@@ -33,9 +34,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     public partial interface IWebHostingPlanOperations
     {
         /// <summary>
-        /// You can retrieve details for a specified web hosting plan name by
-        /// issuing an HTTP GET request.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn167017.aspx
+        /// Creates a new Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='parameters'>
+        /// Web Hosting Plan Parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Web Web Hosting Plan operation response.
+        /// </returns>
+        Task<WebHostingPlanCreateResponse> CreateAsync(string webSpaceName, WebHostingPlanCreateParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Deletes a Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
         /// for more information)
         /// </summary>
         /// <param name='webSpaceName'>
@@ -48,7 +67,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Hosting Plans details operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> DeleteAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets details of an existing Web Hosting Plan  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// The name of the web hosting plan.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Get Web Hosting Plan operation response.
         /// </returns>
         Task<WebHostingPlanGetResponse> GetAsync(string webSpaceName, string webHostingPlanName, CancellationToken cancellationToken);
         
@@ -93,5 +132,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// The List Web Hosting Plans operation response.
         /// </returns>
         Task<WebHostingPlanListResponse> ListAsync(string webSpaceName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Updates an existing Web Hosting Plan.  (see
+        /// http://azure.microsoft.com/en-us/documentation/articles/azure-web-sites-web-hosting-plans-in-depth-overview/
+        /// for more information)
+        /// </summary>
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webHostingPlanName'>
+        /// The name of the web hosting plan.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Update Web Hosting Plan operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Create Web Hosting Plan operation response.
+        /// </returns>
+        Task<WebHostingPlanUpdateResponse> UpdateAsync(string webSpaceName, string webHostingPlanName, WebHostingPlanUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

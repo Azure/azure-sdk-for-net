@@ -532,10 +532,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/";
+            string url = "/api/deployments/?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {
@@ -817,10 +817,10 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
             }
             
             // Construct URL
-            string url = "/api/deployments/" + deploymentId.Trim() + "/log";
+            string url = "/api/deployments/" + deploymentId.Trim() + "/log?";
             if (parameters != null && parameters.Top != null)
             {
-                url = url + "&$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
+                url = url + "$top=" + Uri.EscapeDataString(parameters.Top != null ? parameters.Top.Trim() : "");
             }
             if (parameters != null && parameters.OrderBy != null)
             {

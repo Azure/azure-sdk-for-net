@@ -326,8 +326,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -388,9 +387,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Begin Deleting All Hosted Service operation deletes the
-        /// specified cloud service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
@@ -939,8 +940,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;
@@ -1124,9 +1124,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
-        /// The Delete All Hosted Service operation deletes the specified cloud
-        /// service from Azure.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx
+        /// The DeleteAll Hosted Service operation deletes the specified cloud
+        /// service as well as operating system disk, attached data disks, and
+        /// the source blobs for the disks from storage from Microsoft Azure.
+        /// (see
+        /// 'http://msdn.microsoft.com/en-us/library/windowsazure/gg441305.aspx'
         /// for more information)
         /// </summary>
         /// <param name='serviceName'>
@@ -4083,6 +4085,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
                             }
                             
+                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
+                            {
+                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
+                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
+                            }
+                            
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
                             if (eulaElement != null)
                             {
@@ -4700,6 +4709,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 extensionImageInstance.SampleConfig = sampleConfigInstance;
                             }
                             
+                            XElement replicationCompletedElement = extensionImagesElement.Element(XName.Get("ReplicationCompleted", "http://schemas.microsoft.com/windowsazure"));
+                            if (replicationCompletedElement != null && string.IsNullOrEmpty(replicationCompletedElement.Value) == false)
+                            {
+                                bool replicationCompletedInstance = bool.Parse(replicationCompletedElement.Value);
+                                extensionImageInstance.ReplicationCompleted = replicationCompletedInstance;
+                            }
+                            
                             XElement eulaElement = extensionImagesElement.Element(XName.Get("Eula", "http://schemas.microsoft.com/windowsazure"));
                             if (eulaElement != null)
                             {
@@ -4816,10 +4832,10 @@ namespace Microsoft.WindowsAzure.Management.Compute
             {
                 throw new ArgumentOutOfRangeException("parameters.Description");
             }
-            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
+            int minimumUpdateCount = (parameters.Description != null ? 1 : 0) + (parameters.ExtendedProperties != null ? 1 : 0) + (parameters.Label != null ? 1 : 0) + (parameters.ReverseDnsFqdn != null ? 1 : 0);
             if (minimumUpdateCount < 1)
             {
-                throw new ArgumentException("Expected at least one of parameters.Description, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
+                throw new ArgumentException("Expected at least one of parameters.Description, parameters.ExtendedProperties, parameters.Label, parameters.ReverseDnsFqdn to be provided.");
             }
             
             // Tracing
@@ -4915,8 +4931,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = new MediaTypeHeaderValue("application/xml");
-                httpRequest.Content.Headers.ContentType.CharSet = "utf-8";
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/xml");
                 
                 // Send Request
                 HttpResponseMessage httpResponse = null;

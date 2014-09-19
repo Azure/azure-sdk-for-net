@@ -31,46 +31,6 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
     /// </summary>
     public partial class WebSiteUpdateParameters
     {
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceAvailabilityState? _availabilityState;
-        
-        /// <summary>
-        /// Optional. The state of the availability of management information
-        /// for the web site. Possible values are Normal or Limited. Normal
-        /// means that the web site is running correctly and that management
-        /// information for the web site is available. Limited means that only
-        /// partial management information for the web site is available and
-        /// that detailed web site information is unavailable.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSpaceAvailabilityState? AvailabilityState
-        {
-            get { return this._availabilityState; }
-            set { this._availabilityState = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? _computeMode;
-        
-        /// <summary>
-        /// Optional. The Compute Mode for the web site. Possible values are
-        /// Shared or Dedicated.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteComputeMode? ComputeMode
-        {
-            get { return this._computeMode; }
-            set { this._computeMode = value; }
-        }
-        
-        private bool? _enabled;
-        
-        /// <summary>
-        /// Optional. Indicates if the site is enabled. Setting this value to
-        /// false disables the site (takes the site offline).
-        /// </summary>
-        public bool? Enabled
-        {
-            get { return this._enabled; }
-            set { this._enabled = value; }
-        }
-        
         private IList<string> _hostNames;
         
         /// <summary>
@@ -91,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         private IList<WebSiteUpdateParameters.WebSiteHostNameSslState> _hostNameSslStates;
         
         /// <summary>
-        /// Optional. SSL states bound to the web site.
+        /// Optional. SSL states of host names bound to the web site.
         /// </summary>
         public IList<WebSiteUpdateParameters.WebSiteHostNameSslState> HostNameSslStates
         {
@@ -99,58 +59,16 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._hostNameSslStates = value; }
         }
         
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? _runtimeAvailabilityState;
-        
-        /// <summary>
-        /// Optional. The current runtime availability state. Possible values
-        /// are Normal, Degraded, or NotAvailable: Normal: the web site is
-        /// running correctly; Degraded: the web site is running temporarily
-        /// in a degraded mode (typically with less memory and a shared
-        /// instance). Not Available: due to an unexpected issue, the web site
-        /// has been excluded from provisioning. This typically occurs only
-        /// for free sites.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteRuntimeAvailabilityState? RuntimeAvailabilityState
-        {
-            get { return this._runtimeAvailabilityState; }
-            set { this._runtimeAvailabilityState = value; }
-        }
-        
         private string _serverFarm;
         
         /// <summary>
-        /// Optional. String specifying the server farm. If a server farm
-        /// exists, this value is DefaultServerFarm.
+        /// Optional. String specifying the Server Farm (Web Hosting Plan)
+        /// where to place the site. Server Farm must exist.
         /// </summary>
         public string ServerFarm
         {
             get { return this._serverFarm; }
             set { this._serverFarm = value; }
-        }
-        
-        private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? _siteMode;
-        
-        /// <summary>
-        /// Optional. String that represents the web site mode. If the web site
-        /// mode is Free, this value is Limited. If the web site mode is
-        /// Shared, this value is Basic. Note: The SiteMode value is not used
-        /// for Reserved mode. Reserved mode uses the ComputeMode setting.
-        /// </summary>
-        public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteMode? SiteMode
-        {
-            get { return this._siteMode; }
-            set { this._siteMode = value; }
-        }
-        
-        private IList<WebSiteUpdateParameters.WebSiteSslCertificate> _sslCertificates;
-        
-        /// <summary>
-        /// Optional. SSL certificates bound to the web site.
-        /// </summary>
-        public IList<WebSiteUpdateParameters.WebSiteSslCertificate> SslCertificates
-        {
-            get { return this._sslCertificates; }
-            set { this._sslCertificates = value; }
         }
         
         private string _state;
@@ -172,18 +90,28 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         {
             this.HostNames = new List<string>();
             this.HostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
-            this.SslCertificates = new List<WebSiteUpdateParameters.WebSiteSslCertificate>();
         }
         
         /// <summary>
-        /// SSL state bound to the web site.
+        /// SSL state of a site's hostname.
         /// </summary>
         public partial class WebSiteHostNameSslState
         {
+            private string _name;
+            
+            /// <summary>
+            /// Required. The host name.
+            /// </summary>
+            public string Name
+            {
+                get { return this._name; }
+                set { this._name = value; }
+            }
+            
             private Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteSslState? _sslState;
             
             /// <summary>
-            /// Optional. The SSL state. Possible values are Disabled,
+            /// Required. The SSL state. Possible values are Disabled,
             /// SniEnabled, or IpBasedEnabled.
             /// </summary>
             public Microsoft.WindowsAzure.Management.WebSites.Models.WebSiteSslState? SslState
@@ -204,12 +132,12 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
                 set { this._thumbprint = value; }
             }
             
-            private bool? _toUpdate;
+            private bool _toUpdate;
             
             /// <summary>
-            /// Optional. Indicates whether the SSL state will be updated.
+            /// Required. Indicates whether the SSL state will be updated.
             /// </summary>
-            public bool? ToUpdate
+            public bool ToUpdate
             {
                 get { return this._toUpdate; }
                 set { this._toUpdate = value; }
@@ -221,64 +149,25 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             public WebSiteHostNameSslState()
             {
             }
-        }
-        
-        /// <summary>
-        /// The properties for an SSL certificate.
-        /// </summary>
-        public partial class WebSiteSslCertificate
-        {
-            private bool? _isToBeDeleted;
             
             /// <summary>
-            /// Optional. Indicates if the certificate is to be deleted.
+            /// Initializes a new instance of the WebSiteHostNameSslState class
+            /// with required arguments.
             /// </summary>
-            public bool? IsToBeDeleted
+            public WebSiteHostNameSslState(string name, WebSiteSslState sslState, bool toUpdate)
+                : this()
             {
-                get { return this._isToBeDeleted; }
-                set { this._isToBeDeleted = value; }
-            }
-            
-            private string _password;
-            
-            /// <summary>
-            /// Optional. A string that contains the password for the
-            /// certificate.
-            /// </summary>
-            public string Password
-            {
-                get { return this._password; }
-                set { this._password = value; }
-            }
-            
-            private byte[] _pfxBlob;
-            
-            /// <summary>
-            /// Optional. A base64Binary value that contains the PfxBlob of the
-            /// certificate.
-            /// </summary>
-            public byte[] PfxBlob
-            {
-                get { return this._pfxBlob; }
-                set { this._pfxBlob = value; }
-            }
-            
-            private string _thumbprint;
-            
-            /// <summary>
-            /// Optional. A string that contains the certificate thumbprint.
-            /// </summary>
-            public string Thumbprint
-            {
-                get { return this._thumbprint; }
-                set { this._thumbprint = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the WebSiteSslCertificate class.
-            /// </summary>
-            public WebSiteSslCertificate()
-            {
+                if (name == null)
+                {
+                    throw new ArgumentNullException("name");
+                }
+                if (sslState == null)
+                {
+                    throw new ArgumentNullException("sslState");
+                }
+                this.Name = name;
+                this.SslState = sslState;
+                this.ToUpdate = toUpdate;
             }
         }
     }

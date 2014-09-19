@@ -41,18 +41,6 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
             set { this._sourceDatabaseName = value; }
         }
         
-        private string _sourceServerName;
-        
-        /// <summary>
-        /// Optional. Gets or sets the name of the source Azure SQL Database
-        /// Server.
-        /// </summary>
-        public string SourceServerName
-        {
-            get { return this._sourceServerName; }
-            set { this._sourceServerName = value; }
-        }
-        
         private string _targetDatabaseName;
         
         /// <summary>
@@ -62,6 +50,18 @@ namespace Microsoft.WindowsAzure.Management.Sql.Models
         {
             get { return this._targetDatabaseName; }
             set { this._targetDatabaseName = value; }
+        }
+        
+        private string _targetServerName;
+        
+        /// <summary>
+        /// Optional. Gets or sets the name of the target Azure SQL Database
+        /// Server.
+        /// </summary>
+        public string TargetServerName
+        {
+            get { return this._targetServerName; }
+            set { this._targetServerName = value; }
         }
         
         /// <summary>

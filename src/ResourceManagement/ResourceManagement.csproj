@@ -12,14 +12,13 @@
     <AssemblyName>Microsoft.Azure.ResourceManager</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>d3c56ca4</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>28d911e4</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
     <Compile Include="Generated\Models\BasicDependency.cs" />
     <Compile Include="Generated\Models\Dependency.cs" />
     <Compile Include="Generated\Models\ParametersLink.cs" />
-    <Compile Include="Generated\Models\Permission.cs" />
     <Compile Include="Generated\Models\Subscription.cs" />
     <Compile Include="SubscriptionClient.Customization.cs" />
     <Compile Include="Generated\DeploymentOperationOperations.cs" />
@@ -54,7 +53,6 @@
     <Compile Include="Generated\Models\DeploymentValidateResponse.cs" />
     <Compile Include="Generated\Models\GetSubscriptionResult.cs" />
     <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
-    <Compile Include="Generated\Models\PermissionGetResult.cs" />
     <Compile Include="Generated\Models\Provider.cs" />
     <Compile Include="Generated\Models\ProviderGetResult.cs" />
     <Compile Include="Generated\Models\ProviderListParameters.cs" />
@@ -134,24 +132,19 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Target Name="CopyMicrosoftAzureManagementResourcesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Resources.Specification.1.0.5302.17755-prerelease\tools\Microsoft.Azure.Management.Resources.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Resources.Specification.1.0.5368.26118-prerelease\tools\Microsoft.Azure.Management.Resources.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets'))" />
   </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5330.15854-prerelease\build\Hydra.Generator.targets')" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5290.16039-prerelease\build\Hydra.Generator.targets')" />
-  </Target>
-  <Target Name="CopyMicrosoftAzureManagementResourcesSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Resources.Specification.1.0.5330.16913-prerelease\tools\Microsoft.Azure.Management.Resources.Specification.dll" DestinationFolder="." />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
   </Target>
 </Project>

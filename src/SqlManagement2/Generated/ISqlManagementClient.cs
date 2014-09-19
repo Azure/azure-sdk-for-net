@@ -99,6 +99,16 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Database
+        /// security policy.  Contains operations to: Retrieve and Update
+        /// security policy
+        /// </summary>
+        ISecurityOperations DatabaseSecurity
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Database
         /// Servers.  Contains operations to: Create, Retrieve, Update, and
         /// Delete servers.
         /// </summary>
