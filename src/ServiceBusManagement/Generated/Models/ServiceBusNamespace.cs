@@ -42,6 +42,18 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
             set { this._acsManagementEndpoint = value; }
         }
         
+        private bool _createACSNamespace;
+        
+        /// <summary>
+        /// Optional. Whether or not ACS authentication is needed for
+        /// ServiceBus.
+        /// </summary>
+        public bool CreateACSNamespace
+        {
+            get { return this._createACSNamespace; }
+            set { this._createACSNamespace = value; }
+        }
+        
         private DateTime _createdAt;
         
         /// <summary>
