@@ -71,6 +71,14 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <summary>
+        /// Operations for managing agent diagnostic settings.
+        /// </summary>
+        IAgentDiagnosticSettingsOperations AgentDiagnosticSettingsOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for managing the alert rules and incidents.
         /// </summary>
         IAlertOperations AlertOperations
@@ -90,6 +98,22 @@ namespace Microsoft.Azure.Management.Insights
         /// Operations for managing monitoring configuration.
         /// </summary>
         IMonitoringConfigurationOperations MonitoringConfigurationOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing service diagnostic settings.
+        /// </summary>
+        IServiceDiagnosticSettingsOperations ServiceDiagnosticSettingsOperations
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Operations for managing storage diagnostic settings.
+        /// </summary>
+        IStorageDiagnosticSettingsOperations StorageDiagnosticSettingsOperations
         {
             get; 
         }

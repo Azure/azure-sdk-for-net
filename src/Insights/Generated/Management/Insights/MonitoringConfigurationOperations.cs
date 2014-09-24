@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -570,7 +570,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -750,7 +750,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1383,7 +1383,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1607,7 +1607,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
@@ -2110,7 +2110,7 @@ namespace Microsoft.Azure.Management.Insights
         }
         
         /// <param name='resourceUri'>
-        /// Required. The resource uri.
+        /// Required. The resource identifier of the configuration.
         /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the operation.
