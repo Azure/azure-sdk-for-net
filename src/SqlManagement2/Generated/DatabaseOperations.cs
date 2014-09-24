@@ -192,12 +192,12 @@ namespace Microsoft.Azure.Management.Sql
                 
                 if (parameters.Properties.MaxSizeBytes != null)
                 {
-                    propertiesValue["maxSizeBytes"] = parameters.Properties.MaxSizeBytes.ToString();
+                    propertiesValue["maxSizeBytes"] = parameters.Properties.MaxSizeBytes.Value.ToString();
                 }
                 
                 if (parameters.Properties.RequestedServiceObjectiveId != null)
                 {
-                    propertiesValue["requestedServiceObjectiveId"] = parameters.Properties.RequestedServiceObjectiveId.ToString();
+                    propertiesValue["requestedServiceObjectiveId"] = parameters.Properties.RequestedServiceObjectiveId.Value.ToString();
                 }
                 
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;

@@ -203,7 +203,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 if (parameters.StartTime != null)
                 {
-                    jobCreateParametersValue["startTime"] = parameters.StartTime;
+                    jobCreateParametersValue["startTime"] = parameters.StartTime.Value;
                 }
                 
                 JObject actionValue = new JObject();
@@ -220,12 +220,12 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Action.RetryPolicy.RetryInterval != null)
                     {
-                        retryPolicyValue["retryInterval"] = parameters.Action.RetryPolicy.RetryInterval.ToString();
+                        retryPolicyValue["retryInterval"] = parameters.Action.RetryPolicy.RetryInterval.Value.ToString();
                     }
                     
                     if (parameters.Action.RetryPolicy.RetryCount != null)
                     {
-                        retryPolicyValue["retryCount"] = parameters.Action.RetryPolicy.RetryCount;
+                        retryPolicyValue["retryCount"] = parameters.Action.RetryPolicy.RetryCount.Value;
                     }
                 }
                 
@@ -328,17 +328,17 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Recurrence.Interval != null)
                     {
-                        recurrenceValue["interval"] = parameters.Recurrence.Interval;
+                        recurrenceValue["interval"] = parameters.Recurrence.Interval.Value;
                     }
                     
                     if (parameters.Recurrence.Count != null)
                     {
-                        recurrenceValue["count"] = parameters.Recurrence.Count;
+                        recurrenceValue["count"] = parameters.Recurrence.Count.Value;
                     }
                     
                     if (parameters.Recurrence.EndTime != null)
                     {
-                        recurrenceValue["endTime"] = parameters.Recurrence.EndTime;
+                        recurrenceValue["endTime"] = parameters.Recurrence.EndTime.Value;
                     }
                     
                     if (parameters.Recurrence.Schedule != null)
@@ -408,7 +408,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 
                                 if (monthlyOccurrencesItem.Occurrence != null)
                                 {
-                                    jobScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence;
+                                    jobScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence.Value;
                                 }
                             }
                             scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;
@@ -1025,7 +1025,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 
                 if (parameters.StartTime != null)
                 {
-                    jobCreateOrUpdateParametersValue["startTime"] = parameters.StartTime;
+                    jobCreateOrUpdateParametersValue["startTime"] = parameters.StartTime.Value;
                 }
                 
                 JObject actionValue = new JObject();
@@ -1042,12 +1042,12 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Action.RetryPolicy.RetryInterval != null)
                     {
-                        retryPolicyValue["retryInterval"] = parameters.Action.RetryPolicy.RetryInterval.ToString();
+                        retryPolicyValue["retryInterval"] = parameters.Action.RetryPolicy.RetryInterval.Value.ToString();
                     }
                     
                     if (parameters.Action.RetryPolicy.RetryCount != null)
                     {
-                        retryPolicyValue["retryCount"] = parameters.Action.RetryPolicy.RetryCount;
+                        retryPolicyValue["retryCount"] = parameters.Action.RetryPolicy.RetryCount.Value;
                     }
                 }
                 
@@ -1150,17 +1150,17 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     if (parameters.Recurrence.Interval != null)
                     {
-                        recurrenceValue["interval"] = parameters.Recurrence.Interval;
+                        recurrenceValue["interval"] = parameters.Recurrence.Interval.Value;
                     }
                     
                     if (parameters.Recurrence.Count != null)
                     {
-                        recurrenceValue["count"] = parameters.Recurrence.Count;
+                        recurrenceValue["count"] = parameters.Recurrence.Count.Value;
                     }
                     
                     if (parameters.Recurrence.EndTime != null)
                     {
-                        recurrenceValue["endTime"] = parameters.Recurrence.EndTime;
+                        recurrenceValue["endTime"] = parameters.Recurrence.EndTime.Value;
                     }
                     
                     if (parameters.Recurrence.Schedule != null)
@@ -1230,7 +1230,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 
                                 if (monthlyOccurrencesItem.Occurrence != null)
                                 {
-                                    jobScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence;
+                                    jobScheduleMonthlyOccurrenceValue["occurrence"] = monthlyOccurrencesItem.Occurrence.Value;
                                 }
                             }
                             scheduleValue["monthlyOccurrences"] = monthlyOccurrencesArray;

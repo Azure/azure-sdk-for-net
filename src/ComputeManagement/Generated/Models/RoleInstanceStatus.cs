@@ -139,5 +139,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// responding to requests.
         /// </summary>
         public const string UnresponsiveRole = "UnresponsiveRole";
+        
+        /// <summary>
+        /// Azure is provisioning the role.
+        /// </summary>
+        public const string Provisioning = "Provisioning";
     }
 }

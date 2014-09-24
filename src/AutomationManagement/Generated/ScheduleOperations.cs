@@ -186,12 +186,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Schedule.NextRun != null)
                 {
-                    scheduleCreateParametersValue["NextRun"] = parameters.Schedule.NextRun;
+                    scheduleCreateParametersValue["NextRun"] = parameters.Schedule.NextRun.Value;
                 }
                 
                 if (parameters.Schedule.DayInterval != null)
                 {
-                    scheduleCreateParametersValue["DayInterval"] = parameters.Schedule.DayInterval;
+                    scheduleCreateParametersValue["DayInterval"] = parameters.Schedule.DayInterval.Value;
                 }
                 
                 scheduleCreateParametersValue["odata.type"] = parameters.Schedule.ScheduleType.ToString();
@@ -1337,12 +1337,12 @@ namespace Microsoft.Azure.Management.Automation
                 
                 if (parameters.Schedule.NextRun != null)
                 {
-                    scheduleUpdateParametersValue["NextRun"] = parameters.Schedule.NextRun;
+                    scheduleUpdateParametersValue["NextRun"] = parameters.Schedule.NextRun.Value;
                 }
                 
                 if (parameters.Schedule.DayInterval != null)
                 {
-                    scheduleUpdateParametersValue["DayInterval"] = parameters.Schedule.DayInterval;
+                    scheduleUpdateParametersValue["DayInterval"] = parameters.Schedule.DayInterval.Value;
                 }
                 
                 scheduleUpdateParametersValue["odata.type"] = parameters.Schedule.ScheduleType.ToString();

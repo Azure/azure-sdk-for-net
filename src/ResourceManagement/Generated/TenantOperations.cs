@@ -158,7 +158,6 @@ namespace Microsoft.Azure.Subscriptions
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.TenantIds = new List<TenantIdDescription>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 TenantIdDescription tenantIdDescriptionInstance = new TenantIdDescription();

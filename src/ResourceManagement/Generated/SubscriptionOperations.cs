@@ -320,7 +320,6 @@ namespace Microsoft.Azure.Subscriptions
                         JToken valueArray = responseDoc["value"];
                         if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            result.Subscriptions = new List<Subscription>();
                             foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 Subscription subscriptionInstance = new Subscription();

@@ -5985,7 +5985,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.DetailedErrorLoggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["DetailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["DetailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled.Value;
                 }
                 
                 if (parameters.DocumentRoot != null)
@@ -6021,17 +6021,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.HttpLoggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["HttpLoggingEnabled"] = parameters.HttpLoggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["HttpLoggingEnabled"] = parameters.HttpLoggingEnabled.Value;
                 }
                 
                 if (parameters.LogsDirectorySizeLimit != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["LogsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit;
+                    webSiteUpdateConfigurationParametersValue["LogsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit.Value;
                 }
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode);
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode.Value);
                 }
                 
                 JArray metadataDictionary = new JArray();
@@ -6056,7 +6056,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.NumberOfWorkers != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["NumberOfWorkers"] = parameters.NumberOfWorkers;
+                    webSiteUpdateConfigurationParametersValue["NumberOfWorkers"] = parameters.NumberOfWorkers.Value;
                 }
                 
                 if (parameters.PhpVersion != null)
@@ -6066,19 +6066,19 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.RemoteDebuggingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled;
+                    webSiteUpdateConfigurationParametersValue["RemoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
                 }
                 
                 webSiteUpdateConfigurationParametersValue["RemoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
                 
                 if (parameters.RequestTracingEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RequestTracingEnabled"] = parameters.RequestTracingEnabled;
+                    webSiteUpdateConfigurationParametersValue["RequestTracingEnabled"] = parameters.RequestTracingEnabled.Value;
                 }
                 
                 if (parameters.RequestTracingExpirationTime != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["RequestTracingExpirationTime"] = parameters.RequestTracingExpirationTime;
+                    webSiteUpdateConfigurationParametersValue["RequestTracingExpirationTime"] = parameters.RequestTracingExpirationTime.Value;
                 }
                 
                 if (parameters.ScmType != null)
@@ -6088,17 +6088,17 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.Use32BitWorkerProcess != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["Use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess;
+                    webSiteUpdateConfigurationParametersValue["Use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess.Value;
                 }
                 
                 if (parameters.WebSocketsEnabled != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["WebSocketsEnabled"] = parameters.WebSocketsEnabled;
+                    webSiteUpdateConfigurationParametersValue["WebSocketsEnabled"] = parameters.WebSocketsEnabled.Value;
                 }
                 
                 if (parameters.AlwaysOn != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["AlwaysOn"] = parameters.AlwaysOn;
+                    webSiteUpdateConfigurationParametersValue["AlwaysOn"] = parameters.AlwaysOn.Value;
                 }
                 
                 if (parameters.RoutingRules != null)
@@ -6122,22 +6122,22 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             
                             if (derived.ChangeStep != null)
                             {
-                                routingRuleValue["ChangeStep"] = derived.ChangeStep;
+                                routingRuleValue["ChangeStep"] = derived.ChangeStep.Value;
                             }
                             
                             if (derived.ChangeIntervalInMinutes != null)
                             {
-                                routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes;
+                                routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes.Value;
                             }
                             
                             if (derived.MinReroutePercentage != null)
                             {
-                                routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage;
+                                routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage.Value;
                             }
                             
                             if (derived.MaxReroutePercentage != null)
                             {
-                                routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage;
+                                routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage.Value;
                             }
                             
                             if (derived.ChangeDecisionCallbackUrl != null)

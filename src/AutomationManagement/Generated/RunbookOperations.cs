@@ -3755,12 +3755,12 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (schedulesItem.NextRun != null)
                         {
-                            scheduleValue["NextRun"] = schedulesItem.NextRun;
+                            scheduleValue["NextRun"] = schedulesItem.NextRun.Value;
                         }
                         
                         if (schedulesItem.DayInterval != null)
                         {
-                            scheduleValue["DayInterval"] = schedulesItem.DayInterval;
+                            scheduleValue["DayInterval"] = schedulesItem.DayInterval.Value;
                         }
                         
                         scheduleValue["odata.type"] = schedulesItem.ScheduleType.ToString();

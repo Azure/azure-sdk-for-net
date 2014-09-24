@@ -292,8 +292,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             private IList<VirtualIPAddress> _virtualIPAddresses;
             
             /// <summary>
-            /// Optional. The virtual IP addresses that are specified for
-            /// thedeployment.
+            /// Optional. The virtual IP addresses that are specified for the
+            /// deployment.
             /// </summary>
             public IList<VirtualIPAddress> VirtualIPAddresses
             {

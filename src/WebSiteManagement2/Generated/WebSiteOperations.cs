@@ -172,14 +172,14 @@ namespace Microsoft.Azure.Management.WebSites
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime != null)
                         {
-                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime;
+                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime.Value;
                         }
                         
                         backupScheduleValue["retentionPeriodInDays"] = backupRequestEnvelope.Request.BackupSchedule.RetentionPeriodInDays;
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.StartTime != null)
                         {
-                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime;
+                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime.Value;
                         }
                     }
                     
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (backupRequestEnvelope.Request.Enabled != null)
                     {
-                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled;
+                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled.Value;
                     }
                     
                     if (backupRequestEnvelope.Request.Name != null)
@@ -4804,14 +4804,14 @@ namespace Microsoft.Azure.Management.WebSites
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime != null)
                         {
-                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime;
+                            backupScheduleValue["lastExecutionTime"] = backupRequestEnvelope.Request.BackupSchedule.LastExecutionTime.Value;
                         }
                         
                         backupScheduleValue["retentionPeriodInDays"] = backupRequestEnvelope.Request.BackupSchedule.RetentionPeriodInDays;
                         
                         if (backupRequestEnvelope.Request.BackupSchedule.StartTime != null)
                         {
-                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime;
+                            backupScheduleValue["startTime"] = backupRequestEnvelope.Request.BackupSchedule.StartTime.Value;
                         }
                     }
                     
@@ -4848,7 +4848,7 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (backupRequestEnvelope.Request.Enabled != null)
                     {
-                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled;
+                        propertiesValue["enabled"] = backupRequestEnvelope.Request.Enabled.Value;
                     }
                     
                     if (backupRequestEnvelope.Request.Name != null)
@@ -5088,7 +5088,7 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.DetailedErrorLoggingEnabled != null)
                 {
-                    siteConfigValue["detailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled;
+                    siteConfigValue["detailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled.Value;
                 }
                 
                 if (parameters.DocumentRoot != null)
@@ -5124,17 +5124,17 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.HttpLoggingEnabled != null)
                 {
-                    siteConfigValue["httpLoggingEnabled"] = parameters.HttpLoggingEnabled;
+                    siteConfigValue["httpLoggingEnabled"] = parameters.HttpLoggingEnabled.Value;
                 }
                 
                 if (parameters.LogsDirectorySizeLimit != null)
                 {
-                    siteConfigValue["logsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit;
+                    siteConfigValue["logsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit.Value;
                 }
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    siteConfigValue["managedPipelineMode"] = parameters.ManagedPipelineMode.ToString();
+                    siteConfigValue["managedPipelineMode"] = parameters.ManagedPipelineMode.Value.ToString();
                 }
                 
                 JObject metadataDictionary = new JObject();
@@ -5156,7 +5156,7 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.NumberOfWorkers != null)
                 {
-                    siteConfigValue["numberOfWorkers"] = parameters.NumberOfWorkers;
+                    siteConfigValue["numberOfWorkers"] = parameters.NumberOfWorkers.Value;
                 }
                 
                 if (parameters.PhpVersion != null)
@@ -5166,19 +5166,19 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.RemoteDebuggingEnabled != null)
                 {
-                    siteConfigValue["remoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled;
+                    siteConfigValue["remoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
                 }
                 
                 siteConfigValue["remoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
                 
                 if (parameters.RequestTracingEnabled != null)
                 {
-                    siteConfigValue["requestTracingEnabled"] = parameters.RequestTracingEnabled;
+                    siteConfigValue["requestTracingEnabled"] = parameters.RequestTracingEnabled.Value;
                 }
                 
                 if (parameters.RequestTracingExpirationTime != null)
                 {
-                    siteConfigValue["requestTracingExpirationTime"] = parameters.RequestTracingExpirationTime;
+                    siteConfigValue["requestTracingExpirationTime"] = parameters.RequestTracingExpirationTime.Value;
                 }
                 
                 if (parameters.ScmType != null)
@@ -5188,17 +5188,17 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 if (parameters.Use32BitWorkerProcess != null)
                 {
-                    siteConfigValue["use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess;
+                    siteConfigValue["use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess.Value;
                 }
                 
                 if (parameters.WebSocketsEnabled != null)
                 {
-                    siteConfigValue["webSocketsEnabled"] = parameters.WebSocketsEnabled;
+                    siteConfigValue["webSocketsEnabled"] = parameters.WebSocketsEnabled.Value;
                 }
                 
                 if (parameters.AlwaysOn != null)
                 {
-                    siteConfigValue["alwaysOn"] = parameters.AlwaysOn;
+                    siteConfigValue["alwaysOn"] = parameters.AlwaysOn.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

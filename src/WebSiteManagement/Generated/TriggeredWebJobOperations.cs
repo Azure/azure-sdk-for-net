@@ -1415,7 +1415,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions
                 if (settings.ShutdownGraceTimeInSeconds != null)
                 {
                     requestDoc = new JObject();
-                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds;
+                    requestDoc["ShutdownGraceTimeInSeconds"] = settings.ShutdownGraceTimeInSeconds.Value;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

@@ -816,6 +816,170 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginRebuildingRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginRebuildingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        {
+            return operations.BeginRebuildingRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse BeginRebuildingRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).BeginRebuildingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> BeginRebuildingRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        {
+            return operations.BeginRebuildingRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Reimaging Role Instance By Deployment Name operation
         /// requests a reimage of a role instance that is running in a
         /// deployment. This operation is an asynchronous operation. To
@@ -2703,6 +2867,198 @@ namespace Microsoft.WindowsAzure
         public static Task<OperationStatusResponse> RebootRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, string roleInstanceName)
         {
             return operations.RebootRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse RebuildRoleInstanceByDeploymentName(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).RebuildRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of your deployment.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentNameAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, string roleInstanceName, string resources)
+        {
+            return operations.RebuildRoleInstanceByDeploymentNameAsync(serviceName, deploymentName, roleInstanceName, resources, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static OperationStatusResponse RebuildRoleInstanceByDeploymentSlot(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).RebuildRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Rebuild Role Instance asynchronous operation reinstalls the
+        /// operating system on instances of web roles or worker roles and
+        /// initializes the storage resources that are used by them. If you do
+        /// not want to initialize storage resources, you can use Reimage Role
+        /// Instance
+        /// athttp://msdn.microsoft.com/en-us/library/azure/gg441292.aspx.For
+        /// more information on asynchronous operations, see Tracking
+        /// Asynchronous Service Management Requests at
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460791.aspx.
+        /// (see http://msdn.microsoft.com/en-us/library/azure/dn627518.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='roleInstanceName'>
+        /// Required. The name of your role instance.
+        /// </param>
+        /// <param name='resources'>
+        /// Required. Specifies the resources that must be rebuilt. Currently,
+        /// the only supported value is 'allLocalDrives'.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request and error information regarding
+        /// the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> RebuildRoleInstanceByDeploymentSlotAsync(this IDeploymentOperations operations, string serviceName, string deploymentSlot, string roleInstanceName, string resources)
+        {
+            return operations.RebuildRoleInstanceByDeploymentSlotAsync(serviceName, deploymentSlot, roleInstanceName, resources, CancellationToken.None);
         }
         
         /// <summary>

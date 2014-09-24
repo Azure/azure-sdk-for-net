@@ -144,7 +144,7 @@ namespace Microsoft.WindowsAzure
 
             if (value != null)
             {
-                message = string.Format(CultureInfo.InvariantCulture, "PASS ({0})", value);
+                message = "PASS";
             }
             else
             {

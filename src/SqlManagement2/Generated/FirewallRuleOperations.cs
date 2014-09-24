@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
-        /// Deletes an Azure SQL Database Server Firewall rule.
+        /// Creates or updates an Azure SQL Database Server Firewall rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the Resource Group to which the server
