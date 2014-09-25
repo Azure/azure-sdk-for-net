@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7C9DEC77-95CE-4E17-B4E3-D50176BE39E9}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SiteRecoveryManagement</RootNamespace>
+    <AssemblyName>SiteRecoveryManagement</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Customizations\RecoveryServicesManagementClient.Customization.cs" />
+    <Compile Include="Customizations\SiteRecoveryManagementClient.Customization.cs" />
+    <Compile Include="Generated\CloudServiceOperations.cs" />
+    <Compile Include="Generated\CloudServiceOperationsExtensions.cs" />
+    <Compile Include="Generated\ICloudServiceOperations.cs" />
+    <Compile Include="Generated\IJobOperations.cs" />
+    <Compile Include="Generated\IProtectionContainerOperations.cs" />
+    <Compile Include="Generated\IProtectionEntityOperations.cs" />
+    <Compile Include="Generated\IRecoveryPlanOperations.cs" />
+    <Compile Include="Generated\IRecoveryServicesManagementClient.cs" />
+    <Compile Include="Generated\IServerOperations.cs" />
+    <Compile Include="Generated\ISiteRecoveryManagementClient.cs" />
+    <Compile Include="Generated\IVirtualMachineGroupOperations.cs" />
+    <Compile Include="Generated\IVirtualMachineOperations.cs" />
+    <Compile Include="Generated\JobOperations.cs" />
+    <Compile Include="Generated\JobOperationsExtensions.cs" />
+    <Compile Include="Generated\Models\AsrTask.cs" />
+    <Compile Include="Generated\Models\CloudService.cs" />
+    <Compile Include="Generated\Models\CloudServiceListResponse.cs" />
+    <Compile Include="Generated\Models\CustomRequestHeaders.cs" />
+    <Compile Include="Generated\Models\ErrorDetails.cs" />
+    <Compile Include="Generated\Models\FailoverRequest.cs" />
+    <Compile Include="Generated\Models\Job.cs" />
+    <Compile Include="Generated\Models\JobListResponse.cs" />
+    <Compile Include="Generated\Models\JobQueryParameter.cs" />
+    <Compile Include="Generated\Models\JobResponse.cs" />
+    <Compile Include="Generated\Models\OutputItem.cs" />
+    <Compile Include="Generated\Models\PlannedFailoverRequest.cs" />
+    <Compile Include="Generated\Models\ProtectionContainer.cs" />
+    <Compile Include="Generated\Models\ProtectionContainerListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionContainerResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionEntity.cs" />
+    <Compile Include="Generated\Models\ProtectionEntityListResponse.cs" />
+    <Compile Include="Generated\Models\ProtectionEntityResponse.cs" />
+    <Compile Include="Generated\Models\ProviderError.cs" />
+    <Compile Include="Generated\Models\RecoveryPlan.cs" />
+    <Compile Include="Generated\Models\RecoveryPlanListResponse.cs" />
+    <Compile Include="Generated\Models\RecoveryPlanResponse.cs" />
+    <Compile Include="Generated\Models\RecoveryPlanXmlData.cs" />
+    <Compile Include="Generated\Models\RecoveryPlanXmlOuput.cs" />
+    <Compile Include="Generated\Models\ReprotectRequest.cs" />
+    <Compile Include="Generated\Models\ResourceOperationStatus.cs" />
+    <Compile Include="Generated\Models\ResumeJobParams.cs" />
+    <Compile Include="Generated\Models\RpPlannedFailoverRequest.cs" />
+    <Compile Include="Generated\Models\RpTestFailoverRequest.cs" />
+    <Compile Include="Generated\Models\RpUnplannedFailoverRequest.cs" />
+    <Compile Include="Generated\Models\Server.cs" />
+    <Compile Include="Generated\Models\ServerListResponse.cs" />
+    <Compile Include="Generated\Models\ServerResponse.cs" />
+    <Compile Include="Generated\Models\ServiceError.cs" />
+    <Compile Include="Generated\Models\ServiceResourceBase.cs" />
+    <Compile Include="Generated\Models\ServiceResourceWithoutNameBase.cs" />
+    <Compile Include="Generated\Models\TestFailoverRequest.cs" />
+    <Compile Include="Generated\Models\UnplannedFailoverRequest.cs" />
+    <Compile Include="Generated\Models\Vault.cs" />
+    <Compile Include="Generated\Models\VirtualMachine.cs" />
+    <Compile Include="Generated\Models\VirtualMachineGroup.cs" />
+    <Compile Include="Generated\Models\VirtualMachineGroupListResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineGroupResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineListResponse.cs" />
+    <Compile Include="Generated\Models\VirtualMachineResponse.cs" />
+    <Compile Include="Generated\ProtectionContainerOperations.cs" />
+    <Compile Include="Generated\ProtectionContainerOperationsExtensions.cs" />
+    <Compile Include="Generated\ProtectionEntityOperations.cs" />
+    <Compile Include="Generated\ProtectionEntityOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryPlanOperations.cs" />
+    <Compile Include="Generated\RecoveryPlanOperationsExtensions.cs" />
+    <Compile Include="Generated\RecoveryServicesManagementClient.cs" />
+    <Compile Include="Generated\RecoveryServicesManagementClientExtensions.cs" />
+    <Compile Include="Generated\ServerOperations.cs" />
+    <Compile Include="Generated\ServerOperationsExtensions.cs" />
+    <Compile Include="Generated\SiteRecoveryManagementClient.cs" />
+    <Compile Include="Generated\SiteRecoveryManagementClientExtensions.cs" />
+    <Compile Include="Generated\VirtualMachineGroupOperations.cs" />
+    <Compile Include="Generated\VirtualMachineGroupOperationsExtensions.cs" />
+    <Compile Include="Generated\VirtualMachineOperations.cs" />
+    <Compile Include="Generated\VirtualMachineOperationsExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="GenerateCode.props" />
+    <None Include="Microsoft.Azure.Management.RecoveryServices.nuget.proj" />
+    <None Include="Microsoft.Azure.Management.RecoveryServices.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="hydra.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
