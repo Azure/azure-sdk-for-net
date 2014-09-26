@@ -100,6 +100,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IAuthorizedDedicatedCircuitOperations _authorizedDedicatedCircuits;
+        
+        public virtual IAuthorizedDedicatedCircuitOperations AuthorizedDedicatedCircuits
+        {
+            get { return this._authorizedDedicatedCircuits; }
+        }
+        
         private IBorderGatewayProtocolPeeringOperations _borderGatewayProtocolPeerings;
         
         public virtual IBorderGatewayProtocolPeeringOperations BorderGatewayProtocolPeerings
@@ -112,6 +119,20 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         public virtual ICrossConnectionOperations CrossConnections
         {
             get { return this._crossConnections; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationLiveIdOperations _dedicatedCircuitLinkAuthorizationLiveIds;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationLiveIdOperations DedicatedCircuitLinkAuthorizationLiveIds
+        {
+            get { return this._dedicatedCircuitLinkAuthorizationLiveIds; }
+        }
+        
+        private IDedicatedCircuitLinkAuthorizationOperations _dedicatedCircuitLinkAuthorizations;
+        
+        public virtual IDedicatedCircuitLinkAuthorizationOperations DedicatedCircuitLinkAuthorizations
+        {
+            get { return this._dedicatedCircuitLinkAuthorizations; }
         }
         
         private IDedicatedCircuitLinkOperations _dedicatedCircuitLinks;
@@ -142,8 +163,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient()
             : base()
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationLiveIds = new DedicatedCircuitLinkAuthorizationLiveIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
@@ -215,8 +239,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         private ExpressRouteManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
+            this._dedicatedCircuitLinkAuthorizationLiveIds = new DedicatedCircuitLinkAuthorizationLiveIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
             this._dedicatedCircuitServiceProviders = new DedicatedCircuitServiceProviderOperations(this);
