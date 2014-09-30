@@ -27,6 +27,9 @@
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
 
+  /t:BuildFromLocalSpec
+    TODO: find a good descriptions
+  
   /t:BuildDelaySignedPackages
     Builds packages containing delay signed binaries
     signed with the official key.
@@ -146,6 +149,27 @@
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
+  
+   <!--
+  Regular developer build
+  -->
+  <Target Name="BuildFromLocalSpec" DependsOnTargets="BuildEngineeringDependencies">
+    <MSBuild Projects="$(ProjectName)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="$(ProjectName)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+    <ItemGroup>
+      <_NuGetPackage Include="Microsoft.WindowsAzure.Management.TrafficManager">
+        <PackageVersion>0.13.0-preview</PackageVersion>
+        <Folder>C:\SDK\azure-sdk-for-net\src\TrafficManagerManagement</Folder>
+      </_NuGetPackage>
+    </ItemGroup>
+    <MakeDir Directories="$(PackageOutputDir)" ContinueOnError="true" />
+    <Exec 
+      Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;%(_NuGetPackage.Folder)\%(_NuGetPackage.Identity).nuspec&quot; -Version %(_NuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+ </Target>
 
   <!--
   Clean produced binaries and object files
