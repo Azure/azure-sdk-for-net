@@ -52,12 +52,12 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._name = value; }
         }
         
-        private PublicConfiguration _publicConfiguration;
+        private PublicMonitoringConfiguration _publicConfiguration;
         
         /// <summary>
         /// Optional. The public diagnostic configuration.
         /// </summary>
-        public PublicConfiguration PublicConfiguration
+        public PublicMonitoringConfiguration PublicConfiguration
         {
             get { return this._publicConfiguration; }
             set { this._publicConfiguration = value; }
