@@ -82,6 +82,7 @@
     <Compile Include="TokenCloudCredentialsTest.cs" />
     <Compile Include="ServiceClientTest.cs" />
     <Compile Include="Tracing\CloudTracingExtensionsTest.cs" />
+    <Compile Include="TransientFaultHandling\DefaultHttpErrorDetectionStrategyTests.cs" />
     <Compile Include="TransientFaultHandling\GeneralRetryPolicyTests.cs" />
   </ItemGroup>
   <ItemGroup>
