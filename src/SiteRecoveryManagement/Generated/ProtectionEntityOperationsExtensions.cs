@@ -343,7 +343,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Enable Protection for the given protection entity.
+        /// Reprotect operation for the given protection entity.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -374,7 +374,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Enable Protection for the given protection entity.
+        /// Reprotect operation for the given protection entity.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

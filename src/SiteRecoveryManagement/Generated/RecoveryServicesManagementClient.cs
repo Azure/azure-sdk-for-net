@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
             : base()
         {
             this._cloudServices = new CloudServiceOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2014-10-27";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
             : base(httpClient)
         {
             this._cloudServices = new CloudServiceOperations(this);
-            this._apiVersion = "2013-03-01";
+            this._apiVersion = "2014-10-27";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

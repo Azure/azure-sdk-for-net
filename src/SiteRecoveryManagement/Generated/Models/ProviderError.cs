@@ -20,6 +20,7 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -29,6 +30,17 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// </summary>
     public partial class ProviderError
     {
+        private IDictionary<string, string> _affectedObjects;
+        
+        /// <summary>
+        /// Optional. AffectedObjects of the error.
+        /// </summary>
+        public IDictionary<string, string> AffectedObjects
+        {
+            get { return this._affectedObjects; }
+            set { this._affectedObjects = value; }
+        }
+        
         private DateTime _creationTimeUtc;
         
         /// <summary>
@@ -84,72 +96,6 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._errorMessage = value; }
         }
         
-        private string _hVClusterId;
-        
-        /// <summary>
-        /// Required. HyperV cluster Id.
-        /// </summary>
-        public string HVClusterId
-        {
-            get { return this._hVClusterId; }
-            set { this._hVClusterId = value; }
-        }
-        
-        private string _hVHostId;
-        
-        /// <summary>
-        /// Required. HyperV host Id.
-        /// </summary>
-        public string HVHostId
-        {
-            get { return this._hVHostId; }
-            set { this._hVHostId = value; }
-        }
-        
-        private string _networkId;
-        
-        /// <summary>
-        /// Required. Network Id.
-        /// </summary>
-        public string NetworkId
-        {
-            get { return this._networkId; }
-            set { this._networkId = value; }
-        }
-        
-        private string _protectionContainerId;
-        
-        /// <summary>
-        /// Required. ProtectionContainer Id.
-        /// </summary>
-        public string ProtectionContainerId
-        {
-            get { return this._protectionContainerId; }
-            set { this._protectionContainerId = value; }
-        }
-        
-        private string _serverId;
-        
-        /// <summary>
-        /// Required. Server Id.
-        /// </summary>
-        public string ServerId
-        {
-            get { return this._serverId; }
-            set { this._serverId = value; }
-        }
-        
-        private string _vmId;
-        
-        /// <summary>
-        /// Required. Task Id.
-        /// </summary>
-        public string VmId
-        {
-            get { return this._vmId; }
-            set { this._vmId = value; }
-        }
-        
         private string _workflowId;
         
         /// <summary>
@@ -166,6 +112,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// </summary>
         public ProviderError()
         {
+            this.AffectedObjects = new Dictionary<string, string>();
         }
     }
 }

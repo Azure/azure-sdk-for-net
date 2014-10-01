@@ -22,13 +22,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
     /// The definition of a Task object.
     /// </summary>
-    public partial class AsrTask
+    public partial class AsrTask : ServiceResourceBase
     {
         private IList<string> _actions;
         
@@ -74,26 +75,26 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._startTime = value; }
         }
         
-        private string _status;
+        private string _state;
         
         /// <summary>
-        /// Required. Status of the task.
+        /// Required. State of the task.
         /// </summary>
-        public string Status
+        public string State
         {
-            get { return this._status; }
-            set { this._status = value; }
+            get { return this._state; }
+            set { this._state = value; }
         }
         
-        private string _taskDisplayName;
+        private string _stateDescription;
         
         /// <summary>
-        /// Required. DisplayName of this task.
+        /// Required. StateDescription of the task.
         /// </summary>
-        public string TaskDisplayName
+        public string StateDescription
         {
-            get { return this._taskDisplayName; }
-            set { this._taskDisplayName = value; }
+            get { return this._stateDescription; }
+            set { this._stateDescription = value; }
         }
         
         private string _taskName;

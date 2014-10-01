@@ -144,17 +144,6 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._replicationProvider = value; }
         }
         
-        private string _replicationProviderSettings;
-        
-        /// <summary>
-        /// Required. Virtual machine settings related to Replication provider
-        /// </summary>
-        public string ReplicationProviderSettings
-        {
-            get { return this._replicationProviderSettings; }
-            set { this._replicationProviderSettings = value; }
-        }
-        
         private string _serverId;
         
         /// <summary>

@@ -100,7 +100,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             
             // Construct URL
             string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/Servers/" + serverId.Trim() + "?";
-            url = url + "api-version=2014-07-01";
+            url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -125,7 +125,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -272,7 +272,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             
             // Construct URL
             string url = (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/" + this.Client.CloudServiceName.Trim() + "/resources/WAHyperVRecoveryManager/~/HyperVRecoveryManagerVault/" + this.Client.ResourceName.Trim() + "/Servers?";
-            url = url + "api-version=2014-07-01";
+            url = url + "api-version=2014-10-27";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -297,7 +297,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

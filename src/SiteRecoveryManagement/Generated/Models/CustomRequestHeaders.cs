@@ -32,10 +32,8 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _agentAuthenticationHeader;
         
         /// <summary>
-        /// Optional. Site Recovery requests that go to on-premise components
-        /// (like the Provider installed in VMM) require an authentication
-        /// tokenthat is signed with the vault key to indicate that the
-        /// request indeed originated from the end-user client.
+        /// Optional. String representing a unique code which is used to
+        /// validate that the request is originated by an authenticated client.
         /// </summary>
         public string AgentAuthenticationHeader
         {

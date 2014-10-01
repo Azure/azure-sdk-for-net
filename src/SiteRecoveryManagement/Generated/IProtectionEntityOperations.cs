@@ -154,7 +154,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         Task<JobResponse> PlannedFailoverAsync(string protectionContainerId, string protectionEntityId, PlannedFailoverRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Enable Protection for the given protection entity.
+        /// Reprotect operation for the given protection entity.
         /// </summary>
         /// <param name='protectionContainerId'>
         /// Parent Protection Container ID.

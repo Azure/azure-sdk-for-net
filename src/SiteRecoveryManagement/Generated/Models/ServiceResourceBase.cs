@@ -33,7 +33,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _name;
         
         /// <summary>
-        /// Required. Server name.
+        /// Required. Object name.
         /// </summary>
         public string Name
         {

@@ -29,7 +29,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
     /// <summary>
     /// The definition of a Job object.
     /// </summary>
-    public partial class Job : ServiceResourceWithoutNameBase
+    public partial class Job : ServiceResourceBase
     {
         private string _activityId;
         
@@ -53,21 +53,10 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._allowedActions = value; }
         }
         
-        private bool _completed;
-        
-        /// <summary>
-        /// Required. Flag to state job completion.
-        /// </summary>
-        public bool Completed
-        {
-            get { return this._completed; }
-            set { this._completed = value; }
-        }
-        
         private string _endTimestamp;
         
         /// <summary>
-        /// Required. End timestamp.
+        /// Required. End time stamp.
         /// </summary>
         public string EndTimestamp
         {
@@ -86,32 +75,10 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
             set { this._errors = value; }
         }
         
-        private string _jobDisplayName;
-        
-        /// <summary>
-        /// Required. Job display name.
-        /// </summary>
-        public string JobDisplayName
-        {
-            get { return this._jobDisplayName; }
-            set { this._jobDisplayName = value; }
-        }
-        
-        private IList<string> _jobs;
-        
-        /// <summary>
-        /// Required. Child job of the parent job object.
-        /// </summary>
-        public IList<string> Jobs
-        {
-            get { return this._jobs; }
-            set { this._jobs = value; }
-        }
-        
         private string _startTimestamp;
         
         /// <summary>
-        /// Required. Start timestamp.
+        /// Required. Start time stamp.
         /// </summary>
         public string StartTimestamp
         {
@@ -129,6 +96,18 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         {
             get { return this._state; }
             set { this._state = value; }
+        }
+        
+        private string _stateDescription;
+        
+        /// <summary>
+        /// Required. Description of the current state. It shows the detailed
+        /// state of the job.
+        /// </summary>
+        public string StateDescription
+        {
+            get { return this._stateDescription; }
+            set { this._stateDescription = value; }
         }
         
         private IList<AsrTask> _tasks;
@@ -149,7 +128,6 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         {
             this.AllowedActions = new List<string>();
             this.Errors = new List<ErrorDetails>();
-            this.Jobs = new List<string>();
             this.Tasks = new List<AsrTask>();
         }
     }

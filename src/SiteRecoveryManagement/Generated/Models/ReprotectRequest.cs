@@ -26,7 +26,7 @@ using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The Reprotect request after failover object.
+    /// The Reprotect request object.
     /// </summary>
     public partial class ReprotectRequest : FailoverRequest
     {

@@ -44,7 +44,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         private string _code;
         
         /// <summary>
-        /// Required. Serverie error code.
+        /// Required. Service error code.
         /// </summary>
         public string Code
         {
