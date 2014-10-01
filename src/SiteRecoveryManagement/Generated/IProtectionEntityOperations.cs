@@ -177,7 +177,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         Task<JobResponse> ReprotectAsync(string protectionContainerId, string protectionEntityId, ReprotectRequest parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Test failover of a Vm.
+        /// Test failover of a protection entity.
         /// </summary>
         /// <param name='protectionContainerId'>
         /// Parent Protection Container ID.

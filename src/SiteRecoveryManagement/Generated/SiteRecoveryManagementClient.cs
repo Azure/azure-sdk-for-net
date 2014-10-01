@@ -189,7 +189,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             this._servers = new ServerOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);
-            this._apiVersion = "2014-10-27";
+            this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -296,7 +296,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
             this._servers = new ServerOperations(this);
             this._vmGroup = new VirtualMachineGroupOperations(this);
             this._vm = new VirtualMachineOperations(this);
-            this._apiVersion = "2014-10-27";
+            this._apiVersion = "2013-03-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

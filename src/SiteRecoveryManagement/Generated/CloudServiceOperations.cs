@@ -112,7 +112,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices
                 
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

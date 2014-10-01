@@ -86,7 +86,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         Task<JobListResponse> ListAsync(JobQueryParameter parameters, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Restart the Asr job.
+        /// Restart the job.
         /// </summary>
         /// <param name='jobId'>
         /// Job ID.
@@ -103,7 +103,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         Task<JobResponse> RestartAsync(string jobId, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Resume the Asr job .
+        /// Resume the job .
         /// </summary>
         /// <param name='jobId'>
         /// Job ID.

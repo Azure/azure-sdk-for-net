@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -543,7 +543,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -949,7 +949,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1354,7 +1354,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1597,7 +1597,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1860,7 +1860,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2306,7 +2306,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2674,7 +2674,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         }
         
         /// <summary>
-        /// Test failover of a Vm.
+        /// Test failover of a protection entity.
         /// </summary>
         /// <param name='protectionContainerId'>
         /// Required. Parent Protection Container ID.
@@ -2760,7 +2760,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3214,7 +3214,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("Agent-Authentication", customRequestHeaders.AgentAuthenticationHeader);
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

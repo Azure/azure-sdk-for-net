@@ -172,7 +172,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Restart the Asr job.
+        /// Restart the job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Restart the Asr job.
+        /// Restart the job.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -218,7 +218,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Resume the Asr job .
+        /// Resume the job .
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -246,7 +246,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Resume the Asr job .
+        /// Resume the job .
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

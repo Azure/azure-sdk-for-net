@@ -401,7 +401,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Test failover of a Vm.
+        /// Test failover of a protection entity.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -432,7 +432,7 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
-        /// Test failover of a Vm.
+        /// Test failover of a protection entity.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

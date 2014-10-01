@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -383,7 +383,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
                 // Set Headers
                 httpRequest.Headers.Add("Accept", "application/xml");
                 httpRequest.Headers.Add("x-ms-client-request-id", customRequestHeaders.ClientRequestId);
-                httpRequest.Headers.Add("x-ms-version", "2014-10-27");
+                httpRequest.Headers.Add("x-ms-version", "2013-03-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
