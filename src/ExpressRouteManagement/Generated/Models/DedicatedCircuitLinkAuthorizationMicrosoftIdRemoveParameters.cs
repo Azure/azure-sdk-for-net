@@ -25,26 +25,26 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The parameters to remove existing live Ids from an authorization
+    /// The parameters to remove existing Microsoft Ids from an authorization
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters
+    public partial class DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters
     {
-        private string _liveIds;
+        private string _microsoftIds;
         
         /// <summary>
-        /// Optional. A comma separated list of live Ids
+        /// Optional. A comma separated list of Microsoft Ids
         /// </summary>
-        public string LiveIds
+        public string MicrosoftIds
         {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
+            get { return this._microsoftIds; }
+            set { this._microsoftIds = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters class.
+        /// DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters class.
         /// </summary>
-        public DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters()
+        public DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters()
         {
         }
     }

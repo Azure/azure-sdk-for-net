@@ -38,14 +38,14 @@ namespace Microsoft.WindowsAzure
     /// http://msdn.microsoft.com/en-us/library/windowsazure/ee460799.aspx for
     /// more information)
     /// </summary>
-    public static partial class DedicatedCircuitLinkAuthorizationLiveIdOperationsExtensions
+    public static partial class DedicatedCircuitLinkAuthorizationMicrosoftIdOperationsExtensions
     {
         /// <summary>
-        /// Adds live Ids to the specified authorization
+        /// Adds Microsoft Ids to the specified authorization
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationLiveIdOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -54,27 +54,27 @@ namespace Microsoft.WindowsAzure
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to add new live Ids
+        /// Required. Parameters supplied to add new Microsoft Ids
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse New(this IDedicatedCircuitLinkAuthorizationLiveIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdNewParameters parameters)
+        public static OperationResponse New(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDedicatedCircuitLinkAuthorizationLiveIdOperations)s).NewAsync(serviceKey, authId, parameters);
+                return ((IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations)s).NewAsync(serviceKey, authId, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Adds live Ids to the specified authorization
+        /// Adds Microsoft Ids to the specified authorization
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationLiveIdOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -83,23 +83,23 @@ namespace Microsoft.WindowsAzure
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to add new live Ids
+        /// Required. Parameters supplied to add new Microsoft Ids
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> NewAsync(this IDedicatedCircuitLinkAuthorizationLiveIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdNewParameters parameters)
+        public static Task<OperationResponse> NewAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters)
         {
             return operations.NewAsync(serviceKey, authId, parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Removes live Ids from the specified authorization
+        /// Removes Microsoft Ids from the specified authorization
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationLiveIdOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -108,27 +108,27 @@ namespace Microsoft.WindowsAzure
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to remove existing live Ids
+        /// Required. Parameters supplied to remove existing Microsoft Ids
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Remove(this IDedicatedCircuitLinkAuthorizationLiveIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters parameters)
+        public static OperationResponse Remove(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IDedicatedCircuitLinkAuthorizationLiveIdOperations)s).RemoveAsync(serviceKey, authId, parameters);
+                return ((IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations)s).RemoveAsync(serviceKey, authId, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Removes live Ids from the specified authorization
+        /// Removes Microsoft Ids from the specified authorization
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
-        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationLiveIdOperations.
+        /// Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations.
         /// </param>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -137,13 +137,13 @@ namespace Microsoft.WindowsAzure
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to remove existing live Ids
+        /// Required. Parameters supplied to remove existing Microsoft Ids
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RemoveAsync(this IDedicatedCircuitLinkAuthorizationLiveIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters parameters)
+        public static Task<OperationResponse> RemoveAsync(this IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations operations, string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters)
         {
             return operations.RemoveAsync(serviceKey, authId, parameters, CancellationToken.None);
         }
