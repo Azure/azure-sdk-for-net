@@ -338,11 +338,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
                         }
                         
-                        XElement liveIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                        if (liveIdsElement != null)
+                        XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
+                        if (microsoftIdsElement != null)
                         {
-                            string liveIdsInstance = liveIdsElement.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LiveIds = liveIdsInstance;
+                            string microsoftIdsInstance = microsoftIdsElement.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.MicrosoftIds = microsoftIdsInstance;
                         }
                         
                         XElement usedElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
@@ -507,11 +507,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
                             }
                             
-                            XElement liveIdsElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                            if (liveIdsElement != null)
+                            XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
+                            if (microsoftIdsElement != null)
                             {
-                                string liveIdsInstance = liveIdsElement.Value;
-                                dedicatedCircuitLinkAuthorizationInstance.LiveIds = liveIdsInstance;
+                                string microsoftIdsInstance = microsoftIdsElement.Value;
+                                dedicatedCircuitLinkAuthorizationInstance.MicrosoftIds = microsoftIdsInstance;
                             }
                             
                             XElement usedElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
@@ -641,11 +641,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 limitElement.Value = parameters.Limit.ToString();
                 createDedicatedCircuitLinkAuthorizationElement.Add(limitElement);
                 
-                if (parameters.LiveIds != null)
+                if (parameters.MicrosoftIds != null)
                 {
-                    XElement liveIdsElement = new XElement(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                    liveIdsElement.Value = parameters.LiveIds;
-                    createDedicatedCircuitLinkAuthorizationElement.Add(liveIdsElement);
+                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
+                    microsoftIdsElement.Value = parameters.MicrosoftIds;
+                    createDedicatedCircuitLinkAuthorizationElement.Add(microsoftIdsElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -713,11 +713,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
                         }
                         
-                        XElement liveIdsElement2 = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                        if (liveIdsElement2 != null)
+                        XElement microsoftIdsElement2 = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
+                        if (microsoftIdsElement2 != null)
                         {
-                            string liveIdsInstance = liveIdsElement2.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LiveIds = liveIdsInstance;
+                            string microsoftIdsInstance = microsoftIdsElement2.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.MicrosoftIds = microsoftIdsInstance;
                         }
                         
                         XElement usedElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));
@@ -993,11 +993,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
                         }
                         
-                        XElement liveIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                        if (liveIdsElement != null)
+                        XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
+                        if (microsoftIdsElement != null)
                         {
-                            string liveIdsInstance = liveIdsElement.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LiveIds = liveIdsInstance;
+                            string microsoftIdsInstance = microsoftIdsElement.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.MicrosoftIds = microsoftIdsInstance;
                         }
                         
                         XElement usedElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("Used", "http://schemas.microsoft.com/windowsazure"));

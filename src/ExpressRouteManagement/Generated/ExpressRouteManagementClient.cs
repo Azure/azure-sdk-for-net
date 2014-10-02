@@ -121,11 +121,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get { return this._crossConnections; }
         }
         
-        private IDedicatedCircuitLinkAuthorizationLiveIdOperations _dedicatedCircuitLinkAuthorizationLiveIds;
+        private IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations _dedicatedCircuitLinkAuthorizationMicrosoftIds;
         
-        public virtual IDedicatedCircuitLinkAuthorizationLiveIdOperations DedicatedCircuitLinkAuthorizationLiveIds
+        public virtual IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
         {
-            get { return this._dedicatedCircuitLinkAuthorizationLiveIds; }
+            get { return this._dedicatedCircuitLinkAuthorizationMicrosoftIds; }
         }
         
         private IDedicatedCircuitLinkAuthorizationOperations _dedicatedCircuitLinkAuthorizations;
@@ -166,7 +166,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
-            this._dedicatedCircuitLinkAuthorizationLiveIds = new DedicatedCircuitLinkAuthorizationLiveIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
             this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
@@ -242,7 +242,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             this._authorizedDedicatedCircuits = new AuthorizedDedicatedCircuitOperations(this);
             this._borderGatewayProtocolPeerings = new BorderGatewayProtocolPeeringOperations(this);
             this._crossConnections = new CrossConnectionOperations(this);
-            this._dedicatedCircuitLinkAuthorizationLiveIds = new DedicatedCircuitLinkAuthorizationLiveIdOperations(this);
+            this._dedicatedCircuitLinkAuthorizationMicrosoftIds = new DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(this);
             this._dedicatedCircuitLinkAuthorizations = new DedicatedCircuitLinkAuthorizationOperations(this);
             this._dedicatedCircuitLinks = new DedicatedCircuitLinkOperations(this);
             this._dedicatedCircuits = new DedicatedCircuitOperations(this);
