@@ -26,9 +26,6 @@
   /t:OfficialBuild
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
-
-  /t:BuildFromLocalSpec
-    TODO: find a good descriptions
   
   /t:BuildDelaySignedPackages
     Builds packages containing delay signed binaries
@@ -150,26 +147,24 @@
              Targets="Rebuild" />
   </Target>
   
-   <!--
-  Regular developer build
+  <!--
+    Build a nuget package from a local maml project (mainly used when you have not published the related hydra spec)  
   -->
   <Target Name="BuildFromLocalSpec" DependsOnTargets="BuildEngineeringDependencies">
-    <MSBuild Projects="$(ProjectName)"
+    <ItemGroup>
+      <LocalPackageInfo Include="@(SdkNuGetPackage)" Condition="'%(SdkNuGetPackage.Folder)' == '$(ProductSourceFolder)\$(MamlProjectName)\'" />
+      <_ProjectPath Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj"></_ProjectPath>
+    </ItemGroup>    
+    <MSBuild Projects="@(_ProjectPath)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ProjectName)"
+    <MSBuild Projects="@(_ProjectPath)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-    <ItemGroup>
-      <_NuGetPackage Include="Microsoft.WindowsAzure.Management.TrafficManager">
-        <PackageVersion>0.13.0-preview</PackageVersion>
-        <Folder>C:\SDK\azure-sdk-for-net\src\TrafficManagerManagement</Folder>
-      </_NuGetPackage>
-    </ItemGroup>
     <MakeDir Directories="$(PackageOutputDir)" ContinueOnError="true" />
-    <Exec 
-      Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;%(_NuGetPackage.Folder)\%(_NuGetPackage.Identity).nuspec&quot; -Version %(_NuGetPackage.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
- </Target>
+    <Exec
+      Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;%(LocalPackageInfo.Folder)\%(LocalPackageInfo.Identity).nuspec&quot; -Version %(LocalPackageInfo.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
+  </Target>
 
   <!--
   Clean produced binaries and object files
