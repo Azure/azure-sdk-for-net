@@ -122,7 +122,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Target Name="CopyMicrosoftAzureManagementAutomationSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Automation.Specification.1.0.5368.26127-prerelease\tools\Microsoft.Azure.Management.Automation.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Automation.Specification.1.0.5387.27452-prerelease\tools\Microsoft.Azure.Management.Automation.Specification.dll" DestinationFolder="." />
   </Target>
   <Import Project="GenerateCode.props" />
   <Import Project="..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
