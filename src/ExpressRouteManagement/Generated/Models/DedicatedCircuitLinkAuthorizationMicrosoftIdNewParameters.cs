@@ -25,26 +25,26 @@ using System.Linq;
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
 {
     /// <summary>
-    /// The parameters to add more live Ids to an existing authorization
+    /// The parameters to add more Microsoft Ids to an existing authorization
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationLiveIdNewParameters
+    public partial class DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters
     {
-        private string _liveIds;
+        private string _microsoftIds;
         
         /// <summary>
-        /// Optional. A comma separated list of live Ids
+        /// Optional. A comma separated list of Microsoft Ids
         /// </summary>
-        public string LiveIds
+        public string MicrosoftIds
         {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
+            get { return this._microsoftIds; }
+            set { this._microsoftIds = value; }
         }
         
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdNewParameters class.
+        /// DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters class.
         /// </summary>
-        public DedicatedCircuitLinkAuthorizationLiveIdNewParameters()
+        public DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters()
         {
         }
     }

@@ -97,7 +97,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             get; 
         }
         
-        IDedicatedCircuitLinkAuthorizationLiveIdOperations DedicatedCircuitLinkAuthorizationLiveIds
+        IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations DedicatedCircuitLinkAuthorizationMicrosoftIds
         {
             get; 
         }
