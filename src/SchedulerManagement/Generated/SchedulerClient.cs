@@ -387,6 +387,50 @@ namespace Microsoft.WindowsAzure.Scheduler
         }
         
         /// <summary>
+        /// Parse enum values for type JobAuthenticationType.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static JobAuthenticationType ParseJobAuthenticationType(string value)
+        {
+            if ("basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobAuthenticationType.Basic;
+            }
+            if ("clientcertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return JobAuthenticationType.ClientCertificate;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type JobAuthenticationType to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string JobAuthenticationTypeToString(JobAuthenticationType value)
+        {
+            if (value == JobAuthenticationType.Basic)
+            {
+                return "basic";
+            }
+            if (value == JobAuthenticationType.ClientCertificate)
+            {
+                return "clientcertificate";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
         /// Parse enum values for type JobHistoryActionName.
         /// </summary>
         /// <param name='value'>
