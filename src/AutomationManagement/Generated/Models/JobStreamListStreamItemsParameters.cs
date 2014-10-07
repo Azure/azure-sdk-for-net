@@ -41,12 +41,15 @@ namespace Microsoft.Azure.Management.Automation.Models
             set { this._jobId = value; }
         }
         
-        private DateTime _startTime;
+        private string _startTime;
         
         /// <summary>
-        /// Required. The time after which streams are created.
+        /// Required. Use the start time filter to retrieve stream records
+        /// created after this time. The value should be a datetime string in
+        /// UTC format as defined in ISO 8601. For example,
+        /// 2014-09-25T17:49:17.2252204Z
         /// </summary>
-        public DateTime StartTime
+        public string StartTime
         {
             get { return this._startTime; }
             set { this._startTime = value; }
@@ -75,12 +78,16 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the
         /// JobStreamListStreamItemsParameters class with required arguments.
         /// </summary>
-        public JobStreamListStreamItemsParameters(string jobId, DateTime startTime)
+        public JobStreamListStreamItemsParameters(string jobId, string startTime)
             : this()
         {
             if (jobId == null)
             {
                 throw new ArgumentNullException("jobId");
+            }
+            if (startTime == null)
+            {
+                throw new ArgumentNullException("startTime");
             }
             this.JobId = jobId;
             this.StartTime = startTime;

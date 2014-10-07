@@ -33,7 +33,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _endTime;
         
         /// <summary>
-        /// Optional. The end time filter.
+        /// Optional. For the end time filter the value should be a datetime
+        /// string in UTC format as defined in ISO 8601. For example,
+        /// 2014-09-25T17:49:17.2252204Z
         /// </summary>
         public string EndTime
         {
@@ -44,7 +46,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         private string _startTime;
         
         /// <summary>
-        /// Optional. The start time filter.
+        /// Optional. For the start time filter the value should be a datetime
+        /// string in UTC format as defined in ISO 8601. For example,
+        /// 2014-09-25T17:49:17.2252204Z
         /// </summary>
         public string StartTime
         {

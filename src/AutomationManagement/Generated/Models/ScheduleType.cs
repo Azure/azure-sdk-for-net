@@ -32,5 +32,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string OneTimeSchedule = "AutomationApi.V2014_03_13.OneTimeSchedule";
         
         public const string DailySchedule = "AutomationApi.V2014_03_13.DailySchedule";
+        
+        public const string HourlySchedule = "AutomationApi.V2014_03_13.HourlySchedule";
     }
 }
