@@ -133,7 +133,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -391,7 +391,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -619,7 +619,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -737,6 +737,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                                 oSDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
                             }
+                            
+                            XElement iOTypeElement = oSDiskConfigurationElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement != null)
+                            {
+                                string iOTypeInstance = iOTypeElement.Value;
+                                oSDiskConfigurationInstance.IOType = iOTypeInstance;
+                            }
                         }
                         
                         XElement dataDiskConfigurationsSequenceElement = vMImageDetailsElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
@@ -780,6 +787,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 {
                                     int logicalDiskSizeInGBInstance2 = int.Parse(logicalDiskSizeInGBElement2.Value, CultureInfo.InvariantCulture);
                                     dataDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance2;
+                                }
+                                
+                                XElement iOTypeElement2 = dataDiskConfigurationsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                if (iOTypeElement2 != null)
+                                {
+                                    string iOTypeInstance2 = iOTypeElement2.Value;
+                                    dataDiskConfigurationInstance.IOType = iOTypeInstance2;
                                 }
                             }
                         }
@@ -1040,7 +1054,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1163,6 +1177,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     int logicalDiskSizeInGBInstance = int.Parse(logicalDiskSizeInGBElement.Value, CultureInfo.InvariantCulture);
                                     oSDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance;
                                 }
+                                
+                                XElement iOTypeElement = oSDiskConfigurationElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                if (iOTypeElement != null)
+                                {
+                                    string iOTypeInstance = iOTypeElement.Value;
+                                    oSDiskConfigurationInstance.IOType = iOTypeInstance;
+                                }
                             }
                             
                             XElement dataDiskConfigurationsSequenceElement = vMImagesElement.Element(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
@@ -1206,6 +1227,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     {
                                         int logicalDiskSizeInGBInstance2 = int.Parse(logicalDiskSizeInGBElement2.Value, CultureInfo.InvariantCulture);
                                         dataDiskConfigurationInstance.LogicalDiskSizeInGB = logicalDiskSizeInGBInstance2;
+                                    }
+                                    
+                                    XElement iOTypeElement2 = dataDiskConfigurationsElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (iOTypeElement2 != null)
+                                    {
+                                        string iOTypeInstance2 = iOTypeElement2.Value;
+                                        dataDiskConfigurationInstance.IOType = iOTypeInstance2;
                                     }
                                 }
                             }
@@ -1440,7 +1468,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1826,7 +1854,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
