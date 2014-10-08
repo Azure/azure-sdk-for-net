@@ -29,6 +29,10 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
     /// </summary>
     public enum HttpAuthenticationType
     {
-        ClientCertificate = 0,
+        NotSpecified = 0,
+        
+        Basic = 1,
+        
+        ClientCertificate = 2,
     }
 }
