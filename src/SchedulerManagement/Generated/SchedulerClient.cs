@@ -345,6 +345,14 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static HttpAuthenticationType ParseHttpAuthenticationType(string value)
         {
+            if ("notspecified".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.NotSpecified;
+            }
+            if ("basic".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return HttpAuthenticationType.Basic;
+            }
             if ("clientcertificate".Equals(value, StringComparison.OrdinalIgnoreCase))
             {
                 return HttpAuthenticationType.ClientCertificate;
@@ -363,6 +371,14 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// </returns>
         internal static string HttpAuthenticationTypeToString(HttpAuthenticationType value)
         {
+            if (value == HttpAuthenticationType.NotSpecified)
+            {
+                return "notspecified";
+            }
+            if (value == HttpAuthenticationType.Basic)
+            {
+                return "basic";
+            }
             if (value == HttpAuthenticationType.ClientCertificate)
             {
                 return "clientcertificate";
