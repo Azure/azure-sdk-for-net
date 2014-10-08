@@ -138,6 +138,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._imageFamily = value; }
             }
             
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
+            }
+            
             private bool? _isPremium;
             
             /// <summary>
@@ -302,6 +313,18 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._recommendedVMSize; }
                 set { this._recommendedVMSize = value; }
+            }
+            
+            private bool? _showInGui;
+            
+            /// <summary>
+            /// Optional. Indicates whether the image should be shown in the
+            /// Azure portal.
+            /// </summary>
+            public bool? ShowInGui
+            {
+                get { return this._showInGui; }
+                set { this._showInGui = value; }
             }
             
             private Uri _smallIconUri;
