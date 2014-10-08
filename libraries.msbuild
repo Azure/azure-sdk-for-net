@@ -26,7 +26,7 @@
   /t:OfficialBuild
     Builds officially delay signed binaries.
     Drops into the binaries\unsigned folder.
-  
+
   /t:BuildDelaySignedPackages
     Builds packages containing delay signed binaries
     signed with the official key.
