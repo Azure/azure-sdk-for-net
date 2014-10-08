@@ -192,7 +192,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -474,7 +474,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -773,7 +773,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1029,7 +1029,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1162,7 +1162,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1301,7 +1301,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1460,7 +1460,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1634,7 +1634,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1784,7 +1784,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1930,7 +1930,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2072,7 +2072,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2229,7 +2229,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2386,7 +2386,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2532,7 +2532,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2674,7 +2674,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2818,7 +2818,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2988,7 +2988,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3147,7 +3147,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3388,7 +3388,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3717,7 +3717,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3994,7 +3994,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4175,7 +4175,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5132,7 +5132,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6426,6 +6426,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             Uri sourceMediaLinkInstance = TypeConversion.TryParseUri(sourceMediaLinkElement.Value);
                                             dataVirtualHardDiskInstance.SourceMediaLink = sourceMediaLinkInstance;
                                         }
+                                        
+                                        XElement iOTypeElement = dataVirtualHardDisksElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (iOTypeElement != null)
+                                        {
+                                            string iOTypeInstance = iOTypeElement.Value;
+                                            dataVirtualHardDiskInstance.IOType = iOTypeInstance;
+                                        }
                                     }
                                 }
                                 
@@ -6482,6 +6489,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     {
                                         string osInstance = osElement.Value;
                                         oSVirtualHardDiskInstance.OperatingSystem = osInstance;
+                                    }
+                                    
+                                    XElement iOTypeElement2 = oSVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (iOTypeElement2 != null)
+                                    {
+                                        string iOTypeInstance2 = iOTypeElement2.Value;
+                                        oSVirtualHardDiskInstance.IOType = iOTypeInstance2;
                                     }
                                 }
                                 
@@ -6853,7 +6867,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -8147,6 +8161,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                             Uri sourceMediaLinkInstance = TypeConversion.TryParseUri(sourceMediaLinkElement.Value);
                                             dataVirtualHardDiskInstance.SourceMediaLink = sourceMediaLinkInstance;
                                         }
+                                        
+                                        XElement iOTypeElement = dataVirtualHardDisksElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                        if (iOTypeElement != null)
+                                        {
+                                            string iOTypeInstance = iOTypeElement.Value;
+                                            dataVirtualHardDiskInstance.IOType = iOTypeInstance;
+                                        }
                                     }
                                 }
                                 
@@ -8203,6 +8224,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     {
                                         string osInstance = osElement.Value;
                                         oSVirtualHardDiskInstance.OperatingSystem = osInstance;
+                                    }
+                                    
+                                    XElement iOTypeElement2 = oSVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (iOTypeElement2 != null)
+                                    {
+                                        string iOTypeInstance2 = iOTypeElement2.Value;
+                                        oSVirtualHardDiskInstance.IOType = iOTypeInstance2;
                                     }
                                 }
                                 
@@ -9551,7 +9579,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -9713,7 +9741,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

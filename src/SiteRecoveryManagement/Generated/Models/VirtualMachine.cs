@@ -21,30 +21,30 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
-namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
+namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The parameters to add more live Ids to an existing authorization
+    /// The definition of a Vm object.
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationLiveIdNewParameters
+    public partial class VirtualMachine : ProtectionEntity
     {
-        private string _liveIds;
+        private string _replicationProviderSettings;
         
         /// <summary>
-        /// Optional. A comma separated list of live Ids
+        /// Required. Virtual machine settings related to Replication provider
         /// </summary>
-        public string LiveIds
+        public string ReplicationProviderSettings
         {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
+            get { return this._replicationProviderSettings; }
+            set { this._replicationProviderSettings = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdNewParameters class.
+        /// Initializes a new instance of the VirtualMachine class.
         /// </summary>
-        public DedicatedCircuitLinkAuthorizationLiveIdNewParameters()
+        public VirtualMachine()
         {
         }
     }

@@ -37,16 +37,16 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    internal partial class DedicatedCircuitLinkAuthorizationLiveIdOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationLiveIdOperations
+    internal partial class DedicatedCircuitLinkAuthorizationMicrosoftIdOperations : IServiceOperations<ExpressRouteManagementClient>, Microsoft.WindowsAzure.Management.ExpressRoute.IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdOperations class.
+        /// DedicatedCircuitLinkAuthorizationMicrosoftIdOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal DedicatedCircuitLinkAuthorizationLiveIdOperations(ExpressRouteManagementClient client)
+        internal DedicatedCircuitLinkAuthorizationMicrosoftIdOperations(ExpressRouteManagementClient client)
         {
             this._client = client;
         }
@@ -63,7 +63,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// Adds live Ids to the specified authorization
+        /// Adds Microsoft Ids to the specified authorization
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -72,7 +72,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to add new live Ids
+        /// Required. Parameters supplied to add new Microsoft Ids
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -81,7 +81,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> NewAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdNewParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> NewAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -111,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/authorizations/" + authId.Trim() + "/liveids?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/authorizations/" + authId.Trim() + "/microsoftids?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -144,14 +144,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement dedicatedCircuitLinkAuthorizationLiveIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationLiveIds", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(dedicatedCircuitLinkAuthorizationLiveIdsElement);
+                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                requestDoc.Add(dedicatedCircuitLinkAuthorizationMicrosoftIdsElement);
                 
-                if (parameters.LiveIds != null)
+                if (parameters.MicrosoftIds != null)
                 {
-                    XElement liveIdsElement = new XElement(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                    liveIdsElement.Value = parameters.LiveIds;
-                    dedicatedCircuitLinkAuthorizationLiveIdsElement.Add(liveIdsElement);
+                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                    microsoftIdsElement.Value = parameters.MicrosoftIds;
+                    dedicatedCircuitLinkAuthorizationMicrosoftIdsElement.Add(microsoftIdsElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -217,7 +217,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         }
         
         /// <summary>
-        /// Removes live Ids from the specified authorization
+        /// Removes Microsoft Ids from the specified authorization
         /// </summary>
         /// <param name='serviceKey'>
         /// Required. The service key representing the circuit.
@@ -226,7 +226,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// Required. The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to remove existing live Ids
+        /// Required. Parameters supplied to remove existing Microsoft Ids
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -235,7 +235,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationResponse> RemoveAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> RemoveAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (serviceKey == null)
@@ -265,7 +265,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/authorizations/" + authId.Trim() + "/liveids?api-version=1.0";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/dedicatedcircuits/" + serviceKey.Trim() + "/authorizations/" + authId.Trim() + "/microsoftids?api-version=1.0";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -298,14 +298,14 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement dedicatedCircuitLinkAuthorizationLiveIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationLiveIds", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(dedicatedCircuitLinkAuthorizationLiveIdsElement);
+                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                requestDoc.Add(dedicatedCircuitLinkAuthorizationMicrosoftIdsElement);
                 
-                if (parameters.LiveIds != null)
+                if (parameters.MicrosoftIds != null)
                 {
-                    XElement liveIdsElement = new XElement(XName.Get("LiveIds", "http://schemas.microsoft.com/windowsazure"));
-                    liveIdsElement.Value = parameters.LiveIds;
-                    dedicatedCircuitLinkAuthorizationLiveIdsElement.Add(liveIdsElement);
+                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                    microsoftIdsElement.Value = parameters.MicrosoftIds;
+                    dedicatedCircuitLinkAuthorizationMicrosoftIdsElement.Add(microsoftIdsElement);
                 }
                 
                 requestContent = requestDoc.ToString();

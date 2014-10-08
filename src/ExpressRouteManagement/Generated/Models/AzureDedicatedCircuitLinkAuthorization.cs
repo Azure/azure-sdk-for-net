@@ -45,7 +45,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         
         /// <summary>
         /// Optional. Number of dedicated circuit links allowed amongst all
-        /// live Ids
+        /// Microsoft Ids
         /// </summary>
         public int Limit
         {
@@ -64,15 +64,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._linkAuthId = value; }
         }
         
-        private string _liveIds;
+        private string _microsoftIds;
         
         /// <summary>
-        /// Optional. Specifies a comma separated list of live Ids
+        /// Optional. Specifies a comma separated list of Microsoft Ids
         /// </summary>
-        public string LiveIds
+        public string MicrosoftIds
         {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
+            get { return this._microsoftIds; }
+            set { this._microsoftIds = value; }
         }
         
         private int _used;

@@ -118,6 +118,17 @@ namespace Microsoft.WindowsAzure.Management.Models
                 set { this._name = value; }
             }
             
+            private StorageCapabilities _storageCapabilities;
+            
+            /// <summary>
+            /// Optional. The storage capabilities in this location.
+            /// </summary>
+            public StorageCapabilities StorageCapabilities
+            {
+                get { return this._storageCapabilities; }
+                set { this._storageCapabilities = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the Location class.
             /// </summary>
