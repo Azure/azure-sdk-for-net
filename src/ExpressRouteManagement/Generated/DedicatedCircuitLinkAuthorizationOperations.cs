@@ -331,11 +331,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.Limit = limitInstance;
                         }
                         
-                        XElement linkAuthIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthId", "http://schemas.microsoft.com/windowsazure"));
-                        if (linkAuthIdElement != null)
+                        XElement linkAuthorizationIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthorizationId", "http://schemas.microsoft.com/windowsazure"));
+                        if (linkAuthorizationIdElement != null)
                         {
-                            string linkAuthIdInstance = linkAuthIdElement.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
+                            string linkAuthorizationIdInstance = linkAuthorizationIdElement.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthorizationId = linkAuthorizationIdInstance;
                         }
                         
                         XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
@@ -500,11 +500,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 dedicatedCircuitLinkAuthorizationInstance.Limit = limitInstance;
                             }
                             
-                            XElement linkAuthIdElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("LinkAuthId", "http://schemas.microsoft.com/windowsazure"));
-                            if (linkAuthIdElement != null)
+                            XElement linkAuthorizationIdElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("LinkAuthorizationId", "http://schemas.microsoft.com/windowsazure"));
+                            if (linkAuthorizationIdElement != null)
                             {
-                                string linkAuthIdInstance = linkAuthIdElement.Value;
-                                dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
+                                string linkAuthorizationIdInstance = linkAuthorizationIdElement.Value;
+                                dedicatedCircuitLinkAuthorizationInstance.LinkAuthorizationId = linkAuthorizationIdInstance;
                             }
                             
                             XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationsElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
@@ -706,11 +706,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.Limit = limitInstance;
                         }
                         
-                        XElement linkAuthIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthId", "http://schemas.microsoft.com/windowsazure"));
-                        if (linkAuthIdElement != null)
+                        XElement linkAuthorizationIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthorizationId", "http://schemas.microsoft.com/windowsazure"));
+                        if (linkAuthorizationIdElement != null)
                         {
-                            string linkAuthIdInstance = linkAuthIdElement.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
+                            string linkAuthorizationIdInstance = linkAuthorizationIdElement.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthorizationId = linkAuthorizationIdInstance;
                         }
                         
                         XElement microsoftIdsElement2 = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
@@ -986,11 +986,11 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                             dedicatedCircuitLinkAuthorizationInstance.Limit = limitInstance;
                         }
                         
-                        XElement linkAuthIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthId", "http://schemas.microsoft.com/windowsazure"));
-                        if (linkAuthIdElement != null)
+                        XElement linkAuthorizationIdElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("LinkAuthorizationId", "http://schemas.microsoft.com/windowsazure"));
+                        if (linkAuthorizationIdElement != null)
                         {
-                            string linkAuthIdInstance = linkAuthIdElement.Value;
-                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthId = linkAuthIdInstance;
+                            string linkAuthorizationIdInstance = linkAuthorizationIdElement.Value;
+                            dedicatedCircuitLinkAuthorizationInstance.LinkAuthorizationId = linkAuthorizationIdInstance;
                         }
                         
                         XElement microsoftIdsElement = dedicatedCircuitLinkAuthorizationElement.Element(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));

@@ -53,15 +53,15 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._limit = value; }
         }
         
-        private string _linkAuthId;
+        private string _linkAuthorizationId;
         
         /// <summary>
         /// Optional. A value that uniquely identifies an authorization
         /// </summary>
-        public string LinkAuthId
+        public string LinkAuthorizationId
         {
-            get { return this._linkAuthId; }
-            set { this._linkAuthId = value; }
+            get { return this._linkAuthorizationId; }
+            set { this._linkAuthorizationId = value; }
         }
         
         private string _microsoftIds;
