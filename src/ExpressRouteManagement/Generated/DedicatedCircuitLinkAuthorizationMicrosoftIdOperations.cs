@@ -144,12 +144,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(dedicatedCircuitLinkAuthorizationMicrosoftIdsElement);
                 
                 if (parameters.MicrosoftIds != null)
                 {
-                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
                     microsoftIdsElement.Value = parameters.MicrosoftIds;
                     dedicatedCircuitLinkAuthorizationMicrosoftIdsElement.Add(microsoftIdsElement);
                 }
@@ -298,12 +298,12 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                XElement dedicatedCircuitLinkAuthorizationMicrosoftIdsElement = new XElement(XName.Get("DedicatedCircuitLinkAuthorizationMicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(dedicatedCircuitLinkAuthorizationMicrosoftIdsElement);
                 
                 if (parameters.MicrosoftIds != null)
                 {
-                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.Microsoft.com/windowsazure"));
+                    XElement microsoftIdsElement = new XElement(XName.Get("MicrosoftIds", "http://schemas.microsoft.com/windowsazure"));
                     microsoftIdsElement.Value = parameters.MicrosoftIds;
                     dedicatedCircuitLinkAuthorizationMicrosoftIdsElement.Add(microsoftIdsElement);
                 }
