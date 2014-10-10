@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -39,6 +40,17 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             get { return this._location; }
             set { this._location = value; }
+        }
+        
+        private Plan _plan;
+        
+        /// <summary>
+        /// Optional. Gets or sets the plan of the resource.
+        /// </summary>
+        public Plan Plan
+        {
+            get { return this._plan; }
+            set { this._plan = value; }
         }
         
         private string _properties;
