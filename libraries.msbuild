@@ -7,9 +7,15 @@
     <ProductFriendlyName>Microsoft Azure Management Libraries</ProductFriendlyName>
     <ProductSourceFolder>$(MSBuildThisFileDirectory)src</ProductSourceFolder>
   </PropertyGroup>
-
+ 
   <!-- NuGet Packages -->
   <Import Project="nuget.targets" />
+
+  <ItemGroup>
+    <CommonProjects Include="$(CommonSolution)" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="WindowsAzureManagementLibraries.sln" Condition="$(MamlProjectName) == ''" />
+    <ManagementLibrariesProjects Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj" Condition="$(MamlProjectName) != ''" />
+  </ItemGroup>
 
   <!-- Developer-specific properties -->
   <Import Project="developer\$(USERNAME)\build.props" Condition="Exists('developer\$(USERNAME)\build.props')" />
@@ -133,53 +139,34 @@
   Regular developer build
   -->
   <Target Name="DeveloperBuild" DependsOnTargets="BuildEngineeringDependencies">
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-  </Target>
-  
-  <!--
-    Build a nuget package from a local maml project (mainly used when you have not published the related hydra spec)  
-  -->
-  <Target Name="BuildFromLocalSpec" DependsOnTargets="BuildEngineeringDependencies">
-    <ItemGroup>
-      <LocalPackageInfo Include="@(SdkNuGetPackage)" Condition="'%(SdkNuGetPackage.Folder)' == '$(ProductSourceFolder)\$(MamlProjectName)\'" />
-      <_ProjectPath Include="$(ProductSourceFolder)\$(MamlProjectName)\*.csproj"></_ProjectPath>
-    </ItemGroup>    
-    <MSBuild Projects="@(_ProjectPath)"
-             Properties="$(DeveloperBuildProperties)"
-             Targets="Rebuild" />
-    <MSBuild Projects="@(_ProjectPath)"
-             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
-             Targets="Rebuild" />
-    <MakeDir Directories="$(PackageOutputDir)" ContinueOnError="true" />
-    <Exec
-      Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;%(LocalPackageInfo.Folder)\%(LocalPackageInfo.Identity).nuspec&quot; -Version %(LocalPackageInfo.PackageVersion)$(BuildVersionSuffix)$(AdditionalVersionSuffix) -OutputDirectory &quot;$(PackageOutputDir)&quot;" />
   </Target>
 
   <!--
   Clean produced binaries and object files
   -->
   <Target Name="Clean">
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties)"
              Targets="Clean" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
              Targets="Clean" />
     <RemoveDir Directories="binaries" Condition="Exists('binaries\')" ContinueOnError="true" />
@@ -214,16 +201,16 @@
   <Target Name="OfficialBuild"
           DependsOnTargets="BuildEngineeringDependencies;Clean">
     <CallTarget Targets="BuildServerPreparation" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(CommonSolution)"
+    <MSBuild Projects="@(CommonProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties)"
              Targets="Rebuild" />
-    <MSBuild Projects="$(ManagementLibrariesSolution)"
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
              Properties="$(OfficialMSBuildProperties);$(Net40BuildProperty)"
              Targets="Rebuild" />
   </Target>
@@ -429,6 +416,7 @@
     <Exec Command="$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" />
     <Exec Command="$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)"
           EchoOff="true" />
+    
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
 
@@ -441,8 +429,8 @@
   don't need to be checked into source control. Skips all private packages.
   -->
   <Target Name="ForceRestorePublicPackages">
-    <Exec Command="$(NuGetCommand) restore $(CommonSolution)" ContinueOnError="ErrorAndContinue" />
-    <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore @(CommonProjects)" ContinueOnError="ErrorAndContinue" />
+    <Exec Command="$(NuGetCommand) restore @(ManagementLibrariesProjects)" ContinueOnError="ErrorAndContinue" />
   </Target>
 
   <!--

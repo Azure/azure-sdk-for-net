@@ -9,8 +9,8 @@
   differentiate from the .nuproj system (which we may want to move to in the
   future)
   -->
-  <Import Project="*\**\*.nuget.proj"/>
-
+  <Import Project="*\**\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
+  <Import Project="$(ProductSourceFolder)\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
   <PropertyGroup>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
