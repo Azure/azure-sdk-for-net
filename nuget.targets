@@ -10,7 +10,7 @@
   future)
   -->
   <Import Project="*\**\*.nuget.proj" Condition="$(MamlProjectName) == ''"/>
-  <Import Project="$(ProductSourceFolder)\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
+  <Import Project="*\**\$(MamlProjectName)\*.nuget.proj" Condition="$(MamlProjectName) != ''"/>
   <PropertyGroup>
     <BaselineReleaseNotes>PREVIEW RELEASE</BaselineReleaseNotes>
   </PropertyGroup>
