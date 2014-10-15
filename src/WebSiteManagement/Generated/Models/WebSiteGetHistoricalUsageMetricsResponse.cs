@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetHistoricalUsageMetricsResponse()
         {
-            this.UsageMetrics = new List<HistoricalUsageMetric>();
+            this.UsageMetrics = new LazyList<HistoricalUsageMetric>();
         }
         
         /// <summary>

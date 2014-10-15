@@ -196,30 +196,36 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts
                     
                     if (parameters.Rule.Actions != null)
                     {
-                        JArray actionsArray = new JArray();
-                        foreach (RuleAction actionsItem in parameters.Rule.Actions)
+                        if (parameters.Rule.Actions is ILazyCollection == false || ((ILazyCollection)parameters.Rule.Actions).IsInitialized)
                         {
-                            JObject ruleActionValue = new JObject();
-                            actionsArray.Add(ruleActionValue);
-                            if (actionsItem is RuleEmailAction)
+                            JArray actionsArray = new JArray();
+                            foreach (RuleAction actionsItem in parameters.Rule.Actions)
                             {
-                                ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
-                                RuleEmailAction derived3 = ((RuleEmailAction)actionsItem);
-                                
-                                ruleActionValue["SendToServiceOwners"] = derived3.SendToServiceOwners;
-                                
-                                if (derived3.CustomEmails != null)
+                                JObject ruleActionValue = new JObject();
+                                actionsArray.Add(ruleActionValue);
+                                if (actionsItem is RuleEmailAction)
                                 {
-                                    JArray customEmailsArray = new JArray();
-                                    foreach (string customEmailsItem in derived3.CustomEmails)
+                                    ruleActionValue["odata.type"] = actionsItem.GetType().FullName;
+                                    RuleEmailAction derived3 = ((RuleEmailAction)actionsItem);
+                                    
+                                    ruleActionValue["SendToServiceOwners"] = derived3.SendToServiceOwners;
+                                    
+                                    if (derived3.CustomEmails != null)
                                     {
-                                        customEmailsArray.Add(customEmailsItem);
+                                        if (derived3.CustomEmails is ILazyCollection == false || ((ILazyCollection)derived3.CustomEmails).IsInitialized)
+                                        {
+                                            JArray customEmailsArray = new JArray();
+                                            foreach (string customEmailsItem in derived3.CustomEmails)
+                                            {
+                                                customEmailsArray.Add(customEmailsItem);
+                                            }
+                                            ruleActionValue["CustomEmails"] = customEmailsArray;
+                                        }
                                     }
-                                    ruleActionValue["CustomEmails"] = customEmailsArray;
                                 }
                             }
+                            ruleCreateOrUpdateParametersValue["Actions"] = actionsArray;
                         }
-                        ruleCreateOrUpdateParametersValue["Actions"] = actionsArray;
                     }
                     
                     ruleCreateOrUpdateParametersValue["LastUpdatedTime"] = parameters.Rule.LastUpdatedTime;

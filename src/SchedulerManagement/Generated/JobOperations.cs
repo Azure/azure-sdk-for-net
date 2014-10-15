@@ -245,17 +245,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                         
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
-                        JObject headersDictionary = new JObject();
                         if (parameters.Action.ErrorAction.Request.Headers != null)
                         {
-                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
+                            if (parameters.Action.ErrorAction.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.ErrorAction.Request.Headers).IsInitialized)
                             {
-                                string headersKey = pair.Key;
-                                string headersValue = pair.Value;
-                                headersDictionary[headersKey] = headersValue;
+                                JObject headersDictionary = new JObject();
+                                foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
+                                {
+                                    string headersKey = pair.Key;
+                                    string headersValue = pair.Value;
+                                    headersDictionary[headersKey] = headersValue;
+                                }
+                                requestValue["headers"] = headersDictionary;
                             }
                         }
-                        requestValue["headers"] = headersDictionary;
                         
                         if (parameters.Action.ErrorAction.Request.Body != null)
                         {
@@ -325,17 +328,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
-                    JObject headersDictionary2 = new JObject();
                     if (parameters.Action.Request.Headers != null)
                     {
-                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                        if (parameters.Action.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.Request.Headers).IsInitialized)
                         {
-                            string headersKey2 = pair2.Key;
-                            string headersValue2 = pair2.Value;
-                            headersDictionary2[headersKey2] = headersValue2;
+                            JObject headersDictionary2 = new JObject();
+                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                            {
+                                string headersKey2 = pair2.Key;
+                                string headersValue2 = pair2.Value;
+                                headersDictionary2[headersKey2] = headersValue2;
+                            }
+                            requestValue2["headers"] = headersDictionary2;
                         }
                     }
-                    requestValue2["headers"] = headersDictionary2;
                     
                     if (parameters.Action.Request.Body != null)
                     {
@@ -1249,17 +1255,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                         
                         requestValue["method"] = parameters.Action.ErrorAction.Request.Method;
                         
-                        JObject headersDictionary = new JObject();
                         if (parameters.Action.ErrorAction.Request.Headers != null)
                         {
-                            foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
+                            if (parameters.Action.ErrorAction.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.ErrorAction.Request.Headers).IsInitialized)
                             {
-                                string headersKey = pair.Key;
-                                string headersValue = pair.Value;
-                                headersDictionary[headersKey] = headersValue;
+                                JObject headersDictionary = new JObject();
+                                foreach (KeyValuePair<string, string> pair in parameters.Action.ErrorAction.Request.Headers)
+                                {
+                                    string headersKey = pair.Key;
+                                    string headersValue = pair.Value;
+                                    headersDictionary[headersKey] = headersValue;
+                                }
+                                requestValue["headers"] = headersDictionary;
                             }
                         }
-                        requestValue["headers"] = headersDictionary;
                         
                         if (parameters.Action.ErrorAction.Request.Body != null)
                         {
@@ -1329,17 +1338,20 @@ namespace Microsoft.WindowsAzure.Scheduler
                     
                     requestValue2["method"] = parameters.Action.Request.Method;
                     
-                    JObject headersDictionary2 = new JObject();
                     if (parameters.Action.Request.Headers != null)
                     {
-                        foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                        if (parameters.Action.Request.Headers is ILazyCollection == false || ((ILazyCollection)parameters.Action.Request.Headers).IsInitialized)
                         {
-                            string headersKey2 = pair2.Key;
-                            string headersValue2 = pair2.Value;
-                            headersDictionary2[headersKey2] = headersValue2;
+                            JObject headersDictionary2 = new JObject();
+                            foreach (KeyValuePair<string, string> pair2 in parameters.Action.Request.Headers)
+                            {
+                                string headersKey2 = pair2.Key;
+                                string headersValue2 = pair2.Value;
+                                headersDictionary2[headersKey2] = headersValue2;
+                            }
+                            requestValue2["headers"] = headersDictionary2;
                         }
                     }
-                    requestValue2["headers"] = headersDictionary2;
                     
                     if (parameters.Action.Request.Body != null)
                     {

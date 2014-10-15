@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionsListResponse()
         {
-            this.Definitions = new List<Definition>();
+            this.Definitions = new LazyList<Definition>();
         }
         
         /// <summary>

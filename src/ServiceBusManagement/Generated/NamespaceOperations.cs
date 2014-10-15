@@ -560,14 +560,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 
                 if (rule.Rights != null)
                 {
-                    XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                    foreach (AccessRight rightsItem in rule.Rights)
+                    if (rule.Rights is ILazyCollection == false || ((ILazyCollection)rule.Rights).IsInitialized)
                     {
-                        XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        rightsItemElement.Value = rightsItem.ToString();
-                        rightsSequenceElement.Add(rightsItemElement);
+                        XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                        foreach (AccessRight rightsItem in rule.Rights)
+                        {
+                            XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            rightsItemElement.Value = rightsItem.ToString();
+                            rightsSequenceElement.Add(rightsItemElement);
+                        }
+                        sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                     }
-                    sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                 }
                 
                 XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
@@ -2356,14 +2359,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                     
                     if (rule.Rights != null)
                     {
-                        XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                        foreach (AccessRight rightsItem in rule.Rights)
+                        if (rule.Rights is ILazyCollection == false || ((ILazyCollection)rule.Rights).IsInitialized)
                         {
-                            XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
-                            rightsItemElement.Value = rightsItem.ToString();
-                            rightsSequenceElement.Add(rightsItemElement);
+                            XElement rightsSequenceElement = new XElement(XName.Get("Rights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                            foreach (AccessRight rightsItem in rule.Rights)
+                            {
+                                XElement rightsItemElement = new XElement(XName.Get("AccessRights", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                                rightsItemElement.Value = rightsItem.ToString();
+                                rightsSequenceElement.Add(rightsItemElement);
+                            }
+                            sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                         }
-                        sharedAccessAuthorizationRuleElement.Add(rightsSequenceElement);
                     }
                     
                     XElement createdTimeElement = new XElement(XName.Get("CreatedTime", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));

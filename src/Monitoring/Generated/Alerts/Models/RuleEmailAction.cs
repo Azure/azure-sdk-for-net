@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models;
 
 namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
@@ -59,7 +60,7 @@ namespace Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models
         /// </summary>
         public RuleEmailAction()
         {
-            this.CustomEmails = new List<string>();
+            this.CustomEmails = new LazyList<string>();
         }
     }
 }

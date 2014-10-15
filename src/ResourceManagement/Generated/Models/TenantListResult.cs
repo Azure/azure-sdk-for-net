@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Subscriptions.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Subscriptions.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Subscriptions.Models
         /// </summary>
         public TenantListResult()
         {
-            this.TenantIds = new List<TenantIdDescription>();
+            this.TenantIds = new LazyList<TenantIdDescription>();
         }
     }
 }

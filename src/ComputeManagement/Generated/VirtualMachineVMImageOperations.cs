@@ -1483,14 +1483,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.TargetLocations != null)
                 {
-                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
                     {
-                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
-                        targetLocationsItemElement.Value = targetLocationsItem;
-                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string targetLocationsItem in parameters.TargetLocations)
+                        {
+                            XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                            targetLocationsItemElement.Value = targetLocationsItem;
+                            targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        }
+                        replicationInputElement.Add(targetLocationsSequenceElement);
                     }
-                    replicationInputElement.Add(targetLocationsSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();
@@ -1886,34 +1889,37 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.DataDiskConfigurations != null)
                 {
-                    XElement dataDiskConfigurationsSequenceElement = new XElement(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DataDiskConfigurationUpdateParameters dataDiskConfigurationsItem in parameters.DataDiskConfigurations)
+                    if (parameters.DataDiskConfigurations is ILazyCollection == false || ((ILazyCollection)parameters.DataDiskConfigurations).IsInitialized)
                     {
-                        XElement dataDiskConfigurationElement = new XElement(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
-                        dataDiskConfigurationsSequenceElement.Add(dataDiskConfigurationElement);
-                        
-                        if (dataDiskConfigurationsItem.Name != null)
+                        XElement dataDiskConfigurationsSequenceElement = new XElement(XName.Get("DataDiskConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (DataDiskConfigurationUpdateParameters dataDiskConfigurationsItem in parameters.DataDiskConfigurations)
                         {
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = dataDiskConfigurationsItem.Name;
-                            dataDiskConfigurationElement.Add(nameElement);
+                            XElement dataDiskConfigurationElement = new XElement(XName.Get("DataDiskConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                            dataDiskConfigurationsSequenceElement.Add(dataDiskConfigurationElement);
+                            
+                            if (dataDiskConfigurationsItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = dataDiskConfigurationsItem.Name;
+                                dataDiskConfigurationElement.Add(nameElement);
+                            }
+                            
+                            if (dataDiskConfigurationsItem.HostCaching != null)
+                            {
+                                XElement hostCachingElement2 = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
+                                hostCachingElement2.Value = dataDiskConfigurationsItem.HostCaching;
+                                dataDiskConfigurationElement.Add(hostCachingElement2);
+                            }
+                            
+                            if (dataDiskConfigurationsItem.LogicalUnitNumber != null)
+                            {
+                                XElement lunElement = new XElement(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
+                                lunElement.Value = dataDiskConfigurationsItem.LogicalUnitNumber.ToString();
+                                dataDiskConfigurationElement.Add(lunElement);
+                            }
                         }
-                        
-                        if (dataDiskConfigurationsItem.HostCaching != null)
-                        {
-                            XElement hostCachingElement2 = new XElement(XName.Get("HostCaching", "http://schemas.microsoft.com/windowsazure"));
-                            hostCachingElement2.Value = dataDiskConfigurationsItem.HostCaching;
-                            dataDiskConfigurationElement.Add(hostCachingElement2);
-                        }
-                        
-                        if (dataDiskConfigurationsItem.LogicalUnitNumber != null)
-                        {
-                            XElement lunElement = new XElement(XName.Get("Lun", "http://schemas.microsoft.com/windowsazure"));
-                            lunElement.Value = dataDiskConfigurationsItem.LogicalUnitNumber.ToString();
-                            dataDiskConfigurationElement.Add(lunElement);
-                        }
+                        vMImageElement.Add(dataDiskConfigurationsSequenceElement);
                     }
-                    vMImageElement.Add(dataDiskConfigurationsSequenceElement);
                 }
                 
                 if (parameters.Description != null)

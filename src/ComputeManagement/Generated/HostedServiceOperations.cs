@@ -912,23 +912,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtendedProperties != null)
                 {
-                    XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    if (parameters.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)parameters.ExtendedProperties).IsInitialized)
                     {
-                        string extendedPropertiesKey = pair.Key;
-                        string extendedPropertiesValue = pair.Value;
-                        XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
-                        
-                        XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesKeyElement.Value = extendedPropertiesKey;
-                        extendedPropertiesElement.Add(extendedPropertiesKeyElement);
-                        
-                        XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesValueElement.Value = extendedPropertiesValue;
-                        extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                        {
+                            string extendedPropertiesKey = pair.Key;
+                            string extendedPropertiesValue = pair.Value;
+                            XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
+                            
+                            XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesKeyElement.Value = extendedPropertiesKey;
+                            extendedPropertiesElement.Add(extendedPropertiesKeyElement);
+                            
+                            XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesValueElement.Value = extendedPropertiesValue;
+                            extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        }
+                        createHostedServiceElement.Add(extendedPropertiesDictionaryElement);
                     }
-                    createHostedServiceElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
                 if (parameters.ReverseDnsFqdn != null)
@@ -2495,6 +2498,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                                         {
                                                             int idleTimeoutInMinutesInstance3 = int.Parse(idleTimeoutInMinutesElement3.Value, CultureInfo.InvariantCulture);
                                                             inputEndpointInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance3;
+                                                        }
+                                                        
+                                                        XElement loadBalancerDistributionElement = inputEndpointsElement.Element(XName.Get("LoadBalancerDistribution", "http://schemas.microsoft.com/windowsazure"));
+                                                        if (loadBalancerDistributionElement != null)
+                                                        {
+                                                            string loadBalancerDistributionInstance = loadBalancerDistributionElement.Value;
+                                                            inputEndpointInstance.LoadBalancerDistribution = loadBalancerDistributionInstance;
                                                         }
                                                     }
                                                 }
@@ -4924,23 +4934,26 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.ExtendedProperties != null)
                 {
-                    XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                    if (parameters.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)parameters.ExtendedProperties).IsInitialized)
                     {
-                        string extendedPropertiesKey = pair.Key;
-                        string extendedPropertiesValue = pair.Value;
-                        XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
-                        
-                        XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesKeyElement.Value = extendedPropertiesKey;
-                        extendedPropertiesElement.Add(extendedPropertiesKeyElement);
-                        
-                        XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
-                        extendedPropertiesValueElement.Value = extendedPropertiesValue;
-                        extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        XElement extendedPropertiesDictionaryElement = new XElement(XName.Get("ExtendedProperties", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (KeyValuePair<string, string> pair in parameters.ExtendedProperties)
+                        {
+                            string extendedPropertiesKey = pair.Key;
+                            string extendedPropertiesValue = pair.Value;
+                            XElement extendedPropertiesElement = new XElement(XName.Get("ExtendedProperty", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesDictionaryElement.Add(extendedPropertiesElement);
+                            
+                            XElement extendedPropertiesKeyElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesKeyElement.Value = extendedPropertiesKey;
+                            extendedPropertiesElement.Add(extendedPropertiesKeyElement);
+                            
+                            XElement extendedPropertiesValueElement = new XElement(XName.Get("Value", "http://schemas.microsoft.com/windowsazure"));
+                            extendedPropertiesValueElement.Value = extendedPropertiesValue;
+                            extendedPropertiesElement.Add(extendedPropertiesValueElement);
+                        }
+                        updateHostedServiceElement.Add(extendedPropertiesDictionaryElement);
                     }
-                    updateHostedServiceElement.Add(extendedPropertiesDictionaryElement);
                 }
                 
                 requestContent = requestDoc.ToString();

@@ -1782,14 +1782,17 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 
                 if (parameters.TargetLocations != null)
                 {
-                    XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string targetLocationsItem in parameters.TargetLocations)
+                    if (parameters.TargetLocations is ILazyCollection == false || ((ILazyCollection)parameters.TargetLocations).IsInitialized)
                     {
-                        XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
-                        targetLocationsItemElement.Value = targetLocationsItem;
-                        targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        XElement targetLocationsSequenceElement = new XElement(XName.Get("TargetLocations", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string targetLocationsItem in parameters.TargetLocations)
+                        {
+                            XElement targetLocationsItemElement = new XElement(XName.Get("Region", "http://schemas.microsoft.com/windowsazure"));
+                            targetLocationsItemElement.Value = targetLocationsItem;
+                            targetLocationsSequenceElement.Add(targetLocationsItemElement);
+                        }
+                        replicationInputElement.Add(targetLocationsSequenceElement);
                     }
-                    replicationInputElement.Add(targetLocationsSequenceElement);
                 }
                 
                 requestContent = requestDoc.ToString();

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public CrossConnectionListResponse()
         {
-            this.CrossConnections = new List<AzureCrossConnection>();
+            this.CrossConnections = new LazyList<AzureCrossConnection>();
         }
         
         /// <summary>

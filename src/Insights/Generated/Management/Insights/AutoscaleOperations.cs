@@ -153,17 +153,20 @@ namespace Microsoft.Azure.Management.Insights
                     autoscaleSettingCreateOrUpdateParametersValue["location"] = parameters.Location;
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        autoscaleSettingCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
-                autoscaleSettingCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 if (parameters.Properties != null)
                 {
@@ -172,164 +175,179 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (parameters.Properties.Profiles != null)
                     {
-                        JArray profilesArray = new JArray();
-                        foreach (AutoscaleProfile profilesItem in parameters.Properties.Profiles)
+                        if (parameters.Properties.Profiles is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Profiles).IsInitialized)
                         {
-                            JObject autoscaleProfileValue = new JObject();
-                            profilesArray.Add(autoscaleProfileValue);
-                            
-                            if (profilesItem.Name != null)
+                            JArray profilesArray = new JArray();
+                            foreach (AutoscaleProfile profilesItem in parameters.Properties.Profiles)
                             {
-                                autoscaleProfileValue["name"] = profilesItem.Name;
+                                JObject autoscaleProfileValue = new JObject();
+                                profilesArray.Add(autoscaleProfileValue);
+                                
+                                if (profilesItem.Name != null)
+                                {
+                                    autoscaleProfileValue["name"] = profilesItem.Name;
+                                }
+                                
+                                if (profilesItem.Capacity != null)
+                                {
+                                    JObject capacityValue = new JObject();
+                                    autoscaleProfileValue["capacity"] = capacityValue;
+                                    
+                                    if (profilesItem.Capacity.Minimum != null)
+                                    {
+                                        capacityValue["minimum"] = profilesItem.Capacity.Minimum;
+                                    }
+                                    
+                                    if (profilesItem.Capacity.Maximum != null)
+                                    {
+                                        capacityValue["maximum"] = profilesItem.Capacity.Maximum;
+                                    }
+                                    
+                                    if (profilesItem.Capacity.Default != null)
+                                    {
+                                        capacityValue["default"] = profilesItem.Capacity.Default;
+                                    }
+                                }
+                                
+                                if (profilesItem.Rules != null)
+                                {
+                                    if (profilesItem.Rules is ILazyCollection == false || ((ILazyCollection)profilesItem.Rules).IsInitialized)
+                                    {
+                                        JArray rulesArray = new JArray();
+                                        foreach (ScaleRule rulesItem in profilesItem.Rules)
+                                        {
+                                            JObject scaleRuleValue = new JObject();
+                                            rulesArray.Add(scaleRuleValue);
+                                            
+                                            if (rulesItem.MetricTrigger != null)
+                                            {
+                                                JObject metricTriggerValue = new JObject();
+                                                scaleRuleValue["metricTrigger"] = metricTriggerValue;
+                                                
+                                                if (rulesItem.MetricTrigger.MetricName != null)
+                                                {
+                                                    metricTriggerValue["metricName"] = rulesItem.MetricTrigger.MetricName;
+                                                }
+                                                
+                                                if (rulesItem.MetricTrigger.MetricNamespace != null)
+                                                {
+                                                    metricTriggerValue["metricNamespace"] = rulesItem.MetricTrigger.MetricNamespace;
+                                                }
+                                                
+                                                if (rulesItem.MetricTrigger.MetricResourceUri != null)
+                                                {
+                                                    metricTriggerValue["metricResourceUri"] = rulesItem.MetricTrigger.MetricResourceUri;
+                                                }
+                                                
+                                                metricTriggerValue["timeGrain"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
+                                                
+                                                metricTriggerValue["statistic"] = rulesItem.MetricTrigger.Statistic.ToString();
+                                                
+                                                metricTriggerValue["timeWindow"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
+                                                
+                                                metricTriggerValue["timeAggregation"] = rulesItem.MetricTrigger.TimeAggregation.ToString();
+                                                
+                                                metricTriggerValue["operator"] = rulesItem.MetricTrigger.Operator.ToString();
+                                                
+                                                metricTriggerValue["threshold"] = rulesItem.MetricTrigger.Threshold;
+                                            }
+                                            
+                                            if (rulesItem.ScaleAction != null)
+                                            {
+                                                JObject scaleActionValue = new JObject();
+                                                scaleRuleValue["scaleAction"] = scaleActionValue;
+                                                
+                                                scaleActionValue["direction"] = rulesItem.ScaleAction.Direction.ToString();
+                                                
+                                                scaleActionValue["type"] = rulesItem.ScaleAction.Type.ToString();
+                                                
+                                                if (rulesItem.ScaleAction.Value != null)
+                                                {
+                                                    scaleActionValue["value"] = rulesItem.ScaleAction.Value;
+                                                }
+                                                
+                                                scaleActionValue["cooldown"] = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
+                                            }
+                                        }
+                                        autoscaleProfileValue["rules"] = rulesArray;
+                                    }
+                                }
+                                
+                                if (profilesItem.FixedDate != null)
+                                {
+                                    JObject fixedDateValue = new JObject();
+                                    autoscaleProfileValue["fixedDate"] = fixedDateValue;
+                                    
+                                    if (profilesItem.FixedDate.TimeZone != null)
+                                    {
+                                        fixedDateValue["timeZone"] = profilesItem.FixedDate.TimeZone;
+                                    }
+                                    
+                                    fixedDateValue["start"] = profilesItem.FixedDate.Start;
+                                    
+                                    fixedDateValue["end"] = profilesItem.FixedDate.End;
+                                }
+                                
+                                if (profilesItem.Recurrence != null)
+                                {
+                                    JObject recurrenceValue = new JObject();
+                                    autoscaleProfileValue["recurrence"] = recurrenceValue;
+                                    
+                                    recurrenceValue["frequency"] = profilesItem.Recurrence.Frequency.ToString();
+                                    
+                                    if (profilesItem.Recurrence.Schedule != null)
+                                    {
+                                        JObject scheduleValue = new JObject();
+                                        recurrenceValue["schedule"] = scheduleValue;
+                                        
+                                        if (profilesItem.Recurrence.Schedule.TimeZone != null)
+                                        {
+                                            scheduleValue["timeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Days != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Days is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Days).IsInitialized)
+                                            {
+                                                JArray daysArray = new JArray();
+                                                foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
+                                                {
+                                                    daysArray.Add(daysItem);
+                                                }
+                                                scheduleValue["days"] = daysArray;
+                                            }
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Hours != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Hours is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Hours).IsInitialized)
+                                            {
+                                                JArray hoursArray = new JArray();
+                                                foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
+                                                {
+                                                    hoursArray.Add(hoursItem);
+                                                }
+                                                scheduleValue["hours"] = hoursArray;
+                                            }
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Minutes != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Minutes is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Minutes).IsInitialized)
+                                            {
+                                                JArray minutesArray = new JArray();
+                                                foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
+                                                {
+                                                    minutesArray.Add(minutesItem);
+                                                }
+                                                scheduleValue["minutes"] = minutesArray;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            
-                            if (profilesItem.Capacity != null)
-                            {
-                                JObject capacityValue = new JObject();
-                                autoscaleProfileValue["capacity"] = capacityValue;
-                                
-                                if (profilesItem.Capacity.Minimum != null)
-                                {
-                                    capacityValue["minimum"] = profilesItem.Capacity.Minimum;
-                                }
-                                
-                                if (profilesItem.Capacity.Maximum != null)
-                                {
-                                    capacityValue["maximum"] = profilesItem.Capacity.Maximum;
-                                }
-                                
-                                if (profilesItem.Capacity.Default != null)
-                                {
-                                    capacityValue["default"] = profilesItem.Capacity.Default;
-                                }
-                            }
-                            
-                            if (profilesItem.Rules != null)
-                            {
-                                JArray rulesArray = new JArray();
-                                foreach (ScaleRule rulesItem in profilesItem.Rules)
-                                {
-                                    JObject scaleRuleValue = new JObject();
-                                    rulesArray.Add(scaleRuleValue);
-                                    
-                                    if (rulesItem.MetricTrigger != null)
-                                    {
-                                        JObject metricTriggerValue = new JObject();
-                                        scaleRuleValue["metricTrigger"] = metricTriggerValue;
-                                        
-                                        if (rulesItem.MetricTrigger.MetricName != null)
-                                        {
-                                            metricTriggerValue["metricName"] = rulesItem.MetricTrigger.MetricName;
-                                        }
-                                        
-                                        if (rulesItem.MetricTrigger.MetricNamespace != null)
-                                        {
-                                            metricTriggerValue["metricNamespace"] = rulesItem.MetricTrigger.MetricNamespace;
-                                        }
-                                        
-                                        if (rulesItem.MetricTrigger.MetricResourceUri != null)
-                                        {
-                                            metricTriggerValue["metricResourceUri"] = rulesItem.MetricTrigger.MetricResourceUri;
-                                        }
-                                        
-                                        metricTriggerValue["timeGrain"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
-                                        
-                                        metricTriggerValue["statistic"] = rulesItem.MetricTrigger.Statistic.ToString();
-                                        
-                                        metricTriggerValue["timeWindow"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
-                                        
-                                        metricTriggerValue["timeAggregation"] = rulesItem.MetricTrigger.TimeAggregation.ToString();
-                                        
-                                        metricTriggerValue["operator"] = rulesItem.MetricTrigger.Operator.ToString();
-                                        
-                                        metricTriggerValue["threshold"] = rulesItem.MetricTrigger.Threshold;
-                                    }
-                                    
-                                    if (rulesItem.ScaleAction != null)
-                                    {
-                                        JObject scaleActionValue = new JObject();
-                                        scaleRuleValue["scaleAction"] = scaleActionValue;
-                                        
-                                        scaleActionValue["direction"] = rulesItem.ScaleAction.Direction.ToString();
-                                        
-                                        scaleActionValue["type"] = rulesItem.ScaleAction.Type.ToString();
-                                        
-                                        if (rulesItem.ScaleAction.Value != null)
-                                        {
-                                            scaleActionValue["value"] = rulesItem.ScaleAction.Value;
-                                        }
-                                        
-                                        scaleActionValue["cooldown"] = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
-                                    }
-                                }
-                                autoscaleProfileValue["rules"] = rulesArray;
-                            }
-                            
-                            if (profilesItem.FixedDate != null)
-                            {
-                                JObject fixedDateValue = new JObject();
-                                autoscaleProfileValue["fixedDate"] = fixedDateValue;
-                                
-                                if (profilesItem.FixedDate.TimeZone != null)
-                                {
-                                    fixedDateValue["timeZone"] = profilesItem.FixedDate.TimeZone;
-                                }
-                                
-                                fixedDateValue["start"] = profilesItem.FixedDate.Start;
-                                
-                                fixedDateValue["end"] = profilesItem.FixedDate.End;
-                            }
-                            
-                            if (profilesItem.Recurrence != null)
-                            {
-                                JObject recurrenceValue = new JObject();
-                                autoscaleProfileValue["recurrence"] = recurrenceValue;
-                                
-                                recurrenceValue["frequency"] = profilesItem.Recurrence.Frequency.ToString();
-                                
-                                if (profilesItem.Recurrence.Schedule != null)
-                                {
-                                    JObject scheduleValue = new JObject();
-                                    recurrenceValue["schedule"] = scheduleValue;
-                                    
-                                    if (profilesItem.Recurrence.Schedule.TimeZone != null)
-                                    {
-                                        scheduleValue["timeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Days != null)
-                                    {
-                                        JArray daysArray = new JArray();
-                                        foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
-                                        {
-                                            daysArray.Add(daysItem);
-                                        }
-                                        scheduleValue["days"] = daysArray;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Hours != null)
-                                    {
-                                        JArray hoursArray = new JArray();
-                                        foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
-                                        {
-                                            hoursArray.Add(hoursItem);
-                                        }
-                                        scheduleValue["hours"] = hoursArray;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Minutes != null)
-                                    {
-                                        JArray minutesArray = new JArray();
-                                        foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
-                                        {
-                                            minutesArray.Add(minutesItem);
-                                        }
-                                        scheduleValue["minutes"] = minutesArray;
-                                    }
-                                }
-                            }
+                            propertiesValue["profiles"] = profilesArray;
                         }
-                        propertiesValue["profiles"] = profilesArray;
                     }
                     
                     propertiesValue["enabled"] = parameters.Properties.Enabled;
@@ -1516,17 +1534,20 @@ namespace Microsoft.Azure.Management.Insights
                     autoscaleSettingCreateOrUpdateParametersValue["location"] = parameters.Location;
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        autoscaleSettingCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                     }
                 }
-                autoscaleSettingCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 if (parameters.Properties != null)
                 {
@@ -1535,164 +1556,179 @@ namespace Microsoft.Azure.Management.Insights
                     
                     if (parameters.Properties.Profiles != null)
                     {
-                        JArray profilesArray = new JArray();
-                        foreach (AutoscaleProfile profilesItem in parameters.Properties.Profiles)
+                        if (parameters.Properties.Profiles is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Profiles).IsInitialized)
                         {
-                            JObject autoscaleProfileValue = new JObject();
-                            profilesArray.Add(autoscaleProfileValue);
-                            
-                            if (profilesItem.Name != null)
+                            JArray profilesArray = new JArray();
+                            foreach (AutoscaleProfile profilesItem in parameters.Properties.Profiles)
                             {
-                                autoscaleProfileValue["name"] = profilesItem.Name;
+                                JObject autoscaleProfileValue = new JObject();
+                                profilesArray.Add(autoscaleProfileValue);
+                                
+                                if (profilesItem.Name != null)
+                                {
+                                    autoscaleProfileValue["name"] = profilesItem.Name;
+                                }
+                                
+                                if (profilesItem.Capacity != null)
+                                {
+                                    JObject capacityValue = new JObject();
+                                    autoscaleProfileValue["capacity"] = capacityValue;
+                                    
+                                    if (profilesItem.Capacity.Minimum != null)
+                                    {
+                                        capacityValue["minimum"] = profilesItem.Capacity.Minimum;
+                                    }
+                                    
+                                    if (profilesItem.Capacity.Maximum != null)
+                                    {
+                                        capacityValue["maximum"] = profilesItem.Capacity.Maximum;
+                                    }
+                                    
+                                    if (profilesItem.Capacity.Default != null)
+                                    {
+                                        capacityValue["default"] = profilesItem.Capacity.Default;
+                                    }
+                                }
+                                
+                                if (profilesItem.Rules != null)
+                                {
+                                    if (profilesItem.Rules is ILazyCollection == false || ((ILazyCollection)profilesItem.Rules).IsInitialized)
+                                    {
+                                        JArray rulesArray = new JArray();
+                                        foreach (ScaleRule rulesItem in profilesItem.Rules)
+                                        {
+                                            JObject scaleRuleValue = new JObject();
+                                            rulesArray.Add(scaleRuleValue);
+                                            
+                                            if (rulesItem.MetricTrigger != null)
+                                            {
+                                                JObject metricTriggerValue = new JObject();
+                                                scaleRuleValue["metricTrigger"] = metricTriggerValue;
+                                                
+                                                if (rulesItem.MetricTrigger.MetricName != null)
+                                                {
+                                                    metricTriggerValue["metricName"] = rulesItem.MetricTrigger.MetricName;
+                                                }
+                                                
+                                                if (rulesItem.MetricTrigger.MetricNamespace != null)
+                                                {
+                                                    metricTriggerValue["metricNamespace"] = rulesItem.MetricTrigger.MetricNamespace;
+                                                }
+                                                
+                                                if (rulesItem.MetricTrigger.MetricResourceUri != null)
+                                                {
+                                                    metricTriggerValue["metricResourceUri"] = rulesItem.MetricTrigger.MetricResourceUri;
+                                                }
+                                                
+                                                metricTriggerValue["timeGrain"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
+                                                
+                                                metricTriggerValue["statistic"] = rulesItem.MetricTrigger.Statistic.ToString();
+                                                
+                                                metricTriggerValue["timeWindow"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
+                                                
+                                                metricTriggerValue["timeAggregation"] = rulesItem.MetricTrigger.TimeAggregation.ToString();
+                                                
+                                                metricTriggerValue["operator"] = rulesItem.MetricTrigger.Operator.ToString();
+                                                
+                                                metricTriggerValue["threshold"] = rulesItem.MetricTrigger.Threshold;
+                                            }
+                                            
+                                            if (rulesItem.ScaleAction != null)
+                                            {
+                                                JObject scaleActionValue = new JObject();
+                                                scaleRuleValue["scaleAction"] = scaleActionValue;
+                                                
+                                                scaleActionValue["direction"] = rulesItem.ScaleAction.Direction.ToString();
+                                                
+                                                scaleActionValue["type"] = rulesItem.ScaleAction.Type.ToString();
+                                                
+                                                if (rulesItem.ScaleAction.Value != null)
+                                                {
+                                                    scaleActionValue["value"] = rulesItem.ScaleAction.Value;
+                                                }
+                                                
+                                                scaleActionValue["cooldown"] = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
+                                            }
+                                        }
+                                        autoscaleProfileValue["rules"] = rulesArray;
+                                    }
+                                }
+                                
+                                if (profilesItem.FixedDate != null)
+                                {
+                                    JObject fixedDateValue = new JObject();
+                                    autoscaleProfileValue["fixedDate"] = fixedDateValue;
+                                    
+                                    if (profilesItem.FixedDate.TimeZone != null)
+                                    {
+                                        fixedDateValue["timeZone"] = profilesItem.FixedDate.TimeZone;
+                                    }
+                                    
+                                    fixedDateValue["start"] = profilesItem.FixedDate.Start;
+                                    
+                                    fixedDateValue["end"] = profilesItem.FixedDate.End;
+                                }
+                                
+                                if (profilesItem.Recurrence != null)
+                                {
+                                    JObject recurrenceValue = new JObject();
+                                    autoscaleProfileValue["recurrence"] = recurrenceValue;
+                                    
+                                    recurrenceValue["frequency"] = profilesItem.Recurrence.Frequency.ToString();
+                                    
+                                    if (profilesItem.Recurrence.Schedule != null)
+                                    {
+                                        JObject scheduleValue = new JObject();
+                                        recurrenceValue["schedule"] = scheduleValue;
+                                        
+                                        if (profilesItem.Recurrence.Schedule.TimeZone != null)
+                                        {
+                                            scheduleValue["timeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Days != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Days is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Days).IsInitialized)
+                                            {
+                                                JArray daysArray = new JArray();
+                                                foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
+                                                {
+                                                    daysArray.Add(daysItem);
+                                                }
+                                                scheduleValue["days"] = daysArray;
+                                            }
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Hours != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Hours is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Hours).IsInitialized)
+                                            {
+                                                JArray hoursArray = new JArray();
+                                                foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
+                                                {
+                                                    hoursArray.Add(hoursItem);
+                                                }
+                                                scheduleValue["hours"] = hoursArray;
+                                            }
+                                        }
+                                        
+                                        if (profilesItem.Recurrence.Schedule.Minutes != null)
+                                        {
+                                            if (profilesItem.Recurrence.Schedule.Minutes is ILazyCollection == false || ((ILazyCollection)profilesItem.Recurrence.Schedule.Minutes).IsInitialized)
+                                            {
+                                                JArray minutesArray = new JArray();
+                                                foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
+                                                {
+                                                    minutesArray.Add(minutesItem);
+                                                }
+                                                scheduleValue["minutes"] = minutesArray;
+                                            }
+                                        }
+                                    }
+                                }
                             }
-                            
-                            if (profilesItem.Capacity != null)
-                            {
-                                JObject capacityValue = new JObject();
-                                autoscaleProfileValue["capacity"] = capacityValue;
-                                
-                                if (profilesItem.Capacity.Minimum != null)
-                                {
-                                    capacityValue["minimum"] = profilesItem.Capacity.Minimum;
-                                }
-                                
-                                if (profilesItem.Capacity.Maximum != null)
-                                {
-                                    capacityValue["maximum"] = profilesItem.Capacity.Maximum;
-                                }
-                                
-                                if (profilesItem.Capacity.Default != null)
-                                {
-                                    capacityValue["default"] = profilesItem.Capacity.Default;
-                                }
-                            }
-                            
-                            if (profilesItem.Rules != null)
-                            {
-                                JArray rulesArray = new JArray();
-                                foreach (ScaleRule rulesItem in profilesItem.Rules)
-                                {
-                                    JObject scaleRuleValue = new JObject();
-                                    rulesArray.Add(scaleRuleValue);
-                                    
-                                    if (rulesItem.MetricTrigger != null)
-                                    {
-                                        JObject metricTriggerValue = new JObject();
-                                        scaleRuleValue["metricTrigger"] = metricTriggerValue;
-                                        
-                                        if (rulesItem.MetricTrigger.MetricName != null)
-                                        {
-                                            metricTriggerValue["metricName"] = rulesItem.MetricTrigger.MetricName;
-                                        }
-                                        
-                                        if (rulesItem.MetricTrigger.MetricNamespace != null)
-                                        {
-                                            metricTriggerValue["metricNamespace"] = rulesItem.MetricTrigger.MetricNamespace;
-                                        }
-                                        
-                                        if (rulesItem.MetricTrigger.MetricResourceUri != null)
-                                        {
-                                            metricTriggerValue["metricResourceUri"] = rulesItem.MetricTrigger.MetricResourceUri;
-                                        }
-                                        
-                                        metricTriggerValue["timeGrain"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeGrain);
-                                        
-                                        metricTriggerValue["statistic"] = rulesItem.MetricTrigger.Statistic.ToString();
-                                        
-                                        metricTriggerValue["timeWindow"] = TypeConversion.To8601String(rulesItem.MetricTrigger.TimeWindow);
-                                        
-                                        metricTriggerValue["timeAggregation"] = rulesItem.MetricTrigger.TimeAggregation.ToString();
-                                        
-                                        metricTriggerValue["operator"] = rulesItem.MetricTrigger.Operator.ToString();
-                                        
-                                        metricTriggerValue["threshold"] = rulesItem.MetricTrigger.Threshold;
-                                    }
-                                    
-                                    if (rulesItem.ScaleAction != null)
-                                    {
-                                        JObject scaleActionValue = new JObject();
-                                        scaleRuleValue["scaleAction"] = scaleActionValue;
-                                        
-                                        scaleActionValue["direction"] = rulesItem.ScaleAction.Direction.ToString();
-                                        
-                                        scaleActionValue["type"] = rulesItem.ScaleAction.Type.ToString();
-                                        
-                                        if (rulesItem.ScaleAction.Value != null)
-                                        {
-                                            scaleActionValue["value"] = rulesItem.ScaleAction.Value;
-                                        }
-                                        
-                                        scaleActionValue["cooldown"] = TypeConversion.To8601String(rulesItem.ScaleAction.Cooldown);
-                                    }
-                                }
-                                autoscaleProfileValue["rules"] = rulesArray;
-                            }
-                            
-                            if (profilesItem.FixedDate != null)
-                            {
-                                JObject fixedDateValue = new JObject();
-                                autoscaleProfileValue["fixedDate"] = fixedDateValue;
-                                
-                                if (profilesItem.FixedDate.TimeZone != null)
-                                {
-                                    fixedDateValue["timeZone"] = profilesItem.FixedDate.TimeZone;
-                                }
-                                
-                                fixedDateValue["start"] = profilesItem.FixedDate.Start;
-                                
-                                fixedDateValue["end"] = profilesItem.FixedDate.End;
-                            }
-                            
-                            if (profilesItem.Recurrence != null)
-                            {
-                                JObject recurrenceValue = new JObject();
-                                autoscaleProfileValue["recurrence"] = recurrenceValue;
-                                
-                                recurrenceValue["frequency"] = profilesItem.Recurrence.Frequency.ToString();
-                                
-                                if (profilesItem.Recurrence.Schedule != null)
-                                {
-                                    JObject scheduleValue = new JObject();
-                                    recurrenceValue["schedule"] = scheduleValue;
-                                    
-                                    if (profilesItem.Recurrence.Schedule.TimeZone != null)
-                                    {
-                                        scheduleValue["timeZone"] = profilesItem.Recurrence.Schedule.TimeZone;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Days != null)
-                                    {
-                                        JArray daysArray = new JArray();
-                                        foreach (string daysItem in profilesItem.Recurrence.Schedule.Days)
-                                        {
-                                            daysArray.Add(daysItem);
-                                        }
-                                        scheduleValue["days"] = daysArray;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Hours != null)
-                                    {
-                                        JArray hoursArray = new JArray();
-                                        foreach (int hoursItem in profilesItem.Recurrence.Schedule.Hours)
-                                        {
-                                            hoursArray.Add(hoursItem);
-                                        }
-                                        scheduleValue["hours"] = hoursArray;
-                                    }
-                                    
-                                    if (profilesItem.Recurrence.Schedule.Minutes != null)
-                                    {
-                                        JArray minutesArray = new JArray();
-                                        foreach (int minutesItem in profilesItem.Recurrence.Schedule.Minutes)
-                                        {
-                                            minutesArray.Add(minutesItem);
-                                        }
-                                        scheduleValue["minutes"] = minutesArray;
-                                    }
-                                }
-                            }
+                            propertiesValue["profiles"] = profilesArray;
                         }
-                        propertiesValue["profiles"] = profilesArray;
                     }
                     
                     propertiesValue["enabled"] = parameters.Properties.Enabled;

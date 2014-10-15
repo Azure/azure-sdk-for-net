@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -58,7 +59,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// </summary>
         public VirtualMachineGroup()
         {
-            this.VirtualMachineList = new List<VirtualMachine>();
+            this.VirtualMachineList = new LazyList<VirtualMachine>();
         }
     }
 }

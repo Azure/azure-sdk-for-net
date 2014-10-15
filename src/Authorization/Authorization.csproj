@@ -61,7 +61,7 @@
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.WindowsAzure.Common">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.3.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -84,19 +84,19 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets'))" />
   </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5368.22430-prerelease\build\Hydra.Generator.targets')" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftAzureManagementAuthorizationSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Authorization.Specification.1.0.5368.26128-prerelease\tools\Microsoft.Azure.Management.Authorization.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.Azure.Management.Authorization.Specification.1.0.5401.16594-prerelease\tools\Microsoft.Azure.Management.Authorization.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>

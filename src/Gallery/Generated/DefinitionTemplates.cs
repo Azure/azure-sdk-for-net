@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Gallery
 {
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Gallery
         /// </summary>
         public DefinitionTemplates()
         {
-            this.DeploymentTemplateFileUrls = new Dictionary<string, string>();
+            this.DeploymentTemplateFileUrls = new LazyDictionary<string, string>();
         }
     }
 }

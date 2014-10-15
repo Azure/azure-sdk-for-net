@@ -191,41 +191,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (backupRequest.Databases != null)
                 {
-                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    if (backupRequest.Databases is ILazyCollection == false || ((ILazyCollection)backupRequest.Databases).IsInitialized)
                     {
-                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
-                        databasesSequenceElement.Add(databaseBackupSettingElement);
-                        
-                        if (databasesItem.ConnectionString != null)
+                        XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
                         {
-                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringElement.Value = databasesItem.ConnectionString;
-                            databaseBackupSettingElement.Add(connectionStringElement);
+                            XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                            databasesSequenceElement.Add(databaseBackupSettingElement);
+                            
+                            if (databasesItem.ConnectionString != null)
+                            {
+                                XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringElement.Value = databasesItem.ConnectionString;
+                                databaseBackupSettingElement.Add(connectionStringElement);
+                            }
+                            
+                            if (databasesItem.ConnectionStringName != null)
+                            {
+                                XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                                databaseBackupSettingElement.Add(connectionStringNameElement);
+                            }
+                            
+                            if (databasesItem.DatabaseType != null)
+                            {
+                                XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                databaseTypeElement.Value = databasesItem.DatabaseType;
+                                databaseBackupSettingElement.Add(databaseTypeElement);
+                            }
+                            
+                            if (databasesItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = databasesItem.Name;
+                                databaseBackupSettingElement.Add(nameElement);
+                            }
                         }
-                        
-                        if (databasesItem.ConnectionStringName != null)
-                        {
-                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
-                            databaseBackupSettingElement.Add(connectionStringNameElement);
-                        }
-                        
-                        if (databasesItem.DatabaseType != null)
-                        {
-                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
-                            databaseTypeElement.Value = databasesItem.DatabaseType;
-                            databaseBackupSettingElement.Add(databaseTypeElement);
-                        }
-                        
-                        if (databasesItem.Name != null)
-                        {
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = databasesItem.Name;
-                            databaseBackupSettingElement.Add(nameElement);
-                        }
+                        backupRequestElement.Add(databasesSequenceElement);
                     }
-                    backupRequestElement.Add(databasesSequenceElement);
                 }
                 
                 if (backupRequest.Enabled != null)
@@ -1727,41 +1730,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (restoreRequest.Databases != null)
                 {
-                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    if (restoreRequest.Databases is ILazyCollection == false || ((ILazyCollection)restoreRequest.Databases).IsInitialized)
                     {
-                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
-                        databasesSequenceElement.Add(databaseBackupSettingElement);
-                        
-                        if (databasesItem.ConnectionString != null)
+                        XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
                         {
-                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringElement.Value = databasesItem.ConnectionString;
-                            databaseBackupSettingElement.Add(connectionStringElement);
+                            XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                            databasesSequenceElement.Add(databaseBackupSettingElement);
+                            
+                            if (databasesItem.ConnectionString != null)
+                            {
+                                XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringElement.Value = databasesItem.ConnectionString;
+                                databaseBackupSettingElement.Add(connectionStringElement);
+                            }
+                            
+                            if (databasesItem.ConnectionStringName != null)
+                            {
+                                XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                                databaseBackupSettingElement.Add(connectionStringNameElement);
+                            }
+                            
+                            if (databasesItem.DatabaseType != null)
+                            {
+                                XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                databaseTypeElement.Value = databasesItem.DatabaseType;
+                                databaseBackupSettingElement.Add(databaseTypeElement);
+                            }
+                            
+                            if (databasesItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = databasesItem.Name;
+                                databaseBackupSettingElement.Add(nameElement);
+                            }
                         }
-                        
-                        if (databasesItem.ConnectionStringName != null)
-                        {
-                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
-                            databaseBackupSettingElement.Add(connectionStringNameElement);
-                        }
-                        
-                        if (databasesItem.DatabaseType != null)
-                        {
-                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
-                            databaseTypeElement.Value = databasesItem.DatabaseType;
-                            databaseBackupSettingElement.Add(databaseTypeElement);
-                        }
-                        
-                        if (databasesItem.Name != null)
-                        {
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = databasesItem.Name;
-                            databaseBackupSettingElement.Add(nameElement);
-                        }
+                        restoreRequestElement.Add(databasesSequenceElement);
                     }
-                    restoreRequestElement.Add(databasesSequenceElement);
                 }
                 
                 XElement ignoreConflictingHostNamesElement = new XElement(XName.Get("IgnoreConflictingHostNames", "http://schemas.microsoft.com/windowsazure"));
@@ -2807,7 +2813,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 JToken typeValue = connectionStringsValue["Type"];
                                 if (typeValue != null && typeValue.Type != JTokenType.Null)
                                 {
-                                    ConnectionStringType typeInstance = WebSiteManagementClient.ParseConnectionStringType(((string)typeValue));
+                                    ConnectionStringType typeInstance = ((ConnectionStringType)(((int)typeValue)));
                                     connectionStringInfoInstance.Type = typeInstance;
                                 }
                             }
@@ -2884,7 +2890,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                         JToken managedPipelineModeValue = responseDoc["ManagedPipelineMode"];
                         if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
                         {
-                            ManagedPipelineMode managedPipelineModeInstance = WebSiteManagementClient.ParseManagedPipelineMode(((string)managedPipelineModeValue));
+                            ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)(((int)managedPipelineModeValue)));
                             result.ManagedPipelineMode = managedPipelineModeInstance;
                         }
                         
@@ -3059,6 +3065,27 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 }
                             }
                         }
+                        
+                        JToken javaVersionValue = responseDoc["JavaVersion"];
+                        if (javaVersionValue != null && javaVersionValue.Type != JTokenType.Null)
+                        {
+                            string javaVersionInstance = ((string)javaVersionValue);
+                            result.JavaVersion = javaVersionInstance;
+                        }
+                        
+                        JToken javaContainerValue = responseDoc["JavaContainer"];
+                        if (javaContainerValue != null && javaContainerValue.Type != JTokenType.Null)
+                        {
+                            string javaContainerInstance = ((string)javaContainerValue);
+                            result.JavaContainer = javaContainerInstance;
+                        }
+                        
+                        JToken javaContainerVersionValue = responseDoc["JavaContainerVersion"];
+                        if (javaContainerVersionValue != null && javaContainerVersionValue.Type != JTokenType.Null)
+                        {
+                            string javaContainerVersionInstance = ((string)javaContainerVersionValue);
+                            result.JavaContainerVersion = javaContainerVersionInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -3149,11 +3176,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeDataString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime()));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             if (parameters.TimeGrain != null)
             {
@@ -4780,41 +4807,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (restoreRequest.Databases != null)
                 {
-                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
+                    if (restoreRequest.Databases is ILazyCollection == false || ((ILazyCollection)restoreRequest.Databases).IsInitialized)
                     {
-                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
-                        databasesSequenceElement.Add(databaseBackupSettingElement);
-                        
-                        if (databasesItem.ConnectionString != null)
+                        XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (DatabaseBackupSetting databasesItem in restoreRequest.Databases)
                         {
-                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringElement.Value = databasesItem.ConnectionString;
-                            databaseBackupSettingElement.Add(connectionStringElement);
+                            XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                            databasesSequenceElement.Add(databaseBackupSettingElement);
+                            
+                            if (databasesItem.ConnectionString != null)
+                            {
+                                XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringElement.Value = databasesItem.ConnectionString;
+                                databaseBackupSettingElement.Add(connectionStringElement);
+                            }
+                            
+                            if (databasesItem.ConnectionStringName != null)
+                            {
+                                XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                                databaseBackupSettingElement.Add(connectionStringNameElement);
+                            }
+                            
+                            if (databasesItem.DatabaseType != null)
+                            {
+                                XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                databaseTypeElement.Value = databasesItem.DatabaseType;
+                                databaseBackupSettingElement.Add(databaseTypeElement);
+                            }
+                            
+                            if (databasesItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = databasesItem.Name;
+                                databaseBackupSettingElement.Add(nameElement);
+                            }
                         }
-                        
-                        if (databasesItem.ConnectionStringName != null)
-                        {
-                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
-                            databaseBackupSettingElement.Add(connectionStringNameElement);
-                        }
-                        
-                        if (databasesItem.DatabaseType != null)
-                        {
-                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
-                            databaseTypeElement.Value = databasesItem.DatabaseType;
-                            databaseBackupSettingElement.Add(databaseTypeElement);
-                        }
-                        
-                        if (databasesItem.Name != null)
-                        {
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = databasesItem.Name;
-                            databaseBackupSettingElement.Add(nameElement);
-                        }
+                        restoreRequestElement.Add(databasesSequenceElement);
                     }
-                    restoreRequestElement.Add(databasesSequenceElement);
                 }
                 
                 XElement ignoreConflictingHostNamesElement = new XElement(XName.Get("IgnoreConflictingHostNames", "http://schemas.microsoft.com/windowsazure"));
@@ -5261,52 +5291,58 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.HostNameSslStates != null)
                 {
-                    XElement hostNameSslStatesSequenceElement = new XElement(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesItem in parameters.HostNameSslStates)
+                    if (parameters.HostNameSslStates is ILazyCollection == false || ((ILazyCollection)parameters.HostNameSslStates).IsInitialized)
                     {
-                        XElement webSiteHostNameSslStateElement = new XElement(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure"));
-                        hostNameSslStatesSequenceElement.Add(webSiteHostNameSslStateElement);
-                        
-                        XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        nameElement.Value = hostNameSslStatesItem.Name;
-                        webSiteHostNameSslStateElement.Add(nameElement);
-                        
-                        XElement sslStateElement = new XElement(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
-                        sslStateElement.Value = hostNameSslStatesItem.SslState.ToString();
-                        webSiteHostNameSslStateElement.Add(sslStateElement);
-                        
-                        if (hostNameSslStatesItem.Thumbprint != null)
+                        XElement hostNameSslStatesSequenceElement = new XElement(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesItem in parameters.HostNameSslStates)
                         {
-                            XElement thumbprintElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            thumbprintElement.Value = hostNameSslStatesItem.Thumbprint;
-                            webSiteHostNameSslStateElement.Add(thumbprintElement);
+                            XElement webSiteHostNameSslStateElement = new XElement(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure"));
+                            hostNameSslStatesSequenceElement.Add(webSiteHostNameSslStateElement);
+                            
+                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            nameElement.Value = hostNameSslStatesItem.Name;
+                            webSiteHostNameSslStateElement.Add(nameElement);
+                            
+                            XElement sslStateElement = new XElement(XName.Get("SslState", "http://schemas.microsoft.com/windowsazure"));
+                            sslStateElement.Value = hostNameSslStatesItem.SslState.ToString();
+                            webSiteHostNameSslStateElement.Add(sslStateElement);
+                            
+                            if (hostNameSslStatesItem.Thumbprint != null)
+                            {
+                                XElement thumbprintElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                thumbprintElement.Value = hostNameSslStatesItem.Thumbprint;
+                                webSiteHostNameSslStateElement.Add(thumbprintElement);
+                            }
+                            else
+                            {
+                                XElement emptyElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
+                                XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
+                                nilAttribute.Value = "true";
+                                emptyElement.Add(nilAttribute);
+                                webSiteHostNameSslStateElement.Add(emptyElement);
+                            }
+                            
+                            XElement toUpdateElement = new XElement(XName.Get("ToUpdate", "http://schemas.microsoft.com/windowsazure"));
+                            toUpdateElement.Value = "true";
+                            webSiteHostNameSslStateElement.Add(toUpdateElement);
                         }
-                        else
-                        {
-                            XElement emptyElement = new XElement(XName.Get("Thumbprint", "http://schemas.microsoft.com/windowsazure"));
-                            XAttribute nilAttribute = new XAttribute(XName.Get("nil", "http://www.w3.org/2001/XMLSchema-instance"), "");
-                            nilAttribute.Value = "true";
-                            emptyElement.Add(nilAttribute);
-                            webSiteHostNameSslStateElement.Add(emptyElement);
-                        }
-                        
-                        XElement toUpdateElement = new XElement(XName.Get("ToUpdate", "http://schemas.microsoft.com/windowsazure"));
-                        toUpdateElement.Value = "true";
-                        webSiteHostNameSslStateElement.Add(toUpdateElement);
+                        siteElement.Add(hostNameSslStatesSequenceElement);
                     }
-                    siteElement.Add(hostNameSslStatesSequenceElement);
                 }
                 
                 if (parameters.HostNames != null)
                 {
-                    XElement hostNamesSequenceElement = new XElement(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (string hostNamesItem in parameters.HostNames)
+                    if (parameters.HostNames is ILazyCollection == false || ((ILazyCollection)parameters.HostNames).IsInitialized)
                     {
-                        XElement hostNamesItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
-                        hostNamesItemElement.Value = hostNamesItem;
-                        hostNamesSequenceElement.Add(hostNamesItemElement);
+                        XElement hostNamesSequenceElement = new XElement(XName.Get("HostNames", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (string hostNamesItem in parameters.HostNames)
+                        {
+                            XElement hostNamesItemElement = new XElement(XName.Get("string", "http://schemas.microsoft.com/2003/10/Serialization/Arrays"));
+                            hostNamesItemElement.Value = hostNamesItem;
+                            hostNamesSequenceElement.Add(hostNamesItemElement);
+                        }
+                        siteElement.Add(hostNamesSequenceElement);
                     }
-                    siteElement.Add(hostNamesSequenceElement);
                 }
                 
                 if (parameters.ServerFarm != null)
@@ -5725,41 +5761,44 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (backupRequest.Databases != null)
                 {
-                    XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
-                    foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
+                    if (backupRequest.Databases is ILazyCollection == false || ((ILazyCollection)backupRequest.Databases).IsInitialized)
                     {
-                        XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
-                        databasesSequenceElement.Add(databaseBackupSettingElement);
-                        
-                        if (databasesItem.ConnectionString != null)
+                        XElement databasesSequenceElement = new XElement(XName.Get("Databases", "http://schemas.microsoft.com/windowsazure"));
+                        foreach (DatabaseBackupSetting databasesItem in backupRequest.Databases)
                         {
-                            XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringElement.Value = databasesItem.ConnectionString;
-                            databaseBackupSettingElement.Add(connectionStringElement);
+                            XElement databaseBackupSettingElement = new XElement(XName.Get("DatabaseBackupSetting", "http://schemas.microsoft.com/windowsazure"));
+                            databasesSequenceElement.Add(databaseBackupSettingElement);
+                            
+                            if (databasesItem.ConnectionString != null)
+                            {
+                                XElement connectionStringElement = new XElement(XName.Get("ConnectionString", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringElement.Value = databasesItem.ConnectionString;
+                                databaseBackupSettingElement.Add(connectionStringElement);
+                            }
+                            
+                            if (databasesItem.ConnectionStringName != null)
+                            {
+                                XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
+                                connectionStringNameElement.Value = databasesItem.ConnectionStringName;
+                                databaseBackupSettingElement.Add(connectionStringNameElement);
+                            }
+                            
+                            if (databasesItem.DatabaseType != null)
+                            {
+                                XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
+                                databaseTypeElement.Value = databasesItem.DatabaseType;
+                                databaseBackupSettingElement.Add(databaseTypeElement);
+                            }
+                            
+                            if (databasesItem.Name != null)
+                            {
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = databasesItem.Name;
+                                databaseBackupSettingElement.Add(nameElement);
+                            }
                         }
-                        
-                        if (databasesItem.ConnectionStringName != null)
-                        {
-                            XElement connectionStringNameElement = new XElement(XName.Get("ConnectionStringName", "http://schemas.microsoft.com/windowsazure"));
-                            connectionStringNameElement.Value = databasesItem.ConnectionStringName;
-                            databaseBackupSettingElement.Add(connectionStringNameElement);
-                        }
-                        
-                        if (databasesItem.DatabaseType != null)
-                        {
-                            XElement databaseTypeElement = new XElement(XName.Get("DatabaseType", "http://schemas.microsoft.com/windowsazure"));
-                            databaseTypeElement.Value = databasesItem.DatabaseType;
-                            databaseBackupSettingElement.Add(databaseTypeElement);
-                        }
-                        
-                        if (databasesItem.Name != null)
-                        {
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = databasesItem.Name;
-                            databaseBackupSettingElement.Add(nameElement);
-                        }
+                        backupRequestElement.Add(databasesSequenceElement);
                     }
-                    backupRequestElement.Add(databasesSequenceElement);
                 }
                 
                 if (backupRequest.Enabled != null)
@@ -5935,52 +5974,61 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 JObject webSiteUpdateConfigurationParametersValue = new JObject();
                 requestDoc = webSiteUpdateConfigurationParametersValue;
                 
-                JArray appSettingsDictionary = new JArray();
                 if (parameters.AppSettings != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.AppSettings)
+                    if (parameters.AppSettings is ILazyCollection == false || ((ILazyCollection)parameters.AppSettings).IsInitialized)
                     {
-                        string appSettingsKey = pair.Key;
-                        string appSettingsValue = pair.Value;
-                        JObject appSettingsItemObject = new JObject();
-                        appSettingsItemObject["Name"] = appSettingsKey;
-                        appSettingsItemObject["Value"] = appSettingsValue;
-                        appSettingsDictionary.Add(appSettingsItemObject);
+                        JArray appSettingsDictionary = new JArray();
+                        foreach (KeyValuePair<string, string> pair in parameters.AppSettings)
+                        {
+                            string appSettingsKey = pair.Key;
+                            string appSettingsValue = pair.Value;
+                            JObject appSettingsItemObject = new JObject();
+                            appSettingsItemObject["Name"] = appSettingsKey;
+                            appSettingsItemObject["Value"] = appSettingsValue;
+                            appSettingsDictionary.Add(appSettingsItemObject);
+                        }
+                        webSiteUpdateConfigurationParametersValue["AppSettings"] = appSettingsDictionary;
                     }
                 }
-                webSiteUpdateConfigurationParametersValue["AppSettings"] = appSettingsDictionary;
                 
                 if (parameters.ConnectionStrings != null)
                 {
-                    JArray connectionStringsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStrings)
+                    if (parameters.ConnectionStrings is ILazyCollection == false || ((ILazyCollection)parameters.ConnectionStrings).IsInitialized)
                     {
-                        JObject connectionStringInfoValue = new JObject();
-                        connectionStringsArray.Add(connectionStringInfoValue);
-                        
-                        if (connectionStringsItem.ConnectionString != null)
+                        JArray connectionStringsArray = new JArray();
+                        foreach (WebSiteUpdateConfigurationParameters.ConnectionStringInfo connectionStringsItem in parameters.ConnectionStrings)
                         {
-                            connectionStringInfoValue["ConnectionString"] = connectionStringsItem.ConnectionString;
+                            JObject connectionStringInfoValue = new JObject();
+                            connectionStringsArray.Add(connectionStringInfoValue);
+                            
+                            if (connectionStringsItem.ConnectionString != null)
+                            {
+                                connectionStringInfoValue["ConnectionString"] = connectionStringsItem.ConnectionString;
+                            }
+                            
+                            if (connectionStringsItem.Name != null)
+                            {
+                                connectionStringInfoValue["Name"] = connectionStringsItem.Name;
+                            }
+                            
+                            connectionStringInfoValue["Type"] = ((int)connectionStringsItem.Type);
                         }
-                        
-                        if (connectionStringsItem.Name != null)
-                        {
-                            connectionStringInfoValue["Name"] = connectionStringsItem.Name;
-                        }
-                        
-                        connectionStringInfoValue["Type"] = WebSiteManagementClient.ConnectionStringTypeToString(connectionStringsItem.Type);
+                        webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                     }
-                    webSiteUpdateConfigurationParametersValue["ConnectionStrings"] = connectionStringsArray;
                 }
                 
                 if (parameters.DefaultDocuments != null)
                 {
-                    JArray defaultDocumentsArray = new JArray();
-                    foreach (string defaultDocumentsItem in parameters.DefaultDocuments)
+                    if (parameters.DefaultDocuments is ILazyCollection == false || ((ILazyCollection)parameters.DefaultDocuments).IsInitialized)
                     {
-                        defaultDocumentsArray.Add(defaultDocumentsItem);
+                        JArray defaultDocumentsArray = new JArray();
+                        foreach (string defaultDocumentsItem in parameters.DefaultDocuments)
+                        {
+                            defaultDocumentsArray.Add(defaultDocumentsItem);
+                        }
+                        webSiteUpdateConfigurationParametersValue["DefaultDocuments"] = defaultDocumentsArray;
                     }
-                    webSiteUpdateConfigurationParametersValue["DefaultDocuments"] = defaultDocumentsArray;
                 }
                 
                 if (parameters.DetailedErrorLoggingEnabled != null)
@@ -5995,28 +6043,31 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.HandlerMappings != null)
                 {
-                    JArray handlerMappingsArray = new JArray();
-                    foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappings)
+                    if (parameters.HandlerMappings is ILazyCollection == false || ((ILazyCollection)parameters.HandlerMappings).IsInitialized)
                     {
-                        JObject handlerMappingValue = new JObject();
-                        handlerMappingsArray.Add(handlerMappingValue);
-                        
-                        if (handlerMappingsItem.Arguments != null)
+                        JArray handlerMappingsArray = new JArray();
+                        foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappings)
                         {
-                            handlerMappingValue["Arguments"] = handlerMappingsItem.Arguments;
+                            JObject handlerMappingValue = new JObject();
+                            handlerMappingsArray.Add(handlerMappingValue);
+                            
+                            if (handlerMappingsItem.Arguments != null)
+                            {
+                                handlerMappingValue["Arguments"] = handlerMappingsItem.Arguments;
+                            }
+                            
+                            if (handlerMappingsItem.Extension != null)
+                            {
+                                handlerMappingValue["Extension"] = handlerMappingsItem.Extension;
+                            }
+                            
+                            if (handlerMappingsItem.ScriptProcessor != null)
+                            {
+                                handlerMappingValue["ScriptProcessor"] = handlerMappingsItem.ScriptProcessor;
+                            }
                         }
-                        
-                        if (handlerMappingsItem.Extension != null)
-                        {
-                            handlerMappingValue["Extension"] = handlerMappingsItem.Extension;
-                        }
-                        
-                        if (handlerMappingsItem.ScriptProcessor != null)
-                        {
-                            handlerMappingValue["ScriptProcessor"] = handlerMappingsItem.ScriptProcessor;
-                        }
+                        webSiteUpdateConfigurationParametersValue["HandlerMappings"] = handlerMappingsArray;
                     }
-                    webSiteUpdateConfigurationParametersValue["HandlerMappings"] = handlerMappingsArray;
                 }
                 
                 if (parameters.HttpLoggingEnabled != null)
@@ -6031,23 +6082,26 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.ManagedPipelineMode != null)
                 {
-                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = WebSiteManagementClient.ManagedPipelineModeToString(parameters.ManagedPipelineMode.Value);
+                    webSiteUpdateConfigurationParametersValue["ManagedPipelineMode"] = ((int)parameters.ManagedPipelineMode.Value);
                 }
                 
-                JArray metadataDictionary = new JArray();
                 if (parameters.Metadata != null)
                 {
-                    foreach (KeyValuePair<string, string> pair2 in parameters.Metadata)
+                    if (parameters.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.Metadata).IsInitialized)
                     {
-                        string metadataKey = pair2.Key;
-                        string metadataValue = pair2.Value;
-                        JObject metadataItemObject = new JObject();
-                        metadataItemObject["Name"] = metadataKey;
-                        metadataItemObject["Value"] = metadataValue;
-                        metadataDictionary.Add(metadataItemObject);
+                        JArray metadataDictionary = new JArray();
+                        foreach (KeyValuePair<string, string> pair2 in parameters.Metadata)
+                        {
+                            string metadataKey = pair2.Key;
+                            string metadataValue = pair2.Value;
+                            JObject metadataItemObject = new JObject();
+                            metadataItemObject["Name"] = metadataKey;
+                            metadataItemObject["Value"] = metadataValue;
+                            metadataDictionary.Add(metadataItemObject);
+                        }
+                        webSiteUpdateConfigurationParametersValue["Metadata"] = metadataDictionary;
                     }
                 }
-                webSiteUpdateConfigurationParametersValue["Metadata"] = metadataDictionary;
                 
                 if (parameters.NetFrameworkVersion != null)
                 {
@@ -6103,55 +6157,73 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 
                 if (parameters.RoutingRules != null)
                 {
-                    JArray routingRulesArray = new JArray();
-                    foreach (RoutingRule routingRulesItem in parameters.RoutingRules)
+                    if (parameters.RoutingRules is ILazyCollection == false || ((ILazyCollection)parameters.RoutingRules).IsInitialized)
                     {
-                        JObject routingRuleValue = new JObject();
-                        routingRulesArray.Add(routingRuleValue);
-                        if (routingRulesItem is RampUpRule)
+                        JArray routingRulesArray = new JArray();
+                        foreach (RoutingRule routingRulesItem in parameters.RoutingRules)
                         {
-                            routingRuleValue["__type"] = "RampUpRule:http://schemas.microsoft.com/windowsazure";
-                            RampUpRule derived = ((RampUpRule)routingRulesItem);
-                            
-                            if (derived.ActionHostName != null)
+                            JObject routingRuleValue = new JObject();
+                            routingRulesArray.Add(routingRuleValue);
+                            if (routingRulesItem is RampUpRule)
                             {
-                                routingRuleValue["ActionHostName"] = derived.ActionHostName;
-                            }
-                            
-                            routingRuleValue["ReroutePercentage"] = derived.ReroutePercentage;
-                            
-                            if (derived.ChangeStep != null)
-                            {
-                                routingRuleValue["ChangeStep"] = derived.ChangeStep.Value;
-                            }
-                            
-                            if (derived.ChangeIntervalInMinutes != null)
-                            {
-                                routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes.Value;
-                            }
-                            
-                            if (derived.MinReroutePercentage != null)
-                            {
-                                routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage.Value;
-                            }
-                            
-                            if (derived.MaxReroutePercentage != null)
-                            {
-                                routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage.Value;
-                            }
-                            
-                            if (derived.ChangeDecisionCallbackUrl != null)
-                            {
-                                routingRuleValue["ChangeDecisionCallbackUrl"] = derived.ChangeDecisionCallbackUrl;
-                            }
-                            
-                            if (derived.Name != null)
-                            {
-                                routingRuleValue["Name"] = derived.Name;
+                                routingRuleValue["__type"] = "RampUpRule:http://schemas.microsoft.com/windowsazure";
+                                RampUpRule derived = ((RampUpRule)routingRulesItem);
+                                
+                                if (derived.ActionHostName != null)
+                                {
+                                    routingRuleValue["ActionHostName"] = derived.ActionHostName;
+                                }
+                                
+                                routingRuleValue["ReroutePercentage"] = derived.ReroutePercentage;
+                                
+                                if (derived.ChangeStep != null)
+                                {
+                                    routingRuleValue["ChangeStep"] = derived.ChangeStep.Value;
+                                }
+                                
+                                if (derived.ChangeIntervalInMinutes != null)
+                                {
+                                    routingRuleValue["ChangeIntervalInMinutes"] = derived.ChangeIntervalInMinutes.Value;
+                                }
+                                
+                                if (derived.MinReroutePercentage != null)
+                                {
+                                    routingRuleValue["MinReroutePercentage"] = derived.MinReroutePercentage.Value;
+                                }
+                                
+                                if (derived.MaxReroutePercentage != null)
+                                {
+                                    routingRuleValue["MaxReroutePercentage"] = derived.MaxReroutePercentage.Value;
+                                }
+                                
+                                if (derived.ChangeDecisionCallbackUrl != null)
+                                {
+                                    routingRuleValue["ChangeDecisionCallbackUrl"] = derived.ChangeDecisionCallbackUrl;
+                                }
+                                
+                                if (derived.Name != null)
+                                {
+                                    routingRuleValue["Name"] = derived.Name;
+                                }
                             }
                         }
+                        webSiteUpdateConfigurationParametersValue["RoutingRules"] = routingRulesArray;
                     }
-                    webSiteUpdateConfigurationParametersValue["RoutingRules"] = routingRulesArray;
+                }
+                
+                if (parameters.JavaVersion != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["JavaVersion"] = parameters.JavaVersion;
+                }
+                
+                if (parameters.JavaContainer != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["JavaContainer"] = parameters.JavaContainer;
+                }
+                
+                if (parameters.JavaContainerVersion != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["JavaContainerVersion"] = parameters.JavaContainerVersion;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

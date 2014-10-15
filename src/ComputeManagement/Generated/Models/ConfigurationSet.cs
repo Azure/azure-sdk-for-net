@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -303,10 +304,10 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ConfigurationSet()
         {
-            this.InputEndpoints = new List<InputEndpoint>();
-            this.PublicIPs = new List<ConfigurationSet.PublicIP>();
-            this.StoredCertificateSettings = new List<StoredCertificateSettings>();
-            this.SubnetNames = new List<string>();
+            this.InputEndpoints = new LazyList<InputEndpoint>();
+            this.PublicIPs = new LazyList<ConfigurationSet.PublicIP>();
+            this.StoredCertificateSettings = new LazyList<StoredCertificateSettings>();
+            this.SubnetNames = new LazyList<string>();
         }
         
         /// <summary>

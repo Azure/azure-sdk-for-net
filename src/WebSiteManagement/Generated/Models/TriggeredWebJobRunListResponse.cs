@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.WebSitesExtensions.Models;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public TriggeredWebJobRunListResponse()
         {
-            this.TriggeredWebJobRuns = new List<TriggeredWebJobRun>();
+            this.TriggeredWebJobRuns = new LazyList<TriggeredWebJobRun>();
         }
         
         /// <summary>

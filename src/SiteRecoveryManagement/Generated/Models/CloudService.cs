@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.RecoveryServices.Models;
 
 namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
@@ -91,7 +92,7 @@ namespace Microsoft.WindowsAzure.Management.RecoveryServices.Models
         /// </summary>
         public CloudService()
         {
-            this.Resources = new List<Vault>();
+            this.Resources = new LazyList<Vault>();
         }
     }
 }

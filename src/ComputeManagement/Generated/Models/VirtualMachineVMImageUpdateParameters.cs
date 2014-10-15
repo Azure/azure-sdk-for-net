@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -190,7 +191,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageUpdateParameters()
         {
-            this.DataDiskConfigurations = new List<DataDiskConfigurationUpdateParameters>();
+            this.DataDiskConfigurations = new LazyList<DataDiskConfigurationUpdateParameters>();
         }
         
         /// <summary>

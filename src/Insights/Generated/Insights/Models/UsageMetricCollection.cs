@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public UsageMetricCollection()
         {
-            this.Value = new List<UsageMetric>();
+            this.Value = new LazyList<UsageMetric>();
         }
     }
 }

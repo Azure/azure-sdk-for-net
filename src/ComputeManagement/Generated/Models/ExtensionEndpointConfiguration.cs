@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -66,8 +67,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public ExtensionEndpointConfiguration()
         {
-            this.InputEndpoints = new List<ExtensionEndpointConfiguration.InputEndpoint>();
-            this.InternalEndpoints = new List<ExtensionEndpointConfiguration.InternalEndpoint>();
+            this.InputEndpoints = new LazyList<ExtensionEndpointConfiguration.InputEndpoint>();
+            this.InternalEndpoints = new LazyList<ExtensionEndpointConfiguration.InternalEndpoint>();
         }
         
         /// <summary>
