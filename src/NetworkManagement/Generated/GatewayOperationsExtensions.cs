@@ -315,6 +315,52 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Begin Remove Virtual Network Gateway Shared Key operation
+        /// removes the default sites on the virtual network gateway for the
+        /// specified virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginRemoveDefaultSites(this IGatewayOperations operations, string networkName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginRemoveDefaultSitesAsync(networkName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Remove Virtual Network Gateway Shared Key operation
+        /// removes the default sites on the virtual network gateway for the
+        /// specified virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginRemoveDefaultSitesAsync(this IGatewayOperations operations, string networkName)
+        {
+            return operations.BeginRemoveDefaultSitesAsync(networkName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Begin Reset Virtual Network Gateway Shared Key operation resets
         /// the shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -378,6 +424,60 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayOperationResponse> BeginResetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
         {
             return operations.BeginResetSharedKeyAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set Default Sites request.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static GatewayOperationResponse BeginSetDefaultSites(this IGatewayOperations operations, string networkName, GatewaySetDefaultSiteListParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).BeginSetDefaultSitesAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Begin Set Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set Default Sites request.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<GatewayOperationResponse> BeginSetDefaultSitesAsync(this IGatewayOperations operations, string networkName, GatewaySetDefaultSiteListParameters parameters)
+        {
+            return operations.BeginSetDefaultSitesAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -1215,6 +1315,66 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// The Remove Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse RemoveDefaultSites(this IGatewayOperations operations, string networkName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).RemoveDefaultSitesAsync(networkName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Remove Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> RemoveDefaultSitesAsync(this IGatewayOperations operations, string networkName)
+        {
+            return operations.RemoveDefaultSitesAsync(networkName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Reset Virtual Network Gateway Shared Key operation resets the
         /// shared key on the virtual network gateway for the specified
         /// virtual network connection to the specified local network in
@@ -1292,6 +1452,74 @@ namespace Microsoft.WindowsAzure
         public static Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(this IGatewayOperations operations, string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters)
         {
             return operations.ResetSharedKeyAsync(networkName, localNetworkName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Set Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set Default Sites request.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static GatewayGetOperationStatusResponse SetDefaultSites(this IGatewayOperations operations, string networkName, GatewaySetDefaultSiteListParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IGatewayOperations)s).SetDefaultSitesAsync(networkName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Set Virtual Network Gateway Shared Key operation sets the
+        /// default sites on the virtual network gateway for the specified
+        /// virtual network.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IGatewayOperations.
+        /// </param>
+        /// <param name='networkName'>
+        /// Required. The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Parameters supplied to the Begin Virtual Network Gateway
+        /// Set Default Sites request.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<GatewayGetOperationStatusResponse> SetDefaultSitesAsync(this IGatewayOperations operations, string networkName, GatewaySetDefaultSiteListParameters parameters)
+        {
+            return operations.SetDefaultSitesAsync(networkName, parameters, CancellationToken.None);
         }
         
         /// <summary>

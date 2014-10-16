@@ -24,14 +24,28 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public enum GatewayDiagnosticsState
+    /// <summary>
+    /// The parameters for SetDefaultSites.
+    /// </summary>
+    public partial class GatewaySetDefaultSiteListParameters
     {
-        Ready = 0,
+        private string _defaultSite;
         
-        Scheduled = 1,
+        /// <summary>
+        /// Optional. The default local network site.
+        /// </summary>
+        public string DefaultSite
+        {
+            get { return this._defaultSite; }
+            set { this._defaultSite = value; }
+        }
         
-        InProgress = 2,
-        
-        StopInProgress = 3,
+        /// <summary>
+        /// Initializes a new instance of the
+        /// GatewaySetDefaultSiteListParameters class.
+        /// </summary>
+        public GatewaySetDefaultSiteListParameters()
+        {
+        }
     }
 }

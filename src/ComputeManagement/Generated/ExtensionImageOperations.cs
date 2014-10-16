@@ -272,52 +272,58 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
-                        XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsItem in parameters.ExtensionEndpoints.InputEndpoints)
+                        if (parameters.ExtensionEndpoints.InputEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InputEndpoints).IsInitialized)
                         {
-                            XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
-                            inputEndpointsSequenceElement.Add(inputEndpointElement);
-                            
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = inputEndpointsItem.Name;
-                            inputEndpointElement.Add(nameElement);
-                            
-                            XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement.Value = inputEndpointsItem.Protocol;
-                            inputEndpointElement.Add(protocolElement);
-                            
-                            XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement.Value = inputEndpointsItem.Port.ToString();
-                            inputEndpointElement.Add(portElement);
-                            
-                            XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                            localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
-                            inputEndpointElement.Add(localPortElement);
+                            XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsItem in parameters.ExtensionEndpoints.InputEndpoints)
+                            {
+                                XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                inputEndpointsSequenceElement.Add(inputEndpointElement);
+                                
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = inputEndpointsItem.Name;
+                                inputEndpointElement.Add(nameElement);
+                                
+                                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement.Value = inputEndpointsItem.Protocol;
+                                inputEndpointElement.Add(protocolElement);
+                                
+                                XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement.Value = inputEndpointsItem.Port.ToString();
+                                inputEndpointElement.Add(portElement);
+                                
+                                XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
+                                inputEndpointElement.Add(localPortElement);
+                            }
+                            endpointsElement.Add(inputEndpointsSequenceElement);
                         }
-                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
                     {
-                        XElement internalEndpointsSequenceElement = new XElement(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionEndpointConfiguration.InternalEndpoint internalEndpointsItem in parameters.ExtensionEndpoints.InternalEndpoints)
+                        if (parameters.ExtensionEndpoints.InternalEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InternalEndpoints).IsInitialized)
                         {
-                            XElement internalEndpointElement = new XElement(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure"));
-                            internalEndpointsSequenceElement.Add(internalEndpointElement);
-                            
-                            XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement2.Value = internalEndpointsItem.Name;
-                            internalEndpointElement.Add(nameElement2);
-                            
-                            XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement2.Value = internalEndpointsItem.Protocol;
-                            internalEndpointElement.Add(protocolElement2);
-                            
-                            XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement2.Value = internalEndpointsItem.Port.ToString();
-                            internalEndpointElement.Add(portElement2);
+                            XElement internalEndpointsSequenceElement = new XElement(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InternalEndpoint internalEndpointsItem in parameters.ExtensionEndpoints.InternalEndpoints)
+                            {
+                                XElement internalEndpointElement = new XElement(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                internalEndpointsSequenceElement.Add(internalEndpointElement);
+                                
+                                XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement2.Value = internalEndpointsItem.Name;
+                                internalEndpointElement.Add(nameElement2);
+                                
+                                XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement2.Value = internalEndpointsItem.Protocol;
+                                internalEndpointElement.Add(protocolElement2);
+                                
+                                XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement2.Value = internalEndpointsItem.Port.ToString();
+                                internalEndpointElement.Add(portElement2);
+                            }
+                            endpointsElement.Add(internalEndpointsSequenceElement);
                         }
-                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 
@@ -871,52 +877,58 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     
                     if (parameters.ExtensionEndpoints.InputEndpoints != null)
                     {
-                        XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsItem in parameters.ExtensionEndpoints.InputEndpoints)
+                        if (parameters.ExtensionEndpoints.InputEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InputEndpoints).IsInitialized)
                         {
-                            XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
-                            inputEndpointsSequenceElement.Add(inputEndpointElement);
-                            
-                            XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement.Value = inputEndpointsItem.Name;
-                            inputEndpointElement.Add(nameElement);
-                            
-                            XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement.Value = inputEndpointsItem.Protocol;
-                            inputEndpointElement.Add(protocolElement);
-                            
-                            XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement.Value = inputEndpointsItem.Port.ToString();
-                            inputEndpointElement.Add(portElement);
-                            
-                            XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
-                            localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
-                            inputEndpointElement.Add(localPortElement);
+                            XElement inputEndpointsSequenceElement = new XElement(XName.Get("InputEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InputEndpoint inputEndpointsItem in parameters.ExtensionEndpoints.InputEndpoints)
+                            {
+                                XElement inputEndpointElement = new XElement(XName.Get("InputEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                inputEndpointsSequenceElement.Add(inputEndpointElement);
+                                
+                                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement.Value = inputEndpointsItem.Name;
+                                inputEndpointElement.Add(nameElement);
+                                
+                                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement.Value = inputEndpointsItem.Protocol;
+                                inputEndpointElement.Add(protocolElement);
+                                
+                                XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement.Value = inputEndpointsItem.Port.ToString();
+                                inputEndpointElement.Add(portElement);
+                                
+                                XElement localPortElement = new XElement(XName.Get("LocalPort", "http://schemas.microsoft.com/windowsazure"));
+                                localPortElement.Value = inputEndpointsItem.LocalPort.ToString();
+                                inputEndpointElement.Add(localPortElement);
+                            }
+                            endpointsElement.Add(inputEndpointsSequenceElement);
                         }
-                        endpointsElement.Add(inputEndpointsSequenceElement);
                     }
                     
                     if (parameters.ExtensionEndpoints.InternalEndpoints != null)
                     {
-                        XElement internalEndpointsSequenceElement = new XElement(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        foreach (ExtensionEndpointConfiguration.InternalEndpoint internalEndpointsItem in parameters.ExtensionEndpoints.InternalEndpoints)
+                        if (parameters.ExtensionEndpoints.InternalEndpoints is ILazyCollection == false || ((ILazyCollection)parameters.ExtensionEndpoints.InternalEndpoints).IsInitialized)
                         {
-                            XElement internalEndpointElement = new XElement(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure"));
-                            internalEndpointsSequenceElement.Add(internalEndpointElement);
-                            
-                            XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                            nameElement2.Value = internalEndpointsItem.Name;
-                            internalEndpointElement.Add(nameElement2);
-                            
-                            XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                            protocolElement2.Value = internalEndpointsItem.Protocol;
-                            internalEndpointElement.Add(protocolElement2);
-                            
-                            XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                            portElement2.Value = internalEndpointsItem.Port.ToString();
-                            internalEndpointElement.Add(portElement2);
+                            XElement internalEndpointsSequenceElement = new XElement(XName.Get("InternalEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (ExtensionEndpointConfiguration.InternalEndpoint internalEndpointsItem in parameters.ExtensionEndpoints.InternalEndpoints)
+                            {
+                                XElement internalEndpointElement = new XElement(XName.Get("InternalEndpoint", "http://schemas.microsoft.com/windowsazure"));
+                                internalEndpointsSequenceElement.Add(internalEndpointElement);
+                                
+                                XElement nameElement2 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement2.Value = internalEndpointsItem.Name;
+                                internalEndpointElement.Add(nameElement2);
+                                
+                                XElement protocolElement2 = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                                protocolElement2.Value = internalEndpointsItem.Protocol;
+                                internalEndpointElement.Add(protocolElement2);
+                                
+                                XElement portElement2 = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                                portElement2.Value = internalEndpointsItem.Port.ToString();
+                                internalEndpointElement.Add(portElement2);
+                            }
+                            endpointsElement.Add(internalEndpointsSequenceElement);
                         }
-                        endpointsElement.Add(internalEndpointsSequenceElement);
                     }
                 }
                 

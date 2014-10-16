@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public WindowsRemoteManagementSettings()
         {
-            this.Listeners = new List<WindowsRemoteManagementListener>();
+            this.Listeners = new LazyList<WindowsRemoteManagementListener>();
         }
     }
 }

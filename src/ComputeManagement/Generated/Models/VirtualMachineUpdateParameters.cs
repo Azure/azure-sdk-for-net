@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -148,9 +149,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineUpdateParameters()
         {
-            this.ConfigurationSets = new List<ConfigurationSet>();
-            this.DataVirtualHardDisks = new List<DataVirtualHardDisk>();
-            this.ResourceExtensionReferences = new List<ResourceExtensionReference>();
+            this.ConfigurationSets = new LazyList<ConfigurationSet>();
+            this.DataVirtualHardDisks = new LazyList<DataVirtualHardDisk>();
+            this.ResourceExtensionReferences = new LazyList<ResourceExtensionReference>();
         }
         
         /// <summary>

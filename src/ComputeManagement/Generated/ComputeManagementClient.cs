@@ -431,6 +431,95 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// Parse enum values for type CertificateFormat.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static CertificateFormat ParseCertificateFormat(string value)
+        {
+            if ("pfx".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CertificateFormat.Pfx;
+            }
+            if ("cer".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return CertificateFormat.Cer;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type CertificateFormat to a string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string CertificateFormatToString(CertificateFormat value)
+        {
+            if (value == CertificateFormat.Pfx)
+            {
+                return "pfx";
+            }
+            if (value == CertificateFormat.Cer)
+            {
+                return "cer";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Parse enum values for type LoadBalancerProbeTransportProtocol.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to parse.
+        /// </param>
+        /// <returns>
+        /// The enum value.
+        /// </returns>
+        internal static LoadBalancerProbeTransportProtocol ParseLoadBalancerProbeTransportProtocol(string value)
+        {
+            if ("tcp".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LoadBalancerProbeTransportProtocol.Tcp;
+            }
+            if ("http".Equals(value, StringComparison.OrdinalIgnoreCase))
+            {
+                return LoadBalancerProbeTransportProtocol.Http;
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
+        /// Convert an enum of type LoadBalancerProbeTransportProtocol to a
+        /// string.
+        /// </summary>
+        /// <param name='value'>
+        /// The value to convert to a string.
+        /// </param>
+        /// <returns>
+        /// The enum value as a string.
+        /// </returns>
+        internal static string LoadBalancerProbeTransportProtocolToString(LoadBalancerProbeTransportProtocol value)
+        {
+            if (value == LoadBalancerProbeTransportProtocol.Tcp)
+            {
+                return "tcp";
+            }
+            if (value == LoadBalancerProbeTransportProtocol.Http)
+            {
+                return "http";
+            }
+            throw new ArgumentOutOfRangeException("value");
+        }
+        
+        /// <summary>
         /// The Get Operation Status operation returns the status of the
         /// specified operation. After calling an asynchronous operation, you
         /// can call Get Operation Status to determine whether the operation
@@ -613,95 +702,6 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     httpRequest.Dispose();
                 }
             }
-        }
-        
-        /// <summary>
-        /// Parse enum values for type CertificateFormat.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static CertificateFormat ParseCertificateFormat(string value)
-        {
-            if ("pfx".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return CertificateFormat.Pfx;
-            }
-            if ("cer".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return CertificateFormat.Cer;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type CertificateFormat to a string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string CertificateFormatToString(CertificateFormat value)
-        {
-            if (value == CertificateFormat.Pfx)
-            {
-                return "pfx";
-            }
-            if (value == CertificateFormat.Cer)
-            {
-                return "cer";
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Parse enum values for type LoadBalancerProbeTransportProtocol.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to parse.
-        /// </param>
-        /// <returns>
-        /// The enum value.
-        /// </returns>
-        internal static LoadBalancerProbeTransportProtocol ParseLoadBalancerProbeTransportProtocol(string value)
-        {
-            if ("tcp".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LoadBalancerProbeTransportProtocol.Tcp;
-            }
-            if ("http".Equals(value, StringComparison.OrdinalIgnoreCase))
-            {
-                return LoadBalancerProbeTransportProtocol.Http;
-            }
-            throw new ArgumentOutOfRangeException("value");
-        }
-        
-        /// <summary>
-        /// Convert an enum of type LoadBalancerProbeTransportProtocol to a
-        /// string.
-        /// </summary>
-        /// <param name='value'>
-        /// The value to convert to a string.
-        /// </param>
-        /// <returns>
-        /// The enum value as a string.
-        /// </returns>
-        internal static string LoadBalancerProbeTransportProtocolToString(LoadBalancerProbeTransportProtocol value)
-        {
-            if (value == LoadBalancerProbeTransportProtocol.Tcp)
-            {
-                return "tcp";
-            }
-            if (value == LoadBalancerProbeTransportProtocol.Http)
-            {
-                return "http";
-            }
-            throw new ArgumentOutOfRangeException("value");
         }
     }
 }
