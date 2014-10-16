@@ -22,30 +22,17 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
+namespace Microsoft.WindowsAzure.Scheduler.Models
 {
     /// <summary>
-    /// The parameters to remove existing live Ids from an authorization
+    /// Type of authentication
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters
+    public enum HttpAuthenticationType
     {
-        private string _liveIds;
+        NotSpecified = 0,
         
-        /// <summary>
-        /// Optional. A comma separated list of live Ids
-        /// </summary>
-        public string LiveIds
-        {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
-        }
+        Basic = 1,
         
-        /// <summary>
-        /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters class.
-        /// </summary>
-        public DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters()
-        {
-        }
+        ClientCertificate = 2,
     }
 }

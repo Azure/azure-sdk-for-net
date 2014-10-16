@@ -258,7 +258,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -867,7 +867,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1147,7 +1147,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1765,6 +1765,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             sourceMediaLinkElement.Value = dataVirtualHardDisksItem.SourceMediaLink.AbsoluteUri;
                             dataVirtualHardDiskElement.Add(sourceMediaLinkElement);
                         }
+                        
+                        if (dataVirtualHardDisksItem.IOType != null)
+                        {
+                            XElement iOTypeElement = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            iOTypeElement.Value = dataVirtualHardDisksItem.IOType;
+                            dataVirtualHardDiskElement.Add(iOTypeElement);
+                        }
                     }
                     persistentVMRoleElement.Add(dataVirtualHardDisksSequenceElement);
                 }
@@ -1814,6 +1821,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         XElement osElement = new XElement(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
                         osElement.Value = parameters.OSVirtualHardDisk.OperatingSystem;
                         oSVirtualHardDiskElement.Add(osElement);
+                    }
+                    
+                    if (parameters.OSVirtualHardDisk.IOType != null)
+                    {
+                        XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        iOTypeElement2.Value = parameters.OSVirtualHardDisk.IOType;
+                        oSVirtualHardDiskElement.Add(iOTypeElement2);
                     }
                 }
                 
@@ -2078,7 +2092,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2727,6 +2741,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 sourceMediaLinkElement.Value = dataVirtualHardDisksItem.SourceMediaLink.AbsoluteUri;
                                 dataVirtualHardDiskElement.Add(sourceMediaLinkElement);
                             }
+                            
+                            if (dataVirtualHardDisksItem.IOType != null)
+                            {
+                                XElement iOTypeElement = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                iOTypeElement.Value = dataVirtualHardDisksItem.IOType;
+                                dataVirtualHardDiskElement.Add(iOTypeElement);
+                            }
                         }
                         roleElement.Add(dataVirtualHardDisksSequenceElement);
                     }
@@ -2783,6 +2804,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             XElement osElement = new XElement(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
                             osElement.Value = roleListItem.OSVirtualHardDisk.OperatingSystem;
                             oSVirtualHardDiskElement.Add(osElement);
+                        }
+                        
+                        if (roleListItem.OSVirtualHardDisk.IOType != null)
+                        {
+                            XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            iOTypeElement2.Value = roleListItem.OSVirtualHardDisk.IOType;
+                            oSVirtualHardDiskElement.Add(iOTypeElement2);
                         }
                     }
                     
@@ -3045,7 +3073,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3184,7 +3212,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3336,7 +3364,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3495,7 +3523,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3668,7 +3696,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3812,7 +3840,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4084,7 +4112,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4688,6 +4716,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             sourceMediaLinkElement.Value = dataVirtualHardDisksItem.SourceMediaLink.AbsoluteUri;
                             dataVirtualHardDiskElement.Add(sourceMediaLinkElement);
                         }
+                        
+                        if (dataVirtualHardDisksItem.IOType != null)
+                        {
+                            XElement iOTypeElement = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            iOTypeElement.Value = dataVirtualHardDisksItem.IOType;
+                            dataVirtualHardDiskElement.Add(iOTypeElement);
+                        }
                     }
                     persistentVMRoleElement.Add(dataVirtualHardDisksSequenceElement);
                 }
@@ -4735,6 +4770,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                     XElement osElement = new XElement(XName.Get("OS", "http://schemas.microsoft.com/windowsazure"));
                     osElement.Value = parameters.OSVirtualHardDisk.OperatingSystem;
                     oSVirtualHardDiskElement.Add(osElement);
+                }
+                
+                if (parameters.OSVirtualHardDisk.IOType != null)
+                {
+                    XElement iOTypeElement2 = new XElement(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                    iOTypeElement2.Value = parameters.OSVirtualHardDisk.IOType;
+                    oSVirtualHardDiskElement.Add(iOTypeElement2);
                 }
                 
                 if (parameters.RoleSize != null)
@@ -4901,7 +4943,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5795,7 +5837,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -6408,6 +6450,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     Uri sourceMediaLinkInstance = TypeConversion.TryParseUri(sourceMediaLinkElement.Value);
                                     dataVirtualHardDiskInstance.SourceMediaLink = sourceMediaLinkInstance;
                                 }
+                                
+                                XElement iOTypeElement = dataVirtualHardDisksElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                                if (iOTypeElement != null)
+                                {
+                                    string iOTypeInstance = iOTypeElement.Value;
+                                    dataVirtualHardDiskInstance.IOType = iOTypeInstance;
+                                }
                             }
                         }
                         
@@ -6457,6 +6506,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             {
                                 string osInstance = osElement.Value;
                                 oSVirtualHardDiskInstance.OperatingSystem = osInstance;
+                            }
+                            
+                            XElement iOTypeElement2 = oSVirtualHardDiskElement.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                            if (iOTypeElement2 != null)
+                            {
+                                string iOTypeInstance2 = iOTypeElement2.Value;
+                                oSVirtualHardDiskInstance.IOType = iOTypeInstance2;
                             }
                         }
                     }
@@ -6565,7 +6621,7 @@ namespace Microsoft.WindowsAzure.Management.Compute
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

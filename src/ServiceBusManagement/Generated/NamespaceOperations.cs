@@ -849,6 +849,10 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus
                 createACSNamespaceElement.Value = namespaceEntity.CreateACSNamespace.ToString().ToLower();
                 namespaceDescriptionElement.Add(createACSNamespaceElement);
                 
+                XElement namespaceTypeElement = new XElement(XName.Get("NamespaceType", "http://schemas.microsoft.com/netservices/2010/10/servicebus/connect"));
+                namespaceTypeElement.Value = namespaceEntity.NamespaceType.ToString();
+                namespaceDescriptionElement.Add(namespaceTypeElement);
+                
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/atom+xml");

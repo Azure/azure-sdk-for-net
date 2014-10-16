@@ -261,6 +261,44 @@ namespace Microsoft.WindowsAzure.Scheduler
                         {
                             requestValue["body"] = parameters.Action.ErrorAction.Request.Body;
                         }
+                        
+                        if (parameters.Action.ErrorAction.Request.Authentication != null)
+                        {
+                            JObject authenticationValue = new JObject();
+                            requestValue["authentication"] = authenticationValue;
+                            if (parameters.Action.ErrorAction.Request.Authentication is ClientCertAuthentication)
+                            {
+                                authenticationValue["type"] = "ClientCertificate";
+                                ClientCertAuthentication derived = ((ClientCertAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                if (derived.Password != null)
+                                {
+                                    authenticationValue["password"] = derived.Password;
+                                }
+                                
+                                if (derived.Pfx != null)
+                                {
+                                    authenticationValue["pfx"] = derived.Pfx;
+                                }
+                                
+                                if (derived.CertificateThumbprint != null)
+                                {
+                                    authenticationValue["certificateThumbprint"] = derived.CertificateThumbprint;
+                                }
+                                
+                                if (derived.CertificateExpiration != null)
+                                {
+                                    authenticationValue["certificateExpiration"] = derived.CertificateExpiration.Value;
+                                }
+                                
+                                if (derived.CertificateSubjectName != null)
+                                {
+                                    authenticationValue["certificateSubjectName"] = derived.CertificateSubjectName;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived.Type);
+                            }
+                        }
                     }
                     
                     if (parameters.Action.ErrorAction.QueueMessage != null)
@@ -302,6 +340,44 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (parameters.Action.Request.Body != null)
                     {
                         requestValue2["body"] = parameters.Action.Request.Body;
+                    }
+                    
+                    if (parameters.Action.Request.Authentication != null)
+                    {
+                        JObject authenticationValue2 = new JObject();
+                        requestValue2["authentication"] = authenticationValue2;
+                        if (parameters.Action.Request.Authentication is ClientCertAuthentication)
+                        {
+                            authenticationValue2["type"] = "ClientCertificate";
+                            ClientCertAuthentication derived2 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
+                            
+                            if (derived2.Password != null)
+                            {
+                                authenticationValue2["password"] = derived2.Password;
+                            }
+                            
+                            if (derived2.Pfx != null)
+                            {
+                                authenticationValue2["pfx"] = derived2.Pfx;
+                            }
+                            
+                            if (derived2.CertificateThumbprint != null)
+                            {
+                                authenticationValue2["certificateThumbprint"] = derived2.CertificateThumbprint;
+                            }
+                            
+                            if (derived2.CertificateExpiration != null)
+                            {
+                                authenticationValue2["certificateExpiration"] = derived2.CertificateExpiration.Value;
+                            }
+                            
+                            if (derived2.CertificateSubjectName != null)
+                            {
+                                authenticationValue2["certificateSubjectName"] = derived2.CertificateSubjectName;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                        }
                     }
                 }
                 
@@ -568,6 +644,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         string bodyInstance = ((string)bodyValue);
                                         requestInstance.Body = bodyInstance;
                                     }
+                                    
+                                    JToken authenticationValue3 = requestValue3["authentication"];
+                                    if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)authenticationValue3["type"]);
+                                        if (typeName == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue = authenticationValue3["password"];
+                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance = ((string)passwordValue);
+                                                clientCertAuthenticationInstance.Password = passwordInstance;
+                                            }
+                                            
+                                            JToken pfxValue = authenticationValue3["pfx"];
+                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance = ((string)pfxValue);
+                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                            }
+                                            
+                                            JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                            }
+                                            
+                                            JToken typeValue3 = authenticationValue3["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                clientCertAuthenticationInstance.Type = typeInstance3;
+                                            }
+                                            requestInstance.Authentication = clientCertAuthenticationInstance;
+                                        }
+                                    }
                                 }
                                 
                                 JToken queueMessageValue3 = errorActionValue2["queueMessage"];
@@ -642,6 +771,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     string bodyInstance2 = ((string)bodyValue2);
                                     requestInstance2.Body = bodyInstance2;
+                                }
+                                
+                                JToken authenticationValue4 = requestValue4["authentication"];
+                                if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)authenticationValue4["type"]);
+                                    if (typeName2 == "ClientCertificate")
+                                    {
+                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                        
+                                        JToken passwordValue2 = authenticationValue4["password"];
+                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance2 = ((string)passwordValue2);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                        }
+                                        
+                                        JToken pfxValue2 = authenticationValue4["pfx"];
+                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                        {
+                                            string pfxInstance2 = ((string)pfxValue2);
+                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                        }
+                                        
+                                        JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                        }
+                                        
+                                        JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                        }
+                                        
+                                        JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                        }
+                                        
+                                        JToken typeValue4 = authenticationValue4["type"];
+                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                        }
+                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
                                 }
                             }
                             
@@ -1083,6 +1265,44 @@ namespace Microsoft.WindowsAzure.Scheduler
                         {
                             requestValue["body"] = parameters.Action.ErrorAction.Request.Body;
                         }
+                        
+                        if (parameters.Action.ErrorAction.Request.Authentication != null)
+                        {
+                            JObject authenticationValue = new JObject();
+                            requestValue["authentication"] = authenticationValue;
+                            if (parameters.Action.ErrorAction.Request.Authentication is ClientCertAuthentication)
+                            {
+                                authenticationValue["type"] = "ClientCertificate";
+                                ClientCertAuthentication derived = ((ClientCertAuthentication)parameters.Action.ErrorAction.Request.Authentication);
+                                
+                                if (derived.Password != null)
+                                {
+                                    authenticationValue["password"] = derived.Password;
+                                }
+                                
+                                if (derived.Pfx != null)
+                                {
+                                    authenticationValue["pfx"] = derived.Pfx;
+                                }
+                                
+                                if (derived.CertificateThumbprint != null)
+                                {
+                                    authenticationValue["certificateThumbprint"] = derived.CertificateThumbprint;
+                                }
+                                
+                                if (derived.CertificateExpiration != null)
+                                {
+                                    authenticationValue["certificateExpiration"] = derived.CertificateExpiration.Value;
+                                }
+                                
+                                if (derived.CertificateSubjectName != null)
+                                {
+                                    authenticationValue["certificateSubjectName"] = derived.CertificateSubjectName;
+                                }
+                                
+                                authenticationValue["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived.Type);
+                            }
+                        }
                     }
                     
                     if (parameters.Action.ErrorAction.QueueMessage != null)
@@ -1124,6 +1344,44 @@ namespace Microsoft.WindowsAzure.Scheduler
                     if (parameters.Action.Request.Body != null)
                     {
                         requestValue2["body"] = parameters.Action.Request.Body;
+                    }
+                    
+                    if (parameters.Action.Request.Authentication != null)
+                    {
+                        JObject authenticationValue2 = new JObject();
+                        requestValue2["authentication"] = authenticationValue2;
+                        if (parameters.Action.Request.Authentication is ClientCertAuthentication)
+                        {
+                            authenticationValue2["type"] = "ClientCertificate";
+                            ClientCertAuthentication derived2 = ((ClientCertAuthentication)parameters.Action.Request.Authentication);
+                            
+                            if (derived2.Password != null)
+                            {
+                                authenticationValue2["password"] = derived2.Password;
+                            }
+                            
+                            if (derived2.Pfx != null)
+                            {
+                                authenticationValue2["pfx"] = derived2.Pfx;
+                            }
+                            
+                            if (derived2.CertificateThumbprint != null)
+                            {
+                                authenticationValue2["certificateThumbprint"] = derived2.CertificateThumbprint;
+                            }
+                            
+                            if (derived2.CertificateExpiration != null)
+                            {
+                                authenticationValue2["certificateExpiration"] = derived2.CertificateExpiration.Value;
+                            }
+                            
+                            if (derived2.CertificateSubjectName != null)
+                            {
+                                authenticationValue2["certificateSubjectName"] = derived2.CertificateSubjectName;
+                            }
+                            
+                            authenticationValue2["type"] = SchedulerClient.HttpAuthenticationTypeToString(derived2.Type);
+                        }
                     }
                 }
                 
@@ -1390,6 +1648,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         string bodyInstance = ((string)bodyValue);
                                         requestInstance.Body = bodyInstance;
                                     }
+                                    
+                                    JToken authenticationValue3 = requestValue3["authentication"];
+                                    if (authenticationValue3 != null && authenticationValue3.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)authenticationValue3["type"]);
+                                        if (typeName == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue = authenticationValue3["password"];
+                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance = ((string)passwordValue);
+                                                clientCertAuthenticationInstance.Password = passwordInstance;
+                                            }
+                                            
+                                            JToken pfxValue = authenticationValue3["pfx"];
+                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance = ((string)pfxValue);
+                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue = authenticationValue3["certificateThumbprint"];
+                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                            }
+                                            
+                                            JToken certificateExpirationValue = authenticationValue3["certificateExpiration"];
+                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue = authenticationValue3["certificateSubjectName"];
+                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                            }
+                                            
+                                            JToken typeValue3 = authenticationValue3["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                clientCertAuthenticationInstance.Type = typeInstance3;
+                                            }
+                                            requestInstance.Authentication = clientCertAuthenticationInstance;
+                                        }
+                                    }
                                 }
                                 
                                 JToken queueMessageValue3 = errorActionValue2["queueMessage"];
@@ -1464,6 +1775,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     string bodyInstance2 = ((string)bodyValue2);
                                     requestInstance2.Body = bodyInstance2;
+                                }
+                                
+                                JToken authenticationValue4 = requestValue4["authentication"];
+                                if (authenticationValue4 != null && authenticationValue4.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)authenticationValue4["type"]);
+                                    if (typeName2 == "ClientCertificate")
+                                    {
+                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                        
+                                        JToken passwordValue2 = authenticationValue4["password"];
+                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance2 = ((string)passwordValue2);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                        }
+                                        
+                                        JToken pfxValue2 = authenticationValue4["pfx"];
+                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                        {
+                                            string pfxInstance2 = ((string)pfxValue2);
+                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                        }
+                                        
+                                        JToken certificateThumbprintValue2 = authenticationValue4["certificateThumbprint"];
+                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                        }
+                                        
+                                        JToken certificateExpirationValue2 = authenticationValue4["certificateExpiration"];
+                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                        }
+                                        
+                                        JToken certificateSubjectNameValue2 = authenticationValue4["certificateSubjectName"];
+                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                        }
+                                        
+                                        JToken typeValue4 = authenticationValue4["type"];
+                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                        }
+                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
                                 }
                             }
                             
@@ -2030,6 +2394,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         string bodyInstance = ((string)bodyValue);
                                         requestInstance.Body = bodyInstance;
                                     }
+                                    
+                                    JToken authenticationValue = requestValue["authentication"];
+                                    if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)authenticationValue["type"]);
+                                        if (typeName == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue = authenticationValue["password"];
+                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance = ((string)passwordValue);
+                                                clientCertAuthenticationInstance.Password = passwordInstance;
+                                            }
+                                            
+                                            JToken pfxValue = authenticationValue["pfx"];
+                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance = ((string)pfxValue);
+                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                            }
+                                            
+                                            JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                            }
+                                            
+                                            JToken typeValue3 = authenticationValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                clientCertAuthenticationInstance.Type = typeInstance3;
+                                            }
+                                            requestInstance.Authentication = clientCertAuthenticationInstance;
+                                        }
+                                    }
                                 }
                                 
                                 JToken queueMessageValue = errorActionValue["queueMessage"];
@@ -2104,6 +2521,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     string bodyInstance2 = ((string)bodyValue2);
                                     requestInstance2.Body = bodyInstance2;
+                                }
+                                
+                                JToken authenticationValue2 = requestValue2["authentication"];
+                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)authenticationValue2["type"]);
+                                    if (typeName2 == "ClientCertificate")
+                                    {
+                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                        
+                                        JToken passwordValue2 = authenticationValue2["password"];
+                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance2 = ((string)passwordValue2);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                        }
+                                        
+                                        JToken pfxValue2 = authenticationValue2["pfx"];
+                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                        {
+                                            string pfxInstance2 = ((string)pfxValue2);
+                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                        }
+                                        
+                                        JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                        }
+                                        
+                                        JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                        }
+                                        
+                                        JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                        }
+                                        
+                                        JToken typeValue4 = authenticationValue2["type"];
+                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                        }
+                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
                                 }
                             }
                             
@@ -3020,6 +3490,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 string bodyInstance = ((string)bodyValue);
                                                 requestInstance.Body = bodyInstance;
                                             }
+                                            
+                                            JToken authenticationValue = requestValue["authentication"];
+                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            {
+                                                string typeName = ((string)authenticationValue["type"]);
+                                                if (typeName == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue = authenticationValue["password"];
+                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance = ((string)passwordValue);
+                                                        clientCertAuthenticationInstance.Password = passwordInstance;
+                                                    }
+                                                    
+                                                    JToken pfxValue = authenticationValue["pfx"];
+                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance = ((string)pfxValue);
+                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = authenticationValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                        clientCertAuthenticationInstance.Type = typeInstance3;
+                                                    }
+                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                }
+                                            }
                                         }
                                         
                                         JToken queueMessageValue = errorActionValue["queueMessage"];
@@ -3094,6 +3617,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             string bodyInstance2 = ((string)bodyValue2);
                                             requestInstance2.Body = bodyInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue2 = requestValue2["authentication"];
+                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)authenticationValue2["type"]);
+                                            if (typeName2 == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue2 = authenticationValue2["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken pfxValue2 = authenticationValue2["pfx"];
+                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance2 = ((string)pfxValue2);
+                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                }
+                                                
+                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue2["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                }
+                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
                                         }
                                     }
                                     
@@ -3557,6 +4133,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 string bodyInstance = ((string)bodyValue);
                                                 requestInstance.Body = bodyInstance;
                                             }
+                                            
+                                            JToken authenticationValue = requestValue["authentication"];
+                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            {
+                                                string typeName = ((string)authenticationValue["type"]);
+                                                if (typeName == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue = authenticationValue["password"];
+                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance = ((string)passwordValue);
+                                                        clientCertAuthenticationInstance.Password = passwordInstance;
+                                                    }
+                                                    
+                                                    JToken pfxValue = authenticationValue["pfx"];
+                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance = ((string)pfxValue);
+                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = authenticationValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                        clientCertAuthenticationInstance.Type = typeInstance3;
+                                                    }
+                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                }
+                                            }
                                         }
                                         
                                         JToken queueMessageValue = errorActionValue["queueMessage"];
@@ -3631,6 +4260,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             string bodyInstance2 = ((string)bodyValue2);
                                             requestInstance2.Body = bodyInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue2 = requestValue2["authentication"];
+                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)authenticationValue2["type"]);
+                                            if (typeName2 == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue2 = authenticationValue2["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken pfxValue2 = authenticationValue2["pfx"];
+                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance2 = ((string)pfxValue2);
+                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                }
+                                                
+                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue2["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                }
+                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
                                         }
                                     }
                                     
@@ -4098,6 +4780,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                                 string bodyInstance = ((string)bodyValue);
                                                 requestInstance.Body = bodyInstance;
                                             }
+                                            
+                                            JToken authenticationValue = requestValue["authentication"];
+                                            if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                            {
+                                                string typeName = ((string)authenticationValue["type"]);
+                                                if (typeName == "ClientCertificate")
+                                                {
+                                                    ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                                    
+                                                    JToken passwordValue = authenticationValue["password"];
+                                                    if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string passwordInstance = ((string)passwordValue);
+                                                        clientCertAuthenticationInstance.Password = passwordInstance;
+                                                    }
+                                                    
+                                                    JToken pfxValue = authenticationValue["pfx"];
+                                                    if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                                    {
+                                                        string pfxInstance = ((string)pfxValue);
+                                                        clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                                    }
+                                                    
+                                                    JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                                    if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                        clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                                    }
+                                                    
+                                                    JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                                    if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                                    {
+                                                        DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                        clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                                    }
+                                                    
+                                                    JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                                    if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                        clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                                    }
+                                                    
+                                                    JToken typeValue3 = authenticationValue["type"];
+                                                    if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                                    {
+                                                        HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                        clientCertAuthenticationInstance.Type = typeInstance3;
+                                                    }
+                                                    requestInstance.Authentication = clientCertAuthenticationInstance;
+                                                }
+                                            }
                                         }
                                         
                                         JToken queueMessageValue = errorActionValue["queueMessage"];
@@ -4172,6 +4907,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         {
                                             string bodyInstance2 = ((string)bodyValue2);
                                             requestInstance2.Body = bodyInstance2;
+                                        }
+                                        
+                                        JToken authenticationValue2 = requestValue2["authentication"];
+                                        if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)authenticationValue2["type"]);
+                                            if (typeName2 == "ClientCertificate")
+                                            {
+                                                ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                                
+                                                JToken passwordValue2 = authenticationValue2["password"];
+                                                if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                                {
+                                                    string passwordInstance2 = ((string)passwordValue2);
+                                                    clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                                }
+                                                
+                                                JToken pfxValue2 = authenticationValue2["pfx"];
+                                                if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                                {
+                                                    string pfxInstance2 = ((string)pfxValue2);
+                                                    clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                                }
+                                                
+                                                JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                                if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                                    clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                                }
+                                                
+                                                JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                                if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                                {
+                                                    DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                                    clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                                }
+                                                
+                                                JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                                if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                                {
+                                                    string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                                    clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                                }
+                                                
+                                                JToken typeValue4 = authenticationValue2["type"];
+                                                if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                                {
+                                                    HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                                    clientCertAuthenticationInstance2.Type = typeInstance4;
+                                                }
+                                                requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                            }
                                         }
                                     }
                                     
@@ -4645,6 +5433,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                         string bodyInstance = ((string)bodyValue);
                                         requestInstance.Body = bodyInstance;
                                     }
+                                    
+                                    JToken authenticationValue = requestValue["authentication"];
+                                    if (authenticationValue != null && authenticationValue.Type != JTokenType.Null)
+                                    {
+                                        string typeName = ((string)authenticationValue["type"]);
+                                        if (typeName == "ClientCertificate")
+                                        {
+                                            ClientCertAuthentication clientCertAuthenticationInstance = new ClientCertAuthentication();
+                                            
+                                            JToken passwordValue = authenticationValue["password"];
+                                            if (passwordValue != null && passwordValue.Type != JTokenType.Null)
+                                            {
+                                                string passwordInstance = ((string)passwordValue);
+                                                clientCertAuthenticationInstance.Password = passwordInstance;
+                                            }
+                                            
+                                            JToken pfxValue = authenticationValue["pfx"];
+                                            if (pfxValue != null && pfxValue.Type != JTokenType.Null)
+                                            {
+                                                string pfxInstance = ((string)pfxValue);
+                                                clientCertAuthenticationInstance.Pfx = pfxInstance;
+                                            }
+                                            
+                                            JToken certificateThumbprintValue = authenticationValue["certificateThumbprint"];
+                                            if (certificateThumbprintValue != null && certificateThumbprintValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateThumbprintInstance = ((string)certificateThumbprintValue);
+                                                clientCertAuthenticationInstance.CertificateThumbprint = certificateThumbprintInstance;
+                                            }
+                                            
+                                            JToken certificateExpirationValue = authenticationValue["certificateExpiration"];
+                                            if (certificateExpirationValue != null && certificateExpirationValue.Type != JTokenType.Null)
+                                            {
+                                                DateTime certificateExpirationInstance = ((DateTime)certificateExpirationValue);
+                                                clientCertAuthenticationInstance.CertificateExpiration = certificateExpirationInstance;
+                                            }
+                                            
+                                            JToken certificateSubjectNameValue = authenticationValue["certificateSubjectName"];
+                                            if (certificateSubjectNameValue != null && certificateSubjectNameValue.Type != JTokenType.Null)
+                                            {
+                                                string certificateSubjectNameInstance = ((string)certificateSubjectNameValue);
+                                                clientCertAuthenticationInstance.CertificateSubjectName = certificateSubjectNameInstance;
+                                            }
+                                            
+                                            JToken typeValue3 = authenticationValue["type"];
+                                            if (typeValue3 != null && typeValue3.Type != JTokenType.Null)
+                                            {
+                                                HttpAuthenticationType typeInstance3 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue3));
+                                                clientCertAuthenticationInstance.Type = typeInstance3;
+                                            }
+                                            requestInstance.Authentication = clientCertAuthenticationInstance;
+                                        }
+                                    }
                                 }
                                 
                                 JToken queueMessageValue = errorActionValue["queueMessage"];
@@ -4719,6 +5560,59 @@ namespace Microsoft.WindowsAzure.Scheduler
                                 {
                                     string bodyInstance2 = ((string)bodyValue2);
                                     requestInstance2.Body = bodyInstance2;
+                                }
+                                
+                                JToken authenticationValue2 = requestValue2["authentication"];
+                                if (authenticationValue2 != null && authenticationValue2.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)authenticationValue2["type"]);
+                                    if (typeName2 == "ClientCertificate")
+                                    {
+                                        ClientCertAuthentication clientCertAuthenticationInstance2 = new ClientCertAuthentication();
+                                        
+                                        JToken passwordValue2 = authenticationValue2["password"];
+                                        if (passwordValue2 != null && passwordValue2.Type != JTokenType.Null)
+                                        {
+                                            string passwordInstance2 = ((string)passwordValue2);
+                                            clientCertAuthenticationInstance2.Password = passwordInstance2;
+                                        }
+                                        
+                                        JToken pfxValue2 = authenticationValue2["pfx"];
+                                        if (pfxValue2 != null && pfxValue2.Type != JTokenType.Null)
+                                        {
+                                            string pfxInstance2 = ((string)pfxValue2);
+                                            clientCertAuthenticationInstance2.Pfx = pfxInstance2;
+                                        }
+                                        
+                                        JToken certificateThumbprintValue2 = authenticationValue2["certificateThumbprint"];
+                                        if (certificateThumbprintValue2 != null && certificateThumbprintValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateThumbprintInstance2 = ((string)certificateThumbprintValue2);
+                                            clientCertAuthenticationInstance2.CertificateThumbprint = certificateThumbprintInstance2;
+                                        }
+                                        
+                                        JToken certificateExpirationValue2 = authenticationValue2["certificateExpiration"];
+                                        if (certificateExpirationValue2 != null && certificateExpirationValue2.Type != JTokenType.Null)
+                                        {
+                                            DateTime certificateExpirationInstance2 = ((DateTime)certificateExpirationValue2);
+                                            clientCertAuthenticationInstance2.CertificateExpiration = certificateExpirationInstance2;
+                                        }
+                                        
+                                        JToken certificateSubjectNameValue2 = authenticationValue2["certificateSubjectName"];
+                                        if (certificateSubjectNameValue2 != null && certificateSubjectNameValue2.Type != JTokenType.Null)
+                                        {
+                                            string certificateSubjectNameInstance2 = ((string)certificateSubjectNameValue2);
+                                            clientCertAuthenticationInstance2.CertificateSubjectName = certificateSubjectNameInstance2;
+                                        }
+                                        
+                                        JToken typeValue4 = authenticationValue2["type"];
+                                        if (typeValue4 != null && typeValue4.Type != JTokenType.Null)
+                                        {
+                                            HttpAuthenticationType typeInstance4 = SchedulerClient.ParseHttpAuthenticationType(((string)typeValue4));
+                                            clientCertAuthenticationInstance2.Type = typeInstance4;
+                                        }
+                                        requestInstance2.Authentication = clientCertAuthenticationInstance2;
+                                    }
                                 }
                             }
                             

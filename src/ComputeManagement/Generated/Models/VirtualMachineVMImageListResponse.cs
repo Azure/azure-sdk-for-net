@@ -87,6 +87,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
                 set { this._hostCaching = value; }
             }
             
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
+            }
+            
             private int _logicalDiskSizeInGB;
             
             /// <summary>
@@ -165,6 +176,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             {
                 get { return this._hostCaching; }
                 set { this._hostCaching = value; }
+            }
+            
+            private string _iOType;
+            
+            /// <summary>
+            /// Optional. Gets or sets the IO type.
+            /// </summary>
+            public string IOType
+            {
+                get { return this._iOType; }
+                set { this._iOType = value; }
             }
             
             private int _logicalDiskSizeInGB;

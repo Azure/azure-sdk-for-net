@@ -549,6 +549,13 @@ namespace Microsoft.Azure.Management.Automation
                                                 scheduleInstance.DayInterval = dayIntervalInstance;
                                             }
                                             
+                                            JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                            if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                            {
+                                                int hourIntervalInstance = ((int)hourIntervalValue);
+                                                scheduleInstance.HourInterval = hourIntervalInstance;
+                                            }
+                                            
                                             JToken odatatypeValue = schedulesValue["odata.type"];
                                             if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                             {
@@ -641,6 +648,13 @@ namespace Microsoft.Azure.Management.Automation
                                 {
                                     int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                     scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                }
+                                
+                                JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                {
+                                    int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                    scheduleInstance2.HourInterval = hourIntervalInstance2;
                                 }
                                 
                                 JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -1214,6 +1228,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -1306,6 +1327,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -1895,6 +1923,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -1987,6 +2022,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -2579,6 +2621,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -2671,6 +2720,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -3263,6 +3319,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -3355,6 +3418,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -3951,6 +4021,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -4043,6 +4120,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -4628,6 +4712,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -4720,6 +4811,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -5305,6 +5403,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -5397,6 +5502,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];
@@ -5995,6 +6107,13 @@ namespace Microsoft.Azure.Management.Automation
                                                         scheduleInstance.DayInterval = dayIntervalInstance;
                                                     }
                                                     
+                                                    JToken hourIntervalValue = schedulesValue["HourInterval"];
+                                                    if (hourIntervalValue != null && hourIntervalValue.Type != JTokenType.Null)
+                                                    {
+                                                        int hourIntervalInstance = ((int)hourIntervalValue);
+                                                        scheduleInstance.HourInterval = hourIntervalInstance;
+                                                    }
+                                                    
                                                     JToken odatatypeValue = schedulesValue["odata.type"];
                                                     if (odatatypeValue != null && odatatypeValue.Type != JTokenType.Null)
                                                     {
@@ -6087,6 +6206,13 @@ namespace Microsoft.Azure.Management.Automation
                                         {
                                             int dayIntervalInstance2 = ((int)dayIntervalValue2);
                                             scheduleInstance2.DayInterval = dayIntervalInstance2;
+                                        }
+                                        
+                                        JToken hourIntervalValue2 = scheduleValue["HourInterval"];
+                                        if (hourIntervalValue2 != null && hourIntervalValue2.Type != JTokenType.Null)
+                                        {
+                                            int hourIntervalInstance2 = ((int)hourIntervalValue2);
+                                            scheduleInstance2.HourInterval = hourIntervalInstance2;
                                         }
                                         
                                         JToken odatatypeValue2 = scheduleValue["odata.type"];

@@ -28,10 +28,10 @@ using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute
 {
-    public partial interface IDedicatedCircuitLinkAuthorizationLiveIdOperations
+    public partial interface IDedicatedCircuitLinkAuthorizationMicrosoftIdOperations
     {
         /// <summary>
-        /// Adds live Ids to the specified authorization
+        /// Adds Microsoft Ids to the specified authorization
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
@@ -40,7 +40,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to add new live Ids
+        /// Parameters supplied to add new Microsoft Ids
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -49,10 +49,10 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> NewAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdNewParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> NewAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdNewParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Removes live Ids from the specified authorization
+        /// Removes Microsoft Ids from the specified authorization
         /// </summary>
         /// <param name='serviceKey'>
         /// The service key representing the circuit.
@@ -61,7 +61,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// The GUID representing the authorization
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to remove existing live Ids
+        /// Parameters supplied to remove existing Microsoft Ids
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -70,6 +70,6 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<OperationResponse> RemoveAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationLiveIdRemoveParameters parameters, CancellationToken cancellationToken);
+        Task<OperationResponse> RemoveAsync(string serviceKey, string authId, DedicatedCircuitLinkAuthorizationMicrosoftIdRemoveParameters parameters, CancellationToken cancellationToken);
     }
 }

@@ -22,29 +22,28 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
+namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
     /// <summary>
-    /// The parameters to add more live Ids to an existing authorization
+    /// The definition of a resume job request object.
     /// </summary>
-    public partial class DedicatedCircuitLinkAuthorizationLiveIdNewParameters
+    public partial class ResumeJobParams
     {
-        private string _liveIds;
+        private string _comments;
         
         /// <summary>
-        /// Optional. A comma separated list of live Ids
+        /// Optional. Comments for resume job.
         /// </summary>
-        public string LiveIds
+        public string Comments
         {
-            get { return this._liveIds; }
-            set { this._liveIds = value; }
+            get { return this._comments; }
+            set { this._comments = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// DedicatedCircuitLinkAuthorizationLiveIdNewParameters class.
+        /// Initializes a new instance of the ResumeJobParams class.
         /// </summary>
-        public DedicatedCircuitLinkAuthorizationLiveIdNewParameters()
+        public ResumeJobParams()
         {
         }
     }

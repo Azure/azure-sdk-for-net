@@ -21,6 +21,7 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
 {
@@ -36,6 +37,17 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         {
             get { return this._createACSNamespace; }
             set { this._createACSNamespace = value; }
+        }
+        
+        private NamespaceType _namespaceType;
+        
+        /// <summary>
+        /// Required. Gets or sets the namespace type.
+        /// </summary>
+        public NamespaceType NamespaceType
+        {
+            get { return this._namespaceType; }
+            set { this._namespaceType = value; }
         }
         
         private string _region;
@@ -61,7 +73,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// Initializes a new instance of the
         /// ServiceBusNamespaceCreateParameters class with required arguments.
         /// </summary>
-        public ServiceBusNamespaceCreateParameters(string region)
+        public ServiceBusNamespaceCreateParameters(string region, NamespaceType namespaceType)
             : this()
         {
             if (region == null)
@@ -69,6 +81,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
                 throw new ArgumentNullException("region");
             }
             this.Region = region;
+            this.NamespaceType = namespaceType;
         }
     }
 }

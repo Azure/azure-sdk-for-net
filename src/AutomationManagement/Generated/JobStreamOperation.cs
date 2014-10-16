@@ -99,6 +99,10 @@ namespace Microsoft.Azure.Management.Automation
             {
                 throw new ArgumentNullException("parameters.JobId");
             }
+            if (parameters.StartTime == null)
+            {
+                throw new ArgumentNullException("parameters.StartTime");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -115,7 +119,7 @@ namespace Microsoft.Azure.Management.Automation
             // Construct URL
             string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/cloudservices/OaaSCS/resources/automation/~/Accounts/" + automationAccount.Trim() + "/JobStreams/GetStreamItems?";
             url = url + "jobId='" + Uri.EscapeDataString(parameters.JobId.Trim()) + "'";
-            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime.ToString()) + "'";
+            url = url + "&streamsCreatedSinceDateTime='" + Uri.EscapeDataString(parameters.StartTime.Trim()) + "'";
             if (parameters.StreamType != null)
             {
                 url = url + "&$filter=StreamTypeName eq '" + Uri.EscapeDataString(parameters.StreamType != null ? parameters.StreamType.Trim() : "") + "'";
