@@ -5264,7 +5264,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     XElement hostNameSslStatesSequenceElement = new XElement(XName.Get("HostNameSslStates", "http://schemas.microsoft.com/windowsazure"));
                     foreach (WebSiteUpdateParameters.WebSiteHostNameSslState hostNameSslStatesItem in parameters.HostNameSslStates)
                     {
-                        XElement webSiteHostNameSslStateElement = new XElement(XName.Get("WebSiteHostNameSslState", "http://schemas.microsoft.com/windowsazure"));
+                        XElement webSiteHostNameSslStateElement = new XElement(XName.Get("HostNameSslState", "http://schemas.microsoft.com/windowsazure"));
                         hostNameSslStatesSequenceElement.Add(webSiteHostNameSslStateElement);
                         
                         XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
