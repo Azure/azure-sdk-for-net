@@ -22,41 +22,42 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The status of a gateway diagnostics operation.
+    /// The Network Security Group associated with a subnet.
     /// </summary>
-    public partial class GatewayDiagnosticsStatus : OperationResponse
+    public partial class NetworkSecurityGroupGetForSubnetResponse : OperationResponse
     {
-        private string _diagnosticsUrl;
+        private string _name;
         
         /// <summary>
-        /// Optional. The url where the diagnostics data can be found.
+        /// Optional. Gets or sets name of the Network Security Group
+        /// associated with this subnet from this subscription.
         /// </summary>
-        public string DiagnosticsUrl
+        public string Name
         {
-            get { return this._diagnosticsUrl; }
-            set { this._diagnosticsUrl = value; }
+            get { return this._name; }
+            set { this._name = value; }
         }
         
-        private GatewayDiagnosticsState _state;
+        private string _state;
         
         /// <summary>
-        /// Optional. The current state of the gateway's diagnostics session.
+        /// Optional.
         /// </summary>
-        public GatewayDiagnosticsState State
+        public string State
         {
             get { return this._state; }
             set { this._state = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayDiagnosticsStatus class.
+        /// Initializes a new instance of the
+        /// NetworkSecurityGroupGetForSubnetResponse class.
         /// </summary>
-        public GatewayDiagnosticsStatus()
+        public NetworkSecurityGroupGetForSubnetResponse()
         {
         }
     }

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -228,9 +229,9 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public RoleInstance()
         {
-            this.InstanceEndpoints = new List<InstanceEndpoint>();
-            this.PublicIPs = new List<RoleInstance.PublicIP>();
-            this.ResourceExtensionStatusList = new List<ResourceExtensionStatus>();
+            this.InstanceEndpoints = new LazyList<InstanceEndpoint>();
+            this.PublicIPs = new LazyList<RoleInstance.PublicIP>();
+            this.ResourceExtensionStatusList = new LazyList<ResourceExtensionStatus>();
         }
         
         /// <summary>

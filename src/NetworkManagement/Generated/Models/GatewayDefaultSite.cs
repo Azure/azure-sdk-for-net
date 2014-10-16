@@ -24,10 +24,27 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public enum UpdateGatewayPublicDiagnosticsOperation
+    /// <summary>
+    /// A site that has a default route.
+    /// </summary>
+    public partial class GatewayDefaultSite
     {
-        StartDiagnostics = 0,
+        private string _name;
         
-        StopDiagnostics = 1,
+        /// <summary>
+        /// Optional. The default local network site name.
+        /// </summary>
+        public string Name
+        {
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the GatewayDefaultSite class.
+        /// </summary>
+        public GatewayDefaultSite()
+        {
+        }
     }
 }

@@ -2698,6 +2698,130 @@ namespace Microsoft.WindowsAzure
         }
         
         /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='startTime'>
+        /// Required. Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Required. Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        public static DeploymentEventListResponse ListEvents(this IDeploymentOperations operations, string serviceName, string deploymentName, DateTime startTime, DateTime endTime)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).ListEventsAsync(serviceName, deploymentName, startTime, endTime);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. The name of the deployment.
+        /// </param>
+        /// <param name='startTime'>
+        /// Required. Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Required. Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        public static Task<DeploymentEventListResponse> ListEventsAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, DateTime startTime, DateTime endTime)
+        {
+            return operations.ListEventsAsync(serviceName, deploymentName, startTime, endTime, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='startTime'>
+        /// Required. Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Required. Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        public static DeploymentEventListResponse ListEventsBySlot(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DateTime startTime, DateTime endTime)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).ListEventsBySlotAsync(serviceName, deploymentSlot, startTime, endTime);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// Required. The deployment slot.
+        /// </param>
+        /// <param name='startTime'>
+        /// Required. Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Required. Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        public static Task<DeploymentEventListResponse> ListEventsBySlotAsync(this IDeploymentOperations operations, string serviceName, DeploymentSlot deploymentSlot, DateTime startTime, DateTime endTime)
+        {
+            return operations.ListEventsBySlotAsync(serviceName, deploymentSlot, startTime, endTime, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Reboot Role Instance By Deployment Name operation requests a
         /// reboot of a role instance that is running in a deployment. This
         /// operation is an asynchronous operation. To determine whether the
