@@ -23,14 +23,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
     /// The Get Web Site Configuration operation response.
     /// </summary>
-    public partial class WebSiteGetConfigurationResponse : OperationResponse
+    public partial class WebSiteGetConfigurationResponse
     {
         private IDictionary<string, string> _appSettings;
         
@@ -44,13 +44,25 @@ namespace Microsoft.Azure.Management.WebSites.Models
             set { this._appSettings = value; }
         }
         
-        private IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> _connectionStrings;
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Gets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
+        }
+        
+        private IList<ConnectionStringInfo> _connectionStrings;
         
         /// <summary>
         /// Optional. Contains connection strings for database and other
         /// external resources.
         /// </summary>
-        public IList<WebSiteGetConfigurationResponse.ConnectionStringInfo> ConnectionStrings
+        public IList<ConnectionStringInfo> ConnectionStrings
         {
             get { return this._connectionStrings; }
             set { this._connectionStrings = value; }
@@ -300,58 +312,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         public WebSiteGetConfigurationResponse()
         {
-            this.AppSettings = new Dictionary<string, string>();
-            this.ConnectionStrings = new List<WebSiteGetConfigurationResponse.ConnectionStringInfo>();
-            this.DefaultDocuments = new List<string>();
-            this.HandlerMappings = new List<WebSiteGetConfigurationResponse.HandlerMapping>();
-            this.Metadata = new Dictionary<string, string>();
-        }
-        
-        /// <summary>
-        /// Connection string for database and other external resources.
-        /// </summary>
-        public partial class ConnectionStringInfo
-        {
-            private string _connectionString;
-            
-            /// <summary>
-            /// Optional. A database connection string.
-            /// </summary>
-            public string ConnectionString
-            {
-                get { return this._connectionString; }
-                set { this._connectionString = value; }
-            }
-            
-            private string _name;
-            
-            /// <summary>
-            /// Optional. The name of the connection string.
-            /// </summary>
-            public string Name
-            {
-                get { return this._name; }
-                set { this._name = value; }
-            }
-            
-            private string _type;
-            
-            /// <summary>
-            /// Optional. The type of the connection string (for example,
-            /// "MySQL").
-            /// </summary>
-            public string Type
-            {
-                get { return this._type; }
-                set { this._type = value; }
-            }
-            
-            /// <summary>
-            /// Initializes a new instance of the ConnectionStringInfo class.
-            /// </summary>
-            public ConnectionStringInfo()
-            {
-            }
+            this.AppSettings = new LazyDictionary<string, string>();
+            this.ConnectionStrings = new LazyList<ConnectionStringInfo>();
+            this.DefaultDocuments = new LazyList<string>();
+            this.HandlerMappings = new LazyList<WebSiteGetConfigurationResponse.HandlerMapping>();
+            this.Metadata = new LazyDictionary<string, string>();
         }
         
         /// <summary>

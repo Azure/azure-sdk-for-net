@@ -630,11 +630,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeDataString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime()));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             if (parameters.TimeGrain != null)
             {

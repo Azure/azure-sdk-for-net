@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -110,7 +111,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public RestoreRequest()
         {
-            this.Databases = new List<DatabaseBackupSetting>();
+            this.Databases = new LazyList<DatabaseBackupSetting>();
         }
     }
 }

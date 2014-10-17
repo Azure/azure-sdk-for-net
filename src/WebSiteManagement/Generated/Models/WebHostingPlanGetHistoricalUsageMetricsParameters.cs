@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
@@ -100,7 +101,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebHostingPlanGetHistoricalUsageMetricsParameters()
         {
-            this.MetricNames = new List<string>();
+            this.MetricNames = new LazyList<string>();
         }
     }
 }

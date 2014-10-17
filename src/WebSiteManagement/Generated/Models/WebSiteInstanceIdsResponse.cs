@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteInstanceIdsResponse()
         {
-            this.InstanceIds = new List<string>();
+            this.InstanceIds = new LazyList<string>();
         }
         
         /// <summary>

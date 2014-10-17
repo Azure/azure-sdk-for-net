@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.WindowsAzure.WebSitesExtensions.Models
         /// </summary>
         public SettingsListResponse()
         {
-            this.Settings = new Dictionary<string, string>();
+            this.Settings = new LazyDictionary<string, string>();
         }
     }
 }

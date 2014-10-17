@@ -370,6 +370,21 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// </returns>
         Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<SlotConfigNames> GetSlotConfigNamesAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
         /// <summary>
         /// You can retrieve current usage metrics for a site by issuing an
         /// HTTP GET request. The metrics returned include CPU Time, Data In,
@@ -583,5 +598,23 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// request ID.
         /// </returns>
         Task<OperationResponse> UpdateConfigurationAsync(string webSpaceName, string webSiteName, WebSiteUpdateConfigurationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// The parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateSlotConfigNamesAsync(string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters, CancellationToken cancellationToken);
     }
 }
