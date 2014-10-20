@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.WebSites
         {
             this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
-            this._apiVersion = "2014-04-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.Management.WebSites
         {
             this._webHostingPlans = new WebHostingPlanOperations(this);
             this._webSites = new WebSiteOperations(this);
-            this._apiVersion = "2014-04-01";
+            this._apiVersion = "2014-06-01";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups/" + resourceGroupName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -606,7 +606,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/resourcegroups?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Web/register?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -830,7 +830,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Credentials.SubscriptionId != null ? this.Credentials.SubscriptionId.Trim() : "") + "/providers/Microsoft.Web/unregister?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
