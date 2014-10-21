@@ -21,41 +21,33 @@
 
 using System;
 using System.Linq;
+using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public partial class GatewayCreateParameters
+    public partial class GetRouteTableForSubnetResponse : OperationResponse
     {
-        private GatewaySKU _gatewaySKU;
+        private RouteTable _routeTable;
         
         /// <summary>
-        /// Optional. The SKU of this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public RouteTable RouteTable
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private GatewayType _gatewayType;
-        
-        /// <summary>
-        /// Optional. The routing type for this virtual network gateway.
-        /// </summary>
-        public GatewayType GatewayType
-        {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
+            get { return this._routeTable; }
+            set { this._routeTable = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayCreateParameters class.
+        /// Initializes a new instance of the GetRouteTableForSubnetResponse
+        /// class.
         /// </summary>
-        public GatewayCreateParameters()
+        public GetRouteTableForSubnetResponse()
         {
         }
     }
