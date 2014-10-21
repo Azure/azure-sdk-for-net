@@ -508,6 +508,55 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         }
                     }
                     
+                    if (parameters.ProvisioningConfiguration.NetworkInterfaces != null)
+                    {
+                        if (parameters.ProvisioningConfiguration.NetworkInterfaces is ILazyCollection == false || ((ILazyCollection)parameters.ProvisioningConfiguration.NetworkInterfaces).IsInitialized)
+                        {
+                            XElement networkInterfacesSequenceElement = new XElement(XName.Get("NetworkInterfaces", "http://schemas.microsoft.com/windowsazure"));
+                            foreach (NetworkInterface networkInterfacesItem in parameters.ProvisioningConfiguration.NetworkInterfaces)
+                            {
+                                XElement networkInterfaceElement = new XElement(XName.Get("NetworkInterface", "http://schemas.microsoft.com/windowsazure"));
+                                networkInterfacesSequenceElement.Add(networkInterfaceElement);
+                                
+                                if (networkInterfacesItem.Name != null)
+                                {
+                                    XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    nameElement3.Value = networkInterfacesItem.Name;
+                                    networkInterfaceElement.Add(nameElement3);
+                                }
+                                
+                                if (networkInterfacesItem.IPConfigurations != null)
+                                {
+                                    if (networkInterfacesItem.IPConfigurations is ILazyCollection == false || ((ILazyCollection)networkInterfacesItem.IPConfigurations).IsInitialized)
+                                    {
+                                        XElement iPConfigurationsSequenceElement = new XElement(XName.Get("IPConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                        foreach (IPConfiguration iPConfigurationsItem in networkInterfacesItem.IPConfigurations)
+                                        {
+                                            XElement iPConfigurationElement = new XElement(XName.Get("IPConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                            iPConfigurationsSequenceElement.Add(iPConfigurationElement);
+                                            
+                                            if (iPConfigurationsItem.SubnetName != null)
+                                            {
+                                                XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                                subnetNameElement.Value = iPConfigurationsItem.SubnetName;
+                                                iPConfigurationElement.Add(subnetNameElement);
+                                            }
+                                            
+                                            if (iPConfigurationsItem.StaticVirtualNetworkIPAddress != null)
+                                            {
+                                                XElement staticVirtualNetworkIPAddressElement2 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                staticVirtualNetworkIPAddressElement2.Value = iPConfigurationsItem.StaticVirtualNetworkIPAddress;
+                                                iPConfigurationElement.Add(staticVirtualNetworkIPAddressElement2);
+                                            }
+                                        }
+                                        networkInterfaceElement.Add(iPConfigurationsSequenceElement);
+                                    }
+                                }
+                            }
+                            provisioningConfigurationElement.Add(networkInterfacesSequenceElement);
+                        }
+                    }
+                    
                     if (parameters.ProvisioningConfiguration.NetworkSecurityGroup != null)
                     {
                         XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
@@ -1440,6 +1489,55 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
+                            if (configurationSetsItem.NetworkInterfaces != null)
+                            {
+                                if (configurationSetsItem.NetworkInterfaces is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.NetworkInterfaces).IsInitialized)
+                                {
+                                    XElement networkInterfacesSequenceElement = new XElement(XName.Get("NetworkInterfaces", "http://schemas.microsoft.com/windowsazure"));
+                                    foreach (NetworkInterface networkInterfacesItem in configurationSetsItem.NetworkInterfaces)
+                                    {
+                                        XElement networkInterfaceElement = new XElement(XName.Get("NetworkInterface", "http://schemas.microsoft.com/windowsazure"));
+                                        networkInterfacesSequenceElement.Add(networkInterfaceElement);
+                                        
+                                        if (networkInterfacesItem.Name != null)
+                                        {
+                                            XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            nameElement3.Value = networkInterfacesItem.Name;
+                                            networkInterfaceElement.Add(nameElement3);
+                                        }
+                                        
+                                        if (networkInterfacesItem.IPConfigurations != null)
+                                        {
+                                            if (networkInterfacesItem.IPConfigurations is ILazyCollection == false || ((ILazyCollection)networkInterfacesItem.IPConfigurations).IsInitialized)
+                                            {
+                                                XElement iPConfigurationsSequenceElement = new XElement(XName.Get("IPConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                                foreach (IPConfiguration iPConfigurationsItem in networkInterfacesItem.IPConfigurations)
+                                                {
+                                                    XElement iPConfigurationElement = new XElement(XName.Get("IPConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                                    iPConfigurationsSequenceElement.Add(iPConfigurationElement);
+                                                    
+                                                    if (iPConfigurationsItem.SubnetName != null)
+                                                    {
+                                                        XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                                        subnetNameElement.Value = iPConfigurationsItem.SubnetName;
+                                                        iPConfigurationElement.Add(subnetNameElement);
+                                                    }
+                                                    
+                                                    if (iPConfigurationsItem.StaticVirtualNetworkIPAddress != null)
+                                                    {
+                                                        XElement staticVirtualNetworkIPAddressElement2 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                        staticVirtualNetworkIPAddressElement2.Value = iPConfigurationsItem.StaticVirtualNetworkIPAddress;
+                                                        iPConfigurationElement.Add(staticVirtualNetworkIPAddressElement2);
+                                                    }
+                                                }
+                                                networkInterfaceElement.Add(iPConfigurationsSequenceElement);
+                                            }
+                                        }
+                                    }
+                                    configurationSetElement.Add(networkInterfacesSequenceElement);
+                                }
+                            }
+                            
                             if (configurationSetsItem.NetworkSecurityGroup != null)
                             {
                                 XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
@@ -1715,9 +1813,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (resourceExtensionReferencesItem.Name != null)
                             {
-                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement3.Value = resourceExtensionReferencesItem.Name;
-                                resourceExtensionReferenceElement.Add(nameElement3);
+                                XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement4.Value = resourceExtensionReferencesItem.Name;
+                                resourceExtensionReferenceElement.Add(nameElement4);
                             }
                             
                             if (resourceExtensionReferencesItem.Version != null)
@@ -2468,6 +2566,55 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         }
                                     }
                                     
+                                    if (configurationSetsItem.NetworkInterfaces != null)
+                                    {
+                                        if (configurationSetsItem.NetworkInterfaces is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.NetworkInterfaces).IsInitialized)
+                                        {
+                                            XElement networkInterfacesSequenceElement = new XElement(XName.Get("NetworkInterfaces", "http://schemas.microsoft.com/windowsazure"));
+                                            foreach (NetworkInterface networkInterfacesItem in configurationSetsItem.NetworkInterfaces)
+                                            {
+                                                XElement networkInterfaceElement = new XElement(XName.Get("NetworkInterface", "http://schemas.microsoft.com/windowsazure"));
+                                                networkInterfacesSequenceElement.Add(networkInterfaceElement);
+                                                
+                                                if (networkInterfacesItem.Name != null)
+                                                {
+                                                    XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                                    nameElement4.Value = networkInterfacesItem.Name;
+                                                    networkInterfaceElement.Add(nameElement4);
+                                                }
+                                                
+                                                if (networkInterfacesItem.IPConfigurations != null)
+                                                {
+                                                    if (networkInterfacesItem.IPConfigurations is ILazyCollection == false || ((ILazyCollection)networkInterfacesItem.IPConfigurations).IsInitialized)
+                                                    {
+                                                        XElement iPConfigurationsSequenceElement = new XElement(XName.Get("IPConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                                        foreach (IPConfiguration iPConfigurationsItem in networkInterfacesItem.IPConfigurations)
+                                                        {
+                                                            XElement iPConfigurationElement = new XElement(XName.Get("IPConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                                            iPConfigurationsSequenceElement.Add(iPConfigurationElement);
+                                                            
+                                                            if (iPConfigurationsItem.SubnetName != null)
+                                                            {
+                                                                XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                                                subnetNameElement.Value = iPConfigurationsItem.SubnetName;
+                                                                iPConfigurationElement.Add(subnetNameElement);
+                                                            }
+                                                            
+                                                            if (iPConfigurationsItem.StaticVirtualNetworkIPAddress != null)
+                                                            {
+                                                                XElement staticVirtualNetworkIPAddressElement2 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                                staticVirtualNetworkIPAddressElement2.Value = iPConfigurationsItem.StaticVirtualNetworkIPAddress;
+                                                                iPConfigurationElement.Add(staticVirtualNetworkIPAddressElement2);
+                                                            }
+                                                        }
+                                                        networkInterfaceElement.Add(iPConfigurationsSequenceElement);
+                                                    }
+                                                }
+                                            }
+                                            configurationSetElement.Add(networkInterfacesSequenceElement);
+                                        }
+                                    }
+                                    
                                     if (configurationSetsItem.NetworkSecurityGroup != null)
                                     {
                                         XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
@@ -2743,9 +2890,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     
                                     if (resourceExtensionReferencesItem.Name != null)
                                     {
-                                        XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                        nameElement4.Value = resourceExtensionReferencesItem.Name;
-                                        resourceExtensionReferenceElement.Add(nameElement4);
+                                        XElement nameElement5 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        nameElement5.Value = resourceExtensionReferencesItem.Name;
+                                        resourceExtensionReferenceElement.Add(nameElement5);
                                     }
                                     
                                     if (resourceExtensionReferencesItem.Version != null)
@@ -3002,9 +3149,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 
                                 if (dnsServersItem.Name != null)
                                 {
-                                    XElement nameElement5 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                    nameElement5.Value = dnsServersItem.Name;
-                                    dnsServerElement.Add(nameElement5);
+                                    XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    nameElement6.Value = dnsServersItem.Name;
+                                    dnsServerElement.Add(nameElement6);
                                 }
                                 
                                 if (dnsServersItem.Address != null)
@@ -3038,9 +3185,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (loadBalancersItem.Name != null)
                             {
-                                XElement nameElement6 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement6.Value = loadBalancersItem.Name;
-                                loadBalancerElement.Add(nameElement6);
+                                XElement nameElement7 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement7.Value = loadBalancersItem.Name;
+                                loadBalancerElement.Add(nameElement7);
                             }
                             
                             if (loadBalancersItem.FrontendIPConfiguration != null)
@@ -3057,16 +3204,16 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 
                                 if (loadBalancersItem.FrontendIPConfiguration.SubnetName != null)
                                 {
-                                    XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
-                                    subnetNameElement.Value = loadBalancersItem.FrontendIPConfiguration.SubnetName;
-                                    frontendIpConfigurationElement.Add(subnetNameElement);
+                                    XElement subnetNameElement2 = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                    subnetNameElement2.Value = loadBalancersItem.FrontendIPConfiguration.SubnetName;
+                                    frontendIpConfigurationElement.Add(subnetNameElement2);
                                 }
                                 
                                 if (loadBalancersItem.FrontendIPConfiguration.StaticVirtualNetworkIPAddress != null)
                                 {
-                                    XElement staticVirtualNetworkIPAddressElement2 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
-                                    staticVirtualNetworkIPAddressElement2.Value = loadBalancersItem.FrontendIPConfiguration.StaticVirtualNetworkIPAddress;
-                                    frontendIpConfigurationElement.Add(staticVirtualNetworkIPAddressElement2);
+                                    XElement staticVirtualNetworkIPAddressElement3 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                    staticVirtualNetworkIPAddressElement3.Value = loadBalancersItem.FrontendIPConfiguration.StaticVirtualNetworkIPAddress;
+                                    frontendIpConfigurationElement.Add(staticVirtualNetworkIPAddressElement3);
                                 }
                             }
                         }
@@ -4520,6 +4667,55 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 }
                             }
                             
+                            if (configurationSetsItem.NetworkInterfaces != null)
+                            {
+                                if (configurationSetsItem.NetworkInterfaces is ILazyCollection == false || ((ILazyCollection)configurationSetsItem.NetworkInterfaces).IsInitialized)
+                                {
+                                    XElement networkInterfacesSequenceElement = new XElement(XName.Get("NetworkInterfaces", "http://schemas.microsoft.com/windowsazure"));
+                                    foreach (NetworkInterface networkInterfacesItem in configurationSetsItem.NetworkInterfaces)
+                                    {
+                                        XElement networkInterfaceElement = new XElement(XName.Get("NetworkInterface", "http://schemas.microsoft.com/windowsazure"));
+                                        networkInterfacesSequenceElement.Add(networkInterfaceElement);
+                                        
+                                        if (networkInterfacesItem.Name != null)
+                                        {
+                                            XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                            nameElement3.Value = networkInterfacesItem.Name;
+                                            networkInterfaceElement.Add(nameElement3);
+                                        }
+                                        
+                                        if (networkInterfacesItem.IPConfigurations != null)
+                                        {
+                                            if (networkInterfacesItem.IPConfigurations is ILazyCollection == false || ((ILazyCollection)networkInterfacesItem.IPConfigurations).IsInitialized)
+                                            {
+                                                XElement iPConfigurationsSequenceElement = new XElement(XName.Get("IPConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                                foreach (IPConfiguration iPConfigurationsItem in networkInterfacesItem.IPConfigurations)
+                                                {
+                                                    XElement iPConfigurationElement = new XElement(XName.Get("IPConfiguration", "http://schemas.microsoft.com/windowsazure"));
+                                                    iPConfigurationsSequenceElement.Add(iPConfigurationElement);
+                                                    
+                                                    if (iPConfigurationsItem.SubnetName != null)
+                                                    {
+                                                        XElement subnetNameElement = new XElement(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                                        subnetNameElement.Value = iPConfigurationsItem.SubnetName;
+                                                        iPConfigurationElement.Add(subnetNameElement);
+                                                    }
+                                                    
+                                                    if (iPConfigurationsItem.StaticVirtualNetworkIPAddress != null)
+                                                    {
+                                                        XElement staticVirtualNetworkIPAddressElement2 = new XElement(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                        staticVirtualNetworkIPAddressElement2.Value = iPConfigurationsItem.StaticVirtualNetworkIPAddress;
+                                                        iPConfigurationElement.Add(staticVirtualNetworkIPAddressElement2);
+                                                    }
+                                                }
+                                                networkInterfaceElement.Add(iPConfigurationsSequenceElement);
+                                            }
+                                        }
+                                    }
+                                    configurationSetElement.Add(networkInterfacesSequenceElement);
+                                }
+                            }
+                            
                             if (configurationSetsItem.NetworkSecurityGroup != null)
                             {
                                 XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
@@ -4795,9 +4991,9 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             
                             if (resourceExtensionReferencesItem.Name != null)
                             {
-                                XElement nameElement3 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                nameElement3.Value = resourceExtensionReferencesItem.Name;
-                                resourceExtensionReferenceElement.Add(nameElement3);
+                                XElement nameElement4 = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                nameElement4.Value = resourceExtensionReferencesItem.Name;
+                                resourceExtensionReferenceElement.Add(nameElement4);
                             }
                             
                             if (resourceExtensionReferencesItem.Version != null)
@@ -6349,6 +6545,47 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                         {
                                             int idleTimeoutInMinutesInstance2 = int.Parse(idleTimeoutInMinutesElement2.Value, CultureInfo.InvariantCulture);
                                             publicIPInstance.IdleTimeoutInMinutes = idleTimeoutInMinutesInstance2;
+                                        }
+                                    }
+                                }
+                                
+                                XElement networkInterfacesSequenceElement = configurationSetsElement.Element(XName.Get("NetworkInterfaces", "http://schemas.microsoft.com/windowsazure"));
+                                if (networkInterfacesSequenceElement != null)
+                                {
+                                    foreach (XElement networkInterfacesElement in networkInterfacesSequenceElement.Elements(XName.Get("NetworkInterface", "http://schemas.microsoft.com/windowsazure")))
+                                    {
+                                        NetworkInterface networkInterfaceInstance = new NetworkInterface();
+                                        configurationSetInstance.NetworkInterfaces.Add(networkInterfaceInstance);
+                                        
+                                        XElement nameElement3 = networkInterfacesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                        if (nameElement3 != null)
+                                        {
+                                            string nameInstance3 = nameElement3.Value;
+                                            networkInterfaceInstance.Name = nameInstance3;
+                                        }
+                                        
+                                        XElement iPConfigurationsSequenceElement = networkInterfacesElement.Element(XName.Get("IPConfigurations", "http://schemas.microsoft.com/windowsazure"));
+                                        if (iPConfigurationsSequenceElement != null)
+                                        {
+                                            foreach (XElement iPConfigurationsElement in iPConfigurationsSequenceElement.Elements(XName.Get("IPConfiguration", "http://schemas.microsoft.com/windowsazure")))
+                                            {
+                                                IPConfiguration iPConfigurationInstance = new IPConfiguration();
+                                                networkInterfaceInstance.IPConfigurations.Add(iPConfigurationInstance);
+                                                
+                                                XElement subnetNameElement = iPConfigurationsElement.Element(XName.Get("SubnetName", "http://schemas.microsoft.com/windowsazure"));
+                                                if (subnetNameElement != null)
+                                                {
+                                                    string subnetNameInstance = subnetNameElement.Value;
+                                                    iPConfigurationInstance.SubnetName = subnetNameInstance;
+                                                }
+                                                
+                                                XElement staticVirtualNetworkIPAddressElement2 = iPConfigurationsElement.Element(XName.Get("StaticVirtualNetworkIPAddress", "http://schemas.microsoft.com/windowsazure"));
+                                                if (staticVirtualNetworkIPAddressElement2 != null)
+                                                {
+                                                    string staticVirtualNetworkIPAddressInstance2 = staticVirtualNetworkIPAddressElement2.Value;
+                                                    iPConfigurationInstance.StaticVirtualNetworkIPAddress = staticVirtualNetworkIPAddressInstance2;
+                                                }
+                                            }
                                         }
                                     }
                                 }
