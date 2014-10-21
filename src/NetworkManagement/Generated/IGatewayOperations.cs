@@ -188,6 +188,26 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<GatewayOperationResponse> BeginResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Begin Resize Virtual Network Gateway
+        /// operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<GatewayOperationResponse> BeginResizeAsync(string networkName, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Begin Set Virtual Network Gateway Shared Key operation sets the
         /// default sites on the virtual network gateway for the specified
         /// virtual network.
@@ -595,6 +615,32 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<GatewayGetOperationStatusResponse> ResetSharedKeyAsync(string networkName, string localNetworkName, GatewayResetSharedKeyParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Begin Resize Virtual network Gateway operation resizes an
+        /// existing gateway to a different GatewaySKU.
+        /// </summary>
+        /// <param name='networkName'>
+        /// The name of the virtual network for this gateway.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the Resize Virtual Network Gateway operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is in progress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<GatewayGetOperationStatusResponse> ResizeAsync(string networkName, ResizeGatewayParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Set Virtual Network Gateway Shared Key operation sets the

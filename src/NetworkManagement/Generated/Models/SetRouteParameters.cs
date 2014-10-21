@@ -25,37 +25,45 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
-    /// </summary>
-    public partial class GatewayCreateParameters
+    public partial class SetRouteParameters
     {
-        private GatewaySKU _gatewaySKU;
+        private string _addressPrefix;
         
         /// <summary>
-        /// Optional. The SKU of this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public string AddressPrefix
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
+            get { return this._addressPrefix; }
+            set { this._addressPrefix = value; }
         }
         
-        private GatewayType _gatewayType;
+        private string _name;
         
         /// <summary>
-        /// Optional. The routing type for this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewayType GatewayType
+        public string Name
         {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
+            get { return this._name; }
+            set { this._name = value; }
+        }
+        
+        private NextHop _nextHop;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public NextHop NextHop
+        {
+            get { return this._nextHop; }
+            set { this._nextHop = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayCreateParameters class.
+        /// Initializes a new instance of the SetRouteParameters class.
         /// </summary>
-        public GatewayCreateParameters()
+        public SetRouteParameters()
         {
         }
     }

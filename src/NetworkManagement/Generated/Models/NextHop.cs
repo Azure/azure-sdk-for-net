@@ -21,41 +21,26 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
-    /// </summary>
-    public partial class GatewayCreateParameters
+    public partial class NextHop
     {
-        private GatewaySKU _gatewaySKU;
+        private string _type;
         
         /// <summary>
-        /// Optional. The SKU of this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public string Type
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private GatewayType _gatewayType;
-        
-        /// <summary>
-        /// Optional. The routing type for this virtual network gateway.
-        /// </summary>
-        public GatewayType GatewayType
-        {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
+            get { return this._type; }
+            set { this._type = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayCreateParameters class.
+        /// Initializes a new instance of the NextHop class.
         /// </summary>
-        public GatewayCreateParameters()
+        public NextHop()
         {
         }
     }

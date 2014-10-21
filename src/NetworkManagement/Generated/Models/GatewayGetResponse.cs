@@ -43,6 +43,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._defaultSite = value; }
         }
         
+        private GatewaySKU _gatewaySKU;
+        
+        /// <summary>
+        /// Optional. The SKU for this virtual network gateway.
+        /// </summary>
+        public GatewaySKU GatewaySKU
+        {
+            get { return this._gatewaySKU; }
+            set { this._gatewaySKU = value; }
+        }
+        
         private GatewayType _gatewayType;
         
         /// <summary>

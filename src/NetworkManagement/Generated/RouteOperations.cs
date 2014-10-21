@@ -39,19 +39,18 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 namespace Microsoft.WindowsAzure.Management.Network
 {
     /// <summary>
-    /// The Network Management API includes operations for managing the Network
-    /// Security Groups for your subscription.
+    /// The Network Management API includes operations for managing the routes
+    /// for your subscription.
     /// </summary>
-    internal partial class NetworkSecurityGroupOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.INetworkSecurityGroupOperations
+    internal partial class RouteOperations : IServiceOperations<NetworkManagementClient>, Microsoft.WindowsAzure.Management.Network.IRouteOperations
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkSecurityGroupOperations
-        /// class.
+        /// Initializes a new instance of the RouteOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal NetworkSecurityGroupOperations(NetworkManagementClient client)
+        internal RouteOperations(NetworkManagementClient client)
         {
             this._client = client;
         }
@@ -68,17 +67,20 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Adds a Network Security Group to a subnet.
+        /// Set the specified route table for the provided subnet in the
+        /// provided virtual network in this subscription.
         /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// Required.
+        /// <param name='vnetName'>
+        /// Required. The name of the virtual network that contains the
+        /// provided subnet.
         /// </param>
         /// <param name='subnetName'>
-        /// Required.
+        /// Required. The name of the subnet that the route table will be added
+        /// to.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Add Network Security Group to
-        /// subnet operation.
+        /// Required. The parameters necessary to add a route table to the
+        /// provided subnet.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -94,7 +96,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> AddRouteTableToSubnetAsync(string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -103,10 +105,10 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "AddToSubnetAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "AddRouteTableToSubnetAsync", tracingParameters);
             }
             try
             {
@@ -116,11 +118,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginAddingToSubnetAsync(virtualNetworkName, subnetName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginAddRouteTableToSubnetAsync(vnetName, subnetName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -182,38 +180,34 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Adds a Network Security Group to a subnet.
+        /// Set the specified route table for the provided subnet in the
+        /// provided virtual network in this subscription.
         /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// Required.
+        /// <param name='vnetName'>
+        /// Required. The name of the virtual network that contains the
+        /// provided subnet.
         /// </param>
         /// <param name='subnetName'>
-        /// Required.
+        /// Required. The name of the subnet that the route table will be added
+        /// to.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Add Network Security Group to
-        /// subnet operation.
+        /// Required. The parameters necessary to add a route table to the
+        /// provided subnet.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddToSubnetParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginAddRouteTableToSubnetAsync(string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (vnetName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("vnetName");
             }
             if (subnetName == null)
             {
@@ -223,10 +217,6 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Name == null)
-            {
-                throw new ArgumentNullException("parameters.Name");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -235,14 +225,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("subnetName", subnetName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginAddingToSubnetAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginAddRouteTableToSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + vnetName.Trim() + "/subnets/" + subnetName.Trim() + "/routetables";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -275,12 +265,15 @@ namespace Microsoft.WindowsAzure.Management.Network
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(networkSecurityGroupElement);
+                XElement routeTableAssociationElement = new XElement(XName.Get("RouteTableAssociation", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(routeTableAssociationElement);
                 
-                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                nameElement.Value = parameters.Name;
-                networkSecurityGroupElement.Add(nameElement);
+                if (parameters.RouteTableName != null)
+                {
+                    XElement routeTableNameElement = new XElement(XName.Get("RouteTableName", "http://schemas.microsoft.com/windowsazure"));
+                    routeTableNameElement.Value = parameters.RouteTableName;
+                    routeTableAssociationElement.Add(routeTableNameElement);
+                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -313,8 +306,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -345,40 +338,24 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Creates a new Network Security Group.
+        /// Create the specified route table for this subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Network Security Group
-        /// operation.
+        /// Required. The parameters necessary to create a new route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginCreatingAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginCreateRouteTableAsync(CreateRouteTableParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
-            if (parameters.Name == null)
-            {
-                throw new ArgumentNullException("parameters.Name");
             }
             
             // Tracing
@@ -389,11 +366,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginCreatingAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginCreateRouteTableAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -426,23 +403,29 @@ namespace Microsoft.WindowsAzure.Management.Network
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement networkSecurityGroupElement = new XElement(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(networkSecurityGroupElement);
+                XElement routeTableElement = new XElement(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(routeTableElement);
                 
-                XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                nameElement.Value = parameters.Name;
-                networkSecurityGroupElement.Add(nameElement);
+                if (parameters.Name != null)
+                {
+                    XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement.Value = parameters.Name;
+                    routeTableElement.Add(nameElement);
+                }
                 
                 if (parameters.Label != null)
                 {
                     XElement labelElement = new XElement(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                     labelElement.Value = parameters.Label;
-                    networkSecurityGroupElement.Add(labelElement);
+                    routeTableElement.Add(labelElement);
                 }
                 
-                XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                locationElement.Value = parameters.Location;
-                networkSecurityGroupElement.Add(locationElement);
+                if (parameters.Location != null)
+                {
+                    XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                    locationElement.Value = parameters.Location;
+                    routeTableElement.Add(locationElement);
+                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -475,8 +458,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -507,34 +490,33 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Deletes the pecified Network Security Group from your
-        /// subscription.If the Network Security group is still associated
-        /// with some VM/Role/Subnet, the deletion will fail. In order to
-        /// successfully delete the Network Security, it needs to be not used.
+        /// Set the specified route for the provided table in this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Required. The name of the Network Security Group to delete.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table where the provided route will
+        /// be set.
+        /// </param>
+        /// <param name='routeName'>
+        /// Required. The name of the route that will be set on the provided
+        /// route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeleteRouteAsync(string routeTableName, string routeName, CancellationToken cancellationToken)
         {
             // Validate
-            if (networkSecurityGroupName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ArgumentNullException("routeTableName");
+            }
+            if (routeName == null)
+            {
+                throw new ArgumentNullException("routeName");
             }
             
             // Tracing
@@ -544,12 +526,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "BeginDeletingAsync", tracingParameters);
+                tracingParameters.Add("routeTableName", routeTableName);
+                tracingParameters.Add("routeName", routeName);
+                Tracing.Enter(invocationId, this, "BeginDeleteRouteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables/" + routeTableName.Trim() + "/routes/" + routeName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -605,8 +588,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -637,38 +620,24 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Deletes a rule from the specified Network Security Group.
+        /// Delete the specified route table for this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Required. The name of the Network Security Group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// Required. The name of the rule to delete.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginDeletingRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginDeleteRouteTableAsync(string routeTableName, CancellationToken cancellationToken)
         {
             // Validate
-            if (networkSecurityGroupName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
-            }
-            if (ruleName == null)
-            {
-                throw new ArgumentNullException("ruleName");
+                throw new ArgumentNullException("routeTableName");
             }
             
             // Tracing
@@ -678,13 +647,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "BeginDeletingRuleAsync", tracingParameters);
+                tracingParameters.Add("routeTableName", routeTableName);
+                Tracing.Enter(invocationId, this, "BeginDeleteRouteTableAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim() + "/rules/" + ruleName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables/" + routeTableName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -740,8 +708,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -772,46 +740,35 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Removes a Network Security Group from a subnet.
+        /// Remove the route table from the provided subnet in the provided
+        /// virtual network in this subscription.
         /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// Required.
+        /// <param name='vnetName'>
+        /// Required. The name of the virtual network that contains the
+        /// provided subnet.
         /// </param>
         /// <param name='subnetName'>
-        /// Required.
-        /// </param>
-        /// <param name='networkSecurityGroupName'>
-        /// Required.
+        /// Required. The name of the subnet that the route table will be
+        /// removed from.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginRemovingFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginRemoveRouteTableFromSubnetAsync(string vnetName, string subnetName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (vnetName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("vnetName");
             }
             if (subnetName == null)
             {
                 throw new ArgumentNullException("subnetName");
             }
-            if (networkSecurityGroupName == null)
-            {
-                throw new ArgumentNullException("networkSecurityGroupName");
-            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -820,14 +777,13 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("subnetName", subnetName);
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "BeginRemovingFromSubnetAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginRemoveRouteTableFromSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups/" + networkSecurityGroupName.Trim();
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + vnetName.Trim() + "/subnets/" + subnetName.Trim() + "/routetables";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -883,8 +839,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -915,66 +871,40 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Sets a new Network Security Rule to existing Network Security Group.
+        /// Set the specified route for the provided table in this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Optional.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table where the provided route will
+        /// be set.
         /// </param>
-        /// <param name='ruleName'>
-        /// Optional.
+        /// <param name='routeName'>
+        /// Required. The name of the route that will be set on the provided
+        /// route table.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Set Network Security Rule
-        /// operation.
+        /// Required. The parameters necessary to create a new route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The response body contains the status of the specified asynchronous
-        /// operation, indicating whether it has succeeded, is inprogress, or
-        /// has failed. Note that this status is distinct from the HTTP status
-        /// code returned for the Get Operation Status operation itself. If
-        /// the asynchronous operation succeeded, the response body includes
-        /// the HTTP status code for the successful request. If the
-        /// asynchronous operation failed, the response body includes the HTTP
-        /// status code for the failed request, and also includes error
-        /// information regarding the failure.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> BeginSettingRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationResponse> BeginSetRouteAsync(string routeTableName, string routeName, SetRouteParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException("routeTableName");
+            }
+            if (routeName == null)
+            {
+                throw new ArgumentNullException("routeName");
+            }
             if (parameters == null)
             {
                 throw new ArgumentNullException("parameters");
-            }
-            if (parameters.Action == null)
-            {
-                throw new ArgumentNullException("parameters.Action");
-            }
-            if (parameters.DestinationAddressPrefix == null)
-            {
-                throw new ArgumentNullException("parameters.DestinationAddressPrefix");
-            }
-            if (parameters.DestinationPortRange == null)
-            {
-                throw new ArgumentNullException("parameters.DestinationPortRange");
-            }
-            if (parameters.Protocol == null)
-            {
-                throw new ArgumentNullException("parameters.Protocol");
-            }
-            if (parameters.SourceAddressPrefix == null)
-            {
-                throw new ArgumentNullException("parameters.SourceAddressPrefix");
-            }
-            if (parameters.SourcePortRange == null)
-            {
-                throw new ArgumentNullException("parameters.SourcePortRange");
-            }
-            if (parameters.Type == null)
-            {
-                throw new ArgumentNullException("parameters.Type");
             }
             
             // Tracing
@@ -984,14 +914,14 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                tracingParameters.Add("ruleName", ruleName);
+                tracingParameters.Add("routeTableName", routeTableName);
+                tracingParameters.Add("routeName", routeName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "BeginSettingRuleAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "BeginSetRouteAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + (networkSecurityGroupName != null ? networkSecurityGroupName.Trim() : "") + "/rules/" + (ruleName != null ? ruleName.Trim() : "");
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables/" + routeTableName.Trim() + "/routes/" + routeName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1024,40 +954,35 @@ namespace Microsoft.WindowsAzure.Management.Network
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement ruleElement = new XElement(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure"));
-                requestDoc.Add(ruleElement);
+                XElement routeElement = new XElement(XName.Get("Route", "http://schemas.microsoft.com/windowsazure"));
+                requestDoc.Add(routeElement);
                 
-                XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                typeElement.Value = parameters.Type;
-                ruleElement.Add(typeElement);
+                if (parameters.Name != null)
+                {
+                    XElement nameElement = new XElement(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                    nameElement.Value = parameters.Name;
+                    routeElement.Add(nameElement);
+                }
                 
-                XElement priorityElement = new XElement(XName.Get("Priority", "http://schemas.microsoft.com/windowsazure"));
-                priorityElement.Value = parameters.Priority.ToString();
-                ruleElement.Add(priorityElement);
+                if (parameters.AddressPrefix != null)
+                {
+                    XElement addressPrefixElement = new XElement(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                    addressPrefixElement.Value = parameters.AddressPrefix;
+                    routeElement.Add(addressPrefixElement);
+                }
                 
-                XElement actionElement = new XElement(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
-                actionElement.Value = parameters.Action;
-                ruleElement.Add(actionElement);
-                
-                XElement sourceAddressPrefixElement = new XElement(XName.Get("SourceAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                sourceAddressPrefixElement.Value = parameters.SourceAddressPrefix;
-                ruleElement.Add(sourceAddressPrefixElement);
-                
-                XElement sourcePortRangeElement = new XElement(XName.Get("SourcePortRange", "http://schemas.microsoft.com/windowsazure"));
-                sourcePortRangeElement.Value = parameters.SourcePortRange;
-                ruleElement.Add(sourcePortRangeElement);
-                
-                XElement destinationAddressPrefixElement = new XElement(XName.Get("DestinationAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                destinationAddressPrefixElement.Value = parameters.DestinationAddressPrefix;
-                ruleElement.Add(destinationAddressPrefixElement);
-                
-                XElement destinationPortRangeElement = new XElement(XName.Get("DestinationPortRange", "http://schemas.microsoft.com/windowsazure"));
-                destinationPortRangeElement.Value = parameters.DestinationPortRange;
-                ruleElement.Add(destinationPortRangeElement);
-                
-                XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                protocolElement.Value = parameters.Protocol;
-                ruleElement.Add(protocolElement);
+                if (parameters.NextHop != null)
+                {
+                    XElement nextHopTypeElement = new XElement(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
+                    routeElement.Add(nextHopTypeElement);
+                    
+                    if (parameters.NextHop.Type != null)
+                    {
+                        XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        typeElement.Value = parameters.NextHop.Type;
+                        nextHopTypeElement.Add(typeElement);
+                    }
+                }
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -1090,8 +1015,8 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    OperationStatusResponse result = null;
-                    result = new OperationStatusResponse();
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
@@ -1122,11 +1047,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Creates a new Network Security Group.
+        /// Create the specified route table for this subscription.
         /// </summary>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Create Network Security Group
-        /// operation.
+        /// Required. The parameters necessary to create a new route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1142,7 +1066,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateAsync(NetworkSecurityGroupCreateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> CreateRouteTableAsync(CreateRouteTableParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1152,7 +1076,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "CreateAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "CreateRouteTableAsync", tracingParameters);
             }
             try
             {
@@ -1162,11 +1086,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginCreatingAsync(parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginCreateRouteTableAsync(parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1228,14 +1148,15 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// The Delete Network Security Group operation removes thespecified
-        /// Network Security Group from your subscription.If the Network
-        /// Security group is still associated with some VM/Role/Subnet, the
-        /// deletion will fail. In order to successfully delete the Network
-        /// Security, it needs to be not used.
+        /// Set the specified route for the provided table in this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Required. The name of the Network Security Group to delete.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table where the provided route will
+        /// be set.
+        /// </param>
+        /// <param name='routeName'>
+        /// Required. The name of the route that will be set on the provided
+        /// route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1251,7 +1172,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteAsync(string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteRouteAsync(string routeTableName, string routeName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1260,8 +1181,9 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "DeleteAsync", tracingParameters);
+                tracingParameters.Add("routeTableName", routeTableName);
+                tracingParameters.Add("routeName", routeName);
+                Tracing.Enter(invocationId, this, "DeleteRouteAsync", tracingParameters);
             }
             try
             {
@@ -1271,11 +1193,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingAsync(networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginDeleteRouteAsync(routeTableName, routeName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1337,14 +1255,10 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// The Delete Network Security Rule operation removes a rule from the
-        /// specified Network Security Group.
+        /// Delete the specified route table for this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Required. The name of the Network Security Group.
-        /// </param>
-        /// <param name='ruleName'>
-        /// Required. The name of the rule to delete.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table to delete.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -1360,7 +1274,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> DeleteRouteTableAsync(string routeTableName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -1369,9 +1283,8 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                tracingParameters.Add("ruleName", ruleName);
-                Tracing.Enter(invocationId, this, "DeleteRuleAsync", tracingParameters);
+                tracingParameters.Add("routeTableName", routeTableName);
+                Tracing.Enter(invocationId, this, "DeleteRouteTableAsync", tracingParameters);
             }
             try
             {
@@ -1381,11 +1294,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginDeletingRuleAsync(networkSecurityGroupName, ruleName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginDeleteRouteTableAsync(routeTableName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -1447,27 +1356,25 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Gets the details for the specified Network Security Group in the
-        /// subscription.
+        /// Get the specified route table for this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Required. The name of the Network Security Group to retrieve.
-        /// </param>
-        /// <param name='detailLevel'>
-        /// Optional. Use 'Full' to list rules.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table in this subscription to
+        /// retrieve.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// A Network Security Group associated with your subscription.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupGetResponse> GetAsync(string networkSecurityGroupName, string detailLevel, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GetRouteTableResponse> GetRouteTableAsync(string routeTableName, CancellationToken cancellationToken)
         {
             // Validate
-            if (networkSecurityGroupName == null)
+            if (routeTableName == null)
             {
-                throw new ArgumentNullException("networkSecurityGroupName");
+                throw new ArgumentNullException("routeTableName");
             }
             
             // Tracing
@@ -1477,17 +1384,12 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                tracingParameters.Add("detailLevel", detailLevel);
-                Tracing.Enter(invocationId, this, "GetAsync", tracingParameters);
+                tracingParameters.Add("routeTableName", routeTableName);
+                Tracing.Enter(invocationId, this, "GetRouteTableAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups/" + networkSecurityGroupName.Trim() + "?";
-            if (detailLevel != null)
-            {
-                url = url + "detaillevel=" + Uri.EscapeDataString(detailLevel != null ? detailLevel.Trim() : "");
-            }
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables/" + routeTableName.Trim();
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1543,130 +1445,101 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    NetworkSecurityGroupGetResponse result = null;
+                    GetRouteTableResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupGetResponse();
+                    result = new GetRouteTableResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupElement != null)
+                    XElement routeTableElement = responseDoc.Element(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure"));
+                    if (routeTableElement != null)
                     {
-                        XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        RouteTable routeTableInstance = new RouteTable();
+                        result.RouteTable = routeTableInstance;
+                        
+                        XElement nameElement = routeTableElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
+                            routeTableInstance.Name = nameInstance;
                         }
                         
-                        XElement labelElement = networkSecurityGroupElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        XElement labelElement = routeTableElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                         if (labelElement != null)
                         {
                             string labelInstance = labelElement.Value;
-                            result.Label = labelInstance;
+                            routeTableInstance.Label = labelInstance;
                         }
                         
-                        XElement locationElement = networkSecurityGroupElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                        XElement locationElement = routeTableElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
                         if (locationElement != null)
                         {
                             string locationInstance = locationElement.Value;
-                            result.Location = locationInstance;
+                            routeTableInstance.Location = locationInstance;
                         }
                         
-                        XElement rulesSequenceElement = networkSecurityGroupElement.Element(XName.Get("Rules", "http://schemas.microsoft.com/windowsazure"));
-                        if (rulesSequenceElement != null)
+                        XElement routeTableStateElement = routeTableElement.Element(XName.Get("RouteTableState", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeTableStateElement != null)
                         {
-                            foreach (XElement rulesElement in rulesSequenceElement.Elements(XName.Get("Rule", "http://schemas.microsoft.com/windowsazure")))
+                            RouteTableState routeTableStateInstance = ((RouteTableState)Enum.Parse(typeof(RouteTableState), routeTableStateElement.Value, true));
+                            routeTableInstance.RouteTableState = routeTableStateInstance;
+                        }
+                        
+                        XElement routeListSequenceElement = routeTableElement.Element(XName.Get("RouteList", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeListSequenceElement != null)
+                        {
+                            foreach (XElement routeListElement in routeListSequenceElement.Elements(XName.Get("Route", "http://schemas.microsoft.com/windowsazure")))
                             {
-                                NetworkSecurityRule ruleInstance = new NetworkSecurityRule();
-                                result.Rules.Add(ruleInstance);
+                                Route routeInstance = new Route();
+                                routeTableInstance.RouteList.Add(routeInstance);
                                 
-                                XElement nameElement2 = rulesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                XElement nameElement2 = routeListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                                 if (nameElement2 != null)
                                 {
                                     string nameInstance2 = nameElement2.Value;
-                                    ruleInstance.Name = nameInstance2;
+                                    routeInstance.Name = nameInstance2;
                                 }
                                 
-                                XElement typeElement = rulesElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                if (typeElement != null)
+                                XElement addressPrefixElement = routeListElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressPrefixElement != null)
                                 {
-                                    string typeInstance = typeElement.Value;
-                                    ruleInstance.Type = typeInstance;
+                                    string addressPrefixInstance = addressPrefixElement.Value;
+                                    routeInstance.AddressPrefix = addressPrefixInstance;
                                 }
                                 
-                                XElement priorityElement = rulesElement.Element(XName.Get("Priority", "http://schemas.microsoft.com/windowsazure"));
-                                if (priorityElement != null)
+                                XElement nextHopTypeElement = routeListElement.Element(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
+                                if (nextHopTypeElement != null)
                                 {
-                                    int priorityInstance = int.Parse(priorityElement.Value, CultureInfo.InvariantCulture);
-                                    ruleInstance.Priority = priorityInstance;
+                                    NextHop nextHopTypeInstance = new NextHop();
+                                    routeInstance.NextHop = nextHopTypeInstance;
+                                    
+                                    XElement typeElement = nextHopTypeElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        nextHopTypeInstance.Type = typeInstance;
+                                    }
                                 }
                                 
-                                XElement actionElement = rulesElement.Element(XName.Get("Action", "http://schemas.microsoft.com/windowsazure"));
-                                if (actionElement != null)
+                                XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
+                                if (metricElement != null)
                                 {
-                                    string actionInstance = actionElement.Value;
-                                    ruleInstance.Action = actionInstance;
+                                    int metricInstance = int.Parse(metricElement.Value, CultureInfo.InvariantCulture);
+                                    routeInstance.Metric = metricInstance;
                                 }
                                 
-                                XElement sourceAddressPrefixElement = rulesElement.Element(XName.Get("SourceAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                if (sourceAddressPrefixElement != null)
+                                XElement routeStateElement = routeListElement.Element(XName.Get("RouteState", "http://schemas.microsoft.com/windowsazure"));
+                                if (routeStateElement != null)
                                 {
-                                    string sourceAddressPrefixInstance = sourceAddressPrefixElement.Value;
-                                    ruleInstance.SourceAddressPrefix = sourceAddressPrefixInstance;
-                                }
-                                
-                                XElement sourcePortRangeElement = rulesElement.Element(XName.Get("SourcePortRange", "http://schemas.microsoft.com/windowsazure"));
-                                if (sourcePortRangeElement != null)
-                                {
-                                    string sourcePortRangeInstance = sourcePortRangeElement.Value;
-                                    ruleInstance.SourcePortRange = sourcePortRangeInstance;
-                                }
-                                
-                                XElement destinationAddressPrefixElement = rulesElement.Element(XName.Get("DestinationAddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                if (destinationAddressPrefixElement != null)
-                                {
-                                    string destinationAddressPrefixInstance = destinationAddressPrefixElement.Value;
-                                    ruleInstance.DestinationAddressPrefix = destinationAddressPrefixInstance;
-                                }
-                                
-                                XElement destinationPortRangeElement = rulesElement.Element(XName.Get("DestinationPortRange", "http://schemas.microsoft.com/windowsazure"));
-                                if (destinationPortRangeElement != null)
-                                {
-                                    string destinationPortRangeInstance = destinationPortRangeElement.Value;
-                                    ruleInstance.DestinationPortRange = destinationPortRangeInstance;
-                                }
-                                
-                                XElement protocolElement = rulesElement.Element(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                                if (protocolElement != null)
-                                {
-                                    string protocolInstance = protocolElement.Value;
-                                    ruleInstance.Protocol = protocolInstance;
-                                }
-                                
-                                XElement stateElement = rulesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                                if (stateElement != null)
-                                {
-                                    string stateInstance = stateElement.Value;
-                                    ruleInstance.State = stateInstance;
-                                }
-                                
-                                XElement isDefaultElement = rulesElement.Element(XName.Get("IsDefault", "http://schemas.microsoft.com/windowsazure"));
-                                if (isDefaultElement != null)
-                                {
-                                    bool isDefaultInstance = bool.Parse(isDefaultElement.Value);
-                                    ruleInstance.IsDefault = isDefaultInstance;
+                                    RouteState routeStateInstance = ((RouteState)Enum.Parse(typeof(RouteState), routeStateElement.Value, true));
+                                    routeInstance.State = routeStateInstance;
                                 }
                             }
                         }
                     }
                     
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -1692,26 +1565,29 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Gets the Network Security Group applied to a specific subnet.
+        /// Get the specified route table for the provided subnet in the
+        /// provided virtual network in this subscription.
         /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// Required.
+        /// <param name='vnetName'>
+        /// Required. The name of the virtual network that contains the
+        /// provided subnet.
         /// </param>
         /// <param name='subnetName'>
-        /// Required.
+        /// Required. The name of the subnet.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Network Security Group associated with a subnet.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupGetForSubnetResponse> GetForSubnetAsync(string virtualNetworkName, string subnetName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GetRouteTableForSubnetResponse> GetRouteTableForSubnetAsync(string vnetName, string subnetName, CancellationToken cancellationToken)
         {
             // Validate
-            if (virtualNetworkName == null)
+            if (vnetName == null)
             {
-                throw new ArgumentNullException("virtualNetworkName");
+                throw new ArgumentNullException("vnetName");
             }
             if (subnetName == null)
             {
@@ -1725,13 +1601,232 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("subnetName", subnetName);
-                Tracing.Enter(invocationId, this, "GetForSubnetAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "GetRouteTableForSubnetAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + virtualNetworkName.Trim() + "/subnets/" + subnetName.Trim() + "/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/virtualnetwork/" + vnetName.Trim() + "/subnets/" + subnetName.Trim() + "/routetables";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode >= HttpStatusCode.BadRequest)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    GetRouteTableForSubnetResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new GetRouteTableForSubnetResponse();
+                    XDocument responseDoc = XDocument.Parse(responseContent);
+                    
+                    XElement routeTableElement = responseDoc.Element(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure"));
+                    if (routeTableElement != null)
+                    {
+                        RouteTable routeTableInstance = new RouteTable();
+                        result.RouteTable = routeTableInstance;
+                        
+                        XElement nameElement = routeTableElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        if (nameElement != null)
+                        {
+                            string nameInstance = nameElement.Value;
+                            routeTableInstance.Name = nameInstance;
+                        }
+                        
+                        XElement labelElement = routeTableElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        if (labelElement != null)
+                        {
+                            string labelInstance = labelElement.Value;
+                            routeTableInstance.Label = labelInstance;
+                        }
+                        
+                        XElement locationElement = routeTableElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                        if (locationElement != null)
+                        {
+                            string locationInstance = locationElement.Value;
+                            routeTableInstance.Location = locationInstance;
+                        }
+                        
+                        XElement routeTableStateElement = routeTableElement.Element(XName.Get("RouteTableState", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeTableStateElement != null)
+                        {
+                            RouteTableState routeTableStateInstance = ((RouteTableState)Enum.Parse(typeof(RouteTableState), routeTableStateElement.Value, true));
+                            routeTableInstance.RouteTableState = routeTableStateInstance;
+                        }
+                        
+                        XElement routeListSequenceElement = routeTableElement.Element(XName.Get("RouteList", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeListSequenceElement != null)
+                        {
+                            foreach (XElement routeListElement in routeListSequenceElement.Elements(XName.Get("Route", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                Route routeInstance = new Route();
+                                routeTableInstance.RouteList.Add(routeInstance);
+                                
+                                XElement nameElement2 = routeListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
+                                {
+                                    string nameInstance2 = nameElement2.Value;
+                                    routeInstance.Name = nameInstance2;
+                                }
+                                
+                                XElement addressPrefixElement = routeListElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressPrefixElement != null)
+                                {
+                                    string addressPrefixInstance = addressPrefixElement.Value;
+                                    routeInstance.AddressPrefix = addressPrefixInstance;
+                                }
+                                
+                                XElement nextHopTypeElement = routeListElement.Element(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
+                                if (nextHopTypeElement != null)
+                                {
+                                    NextHop nextHopTypeInstance = new NextHop();
+                                    routeInstance.NextHop = nextHopTypeInstance;
+                                    
+                                    XElement typeElement = nextHopTypeElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        nextHopTypeInstance.Type = typeInstance;
+                                    }
+                                }
+                                
+                                XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
+                                if (metricElement != null)
+                                {
+                                    int metricInstance = int.Parse(metricElement.Value, CultureInfo.InvariantCulture);
+                                    routeInstance.Metric = metricInstance;
+                                }
+                                
+                                XElement routeStateElement = routeListElement.Element(XName.Get("RouteState", "http://schemas.microsoft.com/windowsazure"));
+                                if (routeStateElement != null)
+                                {
+                                    RouteState routeStateInstance = ((RouteState)Enum.Parse(typeof(RouteState), routeStateElement.Value, true));
+                                    routeInstance.State = routeStateInstance;
+                                }
+                            }
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Get the specified route table for this subscription.
+        /// </summary>
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table in this subscription to
+        /// retrieve.
+        /// </param>
+        /// <param name='detailLevel'>
+        /// Required. The amount of detail about the requested route table that
+        /// will be returned.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.GetRouteTableResponse> GetRouteTableWithDetailsAsync(string routeTableName, string detailLevel, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (routeTableName == null)
+            {
+                throw new ArgumentNullException("routeTableName");
+            }
+            if (detailLevel == null)
+            {
+                throw new ArgumentNullException("detailLevel");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("routeTableName", routeTableName);
+                tracingParameters.Add("detailLevel", detailLevel);
+                Tracing.Enter(invocationId, this, "GetRouteTableWithDetailsAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables/" + routeTableName.Trim() + "?";
+            url = url + "detailLevel=" + Uri.EscapeDataString(detailLevel.Trim());
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1787,36 +1882,101 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    NetworkSecurityGroupGetForSubnetResponse result = null;
+                    GetRouteTableResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupGetForSubnetResponse();
+                    result = new GetRouteTableResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement networkSecurityGroupElement = responseDoc.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupElement != null)
+                    XElement routeTableElement = responseDoc.Element(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure"));
+                    if (routeTableElement != null)
                     {
-                        XElement nameElement = networkSecurityGroupElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                        RouteTable routeTableInstance = new RouteTable();
+                        result.RouteTable = routeTableInstance;
+                        
+                        XElement nameElement = routeTableElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                         if (nameElement != null)
                         {
                             string nameInstance = nameElement.Value;
-                            result.Name = nameInstance;
+                            routeTableInstance.Name = nameInstance;
                         }
                         
-                        XElement stateElement = networkSecurityGroupElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
-                        if (stateElement != null)
+                        XElement labelElement = routeTableElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                        if (labelElement != null)
                         {
-                            string stateInstance = stateElement.Value;
-                            result.State = stateInstance;
+                            string labelInstance = labelElement.Value;
+                            routeTableInstance.Label = labelInstance;
+                        }
+                        
+                        XElement locationElement = routeTableElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                        if (locationElement != null)
+                        {
+                            string locationInstance = locationElement.Value;
+                            routeTableInstance.Location = locationInstance;
+                        }
+                        
+                        XElement routeTableStateElement = routeTableElement.Element(XName.Get("RouteTableState", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeTableStateElement != null)
+                        {
+                            RouteTableState routeTableStateInstance = ((RouteTableState)Enum.Parse(typeof(RouteTableState), routeTableStateElement.Value, true));
+                            routeTableInstance.RouteTableState = routeTableStateInstance;
+                        }
+                        
+                        XElement routeListSequenceElement = routeTableElement.Element(XName.Get("RouteList", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeListSequenceElement != null)
+                        {
+                            foreach (XElement routeListElement in routeListSequenceElement.Elements(XName.Get("Route", "http://schemas.microsoft.com/windowsazure")))
+                            {
+                                Route routeInstance = new Route();
+                                routeTableInstance.RouteList.Add(routeInstance);
+                                
+                                XElement nameElement2 = routeListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                if (nameElement2 != null)
+                                {
+                                    string nameInstance2 = nameElement2.Value;
+                                    routeInstance.Name = nameInstance2;
+                                }
+                                
+                                XElement addressPrefixElement = routeListElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                if (addressPrefixElement != null)
+                                {
+                                    string addressPrefixInstance = addressPrefixElement.Value;
+                                    routeInstance.AddressPrefix = addressPrefixInstance;
+                                }
+                                
+                                XElement nextHopTypeElement = routeListElement.Element(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
+                                if (nextHopTypeElement != null)
+                                {
+                                    NextHop nextHopTypeInstance = new NextHop();
+                                    routeInstance.NextHop = nextHopTypeInstance;
+                                    
+                                    XElement typeElement = nextHopTypeElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                    if (typeElement != null)
+                                    {
+                                        string typeInstance = typeElement.Value;
+                                        nextHopTypeInstance.Type = typeInstance;
+                                    }
+                                }
+                                
+                                XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
+                                if (metricElement != null)
+                                {
+                                    int metricInstance = int.Parse(metricElement.Value, CultureInfo.InvariantCulture);
+                                    routeInstance.Metric = metricInstance;
+                                }
+                                
+                                XElement routeStateElement = routeListElement.Element(XName.Get("RouteState", "http://schemas.microsoft.com/windowsazure"));
+                                if (routeStateElement != null)
+                                {
+                                    RouteState routeStateInstance = ((RouteState)Enum.Parse(typeof(RouteState), routeStateElement.Value, true));
+                                    routeInstance.State = routeStateInstance;
+                                }
+                            }
                         }
                     }
                     
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -1842,15 +2002,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Lists all of the Network Security Groups for the subscription.
+        /// List the existing route tables for this subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The List Definitions operation response.
+        /// A standard service response including an HTTP status code and
+        /// request ID.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.NetworkSecurityGroupListResponse> ListAsync(CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.Network.Models.ListRouteTablesResponse> ListRouteTablesAsync(CancellationToken cancellationToken)
         {
             // Validate
             
@@ -1861,11 +2022,11 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                Tracing.Enter(invocationId, this, "ListAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "ListRouteTablesAsync", tracingParameters);
             }
             
             // Construct URL
-            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/networksecuritygroups";
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/networking/routetables";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1921,49 +2082,104 @@ namespace Microsoft.WindowsAzure.Management.Network
                     }
                     
                     // Create Result
-                    NetworkSecurityGroupListResponse result = null;
+                    ListRouteTablesResponse result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new NetworkSecurityGroupListResponse();
+                    result = new ListRouteTablesResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement networkSecurityGroupsSequenceElement = responseDoc.Element(XName.Get("NetworkSecurityGroups", "http://schemas.microsoft.com/windowsazure"));
-                    if (networkSecurityGroupsSequenceElement != null)
+                    XElement routeTablesSequenceElement = responseDoc.Element(XName.Get("RouteTables", "http://schemas.microsoft.com/windowsazure"));
+                    if (routeTablesSequenceElement != null)
                     {
-                        foreach (XElement networkSecurityGroupsElement in networkSecurityGroupsSequenceElement.Elements(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure")))
+                        foreach (XElement routeTablesElement in routeTablesSequenceElement.Elements(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure")))
                         {
-                            NetworkSecurityGroup networkSecurityGroupInstance = new NetworkSecurityGroup();
-                            result.NetworkSecurityGroups.Add(networkSecurityGroupInstance);
+                            RouteTable routeTableInstance = new RouteTable();
+                            result.RouteTables.Add(routeTableInstance);
                             
-                            XElement nameElement = networkSecurityGroupsElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                            XElement nameElement = routeTablesElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
                             if (nameElement != null)
                             {
                                 string nameInstance = nameElement.Value;
-                                networkSecurityGroupInstance.Name = nameInstance;
+                                routeTableInstance.Name = nameInstance;
                             }
                             
-                            XElement labelElement = networkSecurityGroupsElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
+                            XElement labelElement = routeTablesElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
                             if (labelElement != null)
                             {
                                 string labelInstance = labelElement.Value;
-                                networkSecurityGroupInstance.Label = labelInstance;
+                                routeTableInstance.Label = labelInstance;
                             }
                             
-                            XElement locationElement = networkSecurityGroupsElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            XElement locationElement = routeTablesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
                             if (locationElement != null)
                             {
                                 string locationInstance = locationElement.Value;
-                                networkSecurityGroupInstance.Location = locationInstance;
+                                routeTableInstance.Location = locationInstance;
+                            }
+                            
+                            XElement routeTableStateElement = routeTablesElement.Element(XName.Get("RouteTableState", "http://schemas.microsoft.com/windowsazure"));
+                            if (routeTableStateElement != null)
+                            {
+                                RouteTableState routeTableStateInstance = ((RouteTableState)Enum.Parse(typeof(RouteTableState), routeTableStateElement.Value, true));
+                                routeTableInstance.RouteTableState = routeTableStateInstance;
+                            }
+                            
+                            XElement routeListSequenceElement = routeTablesElement.Element(XName.Get("RouteList", "http://schemas.microsoft.com/windowsazure"));
+                            if (routeListSequenceElement != null)
+                            {
+                                foreach (XElement routeListElement in routeListSequenceElement.Elements(XName.Get("Route", "http://schemas.microsoft.com/windowsazure")))
+                                {
+                                    Route routeInstance = new Route();
+                                    routeTableInstance.RouteList.Add(routeInstance);
+                                    
+                                    XElement nameElement2 = routeListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nameElement2 != null)
+                                    {
+                                        string nameInstance2 = nameElement2.Value;
+                                        routeInstance.Name = nameInstance2;
+                                    }
+                                    
+                                    XElement addressPrefixElement = routeListElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
+                                    if (addressPrefixElement != null)
+                                    {
+                                        string addressPrefixInstance = addressPrefixElement.Value;
+                                        routeInstance.AddressPrefix = addressPrefixInstance;
+                                    }
+                                    
+                                    XElement nextHopTypeElement = routeListElement.Element(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
+                                    if (nextHopTypeElement != null)
+                                    {
+                                        NextHop nextHopTypeInstance = new NextHop();
+                                        routeInstance.NextHop = nextHopTypeInstance;
+                                        
+                                        XElement typeElement = nextHopTypeElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                                        if (typeElement != null)
+                                        {
+                                            string typeInstance = typeElement.Value;
+                                            nextHopTypeInstance.Type = typeInstance;
+                                        }
+                                    }
+                                    
+                                    XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
+                                    if (metricElement != null)
+                                    {
+                                        int metricInstance = int.Parse(metricElement.Value, CultureInfo.InvariantCulture);
+                                        routeInstance.Metric = metricInstance;
+                                    }
+                                    
+                                    XElement routeStateElement = routeListElement.Element(XName.Get("RouteState", "http://schemas.microsoft.com/windowsazure"));
+                                    if (routeStateElement != null)
+                                    {
+                                        RouteState routeStateInstance = ((RouteState)Enum.Parse(typeof(RouteState), routeStateElement.Value, true));
+                                        routeInstance.State = routeStateInstance;
+                                    }
+                                }
                             }
                         }
                     }
                     
                     result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
                     
                     if (shouldTrace)
                     {
@@ -1989,16 +2205,16 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Removes a Network Security Group from a subnet.
+        /// Remove the route table from the provided subnet in the provided
+        /// virtual network in this subscription.
         /// </summary>
-        /// <param name='virtualNetworkName'>
-        /// Required.
+        /// <param name='vnetName'>
+        /// Required. The name of the virtual network that contains the
+        /// provided subnet.
         /// </param>
         /// <param name='subnetName'>
-        /// Required.
-        /// </param>
-        /// <param name='networkSecurityGroupName'>
-        /// Required.
+        /// Required. The name of the subnet that the route table will be
+        /// removed from.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2014,7 +2230,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> RemoveFromSubnetAsync(string virtualNetworkName, string subnetName, string networkSecurityGroupName, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> RemoveRouteTableFromSubnetAsync(string vnetName, string subnetName, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -2023,10 +2239,9 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("virtualNetworkName", virtualNetworkName);
+                tracingParameters.Add("vnetName", vnetName);
                 tracingParameters.Add("subnetName", subnetName);
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                Tracing.Enter(invocationId, this, "RemoveFromSubnetAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "RemoveRouteTableFromSubnetAsync", tracingParameters);
             }
             try
             {
@@ -2036,11 +2251,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginRemovingFromSubnetAsync(virtualNetworkName, subnetName, networkSecurityGroupName, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginRemoveRouteTableFromSubnetAsync(vnetName, subnetName, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;
@@ -2102,17 +2313,18 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
-        /// Add new Network Security Rule to existing Network Security Group.
+        /// Set the specified route for the provided table in this subscription.
         /// </summary>
-        /// <param name='networkSecurityGroupName'>
-        /// Optional.
+        /// <param name='routeTableName'>
+        /// Required. The name of the route table where the provided route will
+        /// be set.
         /// </param>
-        /// <param name='ruleName'>
-        /// Optional.
+        /// <param name='routeName'>
+        /// Required. The name of the route that will be set on the provided
+        /// route table.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the Set Network Security Rule
-        /// operation.
+        /// Required. The parameters necessary to create a new route table.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -2128,7 +2340,7 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// status code for the failed request, and also includes error
         /// information regarding the failure.
         /// </returns>
-        public async System.Threading.Tasks.Task<OperationStatusResponse> SetRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<OperationStatusResponse> SetRouteAsync(string routeTableName, string routeName, SetRouteParameters parameters, CancellationToken cancellationToken)
         {
             NetworkManagementClient client = this.Client;
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -2137,10 +2349,10 @@ namespace Microsoft.WindowsAzure.Management.Network
             {
                 invocationId = Tracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("networkSecurityGroupName", networkSecurityGroupName);
-                tracingParameters.Add("ruleName", ruleName);
+                tracingParameters.Add("routeTableName", routeTableName);
+                tracingParameters.Add("routeName", routeName);
                 tracingParameters.Add("parameters", parameters);
-                Tracing.Enter(invocationId, this, "SetRuleAsync", tracingParameters);
+                Tracing.Enter(invocationId, this, "SetRouteAsync", tracingParameters);
             }
             try
             {
@@ -2150,11 +2362,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 }
                 
                 cancellationToken.ThrowIfCancellationRequested();
-                OperationStatusResponse response = await client.NetworkSecurityGroups.BeginSettingRuleAsync(networkSecurityGroupName, ruleName, parameters, cancellationToken).ConfigureAwait(false);
-                if (response.Status == OperationStatus.Succeeded)
-                {
-                    return response;
-                }
+                OperationResponse response = await client.Routes.BeginSetRouteAsync(routeTableName, routeName, parameters, cancellationToken).ConfigureAwait(false);
                 cancellationToken.ThrowIfCancellationRequested();
                 OperationStatusResponse result = await client.GetOperationStatusAsync(response.RequestId, cancellationToken).ConfigureAwait(false);
                 int delayInSeconds = 30;

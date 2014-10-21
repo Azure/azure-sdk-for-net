@@ -25,15 +25,12 @@ using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
-    /// </summary>
-    public partial class GatewayCreateParameters
+    public partial class ResizeGatewayParameters
     {
         private GatewaySKU _gatewaySKU;
         
         /// <summary>
-        /// Optional. The SKU of this virtual network gateway.
+        /// Optional.
         /// </summary>
         public GatewaySKU GatewaySKU
         {
@@ -41,21 +38,21 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._gatewaySKU = value; }
         }
         
-        private GatewayType _gatewayType;
+        private string _operation;
         
         /// <summary>
-        /// Optional. The routing type for this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewayType GatewayType
+        public string Operation
         {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
+            get { return this._operation; }
+            set { this._operation = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayCreateParameters class.
+        /// Initializes a new instance of the ResizeGatewayParameters class.
         /// </summary>
-        public GatewayCreateParameters()
+        public ResizeGatewayParameters()
         {
         }
     }

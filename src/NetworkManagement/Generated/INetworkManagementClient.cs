@@ -131,6 +131,15 @@ namespace Microsoft.WindowsAzure.Management.Network
         
         /// <summary>
         /// The Network Management API includes operations for managing the
+        /// routes for your subscription.
+        /// </summary>
+        IRouteOperations Routes
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// The Network Management API includes operations for managing the
         /// static IPs for your subscription.
         /// </summary>
         IStaticIPOperations StaticIPs

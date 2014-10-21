@@ -20,43 +20,53 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create Virtual Network Gateway operation.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public partial class GatewayCreateParameters
+    public partial class ListRouteTablesResponse : OperationResponse, IEnumerable<RouteTable>
     {
-        private GatewaySKU _gatewaySKU;
+        private IList<RouteTable> _routeTables;
         
         /// <summary>
-        /// Optional. The SKU of this virtual network gateway.
+        /// Optional.
         /// </summary>
-        public GatewaySKU GatewaySKU
+        public IList<RouteTable> RouteTables
         {
-            get { return this._gatewaySKU; }
-            set { this._gatewaySKU = value; }
-        }
-        
-        private GatewayType _gatewayType;
-        
-        /// <summary>
-        /// Optional. The routing type for this virtual network gateway.
-        /// </summary>
-        public GatewayType GatewayType
-        {
-            get { return this._gatewayType; }
-            set { this._gatewayType = value; }
+            get { return this._routeTables; }
+            set { this._routeTables = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayCreateParameters class.
+        /// Initializes a new instance of the ListRouteTablesResponse class.
         /// </summary>
-        public GatewayCreateParameters()
+        public ListRouteTablesResponse()
         {
+            this.RouteTables = new LazyList<RouteTable>();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of RouteTables.
+        /// </summary>
+        public IEnumerator<RouteTable> GetEnumerator()
+        {
+            return this.RouteTables.GetEnumerator();
+        }
+        
+        /// <summary>
+        /// Gets the sequence of RouteTables.
+        /// </summary>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
