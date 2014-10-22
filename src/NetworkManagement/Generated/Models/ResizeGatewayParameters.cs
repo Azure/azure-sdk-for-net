@@ -38,12 +38,12 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             set { this._gatewaySKU = value; }
         }
         
-        private string _operation;
+        private UpdateGatewayOperation _operation;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public string Operation
+        public UpdateGatewayOperation Operation
         {
             get { return this._operation; }
             set { this._operation = value; }

@@ -24,8 +24,8 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
-    public static partial class UpdateGatewayOperation
+    public enum UpdateGatewayOperation
     {
-        public const string Resize = "Resize";
+        Resize = 0,
     }
 }

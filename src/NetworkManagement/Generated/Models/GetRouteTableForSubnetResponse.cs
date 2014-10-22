@@ -22,7 +22,6 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
@@ -32,15 +31,15 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class GetRouteTableForSubnetResponse : OperationResponse
     {
-        private RouteTable _routeTable;
+        private string _routeTableName;
         
         /// <summary>
         /// Optional.
         /// </summary>
-        public RouteTable RouteTable
+        public string RouteTableName
         {
-            get { return this._routeTable; }
-            set { this._routeTable = value; }
+            get { return this._routeTableName; }
+            set { this._routeTableName = value; }
         }
         
         /// <summary>
