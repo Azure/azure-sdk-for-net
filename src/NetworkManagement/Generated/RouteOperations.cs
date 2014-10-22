@@ -1670,90 +1670,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                     result = new GetRouteTableForSubnetResponse();
                     XDocument responseDoc = XDocument.Parse(responseContent);
                     
-                    XElement routeTableElement = responseDoc.Element(XName.Get("RouteTable", "http://schemas.microsoft.com/windowsazure"));
-                    if (routeTableElement != null)
+                    XElement routeTableAssociationElement = responseDoc.Element(XName.Get("RouteTableAssociation", "http://schemas.microsoft.com/windowsazure"));
+                    if (routeTableAssociationElement != null)
                     {
-                        RouteTable routeTableInstance = new RouteTable();
-                        result.RouteTable = routeTableInstance;
-                        
-                        XElement nameElement = routeTableElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                        if (nameElement != null)
+                        XElement routeTableNameElement = routeTableAssociationElement.Element(XName.Get("RouteTableName", "http://schemas.microsoft.com/windowsazure"));
+                        if (routeTableNameElement != null)
                         {
-                            string nameInstance = nameElement.Value;
-                            routeTableInstance.Name = nameInstance;
-                        }
-                        
-                        XElement labelElement = routeTableElement.Element(XName.Get("Label", "http://schemas.microsoft.com/windowsazure"));
-                        if (labelElement != null)
-                        {
-                            string labelInstance = labelElement.Value;
-                            routeTableInstance.Label = labelInstance;
-                        }
-                        
-                        XElement locationElement = routeTableElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        if (locationElement != null)
-                        {
-                            string locationInstance = locationElement.Value;
-                            routeTableInstance.Location = locationInstance;
-                        }
-                        
-                        XElement routeTableStateElement = routeTableElement.Element(XName.Get("RouteTableState", "http://schemas.microsoft.com/windowsazure"));
-                        if (routeTableStateElement != null)
-                        {
-                            RouteTableState routeTableStateInstance = ((RouteTableState)Enum.Parse(typeof(RouteTableState), routeTableStateElement.Value, true));
-                            routeTableInstance.RouteTableState = routeTableStateInstance;
-                        }
-                        
-                        XElement routeListSequenceElement = routeTableElement.Element(XName.Get("RouteList", "http://schemas.microsoft.com/windowsazure"));
-                        if (routeListSequenceElement != null)
-                        {
-                            foreach (XElement routeListElement in routeListSequenceElement.Elements(XName.Get("Route", "http://schemas.microsoft.com/windowsazure")))
-                            {
-                                Route routeInstance = new Route();
-                                routeTableInstance.RouteList.Add(routeInstance);
-                                
-                                XElement nameElement2 = routeListElement.Element(XName.Get("Name", "http://schemas.microsoft.com/windowsazure"));
-                                if (nameElement2 != null)
-                                {
-                                    string nameInstance2 = nameElement2.Value;
-                                    routeInstance.Name = nameInstance2;
-                                }
-                                
-                                XElement addressPrefixElement = routeListElement.Element(XName.Get("AddressPrefix", "http://schemas.microsoft.com/windowsazure"));
-                                if (addressPrefixElement != null)
-                                {
-                                    string addressPrefixInstance = addressPrefixElement.Value;
-                                    routeInstance.AddressPrefix = addressPrefixInstance;
-                                }
-                                
-                                XElement nextHopTypeElement = routeListElement.Element(XName.Get("NextHopType", "http://schemas.microsoft.com/windowsazure"));
-                                if (nextHopTypeElement != null)
-                                {
-                                    NextHop nextHopTypeInstance = new NextHop();
-                                    routeInstance.NextHop = nextHopTypeInstance;
-                                    
-                                    XElement typeElement = nextHopTypeElement.Element(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                                    if (typeElement != null)
-                                    {
-                                        string typeInstance = typeElement.Value;
-                                        nextHopTypeInstance.Type = typeInstance;
-                                    }
-                                }
-                                
-                                XElement metricElement = routeListElement.Element(XName.Get("Metric", "http://schemas.microsoft.com/windowsazure"));
-                                if (metricElement != null)
-                                {
-                                    int metricInstance = int.Parse(metricElement.Value, CultureInfo.InvariantCulture);
-                                    routeInstance.Metric = metricInstance;
-                                }
-                                
-                                XElement routeStateElement = routeListElement.Element(XName.Get("RouteState", "http://schemas.microsoft.com/windowsazure"));
-                                if (routeStateElement != null)
-                                {
-                                    RouteState routeStateInstance = ((RouteState)Enum.Parse(typeof(RouteState), routeStateElement.Value, true));
-                                    routeInstance.State = routeStateInstance;
-                                }
-                            }
+                            string routeTableNameInstance = routeTableNameElement.Value;
+                            result.RouteTableName = routeTableNameInstance;
                         }
                     }
                     

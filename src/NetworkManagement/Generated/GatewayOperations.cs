@@ -329,13 +329,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 XElement createGatewayParametersElement = new XElement(XName.Get("CreateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(createGatewayParametersElement);
                 
+                XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                gatewaySizeElement.Value = parameters.GatewaySKU.ToString();
+                createGatewayParametersElement.Add(gatewaySizeElement);
+                
                 XElement gatewayTypeElement = new XElement(XName.Get("gatewayType", "http://schemas.microsoft.com/windowsazure"));
                 gatewayTypeElement.Value = parameters.GatewayType.ToString();
                 createGatewayParametersElement.Add(gatewayTypeElement);
-                
-                XElement gatewaySKUElement = new XElement(XName.Get("GatewaySKU", "http://schemas.microsoft.com/windowsazure"));
-                gatewaySKUElement.Value = parameters.GatewaySKU.ToString();
-                createGatewayParametersElement.Add(gatewaySKUElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -1253,16 +1253,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                 XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", ""));
                 requestDoc.Add(updateGatewayParametersElement);
                 
-                if (parameters.Operation != null)
-                {
-                    XElement operationElement = new XElement(XName.Get("Operation", ""));
-                    operationElement.Value = "Resize";
-                    updateGatewayParametersElement.Add(operationElement);
-                }
+                XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", ""));
+                gatewaySizeElement.Value = parameters.GatewaySKU.ToString();
+                updateGatewayParametersElement.Add(gatewaySizeElement);
                 
-                XElement gatewaySKUElement = new XElement(XName.Get("GatewaySKU", ""));
-                gatewaySKUElement.Value = parameters.GatewaySKU.ToString();
-                updateGatewayParametersElement.Add(gatewaySKUElement);
+                XElement operationElement = new XElement(XName.Get("Operation", ""));
+                operationElement.Value = "Resize";
+                updateGatewayParametersElement.Add(operationElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -2576,11 +2573,11 @@ namespace Microsoft.WindowsAzure.Management.Network
                             result.GatewayType = gatewayTypeInstance;
                         }
                         
-                        XElement gatewaySKUElement = gatewayElement.Element(XName.Get("GatewaySKU", "http://schemas.microsoft.com/windowsazure"));
-                        if (gatewaySKUElement != null)
+                        XElement gatewaySizeElement = gatewayElement.Element(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
+                        if (gatewaySizeElement != null)
                         {
-                            GatewaySKU gatewaySKUInstance = ((GatewaySKU)Enum.Parse(typeof(GatewaySKU), gatewaySKUElement.Value, true));
-                            result.GatewaySKU = gatewaySKUInstance;
+                            GatewaySKU gatewaySizeInstance = ((GatewaySKU)Enum.Parse(typeof(GatewaySKU), gatewaySizeElement.Value, true));
+                            result.GatewaySKU = gatewaySizeInstance;
                         }
                         
                         XElement defaultSitesElement = gatewayElement.Element(XName.Get("DefaultSites", "http://schemas.microsoft.com/windowsazure"));
