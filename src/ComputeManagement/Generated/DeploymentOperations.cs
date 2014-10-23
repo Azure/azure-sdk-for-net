@@ -9195,11 +9195,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     rebootEventInstance.RebootReason = rebootReasonInstance;
                                 }
                                 
-                                XElement rebootStartedTimeElement = rebootEventsElement.Element(XName.Get("RebootStartedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (rebootStartedTimeElement != null && string.IsNullOrEmpty(rebootStartedTimeElement.Value) == false)
+                                XElement rebootStartTimeElement = rebootEventsElement.Element(XName.Get("RebootStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (rebootStartTimeElement != null && string.IsNullOrEmpty(rebootStartTimeElement.Value) == false)
                                 {
-                                    DateTime rebootStartedTimeInstance = DateTime.Parse(rebootStartedTimeElement.Value, CultureInfo.InvariantCulture);
-                                    rebootEventInstance.RebootStartedTime = rebootStartedTimeInstance;
+                                    DateTime rebootStartTimeInstance = DateTime.Parse(rebootStartTimeElement.Value, CultureInfo.InvariantCulture);
+                                    rebootEventInstance.RebootStartTime = rebootStartTimeInstance;
                                 }
                             }
                         }
@@ -9384,11 +9384,11 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                     rebootEventInstance.RebootReason = rebootReasonInstance;
                                 }
                                 
-                                XElement rebootStartedTimeElement = rebootEventsElement.Element(XName.Get("RebootStartedTime", "http://schemas.microsoft.com/windowsazure"));
-                                if (rebootStartedTimeElement != null && string.IsNullOrEmpty(rebootStartedTimeElement.Value) == false)
+                                XElement rebootStartTimeElement = rebootEventsElement.Element(XName.Get("RebootStartTime", "http://schemas.microsoft.com/windowsazure"));
+                                if (rebootStartTimeElement != null && string.IsNullOrEmpty(rebootStartTimeElement.Value) == false)
                                 {
-                                    DateTime rebootStartedTimeInstance = DateTime.Parse(rebootStartedTimeElement.Value, CultureInfo.InvariantCulture);
-                                    rebootEventInstance.RebootStartedTime = rebootStartedTimeInstance;
+                                    DateTime rebootStartTimeInstance = DateTime.Parse(rebootStartTimeElement.Value, CultureInfo.InvariantCulture);
+                                    rebootEventInstance.RebootStartTime = rebootStartTimeInstance;
                                 }
                             }
                         }
