@@ -51,15 +51,15 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._rebootReason = value; }
         }
         
-        private System.DateTime? _rebootStartedTime;
+        private System.DateTime? _rebootStartTime;
         
         /// <summary>
         /// Optional. Gets or sets the time the reboot started.
         /// </summary>
-        public System.DateTime? RebootStartedTime
+        public System.DateTime? RebootStartTime
         {
-            get { return this._rebootStartedTime; }
-            set { this._rebootStartedTime = value; }
+            get { return this._rebootStartTime; }
+            set { this._rebootStartTime = value; }
         }
         
         private string _roleName;

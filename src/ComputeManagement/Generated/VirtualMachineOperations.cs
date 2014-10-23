@@ -5503,6 +5503,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                                 idleTimeoutInMinutesElement.Value = loadBalancedEndpointsItem.IdleTimeoutInMinutes.ToString();
                                 inputEndpointElement.Add(idleTimeoutInMinutesElement);
                             }
+                            
+                            if (loadBalancedEndpointsItem.LoadBalancerDistribution != null)
+                            {
+                                XElement loadBalancerDistributionElement = new XElement(XName.Get("LoadBalancerDistribution", "http://schemas.microsoft.com/windowsazure"));
+                                loadBalancerDistributionElement.Value = loadBalancedEndpointsItem.LoadBalancerDistribution;
+                                inputEndpointElement.Add(loadBalancerDistributionElement);
+                            }
                         }
                     }
                 }
