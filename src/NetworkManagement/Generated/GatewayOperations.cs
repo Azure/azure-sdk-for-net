@@ -1250,14 +1250,14 @@ namespace Microsoft.WindowsAzure.Management.Network
                 string requestContent = null;
                 XDocument requestDoc = new XDocument();
                 
-                XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", ""));
+                XElement updateGatewayParametersElement = new XElement(XName.Get("UpdateGatewayParameters", "http://schemas.microsoft.com/windowsazure"));
                 requestDoc.Add(updateGatewayParametersElement);
                 
-                XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", ""));
+                XElement gatewaySizeElement = new XElement(XName.Get("GatewaySize", "http://schemas.microsoft.com/windowsazure"));
                 gatewaySizeElement.Value = parameters.GatewaySKU.ToString();
                 updateGatewayParametersElement.Add(gatewaySizeElement);
                 
-                XElement operationElement = new XElement(XName.Get("Operation", ""));
+                XElement operationElement = new XElement(XName.Get("Operation", "http://schemas.microsoft.com/windowsazure"));
                 operationElement.Value = "Resize";
                 updateGatewayParametersElement.Add(operationElement);
                 
