@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ServiceBus.Models;
 
 namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         /// </summary>
         public ServiceBusTopicsResponse()
         {
-            this.Topics = new List<ServiceBusTopic>();
+            this.Topics = new LazyList<ServiceBusTopic>();
         }
         
         /// <summary>
