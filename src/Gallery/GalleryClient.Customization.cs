@@ -25,17 +25,17 @@ namespace Microsoft.Azure
 {
     public static class GalleryDiscoveryExtensions
     {
-        public static GalleryClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
+        public static GalleryClient CreateGalleryClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
         {
             return new GalleryClient(credentials);
         }
 
-        public static GalleryClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public static GalleryClient CreateGalleryClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
         {
             return new GalleryClient(credentials, baseUri);
         }
 
-        public static GalleryClient CreateCloudServiceManagementClient(this CloudClients clients)
+        public static GalleryClient CreateGalleryClient(this CloudClients clients)
         {
             return ConfigurationHelper.CreateFromSettings<GalleryClient>(GalleryClient.Create);
         }
