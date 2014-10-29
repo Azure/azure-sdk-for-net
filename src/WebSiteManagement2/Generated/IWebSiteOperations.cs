@@ -308,9 +308,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken);
+        Task<WebSiteGetConfigurationResult> GetConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restart the web site.
@@ -446,6 +446,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// The Get Web Site Repository operation response.
         /// </returns>
         Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(string resourceGroupName, string webSiteName, string slotName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        Task<SlotConfigNamesResult> GetSlotConfigNamesAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get a web site's current usage metrics. The metrics returned
@@ -732,5 +751,28 @@ namespace Microsoft.Azure.Management.WebSites
         /// List of metadata for the website.
         /// </returns>
         Task<WebSiteMetadataResult> UpdateMetadataAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// The Update slot configs parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> UpdateSlotConfigNamesAsync(string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters, CancellationToken cancellationToken);
     }
 }

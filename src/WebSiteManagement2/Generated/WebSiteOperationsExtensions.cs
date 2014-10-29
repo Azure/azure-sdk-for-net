@@ -688,9 +688,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        public static WebSiteGetConfigurationResponse GetConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
+        public static WebSiteGetConfigurationResult GetConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -723,9 +723,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        public static Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
+        public static Task<WebSiteGetConfigurationResult> GetConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
         {
             return operations.GetConfigurationAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
         }
@@ -1070,6 +1070,56 @@ namespace Microsoft.Azure.Management.WebSites
         public static Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return operations.GetRepositoryAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        public static SlotConfigNamesResult GetSlotConfigNames(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetSlotConfigNamesAsync(resourceGroupName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        public static Task<SlotConfigNamesResult> GetSlotConfigNamesAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        {
+            return operations.GetSlotConfigNamesAsync(resourceGroupName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
@@ -1786,6 +1836,64 @@ namespace Microsoft.Azure.Management.WebSites
         public static Task<WebSiteMetadataResult> UpdateMetadataAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
         {
             return operations.UpdateMetadataAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update slot configs parameters
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateSlotConfigNames(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateSlotConfigNamesAsync(resourceGroupName, webSiteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update slot configs parameters
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateSlotConfigNamesAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters)
+        {
+            return operations.UpdateSlotConfigNamesAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
         }
     }
 }

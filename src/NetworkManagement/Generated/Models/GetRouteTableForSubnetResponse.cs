@@ -22,41 +22,31 @@
 using System;
 using System.Linq;
 using Microsoft.WindowsAzure;
-using Microsoft.WindowsAzure.Management.Network.Models;
 
 namespace Microsoft.WindowsAzure.Management.Network.Models
 {
     /// <summary>
-    /// The status of a gateway diagnostics operation.
+    /// A standard service response including an HTTP status code and request
+    /// ID.
     /// </summary>
-    public partial class GatewayDiagnosticsStatus : OperationResponse
+    public partial class GetRouteTableForSubnetResponse : OperationResponse
     {
-        private string _diagnosticsUrl;
+        private string _routeTableName;
         
         /// <summary>
-        /// Optional. The url where the diagnostics data can be found.
+        /// Optional.
         /// </summary>
-        public string DiagnosticsUrl
+        public string RouteTableName
         {
-            get { return this._diagnosticsUrl; }
-            set { this._diagnosticsUrl = value; }
-        }
-        
-        private GatewayDiagnosticsState _state;
-        
-        /// <summary>
-        /// Optional. The current state of the gateway's diagnostics session.
-        /// </summary>
-        public GatewayDiagnosticsState State
-        {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._routeTableName; }
+            set { this._routeTableName = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the GatewayDiagnosticsStatus class.
+        /// Initializes a new instance of the GetRouteTableForSubnetResponse
+        /// class.
         /// </summary>
-        public GatewayDiagnosticsStatus()
+        public GetRouteTableForSubnetResponse()
         {
         }
     }

@@ -32,6 +32,28 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
     /// </summary>
     public partial class GatewayGetResponse : OperationResponse
     {
+        private GatewayDefaultSite _defaultSite;
+        
+        /// <summary>
+        /// Optional. The default site on the gateway.
+        /// </summary>
+        public GatewayDefaultSite DefaultSite
+        {
+            get { return this._defaultSite; }
+            set { this._defaultSite = value; }
+        }
+        
+        private GatewaySKU _gatewaySKU;
+        
+        /// <summary>
+        /// Optional. The SKU for this virtual network gateway.
+        /// </summary>
+        public GatewaySKU GatewaySKU
+        {
+            get { return this._gatewaySKU; }
+            set { this._gatewaySKU = value; }
+        }
+        
         private GatewayType _gatewayType;
         
         /// <summary>

@@ -23,7 +23,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.WebSites.Models;
-using Microsoft.WindowsAzure;
 using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.WebSites.Models
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     /// <summary>
     /// The Get Web Site Configuration operation response.
     /// </summary>
-    public partial class WebSiteGetConfigurationResponse : OperationResponse
+    public partial class WebSiteGetConfigurationResponse
     {
         private IDictionary<string, string> _appSettings;
         
@@ -43,6 +42,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._appSettings; }
             set { this._appSettings = value; }
+        }
+        
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Gets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
         }
         
         private IList<ConnectionStringInfo> _connectionStrings;

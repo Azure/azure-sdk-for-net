@@ -283,6 +283,18 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
                 set { this._name = value; }
             }
             
+            private string _networkSecurityGroup;
+            
+            /// <summary>
+            /// Optional. Name of Network Security Group associated with this
+            /// subnet.
+            /// </summary>
+            public string NetworkSecurityGroup
+            {
+                get { return this._networkSecurityGroup; }
+                set { this._networkSecurityGroup = value; }
+            }
+            
             /// <summary>
             /// Initializes a new instance of the Subnet class.
             /// </summary>
@@ -369,6 +381,17 @@ namespace Microsoft.WindowsAzure.Management.Network.Models
             {
                 get { return this._label; }
                 set { this._label = value; }
+            }
+            
+            private string _location;
+            
+            /// <summary>
+            /// Optional. Gets or sets the virtual network location.
+            /// </summary>
+            public string Location
+            {
+                get { return this._location; }
+                set { this._location = value; }
             }
             
             private string _name;

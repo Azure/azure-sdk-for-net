@@ -21,13 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.DataFactories.Models;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.Azure.Management.DataFactories.Models
 {
-    public enum UpdateGatewayPublicDiagnosticsOperation
+    /// <summary>
+    /// The Get pipeline operation response.
+    /// </summary>
+    public partial class PipelineGetResponse : OperationResponse
     {
-        StartDiagnostics = 0,
+        private Pipeline _pipeline;
         
-        StopDiagnostics = 1,
+        /// <summary>
+        /// Optional. The pipeline instance.
+        /// </summary>
+        public Pipeline Pipeline
+        {
+            get { return this._pipeline; }
+            set { this._pipeline = value; }
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the PipelineGetResponse class.
+        /// </summary>
+        public PipelineGetResponse()
+        {
+        }
     }
 }

@@ -164,6 +164,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._iPAddress = value; }
         }
         
+        private IList<NetworkInterfaceInstance> _networkInterfaces;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<NetworkInterfaceInstance> NetworkInterfaces
+        {
+            get { return this._networkInterfaces; }
+            set { this._networkInterfaces = value; }
+        }
+        
         private RoleInstancePowerState _powerState;
         
         /// <summary>
@@ -230,6 +241,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public RoleInstance()
         {
             this.InstanceEndpoints = new LazyList<InstanceEndpoint>();
+            this.NetworkInterfaces = new LazyList<NetworkInterfaceInstance>();
             this.PublicIPs = new LazyList<RoleInstance.PublicIP>();
             this.ResourceExtensionStatusList = new LazyList<ResourceExtensionStatus>();
         }

@@ -131,7 +131,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -250,7 +250,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -369,7 +369,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-05-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-10-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -445,6 +445,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                 virtualNetworkSiteInstance.AffinityGroup = affinityGroupInstance;
                             }
                             
+                            XElement locationElement = virtualNetworkSitesElement.Element(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            if (locationElement != null)
+                            {
+                                string locationInstance = locationElement.Value;
+                                virtualNetworkSiteInstance.Location = locationInstance;
+                            }
+                            
                             XElement stateElement = virtualNetworkSitesElement.Element(XName.Get("State", "http://schemas.microsoft.com/windowsazure"));
                             if (stateElement != null)
                             {
@@ -488,6 +495,13 @@ namespace Microsoft.WindowsAzure.Management.Network
                                     {
                                         string addressPrefixInstance = addressPrefixElement.Value;
                                         subnetInstance.AddressPrefix = addressPrefixInstance;
+                                    }
+                                    
+                                    XElement networkSecurityGroupElement = subnetsElement.Element(XName.Get("NetworkSecurityGroup", "http://schemas.microsoft.com/windowsazure"));
+                                    if (networkSecurityGroupElement != null)
+                                    {
+                                        string networkSecurityGroupInstance = networkSecurityGroupElement.Value;
+                                        subnetInstance.NetworkSecurityGroup = networkSecurityGroupInstance;
                                     }
                                 }
                             }

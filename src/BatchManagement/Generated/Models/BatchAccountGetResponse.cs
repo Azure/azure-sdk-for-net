@@ -21,17 +21,32 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Batch.Models;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Management.Network.Models
+namespace Microsoft.Azure.Management.Batch.Models
 {
-    public enum GatewayDiagnosticsState
+    /// <summary>
+    /// Values returned by the Get operation.
+    /// </summary>
+    public partial class BatchAccountGetResponse : OperationResponse
     {
-        Ready = 0,
+        private AccountResource _resource;
         
-        Scheduled = 1,
+        /// <summary>
+        /// Optional. The returned account resource.
+        /// </summary>
+        public AccountResource Resource
+        {
+            get { return this._resource; }
+            set { this._resource = value; }
+        }
         
-        InProgress = 2,
-        
-        StopInProgress = 3,
+        /// <summary>
+        /// Initializes a new instance of the BatchAccountGetResponse class.
+        /// </summary>
+        public BatchAccountGetResponse()
+        {
+        }
     }
 }

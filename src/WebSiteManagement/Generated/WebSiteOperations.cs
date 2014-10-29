@@ -3086,6 +3086,13 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             string javaContainerVersionInstance = ((string)javaContainerVersionValue);
                             result.JavaContainerVersion = javaContainerVersionInstance;
                         }
+                        
+                        JToken autoSwapSlotNameValue = responseDoc["AutoSwapSlotName"];
+                        if (autoSwapSlotNameValue != null && autoSwapSlotNameValue.Type != JTokenType.Null)
+                        {
+                            string autoSwapSlotNameInstance = ((string)autoSwapSlotNameValue);
+                            result.AutoSwapSlotName = autoSwapSlotNameInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -3942,6 +3949,162 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                     if (anyURIElement != null)
                     {
                         result.Uri = TypeConversion.TryParseUri(anyURIElement.Value);
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Management.WebSites.Models.SlotConfigNames> GetSlotConfigNamesAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetSlotConfigNamesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/slotConfigNames";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SlotConfigNames result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new SlotConfigNames();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        JToken appSettingNamesArray = responseDoc["AppSettingNames"];
+                        if (appSettingNamesArray != null && appSettingNamesArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken appSettingNamesValue in ((JArray)appSettingNamesArray))
+                            {
+                                result.AppSettingNames.Add(((string)appSettingNamesValue));
+                            }
+                        }
+                        
+                        JToken connectionStringNamesArray = responseDoc["ConnectionStringNames"];
+                        if (connectionStringNamesArray != null && connectionStringNamesArray.Type != JTokenType.Null)
+                        {
+                            foreach (JToken connectionStringNamesValue in ((JArray)connectionStringNamesArray))
+                            {
+                                result.ConnectionStringNames.Add(((string)connectionStringNamesValue));
+                            }
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -6224,6 +6387,182 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                 if (parameters.JavaContainerVersion != null)
                 {
                     webSiteUpdateConfigurationParametersValue["JavaContainerVersion"] = parameters.JavaContainerVersion;
+                }
+                
+                if (parameters.AutoSwapSlotName != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["AutoSwapSlotName"] = parameters.AutoSwapSlotName;
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> UpdateSlotConfigNamesAsync(string webSpaceName, string webSiteName, SlotConfigNamesUpdate parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateSlotConfigNamesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/slotConfigNames";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject slotConfigNamesUpdateValue = new JObject();
+                requestDoc = slotConfigNamesUpdateValue;
+                
+                if (parameters.ConnectionStringNames != null)
+                {
+                    if (parameters.ConnectionStringNames is ILazyCollection == false || ((ILazyCollection)parameters.ConnectionStringNames).IsInitialized)
+                    {
+                        JArray connectionStringNamesArray = new JArray();
+                        foreach (string connectionStringNamesItem in parameters.ConnectionStringNames)
+                        {
+                            connectionStringNamesArray.Add(connectionStringNamesItem);
+                        }
+                        slotConfigNamesUpdateValue["ConnectionStringNames"] = connectionStringNamesArray;
+                    }
+                }
+                
+                if (parameters.AppSettingNames != null)
+                {
+                    if (parameters.AppSettingNames is ILazyCollection == false || ((ILazyCollection)parameters.AppSettingNames).IsInitialized)
+                    {
+                        JArray appSettingNamesArray = new JArray();
+                        foreach (string appSettingNamesItem in parameters.AppSettingNames)
+                        {
+                            appSettingNamesArray.Add(appSettingNamesItem);
+                        }
+                        slotConfigNamesUpdateValue["AppSettingNames"] = appSettingNamesArray;
+                    }
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);

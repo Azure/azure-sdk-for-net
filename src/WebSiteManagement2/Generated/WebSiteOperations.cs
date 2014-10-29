@@ -2686,9 +2686,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        public async Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken)
+        public async Task<WebSiteGetConfigurationResult> GetConfigurationAsync(string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -2780,232 +2780,285 @@ namespace Microsoft.Azure.Management.WebSites
                     }
                     
                     // Create Result
-                    WebSiteGetConfigurationResponse result = null;
+                    WebSiteGetConfigurationResult result = null;
                     // Deserialize Response
                     cancellationToken.ThrowIfCancellationRequested();
                     string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    result = new WebSiteGetConfigurationResponse();
+                    result = new WebSiteGetConfigurationResult();
                     JToken responseDoc = null;
                     if (string.IsNullOrEmpty(responseContent) == false)
                     {
                         responseDoc = JToken.Parse(responseContent);
                     }
                     
-                    JToken siteConfigValue = responseDoc["SiteConfig"];
-                    if (siteConfigValue != null && siteConfigValue.Type != JTokenType.Null)
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        WebSiteGetConfigurationResponse siteConfigInstance = new WebSiteGetConfigurationResponse();
+                        WebSiteConfigurationEnvelope resourceInstance = new WebSiteConfigurationEnvelope();
+                        result.Resource = resourceInstance;
                         
-                        JToken appSettingsSequenceElement = ((JToken)siteConfigValue["appSettings"]);
-                        if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
+                        JToken propertiesValue = responseDoc["properties"];
+                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                         {
-                            foreach (JProperty property in appSettingsSequenceElement)
+                            WebSiteGetConfigurationResponse propertiesInstance = new WebSiteGetConfigurationResponse();
+                            resourceInstance.Properties = propertiesInstance;
+                            
+                            JToken appSettingsSequenceElement = ((JToken)propertiesValue["appSettings"]);
+                            if (appSettingsSequenceElement != null && appSettingsSequenceElement.Type != JTokenType.Null)
                             {
-                                string appSettingsKey = ((string)property.Name);
-                                string appSettingsValue = ((string)property.Value);
-                                siteConfigInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                foreach (JProperty property in appSettingsSequenceElement)
+                                {
+                                    string appSettingsKey = ((string)property.Name);
+                                    string appSettingsValue = ((string)property.Value);
+                                    propertiesInstance.AppSettings.Add(appSettingsKey, appSettingsValue);
+                                }
+                            }
+                            
+                            JToken connectionStringsArray = propertiesValue["connectionStrings"];
+                            if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
+                                {
+                                    ConnectionStringInfo connStringInfoInstance = new ConnectionStringInfo();
+                                    propertiesInstance.ConnectionStrings.Add(connStringInfoInstance);
+                                    
+                                    JToken connectionStringValue = connectionStringsValue["connectionString"];
+                                    if (connectionStringValue != null && connectionStringValue.Type != JTokenType.Null)
+                                    {
+                                        string connectionStringInstance = ((string)connectionStringValue);
+                                        connStringInfoInstance.ConnectionString = connectionStringInstance;
+                                    }
+                                    
+                                    JToken nameValue = connectionStringsValue["name"];
+                                    if (nameValue != null && nameValue.Type != JTokenType.Null)
+                                    {
+                                        string nameInstance = ((string)nameValue);
+                                        connStringInfoInstance.Name = nameInstance;
+                                    }
+                                    
+                                    JToken typeValue = connectionStringsValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        DatabaseServerType typeInstance = ((DatabaseServerType)Enum.Parse(typeof(DatabaseServerType), ((string)typeValue), true));
+                                        connStringInfoInstance.Type = typeInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken defaultDocumentsArray = propertiesValue["defaultDocuments"];
+                            if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
+                                {
+                                    propertiesInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
+                                }
+                            }
+                            
+                            JToken detailedErrorLoggingEnabledValue = propertiesValue["detailedErrorLoggingEnabled"];
+                            if (detailedErrorLoggingEnabledValue != null && detailedErrorLoggingEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool detailedErrorLoggingEnabledInstance = ((bool)detailedErrorLoggingEnabledValue);
+                                propertiesInstance.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
+                            }
+                            
+                            JToken documentRootValue = propertiesValue["documentRoot"];
+                            if (documentRootValue != null && documentRootValue.Type != JTokenType.Null)
+                            {
+                                string documentRootInstance = ((string)documentRootValue);
+                                propertiesInstance.DocumentRoot = documentRootInstance;
+                            }
+                            
+                            JToken handlerMappingsArray = propertiesValue["handlerMappings"];
+                            if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
+                                {
+                                    WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
+                                    propertiesInstance.HandlerMappings.Add(handlerMappingInstance);
+                                    
+                                    JToken argumentsValue = handlerMappingsValue["arguments"];
+                                    if (argumentsValue != null && argumentsValue.Type != JTokenType.Null)
+                                    {
+                                        string argumentsInstance = ((string)argumentsValue);
+                                        handlerMappingInstance.Arguments = argumentsInstance;
+                                    }
+                                    
+                                    JToken extensionValue = handlerMappingsValue["extension"];
+                                    if (extensionValue != null && extensionValue.Type != JTokenType.Null)
+                                    {
+                                        string extensionInstance = ((string)extensionValue);
+                                        handlerMappingInstance.Extension = extensionInstance;
+                                    }
+                                    
+                                    JToken scriptProcessorValue = handlerMappingsValue["scriptProcessor"];
+                                    if (scriptProcessorValue != null && scriptProcessorValue.Type != JTokenType.Null)
+                                    {
+                                        string scriptProcessorInstance = ((string)scriptProcessorValue);
+                                        handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
+                                    }
+                                }
+                            }
+                            
+                            JToken httpLoggingEnabledValue = propertiesValue["httpLoggingEnabled"];
+                            if (httpLoggingEnabledValue != null && httpLoggingEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool httpLoggingEnabledInstance = ((bool)httpLoggingEnabledValue);
+                                propertiesInstance.HttpLoggingEnabled = httpLoggingEnabledInstance;
+                            }
+                            
+                            JToken logsDirectorySizeLimitValue = propertiesValue["logsDirectorySizeLimit"];
+                            if (logsDirectorySizeLimitValue != null && logsDirectorySizeLimitValue.Type != JTokenType.Null)
+                            {
+                                int logsDirectorySizeLimitInstance = ((int)logsDirectorySizeLimitValue);
+                                propertiesInstance.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
+                            }
+                            
+                            JToken managedPipelineModeValue = propertiesValue["managedPipelineMode"];
+                            if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
+                            {
+                                ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
+                                propertiesInstance.ManagedPipelineMode = managedPipelineModeInstance;
+                            }
+                            
+                            JToken metadataSequenceElement = ((JToken)propertiesValue["metadata"]);
+                            if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property2 in metadataSequenceElement)
+                                {
+                                    string metadataKey = ((string)property2.Name);
+                                    string metadataValue = ((string)property2.Value);
+                                    propertiesInstance.Metadata.Add(metadataKey, metadataValue);
+                                }
+                            }
+                            
+                            JToken netFrameworkVersionValue = propertiesValue["netFrameworkVersion"];
+                            if (netFrameworkVersionValue != null && netFrameworkVersionValue.Type != JTokenType.Null)
+                            {
+                                string netFrameworkVersionInstance = ((string)netFrameworkVersionValue);
+                                propertiesInstance.NetFrameworkVersion = netFrameworkVersionInstance;
+                            }
+                            
+                            JToken numberOfWorkersValue = propertiesValue["numberOfWorkers"];
+                            if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
+                            {
+                                int numberOfWorkersInstance = ((int)numberOfWorkersValue);
+                                propertiesInstance.NumberOfWorkers = numberOfWorkersInstance;
+                            }
+                            
+                            JToken phpVersionValue = propertiesValue["phpVersion"];
+                            if (phpVersionValue != null && phpVersionValue.Type != JTokenType.Null)
+                            {
+                                string phpVersionInstance = ((string)phpVersionValue);
+                                propertiesInstance.PhpVersion = phpVersionInstance;
+                            }
+                            
+                            JToken publishingPasswordValue = propertiesValue["publishingPassword"];
+                            if (publishingPasswordValue != null && publishingPasswordValue.Type != JTokenType.Null)
+                            {
+                                string publishingPasswordInstance = ((string)publishingPasswordValue);
+                                propertiesInstance.PublishingPassword = publishingPasswordInstance;
+                            }
+                            
+                            JToken publishingUsernameValue = propertiesValue["publishingUsername"];
+                            if (publishingUsernameValue != null && publishingUsernameValue.Type != JTokenType.Null)
+                            {
+                                string publishingUsernameInstance = ((string)publishingUsernameValue);
+                                propertiesInstance.PublishingUserName = publishingUsernameInstance;
+                            }
+                            
+                            JToken remoteDebuggingEnabledValue = propertiesValue["RemoteDebuggingEnabled"];
+                            if (remoteDebuggingEnabledValue != null && remoteDebuggingEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool remoteDebuggingEnabledInstance = ((bool)remoteDebuggingEnabledValue);
+                                propertiesInstance.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
+                            }
+                            
+                            JToken remoteDebuggingVersionValue = propertiesValue["remoteDebuggingVersion"];
+                            if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
+                            {
+                                RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
+                                propertiesInstance.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
+                            }
+                            
+                            JToken requestTracingEnabledValue = propertiesValue["requestTracingEnabled"];
+                            if (requestTracingEnabledValue != null && requestTracingEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool requestTracingEnabledInstance = ((bool)requestTracingEnabledValue);
+                                propertiesInstance.RequestTracingEnabled = requestTracingEnabledInstance;
+                            }
+                            
+                            JToken requestTracingExpirationTimeValue = propertiesValue["requestTracingExpirationTime"];
+                            if (requestTracingExpirationTimeValue != null && requestTracingExpirationTimeValue.Type != JTokenType.Null)
+                            {
+                                DateTime requestTracingExpirationTimeInstance = ((DateTime)requestTracingExpirationTimeValue);
+                                propertiesInstance.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
+                            }
+                            
+                            JToken scmTypeValue = propertiesValue["scmType"];
+                            if (scmTypeValue != null && scmTypeValue.Type != JTokenType.Null)
+                            {
+                                string scmTypeInstance = ((string)scmTypeValue);
+                                propertiesInstance.ScmType = scmTypeInstance;
+                            }
+                            
+                            JToken autoSwapSlotNameValue = propertiesValue["autoSwapSlotName"];
+                            if (autoSwapSlotNameValue != null && autoSwapSlotNameValue.Type != JTokenType.Null)
+                            {
+                                string autoSwapSlotNameInstance = ((string)autoSwapSlotNameValue);
+                                propertiesInstance.AutoSwapSlotName = autoSwapSlotNameInstance;
+                            }
+                            
+                            JToken use32BitWorkerProcessValue = propertiesValue["use32BitWorkerProcess"];
+                            if (use32BitWorkerProcessValue != null && use32BitWorkerProcessValue.Type != JTokenType.Null)
+                            {
+                                bool use32BitWorkerProcessInstance = ((bool)use32BitWorkerProcessValue);
+                                propertiesInstance.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
+                            }
+                            
+                            JToken webSocketsEnabledValue = propertiesValue["webSocketsEnabled"];
+                            if (webSocketsEnabledValue != null && webSocketsEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
+                                propertiesInstance.WebSocketsEnabled = webSocketsEnabledInstance;
                             }
                         }
                         
-                        JToken connectionStringsArray = siteConfigValue["connectionStrings"];
-                        if (connectionStringsArray != null && connectionStringsArray.Type != JTokenType.Null)
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
                         {
-                            foreach (JToken connectionStringsValue in ((JArray)connectionStringsArray))
+                            string idInstance = ((string)idValue);
+                            resourceInstance.Id = idInstance;
+                        }
+                        
+                        JToken nameValue2 = responseDoc["name"];
+                        if (nameValue2 != null && nameValue2.Type != JTokenType.Null)
+                        {
+                            string nameInstance2 = ((string)nameValue2);
+                            resourceInstance.Name = nameInstance2;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            resourceInstance.Location = locationInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property3 in tagsSequenceElement)
                             {
-                                ConnectionStringInfo connStringInfoInstance = new ConnectionStringInfo();
-                                siteConfigInstance.ConnectionStrings.Add(connStringInfoInstance);
-                                
-                                JToken connectionStringValue = connectionStringsValue["connectionString"];
-                                if (connectionStringValue != null && connectionStringValue.Type != JTokenType.Null)
-                                {
-                                    string connectionStringInstance = ((string)connectionStringValue);
-                                    connStringInfoInstance.ConnectionString = connectionStringInstance;
-                                }
-                                
-                                JToken nameValue = connectionStringsValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    connStringInfoInstance.Name = nameInstance;
-                                }
-                                
-                                JToken typeValue = connectionStringsValue["type"];
-                                if (typeValue != null && typeValue.Type != JTokenType.Null)
-                                {
-                                    DatabaseServerType typeInstance = ((DatabaseServerType)Enum.Parse(typeof(DatabaseServerType), ((string)typeValue), true));
-                                    connStringInfoInstance.Type = typeInstance;
-                                }
+                                string tagsKey = ((string)property3.Name);
+                                string tagsValue = ((string)property3.Value);
+                                resourceInstance.Tags.Add(tagsKey, tagsValue);
                             }
                         }
                         
-                        JToken defaultDocumentsArray = siteConfigValue["defaultDocuments"];
-                        if (defaultDocumentsArray != null && defaultDocumentsArray.Type != JTokenType.Null)
+                        JToken typeValue2 = responseDoc["type"];
+                        if (typeValue2 != null && typeValue2.Type != JTokenType.Null)
                         {
-                            foreach (JToken defaultDocumentsValue in ((JArray)defaultDocumentsArray))
-                            {
-                                siteConfigInstance.DefaultDocuments.Add(((string)defaultDocumentsValue));
-                            }
-                        }
-                        
-                        JToken detailedErrorLoggingEnabledValue = siteConfigValue["detailedErrorLoggingEnabled"];
-                        if (detailedErrorLoggingEnabledValue != null && detailedErrorLoggingEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool detailedErrorLoggingEnabledInstance = ((bool)detailedErrorLoggingEnabledValue);
-                            siteConfigInstance.DetailedErrorLoggingEnabled = detailedErrorLoggingEnabledInstance;
-                        }
-                        
-                        JToken documentRootValue = siteConfigValue["documentRoot"];
-                        if (documentRootValue != null && documentRootValue.Type != JTokenType.Null)
-                        {
-                            string documentRootInstance = ((string)documentRootValue);
-                            siteConfigInstance.DocumentRoot = documentRootInstance;
-                        }
-                        
-                        JToken handlerMappingsArray = siteConfigValue["handlerMappings"];
-                        if (handlerMappingsArray != null && handlerMappingsArray.Type != JTokenType.Null)
-                        {
-                            foreach (JToken handlerMappingsValue in ((JArray)handlerMappingsArray))
-                            {
-                                WebSiteGetConfigurationResponse.HandlerMapping handlerMappingInstance = new WebSiteGetConfigurationResponse.HandlerMapping();
-                                siteConfigInstance.HandlerMappings.Add(handlerMappingInstance);
-                                
-                                JToken argumentsValue = handlerMappingsValue["arguments"];
-                                if (argumentsValue != null && argumentsValue.Type != JTokenType.Null)
-                                {
-                                    string argumentsInstance = ((string)argumentsValue);
-                                    handlerMappingInstance.Arguments = argumentsInstance;
-                                }
-                                
-                                JToken extensionValue = handlerMappingsValue["extension"];
-                                if (extensionValue != null && extensionValue.Type != JTokenType.Null)
-                                {
-                                    string extensionInstance = ((string)extensionValue);
-                                    handlerMappingInstance.Extension = extensionInstance;
-                                }
-                                
-                                JToken scriptProcessorValue = handlerMappingsValue["scriptProcessor"];
-                                if (scriptProcessorValue != null && scriptProcessorValue.Type != JTokenType.Null)
-                                {
-                                    string scriptProcessorInstance = ((string)scriptProcessorValue);
-                                    handlerMappingInstance.ScriptProcessor = scriptProcessorInstance;
-                                }
-                            }
-                        }
-                        
-                        JToken httpLoggingEnabledValue = siteConfigValue["httpLoggingEnabled"];
-                        if (httpLoggingEnabledValue != null && httpLoggingEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool httpLoggingEnabledInstance = ((bool)httpLoggingEnabledValue);
-                            siteConfigInstance.HttpLoggingEnabled = httpLoggingEnabledInstance;
-                        }
-                        
-                        JToken logsDirectorySizeLimitValue = siteConfigValue["logsDirectorySizeLimit"];
-                        if (logsDirectorySizeLimitValue != null && logsDirectorySizeLimitValue.Type != JTokenType.Null)
-                        {
-                            int logsDirectorySizeLimitInstance = ((int)logsDirectorySizeLimitValue);
-                            siteConfigInstance.LogsDirectorySizeLimit = logsDirectorySizeLimitInstance;
-                        }
-                        
-                        JToken managedPipelineModeValue = siteConfigValue["managedPipelineMode"];
-                        if (managedPipelineModeValue != null && managedPipelineModeValue.Type != JTokenType.Null)
-                        {
-                            ManagedPipelineMode managedPipelineModeInstance = ((ManagedPipelineMode)Enum.Parse(typeof(ManagedPipelineMode), ((string)managedPipelineModeValue), true));
-                            siteConfigInstance.ManagedPipelineMode = managedPipelineModeInstance;
-                        }
-                        
-                        JToken metadataSequenceElement = ((JToken)siteConfigValue["metadata"]);
-                        if (metadataSequenceElement != null && metadataSequenceElement.Type != JTokenType.Null)
-                        {
-                            foreach (JProperty property2 in metadataSequenceElement)
-                            {
-                                string metadataKey = ((string)property2.Name);
-                                string metadataValue = ((string)property2.Value);
-                                siteConfigInstance.Metadata.Add(metadataKey, metadataValue);
-                            }
-                        }
-                        
-                        JToken netFrameworkVersionValue = siteConfigValue["netFrameworkVersion"];
-                        if (netFrameworkVersionValue != null && netFrameworkVersionValue.Type != JTokenType.Null)
-                        {
-                            string netFrameworkVersionInstance = ((string)netFrameworkVersionValue);
-                            siteConfigInstance.NetFrameworkVersion = netFrameworkVersionInstance;
-                        }
-                        
-                        JToken numberOfWorkersValue = siteConfigValue["numberOfWorkers"];
-                        if (numberOfWorkersValue != null && numberOfWorkersValue.Type != JTokenType.Null)
-                        {
-                            int numberOfWorkersInstance = ((int)numberOfWorkersValue);
-                            siteConfigInstance.NumberOfWorkers = numberOfWorkersInstance;
-                        }
-                        
-                        JToken phpVersionValue = siteConfigValue["phpVersion"];
-                        if (phpVersionValue != null && phpVersionValue.Type != JTokenType.Null)
-                        {
-                            string phpVersionInstance = ((string)phpVersionValue);
-                            siteConfigInstance.PhpVersion = phpVersionInstance;
-                        }
-                        
-                        JToken publishingPasswordValue = siteConfigValue["publishingPassword"];
-                        if (publishingPasswordValue != null && publishingPasswordValue.Type != JTokenType.Null)
-                        {
-                            string publishingPasswordInstance = ((string)publishingPasswordValue);
-                            siteConfigInstance.PublishingPassword = publishingPasswordInstance;
-                        }
-                        
-                        JToken publishingUsernameValue = siteConfigValue["publishingUsername"];
-                        if (publishingUsernameValue != null && publishingUsernameValue.Type != JTokenType.Null)
-                        {
-                            string publishingUsernameInstance = ((string)publishingUsernameValue);
-                            siteConfigInstance.PublishingUserName = publishingUsernameInstance;
-                        }
-                        
-                        JToken remoteDebuggingEnabledValue = siteConfigValue["RemoteDebuggingEnabled"];
-                        if (remoteDebuggingEnabledValue != null && remoteDebuggingEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool remoteDebuggingEnabledInstance = ((bool)remoteDebuggingEnabledValue);
-                            siteConfigInstance.RemoteDebuggingEnabled = remoteDebuggingEnabledInstance;
-                        }
-                        
-                        JToken remoteDebuggingVersionValue = siteConfigValue["remoteDebuggingVersion"];
-                        if (remoteDebuggingVersionValue != null && remoteDebuggingVersionValue.Type != JTokenType.Null)
-                        {
-                            RemoteDebuggingVersion remoteDebuggingVersionInstance = ((RemoteDebuggingVersion)Enum.Parse(typeof(RemoteDebuggingVersion), ((string)remoteDebuggingVersionValue), true));
-                            siteConfigInstance.RemoteDebuggingVersion = remoteDebuggingVersionInstance;
-                        }
-                        
-                        JToken requestTracingEnabledValue = siteConfigValue["requestTracingEnabled"];
-                        if (requestTracingEnabledValue != null && requestTracingEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool requestTracingEnabledInstance = ((bool)requestTracingEnabledValue);
-                            siteConfigInstance.RequestTracingEnabled = requestTracingEnabledInstance;
-                        }
-                        
-                        JToken requestTracingExpirationTimeValue = siteConfigValue["requestTracingExpirationTime"];
-                        if (requestTracingExpirationTimeValue != null && requestTracingExpirationTimeValue.Type != JTokenType.Null)
-                        {
-                            DateTime requestTracingExpirationTimeInstance = ((DateTime)requestTracingExpirationTimeValue);
-                            siteConfigInstance.RequestTracingExpirationTime = requestTracingExpirationTimeInstance;
-                        }
-                        
-                        JToken scmTypeValue = siteConfigValue["scmType"];
-                        if (scmTypeValue != null && scmTypeValue.Type != JTokenType.Null)
-                        {
-                            string scmTypeInstance = ((string)scmTypeValue);
-                            siteConfigInstance.ScmType = scmTypeInstance;
-                        }
-                        
-                        JToken use32BitWorkerProcessValue = siteConfigValue["use32BitWorkerProcess"];
-                        if (use32BitWorkerProcessValue != null && use32BitWorkerProcessValue.Type != JTokenType.Null)
-                        {
-                            bool use32BitWorkerProcessInstance = ((bool)use32BitWorkerProcessValue);
-                            siteConfigInstance.Use32BitWorkerProcess = use32BitWorkerProcessInstance;
-                        }
-                        
-                        JToken webSocketsEnabledValue = siteConfigValue["webSocketsEnabled"];
-                        if (webSocketsEnabledValue != null && webSocketsEnabledValue.Type != JTokenType.Null)
-                        {
-                            bool webSocketsEnabledInstance = ((bool)webSocketsEnabledValue);
-                            siteConfigInstance.WebSocketsEnabled = webSocketsEnabledInstance;
+                            string typeInstance2 = ((string)typeValue2);
+                            resourceInstance.Type = typeInstance2;
                         }
                     }
                     
@@ -4382,6 +4435,215 @@ namespace Microsoft.Azure.Management.WebSites
                         {
                             Uri uriInstance = TypeConversion.TryParseUri(((string)uriValue));
                             result.Uri = uriInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        public async Task<SlotConfigNamesResult> GetSlotConfigNamesAsync(string resourceGroupName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "GetSlotConfigNamesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim() + "/slotConfigNames?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SlotConfigNamesResult result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new SlotConfigNamesResult();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        SlotConfigNamesEnvelope resourceInstance = new SlotConfigNamesEnvelope();
+                        result.Resource = resourceInstance;
+                        
+                        JToken propertiesValue = responseDoc["properties"];
+                        if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                        {
+                            SlotConfigNames propertiesInstance = new SlotConfigNames();
+                            resourceInstance.Properties = propertiesInstance;
+                            
+                            JToken connectionStringNamesArray = propertiesValue["connectionStringNames"];
+                            if (connectionStringNamesArray != null && connectionStringNamesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken connectionStringNamesValue in ((JArray)connectionStringNamesArray))
+                                {
+                                    propertiesInstance.ConnectionStringNames.Add(((string)connectionStringNamesValue));
+                                }
+                            }
+                            
+                            JToken appSettingNamesArray = propertiesValue["appSettingNames"];
+                            if (appSettingNamesArray != null && appSettingNamesArray.Type != JTokenType.Null)
+                            {
+                                foreach (JToken appSettingNamesValue in ((JArray)appSettingNamesArray))
+                                {
+                                    propertiesInstance.AppSettingNames.Add(((string)appSettingNamesValue));
+                                }
+                            }
+                        }
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            resourceInstance.Id = idInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            resourceInstance.Name = nameInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            resourceInstance.Location = locationInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
+                                resourceInstance.Tags.Add(tagsKey, tagsValue);
+                            }
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            resourceInstance.Type = typeInstance;
                         }
                     }
                     
@@ -6650,6 +6912,14 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ArgumentNullException("parameters");
             }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
             
             // Tracing
             bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
@@ -6671,7 +6941,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
             }
-            url = url + "/config?";
+            url = url + "/config/web?";
             url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -6704,31 +6974,33 @@ namespace Microsoft.Azure.Management.WebSites
                 string requestContent = null;
                 JToken requestDoc = null;
                 
-                JObject siteConfigValue = new JObject();
-                requestDoc = new JObject();
-                requestDoc["siteConfig"] = siteConfigValue;
+                JObject webSiteUpdateConfigurationParametersValue = new JObject();
+                requestDoc = webSiteUpdateConfigurationParametersValue;
                 
-                if (parameters.AppSettings != null)
+                JObject propertiesValue = new JObject();
+                webSiteUpdateConfigurationParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.AppSettings != null)
                 {
-                    if (parameters.AppSettings is ILazyCollection == false || ((ILazyCollection)parameters.AppSettings).IsInitialized)
+                    if (parameters.Properties.AppSettings is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AppSettings).IsInitialized)
                     {
                         JObject appSettingsDictionary = new JObject();
-                        foreach (KeyValuePair<string, string> pair in parameters.AppSettings)
+                        foreach (KeyValuePair<string, string> pair in parameters.Properties.AppSettings)
                         {
                             string appSettingsKey = pair.Key;
                             string appSettingsValue = pair.Value;
                             appSettingsDictionary[appSettingsKey] = appSettingsValue;
                         }
-                        siteConfigValue["appSettings"] = appSettingsDictionary;
+                        propertiesValue["appSettings"] = appSettingsDictionary;
                     }
                 }
                 
-                if (parameters.ConnectionStrings != null)
+                if (parameters.Properties.ConnectionStrings != null)
                 {
-                    if (parameters.ConnectionStrings is ILazyCollection == false || ((ILazyCollection)parameters.ConnectionStrings).IsInitialized)
+                    if (parameters.Properties.ConnectionStrings is ILazyCollection == false || ((ILazyCollection)parameters.Properties.ConnectionStrings).IsInitialized)
                     {
                         JArray connectionStringsArray = new JArray();
-                        foreach (ConnectionStringInfo connectionStringsItem in parameters.ConnectionStrings)
+                        foreach (ConnectionStringInfo connectionStringsItem in parameters.Properties.ConnectionStrings)
                         {
                             JObject connStringInfoValue = new JObject();
                             connectionStringsArray.Add(connStringInfoValue);
@@ -6745,39 +7017,39 @@ namespace Microsoft.Azure.Management.WebSites
                             
                             connStringInfoValue["type"] = connectionStringsItem.Type.ToString();
                         }
-                        siteConfigValue["connectionStrings"] = connectionStringsArray;
+                        propertiesValue["connectionStrings"] = connectionStringsArray;
                     }
                 }
                 
-                if (parameters.DefaultDocuments != null)
+                if (parameters.Properties.DefaultDocuments != null)
                 {
-                    if (parameters.DefaultDocuments is ILazyCollection == false || ((ILazyCollection)parameters.DefaultDocuments).IsInitialized)
+                    if (parameters.Properties.DefaultDocuments is ILazyCollection == false || ((ILazyCollection)parameters.Properties.DefaultDocuments).IsInitialized)
                     {
                         JArray defaultDocumentsArray = new JArray();
-                        foreach (string defaultDocumentsItem in parameters.DefaultDocuments)
+                        foreach (string defaultDocumentsItem in parameters.Properties.DefaultDocuments)
                         {
                             defaultDocumentsArray.Add(defaultDocumentsItem);
                         }
-                        siteConfigValue["defaultDocuments"] = defaultDocumentsArray;
+                        propertiesValue["defaultDocuments"] = defaultDocumentsArray;
                     }
                 }
                 
-                if (parameters.DetailedErrorLoggingEnabled != null)
+                if (parameters.Properties.DetailedErrorLoggingEnabled != null)
                 {
-                    siteConfigValue["detailedErrorLoggingEnabled"] = parameters.DetailedErrorLoggingEnabled.Value;
+                    propertiesValue["detailedErrorLoggingEnabled"] = parameters.Properties.DetailedErrorLoggingEnabled.Value;
                 }
                 
-                if (parameters.DocumentRoot != null)
+                if (parameters.Properties.DocumentRoot != null)
                 {
-                    siteConfigValue["documentRoot"] = parameters.DocumentRoot;
+                    propertiesValue["documentRoot"] = parameters.Properties.DocumentRoot;
                 }
                 
-                if (parameters.HandlerMappings != null)
+                if (parameters.Properties.HandlerMappings != null)
                 {
-                    if (parameters.HandlerMappings is ILazyCollection == false || ((ILazyCollection)parameters.HandlerMappings).IsInitialized)
+                    if (parameters.Properties.HandlerMappings is ILazyCollection == false || ((ILazyCollection)parameters.Properties.HandlerMappings).IsInitialized)
                     {
                         JArray handlerMappingsArray = new JArray();
-                        foreach (WebSiteUpdateConfigurationParameters.HandlerMapping handlerMappingsItem in parameters.HandlerMappings)
+                        foreach (WebSiteUpdateConfigurationDetails.HandlerMapping handlerMappingsItem in parameters.Properties.HandlerMappings)
                         {
                             JObject handlerMappingValue = new JObject();
                             handlerMappingsArray.Add(handlerMappingValue);
@@ -6797,90 +7069,124 @@ namespace Microsoft.Azure.Management.WebSites
                                 handlerMappingValue["scriptProcessor"] = handlerMappingsItem.ScriptProcessor;
                             }
                         }
-                        siteConfigValue["handlerMappings"] = handlerMappingsArray;
+                        propertiesValue["handlerMappings"] = handlerMappingsArray;
                     }
                 }
                 
-                if (parameters.HttpLoggingEnabled != null)
+                if (parameters.Properties.HttpLoggingEnabled != null)
                 {
-                    siteConfigValue["httpLoggingEnabled"] = parameters.HttpLoggingEnabled.Value;
+                    propertiesValue["httpLoggingEnabled"] = parameters.Properties.HttpLoggingEnabled.Value;
                 }
                 
-                if (parameters.LogsDirectorySizeLimit != null)
+                if (parameters.Properties.LogsDirectorySizeLimit != null)
                 {
-                    siteConfigValue["logsDirectorySizeLimit"] = parameters.LogsDirectorySizeLimit.Value;
+                    propertiesValue["logsDirectorySizeLimit"] = parameters.Properties.LogsDirectorySizeLimit.Value;
                 }
                 
-                if (parameters.ManagedPipelineMode != null)
+                if (parameters.Properties.ManagedPipelineMode != null)
                 {
-                    siteConfigValue["managedPipelineMode"] = parameters.ManagedPipelineMode.Value.ToString();
+                    propertiesValue["managedPipelineMode"] = parameters.Properties.ManagedPipelineMode.Value.ToString();
                 }
                 
-                if (parameters.Metadata != null)
+                if (parameters.Properties.Metadata != null)
                 {
-                    if (parameters.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.Metadata).IsInitialized)
+                    if (parameters.Properties.Metadata is ILazyCollection == false || ((ILazyCollection)parameters.Properties.Metadata).IsInitialized)
                     {
                         JObject metadataDictionary = new JObject();
-                        foreach (KeyValuePair<string, string> pair2 in parameters.Metadata)
+                        foreach (KeyValuePair<string, string> pair2 in parameters.Properties.Metadata)
                         {
                             string metadataKey = pair2.Key;
                             string metadataValue = pair2.Value;
                             metadataDictionary[metadataKey] = metadataValue;
                         }
-                        siteConfigValue["metadata"] = metadataDictionary;
+                        propertiesValue["metadata"] = metadataDictionary;
                     }
                 }
                 
-                if (parameters.NetFrameworkVersion != null)
+                if (parameters.Properties.NetFrameworkVersion != null)
                 {
-                    siteConfigValue["netFrameworkVersion"] = parameters.NetFrameworkVersion;
+                    propertiesValue["netFrameworkVersion"] = parameters.Properties.NetFrameworkVersion;
                 }
                 
-                if (parameters.NumberOfWorkers != null)
+                if (parameters.Properties.NumberOfWorkers != null)
                 {
-                    siteConfigValue["numberOfWorkers"] = parameters.NumberOfWorkers.Value;
+                    propertiesValue["numberOfWorkers"] = parameters.Properties.NumberOfWorkers.Value;
                 }
                 
-                if (parameters.PhpVersion != null)
+                if (parameters.Properties.PhpVersion != null)
                 {
-                    siteConfigValue["phpVersion"] = parameters.PhpVersion;
+                    propertiesValue["phpVersion"] = parameters.Properties.PhpVersion;
                 }
                 
-                if (parameters.RemoteDebuggingEnabled != null)
+                if (parameters.Properties.RemoteDebuggingEnabled != null)
                 {
-                    siteConfigValue["remoteDebuggingEnabled"] = parameters.RemoteDebuggingEnabled.Value;
+                    propertiesValue["remoteDebuggingEnabled"] = parameters.Properties.RemoteDebuggingEnabled.Value;
                 }
                 
-                siteConfigValue["remoteDebuggingVersion"] = parameters.RemoteDebuggingVersion.ToString();
+                propertiesValue["remoteDebuggingVersion"] = parameters.Properties.RemoteDebuggingVersion.ToString();
                 
-                if (parameters.RequestTracingEnabled != null)
+                if (parameters.Properties.RequestTracingEnabled != null)
                 {
-                    siteConfigValue["requestTracingEnabled"] = parameters.RequestTracingEnabled.Value;
+                    propertiesValue["requestTracingEnabled"] = parameters.Properties.RequestTracingEnabled.Value;
                 }
                 
-                if (parameters.RequestTracingExpirationTime != null)
+                if (parameters.Properties.RequestTracingExpirationTime != null)
                 {
-                    siteConfigValue["requestTracingExpirationTime"] = parameters.RequestTracingExpirationTime.Value;
+                    propertiesValue["requestTracingExpirationTime"] = parameters.Properties.RequestTracingExpirationTime.Value;
                 }
                 
-                if (parameters.ScmType != null)
+                if (parameters.Properties.ScmType != null)
                 {
-                    siteConfigValue["scmType"] = parameters.ScmType;
+                    propertiesValue["scmType"] = parameters.Properties.ScmType;
                 }
                 
-                if (parameters.Use32BitWorkerProcess != null)
+                if (parameters.Properties.Use32BitWorkerProcess != null)
                 {
-                    siteConfigValue["use32BitWorkerProcess"] = parameters.Use32BitWorkerProcess.Value;
+                    propertiesValue["use32BitWorkerProcess"] = parameters.Properties.Use32BitWorkerProcess.Value;
                 }
                 
-                if (parameters.WebSocketsEnabled != null)
+                if (parameters.Properties.WebSocketsEnabled != null)
                 {
-                    siteConfigValue["webSocketsEnabled"] = parameters.WebSocketsEnabled.Value;
+                    propertiesValue["webSocketsEnabled"] = parameters.Properties.WebSocketsEnabled.Value;
                 }
                 
-                if (parameters.AlwaysOn != null)
+                if (parameters.Properties.AlwaysOn != null)
                 {
-                    siteConfigValue["alwaysOn"] = parameters.AlwaysOn.Value;
+                    propertiesValue["alwaysOn"] = parameters.Properties.AlwaysOn.Value;
+                }
+                
+                if (parameters.Properties.AutoSwapSlotName != null)
+                {
+                    propertiesValue["autoSwapSlotName"] = parameters.Properties.AutoSwapSlotName;
+                }
+                
+                if (parameters.Id != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["id"] = parameters.Id;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["name"] = parameters.Name;
+                }
+                
+                webSiteUpdateConfigurationParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair3 in parameters.Tags)
+                    {
+                        string tagsKey = pair3.Key;
+                        string tagsValue = pair3.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    webSiteUpdateConfigurationParametersValue["tags"] = tagsDictionary;
+                }
+                
+                if (parameters.Type != null)
+                {
+                    webSiteUpdateConfigurationParametersValue["type"] = parameters.Type;
                 }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
@@ -7521,6 +7827,222 @@ namespace Microsoft.Azure.Management.WebSites
                         }
                     }
                     
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update slot configs parameters
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> UpdateSlotConfigNamesAsync(string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Location == null)
+            {
+                throw new ArgumentNullException("parameters.Location");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateSlotConfigNamesAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim() + "/slotConfigNames?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject slotConfigNamesUpdateParametersValue = new JObject();
+                requestDoc = slotConfigNamesUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                slotConfigNamesUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.ConnectionStringNames != null)
+                {
+                    if (parameters.Properties.ConnectionStringNames is ILazyCollection == false || ((ILazyCollection)parameters.Properties.ConnectionStringNames).IsInitialized)
+                    {
+                        JArray connectionStringNamesArray = new JArray();
+                        foreach (string connectionStringNamesItem in parameters.Properties.ConnectionStringNames)
+                        {
+                            connectionStringNamesArray.Add(connectionStringNamesItem);
+                        }
+                        propertiesValue["connectionStringNames"] = connectionStringNamesArray;
+                    }
+                }
+                
+                if (parameters.Properties.AppSettingNames != null)
+                {
+                    if (parameters.Properties.AppSettingNames is ILazyCollection == false || ((ILazyCollection)parameters.Properties.AppSettingNames).IsInitialized)
+                    {
+                        JArray appSettingNamesArray = new JArray();
+                        foreach (string appSettingNamesItem in parameters.Properties.AppSettingNames)
+                        {
+                            appSettingNamesArray.Add(appSettingNamesItem);
+                        }
+                        propertiesValue["appSettingNames"] = appSettingNamesArray;
+                    }
+                }
+                
+                if (parameters.Id != null)
+                {
+                    slotConfigNamesUpdateParametersValue["id"] = parameters.Id;
+                }
+                
+                if (parameters.Name != null)
+                {
+                    slotConfigNamesUpdateParametersValue["name"] = parameters.Name;
+                }
+                
+                slotConfigNamesUpdateParametersValue["location"] = parameters.Location;
+                
+                if (parameters.Tags != null)
+                {
+                    JObject tagsDictionary = new JObject();
+                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    {
+                        string tagsKey = pair.Key;
+                        string tagsValue = pair.Value;
+                        tagsDictionary[tagsKey] = tagsValue;
+                    }
+                    slotConfigNamesUpdateParametersValue["tags"] = tagsDictionary;
+                }
+                
+                if (parameters.Type != null)
+                {
+                    slotConfigNamesUpdateParametersValue["type"] = parameters.Type;
+                }
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {

@@ -614,14 +614,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                     }
                                     
                                     XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                    if (weightElement != null)
+                                    if (weightElement != null && string.IsNullOrEmpty(weightElement.Value) == false)
                                     {
                                         int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                         endpointInstance.Weight = weightInstance;
                                     }
                                     
                                     XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                    if (minChildEndpointsElement != null)
+                                    if (minChildEndpointsElement != null && string.IsNullOrEmpty(minChildEndpointsElement.Value) == false)
                                     {
                                         int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
                                         endpointInstance.MinChildEndpoints = minChildEndpointsInstance;
@@ -930,14 +930,14 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                                         }
                                         
                                         XElement weightElement = endpointsElement.Element(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                                        if (weightElement != null)
+                                        if (weightElement != null && string.IsNullOrEmpty(weightElement.Value) == false)
                                         {
                                             int weightInstance = int.Parse(weightElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.Weight = weightInstance;
                                         }
                                         
                                         XElement minChildEndpointsElement = endpointsElement.Element(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                                        if (minChildEndpointsElement != null)
+                                        if (minChildEndpointsElement != null && string.IsNullOrEmpty(minChildEndpointsElement.Value) == false)
                                         {
                                             int minChildEndpointsInstance = int.Parse(minChildEndpointsElement.Value, CultureInfo.InvariantCulture);
                                             endpointInstance.MinChildEndpoints = minChildEndpointsInstance;

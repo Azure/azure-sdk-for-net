@@ -55,6 +55,18 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             set { this._appSettings = value; }
         }
         
+        private string _autoSwapSlotName;
+        
+        /// <summary>
+        /// Optional. Sets the slot name to swap with after successful
+        /// deployment.
+        /// </summary>
+        public string AutoSwapSlotName
+        {
+            get { return this._autoSwapSlotName; }
+            set { this._autoSwapSlotName = value; }
+        }
+        
         private IList<WebSiteUpdateConfigurationParameters.ConnectionStringInfo> _connectionStrings;
         
         /// <summary>

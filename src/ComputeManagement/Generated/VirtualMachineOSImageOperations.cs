@@ -676,6 +676,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
                         }
+                        
+                        XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -2423,6 +2430,13 @@ namespace Microsoft.WindowsAzure.Management.Compute
                         {
                             string languageInstance = languageElement2.Value;
                             result.Language = languageInstance;
+                        }
+                        
+                        XElement iOTypeElement = oSImageElement2.Element(XName.Get("IOType", "http://schemas.microsoft.com/windowsazure"));
+                        if (iOTypeElement != null)
+                        {
+                            string iOTypeInstance = iOTypeElement.Value;
+                            result.IOType = iOTypeInstance;
                         }
                     }
                     

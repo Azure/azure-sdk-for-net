@@ -6,7 +6,6 @@
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.WebSites">
       <PackageVersion>0.13.0-prerelease</PackageVersion>
-
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

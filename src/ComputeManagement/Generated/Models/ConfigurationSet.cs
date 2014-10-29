@@ -163,6 +163,29 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._inputEndpoints = value; }
         }
         
+        private IList<NetworkInterface> _networkInterfaces;
+        
+        /// <summary>
+        /// Optional.
+        /// </summary>
+        public IList<NetworkInterface> NetworkInterfaces
+        {
+            get { return this._networkInterfaces; }
+            set { this._networkInterfaces = value; }
+        }
+        
+        private string _networkSecurityGroup;
+        
+        /// <summary>
+        /// Optional. Gets or sets the Network Security Group associated with
+        /// this role. Optional
+        /// </summary>
+        public string NetworkSecurityGroup
+        {
+            get { return this._networkSecurityGroup; }
+            set { this._networkSecurityGroup = value; }
+        }
+        
         private IList<ConfigurationSet.PublicIP> _publicIPs;
         
         /// <summary>
@@ -305,6 +328,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         public ConfigurationSet()
         {
             this.InputEndpoints = new LazyList<InputEndpoint>();
+            this.NetworkInterfaces = new LazyList<NetworkInterface>();
             this.PublicIPs = new LazyList<ConfigurationSet.PublicIP>();
             this.StoredCertificateSettings = new LazyList<StoredCertificateSettings>();
             this.SubnetNames = new LazyList<string>();
