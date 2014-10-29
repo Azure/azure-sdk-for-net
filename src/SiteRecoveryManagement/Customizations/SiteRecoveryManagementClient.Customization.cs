@@ -27,17 +27,17 @@ namespace Microsoft.Azure
 {
     public static class SiteRecoveryManagementDiscoveryExtensions
     {
-        public static SiteRecoveryManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
+        public static SiteRecoveryManagementClient CreateSiteRecoveryManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials)
         {
             return new SiteRecoveryManagementClient("", "", credentials);
         }
 
-        public static SiteRecoveryManagementClient CreateCloudServiceManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
+        public static SiteRecoveryManagementClient CreateSiteRecoveryManagementClient(this CloudClients clients, SubscriptionCloudCredentials credentials, Uri baseUri)
         {
             return new SiteRecoveryManagementClient("", "", credentials, baseUri);
         }
 
-        public static SiteRecoveryManagementClient CreateCloudServiceManagementClient(this CloudClients clients)
+        public static SiteRecoveryManagementClient CreateSiteRecoveryManagementClient(this CloudClients clients)
         {
             return ConfigurationHelper.CreateFromSettings<SiteRecoveryManagementClient>(SiteRecoveryManagementClient.Create);
         }
