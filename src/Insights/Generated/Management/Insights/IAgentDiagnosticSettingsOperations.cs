@@ -63,6 +63,6 @@ namespace Microsoft.Azure.Management.Insights
         /// Generic empty response. We only pass it to ensure json error
         /// handling
         /// </returns>
-        Task<EmptyResponse> PutAsync(string resourceUri, AgentDiagnosticSettgingsPutParameters parameters, CancellationToken cancellationToken);
+        Task<EmptyResponse> PutAsync(string resourceUri, AgentDiagnosticSettingsPutParameters parameters, CancellationToken cancellationToken);
     }
 }

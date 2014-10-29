@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Generic empty response. We only pass it to ensure json error
         /// handling
         /// </returns>
-        public static EmptyResponse Put(this IAgentDiagnosticSettingsOperations operations, string resourceUri, AgentDiagnosticSettgingsPutParameters parameters)
+        public static EmptyResponse Put(this IAgentDiagnosticSettingsOperations operations, string resourceUri, AgentDiagnosticSettingsPutParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Generic empty response. We only pass it to ensure json error
         /// handling
         /// </returns>
-        public static Task<EmptyResponse> PutAsync(this IAgentDiagnosticSettingsOperations operations, string resourceUri, AgentDiagnosticSettgingsPutParameters parameters)
+        public static Task<EmptyResponse> PutAsync(this IAgentDiagnosticSettingsOperations operations, string resourceUri, AgentDiagnosticSettingsPutParameters parameters)
         {
             return operations.PutAsync(resourceUri, parameters, CancellationToken.None);
         }

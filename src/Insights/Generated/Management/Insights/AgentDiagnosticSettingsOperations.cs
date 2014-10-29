@@ -718,7 +718,7 @@ namespace Microsoft.Azure.Management.Insights
         /// Generic empty response. We only pass it to ensure json error
         /// handling
         /// </returns>
-        public async Task<EmptyResponse> PutAsync(string resourceUri, AgentDiagnosticSettgingsPutParameters parameters, CancellationToken cancellationToken)
+        public async Task<EmptyResponse> PutAsync(string resourceUri, AgentDiagnosticSettingsPutParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceUri == null)

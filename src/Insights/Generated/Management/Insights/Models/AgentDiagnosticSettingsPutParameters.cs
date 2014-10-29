@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Insights.Models
     /// <summary>
     /// Parameters supplied to the Create or Update monitoring configuration.
     /// </summary>
-    public partial class AgentDiagnosticSettgingsPutParameters
+    public partial class AgentDiagnosticSettingsPutParameters
     {
         private AgentDiagnosticSettings _properties;
         
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// Initializes a new instance of the
         /// AgentDiagnosticSettgingsPutParameters class.
         /// </summary>
-        public AgentDiagnosticSettgingsPutParameters()
+        public AgentDiagnosticSettingsPutParameters()
         {
         }
     }

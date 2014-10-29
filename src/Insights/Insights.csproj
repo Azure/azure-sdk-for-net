@@ -40,7 +40,7 @@
     <Compile Include="Generated\Management\Insights\IAgentDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\IServiceDiagnosticSettingsOperations.cs" />
     <Compile Include="Generated\Management\Insights\IStorageDiagnosticSettingsOperations.cs" />
-    <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettgingsPutParameters.cs" />
+    <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettingsPutParameters.cs" />
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettings.cs" />
     <Compile Include="Generated\Management\Insights\Models\AgentDiagnosticSettingsGetResponse.cs" />
     <Compile Include="Generated\Management\Insights\Models\CreateOrUpdateStorageConfigurationParameters.cs" />
