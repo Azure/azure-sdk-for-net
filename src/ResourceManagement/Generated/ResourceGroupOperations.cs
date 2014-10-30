@@ -441,17 +441,20 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        basicResourceGroupValue["tags"] = tagsDictionary;
                     }
                 }
-                basicResourceGroupValue["tags"] = tagsDictionary;
                 
                 if (parameters.ProvisioningState != null)
                 {
@@ -1389,17 +1392,20 @@ namespace Microsoft.Azure.Management.Resources
                     basicResourceGroupValue["properties"] = JObject.Parse(parameters.Properties);
                 }
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
-                    foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                    if (parameters.Tags is ILazyCollection == false || ((ILazyCollection)parameters.Tags).IsInitialized)
                     {
-                        string tagsKey = pair.Key;
-                        string tagsValue = pair.Value;
-                        tagsDictionary[tagsKey] = tagsValue;
+                        JObject tagsDictionary = new JObject();
+                        foreach (KeyValuePair<string, string> pair in parameters.Tags)
+                        {
+                            string tagsKey = pair.Key;
+                            string tagsValue = pair.Value;
+                            tagsDictionary[tagsKey] = tagsValue;
+                        }
+                        basicResourceGroupValue["tags"] = tagsDictionary;
                     }
                 }
-                basicResourceGroupValue["tags"] = tagsDictionary;
                 
                 if (parameters.ProvisioningState != null)
                 {

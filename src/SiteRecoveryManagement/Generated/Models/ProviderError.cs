@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
 {
@@ -112,7 +113,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// </summary>
         public ProviderError()
         {
-            this.AffectedObjects = new Dictionary<string, string>();
+            this.AffectedObjects = new LazyDictionary<string, string>();
         }
     }
 }

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Store.Models;
 
 namespace Microsoft.WindowsAzure.Management.Store.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
         /// </summary>
         public CloudServiceListResponse()
         {
-            this.CloudServices = new List<CloudServiceListResponse.CloudService>();
+            this.CloudServices = new LazyList<CloudServiceListResponse.CloudService>();
         }
         
         /// <summary>
@@ -135,7 +136,7 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
             /// </summary>
             public CloudService()
             {
-                this.Resources = new List<CloudServiceListResponse.CloudService.AddOnResource>();
+                this.Resources = new LazyList<CloudServiceListResponse.CloudService.AddOnResource>();
             }
             
             /// <summary>
@@ -262,8 +263,8 @@ namespace Microsoft.WindowsAzure.Management.Store.Models
                 /// </summary>
                 public AddOnResource()
                 {
-                    this.OutputItems = new Dictionary<string, string>();
-                    this.UsageLimits = new List<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
+                    this.OutputItems = new LazyDictionary<string, string>();
+                    this.UsageLimits = new LazyList<CloudServiceListResponse.CloudService.AddOnResource.UsageLimit>();
                 }
                 
                 /// <summary>

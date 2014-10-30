@@ -190,6 +190,9 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.3.0.5401.16590-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
+  </Target>
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.3.0.5401.16594-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>

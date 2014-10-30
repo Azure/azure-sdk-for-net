@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Subscriptions.Models;
 
 namespace Microsoft.WindowsAzure.Subscriptions.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Subscriptions.Models
         /// </summary>
         public SubscriptionListOperationResponse()
         {
-            this.Subscriptions = new List<SubscriptionListOperationResponse.Subscription>();
+            this.Subscriptions = new LazyList<SubscriptionListOperationResponse.Subscription>();
         }
         
         /// <summary>

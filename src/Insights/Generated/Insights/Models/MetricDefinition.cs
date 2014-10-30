@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -66,12 +67,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._primaryAggregationType = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Collection of extended properties.
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -105,8 +106,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public MetricDefinition()
         {
-            this.MetricAvailabilities = new List<MetricAvailability>();
-            this.Properties = new Dictionary<string, string>();
+            this.MetricAvailabilities = new LazyList<MetricAvailability>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

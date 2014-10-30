@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public LocationsListResponse()
         {
-            this.Locations = new List<LocationsListResponse.Location>();
+            this.Locations = new LazyList<LocationsListResponse.Location>();
         }
         
         /// <summary>
@@ -134,7 +135,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public Location()
             {
-                this.AvailableServices = new List<string>();
+                this.AvailableServices = new LazyList<string>();
             }
         }
     }

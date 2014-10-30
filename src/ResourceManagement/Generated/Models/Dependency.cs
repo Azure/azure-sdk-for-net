@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public Dependency()
         {
-            this.DependsOn = new List<BasicDependency>();
+            this.DependsOn = new LazyList<BasicDependency>();
         }
     }
 }

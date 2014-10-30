@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public DeploymentOperationsListResult()
         {
-            this.Operations = new List<DeploymentOperation>();
+            this.Operations = new LazyList<DeploymentOperation>();
         }
     }
 }
