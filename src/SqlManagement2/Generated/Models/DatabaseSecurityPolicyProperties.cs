@@ -51,6 +51,18 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._isAuditingEnabled = value; }
         }
         
+        private bool _isBlockDirectAccessEnabled;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value indicating whether block direct
+        /// access is enabled.
+        /// </summary>
+        public bool IsBlockDirectAccessEnabled
+        {
+            get { return this._isBlockDirectAccessEnabled; }
+            set { this._isBlockDirectAccessEnabled = value; }
+        }
+        
         private bool _isEventTypeDataAccessEnabled;
         
         /// <summary>
@@ -160,6 +172,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._retentionDays; }
             set { this._retentionDays = value; }
+        }
+        
+        private string _secondaryStorageAccountKey;
+        
+        /// <summary>
+        /// Optional. Gets or sets the secondary storage account key.
+        /// </summary>
+        public string SecondaryStorageAccountKey
+        {
+            get { return this._secondaryStorageAccountKey; }
+            set { this._secondaryStorageAccountKey = value; }
         }
         
         private string _storageAccountKey;
