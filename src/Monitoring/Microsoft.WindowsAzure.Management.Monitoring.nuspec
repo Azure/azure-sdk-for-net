@@ -16,7 +16,7 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure monitoring "monitoring services" metrics alerts autoscale REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp8+wpa81+win">
+      <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.WindowsAzure.Management.Monitoring.dll" />
       </group>
       <group targetFramework="net40">
@@ -29,9 +29,9 @@
   </metadata>
   <files>
     <file src="Monitoring\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\portable-net45+sl50+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\portable-net45+sl50+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.dll" target="lib\net40" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.pdb" target="lib\net40" />
     <file src="..\binaries\Microsoft.WindowsAzure.Management.Monitoring.xml" target="lib\net40" />

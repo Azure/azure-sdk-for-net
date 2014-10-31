@@ -18,7 +18,7 @@ Provides management capabilities for batch services.</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft Azure batch management "batch" "batch management" REST HTTP client windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp8+wpa81+win">
+      <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Management.Batch.dll" />
       </group>
       <group targetFramework="net40">
@@ -31,9 +31,9 @@ Provides management capabilities for batch services.</description>
   </metadata>
   <files>
     <file src="BatchManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.Azure.Management.Batch.dll" target="lib\portable-net45+sl50+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.Azure.Management.Batch.pdb" target="lib\portable-net45+sl50+wp8+wpa81+win" />
-    <file src="..\binaries\Microsoft.Azure.Management.Batch.xml" target="lib\portable-net45+sl50+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.Batch.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.Batch.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.Azure.Management.Batch.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.Batch.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.Batch.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.Azure.Management.Batch.xml" target="lib\net40" />
