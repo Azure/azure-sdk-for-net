@@ -51,6 +51,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._failedEventsCount = value; }
         }
         
+        private int _successEventsCount;
+        
+        /// <summary>
+        /// Optional. The total number of success events.
+        /// </summary>
+        public int SuccessEventsCount
+        {
+            get { return this._successEventsCount; }
+            set { this._successEventsCount = value; }
+        }
+        
         private int _totalEventsCount;
         
         /// <summary>
