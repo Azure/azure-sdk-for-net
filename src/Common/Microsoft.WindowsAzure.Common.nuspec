@@ -20,7 +20,6 @@ Supported Portable Library Platforms:
 - .NET Framework 4.5, 4.5.1
 - .NET for Windows Store apps
 - Windows Phone 8, 8.1
-- Silverlight 5
 - Portable Class Libraries</description>
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud REST HTTP client core common azureofficial windowsazureofficial</tags>
