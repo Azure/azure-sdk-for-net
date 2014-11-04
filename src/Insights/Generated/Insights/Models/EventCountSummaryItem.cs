@@ -62,6 +62,17 @@ namespace Microsoft.Azure.Insights.Models
             set { this._id = value; }
         }
         
+        private int _successEventsCount;
+        
+        /// <summary>
+        /// Optional. The number of success events in the time grain.
+        /// </summary>
+        public int SuccessEventsCount
+        {
+            get { return this._successEventsCount; }
+            set { this._successEventsCount = value; }
+        }
+        
         private TimeSpan _timeGrain;
         
         /// <summary>

@@ -69,6 +69,52 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The List Digest Event Values operation lists the digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Required. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListDigestEvents(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListDigestEventsAsync(filterString, selectedProperties);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Digest Event Values operation lists the digest events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='filterString'>
+        /// Required. The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// Required. The list of property names to be returned. You can save
+        /// bandwith by selecting only the properties you need.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListDigestEventsAsync(this IEventOperations operations, string filterString, string selectedProperties)
+        {
+            return operations.ListDigestEventsAsync(filterString, selectedProperties, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>

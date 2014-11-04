@@ -47,6 +47,24 @@ namespace Microsoft.Azure.Insights
         Task<EventCountSummaryResponse> GetCountSummaryAsync(string filterString, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The List Digest Event Values operation lists the digest events.
+        /// </summary>
+        /// <param name='filterString'>
+        /// The filter string
+        /// </param>
+        /// <param name='selectedProperties'>
+        /// The list of property names to be returned. You can save bandwith by
+        /// selecting only the properties you need.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListDigestEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='filterString'>
