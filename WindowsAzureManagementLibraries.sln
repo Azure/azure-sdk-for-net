@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{868850B4-1073-41A1-ABA8-A3B465880148}"
 EndProject
@@ -83,6 +83,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BatchManagement", "src\BatchManagement\BatchManagement.csproj", "{3CE42B6D-A828-49C0-9ED6-D618264FC59C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataFactoryManagement", "src\DataFactoryManagement\DataFactoryManagement.csproj", "{5CF6CC47-222C-4510-9123-1F9CC35B6E50}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamAnalyticsManagement", "src\StreamAnalyticsManagement\StreamAnalyticsManagement.csproj", "{43206A5D-D990-4310-BC61-266773178265}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -284,6 +286,14 @@ Global
 		{5CF6CC47-222C-4510-9123-1F9CC35B6E50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CF6CC47-222C-4510-9123-1F9CC35B6E50}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5CF6CC47-222C-4510-9123-1F9CC35B6E50}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{43206A5D-D990-4310-BC61-266773178265}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -313,6 +323,7 @@ Global
 		{7C9DEC77-95CE-4E17-B4E3-D50176BE39E9} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{3CE42B6D-A828-49C0-9ED6-D618264FC59C} = {868850B4-1073-41A1-ABA8-A3B465880148}
 		{5CF6CC47-222C-4510-9123-1F9CC35B6E50} = {868850B4-1073-41A1-ABA8-A3B465880148}
+		{43206A5D-D990-4310-BC61-266773178265} = {868850B4-1073-41A1-ABA8-A3B465880148}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = WindowsAzureLibraries.vsmdi
