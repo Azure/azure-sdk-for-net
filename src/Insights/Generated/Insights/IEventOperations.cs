@@ -65,6 +65,21 @@ namespace Microsoft.Azure.Insights
         Task<EventDataListResponse> ListDigestEventsAsync(string filterString, string selectedProperties, CancellationToken cancellationToken);
         
         /// <summary>
+        /// The List Digest Event Next operation lists the next set of digest
+        /// events.
+        /// </summary>
+        /// <param name='nextLink'>
+        /// The next link
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        Task<EventDataListResponse> ListDigestEventsNextAsync(string nextLink, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='filterString'>

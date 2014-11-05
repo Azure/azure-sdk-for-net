@@ -115,6 +115,46 @@ namespace Microsoft.Azure.Insights
         }
         
         /// <summary>
+        /// The List Digest Event Next operation lists the next set of digest
+        /// events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static EventDataListResponse ListDigestEventsNext(this IEventOperations operations, string nextLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IEventOperations)s).ListDigestEventsNextAsync(nextLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The List Digest Event Next operation lists the next set of digest
+        /// events.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the Microsoft.Azure.Insights.IEventOperations.
+        /// </param>
+        /// <param name='nextLink'>
+        /// Required. The next link
+        /// </param>
+        /// <returns>
+        /// The List Events operation response.
+        /// </returns>
+        public static Task<EventDataListResponse> ListDigestEventsNextAsync(this IEventOperations operations, string nextLink)
+        {
+            return operations.ListDigestEventsNextAsync(nextLink, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The count of events in a subscription.
         /// </summary>
         /// <param name='operations'>
