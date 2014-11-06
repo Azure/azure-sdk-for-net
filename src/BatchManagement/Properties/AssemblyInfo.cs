@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("Provides management functions for Microsoft Azure Batch services.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.1.3.0")]
+[assembly: AssemblyFileVersion("1.1.4.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
