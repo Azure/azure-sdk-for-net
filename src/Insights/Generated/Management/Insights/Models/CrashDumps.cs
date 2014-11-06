@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Insights.Models
 {
@@ -83,7 +84,7 @@ namespace Microsoft.Azure.Management.Insights.Models
         /// </summary>
         public CrashDumps()
         {
-            this.Processes = new List<string>();
+            this.Processes = new LazyList<string>();
         }
     }
 }

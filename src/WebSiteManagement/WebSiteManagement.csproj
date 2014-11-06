@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -178,7 +178,8 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
-      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.0\lib\portable-net45+sl50+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+      <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
+      
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
@@ -190,6 +191,9 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
+  <Target Name="CopyMicrosoftWindowsAzureManagementWebSitesSpecification" BeforeTargets="GenerateCodeFromSpecs">
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.WebSites.Specification.3.0.5401.16590-prerelease\tools\Microsoft.WindowsAzure.Management.WebSites.Specification.dll" DestinationFolder="." />
+  </Target>
   <Target Name="CopyMicrosoftWindowsAzureWebSitesExtensionsSpecification" BeforeTargets="GenerateCodeFromSpecs">
     <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.WebSitesExtensions.Specification.3.0.5401.16594-prerelease\tools\Microsoft.WindowsAzure.WebSitesExtensions.Specification.dll" DestinationFolder="." />
   </Target>

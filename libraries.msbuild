@@ -154,6 +154,18 @@
   </Target>
 
   <!--
+  Management library build
+  -->
+  <Target Name="ManagementLibrariesBuild" DependsOnTargets="BuildEngineeringDependencies">
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties)"
+             Targets="Rebuild" />
+    <MSBuild Projects="@(ManagementLibrariesProjects)"
+             Properties="$(DeveloperBuildProperties);$(Net40BuildProperty)"
+             Targets="Rebuild" />
+  </Target>
+
+  <!--
   Clean produced binaries and object files
   -->
   <Target Name="Clean">
@@ -387,24 +399,18 @@
 
   <!--
   Force nuget package restore so that packages that include .targets files
-  don't need to be checked into source control.
+  do not need to be checked into source control.
 
-  Assumes use of a private feed, requires the following environment variables
-  to be set:
-
-  PRIVATE_FEED_URL: The url of the feed to pull from (in addition to the public default feed)
-  PRIVATE_FEED_USER_NAME: User name for access to the feed
-  PRIVATE_FEED_PASSWORD: Password for access to the feed
+  Assumes use of a private feed.
+    PRIVATE_FEED_URL: The url of the feed to pull from with specific credentials (in addition to the public default feed)
+    PRIVATE_FEED_USER_NAME: User name for access to the feed
+    PRIVATE_FEED_PASSWORD: Password for access to the feed
   -->
   <Target Name="ForceRestorePackages" Condition=" '$(GenerateHydraSpecs)' == 'true' ">
     <PropertyGroup>
       <NuGetRestoreConfigFile>$(MSBuildProjectDirectory)\restore.config</NuGetRestoreConfigFile>
       <NuGetRestoreConfigSwitch>-ConfigFile &quot;$(NuGetRestoreConfigFile)&quot;</NuGetRestoreConfigSwitch>
     </PropertyGroup>
-
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_URL. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_URL)'=='' " />
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_USER_NAME. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_USER_NAME)'=='' " />
-    <Error Text="The code generation target ForceRestorePackages requires an environment variable: PRIVATE_FEED_PASSWORD. Please see libraries.msbuild for more information." Condition=" '$(PRIVATE_FEED_PASSWORD)'=='' " />
 
     <!-- Create config for user name and password for private feed access -->
     <Delete Files="$(NuGetRestoreConfigFile)" />
@@ -413,10 +419,12 @@
       Lines="&lt;configuration&gt;&lt;/configuration&gt;"
       Overwrite="true"
       Encoding="Unicode"/>
-    <Exec Command="$(NuGetCommand) sources add -Name Hydra -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" />
-    <Exec Command="$(NuGetCommand) sources Update -Name Hydra -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)"
-          EchoOff="true" />
-    
+    <!-- Private versions of packages are picked up from these feeds, defined with environment variables -->
+    <Exec Command="$(NuGetCommand) sources add -Name PrimaryFeed -Source &quot;$(PRIVATE_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(PRIVATE_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name PrimaryFeed -UserName $(PRIVATE_FEED_USER_NAME) -Password &quot;$(PRIVATE_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(PRIVATE_FEED_PASSWORD)'!='' AND '$(PRIVATE_FEED_USER_NAME)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources add -Name SecondaryFeed -Source &quot;$(SECONDARY_FEED_URL)&quot; $(NuGetRestoreConfigSwitch)" Condition=" '$(SECONDARY_FEED_URL)'!='' "/>
+    <Exec Command="$(NuGetCommand) sources Update -Name SecondaryFeed -UserName $(SECONDARY_FEED_USER_NAME) -Password &quot;$(SECONDARY_FEED_PASSWORD)&quot; $(NuGetRestoreConfigSwitch)" EchoOff="true" Condition=" '$(SECONDARY_FEED_PASSWORD)'!='' AND '$(SECONDARY_FEED_USER_NAME)'!='' "/>
+
     <Exec Command="$(NuGetCommand) restore $(CommonSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
     <Exec Command="$(NuGetCommand) restore $(ManagementLibrariesSolution) $(NuGetRestoreConfigSwitch)" ContinueOnError="ErrorAndContinue" />
 

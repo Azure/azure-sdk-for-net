@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Models
 {
@@ -57,8 +58,8 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ComputeCapabilities()
         {
-            this.VirtualMachinesRoleSizes = new List<string>();
-            this.WebWorkerRoleSizes = new List<string>();
+            this.VirtualMachinesRoleSizes = new LazyList<string>();
+            this.WebWorkerRoleSizes = new LazyList<string>();
         }
     }
 }

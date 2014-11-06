@@ -268,6 +268,13 @@ namespace Microsoft.Azure.Management.Sql
                                 propertiesInstance.StorageAccountKey = storageAccountKeyInstance;
                             }
                             
+                            JToken secondaryStorageAccountKeyValue = propertiesValue["secondaryStorageAccountKey"];
+                            if (secondaryStorageAccountKeyValue != null && secondaryStorageAccountKeyValue.Type != JTokenType.Null)
+                            {
+                                string secondaryStorageAccountKeyInstance = ((string)secondaryStorageAccountKeyValue);
+                                propertiesInstance.SecondaryStorageAccountKey = secondaryStorageAccountKeyInstance;
+                            }
+                            
                             JToken storageTableEndpointValue = propertiesValue["storageTableEndpoint"];
                             if (storageTableEndpointValue != null && storageTableEndpointValue.Type != JTokenType.Null)
                             {
@@ -329,6 +336,13 @@ namespace Microsoft.Azure.Management.Sql
                             {
                                 bool useServerDefaultInstance = ((bool)useServerDefaultValue);
                                 propertiesInstance.UseServerDefault = useServerDefaultInstance;
+                            }
+                            
+                            JToken isBlockDirectAccessEnabledValue = propertiesValue["isBlockDirectAccessEnabled"];
+                            if (isBlockDirectAccessEnabledValue != null && isBlockDirectAccessEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool isBlockDirectAccessEnabledInstance = ((bool)isBlockDirectAccessEnabledValue);
+                                propertiesInstance.IsBlockDirectAccessEnabled = isBlockDirectAccessEnabledInstance;
                             }
                         }
                         
@@ -521,6 +535,11 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["storageAccountKey"] = parameters.Properties.StorageAccountKey;
                 }
                 
+                if (parameters.Properties.SecondaryStorageAccountKey != null)
+                {
+                    propertiesValue["secondaryStorageAccountKey"] = parameters.Properties.SecondaryStorageAccountKey;
+                }
+                
                 if (parameters.Properties.StorageTableEndpoint != null)
                 {
                     propertiesValue["storageTableEndpoint"] = parameters.Properties.StorageTableEndpoint;
@@ -562,6 +581,8 @@ namespace Microsoft.Azure.Management.Sql
                 }
                 
                 propertiesValue["useServerDefault"] = parameters.Properties.UseServerDefault;
+                
+                propertiesValue["isBlockDirectAccessEnabled"] = parameters.Properties.IsBlockDirectAccessEnabled;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

@@ -38,10 +38,5 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// UpstreamInPipeline.
         /// </summary>
         public const string UpstreamInPipeline = "UpstreamInPipeline";
-        
-        /// <summary>
-        /// UpstreamInFactory.
-        /// </summary>
-        public const string UpstreamInFactory = "UpstreamInFactory";
     }
 }

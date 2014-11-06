@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -103,7 +104,7 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventCountSummaryResponse()
         {
-            this.SummaryItems = new List<CountSummaryItem>();
+            this.SummaryItems = new LazyList<CountSummaryItem>();
         }
     }
 }

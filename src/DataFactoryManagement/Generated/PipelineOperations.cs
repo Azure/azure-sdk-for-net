@@ -693,6 +693,56 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 transformationValue2["storageLinkedServices"] = storageLinkedServicesArray2;
                                             }
                                         }
+                                        if (derived10.Transformation is MapReduce)
+                                        {
+                                            transformationValue2["type"] = "MapReduce";
+                                            MapReduce derived13 = ((MapReduce)derived10.Transformation);
+                                            
+                                            transformationValue2["className"] = derived13.ClassName;
+                                            
+                                            transformationValue2["jarFilePath"] = derived13.JarFilePath;
+                                            
+                                            if (derived13.JarLinkedService != null)
+                                            {
+                                                transformationValue2["jarLinkedService"] = derived13.JarLinkedService;
+                                            }
+                                            
+                                            if (derived13.JarLibs != null)
+                                            {
+                                                if (derived13.JarLibs is ILazyCollection == false || ((ILazyCollection)derived13.JarLibs).IsInitialized)
+                                                {
+                                                    JArray jarLibsArray = new JArray();
+                                                    foreach (string jarLibsItem in derived13.JarLibs)
+                                                    {
+                                                        jarLibsArray.Add(jarLibsItem);
+                                                    }
+                                                    transformationValue2["jarLibs"] = jarLibsArray;
+                                                }
+                                            }
+                                            
+                                            if (derived13.Arguments != null)
+                                            {
+                                                if (derived13.Arguments is ILazyCollection == false || ((ILazyCollection)derived13.Arguments).IsInitialized)
+                                                {
+                                                    JArray argumentsArray = new JArray();
+                                                    foreach (string argumentsItem in derived13.Arguments)
+                                                    {
+                                                        argumentsArray.Add(argumentsItem);
+                                                    }
+                                                    transformationValue2["arguments"] = argumentsArray;
+                                                }
+                                            }
+                                            
+                                            if (derived13.StorageLinkedServices != null)
+                                            {
+                                                JArray storageLinkedServicesArray3 = new JArray();
+                                                foreach (string storageLinkedServicesItem3 in derived13.StorageLinkedServices)
+                                                {
+                                                    storageLinkedServicesArray3.Add(storageLinkedServicesItem3);
+                                                }
+                                                transformationValue2["storageLinkedServices"] = storageLinkedServicesArray3;
+                                            }
+                                        }
                                     }
                                     
                                     activityValue["name"] = derived10.Name;
@@ -792,30 +842,30 @@ namespace Microsoft.Azure.Management.DataFactories
                                 if (activitiesItem is CustomActivity)
                                 {
                                     activityValue["type"] = "CustomActivity";
-                                    CustomActivity derived13 = ((CustomActivity)activitiesItem);
+                                    CustomActivity derived14 = ((CustomActivity)activitiesItem);
                                     
-                                    if (derived13.Transformation != null)
+                                    if (derived14.Transformation != null)
                                     {
                                         JObject transformationValue3 = new JObject();
                                         activityValue["transformation"] = transformationValue3;
                                         
-                                        transformationValue3["assemblyName"] = derived13.Transformation.AssemblyName;
+                                        transformationValue3["assemblyName"] = derived14.Transformation.AssemblyName;
                                         
-                                        transformationValue3["entryPoint"] = derived13.Transformation.EntryPoint;
+                                        transformationValue3["entryPoint"] = derived14.Transformation.EntryPoint;
                                         
-                                        if (derived13.Transformation.PackageLinkedService != null)
+                                        if (derived14.Transformation.PackageLinkedService != null)
                                         {
-                                            transformationValue3["packageLinkedService"] = derived13.Transformation.PackageLinkedService;
+                                            transformationValue3["packageLinkedService"] = derived14.Transformation.PackageLinkedService;
                                         }
                                         
-                                        transformationValue3["packageFile"] = derived13.Transformation.PackageFile;
+                                        transformationValue3["packageFile"] = derived14.Transformation.PackageFile;
                                         
-                                        if (derived13.Transformation.ExtendedProperties != null)
+                                        if (derived14.Transformation.ExtendedProperties != null)
                                         {
-                                            if (derived13.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived13.Transformation.ExtendedProperties).IsInitialized)
+                                            if (derived14.Transformation.ExtendedProperties is ILazyCollection == false || ((ILazyCollection)derived14.Transformation.ExtendedProperties).IsInitialized)
                                             {
                                                 JObject extendedPropertiesDictionary3 = new JObject();
-                                                foreach (KeyValuePair<string, string> pair3 in derived13.Transformation.ExtendedProperties)
+                                                foreach (KeyValuePair<string, string> pair3 in derived14.Transformation.ExtendedProperties)
                                                 {
                                                     string extendedPropertiesKey3 = pair3.Key;
                                                     string extendedPropertiesValue3 = pair3.Value;
@@ -826,63 +876,63 @@ namespace Microsoft.Azure.Management.DataFactories
                                         }
                                     }
                                     
-                                    activityValue["name"] = derived13.Name;
+                                    activityValue["name"] = derived14.Name;
                                     
-                                    if (derived13.Description != null)
+                                    if (derived14.Description != null)
                                     {
-                                        activityValue["description"] = derived13.Description;
+                                        activityValue["description"] = derived14.Description;
                                     }
                                     
-                                    if (derived13.LinkedServiceName != null)
+                                    if (derived14.LinkedServiceName != null)
                                     {
-                                        activityValue["linkedServiceName"] = derived13.LinkedServiceName;
+                                        activityValue["linkedServiceName"] = derived14.LinkedServiceName;
                                     }
                                     
-                                    if (derived13.Policy != null)
+                                    if (derived14.Policy != null)
                                     {
                                         JObject policyValue3 = new JObject();
                                         activityValue["policy"] = policyValue3;
                                         
-                                        if (derived13.Policy.Timeout != null)
+                                        if (derived14.Policy.Timeout != null)
                                         {
-                                            policyValue3["timeout"] = derived13.Policy.Timeout.Value.ToString();
+                                            policyValue3["timeout"] = derived14.Policy.Timeout.Value.ToString();
                                         }
                                         
-                                        if (derived13.Policy.Delay != null)
+                                        if (derived14.Policy.Delay != null)
                                         {
-                                            policyValue3["delay"] = derived13.Policy.Delay.Value.ToString();
+                                            policyValue3["delay"] = derived14.Policy.Delay.Value.ToString();
                                         }
                                         
-                                        if (derived13.Policy.Concurrency != null)
+                                        if (derived14.Policy.Concurrency != null)
                                         {
-                                            policyValue3["concurrency"] = derived13.Policy.Concurrency.Value;
+                                            policyValue3["concurrency"] = derived14.Policy.Concurrency.Value;
                                         }
                                         
-                                        if (derived13.Policy.ExecutionPriorityOrder != null)
+                                        if (derived14.Policy.ExecutionPriorityOrder != null)
                                         {
-                                            policyValue3["executionPriorityOrder"] = derived13.Policy.ExecutionPriorityOrder;
+                                            policyValue3["executionPriorityOrder"] = derived14.Policy.ExecutionPriorityOrder;
                                         }
                                         
-                                        if (derived13.Policy.Retry != null)
+                                        if (derived14.Policy.Retry != null)
                                         {
-                                            policyValue3["retry"] = derived13.Policy.Retry.Value;
+                                            policyValue3["retry"] = derived14.Policy.Retry.Value;
                                         }
                                         
-                                        if (derived13.Policy.LongRetry != null)
+                                        if (derived14.Policy.LongRetry != null)
                                         {
-                                            policyValue3["longRetry"] = derived13.Policy.LongRetry.Value;
+                                            policyValue3["longRetry"] = derived14.Policy.LongRetry.Value;
                                         }
                                         
-                                        if (derived13.Policy.LongRetryInterval != null)
+                                        if (derived14.Policy.LongRetryInterval != null)
                                         {
-                                            policyValue3["longRetryInterval"] = derived13.Policy.LongRetryInterval.Value.ToString();
+                                            policyValue3["longRetryInterval"] = derived14.Policy.LongRetryInterval.Value.ToString();
                                         }
                                     }
                                     
-                                    if (derived13.Inputs != null)
+                                    if (derived14.Inputs != null)
                                     {
                                         JArray inputsArray3 = new JArray();
-                                        foreach (ActivityInput inputsItem3 in derived13.Inputs)
+                                        foreach (ActivityInput inputsItem3 in derived14.Inputs)
                                         {
                                             JObject activityInputValue3 = new JObject();
                                             inputsArray3.Add(activityInputValue3);
@@ -907,10 +957,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                         activityValue["inputs"] = inputsArray3;
                                     }
                                     
-                                    if (derived13.Outputs != null)
+                                    if (derived14.Outputs != null)
                                     {
                                         JArray outputsArray3 = new JArray();
-                                        foreach (ActivityOutput outputsItem3 in derived13.Outputs)
+                                        foreach (ActivityOutput outputsItem3 in derived14.Outputs)
                                         {
                                             JObject activityOutputValue3 = new JObject();
                                             outputsArray3.Add(activityOutputValue3);
@@ -1633,10 +1683,10 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken storageLinkedServicesArray3 = transformationValue5["storageLinkedServices"];
-                                                if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                JToken storageLinkedServicesArray4 = transformationValue5["storageLinkedServices"];
+                                                if (storageLinkedServicesArray4 != null && storageLinkedServicesArray4.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray3))
+                                                    foreach (JToken storageLinkedServicesValue in ((JArray)storageLinkedServicesArray4))
                                                     {
                                                         hiveInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue));
                                                     }
@@ -1679,15 +1729,68 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 
-                                                JToken storageLinkedServicesArray4 = transformationValue5["storageLinkedServices"];
-                                                if (storageLinkedServicesArray4 != null && storageLinkedServicesArray4.Type != JTokenType.Null)
+                                                JToken storageLinkedServicesArray5 = transformationValue5["storageLinkedServices"];
+                                                if (storageLinkedServicesArray5 != null && storageLinkedServicesArray5.Type != JTokenType.Null)
                                                 {
-                                                    foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray4))
+                                                    foreach (JToken storageLinkedServicesValue2 in ((JArray)storageLinkedServicesArray5))
                                                     {
                                                         pigInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue2));
                                                     }
                                                 }
                                                 hDInsightActivityInstance.Transformation = pigInstance;
+                                            }
+                                            if (typeName5 == "MapReduce")
+                                            {
+                                                MapReduce mapReduceInstance = new MapReduce();
+                                                
+                                                JToken classNameValue = transformationValue5["className"];
+                                                if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string classNameInstance = ((string)classNameValue);
+                                                    mapReduceInstance.ClassName = classNameInstance;
+                                                }
+                                                
+                                                JToken jarFilePathValue = transformationValue5["jarFilePath"];
+                                                if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarFilePathInstance = ((string)jarFilePathValue);
+                                                    mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                }
+                                                
+                                                JToken jarLinkedServiceValue = transformationValue5["jarLinkedService"];
+                                                if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                    mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                }
+                                                
+                                                JToken jarLibsArray2 = transformationValue5["jarLibs"];
+                                                if (jarLibsArray2 != null && jarLibsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken jarLibsValue in ((JArray)jarLibsArray2))
+                                                    {
+                                                        mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken argumentsArray2 = transformationValue5["arguments"];
+                                                if (argumentsArray2 != null && argumentsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken argumentsValue in ((JArray)argumentsArray2))
+                                                    {
+                                                        mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken storageLinkedServicesArray6 = transformationValue5["storageLinkedServices"];
+                                                if (storageLinkedServicesArray6 != null && storageLinkedServicesArray6.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray6))
+                                                    {
+                                                        mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                    }
+                                                }
+                                                hDInsightActivityInstance.Transformation = mapReduceInstance;
                                             }
                                         }
                                         
@@ -2914,6 +3017,59 @@ namespace Microsoft.Azure.Management.DataFactories
                                                 }
                                                 hDInsightActivityInstance.Transformation = pigInstance;
                                             }
+                                            if (typeName5 == "MapReduce")
+                                            {
+                                                MapReduce mapReduceInstance = new MapReduce();
+                                                
+                                                JToken classNameValue = transformationValue2["className"];
+                                                if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string classNameInstance = ((string)classNameValue);
+                                                    mapReduceInstance.ClassName = classNameInstance;
+                                                }
+                                                
+                                                JToken jarFilePathValue = transformationValue2["jarFilePath"];
+                                                if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarFilePathInstance = ((string)jarFilePathValue);
+                                                    mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                }
+                                                
+                                                JToken jarLinkedServiceValue = transformationValue2["jarLinkedService"];
+                                                if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                    mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                }
+                                                
+                                                JToken jarLibsArray = transformationValue2["jarLibs"];
+                                                if (jarLibsArray != null && jarLibsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken jarLibsValue in ((JArray)jarLibsArray))
+                                                    {
+                                                        mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken argumentsArray = transformationValue2["arguments"];
+                                                if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                    {
+                                                        mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken storageLinkedServicesArray3 = transformationValue2["storageLinkedServices"];
+                                                if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
+                                                    {
+                                                        mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                    }
+                                                }
+                                                hDInsightActivityInstance.Transformation = mapReduceInstance;
+                                            }
                                         }
                                         
                                         JToken nameValue5 = activitiesValue["name"];
@@ -3447,11 +3603,11 @@ namespace Microsoft.Azure.Management.DataFactories
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -4508,6 +4664,59 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 hDInsightActivityInstance.Transformation = pigInstance;
+                                            }
+                                            if (typeName5 == "MapReduce")
+                                            {
+                                                MapReduce mapReduceInstance = new MapReduce();
+                                                
+                                                JToken classNameValue = transformationValue2["className"];
+                                                if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string classNameInstance = ((string)classNameValue);
+                                                    mapReduceInstance.ClassName = classNameInstance;
+                                                }
+                                                
+                                                JToken jarFilePathValue = transformationValue2["jarFilePath"];
+                                                if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarFilePathInstance = ((string)jarFilePathValue);
+                                                    mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                }
+                                                
+                                                JToken jarLinkedServiceValue = transformationValue2["jarLinkedService"];
+                                                if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                    mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                }
+                                                
+                                                JToken jarLibsArray = transformationValue2["jarLibs"];
+                                                if (jarLibsArray != null && jarLibsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken jarLibsValue in ((JArray)jarLibsArray))
+                                                    {
+                                                        mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken argumentsArray = transformationValue2["arguments"];
+                                                if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                    {
+                                                        mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken storageLinkedServicesArray3 = transformationValue2["storageLinkedServices"];
+                                                if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
+                                                    {
+                                                        mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                    }
+                                                }
+                                                hDInsightActivityInstance.Transformation = mapReduceInstance;
                                             }
                                         }
                                         
@@ -5684,6 +5893,59 @@ namespace Microsoft.Azure.Management.DataFactories
                                                     }
                                                 }
                                                 hDInsightActivityInstance.Transformation = pigInstance;
+                                            }
+                                            if (typeName5 == "MapReduce")
+                                            {
+                                                MapReduce mapReduceInstance = new MapReduce();
+                                                
+                                                JToken classNameValue = transformationValue2["className"];
+                                                if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string classNameInstance = ((string)classNameValue);
+                                                    mapReduceInstance.ClassName = classNameInstance;
+                                                }
+                                                
+                                                JToken jarFilePathValue = transformationValue2["jarFilePath"];
+                                                if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarFilePathInstance = ((string)jarFilePathValue);
+                                                    mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                }
+                                                
+                                                JToken jarLinkedServiceValue = transformationValue2["jarLinkedService"];
+                                                if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                {
+                                                    string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                    mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                }
+                                                
+                                                JToken jarLibsArray = transformationValue2["jarLibs"];
+                                                if (jarLibsArray != null && jarLibsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken jarLibsValue in ((JArray)jarLibsArray))
+                                                    {
+                                                        mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken argumentsArray = transformationValue2["arguments"];
+                                                if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                    {
+                                                        mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                    }
+                                                }
+                                                
+                                                JToken storageLinkedServicesArray3 = transformationValue2["storageLinkedServices"];
+                                                if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
+                                                    {
+                                                        mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                    }
+                                                }
+                                                hDInsightActivityInstance.Transformation = mapReduceInstance;
                                             }
                                         }
                                         
@@ -6899,6 +7161,59 @@ namespace Microsoft.Azure.Management.DataFactories
                                                         }
                                                         hDInsightActivityInstance.Transformation = pigInstance;
                                                     }
+                                                    if (typeName5 == "MapReduce")
+                                                    {
+                                                        MapReduce mapReduceInstance = new MapReduce();
+                                                        
+                                                        JToken classNameValue = transformationValue2["className"];
+                                                        if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string classNameInstance = ((string)classNameValue);
+                                                            mapReduceInstance.ClassName = classNameInstance;
+                                                        }
+                                                        
+                                                        JToken jarFilePathValue = transformationValue2["jarFilePath"];
+                                                        if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                        {
+                                                            string jarFilePathInstance = ((string)jarFilePathValue);
+                                                            mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                        }
+                                                        
+                                                        JToken jarLinkedServiceValue = transformationValue2["jarLinkedService"];
+                                                        if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                            mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                        }
+                                                        
+                                                        JToken jarLibsArray = transformationValue2["jarLibs"];
+                                                        if (jarLibsArray != null && jarLibsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken jarLibsValue in ((JArray)jarLibsArray))
+                                                            {
+                                                                mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken argumentsArray = transformationValue2["arguments"];
+                                                        if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                            {
+                                                                mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken storageLinkedServicesArray3 = transformationValue2["storageLinkedServices"];
+                                                        if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
+                                                            {
+                                                                mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                            }
+                                                        }
+                                                        hDInsightActivityInstance.Transformation = mapReduceInstance;
+                                                    }
                                                 }
                                                 
                                                 JToken nameValue5 = activitiesValue["name"];
@@ -8091,6 +8406,59 @@ namespace Microsoft.Azure.Management.DataFactories
                                                             }
                                                         }
                                                         hDInsightActivityInstance.Transformation = pigInstance;
+                                                    }
+                                                    if (typeName5 == "MapReduce")
+                                                    {
+                                                        MapReduce mapReduceInstance = new MapReduce();
+                                                        
+                                                        JToken classNameValue = transformationValue2["className"];
+                                                        if (classNameValue != null && classNameValue.Type != JTokenType.Null)
+                                                        {
+                                                            string classNameInstance = ((string)classNameValue);
+                                                            mapReduceInstance.ClassName = classNameInstance;
+                                                        }
+                                                        
+                                                        JToken jarFilePathValue = transformationValue2["jarFilePath"];
+                                                        if (jarFilePathValue != null && jarFilePathValue.Type != JTokenType.Null)
+                                                        {
+                                                            string jarFilePathInstance = ((string)jarFilePathValue);
+                                                            mapReduceInstance.JarFilePath = jarFilePathInstance;
+                                                        }
+                                                        
+                                                        JToken jarLinkedServiceValue = transformationValue2["jarLinkedService"];
+                                                        if (jarLinkedServiceValue != null && jarLinkedServiceValue.Type != JTokenType.Null)
+                                                        {
+                                                            string jarLinkedServiceInstance = ((string)jarLinkedServiceValue);
+                                                            mapReduceInstance.JarLinkedService = jarLinkedServiceInstance;
+                                                        }
+                                                        
+                                                        JToken jarLibsArray = transformationValue2["jarLibs"];
+                                                        if (jarLibsArray != null && jarLibsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken jarLibsValue in ((JArray)jarLibsArray))
+                                                            {
+                                                                mapReduceInstance.JarLibs.Add(((string)jarLibsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken argumentsArray = transformationValue2["arguments"];
+                                                        if (argumentsArray != null && argumentsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken argumentsValue in ((JArray)argumentsArray))
+                                                            {
+                                                                mapReduceInstance.Arguments.Add(((string)argumentsValue));
+                                                            }
+                                                        }
+                                                        
+                                                        JToken storageLinkedServicesArray3 = transformationValue2["storageLinkedServices"];
+                                                        if (storageLinkedServicesArray3 != null && storageLinkedServicesArray3.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken storageLinkedServicesValue3 in ((JArray)storageLinkedServicesArray3))
+                                                            {
+                                                                mapReduceInstance.StorageLinkedServices.Add(((string)storageLinkedServicesValue3));
+                                                            }
+                                                        }
+                                                        hDInsightActivityInstance.Transformation = mapReduceInstance;
                                                     }
                                                 }
                                                 

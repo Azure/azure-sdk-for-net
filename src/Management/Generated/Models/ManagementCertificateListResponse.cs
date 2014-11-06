@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -50,7 +51,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public ManagementCertificateListResponse()
         {
-            this.SubscriptionCertificates = new List<ManagementCertificateListResponse.SubscriptionCertificate>();
+            this.SubscriptionCertificates = new LazyList<ManagementCertificateListResponse.SubscriptionCertificate>();
         }
         
         /// <summary>

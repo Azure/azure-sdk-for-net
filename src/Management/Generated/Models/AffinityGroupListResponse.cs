@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public AffinityGroupListResponse()
         {
-            this.AffinityGroups = new List<AffinityGroupListResponse.AffinityGroup>();
+            this.AffinityGroups = new LazyList<AffinityGroupListResponse.AffinityGroup>();
         }
         
         /// <summary>
@@ -160,7 +161,7 @@ namespace Microsoft.WindowsAzure.Management.Models
             /// </summary>
             public AffinityGroup()
             {
-                this.Capabilities = new List<string>();
+                this.Capabilities = new LazyList<string>();
             }
         }
     }

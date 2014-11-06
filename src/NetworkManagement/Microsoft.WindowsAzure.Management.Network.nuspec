@@ -15,7 +15,7 @@
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure network management "networks" "networks management" REST HTTP client azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="portable-net45+sl50+wp80+win">
+      <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.WindowsAzure.Management.Network.dll" />
       </group>
       <group targetFramework="net40">
@@ -23,14 +23,14 @@
       </group>
     </references>
     <dependencies>
-      <dependency id="Microsoft.WindowsAzure.Common" version="[1.4.0,2.0)" />
+      <dependency id="Microsoft.WindowsAzure.Common" version="[1.4.1,2.0)" />
     </dependencies>
   </metadata>
   <files>
     <file src="NetworkManagement\**\*.cs" target="src" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.dll" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.pdb" target="lib\portable-net45+sl50+wp80+win" />
-    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.xml" target="lib\portable-net45+sl50+wp80+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.dll" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.pdb" target="lib\portable-net45+wp8+wpa81+win" />
+    <file src="..\binaries\Microsoft.WindowsAzure.Management.Network.xml" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Network.dll" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Network.pdb" target="lib\net40" />
     <file src="..\binaries\net40\Microsoft.WindowsAzure.Management.Network.xml" target="lib\net40" />

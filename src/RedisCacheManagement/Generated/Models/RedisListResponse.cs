@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </summary>
         public RedisListResponse()
         {
-            this.Value = new List<RedisResource>();
+            this.Value = new LazyList<RedisResource>();
         }
     }
 }
