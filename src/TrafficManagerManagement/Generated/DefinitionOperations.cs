@@ -188,54 +188,57 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 timeToLiveInSecondsElement.Value = parameters.DnsOptions.TimeToLiveInSeconds.ToString();
                 dnsOptionsElement.Add(timeToLiveInSecondsElement);
                 
-                XElement monitorsSequenceElement = new XElement(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
-                foreach (DefinitionMonitor monitorsItem in parameters.Monitors)
+                if (parameters.Monitors is ILazyCollection == false || ((ILazyCollection)parameters.Monitors).IsInitialized)
                 {
-                    XElement monitorElement = new XElement(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure"));
-                    monitorsSequenceElement.Add(monitorElement);
-                    
-                    XElement intervalInSecondsElement = new XElement(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                    intervalInSecondsElement.Value = monitorsItem.IntervalInSeconds.ToString();
-                    monitorElement.Add(intervalInSecondsElement);
-                    
-                    XElement timeoutInSecondsElement = new XElement(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
-                    timeoutInSecondsElement.Value = monitorsItem.TimeoutInSeconds.ToString();
-                    monitorElement.Add(timeoutInSecondsElement);
-                    
-                    XElement toleratedNumberOfFailuresElement = new XElement(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
-                    toleratedNumberOfFailuresElement.Value = monitorsItem.ToleratedNumberOfFailures.ToString();
-                    monitorElement.Add(toleratedNumberOfFailuresElement);
-                    
-                    XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
-                    protocolElement.Value = TrafficManagerManagementClient.DefinitionMonitorProtocolToString(monitorsItem.Protocol);
-                    monitorElement.Add(protocolElement);
-                    
-                    XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
-                    portElement.Value = monitorsItem.Port.ToString();
-                    monitorElement.Add(portElement);
-                    
-                    XElement httpOptionsElement = new XElement(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
-                    monitorElement.Add(httpOptionsElement);
-                    
-                    if (monitorsItem.HttpOptions.Verb != null)
+                    XElement monitorsSequenceElement = new XElement(XName.Get("Monitors", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DefinitionMonitor monitorsItem in parameters.Monitors)
                     {
-                        XElement verbElement = new XElement(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
-                        verbElement.Value = "GET";
-                        httpOptionsElement.Add(verbElement);
+                        XElement monitorElement = new XElement(XName.Get("Monitor", "http://schemas.microsoft.com/windowsazure"));
+                        monitorsSequenceElement.Add(monitorElement);
+                        
+                        XElement intervalInSecondsElement = new XElement(XName.Get("IntervalInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                        intervalInSecondsElement.Value = monitorsItem.IntervalInSeconds.ToString();
+                        monitorElement.Add(intervalInSecondsElement);
+                        
+                        XElement timeoutInSecondsElement = new XElement(XName.Get("TimeoutInSeconds", "http://schemas.microsoft.com/windowsazure"));
+                        timeoutInSecondsElement.Value = monitorsItem.TimeoutInSeconds.ToString();
+                        monitorElement.Add(timeoutInSecondsElement);
+                        
+                        XElement toleratedNumberOfFailuresElement = new XElement(XName.Get("ToleratedNumberOfFailures", "http://schemas.microsoft.com/windowsazure"));
+                        toleratedNumberOfFailuresElement.Value = monitorsItem.ToleratedNumberOfFailures.ToString();
+                        monitorElement.Add(toleratedNumberOfFailuresElement);
+                        
+                        XElement protocolElement = new XElement(XName.Get("Protocol", "http://schemas.microsoft.com/windowsazure"));
+                        protocolElement.Value = TrafficManagerManagementClient.DefinitionMonitorProtocolToString(monitorsItem.Protocol);
+                        monitorElement.Add(protocolElement);
+                        
+                        XElement portElement = new XElement(XName.Get("Port", "http://schemas.microsoft.com/windowsazure"));
+                        portElement.Value = monitorsItem.Port.ToString();
+                        monitorElement.Add(portElement);
+                        
+                        XElement httpOptionsElement = new XElement(XName.Get("HttpOptions", "http://schemas.microsoft.com/windowsazure"));
+                        monitorElement.Add(httpOptionsElement);
+                        
+                        if (monitorsItem.HttpOptions.Verb != null)
+                        {
+                            XElement verbElement = new XElement(XName.Get("Verb", "http://schemas.microsoft.com/windowsazure"));
+                            verbElement.Value = "GET";
+                            httpOptionsElement.Add(verbElement);
+                        }
+                        
+                        if (monitorsItem.HttpOptions.RelativePath != null)
+                        {
+                            XElement relativePathElement = new XElement(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
+                            relativePathElement.Value = monitorsItem.HttpOptions.RelativePath;
+                            httpOptionsElement.Add(relativePathElement);
+                        }
+                        
+                        XElement expectedStatusCodeElement = new XElement(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
+                        expectedStatusCodeElement.Value = "200";
+                        httpOptionsElement.Add(expectedStatusCodeElement);
                     }
-                    
-                    if (monitorsItem.HttpOptions.RelativePath != null)
-                    {
-                        XElement relativePathElement = new XElement(XName.Get("RelativePath", "http://schemas.microsoft.com/windowsazure"));
-                        relativePathElement.Value = monitorsItem.HttpOptions.RelativePath;
-                        httpOptionsElement.Add(relativePathElement);
-                    }
-                    
-                    XElement expectedStatusCodeElement = new XElement(XName.Get("ExpectedStatusCode", "http://schemas.microsoft.com/windowsazure"));
-                    expectedStatusCodeElement.Value = "200";
-                    httpOptionsElement.Add(expectedStatusCodeElement);
+                    definitionElement.Add(monitorsSequenceElement);
                 }
-                definitionElement.Add(monitorsSequenceElement);
                 
                 XElement policyElement = new XElement(XName.Get("Policy", "http://schemas.microsoft.com/windowsazure"));
                 definitionElement.Add(policyElement);
@@ -244,46 +247,49 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager
                 loadBalancingMethodElement.Value = parameters.Policy.LoadBalancingMethod.ToString();
                 policyElement.Add(loadBalancingMethodElement);
                 
-                XElement endpointsSequenceElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
-                foreach (DefinitionEndpointCreateParameters endpointsItem in parameters.Policy.Endpoints)
+                if (parameters.Policy.Endpoints is ILazyCollection == false || ((ILazyCollection)parameters.Policy.Endpoints).IsInitialized)
                 {
-                    XElement endpointElement = new XElement(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure"));
-                    endpointsSequenceElement.Add(endpointElement);
-                    
-                    XElement domainNameElement = new XElement(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
-                    domainNameElement.Value = endpointsItem.DomainName;
-                    endpointElement.Add(domainNameElement);
-                    
-                    XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
-                    statusElement.Value = endpointsItem.Status.ToString();
-                    endpointElement.Add(statusElement);
-                    
-                    XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
-                    typeElement.Value = endpointsItem.Type.ToString();
-                    endpointElement.Add(typeElement);
-                    
-                    if (endpointsItem.Location != null)
+                    XElement endpointsSequenceElement = new XElement(XName.Get("Endpoints", "http://schemas.microsoft.com/windowsazure"));
+                    foreach (DefinitionEndpointCreateParameters endpointsItem in parameters.Policy.Endpoints)
                     {
-                        XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
-                        locationElement.Value = endpointsItem.Location;
-                        endpointElement.Add(locationElement);
+                        XElement endpointElement = new XElement(XName.Get("Endpoint", "http://schemas.microsoft.com/windowsazure"));
+                        endpointsSequenceElement.Add(endpointElement);
+                        
+                        XElement domainNameElement = new XElement(XName.Get("DomainName", "http://schemas.microsoft.com/windowsazure"));
+                        domainNameElement.Value = endpointsItem.DomainName;
+                        endpointElement.Add(domainNameElement);
+                        
+                        XElement statusElement = new XElement(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
+                        statusElement.Value = endpointsItem.Status.ToString();
+                        endpointElement.Add(statusElement);
+                        
+                        XElement typeElement = new XElement(XName.Get("Type", "http://schemas.microsoft.com/windowsazure"));
+                        typeElement.Value = endpointsItem.Type.ToString();
+                        endpointElement.Add(typeElement);
+                        
+                        if (endpointsItem.Location != null)
+                        {
+                            XElement locationElement = new XElement(XName.Get("Location", "http://schemas.microsoft.com/windowsazure"));
+                            locationElement.Value = endpointsItem.Location;
+                            endpointElement.Add(locationElement);
+                        }
+                        
+                        if (endpointsItem.Weight != null)
+                        {
+                            XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
+                            weightElement.Value = endpointsItem.Weight.ToString();
+                            endpointElement.Add(weightElement);
+                        }
+                        
+                        if (endpointsItem.MinChildEndpoints != null)
+                        {
+                            XElement minChildEndpointsElement = new XElement(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
+                            minChildEndpointsElement.Value = endpointsItem.MinChildEndpoints.ToString();
+                            endpointElement.Add(minChildEndpointsElement);
+                        }
                     }
-                    
-                    if (endpointsItem.Weight != null)
-                    {
-                        XElement weightElement = new XElement(XName.Get("Weight", "http://schemas.microsoft.com/windowsazure"));
-                        weightElement.Value = endpointsItem.Weight.ToString();
-                        endpointElement.Add(weightElement);
-                    }
-                    
-                    if (endpointsItem.MinChildEndpoints != null)
-                    {
-                        XElement minChildEndpointsElement = new XElement(XName.Get("MinChildEndpoints", "http://schemas.microsoft.com/windowsazure"));
-                        minChildEndpointsElement.Value = endpointsItem.MinChildEndpoints.ToString();
-                        endpointElement.Add(minChildEndpointsElement);
-                    }
+                    policyElement.Add(endpointsSequenceElement);
                 }
-                policyElement.Add(endpointsSequenceElement);
                 
                 requestContent = requestDoc.ToString();
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Storage.Models;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Storage.Models
         /// </summary>
         public StorageAccountListResponse()
         {
-            this.StorageAccounts = new List<StorageAccount>();
+            this.StorageAccounts = new LazyList<StorageAccount>();
         }
         
         /// <summary>

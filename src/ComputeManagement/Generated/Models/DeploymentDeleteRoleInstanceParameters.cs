@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentDeleteRoleInstanceParameters()
         {
-            this.Name = new List<string>();
+            this.Name = new LazyList<string>();
         }
     }
 }

@@ -78,6 +78,17 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
             set { this._loadBalancedEndpointSetName = value; }
         }
         
+        private string _loadBalancerDistribution;
+        
+        /// <summary>
+        /// Optional. Load Balancer Distribution for this endpoint.
+        /// </summary>
+        public string LoadBalancerDistribution
+        {
+            get { return this._loadBalancerDistribution; }
+            set { this._loadBalancerDistribution = value; }
+        }
+        
         private string _loadBalancerName;
         
         /// <summary>

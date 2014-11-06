@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Models;
 
 namespace Microsoft.WindowsAzure.Management.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Models
         /// </summary>
         public RoleSizeListResponse()
         {
-            this.RoleSizes = new List<RoleSizeListResponse.RoleSize>();
+            this.RoleSizes = new LazyList<RoleSizeListResponse.RoleSize>();
         }
         
         /// <summary>

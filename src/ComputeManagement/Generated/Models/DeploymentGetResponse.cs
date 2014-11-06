@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -329,11 +330,11 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public DeploymentGetResponse()
         {
-            this.ExtendedProperties = new Dictionary<string, string>();
-            this.LoadBalancers = new List<LoadBalancer>();
-            this.RoleInstances = new List<RoleInstance>();
-            this.Roles = new List<Role>();
-            this.VirtualIPAddresses = new List<VirtualIPAddress>();
+            this.ExtendedProperties = new LazyDictionary<string, string>();
+            this.LoadBalancers = new LazyList<LoadBalancer>();
+            this.RoleInstances = new LazyList<RoleInstance>();
+            this.Roles = new LazyList<Role>();
+            this.VirtualIPAddresses = new LazyList<VirtualIPAddress>();
         }
     }
 }

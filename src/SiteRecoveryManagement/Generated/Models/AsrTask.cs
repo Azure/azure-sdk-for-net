@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.SiteRecovery.Models;
 
 namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
@@ -125,7 +126,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery.Models
         /// </summary>
         public AsrTask()
         {
-            this.Actions = new List<string>();
+            this.Actions = new LazyList<string>();
         }
     }
 }

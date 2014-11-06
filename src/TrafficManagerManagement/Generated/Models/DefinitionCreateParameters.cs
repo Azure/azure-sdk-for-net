@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.TrafficManager.Models;
 
 namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
@@ -69,7 +70,7 @@ namespace Microsoft.WindowsAzure.Management.TrafficManager.Models
         /// </summary>
         public DefinitionCreateParameters()
         {
-            this.Monitors = new List<DefinitionMonitor>();
+            this.Monitors = new LazyList<DefinitionMonitor>();
         }
         
         /// <summary>

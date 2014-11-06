@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -92,7 +93,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobHttpRequest()
         {
-            this.Headers = new Dictionary<string, string>();
+            this.Headers = new LazyDictionary<string, string>();
         }
         
         /// <summary>

@@ -186,17 +186,17 @@ namespace Microsoft.Azure.Management.Sql
                 
                 serverCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.Tags != null)
                 {
+                    JObject tagsDictionary = new JObject();
                     foreach (KeyValuePair<string, string> pair in parameters.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
+                    serverCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
-                serverCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);

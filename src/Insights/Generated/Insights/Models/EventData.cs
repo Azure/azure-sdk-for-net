@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Insights.Models;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Insights.Models
 {
@@ -44,12 +45,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._authorization = value; }
         }
         
-        private Dictionary<string, string> _claims;
+        private IDictionary<string, string> _claims;
         
         /// <summary>
         /// Optional. Gets or sets the claims
         /// </summary>
-        public Dictionary<string, string> Claims
+        public IDictionary<string, string> Claims
         {
             get { return this._claims; }
             set { this._claims = value; }
@@ -186,12 +187,12 @@ namespace Microsoft.Azure.Insights.Models
             set { this._operationName = value; }
         }
         
-        private Dictionary<string, string> _properties;
+        private IDictionary<string, string> _properties;
         
         /// <summary>
         /// Optional. Gets or sets the property bag
         /// </summary>
-        public Dictionary<string, string> Properties
+        public IDictionary<string, string> Properties
         {
             get { return this._properties; }
             set { this._properties = value; }
@@ -290,8 +291,8 @@ namespace Microsoft.Azure.Insights.Models
         /// </summary>
         public EventData()
         {
-            this.Claims = new Dictionary<string, string>();
-            this.Properties = new Dictionary<string, string>();
+            this.Claims = new LazyDictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

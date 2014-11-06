@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public HostedServiceListExtensionsResponse()
         {
-            this.Extensions = new List<HostedServiceListExtensionsResponse.Extension>();
+            this.Extensions = new LazyList<HostedServiceListExtensionsResponse.Extension>();
         }
         
         /// <summary>

@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -253,9 +254,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSite()
         {
-            this.EnabledHostNames = new List<string>();
-            this.HostNames = new List<string>();
-            this.HostNameSslStates = new List<WebSite.WebSiteHostNameSslState>();
+            this.EnabledHostNames = new LazyList<string>();
+            this.HostNames = new LazyList<string>();
+            this.HostNameSslStates = new LazyList<WebSite.WebSiteHostNameSslState>();
         }
         
         /// <summary>
@@ -361,9 +362,9 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
             /// </summary>
             public WebSiteProperties()
             {
-                this.AppSettings = new Dictionary<string, string>();
-                this.Metadata = new Dictionary<string, string>();
-                this.Properties = new Dictionary<string, string>();
+                this.AppSettings = new LazyDictionary<string, string>();
+                this.Metadata = new LazyDictionary<string, string>();
+                this.Properties = new LazyDictionary<string, string>();
             }
         }
     }

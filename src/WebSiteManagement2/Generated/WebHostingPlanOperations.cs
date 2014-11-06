@@ -21,6 +21,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -127,7 +128,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + parameters.WebHostingPlan.Name.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -186,17 +187,22 @@ namespace Microsoft.Azure.Management.WebSites
                 
                 webHostingPlanCreateOrUpdateParametersValue["location"] = parameters.WebHostingPlan.Location;
                 
-                JObject tagsDictionary = new JObject();
                 if (parameters.WebHostingPlan.Tags != null)
                 {
+                    JObject tagsDictionary = new JObject();
                     foreach (KeyValuePair<string, string> pair in parameters.WebHostingPlan.Tags)
                     {
                         string tagsKey = pair.Key;
                         string tagsValue = pair.Value;
                         tagsDictionary[tagsKey] = tagsValue;
                     }
+                    webHostingPlanCreateOrUpdateParametersValue["tags"] = tagsDictionary;
                 }
-                webHostingPlanCreateOrUpdateParametersValue["tags"] = tagsDictionary;
+                
+                if (parameters.WebHostingPlan.Type != null)
+                {
+                    webHostingPlanCreateOrUpdateParametersValue["type"] = parameters.WebHostingPlan.Type;
+                }
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -307,6 +313,13 @@ namespace Microsoft.Azure.Management.WebSites
                                 webHostingPlanInstance.Tags.Add(tagsKey2, tagsValue2);
                             }
                         }
+                        
+                        JToken typeValue = serverFarmValue["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            webHostingPlanInstance.Type = typeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -382,7 +395,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -511,7 +524,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -641,6 +654,13 @@ namespace Microsoft.Azure.Management.WebSites
                                 webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
                             }
                         }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            webHostingPlanInstance.Type = typeInstance;
+                        }
                     }
                     
                     result.StatusCode = statusCode;
@@ -726,18 +746,18 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms/" + webHostingPlanName.Trim() + "/metrics?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             if (parameters.MetricNames != null && parameters.MetricNames.Count > 0)
             {
                 url = url + "&names=" + Uri.EscapeDataString(string.Join(",", parameters.MetricNames));
             }
             if (parameters.StartTime != null)
             {
-                url = url + "&StartTime=" + Uri.EscapeDataString(parameters.StartTime.Value.ToString());
+                url = url + "&StartTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.StartTime.Value.ToUniversalTime()));
             }
             if (parameters.EndTime != null)
             {
-                url = url + "&EndTime=" + Uri.EscapeDataString(parameters.EndTime.Value.ToString());
+                url = url + "&EndTime=" + Uri.EscapeDataString(string.Format(CultureInfo.InvariantCulture, "{0:O}", parameters.EndTime.Value.ToUniversalTime()));
             }
             if (parameters.TimeGrain != null)
             {
@@ -766,7 +786,7 @@ namespace Microsoft.Azure.Management.WebSites
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                httpRequest.Headers.Add("x-ms-version", "2014-06-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1010,7 +1030,7 @@ namespace Microsoft.Azure.Management.WebSites
             
             // Construct URL
             string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/serverFarms?";
-            url = url + "api-version=2014-04-01";
+            url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
             if (baseUrl[baseUrl.Length - 1] == '/')
@@ -1078,15 +1098,15 @@ namespace Microsoft.Azure.Management.WebSites
                     
                     if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                     {
-                        JToken webHostingPlansArray = responseDoc;
-                        if (webHostingPlansArray != null && webHostingPlansArray.Type != JTokenType.Null)
+                        JToken valueArray = responseDoc["value"];
+                        if (valueArray != null && valueArray.Type != JTokenType.Null)
                         {
-                            foreach (JToken webHostingPlansValue in ((JArray)webHostingPlansArray))
+                            foreach (JToken valueValue in ((JArray)valueArray))
                             {
                                 WebHostingPlan webHostingPlanInstance = new WebHostingPlan();
                                 result.WebHostingPlans.Add(webHostingPlanInstance);
                                 
-                                JToken propertiesValue = webHostingPlansValue["properties"];
+                                JToken propertiesValue = valueValue["properties"];
                                 if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
                                 {
                                     WebHostingPlanProperties propertiesInstance = new WebHostingPlanProperties();
@@ -1114,28 +1134,28 @@ namespace Microsoft.Azure.Management.WebSites
                                     }
                                 }
                                 
-                                JToken idValue = webHostingPlansValue["id"];
+                                JToken idValue = valueValue["id"];
                                 if (idValue != null && idValue.Type != JTokenType.Null)
                                 {
                                     string idInstance = ((string)idValue);
                                     webHostingPlanInstance.Id = idInstance;
                                 }
                                 
-                                JToken nameValue = webHostingPlansValue["name"];
+                                JToken nameValue = valueValue["name"];
                                 if (nameValue != null && nameValue.Type != JTokenType.Null)
                                 {
                                     string nameInstance = ((string)nameValue);
                                     webHostingPlanInstance.Name = nameInstance;
                                 }
                                 
-                                JToken locationValue = webHostingPlansValue["location"];
+                                JToken locationValue = valueValue["location"];
                                 if (locationValue != null && locationValue.Type != JTokenType.Null)
                                 {
                                     string locationInstance = ((string)locationValue);
                                     webHostingPlanInstance.Location = locationInstance;
                                 }
                                 
-                                JToken tagsSequenceElement = ((JToken)webHostingPlansValue["tags"]);
+                                JToken tagsSequenceElement = ((JToken)valueValue["tags"]);
                                 if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
                                 {
                                     foreach (JProperty property in tagsSequenceElement)
@@ -1144,6 +1164,13 @@ namespace Microsoft.Azure.Management.WebSites
                                         string tagsValue = ((string)property.Value);
                                         webHostingPlanInstance.Tags.Add(tagsKey, tagsValue);
                                     }
+                                }
+                                
+                                JToken typeValue = valueValue["type"];
+                                if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                {
+                                    string typeInstance = ((string)typeValue);
+                                    webHostingPlanInstance.Type = typeInstance;
                                 }
                             }
                         }

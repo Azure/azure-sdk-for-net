@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.ExpressRoute.Models;
 
 namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
@@ -49,7 +50,7 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
         /// </summary>
         public DedicatedCircuitListResponse()
         {
-            this.DedicatedCircuits = new List<AzureDedicatedCircuit>();
+            this.DedicatedCircuits = new LazyList<AzureDedicatedCircuit>();
         }
         
         /// <summary>

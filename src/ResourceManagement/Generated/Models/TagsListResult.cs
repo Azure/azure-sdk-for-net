@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.Management.Resources.Models
         /// </summary>
         public TagsListResult()
         {
-            this.Tags = new List<TagDetails>();
+            this.Tags = new LazyList<TagDetails>();
         }
         
         /// <summary>

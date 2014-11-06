@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 
 namespace Microsoft.WindowsAzure.Management.Scheduler.Models
 {
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Management.Scheduler.Models
         /// </summary>
         public ResourceProviderGetPropertiesResponse()
         {
-            this.Properties = new Dictionary<string, string>();
+            this.Properties = new LazyDictionary<string, string>();
         }
     }
 }

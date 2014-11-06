@@ -53,17 +53,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='backupRequestEnvelope'>
         /// Required. A backup specification.
         /// </param>
         /// <returns>
         /// The backup record created based on the backup request.
         /// </returns>
-        public static WebSiteBackupResponse Backup(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope)
+        public static WebSiteBackupResponse Backup(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).BackupAsync(resourceGroupName, webSiteName, backupRequestEnvelope);
+                return ((IWebSiteOperations)s).BackupAsync(resourceGroupName, webSiteName, slotName, backupRequestEnvelope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -81,15 +84,18 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='backupRequestEnvelope'>
         /// Required. A backup specification.
         /// </param>
         /// <returns>
         /// The backup record created based on the backup request.
         /// </returns>
-        public static Task<WebSiteBackupResponse> BackupAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope)
+        public static Task<WebSiteBackupResponse> BackupAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope)
         {
-            return operations.BackupAsync(resourceGroupName, webSiteName, backupRequestEnvelope, CancellationToken.None);
+            return operations.BackupAsync(resourceGroupName, webSiteName, slotName, backupRequestEnvelope, CancellationToken.None);
         }
         
         /// <summary>
@@ -106,17 +112,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public static WebSiteCreateResponse CreateOrUpdate(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateOrUpdateParameters parameters)
+        public static WebSiteCreateResponse CreateOrUpdate(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).CreateOrUpdateAsync(resourceGroupName, parameters);
+                return ((IWebSiteOperations)s).CreateOrUpdateAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -135,15 +147,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. Parameters supplied to the Create Web Site operation.
         /// </param>
         /// <returns>
         /// The Create Web Space operation response.
         /// </returns>
-        public static Task<WebSiteCreateResponse> CreateOrUpdateAsync(this IWebSiteOperations operations, string resourceGroupName, WebSiteCreateOrUpdateParameters parameters)
+        public static Task<WebSiteCreateResponse> CreateOrUpdateAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -166,15 +184,18 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse CreateRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static OperationResponse CreateRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).CreateRepositoryAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).CreateRepositoryAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -199,13 +220,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<OperationResponse> CreateRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.CreateRepositoryAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.CreateRepositoryAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -221,6 +245,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the Web Site resource.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The parameters to delete a web site.
         /// </param>
@@ -228,11 +255,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Delete(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteDeleteParameters parameters)
+        public static OperationResponse Delete(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteDeleteParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).DeleteAsync(resourceGroupName, webSiteName, parameters);
+                return ((IWebSiteOperations)s).DeleteAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -250,6 +277,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the Web Site resource.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The parameters to delete a web site.
         /// </param>
@@ -257,9 +287,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> DeleteAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteDeleteParameters parameters)
+        public static Task<OperationResponse> DeleteAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteDeleteParameters parameters)
         {
-            return operations.DeleteAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
+            return operations.DeleteAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -282,14 +312,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Delete Web Site Repository operation response.
         /// </returns>
-        public static WebSiteDeleteRepositoryResponse DeleteRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteDeleteRepositoryResponse DeleteRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).DeleteRepositoryAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).DeleteRepositoryAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -314,12 +347,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Delete Web Site Repository operation response.
         /// </returns>
-        public static Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteDeleteRepositoryResponse> DeleteRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.DeleteRepositoryAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.DeleteRepositoryAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -339,6 +375,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='restoreRequestEnvelope'>
         /// Required. A restore request.
         /// </param>
@@ -346,11 +385,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// The information gathered about a backup storaged in a storage
         /// account.
         /// </returns>
-        public static WebSiteRestoreDiscoverResponse Discover(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope)
+        public static WebSiteRestoreDiscoverResponse Discover(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).DiscoverAsync(resourceGroupName, webSiteName, restoreRequestEnvelope);
+                return ((IWebSiteOperations)s).DiscoverAsync(resourceGroupName, webSiteName, slotName, restoreRequestEnvelope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -372,6 +411,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='restoreRequestEnvelope'>
         /// Required. A restore request.
         /// </param>
@@ -379,9 +421,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// The information gathered about a backup storaged in a storage
         /// account.
         /// </returns>
-        public static Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope)
+        public static Task<WebSiteRestoreDiscoverResponse> DiscoverAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope)
         {
-            return operations.DiscoverAsync(resourceGroupName, webSiteName, restoreRequestEnvelope, CancellationToken.None);
+            return operations.DiscoverAsync(resourceGroupName, webSiteName, slotName, restoreRequestEnvelope, CancellationToken.None);
         }
         
         /// <summary>
@@ -405,15 +447,18 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse GeneratePassword(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static OperationResponse GeneratePassword(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GeneratePasswordAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).GeneratePasswordAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -439,13 +484,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> GeneratePasswordAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<OperationResponse> GeneratePasswordAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.GeneratePasswordAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.GeneratePasswordAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -464,17 +512,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.
         /// </returns>
-        public static WebSiteGetResponse Get(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetParameters parameters)
+        public static WebSiteGetResponse Get(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetAsync(resourceGroupName, webSiteName, parameters);
+                return ((IWebSiteOperations)s).GetAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -495,15 +546,70 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Details operation response.
         /// </returns>
-        public static Task<WebSiteGetResponse> GetAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetParameters parameters)
+        public static Task<WebSiteGetResponse> GetAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetParameters parameters)
         {
-            return operations.GetAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
+            return operations.GetAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        public static WebSiteAppSettingsResult GetAppSettings(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetAppSettingsAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        public static Task<WebSiteAppSettingsResult> GetAppSettingsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.GetAppSettingsAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -519,14 +625,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// Scheduled backup definition.
         /// </returns>
-        public static WebSiteGetBackupConfigurationResponse GetBackupConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteGetBackupConfigurationResponse GetBackupConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetBackupConfigurationAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).GetBackupConfigurationAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -544,12 +653,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// Scheduled backup definition.
         /// </returns>
-        public static Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteGetBackupConfigurationResponse> GetBackupConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.GetBackupConfigurationAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.GetBackupConfigurationAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -569,17 +681,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        public static WebSiteGetConfigurationResponse GetConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetConfigurationParameters parameters)
+        public static WebSiteGetConfigurationResult GetConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetConfigurationAsync(resourceGroupName, webSiteName, parameters);
+                return ((IWebSiteOperations)s).GetConfigurationAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -601,15 +716,70 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
-        /// The Get Web Site Configuration operation response.
+        /// Config for the website.
         /// </returns>
-        public static Task<WebSiteGetConfigurationResponse> GetConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetConfigurationParameters parameters)
+        public static Task<WebSiteGetConfigurationResult> GetConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetConfigurationParameters parameters)
         {
-            return operations.GetConfigurationAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
+            return operations.GetConfigurationAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        public static WebSiteConnectionStringsResult GetConnectionStrings(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetConnectionStringsAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        public static Task<WebSiteConnectionStringsResult> GetConnectionStringsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.GetConnectionStringsAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -628,17 +798,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
         /// </returns>
-        public static WebSiteGetHistoricalUsageMetricsResponse GetHistoricalUsageMetrics(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
+        public static WebSiteGetHistoricalUsageMetricsResponse GetHistoricalUsageMetrics(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetHistoricalUsageMetricsParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetHistoricalUsageMetricsAsync(resourceGroupName, webSiteName, parameters);
+                return ((IWebSiteOperations)s).GetHistoricalUsageMetricsAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -659,15 +832,122 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The Get Web Site Historical Usage Metrics parameters.
         /// </param>
         /// <returns>
         /// The Get Web Site Historical Usage Metrics operation response.
         /// </returns>
-        public static Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteGetHistoricalUsageMetricsParameters parameters)
+        public static Task<WebSiteGetHistoricalUsageMetricsResponse> GetHistoricalUsageMetricsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteGetHistoricalUsageMetricsParameters parameters)
         {
-            return operations.GetHistoricalUsageMetricsAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
+            return operations.GetHistoricalUsageMetricsAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        public static WebSiteMetadataResult GetMetadata(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetMetadataAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        public static Task<WebSiteMetadataResult> GetMetadataAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.GetMetadataAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Get publishing credentials for the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site.
+        /// </param>
+        /// <returns>
+        /// Publishing credentials for the website.
+        /// </returns>
+        public static WebSitePublishingCredentialsResult GetPublishingCredentials(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetPublishingCredentialsAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Get publishing credentials for the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site.
+        /// </param>
+        /// <returns>
+        /// Publishing credentials for the website.
+        /// </returns>
+        public static Task<WebSitePublishingCredentialsResult> GetPublishingCredentialsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.GetPublishingCredentialsAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -685,14 +965,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
         /// </returns>
-        public static WebSiteGetPublishProfileResponse GetPublishProfile(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteGetPublishProfileResponse GetPublishProfile(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetPublishProfileAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).GetPublishProfileAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -712,12 +995,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Publish Profile operation response.
         /// </returns>
-        public static Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteGetPublishProfileResponse> GetPublishProfileAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.GetPublishProfileAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.GetPublishProfileAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -740,14 +1026,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Repository operation response.
         /// </returns>
-        public static WebSiteGetRepositoryResponse GetRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteGetRepositoryResponse GetRepository(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetRepositoryAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).GetRepositoryAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -772,12 +1061,65 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Repository operation response.
         /// </returns>
-        public static Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteGetRepositoryResponse> GetRepositoryAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.GetRepositoryAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.GetRepositoryAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        public static SlotConfigNamesResult GetSlotConfigNames(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).GetSlotConfigNamesAsync(resourceGroupName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <returns>
+        /// List of slot specific settings.
+        /// </returns>
+        public static Task<SlotConfigNamesResult> GetSlotConfigNamesAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        {
+            return operations.GetSlotConfigNamesAsync(resourceGroupName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>
@@ -799,14 +1141,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
         /// </returns>
-        public static WebSiteGetUsageMetricsResponse GetUsageMetrics(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteGetUsageMetricsResponse GetUsageMetrics(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).GetUsageMetricsAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).GetUsageMetricsAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -830,12 +1175,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// The Get Web Site Usage Metrics operation response.
         /// </returns>
-        public static Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteGetUsageMetricsResponse> GetUsageMetricsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.GetUsageMetricsAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.GetUsageMetricsAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -848,17 +1196,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
+        /// <param name='webSiteName'>
+        /// Optional. The name of the web site.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The List Web Sites operation response.
         /// </returns>
-        public static WebSiteListResponse List(this IWebSiteOperations operations, string resourceGroupName, WebSiteListParameters parameters)
+        public static WebSiteListResponse List(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteListParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).ListAsync(resourceGroupName, parameters);
+                return ((IWebSiteOperations)s).ListAsync(resourceGroupName, webSiteName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -873,15 +1224,18 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
         /// </param>
+        /// <param name='webSiteName'>
+        /// Optional. The name of the web site.
+        /// </param>
         /// <param name='parameters'>
         /// Optional. Additional parameters.
         /// </param>
         /// <returns>
         /// The List Web Sites operation response.
         /// </returns>
-        public static Task<WebSiteListResponse> ListAsync(this IWebSiteOperations operations, string resourceGroupName, WebSiteListParameters parameters)
+        public static Task<WebSiteListResponse> ListAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteListParameters parameters)
         {
-            return operations.ListAsync(resourceGroupName, parameters, CancellationToken.None);
+            return operations.ListAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -897,14 +1251,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// List of backups for the website.
         /// </returns>
-        public static WebSiteGetBackupsResponse ListBackups(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static WebSiteGetBackupsResponse ListBackups(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).ListBackupsAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).ListBackupsAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -922,12 +1279,15 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <returns>
         /// List of backups for the website.
         /// </returns>
-        public static Task<WebSiteGetBackupsResponse> ListBackupsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<WebSiteGetBackupsResponse> ListBackupsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.ListBackupsAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.ListBackupsAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -938,20 +1298,23 @@ namespace Microsoft.Azure.Management.WebSites
         /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group
         /// </param>
         /// <param name='webSiteName'>
-        /// Required. TBD
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse Restart(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static OperationResponse Restart(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).RestartAsync(resourceGroupName, webSiteName);
+                return ((IWebSiteOperations)s).RestartAsync(resourceGroupName, webSiteName, slotName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -964,18 +1327,21 @@ namespace Microsoft.Azure.Management.WebSites
         /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
+        /// Required. The name of the resource group
         /// </param>
         /// <param name='webSiteName'>
-        /// Required. TBD
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName)
+        public static Task<OperationResponse> RestartAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
         {
-            return operations.RestartAsync(resourceGroupName, webSiteName, CancellationToken.None);
+            return operations.RestartAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
         }
         
         /// <summary>
@@ -992,17 +1358,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='restoreRequestEnvelope'>
         /// Required. A restore request.
         /// </param>
         /// <returns>
         /// Restore operation information.
         /// </returns>
-        public static WebSiteRestoreResponse Restore(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope)
+        public static WebSiteRestoreResponse Restore(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).RestoreAsync(resourceGroupName, webSiteName, restoreRequestEnvelope);
+                return ((IWebSiteOperations)s).RestoreAsync(resourceGroupName, webSiteName, slotName, restoreRequestEnvelope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1021,15 +1390,192 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='restoreRequestEnvelope'>
         /// Required. A restore request.
         /// </param>
         /// <returns>
         /// Restore operation information.
         /// </returns>
-        public static Task<WebSiteRestoreResponse> RestoreAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, RestoreRequestEnvelope restoreRequestEnvelope)
+        public static Task<WebSiteRestoreResponse> RestoreAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, RestoreRequestEnvelope restoreRequestEnvelope)
         {
-            return operations.RestoreAsync(resourceGroupName, webSiteName, restoreRequestEnvelope, CancellationToken.None);
+            return operations.RestoreAsync(resourceGroupName, webSiteName, slotName, restoreRequestEnvelope, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Start(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).StartAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> StartAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.StartAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse Stop(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).StopAsync(resourceGroupName, webSiteName, slotName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Restart the web site.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. Name of website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the web site
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> StopAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName)
+        {
+            return operations.StopAsync(resourceGroupName, webSiteName, slotName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve the application settings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site app settings parameters
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        public static WebSiteAppSettingsResult UpdateAppSettings(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateAppSettingsAsync(resourceGroupName, webSiteName, slotName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can retrieve the application settings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site app settings parameters
+        /// </param>
+        /// <returns>
+        /// List of app settings for the website.
+        /// </returns>
+        public static Task<WebSiteAppSettingsResult> UpdateAppSettingsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
+        {
+            return operations.UpdateAppSettingsAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -1045,6 +1591,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='backupRequestEnvelope'>
         /// Required. A backup schedule specification.
         /// </param>
@@ -1052,11 +1601,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateBackupConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope)
+        public static OperationResponse UpdateBackupConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).UpdateBackupConfigurationAsync(resourceGroupName, webSiteName, backupRequestEnvelope);
+                return ((IWebSiteOperations)s).UpdateBackupConfigurationAsync(resourceGroupName, webSiteName, slotName, backupRequestEnvelope);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1074,6 +1623,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='backupRequestEnvelope'>
         /// Required. A backup schedule specification.
         /// </param>
@@ -1081,9 +1633,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateBackupConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, BackupRequestEnvelope backupRequestEnvelope)
+        public static Task<OperationResponse> UpdateBackupConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, BackupRequestEnvelope backupRequestEnvelope)
         {
-            return operations.UpdateBackupConfigurationAsync(resourceGroupName, webSiteName, backupRequestEnvelope, CancellationToken.None);
+            return operations.UpdateBackupConfigurationAsync(resourceGroupName, webSiteName, slotName, backupRequestEnvelope, CancellationToken.None);
         }
         
         /// <summary>
@@ -1103,6 +1655,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The Update Web Site Configuration parameters.
         /// </param>
@@ -1110,11 +1665,11 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static OperationResponse UpdateConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
+        public static OperationResponse UpdateConfiguration(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConfigurationParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IWebSiteOperations)s).UpdateConfigurationAsync(resourceGroupName, webSiteName, parameters);
+                return ((IWebSiteOperations)s).UpdateConfigurationAsync(resourceGroupName, webSiteName, slotName, parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -1136,6 +1691,9 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='webSiteName'>
         /// Required. The name of the web site.
         /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
         /// <param name='parameters'>
         /// Required. The Update Web Site Configuration parameters.
         /// </param>
@@ -1143,9 +1701,199 @@ namespace Microsoft.Azure.Management.WebSites
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<OperationResponse> UpdateConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, WebSiteUpdateConfigurationParameters parameters)
+        public static Task<OperationResponse> UpdateConfigurationAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConfigurationParameters parameters)
         {
-            return operations.UpdateConfigurationAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
+            return operations.UpdateConfigurationAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve the connection strings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site connection strings parameters
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        public static WebSiteConnectionStringsResult UpdateConnectionStrings(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConnectionStringsParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateConnectionStringsAsync(resourceGroupName, webSiteName, slotName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can retrieve the connection strings for a web site by issuing
+        /// an HTTP GET request, or update them by using HTTP PUT with a
+        /// request body that contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site connection strings parameters
+        /// </param>
+        /// <returns>
+        /// List of connection strings for the website.
+        /// </returns>
+        public static Task<WebSiteConnectionStringsResult> UpdateConnectionStringsAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteUpdateConnectionStringsParameters parameters)
+        {
+            return operations.UpdateConnectionStringsAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// You can retrieve the metadata for a web site by issuing an HTTP GET
+        /// request, or update them by using HTTP PUT with a request body that
+        /// contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site metadata parameters
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        public static WebSiteMetadataResult UpdateMetadata(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateMetadataAsync(resourceGroupName, webSiteName, slotName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// You can retrieve the metadata for a web site by issuing an HTTP GET
+        /// request, or update them by using HTTP PUT with a request body that
+        /// contains the settings to be updated.  (see
+        /// http://msdn.microsoft.com/en-us/library/windowsazure/dn166985.aspx
+        /// for more information)
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update Web Site metadata parameters
+        /// </param>
+        /// <returns>
+        /// List of metadata for the website.
+        /// </returns>
+        public static Task<WebSiteMetadataResult> UpdateMetadataAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, string slotName, WebSiteNameValueParameters parameters)
+        {
+            return operations.UpdateMetadataAsync(resourceGroupName, webSiteName, slotName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update slot configs parameters
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse UpdateSlotConfigNames(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).UpdateSlotConfigNamesAsync(resourceGroupName, webSiteName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Update list of app settings and connection strings which to be slot
+        /// specific. E.g. settings in staging slots remain in staging after
+        /// swap with production.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The Update slot configs parameters
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> UpdateSlotConfigNamesAsync(this IWebSiteOperations operations, string resourceGroupName, string webSiteName, SlotConfigNamesUpdateParameters parameters)
+        {
+            return operations.UpdateSlotConfigNamesAsync(resourceGroupName, webSiteName, parameters, CancellationToken.None);
         }
     }
 }

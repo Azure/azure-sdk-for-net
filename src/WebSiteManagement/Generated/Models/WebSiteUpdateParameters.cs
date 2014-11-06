@@ -22,6 +22,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.WebSites.Models;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
@@ -88,8 +89,8 @@ namespace Microsoft.WindowsAzure.Management.WebSites.Models
         /// </summary>
         public WebSiteUpdateParameters()
         {
-            this.HostNames = new List<string>();
-            this.HostNameSslStates = new List<WebSiteUpdateParameters.WebSiteHostNameSslState>();
+            this.HostNames = new LazyList<string>();
+            this.HostNameSslStates = new LazyList<WebSiteUpdateParameters.WebSiteHostNameSslState>();
         }
         
         /// <summary>

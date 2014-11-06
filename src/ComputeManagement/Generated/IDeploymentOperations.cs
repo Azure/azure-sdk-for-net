@@ -1166,6 +1166,56 @@ namespace Microsoft.WindowsAzure.Management.Compute
         Task<OperationStatusResponse> GetPackageBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DeploymentGetPackageParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// The name of the deployment.
+        /// </param>
+        /// <param name='startTime'>
+        /// Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        Task<DeploymentEventListResponse> ListEventsAsync(string serviceName, string deploymentName, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </summary>
+        /// <param name='serviceName'>
+        /// The name of the cloud service.
+        /// </param>
+        /// <param name='deploymentSlot'>
+        /// The deployment slot.
+        /// </param>
+        /// <param name='startTime'>
+        /// Datetime in UTC representing the start time of the query.
+        /// </param>
+        /// <param name='endTime'>
+        /// Datetime in UTC representing the end time of the query.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Identifies the list of reboot events due to planned maintenance
+        /// that impacted a deployment in the optionally provided timeframe.
+        /// </returns>
+        Task<DeploymentEventListResponse> ListEventsBySlotAsync(string serviceName, DeploymentSlot deploymentSlot, DateTime startTime, DateTime endTime, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// The Reboot Role Instance By Deployment Name operation requests a
         /// reboot of a role instance that is running in a deployment. This
         /// operation is an asynchronous operation. To determine whether the

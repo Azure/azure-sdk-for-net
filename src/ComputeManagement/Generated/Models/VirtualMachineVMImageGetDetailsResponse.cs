@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Management.Compute.Models;
 
 namespace Microsoft.WindowsAzure.Management.Compute.Models
@@ -365,8 +366,8 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
         /// </summary>
         public VirtualMachineVMImageGetDetailsResponse()
         {
-            this.DataDiskConfigurations = new List<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
-            this.ReplicationProgress = new List<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
+            this.DataDiskConfigurations = new LazyList<VirtualMachineVMImageListResponse.DataDiskConfiguration>();
+            this.ReplicationProgress = new LazyList<VirtualMachineVMImageGetDetailsResponse.ReplicationProgressElement>();
         }
         
         /// <summary>

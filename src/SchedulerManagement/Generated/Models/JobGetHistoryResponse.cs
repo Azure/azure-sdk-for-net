@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Common.Internals;
 using Microsoft.WindowsAzure.Scheduler.Models;
 
 namespace Microsoft.WindowsAzure.Scheduler.Models
@@ -48,7 +49,7 @@ namespace Microsoft.WindowsAzure.Scheduler.Models
         /// </summary>
         public JobGetHistoryResponse()
         {
-            this.JobHistory = new List<JobGetHistoryResponse.JobHistoryEntry>();
+            this.JobHistory = new LazyList<JobGetHistoryResponse.JobHistoryEntry>();
         }
         
         /// <summary>
