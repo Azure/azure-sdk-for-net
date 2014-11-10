@@ -2,7 +2,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
 
   <PropertyGroup>
-    <!--
+  <!--
      Is the spec being generated from being retrieved via NuGet or from a local project?
      If this is a project that uses the spec from the same solution (for example, a test
      project) then set this property to blank (or just remove it completely)
@@ -13,7 +13,7 @@
   <!-- User settable properties to control how specs are found in the same solution -->
   <PropertyGroup Condition="$(GetSpecFromNuGet) == ''">
     <!-- name of project directory which builds the spec dll -->
-    <SpecAssemblyProjectDirName>Microsoft.Azure.Management.Authorization.Specification</SpecAssemblyProjectDirName>
+    <SpecAssemblyProjectDirName>MySpec</SpecAssemblyProjectDirName>
 
     <!-- The filename for the generated spec assembly -->
     <SpecAssemblyFileName>$(SpecAssemblyProjectDirName).dll</SpecAssemblyFileName>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -12,7 +12,7 @@
     <AssemblyName>Microsoft.WindowsAzure.Management.Network</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
-    <NuGetPackageImportStamp>f50804cd</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>e34377d6</NuGetPackageImportStamp>
   </PropertyGroup>
   <Import Project="..\library.props" />
   <ItemGroup>
@@ -116,7 +116,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="hydra.xml">
+    <Content Include="hyak.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="readme.txt" />
@@ -124,7 +124,6 @@
   <ItemGroup>
     <Reference Include="Microsoft.WindowsAzure.Common">
       <HintPath>..\..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\portable-net45+wp8+wpa81+win\Microsoft.WindowsAzure.Common.dll</HintPath>
-      
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(WindowsAzureCurrentConfiguration)' == 'portable' " />
@@ -136,23 +135,20 @@
   </Target>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets') " />
   <Import Project="$(SolutionDir)\src\library.targets" />
-  <Target Name="CopyMicrosoftWindowsAzureManagementNetworkSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.2.0.5401.16587-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
-  </Target>
   <Import Project="GenerateCode.props" />
-  <Import Project="..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets" Condition="Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" />
+  <Import Project="..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets" Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets'))" />
+    <Error Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets'))" />
   </Target>
   <Target Name="DoSpecGeneration" DependsOnTargets="RestorePackages" BeforeTargets="BeforeBuild">
     <CallTarget Targets="GenerateCodeFromSpecs" Condition="'$(HydraGeneratorImported)' != ''" />
-    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
-    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hydra.Generator.1.0.5393.11871-prerelease\build\Hydra.Generator.targets')" />
+    <Error Text="The Hydra code generator package was restored from nuget. Build the project again to do code generation." Condition="Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets') And '$(HydraGeneratorImported)' == ''" />
+    <Warning Text="The Hydra code generation packages are not available. Compilation will be done on existing generated sources." Condition="!Exists('..\..\packages\Hyak.Generator.1.0.5400.37276-prerelease\build\Hyak.Generator.targets')" />
   </Target>
   <Target Name="CopyMicrosoftWindowsAzureManagementNetworkSpecification" BeforeTargets="GenerateCodeFromSpecs">
-    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.2.0.5410.14597-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
+    <Copy SourceFiles="..\..\packages\Microsoft.WindowsAzure.Management.Network.Specification.2.0.5427.16701-prerelease\tools\Microsoft.WindowsAzure.Management.Network.Specification.dll" DestinationFolder="." />
   </Target>
 </Project>
