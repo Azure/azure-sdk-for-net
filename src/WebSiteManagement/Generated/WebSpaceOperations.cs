@@ -1239,11 +1239,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                                 siteInstance.AvailabilityState = availabilityStateInstance;
                             }
                             
-                            XElement skuElement = sitesElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
-                            if (skuElement != null)
+                            XElement sKUElement = sitesElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                            if (sKUElement != null)
                             {
-                                SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
-                                siteInstance.Sku = skuInstance;
+                                SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                                siteInstance.Sku = sKUInstance;
                             }
                             
                             XElement enabledElement = sitesElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
