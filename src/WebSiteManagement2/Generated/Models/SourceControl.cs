@@ -21,43 +21,38 @@
 
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.WebSites.Models;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// Parameters supplied to the Create or Update operation for the resource
-    /// group.
+    /// Describes a source control.
     /// </summary>
-    public partial class ResourceGroupCreateOrUpdateParameters
+    public partial class SourceControl : ResourceBase
     {
-        private string _location;
+        private SourceControlProperties _properties;
         
         /// <summary>
-        /// Required. The location of the resource group. It cannot be changed
-        /// after the resource group has been created. Has to be one of the
-        /// supported Azure Locations, such as West US, East US, West Europe,
-        /// East Asia, or on-premise/alternate provider location names.
+        /// Optional. Gets or sets the properties of the source control.
         /// </summary>
-        public string Location
+        public SourceControlProperties Properties
         {
-            get { return this._location; }
-            set { this._location = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceGroupCreateOrUpdateParameters class.
+        /// Initializes a new instance of the SourceControl class.
         /// </summary>
-        public ResourceGroupCreateOrUpdateParameters()
+        public SourceControl()
         {
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceGroupCreateOrUpdateParameters class with required
+        /// Initializes a new instance of the SourceControl class with required
         /// arguments.
         /// </summary>
-        public ResourceGroupCreateOrUpdateParameters(string location)
+        public SourceControl(string location)
             : this()
         {
             if (location == null)

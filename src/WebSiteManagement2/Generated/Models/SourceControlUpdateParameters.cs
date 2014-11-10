@@ -21,32 +21,46 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure;
+using Microsoft.Azure.Management.WebSites.Models;
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
     /// <summary>
-    /// The Create or Update resource group operation response.
+    /// Update source control parameters.
     /// </summary>
-    public partial class ResourceGroupCreateOrUpdateResponse : OperationResponse
+    public partial class SourceControlUpdateParameters
     {
-        private string _name;
+        private SourceControlProperties _properties;
         
         /// <summary>
-        /// Optional. The resource group name.
+        /// Required. Gets or sets the properties of the source control.
         /// </summary>
-        public string Name
+        public SourceControlProperties Properties
         {
-            get { return this._name; }
-            set { this._name = value; }
+            get { return this._properties; }
+            set { this._properties = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceGroupCreateOrUpdateResponse class.
+        /// Initializes a new instance of the SourceControlUpdateParameters
+        /// class.
         /// </summary>
-        public ResourceGroupCreateOrUpdateResponse()
+        public SourceControlUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the SourceControlUpdateParameters
+        /// class with required arguments.
+        /// </summary>
+        public SourceControlUpdateParameters(SourceControlProperties properties)
+            : this()
+        {
+            if (properties == null)
+            {
+                throw new ArgumentNullException("properties");
+            }
+            this.Properties = properties;
         }
     }
 }

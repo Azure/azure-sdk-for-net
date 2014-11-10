@@ -69,6 +69,141 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             get { return this._client; }
         }
         
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// Required. The name of the target slot to be swapped with.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> ApplySlotConfigurationAsync(string webSpaceName, string webSiteName, string targetSwapSlot, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (targetSwapSlot == null)
+            {
+                throw new ArgumentNullException("targetSwapSlot");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("targetSwapSlot", targetSwapSlot);
+                Tracing.Enter(invocationId, this, "ApplySlotConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/applySlotConfig?";
+            url = url + "targetSwapSlot=" + Uri.EscapeDataString(targetSwapSlot.Trim());
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
         /// <summary>
         /// Backups a site on-demand.
         /// </summary>
@@ -989,11 +1124,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement skuElement = siteElement2.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
-                        if (skuElement != null)
+                        XElement sKUElement = siteElement2.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement != null)
                         {
-                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
-                            webSiteInstance.Sku = skuInstance;
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                            webSiteInstance.Sku = sKUInstance;
                         }
                         
                         XElement enabledElement = siteElement2.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
@@ -2199,11 +2334,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement skuElement = siteElement.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
-                        if (skuElement != null)
+                        XElement sKUElement = siteElement.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement != null)
                         {
-                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
-                            webSiteInstance.Sku = skuInstance;
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                            webSiteInstance.Sku = sKUInstance;
                         }
                         
                         XElement enabledElement = siteElement.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));
@@ -4742,6 +4877,132 @@ namespace Microsoft.WindowsAzure.Management.WebSites
             }
         }
         
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async System.Threading.Tasks.Task<OperationResponse> ResetSlotConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (webSpaceName == null)
+            {
+                throw new ArgumentNullException("webSpaceName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("webSpaceName", webSpaceName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                Tracing.Enter(invocationId, this, "ResetSlotConfigurationAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/services/WebSpaces/" + webSpaceName.Trim() + "/sites/" + webSiteName.Trim() + "/resetSlotConfig";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                httpRequest.Headers.Add("accept", "application/json");
+                httpRequest.Headers.Add("x-ms-version", "2014-04-01");
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
         /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
         /// http://msdn.microsoft.com/en-us/library/windowsazure/dn236425.aspx
@@ -5580,11 +5841,11 @@ namespace Microsoft.WindowsAzure.Management.WebSites
                             webSiteInstance.AvailabilityState = availabilityStateInstance;
                         }
                         
-                        XElement skuElement = siteElement2.Element(XName.Get("Sku", "http://schemas.microsoft.com/windowsazure"));
-                        if (skuElement != null)
+                        XElement sKUElement = siteElement2.Element(XName.Get("SKU", "http://schemas.microsoft.com/windowsazure"));
+                        if (sKUElement != null)
                         {
-                            SkuOptions skuInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), skuElement.Value, true));
-                            webSiteInstance.Sku = skuInstance;
+                            SkuOptions sKUInstance = ((SkuOptions)Enum.Parse(typeof(SkuOptions), sKUElement.Value, true));
+                            webSiteInstance.Sku = sKUInstance;
                         }
                         
                         XElement enabledElement = siteElement2.Element(XName.Get("Enabled", "http://schemas.microsoft.com/windowsazure"));

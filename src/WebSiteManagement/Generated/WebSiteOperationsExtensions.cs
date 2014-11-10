@@ -39,6 +39,54 @@ namespace Microsoft.WindowsAzure
     /// </summary>
     public static partial class WebSiteOperationsExtensions
     {
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// Required. The name of the target slot to be swapped with.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse ApplySlotConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string targetSwapSlot)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ApplySlotConfigurationAsync(webSpaceName, webSiteName, targetSwapSlot);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// Required. The name of the target slot to be swapped with.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> ApplySlotConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName, string targetSwapSlot)
+        {
+            return operations.ApplySlotConfigurationAsync(webSpaceName, webSiteName, targetSwapSlot, CancellationToken.None);
+        }
+        
         /// <summary>
         /// Backups a site on-demand.
         /// </summary>
@@ -1075,6 +1123,48 @@ namespace Microsoft.WindowsAzure
         public static Task<WebSiteGetBackupsResponse> ListBackupsAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
         {
             return operations.ListBackupsAsync(webSpaceName, webSiteName, CancellationToken.None);
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static OperationResponse ResetSlotConfiguration(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IWebSiteOperations)s).ResetSlotConfigurationAsync(webSpaceName, webSiteName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.WebSites.IWebSiteOperations.
+        /// </param>
+        /// <param name='webSpaceName'>
+        /// Required. The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<OperationResponse> ResetSlotConfigurationAsync(this IWebSiteOperations operations, string webSpaceName, string webSiteName)
+        {
+            return operations.ResetSlotConfigurationAsync(webSpaceName, webSiteName, CancellationToken.None);
         }
         
         /// <summary>

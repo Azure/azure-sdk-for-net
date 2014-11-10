@@ -21,29 +21,31 @@
 
 using System;
 using System.Linq;
-using Microsoft.WindowsAzure.Common;
-using Microsoft.WindowsAzure.Scheduler.Models;
+using Microsoft.Azure.Management.WebSites.Models;
+using Microsoft.WindowsAzure;
 
-namespace Microsoft.WindowsAzure.Scheduler.Models
+namespace Microsoft.Azure.Management.WebSites.Models
 {
-    public partial class PatchJobCollectionJobsUpdateStateParameters
+    /// <summary>
+    /// The update source control operation response.
+    /// </summary>
+    public partial class SourceControlUpdateResponse : OperationResponse
     {
-        private Patchable<JobState> _state;
+        private SourceControl _sourceControl;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Gets or sets the source control details.
         /// </summary>
-        public Patchable<JobState> State
+        public SourceControl SourceControl
         {
-            get { return this._state; }
-            set { this._state = value; }
+            get { return this._sourceControl; }
+            set { this._sourceControl = value; }
         }
         
         /// <summary>
-        /// Initializes a new instance of the
-        /// PatchJobCollectionJobsUpdateStateParameters class.
+        /// Initializes a new instance of the SourceControlUpdateResponse class.
         /// </summary>
-        public PatchJobCollectionJobsUpdateStateParameters()
+        public SourceControlUpdateResponse()
         {
         }
     }

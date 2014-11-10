@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         
         /// <summary>
         /// Optional. Supported values are an empty string (an empty string
-        /// disables PHP), 5.3, and 5.4.
+        /// disables PHP), 5.3, 5.4, 5.5 and 5.6.
         /// </summary>
         public string PhpVersion
         {
@@ -225,6 +225,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         {
             get { return this._publishingUserName; }
             set { this._publishingUserName = value; }
+        }
+        
+        private string _pythonVersion;
+        
+        /// <summary>
+        /// Optional. Supported values are an empty string (an empty string
+        /// disables Python), 2.7 and 3.4.
+        /// </summary>
+        public string PythonVersion
+        {
+            get { return this._pythonVersion; }
+            set { this._pythonVersion = value; }
         }
         
         private bool? _remoteDebuggingEnabled;

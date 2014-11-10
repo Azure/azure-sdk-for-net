@@ -35,6 +35,24 @@ namespace Microsoft.WindowsAzure.Management.WebSites
     /// </summary>
     public partial interface IWebSiteOperations
     {
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='targetSwapSlot'>
+        /// The name of the target slot to be swapped with.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> ApplySlotConfigurationAsync(string webSpaceName, string webSiteName, string targetSwapSlot, CancellationToken cancellationToken);
+        
         /// <summary>
         /// Backups a site on-demand.
         /// </summary>
@@ -438,6 +456,21 @@ namespace Microsoft.WindowsAzure.Management.WebSites
         /// List of backups for the website.
         /// </returns>
         Task<WebSiteGetBackupsResponse> ListBackupsAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
+        
+        /// <param name='webSpaceName'>
+        /// The name of the web space.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// The name of the web site.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<OperationResponse> ResetSlotConfigurationAsync(string webSpaceName, string webSiteName, CancellationToken cancellationToken);
         
         /// <summary>
         /// You can restart a web site by issuing an HTTP POST request.  (see
