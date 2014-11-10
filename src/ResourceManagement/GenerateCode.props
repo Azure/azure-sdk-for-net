@@ -13,7 +13,7 @@
   <!-- User settable properties to control how specs are found in the same solution -->
   <PropertyGroup Condition="$(GetSpecFromNuGet) == ''">
     <!-- name of project directory which builds the spec dll -->
-    <SpecAssemblyProjectDirName>MySpec</SpecAssemblyProjectDirName>
+    <SpecAssemblyProjectDirName>Microsoft.Azure.Management.Resources.Specification</SpecAssemblyProjectDirName>
 
     <!-- The filename for the generated spec assembly -->
     <SpecAssemblyFileName>$(SpecAssemblyProjectDirName).dll</SpecAssemblyFileName>
