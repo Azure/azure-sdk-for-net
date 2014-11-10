@@ -24,9 +24,6 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.WebSites.Models
 {
-    /// <summary>
-    /// The managed pipeline mode of a web site.
-    /// </summary>
     public enum ManagedPipelineMode
     {
         /// <summary>

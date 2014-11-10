@@ -1190,6 +1190,151 @@ namespace Microsoft.Azure.Management.WebSites
         }
         
         /// <summary>
+        /// Unlink source control from website
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site.
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot.
+        /// </param>
+        /// <param name='repoUrl'>
+        /// Required. The repository url.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public async Task<OperationResponse> DeleteSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, string repoUrl, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (repoUrl == null)
+            {
+                throw new ArgumentNullException("repoUrl");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("slotName", slotName);
+                tracingParameters.Add("repoUrl", repoUrl);
+                Tracing.Enter(invocationId, this, "DeleteSiteSourceControlAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim();
+            if (slotName != null)
+            {
+                url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
+            }
+            url = url + "/sourcecontrols/web?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Delete;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    OperationResponse result = null;
+                    result = new OperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
         /// Scans a backup in a storage account and returns database
         /// information etc. Should be called before calling Restore to
         /// discover what parameters are needed for the restore operation.
@@ -1631,7 +1776,7 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
             }
-            url = url + "newPassword?";
+            url = url + "/newPassword?";
             url = url + "api-version=2014-06-01";
             string baseUrl = this.Client.BaseUri.AbsoluteUri;
             // Trim '/' character from the end of baseUrl and beginning of url.
@@ -2949,6 +3094,13 @@ namespace Microsoft.Azure.Management.WebSites
                             {
                                 string phpVersionInstance = ((string)phpVersionValue);
                                 propertiesInstance.PhpVersion = phpVersionInstance;
+                            }
+                            
+                            JToken pythonVersionValue = propertiesValue["pythonVersion"];
+                            if (pythonVersionValue != null && pythonVersionValue.Type != JTokenType.Null)
+                            {
+                                string pythonVersionInstance = ((string)pythonVersionValue);
+                                propertiesInstance.PythonVersion = pythonVersionInstance;
                             }
                             
                             JToken publishingPasswordValue = propertiesValue["publishingPassword"];
@@ -7118,6 +7270,11 @@ namespace Microsoft.Azure.Management.WebSites
                     propertiesValue["phpVersion"] = parameters.Properties.PhpVersion;
                 }
                 
+                if (parameters.Properties.PythonVersion != null)
+                {
+                    propertiesValue["pythonVersion"] = parameters.Properties.PythonVersion;
+                }
+                
                 if (parameters.Properties.RemoteDebuggingEnabled != null)
                 {
                     propertiesValue["remoteDebuggingEnabled"] = parameters.Properties.RemoteDebuggingEnabled.Value;
@@ -7824,6 +7981,283 @@ namespace Microsoft.Azure.Management.WebSites
                         {
                             string typeInstance = ((string)typeValue);
                             resourceInstance.Type = typeInstance;
+                        }
+                    }
+                    
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        Tracing.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Link source control to website (do not forget to setup the token,
+        /// and if needed token secret, for the specific source control type
+        /// used).
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group
+        /// </param>
+        /// <param name='webSiteName'>
+        /// Required. The name of the web site
+        /// </param>
+        /// <param name='slotName'>
+        /// Optional. The name of the slot of the website
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The update site source control parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The link site to source control operation response.
+        /// </returns>
+        public async Task<SiteSourceControlUpdateResponse> UpdateSiteSourceControlAsync(string resourceGroupName, string webSiteName, string slotName, SiteSourceControlUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (webSiteName == null)
+            {
+                throw new ArgumentNullException("webSiteName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            if (parameters.Properties.RepoUrl == null)
+            {
+                throw new ArgumentNullException("parameters.Properties.RepoUrl");
+            }
+            
+            // Tracing
+            bool shouldTrace = CloudContext.Configuration.Tracing.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = Tracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("webSiteName", webSiteName);
+                tracingParameters.Add("slotName", slotName);
+                tracingParameters.Add("parameters", parameters);
+                Tracing.Enter(invocationId, this, "UpdateSiteSourceControlAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "/subscriptions/" + (this.Client.Credentials.SubscriptionId != null ? this.Client.Credentials.SubscriptionId.Trim() : "") + "/resourceGroups/" + resourceGroupName.Trim() + "/providers/Microsoft.Web/sites/" + webSiteName.Trim();
+            if (slotName != null)
+            {
+                url = url + "/slots/" + Uri.EscapeDataString(slotName != null ? slotName.Trim() : "");
+            }
+            url = url + "/sourcecontrols/web?";
+            url = url + "api-version=2014-06-01";
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject siteSourceControlUpdateParametersValue = new JObject();
+                requestDoc = siteSourceControlUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                siteSourceControlUpdateParametersValue["properties"] = propertiesValue;
+                
+                propertiesValue["repoUrl"] = parameters.Properties.RepoUrl;
+                
+                if (parameters.Properties.Branch != null)
+                {
+                    propertiesValue["branch"] = parameters.Properties.Branch;
+                }
+                
+                propertiesValue["isManualIntegration"] = parameters.Properties.IsManualIntegration;
+                
+                propertiesValue["deploymentRollbackEnabled"] = parameters.Properties.DeploymentRollbackEnabled;
+                
+                propertiesValue["isMercurial"] = parameters.Properties.IsMercurial;
+                
+                requestContent = requestDoc.ToString(Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        Tracing.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        Tracing.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            Tracing.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    SiteSourceControlUpdateResponse result = null;
+                    // Deserialize Response
+                    cancellationToken.ThrowIfCancellationRequested();
+                    string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    result = new SiteSourceControlUpdateResponse();
+                    JToken responseDoc = null;
+                    if (string.IsNullOrEmpty(responseContent) == false)
+                    {
+                        responseDoc = JToken.Parse(responseContent);
+                    }
+                    
+                    if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                    {
+                        SiteSourceControl siteSourceControlInstance = new SiteSourceControl();
+                        result.SiteSourceControl = siteSourceControlInstance;
+                        
+                        JToken propertiesValue2 = responseDoc["properties"];
+                        if (propertiesValue2 != null && propertiesValue2.Type != JTokenType.Null)
+                        {
+                            SiteSourceControlProperties propertiesInstance = new SiteSourceControlProperties();
+                            siteSourceControlInstance.Properties = propertiesInstance;
+                            
+                            JToken repoUrlValue = propertiesValue2["repoUrl"];
+                            if (repoUrlValue != null && repoUrlValue.Type != JTokenType.Null)
+                            {
+                                string repoUrlInstance = ((string)repoUrlValue);
+                                propertiesInstance.RepoUrl = repoUrlInstance;
+                            }
+                            
+                            JToken branchValue = propertiesValue2["branch"];
+                            if (branchValue != null && branchValue.Type != JTokenType.Null)
+                            {
+                                string branchInstance = ((string)branchValue);
+                                propertiesInstance.Branch = branchInstance;
+                            }
+                            
+                            JToken isManualIntegrationValue = propertiesValue2["isManualIntegration"];
+                            if (isManualIntegrationValue != null && isManualIntegrationValue.Type != JTokenType.Null)
+                            {
+                                bool isManualIntegrationInstance = ((bool)isManualIntegrationValue);
+                                propertiesInstance.IsManualIntegration = isManualIntegrationInstance;
+                            }
+                            
+                            JToken deploymentRollbackEnabledValue = propertiesValue2["deploymentRollbackEnabled"];
+                            if (deploymentRollbackEnabledValue != null && deploymentRollbackEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool deploymentRollbackEnabledInstance = ((bool)deploymentRollbackEnabledValue);
+                                propertiesInstance.DeploymentRollbackEnabled = deploymentRollbackEnabledInstance;
+                            }
+                            
+                            JToken isMercurialValue = propertiesValue2["isMercurial"];
+                            if (isMercurialValue != null && isMercurialValue.Type != JTokenType.Null)
+                            {
+                                bool isMercurialInstance = ((bool)isMercurialValue);
+                                propertiesInstance.IsMercurial = isMercurialInstance;
+                            }
+                        }
+                        
+                        JToken idValue = responseDoc["id"];
+                        if (idValue != null && idValue.Type != JTokenType.Null)
+                        {
+                            string idInstance = ((string)idValue);
+                            siteSourceControlInstance.Id = idInstance;
+                        }
+                        
+                        JToken nameValue = responseDoc["name"];
+                        if (nameValue != null && nameValue.Type != JTokenType.Null)
+                        {
+                            string nameInstance = ((string)nameValue);
+                            siteSourceControlInstance.Name = nameInstance;
+                        }
+                        
+                        JToken locationValue = responseDoc["location"];
+                        if (locationValue != null && locationValue.Type != JTokenType.Null)
+                        {
+                            string locationInstance = ((string)locationValue);
+                            siteSourceControlInstance.Location = locationInstance;
+                        }
+                        
+                        JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                        if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                        {
+                            foreach (JProperty property in tagsSequenceElement)
+                            {
+                                string tagsKey = ((string)property.Name);
+                                string tagsValue = ((string)property.Value);
+                                siteSourceControlInstance.Tags.Add(tagsKey, tagsValue);
+                            }
+                        }
+                        
+                        JToken typeValue = responseDoc["type"];
+                        if (typeValue != null && typeValue.Type != JTokenType.Null)
+                        {
+                            string typeInstance = ((string)typeValue);
+                            siteSourceControlInstance.Type = typeInstance;
                         }
                     }
                     

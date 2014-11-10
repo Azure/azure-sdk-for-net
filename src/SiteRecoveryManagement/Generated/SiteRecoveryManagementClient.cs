@@ -211,7 +211,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         public SiteRecoveryManagementClient(string cloudServiceName, string resourceName, SubscriptionCloudCredentials credentials, Uri baseUri)
@@ -318,7 +318,7 @@ namespace Microsoft.WindowsAzure.Management.SiteRecovery
         /// the URI for every service call.
         /// </param>
         /// <param name='baseUri'>
-        /// Required. Gets the URI used as the base for all cloud service
+        /// Optional. Gets the URI used as the base for all cloud service
         /// requests.
         /// </param>
         /// <param name='httpClient'>

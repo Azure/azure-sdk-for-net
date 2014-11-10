@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Hyak>
+    <Assembly>Microsoft.Azure.Management.Automation.Specification.dll</Assembly>
+    <OutputDirectory>Generated</OutputDirectory>
+
+    <Specification>
+        <Type>Microsoft.Azure.Management.Automation.AutomationManagementClient</Type>
+
+        <Platform>
+            <Flavor>CSharp.Azure</Flavor>
+            <OutputDirectory></OutputDirectory>
+            <BaseNamespace>Microsoft.Azure.Management.Automation</BaseNamespace>
+            <Split>Namespace</Split>
+        </Platform>
+
+    </Specification>
+</Hyak>

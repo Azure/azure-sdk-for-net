@@ -4574,7 +4574,7 @@ namespace Microsoft.WindowsAzure.Scheduler
         /// <returns>
         /// The Update Jobs State operation response.
         /// </returns>
-        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(PatchJobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Microsoft.WindowsAzure.Scheduler.Models.JobCollectionJobsUpdateStateResponse> UpdateJobCollectionStateAsync(JobCollectionJobsUpdateStateParameters parameters, CancellationToken cancellationToken)
         {
             // Validate
             if (parameters == null)
@@ -4630,10 +4630,7 @@ namespace Microsoft.WindowsAzure.Scheduler
                 JObject jobCollectionJobsUpdateStateParametersValue = new JObject();
                 requestDoc = jobCollectionJobsUpdateStateParametersValue;
                 
-                if (parameters.State.IsIncluded)
-                {
-                    jobCollectionJobsUpdateStateParametersValue["state"] = SchedulerClient.JobStateToString(parameters.State);
-                }
+                jobCollectionJobsUpdateStateParametersValue["state"] = SchedulerClient.JobStateToString(parameters.State);
                 
                 requestContent = requestDoc.ToString(Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
